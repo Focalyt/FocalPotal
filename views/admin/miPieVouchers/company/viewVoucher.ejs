@@ -1,0 +1,87 @@
+<% include ../../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Company Voucher</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Company Voucher</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../../partials/flash %>
+			<form class="form-horizontal" id="formData">
+				<section>
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">Candidate Voucher</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Display Voucher
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" required name="displayVoucher"
+													value='<%= voucher?.displayVoucher  %>' />
+											    <input type="hidden" name="forCandidates" value="true">
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Voucher Code
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" required name="code"
+													value='<%= voucher?.code %>' />
+											</div><div class="col-xl-3 mb-1">
+												<label>Select Type
+													<span class="asterisk">*</span></label>
+                                                    <select class="form-control" name="voucherType" required>
+                                                        <option value="">Select Option</option>
+                                                        <option value="Percentage" <% if(voucher?.voucherType==='Percentage') {%> selected <% } %>>Percentage</option>
+                                                        <option value="Amount" <% if(voucher?.voucherType==='Amount') { %> selected <% } %>>Amount</option>
+                                                        </select>
+											</div>
+                                            <div class="col-xl-3 mb-1">
+												<label>Value
+													<span class="asterisk">*</span></label>
+												<input type="number" class="form-control" required name="value"
+													value='<%= voucher?.value %>' />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Activation Date
+													<span class="asterisk">*</span></label>
+												<input type="date"  class="form-control" required name="activationDate" id="startDate"
+												    min="<%= voucher?.activationDate ? moment(voucher.activationDate).utcOffset('+05:30').format('YYYY-MM-DD') : moment().utcOffset('+05:30').format('YYYY-MM-DD') %>"
+													value='<%= voucher?.activationDate ? moment(voucher.activationDate).utcOffset('+05:30').format('YYYY-MM-DD') : '' %>' />
+											</div><div class="col-xl-3 mb-1">
+												<label>Active Till
+													<span class="asterisk">*</span></label>
+												<input type="date" class="form-control" required name="activeTill" id="endDate"
+												    min="<%= voucher?.activationDate ? moment(voucher.activationDate).utcOffset('+05:30').format('YYYY-MM-DD') : moment().utcOffset('+05:30').format('YYYY-MM-DD') %>"
+													value='<%= voucher?.activeTill ? moment(voucher?.activeTill).utcOffset('+05:30').format('YYYY-MM-DD') : '' %>' />
+											</div>
+                                            <div class="col-xl-3 mb-1">
+												<label>Description</label>
+												<textarea class="form-control" name="description" cols="3" rows="3"
+												 ><%= voucher?.description %></textarea>
+											</div>
+                                            </div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	</div>
+	</form>
+	<% include ../../partials/footer %>
+		</div>

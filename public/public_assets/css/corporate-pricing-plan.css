@@ -1,0 +1,126 @@
+.heading{
+    margin-top:5rem;
+}
+
+
+.background{
+    background-color: #faedb8;
+    border-radius: 25px;
+}
+
+.first-head {
+    color: #0A2755;
+    font-weight: 700;
+    font-family: Slack-Lato, Slack-Fractions, appleLogo, sans-serif;
+}
+
+.point {
+
+    font-weight: 600;
+    color: #8E7e7f;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.point-2 {
+    color: #6A5F74;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.background-2 {
+    background-color: #03215F;
+    color: white;
+
+    font-family: Garnet Capitals Bold;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+
+}
+
+
+
+.mt-bd {
+    margin-top: 1px;
+    padding-bottom: 20px;
+
+}
+
+.first {
+    border-right: 2px #765F8F solid;
+
+}
+
+.sec {
+    border-right: 2px #765F8F solid;
+
+}
+
+
+
+
+
+.another-1 {
+
+    border-right: 1px #A6A6A6 solid;
+    /***** line-height: 25px;*/
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+
+
+
+
+
+
+}
+
+.ls {
+    letter-spacing: 0.5px;
+}
+
+.yellow-b {
+    font-size: 24px;
+    background-color: #FF8C00;
+    padding-left: 3px;
+    padding-right: 3px;
+ 
+  
+
+}
+
+.orange {
+    color: #e44830 !important;
+
+}
+
+.another-2 {
+    border-right: 1px #A6A6A6 solid;
+}
+
+.silk {
+    line-height: 24px;
+    font-Size: 14px;
+    Color: #fff7f7;
+letter-spacing: 1px!important;
+
+    font-weight: 400;
+
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/*.dd {
+
+    position: absolute;
+    top: 18%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 80px;
+    width: 200px;
+    border-radius: 230px 230px 0 0;
+
+    background-color: #faedb8;
+
+}*/

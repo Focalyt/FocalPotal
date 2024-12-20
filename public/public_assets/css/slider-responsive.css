@@ -1,0 +1,138 @@
+@media only screen and (min-width: 1920px) {
+
+    /* .carousel-gallery {
+        margin: 2% 0 ;
+      
+      } */
+}
+
+
+
+
+
+@media (min-width:1440px){
+    .target-size {
+        width: 18%!important;
+    }
+
+}
+
+
+
+
+
+@media only screen and (max-width: 984px) {
+
+    /* .carousel-gallery {
+        margin: 8% 0 ;
+      
+      } */
+
+      .swiper-wrapper {
+        height: 100%;
+    }
+}
+
+@media only screen and (max-width: 741px) {
+
+    .pulse {
+        width: 62px!important;
+        height: 62px!important;}
+        .uplay{
+            width: 70%!important;
+            height: auto!important;
+            left: 2px!important;
+        }
+        /* .carousel-gallery {
+            margin: 8% 0 ;
+          
+          } */
+
+}
+
+
+
+
+@media only screen and (max-width: 576px) {
+    .pulse {
+        width: 56px!important;
+        height: 56px!important;}
+        
+        .uplay{
+            width: 70%!important;
+            height: auto!important;
+            left: 2px!important;
+        }
+
+        .bit-video{
+            width: 51%!important;
+            height: auto;
+        }
+
+        .pluscenter {
+       
+            left: 26%!important;
+        
+        }
+        .video-icon-pic{
+            left: 50%!important;
+        }
+        /* .carousel-gallery {
+            margin: 10% 0 ;
+          
+          } */
+
+  }
+
+
+
+  @media only screen and (max-width: 450px) {
+    .pulse {
+        width: 47px!important;
+        height: 47px!important;}
+        
+        .uplay{
+            width: 50%!important;
+            height: auto!important;
+            left: 2px!important;
+            top: 12px!important;
+        }
+        .pulse-center{
+            top: 66%!important;
+        }
+        /* .carousel-gallery {
+            margin: 13% 0 ;
+          
+          } */
+
+  }
+
+
+  @media only screen and (max-width: 402px) {
+    .pulse {
+        width: 47px!important;
+        height: 47px!important;}
+        
+        .uplay{
+            width: 50%!important;
+            height: auto!important;
+            left: 2px!important;
+            top: 12px!important;
+        }
+        .pulsecenter{
+            top: 67%!important;
+        }
+  }
+
+
+  @media only screen and (max-width: 374px) {
+
+    .bit-video{
+        width: 56%!important;
+        height: auto;
+    }
+  }
+
+
+ 
+

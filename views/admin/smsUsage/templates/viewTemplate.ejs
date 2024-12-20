@@ -1,0 +1,73 @@
+<% include ../../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">View Templates</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">View Templates</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../../partials/flash %>
+			<form class="form-horizontal" id="formData">
+				<section>
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">View Templates</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Template ID
+													<span class="asterisk">*</span></label>
+												<input type="number" class="form-control" required name="templateId" id="templateId"
+													value='<%= data?.templateId %>' readonly/>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Categories
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" required name="categories" id="categories"
+													value='<%= data?.categories %>' readonly/>
+											</div>
+                                            <div class="col-xl-3 mb-1">
+												<label>Name
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" required name="name" id="name"
+													value='<%= data?.name %>' readonly/>
+											</div>
+                                            <div class="col-xl-3 mb-1">
+												<label>Activation Date
+													<span class="asterisk">*</span></label>
+												<input type="date"  class="form-control" required name="activationDate" id="activationDate"
+												    min="<%= moment().utcOffset('+05:30').format('MM-DD-YYYY') %>" readonly
+													value='<%= data?.activationDate ? moment(data.activationDate).utcOffset('+05:30').format('YYYY-MM-DD') : '' %>'  />
+											</div>
+										</div>
+										<div class="row">
+											
+                                            <div class="col-xl-3 mb-1">
+												<label>Message</label>
+												<textarea class="form-control" name="message" cols="3" rows="3" readonly
+                                                onkeypress="if(this.value.length==150) return false" maxlength="150" ><%= data.message%></textarea>
+											</div>
+                                            </div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	</div>
+	</form>
+	<% include ../../partials/footer %>
+		</div>

@@ -1,0 +1,1480 @@
+<% include ./partials/header %>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+  <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <div id="preloader"></div>
+    <% include ./partials/navbar %>
+      <% include ./partials/leftpane%>
+        <% include ../../partials/flash %>
+          <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper"></div>
+            <form>
+              <section id="Concerned-Person ">
+                <div class="row">
+                  <div class="col-xl-12 px-3 text-right">
+                    <a href="/company/list/jobs" class="btn btn-outline-primary">All Job Details</a>
+                  </div>
+                  <div class="col-xl-12 col-lg-12 px-3">
+                    <div class="card mt-2">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0">
+                        <h4 class="card-title pb-1">Add Job Description</h4>
+                      </div>
+                      <div class="card-content" id="jd-info">
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-xl-3 mb-1" id="jd-organizationName">
+                                <label>Display Organization Name</label><span class="mandatory"> *</span></label>
+                                <input class="form-control" id="organizationName" type="text" name="displayCompanyName"
+                                  value="<%= company?.name %>" required="required" placeholder="Company Name"
+                                  oninvalid="this.setCustomValidity('Enter Company Name Here')"
+                                  onkeypress="if(this.value.length==50) return false"
+                                  oninput="this.setCustomValidity('')" />
+                              </div>
+                              <div class="col-xl-3 mb-1" id="jd-title">
+                                <label>Title</label><span class="mandatory"> *</span></label>
+                                <input class="form-control" id="jobTitle" type="text" name="title"
+                                  value="<%= vacancy?.title %>" required="required"
+                                  oninvalid="this.setCustomValidity('Enter Title Here')"
+                                  placeholder="Enter the job title" oninput="this.setCustomValidity('')"
+                                  maxlength="25" />
+                              </div>
+                              <div class="col-xl-2 mb-1">
+                                <label>Cut Price</label>
+                                <input class="form-control" id="cutprice" type="number">
+                              </div>  
+
+                              <div class="col-xl-3 mb-1" id="jd-industry-field">
+                                <label>Industry</label><span class="mandatory"> *</span></label>
+                                <select class="form-control" value="" id="jd-industry" name="_industry" required
+                                  oninvalid="this.setCustomValidity('Please Select Industry')"
+                                  oninput="this.setCustomValidity('')">
+                                  <option value="">Select option</option>
+                                  <% industry.forEach((item)=>{%>
+                                    <% if(vacancy?._industry?.toString()==item._id.toString()) { %>
+                                      <option value="<%= item._id %>" class="text-capitalize" selected>
+                                        <%= item.name %>
+                                      </option>
+                                      <% } else { %>
+                                        <option value="<%=item._id %>" class="text-capitalize">
+                                          <%= item.name %>
+                                        </option>
+                                        <% } %>
+                                          <% }); %>
+                                </select>
+                              </div>
+                              <!-- <div class="col-xl-3 mb-1 d-none" id="jd-category-field">
+                                <label>Job Type</label><span class="mandatory"> *</span></label>
+                                <select class="form-control text-capitalize " value="" id="jd-category"
+                                  name="_jobCategory" required
+                                  oninvalid="this.setCustomValidity('Please Select JobCategory')"
+                                  oninput="this.setCustomValidity('')">
+                                  <option value="">Select option</option>
+                                  <% jobCategory.forEach((item)=>{%>
+                                    <% if(vacancy?._jobCategory?.toString()==item._id.toString()) { %>
+                                      <option value="<%= item._id %>" class="text-capitalize" selected>
+                                        <%= item.name %>
+                                      </option>
+                                      <% } else { %>
+                                        <option value="<%=item._id %>" class="text-capitalize">
+                                          <%= item.name %>
+                                        </option>
+                                        <% } %>
+                                          <% }); %>
+                                </select>
+                              </div> -->
+                              <div class="col-xl-3 mb-1  " id="jd-exp-field">
+                                <label>Experience (In Years)</label><span class="mandatory"> *</span></label>
+                                <select class="form-control" id="jd-exp" name="experience" value="" required
+                                  oninvalid="this.setCustomValidity('Please Select Experience')"
+                                  oninput="this.setCustomValidity('')">
+                                  <option value="">Select option</option>
+                                  <% if(vacancy?.experience) { %>
+                                    <option value="<%= vacancy?.experience %>" class="text-capitalize" selected>
+                                      <%= vacancy?.experience %>
+                                    </option>
+                                    <%}%>
+                                      <option value="0" <% if(vacancy?.experience=='0' ) {%> selected <% } %> >Fresher
+                                      </option>
+                                      <% for (var i=1; i <=25; i++ ) { %>
+                                        <option value="<%= i %>">
+                                          <%= i %>
+                                        </option>
+                                        <% } %>
+                                </select>
+                              </div>
+                              <div class="col-xl-3 mb-1" id="jd-qua-field">
+                                <label>Qualification</label><span class="mandatory"> *</span></label>
+                                <select class="form-control" name="_qualification" value="" required id="jd-qua"
+                                  oninvalid="this.setCustomValidity('Please Select Qualification')"
+                                  oninput="this.setCustomValidity('')">
+                                  <option value="">Select option</option>
+                                  <% qualification.forEach((item)=>{%>
+                                    <% if(vacancy?. _qualification?.toString()==item._id.toString()) { %>
+                                      <option value="<%= item._id %>" class="text-capitalize" selected>
+                                        <%= item.name %>
+                                      </option>
+                                      <% } else { %>
+                                        <option value="<%=item._id %>" class="text-capitalize">
+                                          <%= item.name %>
+                                        </option>
+                                        <% } %>
+                                          <% }); %>
+                                </select>
+                              </div>
+                              <div class="col-xl-3 mb-1" id="jd-subqua-field">
+                                <label>Stream</label><span class="mandatory"> *</span></label>
+                                <select class="form-control chosen" multiple name="_subQualification" value="" required
+                                  id="jd-subqua" oninvalid="this.setCustomValidity('Please Select Sub Qualification')"
+                                  oninput="this.setCustomValidity('')">
+                                  <% subQualification.forEach((item)=>{%>
+                                      <% if(vacancy?._subQualification?.includes(item._id)) { %>
+                                    <option value="<%= item._id %>" class="text-capitalize" selected>
+                                      <%= item.name %> 
+                                    </option>
+                                    <% } else { %>                                      
+                                      <option value="<%=item._id %>" class="text-capitalize">
+                                        <%= item.name %>
+                                      </option>
+                                      <% } %>
+                                        <% }); %>
+                                </select>
+                              </div>
+                              <div class="col-xl-3 mb-1" id="sub-qua-field">
+                                <label>Sub Qualification</label><span class="mandatory"> *</span></label>
+                                <input type="text" class="form-control" placeholder="Enter your subQualification"
+                                  disabled name="_subQualification" value="">
+                              </div>
+                              <input type="hidden" value="<%= vacancy?.isEdit %>" name="isEdit" id="isedited">
+                              <div class="col-xl-3 mb-1" id="jd-validity-field">
+                                <label>Active Till
+                                  <span class="asterisk">*</span></label>
+                                <input type="date" class="form-control" required name="validity" id="endDate"
+                                  min="<%= vacancy?.validity ? moment(vacancy?.validity).utcOffset('+05:30').format('YYYY-MM-DD') : moment().utcOffset('+05:30').format('YYYY-MM-DD') %>"
+                                  value="<%= vacancy?.validity ? moment(vacancy?.validity).utcOffset('+05:30').format('YYYY-MM-DD') : '' %>" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="jd-loc">
+                  <div class="col-xl-12 col-lg-12 px-3">
+                    <div class="card mt-1">
+                      <div class="card-content">
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-xl-4 mb-1" id="jd-state">
+                                <label>State</label><span class="mandatory"> *</span></label>
+                                <select class="form-control" name="state" value="" id="state-field"
+                                  onchange="stateDropDown(event,'city')">
+                                  <option value="">Select option</option>
+                                  <% state.forEach((item)=>{%>
+                                    <% if(vacancy?.state.toString()==item._id.toString()) { %>
+                                      <option value="<%= item._id %>" class="text-capitalize" selected>
+                                        <%= item.name %>
+                                      </option>
+                                      <% } else { %>
+                                        <option value="<%=item._id %>" class="text-capitalize">
+                                          <%= item.name %>
+                                        </option>
+                                        <% } %>
+                                          <% }); %>
+                                </select>
+                              </div>
+                              <div class="col-xl-4 mb-1" id="jd-city">
+                                <label>City</label><span class="mandatory"> *</span></label>
+                                <select class="form-control" name="city" id="city" value="">
+                                  <option value="">Select option</option>
+                                  <% if(vacancy?.state?._id) {%>
+                                    <% city?.forEach((item)=>{%>
+                                      <% if(vacancy?.city.toString()==item._id.toString()) { %>
+                                        <option value="<%= item._id %>" class="text-capitalize" selected>
+                                          <%= item.name %>
+                                        </option>
+                                        <%} else { %>
+                                          <option value="<%= item._id %>" class="text-capitalize candidatecitylist">
+                                            <%= item.name %>
+                                          </option>
+                                          <% } }); }%>
+                                </select>
+                              </div>
+                              <div class="col-xl-4" id="loc-field">
+                                <label for="work-loc">Work Location<span class="mandatory"> *</span></label>
+                                <div class="input-group mb-2">
+                                  <div class="input-group-prepend bg-locat">
+                                    <div class="input-group-text bg-intext"><img src="/images/isist.png"
+                                        id="siteforcomp">
+                                    </div>
+                                  </div>
+                                  <input type="text" class="form-control" id="work-loc" value="<%= vacancy?.place %>">
+                                  <input type="hidden" id="place" name="place" value="<%= vacancy?.place %>"
+                                    class="form-control" />
+                                  <input type="hidden" id="latitude" name="latitude" value="<%= vacancy?.latitude %>"
+                                    class="form-control" />
+                                  <input type="hidden" id="longitude" name="longitude" value="<%= vacancy?.longitude %>"
+                                    class="form-control" />
+                                </div>
+                              </div>
+                              <div class="col-xl-4 mb-1">
+                                <label for="noOfVacancies">Number of Vacancies</label>
+                                <input id="noOfVacancies" class="form-control" type="number" name="noOfPosition" 
+                                       onkeypress="if(this.value.length==4) return false" value="<%= vacancy?.noOfPosition %>" maxlength="3" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="jd-comp">
+                  <div class="col-xl-12 col-lg-12 px-3">
+                    <div class="card mt-1">
+                      <div class="card-content">
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row">
+                              
+                              <div class="col-xl-3 mb-1" id="gender-preference">
+                                <div class="demo-inline-spacing" id="gender-preference-div">
+                                  <label>Gender Preferences</label><span class="mandatory"> *</span></label>
+                                  <br>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="genderPreference" id="genderRadio1"
+                                      value="male" <% if(vacancy?.genderPreference==='male' ) {%> checked <% } %> />
+                                      <label class="form-check-label" for="genderRadio1">Male</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="genderPreference" id="genderRadio2"
+                                      value="female" <% if(vacancy?.genderPreference==='female' ) {%> checked <% } %> />
+                                      <label class="form-check-label" for="genderRadio2">Female</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="genderPreference" id="genderRadio3"
+                                      value="no preference" <% if(vacancy?.genderPreference==='no preference' ||
+                                      !vacancy?.genderPreference) {%> checked <% } %> />
+                                      <label class="form-check-label" for="genderRadio3">No Preference</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 mb-1" id="job-type-field">
+                                <div class="demo-inline-spacing" id="type-div">
+                                  <label>Type</label><span class="mandatory"> *</span></label>
+                                  <br>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="jobType" id="inlineRadio1"
+                                      value="Full Time" <% if(vacancy?.jobType==='Full Time' ) {%> checked <% } %> />
+                                      <label class="form-check-label" for="inlineRadio1">Full Time</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="jobType" id="inlineRadio2"
+                                      value="Part Time" <% if(vacancy?.jobType==='Part Time' ) {%> checked <% } %> />
+                                      <label class="form-check-label" for="inlineRadio2">Part Time</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 mb-1" id="jp-comp-field">
+                                <div class="demo-inline-spacing">
+                                  <label>Compensation</label><span class="mandatory"> *</span></label>
+                                  <br>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="compensation" id="inlineRadio3"
+                                      value="Fixed" <% if(vacancy?.compensation==='Fixed' ) {%> checked <% } %>/>
+                                      <label class="form-check-label" for="inlineRadio3">Fixed</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="compensation" id="inlineRadio4"
+                                      value="Incentive Only" <% if(vacancy?.compensation==='Incentive Only' ) {%>
+                                    checked
+                                    <% } %>/>
+                                      <label class="form-check-label" for="inlineRadio4">Incentive Only</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="compensation" id="inlineRadio5"
+                                      value="Fixed + Incentive" <% if(vacancy?.compensation==='Fixed + Incentive' ) {%>
+                                    checked <% } %>/>
+                                      <label class="form-check-label" for="inlineRadio5">Fixed + Incentive</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 mb-1" id="jd-pay-field">
+                                <div class="demo-inline-spacing">
+                                  <label>Pay</label><span class="mandatory"> *</span></label>
+                                  <br>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="pay" id="inlineRadio6"
+                                      value="On Payrol" <% if(vacancy?.pay==='On Payrol' ) {%> checked <% } %>/>
+                                      <label class="form-check-label" for="inlineRadio6">On Payrol</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="pay" id="inlineRadio7"
+                                      value="Freelancer/Consultant" <% if(vacancy?.pay==='Freelancer/Consultant' ) {%>
+                                    checked <% } %>/>
+                                      <label class="form-check-label" for="inlineRadio7">Freelancer/Consultant</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xl-6 mb-1" id="age-group">
+                                <label>Age Group</label>
+                                <div class="row">
+
+                                  <div class="col-6"><label class="label-font">From</label>
+                                    <input type="range" min="18" max="70" value="<%=vacancy?.ageMin||18%>" name="ageMin"
+                                      id="min-age" oninput="displayVal(event,'val-min-age')">
+                                    <p>Age: <span id="val-min-age">
+                                        <%=vacancy?.ageMin||18%>
+                                      </span></p>
+                                  </div>
+                                  <div class="col-6"><label class="label-font">To</label>
+                                    <input type="range" min="18" max="70" value="<%=vacancy?.ageMax||70%>" name="ageMax"
+                                      id="max-age" oninput="displayVal(event,'val-max-age')">
+                                    <p>Age: <span id="val-max-age">
+                                        <%=vacancy?.ageMax||70%>
+                                      </span></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="jd-shift-info">
+                  <div class="col-xl-12 col-lg-12 px-3">
+                    <div class="card mt-1">
+                      <div class="card-content">
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-xl-3 mb-1">
+                                <div class="demo-inline-spacing">
+                                  <label>Shift</label>
+                                  <br>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shift" id="inlineRadio8"
+                                      value="Day Shift" <% if(vacancy?.shift==='Day Shift' ) {%> checked <% } %>/>
+                                      <label class="form-check-label" for="inlineRadio8">Day Shift</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shift" id="inlineRadio9"
+                                      value="Night Shift" <% if(vacancy?.shift==='Night Shift' ) {%> checked <% } %>/>
+                                      <label class="form-check-label" for="inlineRadio9">Night Shift</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shift" id="rotational"
+                                      value="Rotational" <% if(vacancy?.shift==='Rotational' ) {%> checked <% } %>/>
+                                      <label class="form-check-label" for="rotational">Rotational</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="shift" id="inlineRadio10"
+                                      value="NA" <% if(vacancy?.shift==='NA' ) {%> checked <% } %>/>
+                                      <label class="form-check-label" for="inlineRadio10">NA</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-2 mb-1">
+                                <label for="timings">Shift Timings</label>
+                                <input id="timings" class="form-control" type="text" name="shifttimings"                                      
+                                       value="<%= vacancy?.shifttimings %>" 
+                                       maxlength="3" />
+                              </div>
+                              <div class="col-xl-3 mb-1" id="jd-work-field">
+                                <div class="demo-inline-spacing">
+                                  <label>Work Type</label><span class="mandatory"> *</span></label>
+                                  <br>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="work" id="inlineRadio11"
+                                      value="Work from office" <% if(vacancy?.work==='Work from office' ) {%> checked <%
+                                      } %>/>
+                                      <label class="form-check-label" for="inlineRadio11">Work from office</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="work" id="wfh"
+                                      value="Work from home" <% if(vacancy?.work==='Work from home' ) {%> checked <%
+                                      } %>/>
+                                      <label class="form-check-label" for="wfh">Work from home</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="work" id="inlineRadio12"
+                                      value="Field" <% if(vacancy?.work==='Field' ) {%> checked <% } %>/>
+                                      <label class="form-check-label" for="inlineRadio12">Field</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="work" id="inlineRadio13"
+                                      value="NA" <% if(vacancy?.work==='NA' ) {%> checked <% } %>/>
+                                      <label class="form-check-label" for="inlineRadio13">NA</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 mb-1">
+                                <label>Additional Benifits</label>
+                                <select class="form-control chosen" multiple name="benifits" id="additional-benifits"
+                                  data-placeholder="Select Additional Benifits">
+                                  <% if(vacancy?.benifits.length>0 ) {%>
+                                    <% vacancy?.benifits.forEach((i)=>{%>
+                                      <option value="<%= i %>" selected>
+                                        <%= i %>
+                                      </option>
+                                      <%})%>
+                                        <%}%>
+                                          <option value="Health Insurance">Health Insurance</option>
+                                          <option value="Overtime">Overtime</option>
+                                          <option value="Accomodation">Accomodation</option>
+                                          <option value="Transport">Transport</option>
+                                          <option value="PF">PF</option>
+                                          <option value="Joining Bonus">Joining Bonus</option>
+                                          <option value="Fuel Allowance">Fuel Allowance</option>
+                                          <option value="Travel Allowance">Travel Allowance</option>
+                                          <option value="Laptop">Laptop</option>
+                                          <option value="Mobile">Mobile</option>
+                                          <option value="Others">Others</option>
+                                </select>
+                              </div>
+
+                              <div class="col-xl-3">
+                                <label for="remarks">Remarks</label>
+                                <textarea id="remarks" name="remarks" class="form-control" cols="3" rows="3" maxlength="150"><%= vacancy?.remarks %></textarea>
+                            </div>
+                            
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="jd-skills">
+                  <div class="col-xl-12 col-lg-12 px-3">
+                    <div class="card mt-1">
+                      <div class="card-content">
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-xl-3 mb-1">
+                                <label>Payout</label>
+                                  <select id="payout" class="form-control" name="payOut">
+                                  <option value="">Select option</option>
+                                  <option value="Daily" <% if(vacancy?.payOut==='Daily' ) {%> selected <% } %>>Daily
+                                  </option>
+                                  <option value="Weekly" <% if(vacancy?.payOut==='Weekly' ) {%> selected <% } %>>Weekly
+                                  </option>
+                                  <option value="Monthly" <% if(vacancy?.payOut==='Monthly' ) {%> selected <% } %>
+                                      >Monthly
+                                  </option>
+                                  <option value="NA" <% if(vacancy?.payOut==='NA' ) {%> selected <% } %>>NA</option>
+                                </select>
+                              </div>
+                              <div class="col-xl-3 mb-1">
+                                <label for="techSkills">Tech Skills Required</label>
+                                <select id="techSkills" class="form-control chosen" multiple name="_techSkills" data-placeholder="Select Technical Skills">
+                                  <% techskills.forEach((item) => { %>
+                                    <% if(vacancy?._techSkills?.includes(item._id)) { %>
+                                      <option value="<%= item._id %>" class="text-capitalize" selected>
+                                        <%= item.name %>
+                                      </option>
+                                    <% } else { %>
+                                      <option value="<%= item._id %>" class="text-capitalize">
+                                        <%= item.name %>
+                                      </option>
+                                    <% } %>
+                                  <% }); %>
+                                </select>
+                              </div>
+                              
+                              <div class="col-xl-3 mb-1">
+                                <label for="nonTechSkills">Non Tech Skills Required</label>
+                                <select id="nonTechSkills" class="form-control chosen" multiple name="_nonTechSkills" data-placeholder="Select Non-Technical Skills">
+                                  <% nontechskills.forEach((item) => { %>
+                                    <% if(vacancy?._nonTechSkills?.includes(item._id)) { %>
+                                      <option value="<%= item._id %>" class="text-capitalize" selected>
+                                        <%= item.name %>
+                                      </option>
+                                    <% } else { %>
+                                      <option value="<%= item._id %>" class="text-capitalize">
+                                        <%= item.name %>
+                                      </option>
+                                    <% } %>
+                                  <% }); %>
+                                </select>
+                              </div>
+                              
+                              <div class="col-xl-3 mb-1">
+                                <label>Requirement (If any)</label>
+                                <select class="form-control" name="requirement" id="requirement-feild">
+                                  <option value="">Select option</option>
+                                  <option value="Two Wheeler" <% if(vacancy?.requirement==='Two Wheeler' ) {%> selected
+                                    <% } %>>Two Wheeler
+                                  </option>
+                                  <option value="Four Wheeler" <% if(vacancy?.requirement==='Four Wheeler' ) {%>
+                                    selected
+                                    <% } %>>Four Wheeler
+                                  </option>
+                                  <option value="Driving License" <% if(vacancy?.requirement==='Driving License' ) {%>
+                                    selected <% } %>>
+                                      Driving License
+                                  </option>
+                                  <option value="Passport" <% if(vacancy?.payOut==='Passport' ) {%> selected <% } %>
+                                      >Passport</option>
+                                </select>
+                              </div>
+                              <div class="col-xl-3 mb-1 fixed" id="salaryRange-field" name="salaryRange">
+                                <label>Salary Range (Monthly in Rs.)</label><span class="mandatory"> *</span></label>
+                                <br />
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="isFixed" value="true"
+                                    onclick="javascript:salaryCheck();" id="fixedCheck" <% if(vacancy?.isFixed==true )
+                                    {%>
+                                  checked <% } %>/>
+                                    <label class="form-check-label" for="inlineRadio88">Fixed</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" value="false"
+                                    onclick="javascript:salaryCheck();" name="isFixed" id="defineCheck" <%
+                                    if(vacancy?.isFixed==false ) {%> checked <% } %>/>
+                                    <label class="form-check-label" for="inlineRadio99">Define Range</label>
+                                </div>
+                                <div id="ifFixed" <% if(vacancy?.isFixed!=true ) {%> style="display:none;" <% } %>>
+                                    <input class="form-control" placeholder="Fixed amount" type="number" name="amount"
+                                      onKeyPress="if(this.value.length==10) return false;" id="fixed-range-input"
+                                      value="<%= vacancy?.amount%>">
+                                </div>
+                                <div id="ifdefine" <% if(vacancy?.isFixed!=false ) {%>
+                                  style="display:none;" <% } %>>
+                                    <label>&nbsp;</label>
+                                    <div class="row">
+                                      <div class="col-6"> <input class="form-control" placeholder="Minimum"
+                                          type="number" name="min" onKeyPress="if(this.value.length==10) return false;"
+                                          id="min-input" value="<%= vacancy?.min%>" /></div>
+                                      <div class="col-6"><input class="form-control" placeholder="Maximum" type="number"
+                                          name="max" onKeyPress="if(this.value.length==10) return false;" id="max-input"
+                                          value="<%= vacancy?.max%>" /></div>
+                                    </div>
+
+
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 px-3">
+                    <div class="card">
+                      <div class="card-content">
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row">
+                              <label for="contact-directly" class="px-1 h1 col-6">Do you want the candidate to contact
+                                you
+                                directly?</label>
+                              <label for="25 coin" style="display: none;" class="col-6 text-center">This is service
+                                premium we will deduct <%=coinsRequired?.contactcoins %> coins
+                                  from your account</label>
+                              <div class="col-xl-12 col-lg-12 col-12">
+                                <div class="form-check-inline">
+                                  <input type="radio" id="contact-directly-yes" name="isContact" value="true"
+                                    onclick="showContactInfo()" <% if(vacancy?.isContact==true ) {%> checked <% } %>/>
+                                    <label for="contact-directly-yes">Yes</label>
+                                </div>
+                                <div class="form-check-inline">
+                                  <input type="radio" id="contact-directly-no" name="isContact" value="false"
+                                    onclick="hideContactInfo()" <% if(vacancy?.isContact==false ) {%> checked <% } %>/>
+                                    <label for="contact-directly-no">No</label>
+                                </div>
+                              </div>
+                              <div class="col-12" id="contact-info" style="display: none;">
+                                <div class="row">
+                                  <div class="col-xl-3 mb-1" id="jd-name">
+                                    <label>Name</label><span class="mandatory"> </label>
+                                      <input type="text" class="form-control"
+                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 32 || event.charCode == 8;"
+                                        name="nameof" id="name" placeholder="Name" value="<%= vacancy?.nameof %>">
+                                  </div>
+                                  <div class="col-xl-3 mb-1" id="jd-phoneNumber">
+                                    <label>PhoneNumber</label><span class="mandatory"> *</span></label>
+                                    <input type="tel" class="form-control" id="phoneNumber"
+                                      pattern="[+]?[0-9]{1,3}\s?\d{9,12}" value="<%= vacancy?.phoneNumberof %>"
+                                      placeholder="Phone no" name="phoneNumberof"
+                                      onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10">
+                                  </div>
+                                  <div class="col-xl-3 mb-1 " id="jd-whatsappNumber">
+                                    <label>Whatsapp Number</label><span class="mandatory"></label>
+                                      <input type="tel" class="form-control" id="whatsappNumber"
+                                        pattern="[+]?[0-9]{1,3}\s?\d{9,12}" value="<%= vacancy?.whatsappNumberof %>"
+                                        placeholder="Whatsapp Number" name="whatsappNumberof"
+                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10">
+                                  </div>
+                                  <div class="col-xl-3 mb-1" id="jd-email">
+                                    <label>Email</label><span class="mandatory"></label>
+                                      <input class="form-control" type="email" name="emailof"
+                                        placeholder="Enter your email" id="email" value="<%= vacancy?.emailof %>">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <section id="questionanswerTemplate">
+                  <template>
+                    <div class="row questionanswerrow">
+                      <div class="col-xl-6 mb-1">
+                        <label>Question</label>
+                        <textarea name="Question" class="form-control" col="50" rows="1"></textarea>
+                      </div>
+                      <div class="col-xl-6 mb-1">
+                        <label>Answer</label>
+                        <textarea name="Answer" class="form-control" col="50" rows="1"></textarea>
+                      </div>
+                  </template>
+                </section>
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 px-3">
+                      <div class="card mt-1">
+                          <div class="card-content">
+                            <div class="card-body">
+                              <div class="qs_list">
+                                  <div class="row questionanswerrow">
+                                      <div class="col-xl-6">
+                                          <label>Question</label>
+                                          <textarea name="question" class="form-control question" cols="50"
+                                              rows="1">Do you offer a safe working environment?</textarea>
+                                      </div>
+                                      <div class="col-xl-6">
+                                          <label>Answer</label>
+                                          <textarea name="answer" class="form-control answer" cols="50"
+                                              rows="1">Do you offer a safe working environment?</textarea>
+                                      </div>
+                                      <div class="col-xl-12 mb-1 text-right ">
+                                        <a class="btn btn-success text-white add-button">+ Add Another</a>
+                                    </div>
+                                  </div>
+                                  
+                              </div>
+                            </div>
+
+                              <script
+                                  src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script>
+                              <script>
+                                  function initializeCKEditor(selector) {
+                                      ClassicEditor
+                                          .create(document.querySelector(selector))
+                                          .catch(error => {
+                                              console.error(error);
+                                          });
+                                  }
+
+                                  function addQuestionAnswer() {
+                                      var newRow = document.createElement("div");
+                                      newRow.className = "row questionanswerrow";
+                                      newRow.innerHTML = `
+                                  
+                              `;
+                                      document.querySelector(".qs_list").appendChild(newRow);
+                                      initializeCKEditor('.question:last-of-type');
+                                      initializeCKEditor('.answer:last-of-type');
+                                  }
+
+                                  document.querySelector(".add-button").addEventListener("click", function () {
+                                      addQuestionAnswer();
+                                  });
+
+                                  // Initialize CKEditor for 1wthe existing fields
+                                  initializeCKEditor('.question');
+                                  initializeCKEditor('.answer');
+                              </script>
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 px-3">
+                    <div class="card mt-1">
+                      <div class="card-content">
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-xl-4 mb-1">
+                                <label>Job Description</label>
+                                <textarea id="jobDescription" name="jobDescription" class="form-control" col="5"
+                                  rows="5"><%= vacancy?.jobDescription ? vacancy?.jobDescription : 'Looking for a hard working and reliable resource for our company.'%></textarea>
+                              </div>
+                              <div class="col-xl-5">
+                                <label for="duties">Job Duties</label>
+                                <textarea id="duties" name="duties" class="form-control" cols="3" rows="3" maxlength="150"><%= vacancy?.duties %></textarea>
+                            </div>
+
+                              <div class="col-xl-3 mb-1">
+                                <label>Add Video JD</label>
+                                <input class="form-control" type="text" name="jobVideo"
+                                        placeholder="Add Youtube url" id="jobvideo" value="<%= vacancy?.jobVideo %>">
+                              </div>
+                             
+                              <div class="col-xl-12 mb-1 text-right">
+                                <button id="sub-btn" class="btn btn-success waves-effect waves-light text-white">
+                                  SUBMIT
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+          </div>
+          </section>
+          </form>
+          </div>
+
+          <div class="modal fade" id="addCoins" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Insufficient Coins</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pt-1" id="popup-body">
+                  <h5 class="pb-1 mb-0 mt-1">
+                    You need <%=coinsRequired?.contactcoins %> Coins to avail this Premium Service
+                  </h5>
+                  <ul class="list-unstyled">
+                    <li class="mb-1">
+                      <span class="credit font-weight-bold">
+                        Current Coins Balance: <%= company.creditLeft %></span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" onclick="getOffers()" data-toggle="modal" data-target="#coin_offer"
+                    data-dismiss="modal">Buy Coins</button>
+                  <button type="button" class="btn btn-outline-light" data-dismiss="modal"><i
+                      class="feather icon-x d-block d-lg-none"></i>
+                    <span class="d-none d-lg-block">Cancel</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coin modal offer -->
+          <div class="modal fade show" id="coin_offer" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">COIN OFFERS
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body pt-1" id="popup-body">
+                  <ul class="list-unstyled">
+                    <li>
+                      <div class="col-xl-8 mx-auto" id="offers">
+
+                      </div>
+                    </li>
+                    <li class="mb-1">
+                      <span class="credit font-weight-bold">
+                        Current Coins Balance: <%= company.creditLeft %></span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary waves-effect waves-light" id="pay-button"
+                    data-toggle="modal" data-target="#applyvoucher">Pay Now</button>
+                  <button type="button" class="btn btn-outline-light waves-effect waves-light" data-dismiss="modal"><i
+                      class="feather icon-x d-block d-lg-none"></i>
+                    <span class="d-none d-lg-block">Cancel</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Coin modal offer -->
+          <!-- Voucher modal -->
+          <div class="modal fade show" id="applyvoucher" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content modal-sm">
+                <div class="modal-header vchr_header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Buy Coins</h5>
+                  <button type="button" class="close color-purple" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body mode-dice p-0">
+                  <form class="my-3">
+                    <h3 class="coupon-text">If you have <strong>Coupon Code </strong>, apply here</h3>
+                    <input type="text" name="voucherField" class="text-white mt-1" placeholder="Enter Code" id="voucher"
+                      oninput="convert(event)" onkeypress="checkVouchers(event)">
+                    <button type="button" class="voucher-btn disabled btn btn-sm ml-1" aria-label="Apply" id="add"
+                      disabled> <span aria-hidden="true" class="yes-cross" id="applyVoucher"
+                        onclick="apply(event)">Apply</span> </button>
+                  </form>
+                  <input type="hidden" class="form-control" id="offerId" value="" />
+                  <input type="hidden" class="form-control" id="amount" value="" />
+                  <input type="hidden" class="form-control" id="offerAmount" value="" />
+                  <input type="hidden" class="form-control" id="codevalue" value="" />
+                  <p class="text-success font-weight-bolder font-italic" id="success-message"></p>
+                  <p class="text-danger font-weight-bolder font-italic" id="error-message"></p>
+                </div>
+                <div class="modal-footer text-center">
+                  <button class="btn button-vchr shadow" role="button" onclick="payment(event)" id="apply">Apply /Pay
+                    Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- End Voucher modal-->
+          <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+          <script>
+            $('.chosen').chosen();
+            document.getElementById('sub-qua-field').style.display = "none"
+            let selectQua = document.getElementById('jd-qua')
+            let value = selectQua.options[selectQua.selectedIndex].text;
+            if (value == '10th' || value == '12th' || value == 'Upto 5th') {
+              document.getElementById('sub-qua-field').style.display = "block"
+              $('#jd-subqua-field').hide();
+              document.getElementById('isedited').value = true
+            }
+            checkQualificationOptions = () => {
+              const selectQualification = document.getElementById('jd-qua')
+              let value = selectQualification.options[selectQualification.selectedIndex].text;
+              const subQualification = document.getElementById('jd-subqua');
+              if (value === '12th' || value === '10th' || value === 'Upto 5th') {
+                subQualification.removeAttribute('required')
+                return false;
+              }
+              subQualification.setAttribute('required', '')
+              return true;
+            }
+            document.getElementById('pay-button').onclick = function (e) {
+              $('#coin_offer').modal('hide');
+              let amount = $('input[name="offerName"]:checked').val()
+              let offerId = $('input[name="offerName"]:checked').attr('id');
+              setValues(offerId, amount)
+            }
+            function makePayment(e) {
+              let voucherCode = document.getElementById('voucher').value
+              const offerId = document.getElementById('offerId').value;
+              const amount = document.getElementById('amount').value
+              let code = document.getElementById('codevalue').value
+              let data = {
+                offerId: offerId,
+                amount: amount
+              }
+              axios({ method: 'post', url: '/company/payment', data, headers: { 'x-auth': localStorage.getItem('token') } }).then((res) => {
+                let options = {
+                  "key": '<%= process.env.MIPIE_RAZORPAY_KEY %>',
+                  "amount": res.data.order.amount,
+                  "currency": res.data.order.currency,
+                  "name": "MiPie",
+                  "description": "",
+                  "image": "/images/logo/logo.png",
+                  "order_id": res.data.order.id,
+                  "handler": function (response) {
+                    let data = {
+                      paymentId: response.razorpay_payment_id,
+                      orderId: response.razorpay_order_id,
+                      _company: res.data.company._id,
+                      _offer: offerId,
+                      amount: amount,
+                      code: code
+                    }
+                    axios({ method: 'post', url: '/company/paymentStatus', data, headers: { 'x-auth': localStorage.getItem('token') } }).then(res => {
+                      window.location.reload()
+                    }).catch(
+                      (error) => {
+                        console.log(error.message)
+                      })
+                  },
+                  "prefill": {
+                    "name": res.data.company.name,
+                    "email": res.data.company.email,
+                    "contact": res.data.company._concernPerson.mobile
+                  },
+                  "theme": {
+                    "color": "#FC2B5A"
+                  }
+                };
+                let rzp1 = new Razorpay(options);
+                rzp1.open();
+                e.preventDefault();
+              }).catch(
+                err => console.log(err.message)
+              )
+            }
+            function payment(e) {
+              let voucherCode = document.getElementById('voucher').value
+              if (voucherCode.trim() == "") {
+                makePayment(e);
+              } else {
+                let code = document.getElementById('voucher').value
+                let amount = document.getElementById('offerAmount').value
+                let offer = document.getElementById('offerId').value
+                let data = {
+                  amount,
+                  code,
+                  offerId: offer
+                }
+                document.getElementById('codevalue').value = code
+                axios({ method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') } })
+                  .then((res) => {
+                    if (res.data.status && res.data.amount > 0) {
+                      $('#error-message').text('')
+                      $('#success-message').text(res.data.message);
+                      document.getElementById('amount').value = res.data.amount;
+                      document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                      makePayment(e);
+                    } else if (res.data.status && res.data.amount == 0) {
+                      $('#error-message').text('')
+                      $('#success-message').text(res.data.message);
+                      document.getElementById('amount').value = res.data.amount;
+                      document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                      window.location.reload();
+                    } else {
+                      document.getElementById('voucher').value = ''
+                      document.getElementById('codevalue').value = ''
+                      document.getElementById('amount').value = document.getElementById('offerAmount').value;
+                      $('#error-message').text(res.data.message)
+                      $('#success-message').text('');
+                      let offerAmount = document.getElementById('offerAmount').value
+                      document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
+                    }
+                  })
+              }
+            }
+            function checkVouchers(e) {
+              if (e.key === "Enter") {
+                event.preventDefault();
+                payment(e)
+              }
+            }
+            function apply(e) {
+              let code = document.getElementById('voucher').value
+              let amount = document.getElementById('offerAmount').value
+              let offer = document.getElementById('offerId').value
+              let data = {
+                amount,
+                code,
+                offerId: offer
+              }
+              document.getElementById('codevalue').value = code
+              axios({ method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') } })
+                .then((res) => {
+                  if (res.data.status && res.data.amount > 0) {
+                    $('#error-message').text('')
+                    $('#success-message').text(res.data.message);
+                    document.getElementById('amount').value = res.data.amount;
+                    document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                  } else if (res.data.status && res.data.amount == 0) {
+                    $('#error-message').text('')
+                    $('#success-message').text(res.data.message);
+                    document.getElementById('amount').value = res.data.amount;
+                    document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                    window.location.reload();
+                  } else {
+                    document.getElementById('voucher').value = ''
+                    document.getElementById('codevalue').value = ''
+                    $('#error-message').text(res.data.message);
+                    document.getElementById('amount').value = document.getElementById('offerAmount').value;
+                    $('#success-message').text('');
+                    let offerAmount = document.getElementById('offerAmount').value
+                    document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
+                  }
+                })
+            }
+
+            function getOffers() {
+              axios({ method: 'get', url: `/company/getCoinOffers`, headers: { 'x-auth': localStorage.getItem('token') } })
+                .then(res => {
+                  let offers = document.getElementById('offers');
+                  let html = ''
+                  for (let i of res.data) {
+                    html += `<div class="row inner-border my-2 text-white popup-bg py-1"><div class="col-9 pr-0">${i.displayOffer}</div><div class="col-3 text-left"><span>  <input type="radio" id="${i._id}" name="offerName" value="${i.payAmount.$numberDecimal}" class="radio-size"> </span></div></div>`
+                  }
+                  offers.innerHTML = html
+                  $('.radio-size').first().prop("checked", true)
+                })
+            }
+          </script>
+
+          <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7DDN_gUp2zyrlElXtYpjTEQobYiUB9Lg&callback=initMap&libraries=places&v=weekly"
+            defer></script>
+          <script>
+            function initMap() {
+              const options = {
+                componentRestrictions: { country: "in" },
+                types: ["establishment"]
+              };
+
+              const location = document.getElementById("work-loc")
+              var _addEventListener = (location.addEventListener) ? location.addEventListener : location.attachEvent;
+              var arrowEvent = false;
+              function addEventListenerWrapper(type, listener) {
+                if (type == "keydown") {
+                  var orig_listener = listener;
+                  listener = function (event) {
+                    var suggestion_selected = $("#work-loc-selected").length > 0;
+                    if (event.which == 38 || event.which == 40) {
+                      arrowEvent = true
+                    }
+                    else if (event.which == 13 && !suggestion_selected && arrowEvent == false) {
+                      var simulated_downarrow = $.Event("keydown", {
+                        keyCode: 40,
+                        which: 40
+                      });
+                      orig_listener.apply(location, [simulated_downarrow]);
+                    }
+                    orig_listener.apply(location, [event]);
+                  };
+                }
+                _addEventListener.apply(location, [type, listener]);
+              }
+              location.addEventListener = addEventListenerWrapper;
+              location.attachEvent = addEventListenerWrapper;
+              var autocomplete = new google.maps.places.Autocomplete(location, options);
+              google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                let place = autocomplete.getPlace();
+                document.getElementById('place').value = location.value;
+                document.getElementById('latitude').value = place.geometry.location.lat();
+                document.getElementById('longitude').value = place.geometry.location.lng();
+              });
+            }
+            window.initMap = initMap;
+          </script>
+          <script>
+            $('#preloader').hide();
+            let lessCoins=false
+            const stateDropDown = (event, cityId) => {
+              const stateId = event.target.value;
+              let body = { stateId: stateId };
+              const selectCase = document.getElementById(cityId);
+              $.get('/company/getcitiesbyId', body).done((res) => {
+                $(`select#${cityId} option.companycitylist`).remove();
+                let options;
+                for (let i = 0; i < res.cityValues.length; i++) {
+                  options =
+                    options +
+                    `<option value="${res.cityValues[i]._id}" class="text-capitalize companycitylist">${res.cityValues[i].name}</option>`;
+                }
+                $(`select#${cityId}`).append(options);
+              });
+            };
+            function salaryCheck() {
+              if ($('#fixedCheck').is(":checked")) {
+                $('#ifFixed').show();
+                $('#ifdefine').hide();
+              } else {
+                $('#ifdefine').show();
+                $('#ifFixed').hide();
+              }
+            }
+            const displayVal = (event, selector) => {
+              document.getElementById(`${selector}`).textContent = event.target.value
+            }
+            $('#add-button').bind('click', () => {
+              let html = $('#questionanswerTemplate template').html();
+              $('#questionanswerlist').append(html);
+            })
+
+
+            const checkJDVideoValidation = (video) => {
+              let regex = /(\.mp4|\.mov|\.avi)$/i;
+              if (!regex.exec(video)) {
+                return false;
+              } else {
+                return true;
+              }
+            }
+            
+            function getQuestionAnswers() {
+              let questionsAnswersArray = [];
+              const elements = document.querySelectorAll('#questionanswerlist .questionanswerrow');
+              Array.from(elements).forEach((item) => {
+                let queAnsObj = {}
+                let formControls = item.querySelectorAll('.form-control');
+                if(formControls[0].value.trim()!==""&&formControls[1].value.trim()!==""){
+                 queAnsObj['Question'] = formControls[0].value;
+                 queAnsObj['Answer'] = formControls[1].value;
+                 questionsAnswersArray.push(queAnsObj);
+                }
+              })
+              return questionsAnswersArray;
+            }
+
+
+            function convert(event) {
+              const val = event.target.value;
+              event.target.value = val.toUpperCase()
+
+              let applyButton = document.getElementById('add')
+              if (event.target.value.trim() !== '') {
+                applyButton.disabled = false
+                applyButton.classList.remove('disabled')
+              }
+              else {
+                applyButton.disabled = true
+                applyButton.classList.add('disabled')
+              }
+            }
+            function setValues(offerId, amount) {
+              let offer = document.getElementById('offerId')
+              let voucherAmount = document.getElementById('amount')
+              let offerAmount = document.getElementById('offerAmount')
+              offer.value = offerId;
+              voucherAmount.value = amount
+              offerAmount.value = amount
+              document.getElementById('apply').innerHTML = `Pay ₹ ${amount}`
+            }
+            $('#sub-btn').click((e) => {
+              if (!validations()) {
+                event.preventDefault();
+                return false
+              }
+              event.preventDefault();
+              // 25coin modal
+              const creditLeft = +("<%=company.creditLeft%>");
+              const coinsRequired = +("<%=coinsRequired?.contactcoins%>");
+             
+              if (creditLeft < coinsRequired && isContactvalue === "true") {
+                e.preventDefault();
+                document.getElementById("sub-btn").setAttribute("data-toggle", "modal");
+                document.getElementById("sub-btn").setAttribute("data-target", "#addCoins");
+                document.getElementById("sub-btn").setAttribute("data-dismiss", "modal");
+                lessCoins=true
+              } else if (isContactvalue === true && creditLeft < coinsRequired) {
+                e.preventDefault();
+                document.getElementById("sub-btn").setAttribute("data-toggle", "modal");
+                document.getElementById("sub-btn").setAttribute("data-target", "#addCoins");
+                document.getElementById("sub-btn").setAttribute("data-dismiss", "modal");
+                lessCoins=true
+              } else {
+                document.getElementById("sub-btn").removeAttribute("data-toggle");
+                document.getElementById("sub-btn").removeAttribute("data-target");
+                document.getElementById("sub-btn").removeAttribute("data-dismiss");
+                lessCoins=false
+              } 
+              let body = {                
+              displayCompanyName: $('#organizationName').val(),   
+                _techSkills: $('#techSkills').val(),
+                requirement: $('#requirement-feild').val(),
+                _nonTechSkills: $('#nonTechSkills').val(),             
+                noOfPosition: $('#noOfVacancies').val(),
+                shifttimings:$('#shifttimings').val(),
+                remarks: $('#remarks').val(),
+                title: $('#jobTitle').val(),
+                _industry: $('#jd-industry').val(),
+                experience: $('#jd-exp').val(),
+                _qualification: $('#jd-qua').val(),
+                _subQualification: $('#jd-subqua').val(),
+                isedited: $('#availService').val(),
+                validity: $('#endDate').val(),
+                state: $('#state-field').val(),
+                city: $('#city').val(),
+                place: $('#place').val(),
+                latitude: $('#latitude').val(),
+                longitude: $('#longitude').val(), 
+                payOut: $('#payOut').val(),
+                genderPreference:  $('[name=genderPreference]:checked').val(),
+                jobType: $('#inlineRadio1').val() || $('#inlineRadio2').val(),
+                compensation: $('#inlineRadio3').val()||$('#inlineRadio4').val()|| $('#inlineRadio5').val(),
+                pay: $('#inlineRadio6').val()||$('#inlineRadio7').val(),
+                jobDescription: $('#jobDescription').val(),
+                duties:$('#duties').val(),
+                ageMin: $('#min-age').val(),
+                ageMax: $('#max-age').val(),
+                nameof: $('#name').val(),
+                shift:  $('[name=shift]:checked').val(),
+                salaryRange: $('#salaryRange-feild').val(),
+                jobVideo: $('#jobvideo').val(),
+                work: $('[name=work]:checked').val(),
+                benifits: $('#additional-benifits').val(),
+                isFixed: document.getElementById('fixedCheck').checked ? true : false ,
+                isContact: document.getElementById('contact-directly-yes').checked  ? true : false,
+                phoneNumberof: $('#phoneNumber').val(),
+                whatsappNumberof: $('#whatsappNumber').val(),
+                emailof: $('#email').val(),
+                cutprice: $('#cutprice').val(),
+                nameof:$('#name').val(),
+                questionsAnswers: getQuestionAnswers()
+              };
+              if (body['isFixed'] == true) {
+                  body['amount'] = $('#fixed-range-input').val();
+              } else {
+                  body['min'] = $('#min-input').val();
+                  body['max'] = $('#max-input').val();
+              }
+
+              console.log(body, 'body>>>>>>>>>>>>>')
+              if(!lessCoins){
+                axios.post("/company/addjd", body).then((res) => {
+                   if(res&&res.status){
+                    // window.location.href="/company/list/jobs"
+                   }
+                })
+              }
+            })
+            function validations() {
+              $('#jd-info .error').removeClass('error')
+              $('#jd-loc .error').removeClass('error')
+              $('#jd-comp .error').removeClass('error')
+              $('#jd-shift-info .error').removeClass('error')
+              $('#jd-skills .error').removeClass('error')
+              $('#jd-phoneNumber').removeClass('error');
+              $('#jd-whatsappNumber').removeClass('error');
+              $('#jd-name').removeClass('error');
+              $('#jd-email').removeClass('error');
+              let title = $('#jobTitle').val()
+              $('#jd-subqua-field').removeClass('error')
+              let industry = $('#jd-industry').val();
+              let exp = $('#jd-exp').val();
+              let qua = $('#jd-qua').val();
+              let subqua = $('#jd-subqua').val();
+              // let jobCategory = $('#jd-category').val();
+              let address = $('#candidate-address').val()
+              let state = $('#state-field').val()
+              let city = $('#city').val()
+              let name = document.getElementById('name');
+              let whatsappNumber = document.getElementById('whatsappNumber');
+              let phoneNumber = document.getElementById('phoneNumber');
+              let email = document.getElementById('email')
+              let organizationName = $('#organizationName').val()
+              let typeRadio1 = document.getElementById('inlineRadio1');
+              let typeRadio2 = document.getElementById('inlineRadio2')
+              let compRadio1 = document.getElementById('inlineRadio3');
+              let compRadio2 = document.getElementById('inlineRadio4');
+              let compRadio3 = document.getElementById('inlineRadio5');
+              let payRadio1 = document.getElementById('inlineRadio6');
+              let payRadio2 = document.getElementById('inlineRadio7')
+              let workRadio1 = document.getElementById('inlineRadio11');
+              let workRadio2 = document.getElementById('inlineRadio12');
+              let workRadio3 = document.getElementById('inlineRadio13');
+              let wfh = document.getElementById('wfh');
+              let genderRadio1 = document.getElementById('genderRadio1');
+              let minAge = document.getElementById('min-age');
+              let maxAge = document.getElementById('max-age');
+              let genderRadio2 = document.getElementById('genderRadio2');
+              let genderRadio3 = document.getElementById('genderRadio3');
+              const currentLocation = document.getElementById('work-loc');
+              const latitude = $('#latitude').val()
+              const longitude = $('#longitude').val()
+              const place = $('#place').val()
+              let currentLoc = currentLocation.value;
+              const jobValidity = $('#endDate').val()
+              let minSalary = document.getElementById('min-input').value
+              let maxSalary = document.getElementById('max-input').value
+              let fixedSalary = document.getElementById('fixed-range-input').value
+              let firstError = ''
+              let flag = true
+              if (title.trim() === '') {
+                $('#jd-title').addClass('error')
+                firstError = firstError ? firstError : $('#jobTitle')
+                flag = false
+              } if (currentLoc.trim() === "") {
+                $('#loc-field').addClass('error')
+                firstError = firstError ? firstError : $('#work-loc')
+                flag = false;
+              } if (industry.trim() === '') {
+                $('#jd-industry-field').addClass('error')
+                firstError = firstError ? firstError : $('#jd-industry')
+                flag = false
+              }
+              if (exp.trim() === '') {
+                $('#jd-exp-field').addClass('error')
+                firstError = firstError ? firstError : $('#jd-exp')
+                flag = false
+              }
+              if (qua.trim() === '') {
+                $('#jd-qua-field').addClass('error')
+                firstError = firstError ? firstError : $('#jd-qua')
+                flag = false
+              }
+              if (subqua.length <= 0 && checkQualificationOptions() === true) {
+                $('#jd-subqua-field').addClass('error')
+                firstError = firstError ? firstError : $('#jd-subqua-field .chosen-container-multi .chosen-choices input')
+                flag = false
+              }
+              if (jobValidity.trim() === '') {
+                $('#jd-validity-field').addClass('error')
+                firstError = firstError ? firstError : $('#endDate')
+                flag = false
+              }
+              // if (jobCategory.trim() === '') {
+              //   $('#jd-category-field').addClass('error')
+              //   firstError = firstError ? firstError : $('#jd-category-field')
+              //   flag = false
+              // }
+              if (state.trim() === '') {
+                $('#jd-state').addClass('error')
+                firstError = firstError ? firstError : $('#state-field')
+                flag = false
+              }
+              if (city.trim() === '') {
+                $('#jd-city').addClass('error')
+                firstError = firstError ? firstError : $('#city')
+                flag = false
+              }
+              if (minAge.value > maxAge.value && minAge.value && maxAge.value) {
+                $('#age-group').addClass('error');
+                firstError = firstError ? firstError : minAge;
+                flag = false;
+              }
+              if (!typeRadio1.checked && !typeRadio2.checked) {
+                $('#job-type-field').addClass('error')
+                firstError = firstError ? firstError : typeRadio1
+                flag = false
+              }
+              if (!compRadio1.checked && !compRadio2.checked && !compRadio3.checked) {
+                $('#jp-comp-field').addClass('error')
+                firstError = firstError ? firstError : compRadio1
+                flag = false
+              } if (!payRadio1.checked && !payRadio2.checked) {
+                $('#jd-pay-field').addClass('error')
+                firstError = firstError ? firstError : payRadio1
+                flag = false
+              }
+              if (!workRadio1.checked && !workRadio2.checked && !workRadio3.checked && !wfh.checked) {
+                $('#jd-work-field').addClass('error')
+                firstError = firstError ? firstError : workRadio1
+                flag = false
+              } if (!document.getElementById('fixedCheck').checked && !document.getElementById('defineCheck').checked) {
+                $('#salaryRange-field').addClass('error')
+                firstError = firstError ? firstError : document.getElementById('fixedCheck')
+                flag = false
+              } if (document.getElementById('fixedCheck').checked && !fixedSalary) {
+                $('#ifFixed').addClass('error')
+                firstError = firstError ? firstError : document.getElementById('fixedCheck')
+                flag = false
+              } if (document.getElementById('defineCheck').checked && !minSalary && !maxSalary) {
+                $('#ifdefine').addClass('error')
+                firstError = firstError ? firstError : document.getElementById('min-input')
+                flag = false
+              } if (document.getElementById('defineCheck').checked && !minSalary && maxSalary) {
+                $('#min-input').addClass('error')
+                firstError = firstError ? firstError : document.getElementById('min-input')
+                flag = false
+              } if (document.getElementById('defineCheck').checked && minSalary && !maxSalary) {
+                $('#max-input').addClass('error')
+                firstError = firstError ? firstError : document.getElementById('max-input')
+                flag = false
+              }
+              if (organizationName.trim() === '') {
+                $('#jd-organizationName').addClass('error')
+                firstError = firstError ? firstError : $('#organizationName')
+                flag = false
+              }
+              if (!genderRadio1.checked && !genderRadio2.checked && !genderRadio3.checked) {
+                $('#gender-preference').addClass('error')
+                firstError = firstError ? firstError : $('#genderRadio1')
+                flag = false
+              }
+              if (latitude.trim() == "") {
+                $('#loc-field').addClass('error')
+                firstError = firstError ? firstError : $('#work-loc')
+                flag = false;
+              }
+              if (longitude.trim() == "") {
+                $('#loc-field').addClass('error')
+                firstError = firstError ? firstError : $('#work-loc')
+                flag = false;
+              }
+              if (place.trim() == "") {
+                $('#loc-field').addClass('error')
+                firstError = firstError ? firstError : $('#work-loc')
+                flag = false;
+              }
+
+              if (document.querySelector('#contact-directly-yes').checked) {
+                if (phoneNumber.value.trim() === '' || phoneNumber.value.trim().length !== 10) {
+                  $('#jd-phoneNumber').addClass('error');
+                  firstError = firstError ? firstError : $('#phoneNumber');
+                  flag = false;
+                }
+              }
+              if (firstError) {
+                firstError.focus();
+              }
+              return flag
+            }
+
+            function removeVideo() {
+              header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+              let data = {
+                key: $('#jobvideo').val(),
+              }
+              axios.post('/api/deleteSingleFile', data, header)
+                .then(res => {
+                  $('.uploadedvideo').hide()
+                  $('#jobvideo').val('')
+                }).catch(err => console.log(err.message))
+            }
+
+            function showContactInfo() {
+              document.getElementById("contact-info").style.display = "block";
+              var coinLabel = document.querySelector('label[for="25 coin"]');
+              coinLabel.style.display = "block";
+            }
+            function hideContactInfo() {
+              document.getElementById("contact-info").style.display = "none";
+              var coinLabel = document.querySelector('label[for="25 coin"]');
+              coinLabel.style.display = "none";
+            }
+            $(document).ready(function () {
+              if ($('#contact-directly-yes').prop('checked')) {
+                showContactInfo();
+              }
+            });
+
+
+            let isContactvalue = "<%=vacancy?.isContact%>";
+            $('input[name="isContact"]').click(function () {
+              isContactvalue = $('input[name="isContact"]:checked').val() === 'true';
+            });
+            const selectQualification = document.getElementById('jd-qua')
+            $('#jd-qua').change((event) => {
+              const value = selectQualification.options[selectQualification.selectedIndex].text;
+              if (value == '12th' || value == '10th' || value == 'Upto 5th') {
+                document.getElementById('isedited').value = true
+                document.getElementById('sub-qua-field').style.display = "block"
+                $('#jd-subqua-field').hide();
+              } else {
+                document.getElementById('sub-qua-field').style.display = "none"
+                document.getElementById('isedited').value = false
+                $('#jd-subqua-field').show();
+              }
+            })
+
+          </script>
+          <% include ./partials/footer %>
+  </body>

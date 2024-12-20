@@ -1,0 +1,84 @@
+<% include ../../partials/header %>
+
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+      <% include ../../partials/flash %>
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Recent Notifications</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/candidate/dashboard">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">Recent Notifications / सूचनाएं
+                        </li>
+                      </ol>
+                  </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card">
+              <div class="card-header  fliter-block" id="headingOne">
+                <div class="row">
+                  <div class="col-xl-12 ">
+                    <h5 class="mb-2 ">
+                      Notifications / सूचनाएं
+                    </h5>
+                  </div>
+                  <div class="col-6">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+              <div class="card">
+                <div class="card-body px-0">
+                  <div class="col-12 px-2">
+                    <% if(notificationsms.length > 0 ) {%>
+                            <% notificationsms.forEach((i)=> { %>
+                            <h4 class="title-noti font-weight-bold">
+                              <%=i.title%>
+                            </h4>
+                            <p class="">
+                              <%= moment(i.createdAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A')%>
+                            </p>
+                            <div class="notif-box mb-1">
+                              <ul class="mb-xl-1 mb-lg-2 mb-md-2 mb-sm-0 mb-0 pl-2">
+                                <%i.message.split("__").forEach((item)=>{%>
+                                  <li class="pt-1"><%=item%></li>
+                                  <%})%>
+                              </ul>
+                            </div>
+                            <%})%>
+                            <%} else{%>
+                              <p class="text-center">No Notifications Found</p>
+                              <%}%>
+                    </div>
+                </div>
+              
+        
+      </div>
+
+                   
+             
+            </div>
+          </div>
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+        </div>
+        
+        <% include ./partials/footer%>
+
+     

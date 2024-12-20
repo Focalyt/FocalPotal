@@ -1,0 +1,30 @@
+{
+  "name": "Mipie",
+  "short_name": "Mipie",
+  "start_url": "/candidate",
+  "display": "standalone",
+  "background_color": "#ffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/mipie.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/mipie.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/mipie.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/mipie.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}

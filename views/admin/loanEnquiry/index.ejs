@@ -1,0 +1,239 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Loan Enquiry</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Loan Enquiry</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<section class="list-view">
+				<div class="row">
+					<div class="col-12 rounded equal-height-2 coloumn-2">
+						<div class="card">				
+              <div class="row">
+                <div class="col-xl-9 col-lg-9">
+                  <form method="GET">
+                    <div class="row px-1">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12  mt-1">
+                            <label>From Date</label>
+                            <input type="date" class="form-control" name="fromDate" value="<%= data.fromDate %>">
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12  mt-1">
+                          <label>To Date</label>
+                          <input type="date" class="form-control" name="toDate" value="<%= data.toDate %>">
+                      </div>
+                            <div  class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mt-1 py-2">
+                                <button 
+                                  class="btn btn-success  waves-effect waves-light  text-white d-inline px-lg-3 px-md-3 px-sm-2"
+                                  id="submit-btn">Go</button>
+                            </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-xl-3 col-lg-3 px-3 py-1">
+									<p id="totalCompanies" class="font-weight-bold">Total Enquiries: <%= count %></p>
+								</div>
+            </div>				
+							<div class="card-content mt-1">
+								<div class="table-responsive">
+										<table class="table table-hover-animation mb-0 table-hover">
+											<thead class="text-center">
+												<tr>
+													<th>DATE</th>
+													<th>NAME</th>
+													<th>MOBILE</th>
+													<th>Location</th>
+                                                    <th>LOAN AMOUNT</th>
+                                                    <th>SALARY</th>
+													<th>Remarks</th>
+                                                    <th>Purpose</th>
+                                                    <th>Status</th>
+                                                    <% if (view === false) { %>
+                                                    <th>Action</th>
+                                                    <%} %>
+												</tr>
+											</thead>
+											<tbody class="text-center text-capitalize">
+												<% if(loans.length > 0) {%>
+                                                    <% loans.forEach((l) =>{%>
+                                                    <tr>
+                                                        <td><%= moment(l.updatedAt).utcOffset("+05:30").format('MMM DD YYYY')%></td>
+                                                        <td><a  href="/admin/candidate/details/<%=l._candidate._id%>">	<%= l._candidate?.name ? l._candidate?.name : 'NA' %></td>
+                                                        <td><%= l._candidate?.mobile ? l._candidate?.mobile : 'NA' %></td>
+                                                        <td><%= l._candidate?.city?.name && l._candidate?.state?.name ? l._candidate?.city?.name + ', ' + l._candidate?.state?.name : l._candidate?.city?.name ? l._candidate?.city?.name : l._candidate?.state?.name ? l._candidate?.state?.name : 'NA' %></td>
+                                                        <td><%= l.amount ? l.amount : 'NA' %></td>
+                                                        <td><%= l.salary ? l.salary : 'NA' %></td>
+                                                        <td><%= l.remarks ? l.remarks : 'NA' %></td>
+                                                        <td><%= l.purpose ? l.purpose : 'NA' %></td>
+                                                        <td><%= l.status ? l.status : 'NA' %></td>
+                                                        <% if (view === false) { %>
+															<td>
+											                    <i class="feather icon-edit fa-lg primary mt-1" data-toggle="modal"
+																data-target="#updateStatus" onclick="changeStatus('<%= l._id %>','<%= l.status %>')"></i>
+                                                            </td>
+                                                        <%} %>
+                                                    </tr>
+                                                    <%}) %>
+                                                <%}else { %>
+                                                    <tr>
+                                                      <td class="text-center" colspan="10">No record found</td>
+                                                    </tr>
+                                                    <%} %>
+											</tbody>
+										</table>
+										<% if (totalPages> 1) { %>
+                                            <ul class="pagination justify-content-end ml-2 mb-2">
+                                              <% let first=1 %>
+                                                <% let last=totalPages> 4 ? 4 : totalPages %>
+                                                  <% if (totalPages> 4 && page >= 2) { %> <% first=page - 1 %>
+                                                      <% last=page + 1 %>
+                                                        <% if (last> totalPages) last = totalPages %>
+                                                          <% } %>
+                                                            <% if (first> 1) { %>
+                                                              <li class="page-item">
+                                                                <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                                                              </li>
+                                                              <% } %>
+                                                                <% for (let i=first; i <=last; i +=1) { %>
+                                                                  <% if (i===page) { %>
+                                                                    <li class="active page-item">
+                                                                      <a href="javascript:void()" class="page-link">
+                                                                        <%= i %>
+                                                                      </a>
+                                                                    </li>
+                                                                    <% } else { %>
+                                                                      <li class="page-item">
+                                                                        <a class="page-link pageAnchor" href="<%= i %>">
+                                                                          <%= i %>
+                                                                        </a>
+                                                                      </li>
+                                                                      <% } %>
+                                                                        <% } %>
+                                                                          <% if (totalPages> last) { %>
+                                                                            <li class="page-item">
+                                                                              <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                                                                            </li>
+                                                                            <li class="page-item">
+                                                                              <a class="pageAnchor page-link" href="<%= totalPages %>">Last</a>
+                                                                            </li>
+                                                                            <% } %>
+                                            </ul>
+                                            <% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+        <div class="modal fade" id="updateStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Update Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body pt-1" id="popup-body">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Status<span class="required text-danger"> *</span></label>
+                    <select class="form-control text-capitalize" id="loanStatus" value="">
+                      <option value="">Select Option</option>
+                      <% loanStatus.forEach((i)=>{%>
+                        <option value="<%= i %>"><%= i %></option>
+                        <%}) %>
+                      </select>
+                  </div>
+                  
+                  <div class="col-xl-12 mb-1 text-left">
+                    <label>Comment<span class="required text-danger"> *</span></label>
+                    <textarea class="form-control" cols="5" id="statusComment" value="" rows="3"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"
+                  id="updateBtn" onclick="updateStatus()">Update</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                    class="feather icon-x d-block d-lg-none"></i>
+                  <span class="d-none d-lg-block">Cancel</span></button>
+              </div>
+              <input type="hidden" id="loanId" value="">
+            </div>
+          </div>
+        </div>
+			
+	</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const pageAnchors = document.querySelectorAll("a.pageAnchor");
+          const { origin, pathname, search } = window.location;
+          let searchParams = search.split("?")[1];
+          let obj;
+          let url = `${origin}${pathname}?`;
+          if (searchParams) {
+            obj = JSON.parse(
+              '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+              function (key, value) {
+                return key === "" ? value : decodeURIComponent(value);
+              }
+            );
+            const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+            keyArr.forEach((x) => {
+              if (x !== "page") {
+                url += `${x}=${obj[x]}&`;
+              }
+            });
+          }
+          pageAnchors.forEach((el) => {
+            const n = el.getAttribute("href");
+            el.setAttribute("href", `${url}page=${n}`);
+          });
+        });
+
+        function changeStatus(id,status){
+            $('#loanId').val(id)
+            $('#loanStatus').val(status)
+        }
+
+        function updateStatus(){
+            let loanId = $('#loanId').val();
+            let status = $('#loanStatus').val()
+            let comment = $('#statusComment').val()
+
+            if(status.trim()==''){
+                $(`#loanStatus`).addClass("error")
+                $(`#loanStatus`).focus()
+                return false 
+            }
+            if(comment.trim() == ''){
+                $(`#statusComment`).addClass("error")
+                $(`#statusComment`).focus()
+                return false
+            }
+            let body = {
+                loanId,status,comment
+            }
+            let header = { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" }
+            axios.put('/admin/loanEnquiry/updateStatus', body, header).then(res => {
+                if(res.data.status)
+                window.location.reload()
+            }).catch(err => {
+                console.log(err.message)
+            })
+        }
+    </script>
+    <% include ../partials/footer %>

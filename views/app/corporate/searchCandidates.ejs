@@ -1,0 +1,156 @@
+<% include ./partials/header %>
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+  data-menu="vertical-menu-modern" data-col="2-columns">
+  <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+  <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+      <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+          <div class="row breadcrumbs-top">
+            <div class="col-12">
+              <h3 class="content-header-title float-left mb-0">Search Candidates</h3>
+              <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index.html">Home</a>
+                  </li>
+                  <li class="breadcrumb-item active">Search Candidates</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section id="Concerned-Person">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12">
+            <div class="card">
+              <div class="card-header border border-top-0 border-left-0 border-right-0">
+                <h4 class="card-title pb-1">Search Candidates</h4>
+              </div>
+              <div class="card-content">
+                <div class="card-content">
+                    <div class="card-body">
+                      <!-- <div class="row">
+                        <div class="col-xl-4  mb-3">
+                          <input type="type" class="form-control" placeholder="Search for skills, qualification, location etc." id="search-field">
+                        </div>
+                        <div class="col-xl-2  ">
+                          <a href="" class="btn btn-success  waves-effect waves-light">SUBMIT</a>
+                        </div>
+                      </div><div class="row">
+                        <div class="col-xl-4">
+                          <h6 class="mb-3">OR</h6>
+                        </div>
+                      </div> -->
+                      <div class="row">
+                        <div class="col-xl-2 mb-1">
+                      <label>State</label>
+                      <select class="form-control" value="" id="state-field">
+                      </select>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>city</label>
+                      <select class="form-control" value="" id="city-field">
+                      </select>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Qualification</label>
+                      <select class="form-control" value="" id="qualification-field">
+                      </select>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Experience</label>
+                      <select class="form-control" id="exp-field">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                      </select>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                          <label></label> <br><a class="btn btn-success  waves-effect waves-light mb-3 text-white" id="submit-btn">SUBMIT</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <section id="printTheResults">
+                
+              </section>
+            </section>
+        </div>
+      </div>
+  <div class="sidenav-overlay"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>  
+   
+    const statesArray=JSON.parse(localStorage.getItem("stateValues"));
+    const statesSelectField=document.getElementById('state-field');
+    for(let i=0;i<statesArray.length;i++){
+      const option=new Option(statesArray[i].name,statesArray[i].stateId);
+      statesSelectField.options.add(option);
+    }
+    const setCities=(stateId)=>{
+      const body={stateid:stateId};
+      const citySelectField=document.getElementById('city-field');
+      $.get('/app/candidate/getcities',(body)).done((res)=>{
+        citySelectField.innerHTML=''
+         for(let i=0;i<res.length;i++){
+           const city=new Option(res[i].name,res[i].value);
+           citySelectField.options.add(city);
+         }
+      })
+    }
+    setCities(1);
+    statesSelectField.addEventListener('change',(event)=>{
+      setCities(+event.target.value);
+    })
+  const qualificationArray=JSON.parse(localStorage.getItem("qualifications"));
+  const qualificationSelectField=document.getElementById("qualification-field");
+  for(let i=0;i<qualificationArray.length;i++){
+    const qualification=new Option(qualificationArray[i].name,qualificationArray[i].name);
+    qualificationSelectField.options.add(qualification);
+  }
+  const submitBtn=document.getElementById('submit-btn');
+  const parentDiv=document.getElementById("printTheResults");
+  submitBtn.addEventListener('click',()=>{
+    const exp=document.getElementById('exp-field').value;
+    const qualification=document.getElementById('qualification-field').value;
+    const city=document.getElementById('city-field').value;
+    const state=document.getElementById('state-field').value;
+    const body={
+      expToSearch:exp,
+      quaToSearch:qualification,
+      cityToSearch:city,
+      stateToSearch:state
+    };
+      $.post("/app/corporate/get-candidates",body).then((res)=>{
+        if(res.status===200&&res.candidates.length!==0){
+          parentDiv.innerHTML=''
+          const table=displayTheResults(res.candidates);
+          parentDiv.appendChild(table);
+        }else{
+          parentDiv.innerHTML=''
+          const para=document.createElement('p');
+          para.innerHTML='Unable to find the candidates.'
+          parentDiv.appendChild(para)
+        }
+      })
+  })  
+  </script>
+<% include ./partials/footer%>

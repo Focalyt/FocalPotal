@@ -1,0 +1,842 @@
+<% include ./partials/header %>
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">List Candidates</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/company/dashboard">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">List Candidates</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section id="Concerned-Person ">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                  <div class="card">
+                    <div class="card-header border border-top-0 border-left-0 border-right-0">
+                      <h4 class="card-title pb-1">Search Candidates</h4>
+                      <p id="subscription"></p>
+                    </div>
+
+                    <div class="content-body px-2">
+                      <div class="row mb-2">
+                        <div class="col-xl-12 col-lg-12">
+                          <form method="GET">
+                            <div class="row">
+                              <div class="col-xl-3  col-lg-6 col-md-6 col-sm-6 col-12 mt-1">
+                                <label>Set Location As Per JD</label>
+                                <select class="form-control text-capitalize" name="jdLocation"
+                                  id="jdLocation-field">
+                                  <option value="">Select</option>
+                                    <% jdLocation.forEach((jd)=> { %>
+                                    <option value="<%= jd.location?.coordinates %>" class="text-capitalize" 
+                                      <% if (data.jdLocation == jd.location?.coordinates ) { %> selected <% }%>>
+                                      <%= jd.title %>
+                                    </option>
+                                      <% }); %>
+                                </select>
+                              </div>
+                              <div class="col-xl-3  col-lg-6 col-md-6 col-sm-6 col-12 mt-1">
+                                <label>Qualification</label>
+                                <select class="form-control text-capitalize" name="highestqualification"
+                                  id="qualification-field">
+                                  <option value="">Select</option>
+                                  <% qualification.forEach((i)=> { %>
+                                    <% if(data.highestqualification==i._id) {%>
+                                      <option value="<%= i._id %>" class="text-capitalize" selected>
+                                        <%= i.name %>
+                                      </option>
+                                      <% } else { %>
+                                        <option value="<%= i._id %>" class="text-capitalize">
+                                          <%= i.name %>
+                                        </option>
+                                        <% } }); %>
+                                </select>
+                              </div>
+                              <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                                <label>Sub Qualification</label>
+                                <select class="form-control text-capitalize" name="subQualification" id="subQualification">
+                                  <option value="">Select</option>
+                                  <% subQualification?.forEach((subQualification)=> { %>
+                                    <option class="text-capitalize" value="<%= subQualification._id %>" <% if (data?.subQualification == subQualification._id ) { %> selected <% }%> > <%= subQualification.name %></option>
+                                  <% }); %>
+                                </select>
+                              </div>
+                              <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1" >
+                                <label>Experience</label>
+                                <select class="form-control" name="experience" id="exp-field">
+                                  <option value="">Select</option>
+                                  <option value="0" <% if (data.experience=='0' ) { %> selected <% }%>>0</option>
+                                  <% for(let i=1; i<16; i++) {%>
+                                    <option value="<%= i %>" <% if (data.experience==i ) { %> selected <% }%> ><%= i %></option>
+                                 <% } %>
+                                </select>
+                              </div>
+                              <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                                <label>Gender</label>
+                                <select class="form-control text-capitalize" name="gender" id="gender">
+                                  <option value="">Select</option>
+                                  <option class="text-capitalize" value="Female" <% if (data.gender=='Female' ) { %> selected <% }%> >Female</option>
+                                  <option class="text-capitalize" value="Male" <% if (data.gender=='Male' ) { %> selected <% }%> >Male</option>
+                                </select>
+                              </div>
+                              <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                                <label>Preferred State</label>
+                                <select class="form-control text-capitalize" name="stateId" id="state"
+                                  onchange="stateDropDown(event,'city')">
+                                  <option value="">Select</option>
+                                  <% state.forEach((i)=> { %>
+                                    <% if (data.stateId==i._id) { %>
+                                      <option value="<%= i._id %>" class="text-capitalize cityclass" selected>
+                                        <%= i.name %>
+                                      </option>
+                                      <% } else { %>
+                                        <option value="<%= i._id %>" class="text-capitalize">
+                                          <%= i.name %>
+                                        </option>
+                                        <% } %>
+                                          <% }); %>
+                                </select>
+                              </div>
+                            
+                            
+                              <div class="col-xl-3  col-lg-6 col-md-6 col-sm-6 col-12 mt-xl-2 mt-1">
+                                <label>Preferred City</label>
+                                <select class="form-control text-capitalize" name="cityId" id="city">
+                                  <option value="">Select</option>
+                                  <% if (data.stateId) { %>
+                                    <% city.forEach((i)=> { %>
+                                      <% if (data.cityId==i._id) { %>
+                                        <option value="<%= i._id %>" class="text-capitalize companycitylist" selected>
+                                          <%= i.name %>
+                                        </option>
+                                        <% } else { %>
+                                          <option value="<%= i._id %>" class="text-capitalize companycitylist">
+                                            <%= i.name %>
+                                          </option>
+                                          <% } %>
+                                            <% }); %>
+                                              <% } %>
+                                </select>
+                              </div>
+                              <div class="col-xl-3  col-lg-6 col-md-6 col-sm-6 col-12  mt-xl-2">
+                                <label>Tech Skills</label>
+                                <select class="form-control text-capitalize" name="techSkills" id="techSkills">
+                                  <option value="">Select</option>
+                                  <% skills.forEach((skills)=> { %>
+                                    <% if (skills.type == 'technical') { %>
+                                      <option  class="text-capitalize"
+                                       value="<%= skills._id %>" <% if (data.techSkills== skills._id ) { %> selected <% }%> ><%= skills.name %></option>
+                                    <% } %>
+                                  <% }); %>
+                                </select>
+                              </div>
+                              <div class="col-xl-3  col-lg-6 col-md-6 col-sm-6 col-12 mr-0 mt-xl-2">
+                                <label>Non Tech Skills</label>
+                                <select class="form-control text-capitalize" name="nonTechSkills" id="nonTechSkills">
+                                  <option value="">Select</option>
+                                  <% skills.forEach((skills)=> { %>
+                                    <% if (skills.type == 'non technical') { %>
+                                      <option class="text-capitalize"
+                                       value="<%= skills._id %>" <% if (data.nonTechSkills== skills._id ) { %> selected <% }%> ><%= skills.name %></option>
+                                    <% } %>
+                                  <% }); %>
+                                </select>
+                              </div>                              
+                               <div  class="col-xl-12  mt-xl-3 mt-lg-2 mt-md-3 mt-sm-2 mt-2 text-right">
+                                <button 
+                                  class="btn btn-success  waves-effect waves-light  text-white d-inline px-xl-3 px-lg-3 px-md-2 px-sm-1 px-1"
+                                  id="submit-btn">Go</button>
+                                  <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-sm-1 mx-0 px-xl-3 px-lg-3 px-md-2 px-sm-1 px-1"
+                                  href="/company/list-candidates">RESET</a>
+                                
+                                  <a href="#" class="btn btn-primary  waves-effect waves-light  text-white d-inline  ml-xl-1 px-xl-3 px-lg-3 px-md-2 px-sm-1 px-1"
+                                  data-toggle="modal" data-target="#promote">Promote</a>
+
+                                  <a href="#" class="btn btn-success  waves-effect waves-light  text-white d-inline  ml-xl-1 px-xl-3 px-lg-3 px-md-2 px-sm-1 px-1"
+                                  data-toggle="modal" data-target="#bulkAction" id="bulkButton">Bulk Action</a>
+                                  <input type="hidden" id="pageCount" value="<%= pageCount%>">
+                                </div>
+                             
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="card mb-0">
+                            <div class="card-content">
+                              <div class="table-responsive">
+                                <table class="table table-hover-animation mb-0 table-hover" id="table">
+                                  <thead>
+                                    <tr>
+                                      <th class="long_text">CANDIDATES</th>
+                                      <th>GENDER</th>
+                                      <th>Qualification</th>
+                                      <th class="long_text">Branch</th>
+                                      <th>Experience</th>
+                                      <th>ACTIONS</th>
+                                      <th >Location</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table-body">
+                                    <% if(candidates?.length > 0){ %>
+                                    <%candidates.forEach((candidate)=>{%>
+                                      <tr id="<%=candidate._id%>">
+                                        <td class="appliedTag">
+                                          <%=candidate.name ? candidate.name: "NA" %>
+                                          <% if(candidate.appliedJobs.length> 0){%>
+                                              <span class="badge bg-success ml-1 rounded" style="position: relative;">
+                                                Applied
+                                              </span>
+                                              <%}%>
+                                        </td>
+                                        <td>
+                                          <%= candidate.sex ? candidate.sex : 'NA' %>
+                                          <input type="hidden" class="candidateId"  value="<%=candidate._id%>">
+                                        </td>
+                                        <td>
+                                          <%=candidate.highestQualification ? qualification.find(i=>i._id == candidate.highestQualification)?.name: "NA" %>
+                                        </td>
+                                        <td class="long_text">
+                                          <%=candidate.subQualifications[0]?.name ?
+                                            candidate.subQualifications[0].name : "NA" %>
+                                        </td>
+                                        <td>
+                                          <% if (candidate.totalExperience) { %>
+                                              <%= candidate.totalExperience %> Years
+                                          <% } else { %>
+                                              Fresher
+                                          <% } %>
+                                      </td>
+                                      
+                                                                               
+                                        <td class="actions">
+                                          <a href="/company/candidate/<%=candidate._id%>?src=list"><i
+                                              class="fa-regular fa-user"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="#"><i class="fa-sm fa-solid text-danger fa-location-dot font-small"><span
+                                                 id="open-map" onclick="openMap('<%= candidate.latitude %>','<%= candidate.longitude %>')" >
+                                                <%= Math.round(candidate.distance / 1000) + " KMs" %>
+                                              </span></i></a>
+                                            </td>
+                                      </tr>
+                                      <% }) } else {%>
+                                        <tr><td colspan="7" class="text-center">No Result Found</td></tr>
+                                    <%}%> 
+                                  </tbody>
+                                </table>
+                                <% if (totalPages> 1) { %>
+                                  <ul class="pagination justify-content-end ml-2 mb-2">
+                                    <% let first=1 %>
+                                      <% let last=totalPages> 4 ? 4 :
+                                        totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                                          <% first=page - 1 %>
+                                            <% last=page + 1 %>
+                                              <% if (last> totalPages) last = totalPages
+                                                %> <% } %>
+                                                  <% if (first> 1) { %>
+                                                    <li class="page-item">
+                                                      <a class="pageAnchor page-link"
+                                                        href="<%= 1 %>">First</a>
+                                                    </li>
+                                                    <% } %>
+                                                      <% for (let i=first; i <=last; i +=1) { %>
+                                                        <% if (i===page) { %>
+                                                          <li class="active page-item">
+                                                            <a href="javascript:void()" class="page-link">
+                                                              <%= i %>
+                                                            </a>
+                                                          </li>
+                                                          <% } else { %>
+                                                            <li class="page-item">
+                                                              <a class="page-link pageAnchor"
+                                                                href="<%= i %>">
+                                                                <%= i %>
+                                                              </a>
+                                                            </li>
+                                                            <% } %>
+                                                              <% } %>
+                                                                <% if (totalPages>
+                                                                  last)
+                                                                  { %>
+                                                                  <li class="page-item">
+                                                                    <a class="pageAnchor page-link"
+                                                                      href="<%= last + 1 %>">...</a>
+                                                                  </li>
+                                                                  <li class="page-item">
+                                                                    <a class="pageAnchor page-link"
+                                                                      href="<%= totalPages %>">Last</a>
+                                                                  </li>
+                                                                  <% } %>
+                                  </ul>
+                                  <% } %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+        </div>
+        </div>
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+        <div class="modal fade" id="promote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Promote Now</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body pt-1" id="popup-body">
+                <form method="post" action="/company/promote">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Select JD</label>
+                    <select class="form-control text-capitalize" id="hiringJob" value="">
+                      <option value="">Select Option</option>
+                      <% jobs.forEach((job)=> { %>
+                        <option value="<%= job._id %>">
+                          <%= job.title %>
+                        </option>
+                            <% }); %>
+                    </select>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Categories
+                      <span class="asterisk">*</span></label>
+                      <select class="form-control" name="categories" value="" onchange="categoryDropdown(event)" id="categories">
+                        <option value="">Select Categories</option>
+                        <option value="Job Promotion">Job Promotion</option>
+                        <option value="Interview Scheduling">Interview Scheduling</option>
+                        <option value="Miscellaneous">Miscellaneous</option>
+                      </select>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Select Template</label>
+                    <select class="form-control text-capitalize categorieList" value="" data-text="" id="template" onchange="updatePreview(event)">
+                      <option value="">Select Option</option>
+                      <% if (template.categories) { %>
+                        <% template.forEach((i)=> { %>
+                          <option value="<%= template._id %>" data-text="<%= template.message%>" id="option">
+                            <%= template.name %>
+                          </option>
+                                <% }); %>
+                              <% } %>
+                      </select>
+                  </div>
+                  <div class="col-xl-12 mb-1 text-left">
+                    <label>Template Preview</label>
+                    <textarea class="form-control" cols="5" value="" rows="3" id="tempPreview" readonly></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="d-inline border border-top-0 border-left-0 border-right-0 pb-1 mb-1">
+                <span>Total Messages:</span>
+              <span class="text-left font-weight-bold" id="count" value="<%= count%>"><%= count%></span>
+              </div>
+              <div class="row ml-1">
+              <p class="text-left font-weight-bold text-dark">Coins Balance:<%= company?.creditLeft  %></p>
+              <p class="text-right font-weight-bold text-danger ml-5"><i>Coins Required: <%= count * coinsRequired?.SMS %></i></p>
+            </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary " data-dismiss="modal"
+                  id="sendBtn" onclick="Send()">Send</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                    class="feather icon-x d-block d-lg-none"></i>
+                  <span class="d-none d-lg-block">Cancel</span></button>
+              </div>
+            </div>
+          </div>
+        </form>
+        </div>
+        <div class="modal fade" id="bulkAction" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">UPDATE STATUS</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body pt-1" id="popup-body">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                  <label>Status
+                    <span class="asterisk">*</span></label>
+                    <select class="form-control" name="categories" value="" id="hiringStatus">
+                      <option value="">Select Categories</option>
+                      <option value="shortlisted">Shortlisted</option>
+                      <option value="interview due" >Interview Due</option>                     
+                      <option value="offer letter rollout" >Offer Letter Rollout</option>                     
+                      <option value="hired">Hired</option>
+                    
+                    </select>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                  <label>Select JD</label>
+                  <select class="form-control text-capitalize" id="jd" value="">
+                    <option value="">Select Option</option>
+                    <% jobs.forEach((job)=> { %>
+                      <option value="<%= job._id %>"><%= job.title %>
+                        </option>
+                          <% }); %>
+                  </select>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                  <label>Select Concerned Person</label>
+                  <select class="form-control text-capitalize categorieList" value="" data-text="" id="concernedPerson">
+                    <option value="">Select options</option>
+                    <% company.companyExecutives?.forEach((executive)=> { %>
+                      <option value="<%= executive._id %>"> <%= executive.name %></option>
+                    <% }); %>
+                    </select>
+                </div>
+                <div class="col-xl-12 mb-1 text-left">
+                  <label>Comment</label>
+                  <textarea class="form-control" cols="5" value="" rows="3" id="comment"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col ml-1">
+              <div class="row">
+                <p class="text-left font-weight-bold text-dark">Current Page Candidates: <%= pageCount %></p>
+              </div>
+              <div class="row">
+                <p class="text-right font-weight-bold text-dark mr-5">Available Coins: <%= company.creditLeft %></p>
+                <p><span class="text-right credit font-weight-bold ml-5">
+                  Coins Required: <%= pageCount * coinsRequired?.shortlist %></span></p>
+              </div>
+          </div>
+            <div class="modal-footer">
+              <div class="row">
+                <div class="col-xl-12">
+                  <div id="msg" style="color:red; display:none;">
+                  </div>
+                </div>
+              </div> 
+              <button type="submit" class="btn btn-primary "
+              id="update" onclick="updateStatus('<%= pageCount %>','<%= company.creditLeft %>','<%= coinsRequired.shortlist %>')">Update</button>
+             
+              <button type="submit" class="btn btn-primary d-none"
+              id="buyCoins" onclick="getOffers()" data-toggle="modal" data-target="#coin_offer" data-dismiss="modal">Buy Coins</button>
+
+              <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                class="feather icon-x d-block d-lg-none"></i>
+              <span class="d-none d-lg-block">Cancel</span></button>
+              
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="modal fade show" id="coin_offer" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">COIN OFFERS
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body pt-1" id="popup-body">
+              <ul class="list-unstyled">
+                <li>
+                  <div class="col-xl-8 mx-auto" id="offers">
+                   
+                  </div>
+                </li>
+                <li class="mb-1">
+                  <span class="credit font-weight-bold">
+                    Current Coins Balance: <%= company?.creditLeft  %></span>
+                </li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary waves-effect waves-light" id="pay-button" data-toggle="modal" data-target="#applyvoucher" data-dismiss="modal">Pay Now</button>
+              <button type="button" class="btn btn-outline-light waves-effect waves-light"
+                data-dismiss="modal"><i class="feather icon-x d-block d-lg-none"></i>
+                <span class="d-none d-lg-block">Cancel</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade show" id="applyvoucher" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content modal-sm">
+         <div class="modal-header vchr_header">
+           <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Buy Coins</h5>
+           <button type="button" class="close color-purple" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">×</span>
+           </button>
+         </div>
+             <div class="modal-body mode-dice p-0">
+               <form class="my-3">
+                <h3 class="coupon-text">If you have <strong>Coupon Code </strong>, apply here</h3>
+               <input type="text" name="voucherField" class="text-white mt-1" placeholder="Enter Code" id="voucher" oninput="convert(event)" onkeypress="checkVouchers(event)">
+               <button type="button" class="voucher-btn disabled btn btn-sm ml-1"  aria-label="Apply" id="add" disabled> <span
+               aria-hidden="true" class="yes-cross" id="applyVoucher" onclick="apply(event)">Apply</span> </button>
+               </form>
+               <input type="hidden" class="form-control"  id="offerId" value="" />
+               <input type="hidden" class="form-control"  id="amount" value="" />
+               <input type="hidden" class="form-control"  id="offerAmount" value="" />
+               <input type="hidden" class="form-control" id="codevalue" value=""/>
+                         <p class="text-success font-weight-bolder font-italic" id="success-message"></p>
+               <p class="text-danger font-weight-bolder font-italic" id="error-message"></p>
+             </div>
+             <div class="modal-footer text-center">
+              <button class="btn button-vchr shadow" role="button" onclick="payment(event)" id="apply">Apply /Pay Now</button>
+             </div>
+             </div>
+             </div>
+      </div>
+      </div>
+        </div>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+           function setValues(offerId, amount) {
+              let offer = document.getElementById('offerId')
+              let voucherAmount = document.getElementById('amount')
+              let offerAmount = document.getElementById('offerAmount')
+              offer.value = offerId;
+              voucherAmount.value = amount
+              offerAmount.value = amount
+              document.getElementById('apply').innerHTML = `Pay ₹ ${amount}`
+            }
+            function convert(event) {
+              const val = event.target.value;
+              event.target.value = val.toUpperCase()
+
+              let applyButton = document.getElementById('add')
+            if(event.target.value.trim() !== ''){
+            applyButton.disabled = false
+            applyButton.classList.remove('disabled')
+           }
+            else{
+            applyButton.disabled = true
+            applyButton.classList.add('disabled')
+           }
+            }
+           document.getElementById('pay-button').onclick = function (e) {
+              $('#coin_offer').modal('hide');
+              let amount = $('input[name="offerName"]:checked').val()
+              let offerId = $('input[name="offerName"]:checked').attr('id');
+              setValues(offerId, amount)
+            }
+            function makePayment(e){
+            let voucherCode = document.getElementById('voucher').value
+            const offerId = document.getElementById('offerId').value;
+            const amount = document.getElementById('amount').value
+            let code=document.getElementById('codevalue').value
+            let data = {
+                offerId: offerId,
+                amount: amount
+              }
+              axios({method: 'post', url: '/company/payment', data, headers: { 'x-auth': localStorage.getItem('token') }}).then((res) => {
+              let options = {
+             "key": '<%= process.env.MIPIE_RAZORPAY_KEY %>',
+             "amount": res.data.order.amount, 
+             "currency": res.data.order.currency,
+             "name": "MiPie",
+             "description": "",
+             "image": "/images/logo/logo.png",
+             "order_id": res.data.order.id, 
+             "handler": function (response){
+                  let data = {
+                     paymentId: response.razorpay_payment_id,
+                     orderId: response.razorpay_order_id,
+                     _company: res.data.company._id,
+                     _offer: offerId,
+                     amount:amount,
+                     code:code
+                  }
+                  axios({method: 'post', url: '/company/paymentStatus', data, headers: { 'x-auth': localStorage.getItem('token') }}).then(res=>{
+                   window.location.reload()
+                  }).catch(
+                     (error) => {
+                         console.log(error.message)
+                     })
+               },
+             "prefill": {
+               "name": res.data.company.name,
+               "email": res.data.company.email,
+               "contact": res.data.company._concernPerson.mobile
+              },
+             "theme": {
+             "color": "#FC2B5A"
+             }
+             };
+             let rzp1 = new Razorpay(options);
+             rzp1.open();
+             e.preventDefault();
+             }).catch(
+               err=> console.log(err.message)
+               )      
+          }
+          function payment(e){
+            let voucherCode = document.getElementById('voucher').value 
+            if(voucherCode.trim()==""){
+              makePayment(e);
+            }else{
+              let code = document.getElementById('voucher').value
+              let amount = document.getElementById('offerAmount').value
+            let data = {
+              amount,
+              code,
+            }
+            document.getElementById('codevalue').value=code
+            axios({method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') }})
+              .then((res) => {
+                if(res.data.status){
+                  $('#error-message').text('')
+                  $('#success-message').text(res.data.message);
+                  document.getElementById('amount').value = res.data.amount;
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                  makePayment(e);
+                }else{
+                  document.getElementById('voucher').value=''
+                  document.getElementById('codevalue').value=''
+                  document.getElementById('amount').value =document.getElementById('offerAmount').value ;
+                  $('#error-message').text(res.data.message)
+                  $('#success-message').text('');
+                  let offerAmount = document.getElementById('offerAmount').value
+                  document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
+                }
+              })
+      }
+    }
+      function checkVouchers(e){
+            if (e.key === "Enter") {
+              event.preventDefault();
+               payment(e)
+            }
+          }
+          function apply(e){
+            let code = document.getElementById('voucher').value
+            let amount = document.getElementById('offerAmount').value
+            let data = {
+              amount,
+              code,
+            }
+            document.getElementById('codevalue').value=code
+            axios({method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') }})
+              .then((res) => {
+                if(res.data.status){
+                  $('#error-message').text('')
+                  $('#success-message').text(res.data.message);
+                  document.getElementById('amount').value = res.data.amount;
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                }else{
+                  document.getElementById('voucher').value=''
+                  document.getElementById('codevalue').value=''
+                  $('#error-message').text(res.data.message);
+                  document.getElementById('amount').value =document.getElementById('offerAmount').value ;
+                  $('#success-message').text('');
+                  let offerAmount = document.getElementById('offerAmount').value
+                  document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
+                }
+              })
+      }
+   
+   
+         const mapfield = document.getElementById('open-map');
+         function openMap(lat,long){
+           let url = "https://maps.google.com/?q=" + lat + "," + long;
+           window.open(url, '_blank');
+         }
+          let templates = []
+          document.addEventListener("DOMContentLoaded", () => {
+   					const pageAnchors = document.querySelectorAll("a.pageAnchor");
+						const { origin, pathname, search } = window.location;
+            let searchParams = search.split('?')[1];
+            let obj;
+            let url = `${origin}${pathname}?`;
+            if(searchParams){
+             obj = JSON.parse('{"' + searchParams.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
+             const keyArr = Object.keys(obj).filter((x) => !!obj[x]);					
+						keyArr.forEach((x) => {
+							if (x !== "page") {
+								url += `${x}=${obj[x]}&`;
+							}
+						});
+            }
+						pageAnchors.forEach((el) => {
+							const n = el.getAttribute("href");
+							el.setAttribute("href", `${url}page=${n}`);
+						});
+					});
+          $('#state').change(function (e) {
+            let stateId = e.target.value
+
+            header = { headers: { 'x-auth': localStorage.getItem('token') } }
+
+            axios.get('/company/getcities', { params: { stateId } }, header)
+              .then(result => {
+                if (result.data.cities.length > 0) {
+                  $('option.cityclass').remove();
+                  let options
+                  result.data.cities.forEach(i => {
+                    options = options + `<option value="${i.cityId}" class="text-capitalize cityclass">${i.name}</option>`
+                  })
+                  $('select#city').append(options);
+                }
+              })
+          });
+
+          const stateDropDown = (event, cityId) => {
+            const stateId = event.target.value;
+            let body = { stateId: stateId };
+            const selectCase = document.getElementById(cityId);
+            if (!stateId) {
+              $(`select#${cityId} option.companycitylist`).remove();
+            } else {
+              $.get('/company/getcitiesbyId', body).done((res) => {
+                $(`select#${cityId} option.companycitylist`).remove();
+                let options;
+                for (let i = 0; i < res.cityValues.length; i++) {
+                  options =
+                    options +
+                    `<option value="${res.cityValues[i]._id}" class="text-capitalize companycitylist">${res.cityValues[i].name}</option>`;
+                }
+                $(`select#${cityId}`).append(options);
+              });
+            }
+          };
+          function updatePreview(event){   
+            let id = event.target.value;
+            let templateData = templates.find((templates=>templates._id === id))
+            let tempField = document.getElementById("tempPreview"); 
+            tempField.innerHTML = templateData.message;
+          }
+          const categoryDropdown = (event) =>{
+            let value = event.target.value;
+        if (value.length == 0) document.getElementById("template").innerHTML = "<option.categorieList>Select Templates</option>";
+        else {
+            axios.get('/company/getTemplateByCategory', { params: { value} })
+            .then((res) => {
+                $(`#template option.categorieList`).remove();
+                let options = '';
+                templates = res.data.template
+                for (let i = 0; i < res.data.template.length; i++) {
+                  options +=
+                    `<option value="${res.data.template[i]._id}" class="text-capitalize categorieList">${res.data.template[i].name}</option>`;
+                }
+                $(`#template`).append(options);
+              })
+              .catch(err=>console.log(err));
+              
+         }
+        }
+          function Send(){
+            let job = document.getElementById('hiringJob').value
+            let template = document.getElementById('template').value
+            let count = document.getElementById('count').innerHTML
+            let body = {
+              job: job,
+              template: template,
+              messages:count
+            }
+            axios({ method: 'post', url: `/company/promote`, data: body, headers: { 'x-auth': localStorage.getItem('token') } })
+            .then(result => {
+                console.log("template send sucessfully");
+              })
+          }
+        </script>
+        <script>
+          function updateStatus(count,creditLeft,coins){
+            let status = document.getElementById('hiringStatus').value
+            let job =document.getElementById('jd').value
+            let comment = document.getElementById('comment').value
+            let concernedPerson = $('#concernedPerson').val()
+            
+            let update = document.getElementById("update")
+            let candidateIds = []
+            $('.candidateId').each(function() {
+              candidateIds.push($(this).val());
+             });
+            if(!status){
+              $('#hiringStatus.form-control').parent().addClass('error');
+              $('#hiringStatus.form-control').focus()
+              return false
+            }
+            let body = {
+              status: status,
+              job: job,
+              comment: comment,
+              concernedPerson: concernedPerson,
+              candidateIds,
+              count
+            }            
+            if(count == 0){
+              $('#msg').show();
+              $('#msg').text('No Candidates found');
+            }
+            else if(creditLeft < coins * count){
+              $('#msg').show();
+              $('#msg').text('Insufficent Balance');
+              $('#update').addClass('d-none')
+              $('#buyCoins').removeClass('d-none')
+            }else{
+            axios({ method: 'post', url: `/company/candidate/bulkStatusUpdate`, data: body, headers: { 'x-auth': localStorage.getItem('token') } })
+              .then(result => {
+                $('#msg').show();
+                $('#msg').text(result.data.message);
+                if(result.data.status==true)
+                window.location.reload()
+              })
+          }
+        }
+
+          function getOffers(){
+              axios({ method: 'get', url: `/company/getCoinOffers`, headers: { 'x-auth': localStorage.getItem('token') } })
+                .then(res => {
+                  let offers = document.getElementById('offers');
+                  let html =''
+                  for(let i of res.data){
+                    html += `<div class="row inner-border my-2 text-white popup-bg py-1" ><div class="col-9 pr-0">${i.displayOffer}</div><div class="col-3 text-left"><span>  <input type="radio" id="${i._id}" name="offerName" value="${i.payAmount.$numberDecimal}" class="radio-size"> </span></div></div>`
+                  }
+                  offers.innerHTML = html
+                  $('.radio-size').first().prop("checked", true)
+                })
+            }
+            const pageCount = $('#pageCount').val()
+            if(pageCount == 0){
+              $('#bulkButton').attr('disabled', `disabled`)
+                $('#bulkButton').addClass('disabled')
+            }
+
+
+        </script>
+        <% include ./partials/footer%>
+
+          <script src="https://kit.fontawesome.com/ce5729505d.js" crossorigin="anonymous"></script>

@@ -1,0 +1,1138 @@
+<% include ../partials/header %>
+<style>
+    .bg-intext{
+        background-color: #FC2B5A;
+    }
+    #sitefor{
+        width: auto;
+    height: 19px;
+    }
+</style>
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Edit Candidate</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="/admin/candidate">Candidates</a>
+                            </li>
+                            <li class="breadcrumb-item active">Edit Candidates
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ../partials/flash %>
+            <form class="form-horizontal" id="formData">
+                <section id="upload-image-template">
+                    <template>
+                        <input type="file" class="form-control" id="filestwo" value=""
+                            onchange="imageChangeHandler(event)">
+                        <input type="hidden" class="form-control" name="image" id="profilepic" value="" />
+                        <div class="col-xl-3 mb-1">
+                    </template>
+                </section>
+                <section id="qualificationtemplate">
+                    <template>
+                        <div class="row px-1 qua-row" class="qua-div">
+                            <div class="col-xl-4">
+                                <label>Year of Passing / उत्तीर्ण होने का वर्ष</label>
+                                <select class="form-control" name="PassingYear">
+                                    <option value="">Select Year </option>
+                                    <% for(let i=2023; i> 1999; i--) { %>
+                                        <option value="<%=i%>" <% if(candidate.yearOfPassing==i ) {%> selected <% } %>>
+                                                <%=i%>
+                                        </option>
+                                        <% }%>
+                                </select>
+                            </div>
+                            <div class="col-xl-4 mb-1">
+                                <label>Qualification / योग्यता</label>
+                                <select class="form-control" onchange="qualificationchange(event)" name="Qualification">
+                                    <option value="">Select Qualification</option>
+                                    <% qualification.forEach((i)=> { %>
+                                        <% if(i.basic !==true) {%>
+                                            <option value="<%= i._id %>" class="text-capitalize">
+                                                <%= i.name %>
+                                            </option>
+                                            <% }}); %>
+                                </select>
+                            </div>
+                            <div class="col-xl-4 mb-1">
+                                <label>Sub Qualification / उप योग्यता</label>
+                                <select class="form-control text-capitalize subqualification" name="subQualification">
+                                    <option value="">Select Subqualification</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-4 mb-1">
+                                <label>College Name / कॉलेज का नाम</label>
+                                <input type="text" class="form-control" placeholder="" name="College" value=""
+                                    onkeypress="if(this.value.length==50) return false">
+                            </div>
+                            <div class="col-xl-4 mb-1">
+                                <label>University Name / विश्वविद्यालय का नाम</label>
+                                <select class="form-control text-capitalize" name="University">
+                                    <option value="">Select University</option>
+                                    <% Universities.forEach((i)=> { %>
+                                        <option value="<%= i._id %>" class="text-capitalize">
+                                            <%= i.name %>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </div>
+                            <div class="col-xl-4 mb-1">
+                                <label>Assessment Type / मूल्यांकन प्रकार</label>
+                                <select class="form-control" name="AssessmentType">
+                                    <option value="">Select Option</option>
+                                    <option value="CGPA" <% if(candidate.AssessmentType==='CGPA' ) {%> selected <% } %>
+                                            >CGPA</option>
+                                    <option value="Percentage" <% if(candidate.AssessmentType==='Percentage' ) {%>
+                                        selected <% } %>
+                                            >Percentage</option>
+                                    <option value="Grade" <% if(candidate.AssessmentType==='Grade' ) {%> selected <% }
+                                            %>>Grade
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-xl-4 mb-1">
+                                <label>Enter Value / मूल्य दर्ज करें</label>
+                                <input type="text" class="form-control" placeholder="Enter CGPA, Percentage or Grade"
+                                    name="Result" onkeypress="if(this.value.length==4) return false" value="">
+                            </div>
+                            <div class="d-flex flex-row-reverse deletequalification">
+                                <div class="col my-auto">
+                                    <a class="btn btn-danger waves-effect waves-light"
+                                        onclick="deleteQualificationRow(this)">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </section>
+                <div id="lowerqualificationtemplate" class="col-xl-12">
+                    <template>
+                        <label>Year of Passing / उत्तीर्ण होने का वर्ष</label>
+                        <select class="form-control single-field" name="yearOfPassing" id="yearOfPassing">
+                            <option value="">Select Year</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
+                            <option value="2010">2010</option>
+                        </select>
+                    </template>
+                </div>
+                <section id="personal-info">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Personal Information</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-3 mb-1" id="pd-name">
+                                                <label>Name <span class="mandatory">*</span></label>
+                                                <input type="text" class="form-control" value="<%= candidate?.name %>"
+                                                    name="name" id="name" maxlength="15" required>
+                                            </div>
+                                            <div class="col-xl-3 mb-1" id="pd-number">
+                                                <label>Mobile <span class="mandatory">*</span></label>
+                                                <input type="tel" onkeypress="if(this.value.length==10) return false" class="form-control" value="<%= candidate.mobile %>"
+                                                    name="mobile" minlength="10" maxlength="13" id="mobile" required>
+                                            </div>
+                                            <div class="col-xl-3 mb-1" id="pd-email">
+                                                <label>Email <span class="mandatory">*</span></label>
+                                                <input type="email" onkeypress="if(this.value.length==30) return false" class="form-control"
+                                                    value="<%= candidate.email %>" id="email" name="email" required>
+                                            </div>
+                                            <div class="col-xl-3 mb-1" id="pd-address">
+                                                <label>Address <span class="mandatory">*</span></label>
+                                                <input type="text" onkeypress="if(this.value.length==50) return false" class="form-control"
+                                                    value="<%= candidate.address %>" name="address" id="address">
+                                            </div>
+                                            <div class="col-xl-3 mb-1" id="pd-state">
+                                                <label>State <span class="mandatory"> *</span></label>
+                                                <select style="cursor: pointer;" class="form-control" name="state"
+                                                    id="state" required>
+                                                    <option value="">Select Option</option>
+                                                    <% state.forEach((s)=> { %>
+                                                        <% if (s._id.toString()===candidate.state?._id.toString()) { %>
+                                                            <option value="<%= s._id %>" selected>
+                                                                <%= s.name %>
+                                                            </option>
+                                                            <% } else { %>
+                                                                <option value="<%= s._id %>">
+                                                                    <%= s.name %>
+                                                                </option>
+                                                                <% } %>
+                                                                    <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1" id="pd-city">
+                                                <label>City <span class="mandatory">*</span></label>
+                                                <select style="cursor: pointer;" class="form-control" name="city"
+                                                    required id="city" value="">
+                                                    <option value=""> Select Option</option>
+                                                    <% city.forEach((s)=> { %>
+                                                        <% if (candidate.city?.toString()===s._id?.toString()) { %>
+                                                            <option value="<%= s._id %>" selected>
+                                                                <%= s.name %>
+                                                            </option>
+                                                            <% } else { %>
+                                                                <option value="<%= s._id %>">
+                                                                    <%= s.name %>
+                                                                </option>
+                                                                <% } %>
+                                                                    <% }); %>
+                                                </select>
+                                            </div>
+											<div class="col-xl-3 mt-2 mb-1">
+												<!--<label>Current Location</label>
+												<input class="form-control" type="text"  id="work-loc" value="<%= candidate?.place %>">
+												<input type="hidden" id="place" name="place" value="" class="form-control"/>
+												<input type="hidden" id="latitude" name="latitude" value="" class="form-control"/>
+												<input type="hidden" id="longitude" name="longitude" value="" class="form-control"/>  -->
+                                                <label class="sr-only " for="inlineFormInputGroup">Username</label>
+                                                <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                <div class="input-group-text bg-intext"><img src="/images/isist.png" id="sitefor" ></div>
+                                                </div>
+                                                 <input type="text" class="form-control" id="inlineFormInputGroup" >
+                                                </div>
+											   </div>
+                                            <div class="col-xl-3 mb-1" id="pd-gender">
+                                                <label>Gender <span class="mandatory">*</span></label>
+                                                <select style="cursor: pointer;" class="form-control" name="sex" id="gender" value="<%= candidate.sex %>">
+                                                    <option value="">Select Option</option>
+                                                    <option value="Male" <% if(candidate.sex==='Male' ){ %> selected <% } %>>Male
+                                                    </option>
+                                                    <option value="Female" <% if(candidate.sex==='Female' ){ %> selected <% } %>
+                                                        >Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1" id="pd-pincode">
+                                                <label>Pincode <span class="mandatory">*</span></label>
+                                                <input type="number" onkeypress="if(this.value.length==6) return false" class="form-control" value="<%= candidate.pincode %>"
+                                                    name="pincode" id="pincode">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label class="col-form-label" for="input-normal">Upload
+                                                    Image</label>
+                                                <div class="row" id="image">
+                                                    <% let clas='' %>
+                                                        <% if (candidate.image) { %>
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-1">
+                                                                <img src="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.image %>"
+                                                                    width="40" height="40" />
+                                                                <input type="hidden" name="image"
+                                                                    value="<%= candidate.image %>" />
+                                                                <p class="mt-1 text-left">
+                                                                    <a class="rmvClass text-danger"
+                                                                        href="javascript:void(0)" id="removelogo">Remove
+                                                                    </a>
+                                                                    <a class="text-primary mr-2" target="_blank"
+                                                                        href="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.image %>">View</a>
+                                                                </p>
+                                                            </div>
+                                                            <% clas='d-none' ; %>
+                                                                <% } else { %>
+
+                                                                    <div
+                                                                        class="col-xl-12 col-md-12 col-sm-12 col-12 mt-1 firstImage <%= clas %>">
+                                                                        <div class="image-upload">
+                                                                            <label for="filestwo"
+                                                                                style="cursor: pointer;">
+                                                                                <img src="/images/add_receipt.png"
+                                                                                    width="40px" height="auto"
+                                                                                    id="outputtwo">
+                                                                                <p class="mt-1">Click to upload
+                                                                                    Image
+                                                                                </p>
+                                                                            </label>
+                                                                            <input id="filestwo" data-id="image"
+                                                                                type="file" name="filebrand"
+                                                                                class="my-image-uploader form-control"
+                                                                                value="" />
+                                                                            <input type="hidden" class="form-control"
+                                                                                name="image" id="profilepic" value="" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tech">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Skills</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-6 col-lg-6" id="Technical-skills-section">
+                                                <% for(let i=0; i < 4;i++) { %>
+                                                    <div class="row mb-1 skillrow">
+                                                        <div class="col-xl-6">
+                                                            <label>Select Skills / कौशल का चयन करें</label>
+                                                            <select class="form-control text-capitalize"
+                                                                name="techskill">
+                                                                <option value="">Select skill</option>
+                                                                <% techSkill.forEach((j)=> { %>
+                                                                    <% if(candidate.techSkills[i]?.id?.toString()==j._id.toString())
+                                                                        { %>
+                                                                        <option
+                                                                            value="<%= candidate.techSkills[i].id %>"
+                                                                            class="text-capitalize" selected>
+                                                                            <%= j.name %>
+                                                                        </option>
+                                                                        <% } else {%>
+                                                                            <option value="<%= j._id %>"
+                                                                                class="text-capitalize">
+                                                                                <%= j.name %>
+                                                                            </option>
+                                                                            <% } }); %>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xl-6">
+
+                                                            <% if(candidate.techSkills[i]?.URL) {%>
+                                                                <br>
+                                                                <a id="uploadedvideo" target="_blank"
+                                                                    href="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.techSkills[i].URL %>"
+                                                                    class="pointer img-fluid">
+                                                                    Uploaded Video
+                                                                </a>
+                                                                <input type="hidden" class="techskill" name="upload_url"
+                                                                    value="<%=candidate.techSkills[i].URL %>" />
+                                                                <i class="feather icon-x remove_uploaded_pic"
+                                                                    style="color:red;" onclick="removevideo(event)"></i>
+                                                                <% } else { %>
+                                                                    <label>Upload video / विडियो को अपलोड करें</label>
+                                                                    <input type="file" id="techSkill<%= i %>"
+                                                                        class="form-control" value="">
+                                                                    <% } %>
+                                                        </div>
+                                                    </div>
+                                                    <% }; %>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6" id="non-technical-skills-section">
+                                                <% for(let i=0; i < 4; i++) { %>
+                                                    <div class="row mb-1 skillrow">
+                                                        <div class="col-xl-6">
+                                                            <label>Select Skills / कौशल का चयन करें</label>
+                                                            <select class="form-control text-capitalize"
+                                                                name="nontechskill">
+                                                                <option value="">Select skill</option>
+                                                                <% nonTechSkill.forEach((j)=> { %>
+                                                                    <% if(candidate.nonTechSkills[i]?.id.toString()==j._id.toString())
+                                                                        { %>
+                                                                        <option
+                                                                            value="<%= candidate.nonTechSkills[i].id %>"
+                                                                            class="text-capitalize" selected>
+                                                                            <%= j.name %>
+                                                                        </option>
+                                                                        <% } else {%>
+                                                                            <option value="<%= j._id %>"
+                                                                                class="text-capitalize">
+                                                                                <%= j.name %>
+                                                                            </option>
+                                                                            <% } }); %>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xl-6">
+
+                                                            <% if(candidate.nonTechSkills[i]?.URL) {%>
+                                                                <br>
+                                                                <a id="uploadedvideo" target="_blank"
+                                                                    href="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.nonTechSkills[i].URL %>"
+                                                                    class="pointer img-fluid">
+                                                                    Uploaded Video
+                                                                </a>
+                                                                <input type="hidden" class="nontechskill"
+                                                                    name="upload_url"
+                                                                    value="<%=candidate.nonTechSkills[i].URL %>" />
+                                                                <i class="feather icon-x remove_uploaded_pic"
+                                                                    style="color:red;" onclick="removevideo(event)"></i>
+
+                                                                <% } else { %>
+                                                                    <label>Upload video / विडियो को अपलोड करें</label>
+                                                                    <input type="file" id="nonTechSkill<%= i %>"
+                                                                        class="form-control" value="">
+                                                                    <% } %>
+                                                        </div>
+                                                    </div>
+                                                    <% }; %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section id="qualification">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Qualification</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-4 mb-1" id="highestQuali">
+                                                <label>Highest Qualification / अपनी उच्चतम योग्यता का चयन करें</label>
+                                                <select class="form-control single-field" value=""
+                                                    name="highestQualification" id="quali">
+                                                    <option value="">Select Highest Qualification</option>
+                                                    <% qualification.forEach((i)=> { %>
+                                                        <% if(candidate.highestQualification?.toString()==i._id) {%>
+                                                            <option value="<%= i._id %>" class="text-capitalize"
+                                                                selected>
+                                                                <%= i.name %>
+                                                            </option>
+                                                            <% } else { %>
+                                                                <option value="<%= i._id %>" class="text-capitalize">
+                                                                    <%= i.name %>
+                                                                </option>
+                                                                <% } }); %>
+                                                </select>
+                                            </div>
+                                            <div id="qualification-div">
+                                                <% if(candidate.yearOfPassing) {%>
+                                                    <div class="row px-1">
+                                                        <label>Year of Passing / उत्तीर्ण होने का वर्ष</label>
+                                                        <select class="form-control single-field" name="yearOfPassing"
+                                                            id="yearPassing">
+                                                            <option value="">Select Year</option>
+                                                            <% for(let i=2023; i> 1999; i--) { %>
+                                                                <option value="<%=i%>" <% if(candidate.yearOfPassing==i
+                                                                    ) {%> selected <% } %>
+                                                                        ><%=i%>
+                                                                </option>
+                                                                <% }%>
+                                                        </select>
+                                                    </div>
+                                                    <% } %>
+                                                        <% if(candidate.qualifications?.length>
+                                                            0&&!candidate.yearOfPassing) {%>
+                                                            <% for(let j=0;j<candidate.qualifications.length;j++) { %>
+                                                                <div class="row px-1 qua-row">
+                                                                    <div class="col-xl-4">
+                                                                        <label>Year of Passing / उत्तीर्ण होने का
+                                                                            वर्ष</label>
+                                                                        <select class="form-control" name="PassingYear">
+                                                                            <option value="">Select Year </option>
+                                                                            <% for(let i=2023; i> 1999; i--) { %>
+                                                                                <option value="<%=i%>" <%
+                                                                                    if(candidate.qualifications[j].PassingYear==i
+                                                                                    ) {%> selected <% } %>
+                                                                                        ><%=i%>
+                                                                                </option>
+                                                                                <% }%>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-xl-4 mb-1">
+                                                                        <label>Qualification / योग्यता</label>
+                                                                        <select class="form-control"
+                                                                            onchange="qualificationchange(event)"
+                                                                            name="Qualification">
+                                                                            <option value="">Select Qualification
+                                                                            </option>
+                                                                            <% qualification.forEach((q)=> { %>
+                                                                                <% if(q.basic !==true) {%>
+                                                                                    <% if(candidate.qualifications[j].Qualification?.toString()==q._id)
+                                                                                        {%>
+                                                                                        <option value="<%= q._id %>"
+                                                                                            class="text-capitalize"
+                                                                                            selected>
+                                                                                            <%= q.name %>
+                                                                                        </option>
+                                                                                        <% } else { %>
+                                                                                            <option value="<%= q._id %>"
+                                                                                                class="text-capitalize">
+                                                                                                <%= q.name %>
+                                                                                            </option>
+                                                                                            <% }} }); %>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-xl-4 mb-1">
+                                                                        <label>Sub Qualification / उप योग्यता</label>
+                                                                        <select
+                                                                            class="form-control text-capitalize subqualification"
+                                                                            name="subQualification">
+                                                                            <option value="">Select Subqualification
+                                                                            </option>
+                                                                            <% subqual.forEach((i)=> { %>
+                                                                                <% if(i._qualification?.toString()==candidate.qualifications[j].Qualification?.toString())
+                                                                                    { %>
+                                                                                    <% if(candidate.qualifications[j].subQualification?.toString()==i._id)
+                                                                                        { %>
+                                                                                        <option
+                                                                                            value="<%= candidate.qualifications[j].subQualification %>"
+                                                                                            class="text-capitalize"
+                                                                                            selected>
+                                                                                            <%= i.name %>
+                                                                                        </option>
+                                                                                        <% } else { %>
+                                                                                            <option value="<%= i._id %>"
+                                                                                                class="text-capitalize">
+                                                                                                <%= i.name %>
+                                                                                            </option>
+                                                                                            <%} }}); %>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-xl-4 mb-1"><label>College Name /
+                                                                            कॉलेज का नाम</label><input type="text"
+                                                                            class="form-control" placeholder=""
+                                                                            name="College"
+                                                                            onkeypress="if(this.value.length==50) return false"
+                                                                            value="<%= candidate.qualifications[j].College %>">
+                                                                    </div>
+                                                                    <div class="col-xl-4 mb-1">
+                                                                        <label>University Name / विश्वविद्यालय का
+                                                                            नाम</label>
+                                                                        <select class="form-control text-capitalize"
+                                                                            name="University">
+                                                                            <option value="">Select University</option>
+                                                                            <% Universities.forEach((i)=> { %>
+                                                                                <% if(candidate.qualifications[j].University?.toString()==i._id)
+                                                                                    { %>
+                                                                                    <option
+                                                                                        value="<%= candidate.qualifications[j].University %>"
+                                                                                        class="text-capitalize"
+                                                                                        selected>
+                                                                                        <%= i.name %>
+                                                                                    </option>
+                                                                                    <% } else { %>
+                                                                                        <option value="<%= i._id %>"
+                                                                                            class="text-capitalize">
+                                                                                            <%= i.name %>
+                                                                                        </option>
+                                                                                        <% }}); %>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-xl-4 mb-1">
+                                                                        <label>Assessment Type / मूल्यांकन
+                                                                            प्रकार</label>
+                                                                        <select class="form-control"
+                                                                            name="AssessmentType">
+                                                                            <option value="">Select Option</option>
+                                                                            <option value="CGPA" <%
+                                                                                if(candidate.qualifications[j].AssessmentType==='CGPA'
+                                                                                ) {%> selected <% } %>>CGPA</option>
+                                                                            <option value="Percentage" <%
+                                                                                if(candidate.qualifications[j].AssessmentType==='Percentage'
+                                                                                ) {%>
+                                                                                selected <% } %>>Percentage</option>
+                                                                            <option value="Grade" <%
+                                                                                if(candidate.qualifications[j].AssessmentType==='Grade'
+                                                                                ) {%> selected <% } %>>Grade</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-xl-4 mb-1">
+                                                                        <label>Enter Value / मूल्य दर्ज करें</label>
+                                                                        <input type="text" class="form-control"
+                                                                            onkeypress="if(this.value.length==4) return false"
+                                                                            placeholder="Enter CGPA, Percentage or Grade"
+                                                                            name="Result"
+                                                                            value="<%= candidate.qualifications[j].Result %>">
+                                                                    </div>
+                                                                    <% if(j>=1) {%>
+                                                                        <div
+                                                                            class="d-flex flex-row-reverse deletequalification">
+                                                                            <div class="col my-auto">
+                                                                                <a class="btn btn-danger waves-effect waves-light"
+                                                                                    onclick="deleteQualificationRow(this)">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% } %>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% } %>
+                                            </div>
+                                            <% if(candidate.qualifications.length>0&&!candidate.yearOfPassing) {%>
+                                                <div id="addmore">
+                                                    <div class="col"><a onclick="addQualificationrow()"
+                                                            class="btn btn-success waves-effect waves-light text-white mt-2">+
+                                                            Add
+                                                            Another</a>
+                                                    </div>
+                                                </div>
+                                                <% } else { %>
+                                                    <div id="addmore" style="display: none">
+                                                        <div class="col"><a onclick="addQualificationrow()"
+                                                                class="btn btn-success waves-effect waves-light text-white mt-2">+
+                                                                Add
+                                                                Another</a>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                                        <!-- <div class="col-xl-3 mb-1">
+                                                <label class="col-form-label" for="input-normal">Upload
+                                                    Resume</label>
+                                                <div class="row" id="resume">
+                                                    <% let classs='' %>
+                                                        <% if (candidate.resume) { %>
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12 ">
+                                                                <img src="https://mmt-alls-1.s3.ap-south-1.amazonaws.com/<%= candidate.resume %>"
+                                                                    width="40" height="40" />
+                                                                <input type="hidden" name="resume"
+                                                                    value="<%= candidate.resume %>" />
+                                                                <p class="mt-1 text-left">
+                                                                    <a class="rmvResume text-danger"
+                                                                        href="javascript:void(0)">Remove </a>
+                                                                    <a class="text-primary mr-2" target="_blank"
+                                                                        href="https://mmt-alls-1.s3.ap-south-1.amazonaws.com/<%= candidate.resume %>">View</a>
+                                                                </p>
+                                                            </div>
+                                                            <% classs='d-none' ; %>
+                                                                <% } %>
+                                                                    <div
+                                                                        class="col-xl-12 col-md-12 col-sm-12 col-12 mt-1 resumeImage <%= classs %>">
+                                                                        <div class="image-upload">
+                                                                            <label for="filesthree">
+                                                                                <img src="/images/add_receipt.png"
+                                                                                    width="40px" height="auto"
+                                                                                    id="outputthree">
+                                                                                <p class="mt-1">Click to upload
+                                                                                    resume
+                                                                                </p>
+                                                                            </label>
+                                                                            <input id="filesthree" data-id="resume"
+                                                                                type="file" name="filebrand"
+                                                                                class="my-resume-uploader form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                </div>
+                                            </div> -->
+
+                                                        <div
+                                                            class="col-xl-12 text-xl-right text-lg-right text-md-right text-sm-center text-center">
+                                                            <!-- <a type="reset" href="/admin/candidate/add" class="btn btn-danger"
+                                                    value="Reset">Reset</a> -->
+                                                            <!-- <a type="reset" onclick="reset()" class="btn btn-danger"
+                                                    value="Reset">Reset</a> -->
+                                                            <a class="btn btn-success waves-effect waves-light text-white"
+                                                                id="save-button"
+                                                                onclick="saveButton('<%= candidate._id %>')">Save</a>
+
+                                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </form>
+            <div class="text-right reset1">
+                <button onclick="reset()" class="btn btn-danger">Reset</button>
+            </div>
+            <script
+            src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE%>&callback=initMap&libraries=places&v=weekly"
+            defer></script>
+            <script>
+              function initMap() {
+                
+                const options = {
+                    componentRestrictions: { country: "in" },
+                    types: ["establishment"]
+                };
+                
+                const location = document.getElementById("work-loc")
+                const autocomplete = new google.maps.places.Autocomplete(location, options);
+                google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                let place = autocomplete.getPlace();
+                document.getElementById('place').value = location.value;
+                document.getElementById('latitude').value = place.geometry.location.lat();
+                document.getElementById('longitude').value = place.geometry.location.lng();
+            });
+            }
+            window.initMap = initMap;
+            </script>
+            <script type="text/javascript">
+                $(function () {
+                    $('.datepicker').datepicker({
+                        format: "yyyy",
+                        viewMode: "years",
+                        minViewMode: "years"
+                    });
+
+                });
+            </script>
+            <script>
+
+                function getQualificationValues() {
+                    let qualificationArray = []    
+                    $('.qua-row').each(function () {
+                        let self = this
+                        let qualiObj = {}
+                        $(self).find('.form-control').each(function () {
+                            let type = $(this).prop("type");
+                            let name = $(this).prop("name")
+                            let val = $(this).val();
+                            if (val !== '' && type != "button" && type != "submit") {
+                                qualiObj[name] = val
+                            }
+                        });
+                        if (!$.isEmptyObject(qualiObj)) {
+                            qualificationArray.push(qualiObj)
+                        }
+                    })
+
+                    return qualificationArray
+                }
+                function getPersonalInformation() {
+                    let personalObj = {};
+                    $('#personal-info').find('.form-control').each(function () {
+                        let type = $(this).prop("type");
+                        let name = $(this).prop("name")
+                        let val = $(this).val()
+                        if (type != "button" && type != "submit" && type != "file") {
+                            personalObj[name] = val;
+                        }
+                    });
+                    return personalObj;
+                }
+                setTechChangeHandler();
+                setNonTechChangeHandler();         
+                const getTechicalSkills = () => {
+                    const initialArray = Array.from(document.querySelectorAll('#Technical-skills-section select'));
+                    const finalArray = [];
+
+                    $('#Technical-skills-section .skillrow').each(function () {
+                        let skillId = $(this).find('select').val()
+                        let uploadedvideo = $(this).find('#uploadedvideo')
+                        let hidden = $(this).find('input.techskill')
+                        let type = $(hidden).prop("type");
+                        let name = $(hidden).prop("name")
+                        let val = $(hidden).val()
+                        if ((val && skillId) || uploadedvideo.length > 0) {
+                            finalArray.push({ skillId, upload_url: val });
+                        }
+                    })
+                    for (let i = 0; i < initialArray.length; i++) {
+                        if (localStorage.getItem(`techSkillVideo${i}`) !== null) {
+                            finalArray.push({ skillId: initialArray[i].value, upload_url: localStorage.getItem(`techSkillVideo${i}`) });
+                            localStorage.removeItem(`techSkillVideo${i}`)
+                        }
+                    }
+                    return finalArray;
+                }
+                const getNonTechnicalSkills = () => {
+                    const initialArray = Array.from(document.querySelectorAll('#non-technical-skills-section select'));
+                    const finalArray = [];
+
+                    $('#non-technical-skills-section .skillrow').each(function () {
+                        let skillId = $(this).find('select').val()
+                        let uploadedvideo = $(this).find('#uploadedvideo')
+                        let hidden = $(this).find('input.nontechskill')
+                        let type = $(hidden).prop("type");
+                        let name = $(hidden).prop("name")
+                        let val = $(hidden).val()
+                        if ((val && skillId) || uploadedvideo.length > 0) {
+                            finalArray.push({ skillId, upload_url: val });
+                        }
+                    })
+
+                    for (let i = 0; i < initialArray.length; i++) {
+                        if (localStorage.getItem(`nonTechSkillVideo${i}`) !== null) {
+                            finalArray.push({ skillId: initialArray[i].value, upload_url: localStorage.getItem(`nonTechSkillVideo${i}`) });
+                            localStorage.removeItem(`nonTechSkillVideo${i}`)
+                        }
+                    }
+                    return finalArray;
+                }
+                function saveButton(id) {
+                    if (!validations()) {
+                        return false
+                    }
+                    const candidateId = id
+                    let body = {
+                        personalInfo: getPersonalInformation(),
+                        qualifications: getQualificationValues(),
+                        technicalskills: getTechicalSkills(),
+                        nontechnicalskills: getNonTechnicalSkills(),
+                        highestQualification:$('#quali').val()
+                    }
+                    header = { headers: { 'x-auth': localStorage.getItem('token') } }
+
+                    axios.post(`/admin/candidate/editProfile/${candidateId}`, body, header)
+                        .then(res => {
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 200)
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            return res.send({ status: false, message: err })
+                        })
+
+                }
+                $(".rmvClass").click(function () {
+                    $(this).closest("div").remove();
+                    $('.firstImage').removeClass('d-none');
+                });
+
+                $(".rmvResume").click(function () {
+                    $(this).closest("div").remove();
+                    $('.resumeImage').removeClass('d-none');
+                });
+
+
+
+                $('#state').change(() => {
+                    $('#city')
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append('<option  value="">Select Option</option>');
+                    if(!($('#state').val())) {
+                        return 
+                    }
+                    axios.get('/admin/candidate/getcitiesbyId', { params: { stateId: $('#state').val() } })
+                        .then(({
+                            data
+                        }) => {
+                            data.forEach((d) => {
+                                $('#city').append(
+                                    `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+                                );
+                            });
+                        })
+                        .catch(e => console.log(e));
+
+                    function removevideo(event) {
+                        let hidden = $(event.target).parent().find('input[type=hidden]')
+                        $(hidden).val('')
+                        let uploadedvideo = $(event.target).parent().find('#uploadedvideo')
+                        $(uploadedvideo).text('deleted')
+                    }
+                });
+
+
+                $('#qual').change(() => {
+                    $('#subQua')
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append('<option disabled selected value="">Select Option</option>');
+                    axios.post('/panel/helper/getsubQual', {
+                        _qualification: $('#qual').val()
+                    })
+                        .then(({
+                            data
+                        }) => {
+                            data.forEach((d) => {
+                                $('#subQua').append(
+                                    `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+                                );
+                            });
+                        })
+                        .catch(e => console.log(e));
+                });
+
+                // reset form 
+                function reset() {
+                    window.location.reload();
+                }
+
+                $('#removelogo').click(() => {
+                    let html = $('#upload-image-template template').html();
+                    $('#removelogo').parent().html(html)
+                    header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                    let data = {
+                        key: $('#logo').val(),
+                    }
+                    axios.post('/api/deleteSingleFile', data, header)
+                        .then(result => {
+                            if (result.status) {
+                                axios.post("/admin/candidate/removelogo", data, { params: { mobile: $('#mobile').val() } }).then(() => console.log('deleted'))
+                                console.log('File deleted')
+                            }
+                        })
+                    return false;
+                })
+
+                function removevideo(event) {
+                    let hidden = $(event.target).parent().find('input[type=hidden]')
+                    $(hidden).val('')
+                    let uploadedvideo = $(event.target).parent().find('#uploadedvideo')
+                    $(uploadedvideo).text('deleted')
+                }
+
+                const checkImageSize = (size) => {
+                    let finalSize = ((size / 1024) / 1024);
+                    if (finalSize > 2) {
+                        return false
+                    }
+                    return true;
+                }
+
+                const checkImageValidation = (file) => {
+                    let regex = /(\.jpg|\.jpeg|\.png)$/i
+                    if (!regex.exec(file)) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+
+                $('#filestwo').change(async function (e) {
+                    let file = e.target.files[0]
+                    let body = {
+                        file: file
+                    }
+                    let type = file.name;
+                    let size = file.size;
+                    let candidateFile = document.getElementById('filestwo');
+                    header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                    if (checkImageValidation(type) === false && checkImageSize(size) === false) {
+                        alert("upload the image in jpg,jpeg or png format and should be less than 2MB");
+                        candidateFile.value = ''
+                    } else if (checkImageValidation(type) === false && checkImageSize(size) === true) {
+                        alert("upload the image in jpg,jpeg or png format");
+                        candidateFile.value = ''
+                    } else if (checkImageValidation(type) === true && checkImageSize(size) === false) {
+                        alert("uploaded image should be less than 2MB");
+                        candidateFile.value = ''
+                    } else {
+                        const filesData = Array.from(e.target.files);
+                        if (!Array.isArray(filesData) || filesData.length <= 0) throw new Error('No image found!');
+                        const data = await Promise.all(filesData.map(async (file) => {
+                            const ext = file.name.split('.').pop();
+                            const res = await axios.get('/admin/s3upload', { params: { type: file.type, ext } });
+                            if (!res || !res.data || !res.data.data) return null;
+                            const { url, key } = res.data.data;
+                            if (!url || !key) return null;
+                            const upload = await axios.put(url, file, { headers: { 'Content-Type': file.type } });
+                            if (upload || upload.status === 200) return key;
+                            return null;
+                        }));
+                        const files = data.filter(x => !!x);
+
+                        if (files.length <= 0) throw new Error('Unable to upload any image!');
+                        localStorage.setItem("profilepic", `${files[0]}`)
+                        document.getElementById('profilepic').value = `${files[0]}`
+
+                    };
+
+                })
+
+                const checkNumber = (number) => {
+                    if (number.length == 10 || number.length == 0) return true
+                    else return false
+                }
+                const checkEmail = (email) => {
+                    if (!email) {
+                        return false
+                    }
+                    let emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
+                    return emailReg.test(email);
+                }
+
+                const checkVideoValidation = (video) => {
+                    let regex = /(\.mp4|\.mov|\.avi)$/i;
+                    if (!regex.exec(video)) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+                const checkVideoSize = (size) => {
+                    let finalSize = ((size / 1024) / 1024);
+                    if (finalSize > 10) {
+                        return false
+                    }
+                    return true;
+                }
+
+
+
+                function validations() {
+                    $('#personal-info .error').removeClass('error')
+                    let name = $('#name').val()
+                    let state = $('#state').val()
+                    let city = $('#city').val()
+                    let number = $('#mobile').val()
+                    let email = $('#email').val()
+                    let pincode=$('#pincode').val()
+                    let gender=$('#gender').val()
+                    let address=$('#address').val()
+                    let flag = true
+                    if (name.trim() === '') {
+                        $('#pd-name').addClass('error')
+                        $('#name').focus()
+                        flag = false
+                    }
+                    if (number.trim() === '' || !checkNumber(number)) {
+                        $('#pd-number').addClass('error')
+                        $('#mobile').focus()
+                        flag = false
+                    }
+                    if (!checkEmail(email)) {
+                        $('#pd-email').addClass('error')
+                        $('#email').focus()
+                        flag = false
+                    }
+                    if (!state) {
+                        $('#pd-state').addClass('error')
+                        $('#state').focus()
+                        flag = false
+                    }
+                    if (!city) {
+                        $('#pd-city').addClass('error')
+                        $('#city').focus()
+                        flag = false
+                    }
+                    if(!gender) {
+                        $('#pd-gender').addClass('error')
+                        $('#gender').focus()
+                        flag = false
+                    }
+                    if(!pincode) {
+                        $('#pd-pincode').addClass('error')
+                        $('#pincode').focus()
+                        flag= false
+                    }
+                    if(address.trim() === '') {
+                        $('#pd-address').addClass('error')
+                        $('#address').focus()
+                        flag = false
+                    }
+                    return flag;
+                }
+
+                function uploadFile(e, section, id) {
+                    let index = e.target.id.slice(-1)
+                    let file = e.target.files[0];
+                    let size = file.size;
+                    let body = {
+                        file: file
+                    }
+                    let inputField = document.getElementById(`${section}${+id}`);
+                    let type = file.name;
+                    header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                    if (checkVideoValidation(type) === false && checkVideoSize(size) === false) {
+                        alert("You need to upload the video either in mp4,mov or avi format and should be less than 10MB");
+                        inputField.value = ''
+                    } else if (checkVideoSize(size) === false && checkVideoValidation(type) === true) {
+                        alert("You need to upload the video less than 10MB");
+                        inputField.value = ''
+                    } else if (checkVideoSize(size) === true && checkVideoValidation(type) === false) {
+                        alert("You need to upload the video either in mp4,mov or avi format");
+                        inputField.value = ''
+                    } else {
+                        axios.post('/admin/uploadVideo', body, header)
+                            .then(result => {
+                                if (result.data.status) {
+                                    localStorage.setItem(`${section}Video${id}`, result.data.data.Key);
+                                }
+                            })
+                            .catch((err)=>{
+                                console.log(err)
+                                res.send({status:false,message:err})
+                            })
+                    }
+                }
+                $('select#quali').change(function (e) {
+                    let value = $('select#quali  :selected').text().trim();
+                    let val = $('select#quali').val()
+                    const quaDiv = document.getElementById('qualification-div');
+                    if (value === "Upto 5th" || value === "10th" || value === "12th") {
+                        $('#addmore').hide()
+                        $('#qualification-div').html('')
+                        let html = $('#lowerqualificationtemplate template').html()
+                        $('#qualification-div').html(html)
+                    } else if (val) {
+                        $('#lowerqualificationyear').hide()
+                        $('#qualification-div').html('')
+                        let html = $('#qualificationtemplate template').html();
+                        $('#addmore').show();
+                        $('#qualification-div').html(html);
+                        let rows = $('.qua-row');
+                        if (rows && rows.length === 1) {
+                            $('.deletequalification').remove();
+                        }
+                    } else {
+                        $('#qualification-div').html('');
+                        $('#lowerqualificationyear').hide()
+                        $('#addmore').hide()
+                    }
+                })
+
+                const qualificationchange = (event) => {
+                    const qualificationId = event.target.value
+                    if (!qualificationId) {
+                        return false
+                    }
+
+                    let row = $(event.target).closest('.qua-row')
+                    const subQualificationCombo = $(row).find('select.subqualification')
+                    let body = { qualificationId };
+                    let options = ''
+                    $.get('/admin/candidate/getSubQualification', body).done((res) => {
+                        if (res.status) {
+                            for (let i = 0; i < res.subQualification.length; i++) {
+                                options = options + `<option value="${res.subQualification[i]._id}" class="text-capitalize">${res.subQualification[i].name}</option>`
+                            }
+
+                            $(subQualificationCombo).find('option:not(:first)').remove()
+                            $(subQualificationCombo).append(options);
+                        }
+
+                    })
+                }
+
+                function addQualificationrow() {
+                    let html = $('#qualificationtemplate template').html()
+                    $('#qualification-div').append(html)
+                }
+
+                function deleteQualificationRow(ele) {
+                    $(ele).closest('.qua-row').remove()
+                }
+
+                function setTechChangeHandler() {
+                    const initialArray = Array.from(document.querySelectorAll('#Technical-skills-section input'));
+                    for (let i = 0; i < initialArray.length; i++) {
+                        initialArray[i].addEventListener('change', () => uploadFile(event, 'techSkill', i));
+                    }
+                }
+                function setNonTechChangeHandler() {
+                    const initialArray = Array.from(document.querySelectorAll('#non-technical-skills-section input'));
+                    for (let i = 0; i < initialArray.length; i++) {
+                        initialArray[i].addEventListener('change', () => uploadFile(event, 'nonTechSkill', i));
+                    }
+                }
+            </script>
+
+            <% include ../partials/footer %>

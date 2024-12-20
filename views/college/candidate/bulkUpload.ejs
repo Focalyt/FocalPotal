@@ -1,0 +1,228 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class=" col-md-12 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Bulk Upload</h3>
+					<span style="float: right;">
+						<!-- <label>Sample File </label> -->
+						<form action="/panel/college/candidate/single" method="get">
+							<button type="submit" class="btn btn-success lovepreet"> Download Sample </button>
+						</form>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<section class="list-view">
+				<div class="row">
+					<div class="col-12 rounded equal-height-2 coloumn-2">
+
+
+						<div class="card">
+							<div class="row p-1">
+
+								<div class="col-xl-6">
+									<div class="row">
+										<div class="card-header">
+											<h4 class="card-title"></h4>
+										</div>
+									</div>
+								</div>
+
+								<div class="card custom-bulk-align" style="
+								height: 57vh;
+								width: 100%;
+							">
+									<!-- <div
+								class="custom-bulk-container"
+								style="width: 100%; max-width: 500px"
+							> -->
+									<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+										<div class="col-12 rounded equal-height-2 coloumn-2">
+											<div class="card">
+												<!-- <div class="row p-1">
+													<div class="col-xl-6">
+														<div class="row">
+															<div class="card-header">
+																<h4 class="card-title"></h4>
+															</div>
+														</div>
+													</div>
+												</div> -->
+
+												<div class="content-header-left col-md-12 col-12">
+													<div class="row breadcrumbs-top">
+														<div class="col-12">
+															<h3 class="content-header-title float-left mb-0">
+																Choose File
+															</h3><br><br>
+															<form method="post" enctype="multipart/form-data">
+																<input style="display:block;" type="file" id="myFile"
+																	name="filename" />
+																<div class="custom-bulkupload-btn-block"
+																	style="display:block;">
+																	<button type="submit" class="btn btn-success my-1">
+																		Submit
+																	</button>
+																</div>
+															</form>
+													
+														</div>
+													</div>
+												</div>
+											
+												<div class="col-12">
+													<div class="card-content">
+														<div class="table-responsive">
+															<% if (imports && imports.length> 0) { %>
+																<table class="table table-hover-animation mb-0 table-hover">
+																	<thead>
+																		
+																		<tr>
+																			<th>NAME</th>
+																			<th>MESSAGE</th>
+																			<th>STATUS</th>
+																			<th>RECORD INSERTED</th>
+																			<th>DATE TIME</th>
+																		</tr>
+																		<tr>
+																			<button onclick="clearlogs('<%= collegedetail._id %>')"
+																		
+																			class="btn  custom-clear-log font-small-4 mb-1" 
+																		>Clear Logs</button>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<% let count=0 %>
+																			<% imports.forEach((l, i)=> { %>
+																				<tr>
+																					<td class="text-capitalize">
+																						<%= l.name %>
+																					</td>
+																					<td class="text-capitalize">
+																				<!-- <img
+																					src="https://mmt-all.s3.ap-south-1.amazonaws.com/<%= l.image %>"
+																					width="50"
+																				/> -->
+																						<%- l.message %>
+	
+																					</td>
+																					<td>
+																						<%- l.status %>
+																					</td>
+																					<td>
+																						<%- l.record %>
+																					</td>
+																					<td>
+																						<%= moment(l.createdAt).format('Do MMMM, YYYY HH:mm') %>
+																					</td>
+	
+																					<!-- <td>
+																						<a class="btn btn-success"
+																							href="/college/candidate/createResume/<%= l._id %>">Create
+																							Resume</a>
+																					</td> -->
+																					</a>
+	
+																					<% if(l.status) { %>
+	
+																						<% } else { %>
+	
+																							</label>
+																							<% } %>
+														</div>
+														</td>
+														</tr>
+														<% }) %>
+															</tbody>
+															</table>
+															<% } else { %>
+																<p class="text-center mt-3">No result found</p>
+																<% } %>
+																	<% if (totalPages> 1) { %>
+																		<ul class="pagination justify-content-end ml-2 mb-2">
+																			<% let first=1 %>
+																				<% let last=totalPages> 4 ? 4 :
+																					totalPages %> <% if (totalPages> 4 && page >= 2) { %> <% first=page
+																							- 1 %>
+																							<% last=page + 1 %>
+																								<% if (last>
+																									totalPages) last = totalPages %> <% } %>
+																										<% if (first>
+																											1) { %>
+																											<li class="page-item">
+																												<a class="pageAnchor page-link"
+																													href="<%= 1 %>">First</a>
+																											</li>
+																											<% } %>
+																												<% for (let i=first; i <=last; i +=1) {
+																													%>
+																													<% if (i===page) { %>
+																														<li class="active page-item">
+																															<a href="javascript:void()"
+																																class="page-link">
+																																<%= i %>
+																															</a>
+																														</li>
+																														<% } else { %>
+																															<li class="page-item">
+																																<a class="page-link pageAnchor"
+																																	href="<%= i %>">
+																																	<%= i %>
+																																</a>
+																															</li>
+																															<% } %>
+																																<% } %>
+																																	<% if (totalPages>
+																																		last)
+																																		{ %>
+																																		<li
+																																			class="page-item">
+																																			<a class="pageAnchor page-link"
+																																				href="<%= last + 1 %>">...</a>
+																																		</li>
+																																		<li
+																																			class="page-item">
+																																			<a class="pageAnchor page-link"
+																																				href="<%= totalPages %>">Last</a>
+																																		</li>
+																																		<% } %>
+																		</ul>
+																		<% } %>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>	
+											
+													
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+	</div>
+	</section>
+	<% include ../partials/footer %>
+	<script>
+		function clearlogs() {
+			//alert(status)
+			$.ajax({
+				type: "POST",
+				url: "clearlog",
+				success:() =>(location.reload()),
+				// 	console.log("sucess")
+				// 	window.location.href ="/college/candidate/bulkUpload/"
+				// } 	sss
+			});
+			//alert(status)
+		}</script>
+		</div>

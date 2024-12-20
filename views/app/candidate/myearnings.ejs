@@ -1,0 +1,455 @@
+<% include ../../partials/header %>
+
+
+
+  <body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static" data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <% include ../../partials/flash %>
+          <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper">
+              <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                  <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                      <h3 class="content-header-title float-left mb-0">My Earnings</h3>
+                      <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item">
+                            <a href="/candidate/dashboard">Home</a>
+                          </li>
+                          <li class="breadcrumb-item active">My Earnings</li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content-body">
+                <section>
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-12 px-0">
+                        <div class="table-content shadow-cashback w-100">
+                          <div class="tab_head font-weight-bolder py-1 px-1"> Documents</div>
+                          <div class="tab_body bg-white p-1">
+                            <div class="row">
+                              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 ">Aadhar Number <span>
+                                  <form>
+                                    <input type="checkbox" <%- documents?.aadharCard ? "checked disabled" : '' %>>
+                                    <label for="vehicle3">
+                                      <%= documents?.aadharCard ? documents.aadharCard : 'xxxx-xxxx-xxxx' %>
+                                    </label>
+                                  </form>
+                                </span> </div>
+                              <div
+                                class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 mt-1 mb-xl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-1 ">
+                                Pan number <span>
+                                  <form>
+                                    <input type="checkbox" <%- documents?.panCard ? "checked disabled" : '' %>>
+                                    <label for="vehicle3">
+                                      <%= documents?.panCard ? documents.panCard : 'xxxx-xxxx-xxxx' %>
+                                    </label>
+                                  </form>
+                                </span> </div>
+                              <div
+                                class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 mt-0 mb-xl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-1 ">
+                                UPI Id <span>
+                                  <form>
+                                    <input type="checkbox" <%- upi ? "checked disabled" : '' %>>
+                                    <label for="vehicle3">
+                                      <%= upi ? upi : 'NA' %>
+                                    </label>
+                                  </form>
+                                </span> </div>
+                            </div>
+                            <p>For Cashout, please upload your Adhaar ard and PAN card.</p>
+                            <p class="mt-1">कैशआउट के लिए कृपया अपना आधार कार्ड और पैन कार्ड अपलोड करें|
+                            </p>
+                            <% if(documents?.status?.toLowerCase()=='rejected' && documents?.comment){ %>
+                              <p class="text-capitalize" style="color: red;">Rejected - <%= documents?.comment %>
+                              </p>
+                              <% } %>
+                                <div class="row">
+                                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"> <button
+                                      class="btn btn-block btn-prp kyc-txt px-0" data-toggle="modal"
+                                      data-target="#kyc">Upload KYC Document <i
+                                        class="fa-solid fa-arrow-up"></i></button></div>
+                                  <div
+                                    class="col-xl-4 col-lg-4 col-md-4 col-sm-4  col-12 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 mt-1">
+                                    <button
+                                      class="btn btn-block btn-orrage kyc-txt px-0 <%- documents?.kycCompleted ? '' : 'disabled' %>"
+                                      <%- documents?.kycCompleted ? "" : 'disabled' %> data-toggle="modal"
+                                      data-target="#redeemCashback">Cashout <span>₹<%= totalCashback %></span></button>
+                                  </div>
+                                </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row mt-xl-5 mt-lg-2 mt-md-2 mt-sm-2 mt-2">
+                      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 pl-xl-0 pr-xl-1 pl-lg-0 pr-lg-1 pl-md-0 pr-md-1  px-sm-0 px-0">
+                        <div class="table-content shadow-cashback shadow-cashback">
+                          <div class="tab_head font-weight-bolder py-1 px-1"> My Earnings</div>
+
+                          <table class="table ">
+                            <thead>
+                              <tr class="tab_row">
+                                <th scope="col">Date/Time</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Amount</th>
+
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% if (candidateEarning.length> 0) { %>
+                                <% candidateEarning.forEach((cashback,i)=> { %>
+                                  <% if(i%2===0) {%>
+                                    <tr class="tab_row-two">
+                                      <%} else{%>
+                                    <tr class="tab_row-three">
+                                      <%} %>
+                                        <td scope="row">
+                                          <%= moment(cashback.createdAt).utcOffset('+05:30').format('DD MMM YYYY, hh:mm A') %>
+                                        </td>
+                                        <td class="text-capitalize">
+                                          <%= cashback?.eventName %>
+                                        </td>
+                                        <td>₹<%= cashback?.amount %>
+                                        </td>
+
+                                    </tr>
+                                    <%}) %>
+                                      <%} %>
+                                        <tr class="tab_row-five">
+                                          <th scope="row"> </th>
+                                          <td></td>
+                                          <td></td>
+                                        </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-3 mt-3 pr-xl-0 pl-xl-1 pr-lg-0 pl-lg-1 pr-md-0 pl-md-1 px-sm-0 px-0">
+                        <div class="table-content shadow-cashback">
+                          <div class="tab_head font-weight-bolder py-1 px-1"> Active Requests</div>
+                          <table class="table ">
+                            <thead>
+                              <tr class="tab_row">
+                                <th scope="col">Date/Time</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% if (activeRequest.length> 0) { %>
+                                <% activeRequest.forEach((request,i)=> { %>
+                                  <% if(i%2===0) {%>
+                                    <tr class="tab_row-two">
+                                      <%} else{%>
+                                    <tr class="tab_row-three">
+                                      <%} %>
+                                        <td>
+                                          <%= moment(request.createdAt).utcOffset('+05:30').format('DD MMM YYYY, hh:mm A') %>
+                                        </td>
+                                        <td>₹<%= request?.amount %>
+                                        </td>
+                                        <td class="text-capitalize">
+                                          <%= request?.status %>
+                                        </td>
+                                    </tr>
+                                    <%}) %>
+                                      <%} %>
+                                        <tr class="tab_row-five">
+                                          <th scope="row"> </th>
+                                          <td></td>
+                                          <td></td>
+                                        </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cashback modal -->
+          <div class="modal fade show" id="redeemCashback" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Redeem Cashback
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body pt-1" id="popup-body">
+                  <ul class="list-unstyled">
+                    <li class="mb-1">
+                      <span class="credit font-weight-bold">
+                        Your Balance : <%= totalCashback ? totalCashback : 0 %></span>
+                    </li>
+                  </ul>
+                  <% if (!canRedeem) { %>
+                    <h5 class="pb-1 mb-0">
+                      For Cashback, you need to have a minimum Rs <%= threshold %>/- in your cashback wallet.
+                    </h5>
+                    <% } %>
+                </div>
+                <p id="error" class="text-danger"></p>
+                <div class="modal-footer">
+                  <button type="submit"
+                    class="btn btn-primary waves-effect waves-light <% if(!canRedeem) {%> disabled <% } %>"
+                    onclick="requestCashback()" <% if(!canRedeem) {%> disabled <% } %> >Request Cashback</button>
+                  <button type="button" class="btn btn-outline-light waves-effect waves-danger" data-dismiss="modal"><i
+                      class="feather icon-x d-block d-lg-none"></i>
+                    <span class="d-none d-lg-block">Cancel</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Cashback modal -->
+
+
+
+          <!-- KYC modal -->
+          <div class="modal fade show" id="kyc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Upload KYC Document</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body pt-1" id="popup-body">
+                  <form method="post" action="/candidate/kycDocument" onsubmit="return validations()">
+                    <div class="col-xl-6 mb-1">
+                      <label>Aadhar Card Number <span class="mandatory">*</span></label>
+                      <input type="number" name="aadharCard" id="aadharCardNumber" class="form-control" <% if
+                        (documents?.kycCompleted) { %> readonly <% }%>
+                        onkeypress="if(this.value.length==12) return false" placeholder="xxxx-xxxx-xxxx" value="<%=
+                          documents?.aadharCard %>" required>
+                    </div>
+                    <div class="col-xl-6 mb-1">
+                      <% if (documents?.aadharCardImage) { %>
+                        <a href="<%= process.env.MIPIE_BUCKET_URL +'/' + documents?.aadharCardImage %>" target="_blank"
+                          id="aadharLink">Uploded image</a>
+                        <% if (!documents?.kycCompleted) { %>
+                          <i class="feather icon-x remove_uploaded_pic" style="color:red;" id="removeAadhar"></i>
+                          <% } %>
+                            <input type="file" class="form-control" id="uploadAadharCard"
+                              onchange="imageChangeHandler(event, 'aadharCardImage')" value="" style="display: none;">
+                            <input type="hidden" class="form-control" name="aadharCardImage" id="aadharCardImage"
+                              value="<%= documents?.aadharCardImage %>" required />
+                            <% } else { %>
+                              <input type="file" class="form-control" id="uploadAadharCard"
+                                onchange="imageChangeHandler(event, 'aadharCardImage')" value="" required>
+                              <input type="hidden" class="form-control" name="aadharCardImage" id="aadharCardImage"
+                                value="" required/>
+                              <% } %>
+                    </div>
+                    <div class="col-xl-6 mb-1">
+                      <label>PAN Card Number</label>
+                      <input type="text" name="panCard" id="panCardNumber" class="form-control"
+                        style="text-transform:uppercase" <% if (documents?.kycCompleted) { %> readonly <% }%>
+                        onkeypress="if(this.value.length==10) return false" maxlength="10" minlength="10" value="<%=
+                          documents?.panCard %>">
+                    </div>
+                    <div class="col-xl-6 mb-1">
+                      <% if(documents?.panCardImage) {%>
+                        <a href="<%= process.env.MIPIE_BUCKET_URL +'/' + documents?.panCardImage %>" target="_blank"
+                          id="panLink">Uploded image</a>
+                        <% if (!documents?.kycCompleted) { %>
+                          <i class="feather icon-x remove_uploaded_pic" style="color:red;" id="removePan"></i>
+                          <% } %>
+                            <input type="file" class="form-control here" id="uploadPanCard"
+                              onchange="imageChangeHandler(event, 'panCardImage')" value="" style="display: none;">
+                            <input type="hidden" class="form-control" name="panCardImage" id="panCardImage"
+                              value="<%= documents?.panCardImage %>" />
+                            <% } else { %>
+                              <input type="file" class="form-control" id="uploadPanCard"
+                                onchange="imageChangeHandler(event, 'panCardImage')" value="">
+                              <input type="hidden" class="form-control" name="panCardImage" id="panCardImage"
+                                value="<%= documents?.panCardImage %>" />
+                              <% } %>
+                    </div>
+                    <div class="col-xl-6 mb-1">
+                      <label>UPI Id <span class="mandatory">*</span></label>
+                      <input type="text" class="form-control" id="upi" value="<%= upi %>" name="upi" required>
+                    </div>
+                </div>
+                <p id="documentError" class="text-danger"></p>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary waves-effect waves-light" id="uploadDocument"
+                    onclick="validations()">Upload</button>
+                  <button type="button" class="btn btn-outline-light waves-effect waves-danger" data-dismiss="modal"><i
+                      class="feather icon-x d-block d-lg-none"></i>
+                    <span class="d-none d-lg-block">Cancel</span></button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- End KYC modal -->
+
+
+          <script>
+            function requestCashback() {
+              axios.post('/candidate/requestCashback', { amount: '<%= totalCashback %>' }, { headers: { 'x-auth': localStorage.getItem('token') } })
+                .then(res => {
+                  if (!res.data.status) {
+                    $('#error').text(res.data.msg)
+                  } else {
+                    window.location.reload()
+                  }
+                })
+            }
+            $("input#aadharCardNumber").on({
+              keydown: function(e) {
+              if (e.which === 32)
+               return false;
+              },
+              change: function() {
+               this.value = this.value.replace(/\s/g, "");
+              }
+           });
+            $("input#panCardNumber").on({
+              keydown: function(e) {
+              if (e.which === 32)
+               return false;
+              },
+              change: function() {
+               this.value = this.value.replace(/\s/g, "");
+              }
+           });
+           $("input#upi").on({
+              keydown: function(e) {
+              if (e.which === 32)
+               return false;
+              },
+              change: function() {
+               this.value = this.value.replace(/\s/g, "");
+              }
+           });
+            function imageChangeHandler(e, id) {
+              let file = e.target.files[0]
+              let body = {
+                file: file
+              }
+              let type = file.name;
+              let size = file.size
+              header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+              if (checkImageType(type) === false && checkImageSize(size) === false) {
+                alert("upload the image in .jpg, .jpeg or .png format and size should less than 3MB");
+                e.target.value = ''
+              } else if (checkImageType(type) === true && checkImageSize(size) === false) {
+                alert("uploaded image size should less than 3MB");
+                e.target.value = ''
+              } else if (checkImageType(type) === false && checkImageSize(size) === true) {
+                alert("upload the image in .jpg, .jpeg or .png format");
+                e.target.value = ''
+              } else {
+                axios.post('/api/uploadSingleFile', body, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      $(`#${id}`).val(result.data.data.Key)
+                    } else {
+                      alert("There is some error while uploading the document. Please upload again.");
+                    }
+                  })
+              }
+            }
+
+            const checkImageSize = (size) => {
+              let finalSize = ((size / 1024) / 1024);
+              if (finalSize > 3) {
+                return false
+              }
+              return true;
+            }
+
+            const checkImageType = (file) => {
+              let regex = /(\.jpg|\.jpeg|\.png)$/i
+              if (!regex.exec(file)) {
+                return false;
+              } else {
+                return true;
+              }
+            }
+
+
+            function validations() {
+              let aadharNumber = $('#aadharCardNumber').val()
+              let panNumber = $('#panCardNumber').val()
+              let aadharImage = $('#aadharCardImage').val()
+              let panImage = $('#panCardImage').val()
+              let upi=$('#upi').val();
+              console.log(aadharNumber,panNumber,aadharImage,panImage,upi)
+              if (aadharNumber.trim()==''&&panNumber.trim()=='') {
+                $('#documentError').text('Please upload atleast one Document.')
+                return false
+              } else if(!aadharImage&&!panImage){
+                $('#documentError').text('Please upload atleast one Document.')
+                return false
+              }else if (upi.trim()=='') {
+                $('#documentError').text('Please enter the value for UPI.')
+                return false
+              }
+              return true;
+            }
+
+            $('#removeAadhar').click(() => {
+              $('#aadharLink').hide()
+              $('#removeAadhar').hide()
+              $('#uploadAadharCard').show()
+              let data = {
+                key: $('#aadharCardImage').val()
+              }
+              header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+              axios.post('/api/deleteSingleFile', data, header)
+                .then(result => {
+                    axios.post("/candidate/removeKYCImage",{type:'aadhar'}).then((res)=>{
+                    if (res.data.status) {
+                      document.getElementById('aadharCardImage').value=''
+                      console.log('File deleted')
+                    }
+                  })
+                })
+              return false;
+            })
+            $('#removePan').click(() => {
+              let data = {
+                key: $('#panCardImage').val()
+              }
+              $('#panLink').hide()
+              $('#removePan').hide()
+              $('#uploadPanCard').show()
+              header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+              axios.post('/api/deleteSingleFile', data, header)
+                .then(result => {
+                  axios.post("/candidate/removeKYCImage",{type:'pan'}).then((res)=>{
+                    if (res.data.status) {
+                      document.getElementById('panCardImage').value=''
+                      console.log('File deleted')
+                    }
+                  })
+                })
+              return false;
+            })
+          </script>
+
+          <% include ./partials/footer%>
+  </body>

@@ -1,0 +1,789 @@
+<% include ../partials/header %>
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Edit Candidate</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="/admin/candidate">Candidates</a>
+                            </li>
+                            <li class="breadcrumb-item active">Edit Candidates
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ../partials/flash %>
+            <form class="form-horizontal" action="" method="post" id="formData">
+                <section id="personal-info">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Personal Information</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Name <span class="mandatory">*</span></label>
+                                                <input type="text" class="form-control" value="<%= candidate.name %>"
+                                                    name="name" maxlength="50" required>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Mobile <span class="mandatory">*</span></label>
+                                                <input type="text" class="form-control" value="<%= candidate.mobile %>"
+                                                    name="mobile" minlength="10" maxlength="13"
+                                                    pattern="^[\+\d]?(?:[\d-.\s()]*)$" required>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Email <span class="mandatory">*</span></label>
+                                                <input type="email" maxlength="50" class="form-control"
+                                                    value="<%= candidate.email %>" name="email" required>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Address</label>
+                                                <input type="text" maxlength="100" class="form-control"
+                                                    value="<%= candidate.address %>" name="address">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Country <span class="mandatory">*</span></label>
+                                                <select style="cursor: pointer;" class="form-control text-capitalize"
+                                                    name="countryId" id="country" required>
+                                                    <option value="">Select Option</option>
+                                                    <% country.forEach((i)=> { %>
+                                                        <% if (i.countryId===candidate.countryId) { %>
+                                                            <option value="<%= i.countryId %>" selected>
+                                                                <%= i.name %>
+                                                            </option>
+                                                            <% } else { %>
+                                                                <option value="<%= i.countryId %>">
+                                                                    <%= i.name %>
+                                                                </option>
+                                                                <% } %>
+                                                                    <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>State <span class="mandatory">*</span></label>
+                                                <select style="cursor: pointer;" class="form-control" name="stateId"
+                                                    id="state" required>
+                                                    <option value="">Select Option</option>
+                                                    <% state.forEach((s)=> { %>
+                                                        <% if (s.stateId===candidate.stateId) { %>
+                                                            <option value="<%= s.stateId %>" selected>
+                                                                <%= s.name %>
+                                                            </option>
+                                                            <% } else { %>
+                                                                <option value="<%= s.stateId %>">
+                                                                    <%= s.name %>
+                                                                </option>
+                                                                <% } %>
+                                                                    <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>City <span class="mandatory">*</span></label>
+                                                <select style="cursor: pointer;" class="form-control" name="cityId"
+                                                    required id="city">
+                                                    <option value=""> Select Option</option>
+                                                    <% city.forEach((s)=> { %>
+                                                        <% if (s.cityId===candidate.cityId) { %>
+                                                            <option value="<%= s.cityId %>" selected>
+                                                                <%= s.name %>
+                                                            </option>
+                                                            <% } else { %>
+                                                                <option value="<%= s.cityId %>">
+                                                                    <%= s.name %>
+                                                                </option>
+                                                                <% } %>
+                                                                    <% }); %>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Gender</label>
+                                                <select style="cursor: pointer;" class="form-control" name="gender">
+                                                    <option>Select Option</option>
+                                                    <option <%=candidate.gender=="Male" ? "selected" : '' %>>Male
+                                                    </option>
+                                                    <option <%=candidate.gender=="Female" ? "selected" : '' %>
+                                                        >Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+												<label>Age</label>
+												<select name="age" style="cursor: pointer;" class="form-control">
+													<option value="1" <%= candidate.age=="1" ?"selected" : '' %>>16 - 20 yrs</option>
+													<option value="2" <%= candidate.age=="2" ? "selected" : '' %>>21 - 25 yrs</option>
+													<option value="3" <%= candidate.age=="3" ? "selected" : '' %> >26 - 30 yrs</option>
+													<option value="4" <%= candidate.age=="4" ? "selected" : '' %>>31 - 35 yrs</option>
+													<option value="5" <%= candidate.age=="5" ?"selected" : '' %> >36 - 40 yrs</option>
+													<option value="6" <%= candidate.age=="6"  ? "selected" : '' %> >41 - 45 yrs</option>
+													<option value="7" <%= candidate.age=="7"  ?"selected" : '' %> >46 - 50 yrs</option>
+													<option value="8" <%= candidate.age=="8"  ? "selected" : '' %> >51 - 55 yrs</option>
+													<option value="9" <%= candidate.age=="9"  ? "selected" : '' %> >55+ yrs</option>
+												</select>
+												
+											</div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Pincode</label>
+                                                <input type="text" class="form-control" value="<%= candidate.pincode %>"
+                                                    minlength="3" maxlength="10" name="pincode">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Linked In</label>
+                                                <input type="text" maxlength="50" class="form-control"
+                                                    value="<%= candidate.linkedInUrl %>" name="linkedInUrl">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Facebook</label>
+                                                <input type="text" class="form-control" maxlength="50"
+                                                    value="<%= candidate.facebookUrl %>" name="facebookUrl">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Twitter</label>
+                                                <input type="text" class="form-control" maxlength="50"
+                                                    value="<%= candidate.twitterUrl %>" name="twitterUrl">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label class="col-form-label" for="input-normal">Upload
+                                                    Image</label>
+                                                <div class="row" id="image">
+                                                    <% let clas='' %>
+                                                        <% if (candidate.image) { %>
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-1">
+                                                                <img src="https://mmt-alls-1.s3.ap-south-1.amazonaws.com/<%= candidate.image %>"
+                                                                    width="40" height="40" />
+                                                                <input type="hidden" name="image"
+                                                                    value="<%= candidate.image %>" />
+                                                                <p class="mt-1 text-left">
+                                                                    <a class="rmvClass text-danger"
+                                                                        href="javascript:void(0)">Remove </a>
+                                                                    <a class="text-primary mr-2" target="_blank"
+                                                                        href="https://mmt-alls-1.s3.ap-south-1.amazonaws.com/<%= candidate.image %>">View</a>
+                                                                </p>
+                                                            </div>
+                                                            <% clas='d-none' ; %>
+                                                                <% } %>
+                                                                    <div
+                                                                        class="col-xl-12 col-md-12 col-sm-12 col-12 mt-1 firstImage <%= clas %>">
+                                                                        <div class="image-upload">
+                                                                            <label for="filestwo"
+                                                                                style="cursor: pointer;">
+                                                                                <img src="/images/add_receipt.png"
+                                                                                    width="40px" height="auto"
+                                                                                    id="outputtwo">
+                                                                                <p class="mt-1">Click to upload
+                                                                                    Image
+                                                                                </p>
+                                                                            </label>
+                                                                            <input id="filestwo" data-id="image"
+                                                                                type="file" name="filebrand"
+                                                                                class="my-image-uploader form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tech">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Skills</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-4 mb-1">
+                                                <!-- <div class="form-group">
+                                                    <label>Technical</label>
+                                                    <select class="selectpicker form-control"
+                                                        title="Select Technical Skill" data-actions-box="true" multiple
+                                                        name="_skill">
+                                                        <% techSkill.forEach((i)=> { %>
+                                                            <% if (candidate._skill.indexOf(i._id)> 0) { %>
+                                                                <option value="<%= i._id %>" selected>
+                                                                    <%= i.name %>
+                                                                </option>
+                                                                <% } else { %>
+                                                                    <option value="<%= i._id %>">
+                                                                        <%= i.name %>
+                                                                    </option>
+                                                                    <% } %>
+                                                                        <% }); %>
+                                                    </select>
+                                                </div> -->
+                                                <!-- ********looping and comparing is same as edit college qualification method ********** -->
+                                                <div class="form-group">
+                                                    <label>Technical</label>
+                                                    <select class="selectpicker form-control"
+                                                        title="Select Technical Skill" data-actions-box="true" multiple
+                                                        name="_skill">
+                                                        <% techSkill.forEach((i)=> { %>
+                                                            <option value="<%= i._id %>" <%-
+                                                                candidate._skill.includes(i._id)?"selected":"" %>>
+                                                                <%= i.name %>
+                                                            </option>
+                                                            <% }); %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 mb-1">
+                                                <!-- <div class="form-group">
+                                                    <label>Non Technical</label>
+                                                    <select class="selectpicker form-control"
+                                                        title="Select Non Technical Skill" data-actions-box="true"
+                                                        multiple name="_skill">
+                                                        <% nonTechSkill.forEach((i)=> { %>
+                                                            <% if (candidate._skill.indexOf(i._id)> 0) { %>
+                                                                <option value="<%= i._id %>" selected>
+                                                                    <%= i.name %>
+                                                                </option>
+                                                                <% } else { %>
+                                                                    <option value="<%= i._id %>">
+                                                                        <%= i.name %>
+                                                                    </option>
+                                                                    <% } %>
+                                                                        <% }); %>
+                                                    </select>
+                                                </div> -->
+                                                <!-- ********looping and comparing is same as edit college qualification method ********** -->
+                                                <div class="form-group">
+                                                    <label>Non Technical</label>
+                                                    <select class="selectpicker form-control"
+                                                        title="Select Non Technical Skill" data-actions-box="true"
+                                                        multiple name="_skill">
+                                                        <% nonTechSkill.forEach((i)=> { %>
+                                                            <option value="<%= i._id %>" <%-
+                                                                candidate._skill.includes(i._id)?"selected":"" %>>
+                                                                <%= i.name %>
+                                                            </option>
+                                                            <% }); %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section id="qualification">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Qualification</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Session Start <span class="mandatory">*</span></label>
+                                                <% const startSession=(candidate.session && candidate.session !=='' ) ?
+                                                    candidate.session.split('-') : 'NA' ; %>
+                                                    <input type="text" class="form-control datepicker"
+                                                        name="sessionStart" value="<%= startSession[0] %>"
+                                                        placeholder="Session Start Year" required>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Session End <span class="mandatory">*</span></label>
+                                                <input type="text" class="form-control datepicker" name="sessionEnd"
+                                                    value="<%= startSession[1] %>" placeholder="Session End Year"
+                                                    required>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Semester</label>
+                                                <select style="cursor: pointer;" class="form-control" name="semester">
+                                                    <option value="">Select Option</option>
+                                                    <% if (candidate.semester==='01' ) { %>
+                                                        <option value="01" selected>01</option>
+                                                        <% } else { %>
+                                                            <option value="01">01</option>
+                                                            <% } %>
+                                                                <% if (candidate.semester==='02' ) { %>
+                                                                    <option value="02" selected>02</option>
+                                                                    <% } else { %>
+                                                                        <option value="02">02</option>
+                                                                        <% } %>
+                                                                            <% if (candidate.semester==='03' ) { %>
+                                                                                <option value="03" selected>03</option>
+                                                                                <% } else { %>
+                                                                                    <option value="03">03</option>
+                                                                                    <% } %>
+                                                                                        <% if (candidate.semester==='04'
+                                                                                            ) { %>
+                                                                                            <option value="04" selected>
+                                                                                                04</option>
+                                                                                            <% } else { %>
+                                                                                                <option value="04">04
+                                                                                                </option>
+                                                                                                <% } %>
+                                                                                                    <% if
+                                                                                                        (candidate.semester==='05'
+                                                                                                        ) { %>
+                                                                                                        <option
+                                                                                                            value="05"
+                                                                                                            selected>05
+                                                                                                        </option>
+                                                                                                        <% } else { %>
+                                                                                                            <option
+                                                                                                                value="05">
+                                                                                                                05
+                                                                                                            </option>
+                                                                                                            <% } %>
+                                                                                                                <% if
+                                                                                                                    (candidate.semester==='06'
+                                                                                                                    ) {
+                                                                                                                    %>
+                                                                                                                    <option
+                                                                                                                        value="06"
+                                                                                                                        selected>
+                                                                                                                        06
+                                                                                                                    </option>
+                                                                                                                    <% } else
+                                                                                                                        {
+                                                                                                                        %>
+                                                                                                                        <option
+                                                                                                                            value="06">
+                                                                                                                            06
+                                                                                                                        </option>
+                                                                                                                        <% }
+                                                                                                                            %>
+                                                                                                                            <% if
+                                                                                                                                (candidate.semester==='07'
+                                                                                                                                )
+                                                                                                                                {
+                                                                                                                                %>
+                                                                                                                                <option
+                                                                                                                                    value="07"
+                                                                                                                                    selected>
+                                                                                                                                    07
+                                                                                                                                </option>
+                                                                                                                                <% } else
+                                                                                                                                    {
+                                                                                                                                    %>
+                                                                                                                                    <option
+                                                                                                                                        value="07">
+                                                                                                                                        07
+                                                                                                                                    </option>
+                                                                                                                                    <% }
+                                                                                                                                        %>
+                                                                                                                                        <% if
+                                                                                                                                            (candidate.semester==='08'
+                                                                                                                                            )
+                                                                                                                                            {
+                                                                                                                                            %>
+                                                                                                                                            <option
+                                                                                                                                                value="08"
+                                                                                                                                                selected>
+                                                                                                                                                08
+                                                                                                                                            </option>
+                                                                                                                                            <% } else
+                                                                                                                                                {
+                                                                                                                                                %>
+                                                                                                                                                <option
+                                                                                                                                                    value="08">
+                                                                                                                                                    08
+                                                                                                                                                </option>
+                                                                                                                                                <% }
+                                                                                                                                                    %>
+                                                </select>
+                                            </div>
+
+
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Course <span class="mandatory">*</span></label>
+                                                <select style="cursor: pointer;" class="form-control text-capitalize"
+                                                    id="qual" name="_qualification" required>
+                                                    <option value="">Select Option</option>
+                                                    <% if(candidate._qualification){ %>
+
+                                                        <% qualification.forEach((i)=> { %>
+                                                            <% if
+                                                                (i._id.toString()===candidate._qualification.toString())
+                                                                { %>
+                                                                <option value="<%= i._id %>" selected>
+                                                                    <%= i.name %>
+                                                                </option>
+                                                                <% } else { %>
+                                                                    <option value="<%= i._id %>">
+                                                                        <%= i.name %>
+                                                                    </option>
+                                                                    <% } %>
+                                                                        <% }); %>
+
+                                                                            <%}else{%>
+
+                                                                                <% qualification.forEach((i)=> { %>
+                                                                                    <option value="<%= i._id %>"
+                                                                                        class="text-capitalize">
+                                                                                        <%= i.name %>
+                                                                                    </option>
+                                                                                    <% }); %>
+
+                                                                                        <%};%>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Stream <span class="mandatory">*</span></label>
+                                                <select style="cursor: pointer;" class="form-control text-capitalize"
+                                                    name="_subQualification" id="subQua" required>
+                                                    <option value="">Select Option</option>
+
+                                                    <% subqual.forEach((q)=> { %>
+                                                        <% if ( candidate._subQualification &&
+                                                            q._id.toString()==candidate._subQualification.toString()) {
+                                                            %>
+                                                            <option value="<%= q._id %>" selected>
+                                                                <%= q.name %>
+                                                            </option>
+                                                            <% } else { %>
+
+                                                                <option value="<%= q._id %>">
+                                                                    <%= q.name %>
+                                                                </option>
+                                                                <% } %>
+                                                                    <% }); %>
+
+
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Current Grade</label>
+                                                <select style="cursor: pointer;" class="form-control" name="cgpaType">
+                                                    <option value="">Select Option</option>
+                                                    <% if (candidate.cgpaType===0) { %>
+                                                        <option value="0" selected>CGPA</option>
+                                                        <option value="1">%</option>
+                                                        <% } else if (candidate.cgpaType===1) { %>
+                                                            <option value="0">CGPA</option>
+                                                            <option value="1" selected>%</option>
+                                                            <% } else { %>
+                                                                <option value="0">CGPA</option>
+                                                                <option value="1">%</option>
+                                                                <% } %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>&nbsp;</label>
+                                                <input type="text" class="form-control" maxlength="3"
+                                                    placeholder="Enter CGPA or %" value="<%= candidate.cgpa %>"
+                                                    name="cgpa">
+                                            </div>
+                                            <!-- <div class="col-xl-3 mb-1">
+                                                <label class="col-form-label" for="input-normal">Upload
+                                                    Resume</label>
+                                                <div class="row" id="resume">
+                                                    <% let classs='' %>
+                                                        <% if (candidate.resume) { %>
+                                                            <div class="col-xl-12 col-md-12 col-sm-12 col-12 ">
+                                                                <img src="https://mmt-alls-1.s3.ap-south-1.amazonaws.com/<%= candidate.resume %>"
+                                                                    width="40" height="40" />
+                                                                <input type="hidden" name="resume"
+                                                                    value="<%= candidate.resume %>" />
+                                                                <p class="mt-1 text-left">
+                                                                    <a class="rmvResume text-danger"
+                                                                        href="javascript:void(0)">Remove </a>
+                                                                    <a class="text-primary mr-2" target="_blank"
+                                                                        href="https://mmt-alls-1.s3.ap-south-1.amazonaws.com/<%= candidate.resume %>">View</a>
+                                                                </p>
+                                                            </div>
+                                                            <% classs='d-none' ; %>
+                                                                <% } %>
+                                                                    <div
+                                                                        class="col-xl-12 col-md-12 col-sm-12 col-12 mt-1 resumeImage <%= classs %>">
+                                                                        <div class="image-upload">
+                                                                            <label for="filesthree">
+                                                                                <img src="/images/add_receipt.png"
+                                                                                    width="40px" height="auto"
+                                                                                    id="outputthree">
+                                                                                <p class="mt-1">Click to upload
+                                                                                    resume
+                                                                                </p>
+                                                                            </label>
+                                                                            <input id="filesthree" data-id="resume"
+                                                                                type="file" name="filebrand"
+                                                                                class="my-resume-uploader form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                </div>
+                                            </div> -->
+
+                                            <div
+                                                class="col-xl-12 text-xl-right text-lg-right text-md-right text-sm-center text-center">
+                                                <!-- <a type="reset" href="/admin/candidate/add" class="btn btn-danger"
+                                                    value="Reset">Reset</a> -->
+                                                <!-- <a type="reset" onclick="reset()" class="btn btn-danger"
+                                                    value="Reset">Reset</a> -->
+                                                <button type="submit" class="btn btn-success">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </form>
+            <div class="text-right reset1">
+				<button onclick="reset()"  class="btn btn-danger"
+					>Reset</button>
+			</div>
+            <% include ../partials/footer %>
+                <script type="text/javascript">
+                    $(function () {
+                        $('.datepicker').datepicker({
+                            format: "yyyy",
+                            viewMode: "years",
+                            minViewMode: "years"
+                        });
+
+                    });
+                </script>
+                <script>
+                    const imageUploaders = document.querySelectorAll('.my-image-uploader');
+                    const submitBtns = document.querySelectorAll('.submitBtn');
+                    imageUploaders.forEach((x) => {
+                        const idText = x.getAttribute('data-id');
+                        const id = document.querySelector(`#${idText}`);
+
+                        x.addEventListener('change', async (e) => {
+                            try {
+                                submitBtns.forEach((x) => { x.disabled = true; });
+                                const filesData = Array.from(e.target.files);
+                                if (!Array.isArray(filesData) || filesData.length <= 0) throw new Error('No image found!');
+
+                                const data = await Promise.all(filesData.map(async (file) => {
+                                    const ext = file.name.split('.').pop();
+                                    const res = await axios.get('/admin/s3upload', { params: { type: file.type, ext } });
+                                    if (!res || !res.data || !res.data.data) return null;
+                                    const { url, key } = res.data.data;
+                                    if (!url || !key) return null;
+                                    const upload = await axios.put(url, file, { headers: { 'Content-Type': file.type } });
+                                    if (upload || upload.status === 200) return key;
+                                    return null;
+                                }));
+
+                                const files = data.filter(x => !!x);
+
+                                if (files.length <= 0) throw new Error('Unable to upload any image!');
+
+                                files.forEach((f) => {
+                                    const div = document.createElement('div');
+                                    div.setAttribute('class', 'col-xl-12 col-md-12 col-sm-12 col-12 mt-1');
+
+                                    const img = document.createElement('img');
+                                    img.setAttribute('src', `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`);
+                                    img.setAttribute('alt', 'img');
+                                    img.setAttribute('width', '40');
+                                    img.setAttribute('height', '40');
+                                    div.appendChild(img);
+
+                                    const input = document.createElement('input');
+                                    input.setAttribute('type', 'hidden');
+                                    input.setAttribute('name', idText);
+                                    input.setAttribute('value', f);
+                                    div.appendChild(input);
+
+                                    const p = document.createElement('p');
+                                    p.setAttribute('class', 'mt-1');
+                                    const rmBtn = document.createElement('a');
+                                    rmBtn.setAttribute('class', 'text-danger');
+                                    rmBtn.setAttribute('href', 'javascript:void(0)');
+                                    rmBtn.textContent = 'Remove ';
+                                    rmBtn.addEventListener('click', () => {
+                                        div.parentNode.removeChild(div)
+                                        $('.firstImage').removeClass('d-none');
+                                    });
+                                    p.appendChild(rmBtn);
+                                    const viewBtn = document.createElement('a');
+                                    viewBtn.setAttribute('class', 'text-primary mr-2');
+                                    viewBtn.setAttribute('target', '_blank');
+                                    viewBtn.setAttribute('href', `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`);
+                                    viewBtn.textContent = 'View';
+                                    p.appendChild(viewBtn);
+                                    div.appendChild(p);
+                                    id.append(div);
+                                    $('.firstImage').addClass('d-none');
+
+                                });
+                                submitBtns.forEach((x) => { x.disabled = false; });
+                                x.value = '';
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        });
+                    });
+
+                    $(".rmvClass").click(function () {
+                        $(this).closest("div").remove();
+                        $('.firstImage').removeClass('d-none');
+                    });
+
+                    $(".rmvResume").click(function () {
+                        $(this).closest("div").remove();
+                        $('.resumeImage').removeClass('d-none');
+                    });
+
+                    const imageUploader = document.querySelectorAll('.my-resume-uploader');
+                    imageUploader.forEach((x) => {
+                        const idText = x.getAttribute('data-id');
+                        const id = document.querySelector(`#${idText}`);
+                        x.addEventListener('change', async (e) => {
+                            try {
+                                submitBtns.forEach((x) => { x.disabled = true; });
+                                const filesData = Array.from(e.target.files);
+                                if (!Array.isArray(filesData) || filesData.length <= 0) throw new Error('No image found!');
+
+                                const data = await Promise.all(filesData.map(async (file) => {
+                                    const ext = file.name.split('.').pop();
+                                    const res = await axios.get('/admin/s3upload', { params: { type: file.type, ext } });
+                                    if (!res || !res.data || !res.data.data) return null;
+                                    const { url, key } = res.data.data;
+                                    if (!url || !key) return null;
+                                    const upload = await axios.put(url, file, { headers: { 'Content-Type': file.type } });
+                                    if (upload || upload.status === 200) return key;
+                                    return null;
+                                }));
+
+                                const files = data.filter(x => !!x);
+
+                                if (files.length <= 0) throw new Error('Unable to upload any image!');
+
+                                files.forEach((f) => {
+                                    const div = document.createElement('div');
+                                    div.setAttribute('class', 'col-xl-12 col-md-12 col-sm-12 col-12');
+
+                                    const img = document.createElement('img');
+                                    img.setAttribute('src', `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`);
+                                    img.setAttribute('alt', 'img');
+                                    img.setAttribute('width', '40');
+                                    img.setAttribute('height', '40');
+                                    div.appendChild(img);
+
+                                    const input = document.createElement('input');
+                                    input.setAttribute('type', 'hidden');
+                                    input.setAttribute('name', idText);
+                                    input.setAttribute('value', f);
+                                    div.appendChild(input);
+
+                                    const p = document.createElement('p');
+                                    p.setAttribute('class', 'mt-1');
+                                    const rmBtn = document.createElement('a');
+                                    rmBtn.setAttribute('class', 'text-danger');
+                                    rmBtn.setAttribute('href', 'javascript:void(0)');
+                                    rmBtn.textContent = 'Remove ';
+                                    rmBtn.addEventListener('click', () => {
+                                        div.parentNode.removeChild(div)
+                                        $('.resumeImage').removeClass('d-none');
+                                    });
+                                    p.appendChild(rmBtn);
+                                    const viewBtn = document.createElement('a');
+                                    viewBtn.setAttribute('class', 'text-primary mr-2');
+                                    viewBtn.setAttribute('target', '_blank');
+                                    viewBtn.setAttribute('href', `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`);
+                                    viewBtn.textContent = 'View';
+                                    p.appendChild(viewBtn);
+                                    div.appendChild(p);
+                                    id.append(div);
+                                    $('.resumeImage').addClass('d-none');
+                                });
+                                submitBtns.forEach((x) => { x.disabled = false; });
+                                x.value = '';
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        });
+                    });
+
+                    $('#country').change(() => {
+                        $('#state')
+                            .find('option')
+                            .remove()
+                            .end()
+                            .append('<option disabled selected value="">Select Option</option>');
+                        axios.post('/panel/helper/getstate', {
+                            countryId: $('#country').val()
+                        })
+                            .then(({
+                                data
+                            }) => {
+                                data.forEach((d) => {
+                                    $('#state').append(
+                                        `<option class='text-capitalize' value='${d.stateId}'>${d.name}</option>`
+                                    );
+                                });
+                            })
+                            .catch(e => console.log(e));
+                    });
+
+
+                    $('#state').change(() => {
+                        $('#city')
+                            .find('option')
+                            .remove()
+                            .end()
+                            .append('<option disabled selected value="">Select Option</option>');
+                        axios.post('/panel/helper/getcity', {
+                            stateId: $('#state').val()
+                        })
+                            .then(({
+                                data
+                            }) => {
+                                data.forEach((d) => {
+                                    $('#city').append(
+                                        `<option class='text-capitalize' value='${d.cityId}'>${d.name}</option>`
+                                    );
+                                });
+                            })
+                            .catch(e => console.log(e));
+                    });
+
+
+                    $('#qual').change(() => {
+                        $('#subQua')
+                            .find('option')
+                            .remove()
+                            .end()
+                            .append('<option disabled selected value="">Select Option</option>');
+                        axios.post('/panel/helper/getsubQual', {
+                            _qualification: $('#qual').val()
+                        })
+                            .then(({
+                                data
+                            }) => {
+                                data.forEach((d) => {
+                                    $('#subQua').append(
+                                        `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+                                    );
+                                });
+                            })
+                            .catch(e => console.log(e));
+                    });
+
+                    // reset form 
+                    function reset() {
+                        window.location.reload();
+                    }
+
+                </script>

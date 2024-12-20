@@ -1,0 +1,1833 @@
+<% include ../../partials/header %>
+
+  <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+  <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <div id="preloader"></div>
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <% include ../../partials/flash %>
+          <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper">
+              <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                  <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                      <h3 class="content-header-title float-left mb-0">Your Profile </h3>
+                      <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/candidate/dashboard">Home</a>
+                          </li>
+                          <li class="breadcrumb-item"><a href="#">Your Profile</a>
+                          </li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="content-body d-none">
+                <!-- Data list view starts -->
+                <section class="list-view">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-header border border-top-0 border-left-0 border-right-0">
+                          <h4 class="mb-0">Complete Your Profile </h4>
+                        </div>
+                        <div class="card-content">
+                          <div class="row">
+                            <div class="col-xl-4 mb-1">
+                              <label>Name</label>
+                              <input class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <section id="upload-image-template">
+                <template>
+                  <input type="file" class="form-control" id="candidate-file" value=""
+                    onchange="imageChangeHandler(event)">
+                  <input type="hidden" class="form-control" name="image" id="profilepic" value="" />
+                  <div class="col-xl-3 mb-1">
+                </template>
+              </section>
+
+              <section id="upload-resume-template">
+                <template>
+                  <input type="file" class="form-control" id="uploadresume" onchange="cvChangeHandler(event)" value="">
+                  <input type="hidden" class="form-control" name="resume" id="resume" value="" />
+                </template>
+              </section>
+
+              <section id="upload-profilevideo-template">
+                <template>
+                  <input type="file" class="form-control" id="uploadVideo" value="" onchange="uploadVideoFile(event)">
+                  <input type="hidden" class="form-control" name="profilevideo" id="video" value="" />
+                </template>
+              </section>
+              <section id="experience-template">
+                <template>
+                  <div class="row px-1 exp-row" class="exp-div">
+                    <div class="col-xl-3 mb-1">
+                      <label>From Date / तिथि से</label>
+                      <input type="date" class="form-control" name="FromDate" value="">
+                    </div>
+                    <div class="col-xl-3 mb-1">
+                      <label>To Date / तिथि तक</label>
+                      <input type="date" class="form-control" name="ToDate" value="">
+                    </div>
+                    <div class="col-xl-3 mb-1">
+                      <label>Industry / उद्योग</label>
+                      <select class="form-control" name="Industry_Name">
+                        <option value="">Select Industry</option>
+                        <% industry.forEach((item)=>{%>
+                          <option value="<%= item._id %>" class="text-capitalize">
+                            <%= item.name %>
+                          </option>
+                          <% }); %>
+                      </select>
+                    </div>
+                    <div class="col-xl-3 mb-1">
+                      <label>Sub Industry / उप उद्योग</label>
+                      <select class="form-control text-capitalize" name="SubIndustry_Name">
+                        <option value="">Select Sub Industry</option>
+                        <% subIndustry.forEach((item)=>{%>
+                          <option value="<%= item._id %>" class="text-capitalize">
+                            <%= item.name %>
+                          </option>
+                          <% }); %>
+                      </select>
+                    </div>
+                    <div class="col-xl-3 mb-1">
+                      <label>Company name / कंपनी का नाम</label>
+                      <input type="text" name="Company_Name" class="form-control" value=""
+                        onkeypress="if(this.value.length==50) return false">
+                    </div>
+                    <!-- <div class="col-xl-3 mb-1">
+                    <label>Company Email / कंपनी ईमेल</label>
+                    <input type="email" name="Company_Email" class="form-control" value="" id="comapany-email"
+                      onkeypress="if(this.value.length==30) return false">
+                  </div> -->
+                    <div class="col-xl-3 mb-1">
+                      <label>State / राज्य</label>
+                      <select class="form-control" name="Company_State" value=""
+                        onchange="expStateChangeHandler(event)">
+                        <option value="">Select State</option>
+                        <% state.forEach((item)=>{%>
+                          <option value="<%= item._id %>" class="text-capitalize">
+                            <%= item.name %>
+                          </option>
+                          <% }); %>
+                      </select>
+                    </div>
+                    <div class="col-xl-3 mb-1">
+                      <label>City / शहर</label>
+                      <!-- <input type="text" name="CompanyCity" class="form-control" value=""> -->
+                      <select id="select-city" name="Company_City" class="form-control citycombo">
+                        <option value="">Select City</option>
+                      </select>
+
+                    </div>
+                    <div class="col-xl-3 mb-1">
+                      <label>Comments / टिप्पणियाँ</label>
+                      <input type="text" name="Comments" class="form-control" value="">
+                    </div>
+                    <div class="col-xl-12 text-right deleteexperience">
+                      <div class="my-auto">
+                        <a class="btn btn-danger waves-effect waves-light" onclick="deleteExperienceRow(this)"
+                          id="del-exp-btn">Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </section>
+              <section id="qualificationtemplate">
+                <template>
+                  <div class="row px-1 qua-row" class="qua-div">
+                    <div class="col-xl-4">
+                      <label>Year of Passing / उत्तीर्ण होने का वर्ष</label>
+                      <select class="form-control" name="PassingYear">
+                        <option value="">Select Year </option>
+                        <% for(let i=2023; i> 1999; i--) { %>
+                          <option value="<%=i%>" <% if(candidate.yearOfPassing==i ) {%> selected <% } %>>
+                              <%=i%>
+                          </option>
+                          <% }%>
+                      </select>
+                    </div>
+                    <div class="col-xl-4 mb-1">
+                      <label>Qualification / योग्यता</label>
+                      <select class="form-control" onchange="qualificationchange(event)" name="Qualification">
+                        <option value="">Select Qualification</option>
+                        <% Qualifications.forEach((i)=> { %>
+                          <% if(i.basic !==true) {%>
+                            <option value="<%= i._id %>" class="text-capitalize">
+                              <%= i.name %>
+                            </option>
+                            <% }}); %>
+                      </select>
+                    </div>
+                    <div class="col-xl-4 mb-1">
+                      <label>Sub Qualification / उप योग्यता</label>
+                      <select class="form-control text-capitalize subqualification" name="subQualification">
+                        <option value="">Select Subqualification</option>
+                      </select>
+                    </div>
+                    <div class="col-xl-4 mb-1">
+                      <label>College Name / कॉलेज का नाम</label>
+                      <input type="text" class="form-control" placeholder="" name="College" value=""
+                        onkeypress="if(this.value.length==50) return false">
+                    </div>
+                    <div class="col-xl-4 mb-1">
+                      <label>University Name / विश्वविद्यालय का नाम</label>
+                      <select class="form-control text-capitalize" name="University">
+                        <option value="">Select University</option>
+                        <% Universities.forEach((i)=> { %>
+                          <option value="<%= i._id %>" class="text-capitalize">
+                            <%= i.name %>
+                          </option>
+                          <% }); %>
+                      </select>
+                    </div>
+                    <div class="col-xl-4 mb-1">
+                      <label>Assessment Type / मूल्यांकन प्रकार</label>
+                      <select class="form-control" name="AssessmentType">
+                        <option value="">Select Option</option>
+                        <option value="CGPA" <% if(candidate.AssessmentType==='CGPA' ) {%> selected <% } %>>CGPA
+                        </option>
+                        <option value="Percentage" <% if(candidate.AssessmentType==='Percentage' ) {%> selected <% } %>
+                            >Percentage</option>
+                        <option value="Grade" <% if(candidate.AssessmentType==='Grade' ) {%> selected <% } %>>Grade
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-xl-4 mb-1">
+                      <label>Enter Value / मूल्य दर्ज करें</label>
+                      <input type="text" class="form-control" placeholder="Enter CGPA, Percentage or Grade"
+                        name="Result" onkeypress="if(this.value.length==4) return false" value="">
+                    </div>
+                    <div class="col-xl-4 mb-1">
+                      <label for="college-loc">College Location</label>
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend bg-locat">
+                          <div class="input-group-text bg-intext"><img src="/images/isist.png" id="siteforcomp"></div>
+                        </div>
+                        <input type="text" class="form-control college-loc" id="college-loc" value="">
+                        <input type="hidden" class="form-control cllgPlace" name="collegePlace" value="" />
+                        <input type="hidden" class="form-control cllgLatitude" name="collegeLatitude" value="" />
+                        <input type="hidden" class="form-control cllgLongitude" name="collegeLongitude" value=""
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <div class="d-flex flex-row-reverse deletequalification">
+                      <div class="col my-auto">
+                        <a class="btn btn-danger waves-effect waves-light"
+                          onclick="deleteQualificationRow(this)">Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </section>
+              <div id="lowerqualificationtemplate" class="col-xl-12">
+                <template>
+                  <label>Year of Passing / उत्तीर्ण होने का वर्ष</label>
+                  <select class="form-control single-field" name="yearOfPassing" id="yearOfPassing">
+                    <option value="">Select Year</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                    <option value="2012">2012</option>
+                    <option value="2011">2011</option>
+                    <option value="2010">2010</option>
+                  </select>
+                </template>
+              </div>
+              <form method="post">
+                <section id="personal-info">
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                      <div class="card">
+                        <div class="card-header border border-top-0 border-left-0 border-right-0">
+                          <h4 class="card-title pb-1">Personal Information</h4>
+                        </div>
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-xl-3 mb-1" id="pd-name">
+                                <label>Name / नाम<span class="mandatory"> *</span></label>
+                                <input type="text" name="name" class="form-control" value="<%= candidate.name %>"
+                                  id="candidate-name" maxlength="15">
+                              </div>
+                              <div class="col-xl-2 mb-1">
+                                <label>Mobile / मोबाइल<span class="mandatory"> *</span></label>
+                                <input type="number" name="mobile" class="form-control" value="<%= candidate.mobile %>"
+                                  id="candidate-number" readonly>
+                              </div>
+                              <div class="col-xl-3 mb-1" id="pd-email">
+                                <label>Email / ईमेल</label>
+                                <input type="email" name="email" class="form-control" value="<%= candidate.email %>"
+                                  id="candidate-email" onkeypress="if(this.value.length==30) return false">
+                              </div>
+
+                              <div class="col-xl-2 mb-1" id="pd-gender">
+                                <label>Gender / लिंग<span class="mandatory"> *</span></label>
+                                <select class="form-control" name="sex" id="user-gender" value="<%= candidate.sex %>">
+                                  <option value="">Please select</option>
+                                  <option value="Male" <% if(candidate.sex==='Male' ){ %> selected <% } %>>Male</option>
+                                  <option value="Female" <% if(candidate.sex==='Female' ){ %> selected <% } %>>Female
+                                  </option>
+                                </select>
+                              </div>
+                              <div class="col-xl-2 mb-1" id="dob-field">
+                                <label>Date of Birth/जन्म तिथि<span class="mandatory"> *</span></label>
+                                <input type="date" name="dob" class="form-control"
+                                  value="<%= candidate.dob ? moment(candidate.dob).utcOffset('+05:30').format('YYYY-MM-DD') : 'NA' %>"
+                                  id="candidate-dob">
+                              </div>
+                              <div class="col-xl-3 mb-1" id="pd-number">
+                                <label>WhatsApp Number/व्हाट्सएप नंबर<span class="mandatory"> *</span></label>
+                                <input type="tel" maxlength="10" onKeyPress="if(this.value.length==10) return false;"
+                                  name="whatsapp" class="form-control"
+                                  value="<%= candidate.whatsapp || candidate.mobile %>" id="candidate-whatsapp-number">
+                              </div>
+                              <div class="col-xl-3 mb-1" id="pd-address">
+                                <label>Address / पता<span class="mandatory"> *</span></label>
+                                <input type="text" name="address" class="form-control" value="<%= candidate.address %>"
+                                  id="candidate-address" onkeypress="if(this.value.length==50) return false">
+                              </div>
+                              <div class="col-xl-3 mb-1" id="pd-state">
+                                <label>State / राज्य<span class="mandatory"> *</span></label>
+                                <select class="form-control" name="state" value="" id="state-field"
+                                  onchange="personalstateChangeHandler(event,'personalcity')">
+                                  <option value="">Select Option</option>
+                                  <% state.forEach((i)=> { %>
+                                    <% if(candidate.state?._id?.toString()==i._id) { %>
+                                      <option value="<%=i._id %>" class="text-capitalize" selected>
+                                        <%= i.name %>
+                                      </option>
+                                      <% } else { %>
+                                        <option value="<%=i._id %>" class="text-capitalize">
+                                          <%= i.name %>
+                                        </option>
+                                        <% } }); %>
+                                </select>
+                              </div>
+                              <div class="col-xl-3 mb-1" id="city-div">
+                                <label>City / शहर<span class="mandatory"> *</span></label>
+                                <select class="form-control" name="city" id='personalcity' value="">
+                                  <option value="">Select City</option>
+                                  <% if(candidate.state?._id) { %>
+                                    <% city.forEach((i)=> { %>
+                                      <% if(candidate.city?.toString()==i._id) { %>
+                                        <option value="<%= i._id %>" class="text-capitalize candidatecitylist" selected>
+                                          <%= i.name %>
+                                        </option>
+                                        <% } else { %>
+                                          <option value="<%= i._id %>" class="text-capitalize candidatecitylist">
+                                            <%= i.name %>
+                                          </option>
+                                          <% } }); }%>
+                                </select>
+                              </div>
+                              <div class="col-xl-6 mb-1">
+                                <!--<label>Current Location</label>
+                              <input class="form-control" type="text"  id="work-loc" value="<%= candidate?.place %>">
+                              <input type="hidden" id="place" name="place" value="" class="form-control"/>
+                              <input type="hidden" id="latitude" name="latitude" value="" class="form-control"/>
+                              <input type="hidden" id="longitude" name="longitude" value="" class="form-control"/>  -->
+                                <label for="work-loc">Current Location<span class="mandatory"> *</span></label>
+                                <div class="input-group">
+                                  <div class="input-group-prepend bg-locat">
+                                    <div class="input-group-text bg-intext"><img src="/images/isist.png"
+                                        id="siteforcomp">
+                                    </div>
+                                  </div>
+                                  <input type="text" class="form-control" id="work-loc" value="<%= candidate?.place %>">
+                                  <input type="hidden" id="place" name="place" value="" class="form-control" />
+                                  <input type="hidden" id="latitude" name="latitude" value="" class="form-control" />
+                                  <input type="hidden" id="longitude" name="longitude" value="" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="col-xl-3 mb-1" id="pd-pincode">
+                                <label>Pincode / पिन कोड<span class="mandatory"> *</span></label>
+                                <input type="number" onkeypress="if(this.value.length==6) return false" name="pincode"
+                                  class="form-control" id="candidate-pincode" maxlength="6"
+                                  value="<%= candidate.pincode %>">
+                              </div>
+                              <div class="col-xl-3 mb-1">
+                                <% if(candidate.image) {%>
+                                  <label>Upload image/ तस्विर अपलोड करे</label>
+                                  <div>
+                                    <a href="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.image %>"
+                                      target="_blank">Uploded image</a>
+                                    <i class="feather icon-x remove_uploaded_pic" style="color:red;"
+                                      id="removelogo"></i>
+                                    <input type="hidden" class="form-control" name="image" id="profilepic" value="" />
+                                  </div>
+                                  <% } else { %>
+                                    <label>Upload image/ तस्विर अपलोड करे</label>
+                                    <input type="file" class="form-control" id="candidate-file" value="">
+                                    <input type="hidden" class="form-control" name="image" id="profilepic" value="" />
+                                    <% } %>
+                              </div>
+                              <div class="col-xl-3 mb-1">
+                                <% if(candidate.resume) {%>
+                                  <label>Upload resume/ रिज्यूमे अपलोड करें </label>
+                                  <div>
+                                    <a href="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.resume %>"
+                                      target="_blank">Uploded resume</a>
+                                    <i class="feather icon-x remove_uploaded_pic" style="color:red;"
+                                      id="removeResume"></i>
+                                    <input type="hidden" class="form-control" name="resume" id="resume" value="" />
+                                  </div>
+                                  <% } else { %>
+                                    <label>Upload resume/ रिज्यूमे अपलोड करें</label>
+                                    <input type="file" class="form-control" id="uploadresume" value="">
+                                    <input type="hidden" class="form-control" name="resume" id="resume" value="" />
+                                    <% } %>
+                              </div>
+                              <div class="col-xl-3 mb-1">
+                                <% if(candidate.profilevideo) {%>
+                                  <label>Add Video Profile/वीडियो प्रोफाइल जोड़ें करें</label>
+                                  <div class="profilevideo">
+                                    <a href="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.profilevideo %>"
+                                      target="_blank" id="uploadedvideo">Uploded Video</a>
+                                    <i class="feather icon-x remove_uploaded_pic" style="color:red;"
+                                      id="removeVideo"></i>
+                                    <input type="hidden" class="form-control" name="profilevideo" id="video"
+                                      value="<%= candidate.profilevideo %>" />
+                                  </div>
+                                  <% } else { %>
+                                    <label>Add Video Profile/ वीडियो प्रोफाइल जोड़ें</label>
+                                    <input type="file" class="form-control" id="uploadVideo" value="">
+                                    <input type="hidden" class="form-control" name="profilevideo" id="video" value="" />
+                                    <% } %>
+                              </div>
+                              <div class="col-xl-3 mb-1">
+                                <label>Sample Video Profile/ वीडियो प्रोफाइल नमूना </label>
+                                <div>
+                                  <a href="/sampleVideoProfile" target="_blank">View / देखे</a>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section id="qualification">
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                      <div class="card">
+                        <div class="card-header border border-top-0 border-left-0 border-right-0">
+                          <h4 class="card-title pb-1">Qualification</h4>
+                        </div>
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row" id="qualification-section">
+                              <div class="col-xl-4 ml-1 mb-1" id="highestQuali">
+                                <label>Highest Qualification / अपनी उच्चतम योग्यता का चयन करें<span class="mandatory">
+                                    *</span></label>
+                                <select class="form-control single-field" value="" name="highestQualification"
+                                  id="quali">
+                                  <option value="">Select Highest Qualification</option>
+                                  <% Qualifications.forEach((i)=> { %>
+                                    <% if(candidate.highestQualification?.toString()==i._id) {%>
+                                      <option value="<%= i._id %>" class="text-capitalize" selected>
+                                        <%= i.name %>
+                                      </option>
+                                      <% } else { %>
+                                        <option value="<%= i._id %>" class="text-capitalize">
+                                          <%= i.name %>
+                                        </option>
+                                        <% } }); %>
+                                </select>
+                              </div>
+                              <div id="qualification-div" class="col-xl-12 mb-1">
+                                <% if(candidate.yearOfPassing) {%>
+                                  <label>Year of Passing / उत्तीर्ण होने का वर्ष</label>
+                                  <select class="form-control single-field" name="yearOfPassing" id="yearPassing">
+                                    <option value="">Select Year</option>
+                                    <% for(let i=2023; i> 1999; i--) { %>
+                                      <option value="<%=i%>" <% if(candidate.yearOfPassing==i ) {%> selected <% } %>
+                                          ><%=i%>
+                                      </option>
+                                      <% }%>
+                                  </select>
+                                  <% } %>
+                                    <% if(candidate.qualifications?.length>0&&!candidate.yearOfPassing) {%>
+                                      <% for(let j=0;j<candidate.qualifications.length;j++) { %>
+                                        <div class="row px-1 qua-row">
+                                          <div class="col-xl-4">
+                                            <label>Year of Passing / उत्तीर्ण होने का वर्ष</label>
+                                            <select class="form-control" name="PassingYear">
+                                              <option value="">Select Year </option>
+                                              <% for(let i=2023; i> 1999; i--) { %>
+                                                <option value="<%=i%>" <% if(candidate.qualifications[j].PassingYear==i
+                                                  ) {%> selected <% } %>
+                                                    ><%=i%>
+                                                </option>
+                                                <% }%>
+                                            </select>
+                                          </div>
+                                          <div class="col-xl-4 mb-1">
+                                            <label>Qualification / योग्यता</label>
+                                            <select class="form-control" onchange="qualificationchange(event)"
+                                              name="Qualification">
+                                              <option value="">Select Qualification</option>
+                                              <% Qualifications.forEach((q)=> { %>
+                                                <% if(q.basic !==true) {%>
+                                                  <% if(candidate.qualifications[j].Qualification?.toString()==q._id)
+                                                    {%>
+                                                    <option value="<%= q._id %>" class="text-capitalize" selected>
+                                                      <%= q.name %>
+                                                    </option>
+                                                    <% } else { %>
+                                                      <option value="<%= q._id %>" class="text-capitalize">
+                                                        <%= q.name %>
+                                                      </option>
+                                                      <% }} }); %>
+                                            </select>
+                                          </div>
+                                          <div class="col-xl-4 mb-1">
+                                            <label>Sub Qualification / उप योग्यता</label>
+                                            <select class="form-control text-capitalize subqualification"
+                                              name="subQualification">
+                                              <option value="">Select Subqualification</option>
+                                              <% subQualification.forEach((i)=> { %>
+                                                <% if(i._qualification?.toString()==candidate.qualifications[j].Qualification?.toString())
+                                                  { %>
+                                                  <% if(candidate.qualifications[j].subQualification?.toString()==i._id)
+                                                    { %>
+                                                    <option value="<%= candidate.qualifications[j].subQualification %>"
+                                                      class="text-capitalize" selected>
+                                                      <%= i.name %>
+                                                    </option>
+                                                    <% } else { %>
+                                                      <option value="<%= i._id %>" class="text-capitalize">
+                                                        <%= i.name %>
+                                                      </option>
+                                                      <%} }}); %>
+                                            </select>
+                                          </div>
+                                          <div class="col-xl-4 mb-1"><label>College Name / कॉलेज का नाम</label><input
+                                              type="text" class="form-control" placeholder="" name="College"
+                                              onkeypress="if(this.value.length==50) return false"
+                                              value="<%= candidate.qualifications[j].College %>"></div>
+                                          <div class="col-xl-4 mb-1">
+                                            <label>University Name / विश्वविद्यालय का नाम</label>
+                                            <select class="form-control text-capitalize" name="University">
+                                              <option value="">Select University</option>
+                                              <% Universities.forEach((i)=> { %>
+                                                <% if(candidate.qualifications[j].University?.toString()==i._id) { %>
+                                                  <option value="<%= candidate.qualifications[j].University %>"
+                                                    class="text-capitalize" selected>
+                                                    <%= i.name %>
+                                                  </option>
+                                                  <% } else { %>
+                                                    <option value="<%= i._id %>" class="text-capitalize">
+                                                      <%= i.name %>
+                                                    </option>
+                                                    <% }}); %>
+                                            </select>
+                                          </div>
+                                          <div class="col-xl-4 mb-1">
+                                            <label>Assessment Type / मूल्यांकन प्रकार</label>
+                                            <select class="form-control" name="AssessmentType">
+                                              <option value="">Select Option</option>
+                                              <option value="CGPA" <%
+                                                if(candidate.qualifications[j].AssessmentType==='CGPA' ) {%> selected <%
+                                                  } %>>CGPA</option>
+                                              <option value="Percentage" <%
+                                                if(candidate.qualifications[j].AssessmentType==='Percentage' ) {%>
+                                                selected <% } %>>Percentage</option>
+                                              <option value="Grade" <%
+                                                if(candidate.qualifications[j].AssessmentType==='Grade' ) {%> selected
+                                                <% } %>>Grade</option>
+                                            </select>
+                                          </div>
+                                          <div class="col-xl-4 mb-1">
+                                            <label>Enter Value / मूल्य दर्ज करें</label>
+                                            <input type="text" class="form-control"
+                                              onkeypress="if(this.value.length==4) return false"
+                                              placeholder="Enter CGPA, Percentage or Grade" name="Result"
+                                              value="<%= candidate.qualifications[j].Result %>">
+                                          </div>
+                                          <div class="col-xl-4 mb-1">
+                                            <label for="college-loc">College Location</label>
+                                            <div class="input-group mb-2">
+                                              <div class="input-group-prepend bg-locat">
+                                                <div class="input-group-text bg-intext"><img src="/images/isist.png"
+                                                    id="siteforcomp"></div>
+                                              </div>
+                                              <input type="text" class="form-control college-loc" id="college-loc"
+                                                value="<%=  candidate.qualifications[j]?.collegePlace %>">
+                                              <input type="hidden" class="form-control cllgPlace" name="collegePlace"
+                                                value="<%=  candidate.qualifications[j]?.collegePlace %>" />
+                                              <input type="hidden" class="form-control cllgLatitude"
+                                                name="collegeLatitude"
+                                                value="<%=  candidate.qualifications[j]?.collegeLatitude %>" />
+                                              <input type="hidden" class="form-control cllgLongitude"
+                                                name="collegeLongitude"
+                                                value="<%=  candidate.qualifications[j]?.collegeLongitude %>" />
+                                            </div>
+                                          </div>
+                                          <% if(j>=1) {%>
+                                            <div class="d-flex flex-row-reverse deletequalification">
+                                              <div class="col my-auto">
+                                                <a class="btn btn-danger waves-effect waves-light"
+                                                  onclick="deleteQualificationRow(this)">Delete</a>
+                                              </div>
+                                            </div>
+                                            <% } %>
+                                        </div>
+                                        <% } %>
+                                          <% } %>
+                              </div>
+                              <% if(candidate.qualifications.length>0&&!candidate.yearOfPassing) {%>
+                                <div id="addmore">
+                                  <div class="col"><a onclick="addQualificationrow()"
+                                      class="btn btn-success waves-effect waves-light text-white mt-2">+ Add
+                                      Another</a>
+                                  </div>
+                                </div>
+                                <% } else { %>
+                                  <div id="addmore" style="display: none">
+                                    <div class="col"><a onclick="addQualificationrow()"
+                                        class="btn btn-success waves-effect waves-light text-white mt-2">+ Add
+                                        Another</a>
+                                    </div>
+                                  </div>
+                                  <% } %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </section>
+                <section id="skills-and-profile">
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6">
+                      <div class="card">
+                        <div class="card-header border border-top-0 border-left-0 border-right-0">
+                          <h4 class="card-title pb-1">Technical Skills / तकनीकी कौशल</h4>
+                        </div>
+                        <div class="card-content">
+                          <div class="card-body" id="Technical-skills-section">
+                            <div class="col-xl-12 px-0">
+                              <% for(let i=0; i < 4; i++) { %>
+                                <div class="row mb-1 skillrow">
+                                  <div class="col-xl-6 ">
+                                    <label>Select Skills / कौशल का चयन करें</label>
+                                    <select class="form-control text-capitalize chosen" name="techskill">
+                                      <option value="">Select skill</option>
+                                      <% techinalSkill.forEach((j)=> { %>
+                                        <% if(candidate.techSkills[i]?.id?.toString()==j._id.toString()) { %>
+                                          <option value="<%= candidate.techSkills[i].id %>" class="text-capitalize"
+                                            selected>
+                                            <%= j.name %>
+                                          </option>
+                                          <% } else {%>
+                                            <option value="<%= j._id %>" class="text-capitalize">
+                                              <%= j.name %>
+                                            </option>
+                                            <% } }); %>
+                                    </select>
+                                  </div>
+                                  <div class="col-xl-6">
+                                    <% if(candidate.techSkills[i]?.URL) {%>
+                                      <br>
+                                      <a id="uploadedvideo" target="_blank"
+                                        href="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.techSkills[i].URL %>"
+                                        class="pointer img-fluid">
+                                        Uploaded Video
+                                      </a>
+                                      <input type="hidden" class="techskill" name="upload_url"
+                                        value="<%=candidate.techSkills[i].URL %>" />
+                                      <i class="feather icon-x remove_uploaded_pic" style="color:red;"
+                                        onclick="removevideo(event)"></i>
+                                      <% } else { %>
+                                        <label>Upload video / विडियो को अपलोड करें</label>
+                                        <input type="file" id="techSkill<%= i %>" class="form-control" value=""
+                                          onchange="uploadFile(event, 'techSkill', '<%= i %>')">
+                                        <% } %>
+                                  </div>
+                                </div>
+                                <% }; %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                      <div class="card">
+                        <div class="card-header border border-top-0 border-left-0 border-right-0">
+                          <h4 class="card-title pb-1">Non Technical Skills / गैर तकनीकी कौशल</h4>
+                        </div>
+                        <div class="card-content">
+                          <div class="card-body" id="non-technical-skills-section">
+                            <div class="col-xl-12 px-0">
+                              <% for(let i=0; i < 4; i++) { %>
+                                <div class="row mb-1 skillrow">
+                                  <div class="col-xl-6">
+                                    <label>Select Skills / कौशल का चयन करें</label>
+                                    <select class="form-control text-capitalize chosen" name="nontechskill">
+                                      <option value="">Select skill</option>
+                                      <% nonTechnicalSkill.forEach((j)=> { %>
+                                        <% if(candidate.nonTechSkills[i]?.id.toString()==j._id.toString()) { %>
+                                          <option value="<%= candidate.nonTechSkills[i].id %>" class="text-capitalize"
+                                            selected>
+                                            <%= j.name %>
+                                          </option>
+                                          <% } else {%>
+                                            <option value="<%= j._id %>" class="text-capitalize">
+                                              <%= j.name %>
+                                            </option>
+                                            <% } }); %>
+                                    </select>
+                                  </div>
+                                  <div class="col-xl-6">
+
+                                    <% if(candidate.nonTechSkills[i]?.URL) {%>
+                                      <br>
+                                      <a id="uploadedvideo" target="_blank"
+                                        href="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.nonTechSkills[i].URL %>"
+                                        class="pointer img-fluid">
+                                        Uploaded Video
+                                      </a>
+                                      <input type="hidden" class="nontechskill" name="upload_url"
+                                        value="<%=candidate.nonTechSkills[i].URL %>" />
+                                      <i class="feather icon-x remove_uploaded_pic" style="color:red;"
+                                        onclick="removevideo(event)"></i>
+
+                                      <% } else { %>
+                                        <label>Upload video / विडियो को अपलोड करें</label>
+                                        <input type="file" id="nonTechSkill<%= i %>" class="form-control" value=""
+                                          onchange="uploadFile(event, 'nonTechSkill', '<%= i %>')">
+                                        <% } %>
+                                  </div>
+                                </div>
+                                <% }; %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section id="Experience-section">
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                      <div class="card">
+                        <div class="card-header border border-top-0 border-left-0 border-right-0">
+                          <h4 class="card-title pb-1">Experience / अनुभव</h4>
+                        </div>
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row" id="exp-section">
+                              <div class="col-xl-3 mb-1" id="isExp">
+                                <label>Experience / अनुभव<span class="mandatory"> *</span></label>
+                                <select class="form-control single-field" value="" name="experience" id="exp-calc">
+                                  <option value="">Select Experience</option>
+                                  <% if(candidate?.isExperienced===false) { %>
+                                    <option value="Fresher" selected>Fresher</option>
+                                    <option value="Experienced">Experienced</option>
+                                    <% } else if(candidate?.isExperienced===true) {%>
+                                      <option value="Fresher">Fresher</option>
+                                      <option value="Experienced" selected>Experienced</option>
+                                      <% } else{ %>
+                                        <option value="Fresher">Fresher</option>
+                                        <option value="Experienced">Experienced</option>
+                                        <% } %>
+                                </select>
+                              </div>
+                              <% if(candidate?.isExperienced) {%>
+                                <div class="col-xl-3 mb-1" id="total-exp">
+                                  <label>Total experience (yrs) / कुल अनुभव (वर्ष)</label>
+                                  <input type="number" name="totalExperience" class="form-control single-field"
+                                    value="<%= candidate.totalExperience %>">
+                                </div>
+                                <% } else{%>
+                                  <div class="col-xl-3 mb-1" id="exp-field">
+                                    <label>Total experience (yrs) / कुल अनुभव (वर्ष)</label>
+                                    <input type="number" name="totalExperience" class="form-control single-field"
+                                      value="">
+                                  </div>
+                                  <% } %>
+                                    <div id="experience-div">
+                                      <% if(candidate.experiences.length>0&&candidate?.isExperienced===true) {%>
+                                        <% candidate.experiences.forEach((exp, index)=> { %>
+                                          <div class="row px-1 exp-row">
+                                            <div class="col-xl-3 mb-1">
+                                              <label>From Date / तिथि से</label>
+                                              <input type="date" class="form-control" name="FromDate"
+                                                value="<%= exp.FromDate %>">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                              <label>To Date / तिथि तक</label>
+                                              <input type="date" class="form-control" name="ToDate"
+                                                value="<%= exp.ToDate %>">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                              <label>Industry / उद्योग</label>
+                                              <select class="form-control text-capitalize" name="Industry_Name">
+                                                <option value="">Select Industry</option>
+                                                <% industry.forEach((i)=> { %>
+                                                  <% if(exp?.Industry_Name?._id?.toString()==i._id) {%>
+                                                    <option value="<%= i._id %>" class="text-capitalize" selected>
+                                                      <%= i.name %>
+                                                    </option>
+                                                    <% } else { %>
+                                                      <option value="<%= i._id %>" class="text-capitalize">
+                                                        <%= i.name %>
+                                                      </option>
+                                                      <% } }); %>
+                                              </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                              <label>Sub Industry / उप उद्योग</label>
+                                              <select class="form-control text-capitalize" name="SubIndustry_Name">
+                                                <option value="">Select Sub Industry</option>
+                                                <% subIndustry.forEach((i)=> { %>
+                                                  <% if(exp?.SubIndustry_Name?._id?.toString()==i._id) {%>
+                                                    <option value="<%= i._id %>" class="text-capitalize" selected>
+                                                      <%= i.name %>
+                                                    </option>
+                                                    <% } else { %>
+                                                      <option value="<%= i._id %>" class="text-capitalize">
+                                                        <%= i.name %>
+                                                      </option>
+                                                      <% } }); %>
+                                              </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                              <label>Company name / कंपनी का नाम</label>
+                                              <input type="text" name="Company_Name" class="form-control"
+                                                value="<%= exp.Company_Name %>"
+                                                onkeypress="if(this.value.length==50) return false">
+                                            </div>
+                                            <!-- <div class="col-xl-3 mb-1">
+                                      <label>Company Email / कंपनी ईमेल</label>
+                                      <input type="email" name="Company_Email" class="form-control" id="comapany-email"
+                                        value="<%= exp.Company_Email %>"
+                                        onkeypress="if(this.value.length==30) return false">
+                                    </div> -->
+                                            <div class="col-xl-3 mb-1">
+                                              <label>State / राज्य</label>
+                                              <select class="form-control" cityclass="<%=exp?._id %>"
+                                                name="Company_State" value="" onchange="expStateChangeHandler(event)">
+                                                <option value="">Select State</option>
+                                                <% state.forEach((item)=>{%>
+                                                  <% if(exp?.Company_State?._id.toString()==item._id) { %>
+                                                    <option value="<%= item._id %>" class="text-capitalize" selected>
+                                                      <%= item.name %>
+                                                    </option>
+                                                    <% } else { %>
+                                                      <option value="<%= item._id %>" class="text-capitalize">
+                                                        <%= item.name %>
+                                                      </option>
+                                                      <% }}); %>
+                                              </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                              <label>City / शहर</label>
+                                              <select name="Company_City" id="compcity<%=exp?._id %>"
+                                                class="form-control">
+                                                <option value="">Select City</option>
+                                                <% allcities.forEach((i)=> { %>
+                                                  <% if(exp?.Company_State?.stateId==i.stateId &&
+                                                    exp?.Company_City?.cityId===i.cityId) { %>
+                                                    <option value="<%= i._id %>" class="text-capitalize <%= exp?._id %>"
+                                                      selected>
+                                                      <%= i.name %>
+                                                    </option>
+                                                    <% } else if(exp?.Company_State?.stateId==i.stateId) { %>
+                                                      <option value="<%= i._id %>"
+                                                        class="text-capitalize <%= exp?._id %>">
+                                                        <%= i.name %>
+                                                      </option>
+                                                      <% } }); %>
+
+                                              </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                              <label>Comments / टिप्पणियाँ</label>
+                                              <input type="text" name="Comments" class="form-control"
+                                                value="<%= exp.Comments %>">
+                                            </div>
+                                            <% if(index>=1) {%>
+                                              <div class="d-flex flex-row-reverse deleteexperience">
+                                                <div class="col my-auto">
+                                                  <a class="btn btn-danger waves-effect waves-light"
+                                                    onclick="deleteExperienceRow(this)">Delete</a>
+                                                </div>
+                                              </div>
+                                              <% } %>
+                                          </div>
+                                          <% }); }%>
+                                    </div>
+                                    <div class="col-xl-12 text-right">
+                                    <% if(candidate?.isExperienced===true) {%>
+                                      <div id="addmoreexp">
+                                        <div><a onclick="addExperienceRow()"
+                                            class="btn btn-success waves-effect waves-light text-white mt-2">+ Add
+                                            Another</a>
+                                        </div>
+                                      </div>
+                                      <% } else { %>
+                                        <div id="addmoreexp" style="display:none;">
+                                          <div><a onclick="addExperienceRow()"
+                                              class="btn btn-success waves-effect waves-light text-white mt-2">+ Add
+                                              Another</a>
+                                          </div>
+                                        </div>
+                                        <% } %>
+                                      </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </section>
+                <section id="location-preference">
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                      <div class="card">
+                        <div class="card-header border border-top-0 border-left-0 border-right-0">
+                          <h4 class="card-title pb-1">Location Preferences / स्थान का चयन</h4>
+                        </div>
+                        <div class="card-content">
+                          <div class="card-body">
+                            <% for(let i=0; i < 3; i++) { %>
+                              <div class="row locationpref">
+                                <div class="col-xl- my-auto">
+                                  <label class="font-weight-bold">Location <%= i+1 %></label>
+                                </div>
+                                <div class="col-xl-3 mb-1">
+                                  <label>State / राज्य</label>
+                                  <select class="form-control" name="state" value="" id="state-field<%= i %>"
+                                    onchange="stateChangeHandler(event,'city-field<%= i %>')">
+                                    <option value="">Select State</option>
+                                    <% state.forEach((item)=>{%>
+                                      <% if(candidate.locationPreferences?.length==0 &&
+                                        candidate.state?._id?.toString()==item._id) {%>
+                                        <option value="<%= item._id %>" class="text-capitalize" selected>
+                                          <%= item.name %>
+                                        </option>
+                                        <%}else if(candidate.locationPreferences[i]?.state?._id.toString()==item._id) {
+                                          %>
+                                          <option value="<%= item._id %>" class="text-capitalize" selected>
+                                            <%= item.name %>
+                                          </option>
+                                          <% } else { %>
+                                            <option value="<%= item._id %>" class="text-capitalize">
+                                              <%= item.name %>
+                                            </option>
+                                            <% }}); %>
+                                  </select>
+                                </div>
+                                <div class="col-xl-3 mb-1" id="city-div<%= i %>">
+                                  <label>City / शहर</label>
+                                  <select class="form-control" name="city" id="city-field<%= i %>">
+                                    <option value="">Select City</option>
+                                    <% allcities.forEach((item)=> { %>
+                                      <% if(candidate.locationPreferences?.length==0 &&
+                                        candidate.city?.toString()==item._id) {%>
+                                        <option value="<%= item._id %>" class="text-capitalize prefcitylist" selected>
+                                          <%= item.name %>
+                                        </option>
+                                        <%}else if(candidate.locationPreferences[i]?.state?.stateId==item.stateId &&
+                                          candidate.locationPreferences[i]?.city?.cityId===item.cityId) { %>
+                                          <option value="<%= item._id %>" class="text-capitalize prefcitylist" selected>
+                                            <%= item.name %>
+                                          </option>
+                                          <% } else if(candidate.locationPreferences[i]?.state?.stateId==item.stateId) {
+                                            %>
+                                            <option value="<%= item._id %>" class="text-capitalize prefcitylist">
+                                              <%= item.name %>
+                                            </option>
+                                            <% } }); %>
+                                  </select>
+                                </div>
+                              </div>
+                              <% } %>
+                                <div class="row">
+                                  <div class="col-xl-12 text-right">
+                                    <a type="reset" class="btn btn-danger waves-effect waves-light"
+                                      id="reset-button">Reset</a>
+                                    <a class="btn btn-success waves-effect waves-light text-white"
+                                      id="save-button">Save</a>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-xl-12">
+                                    <div id="msg" style="color:red; display:none;">
+                                    </div>
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </form>
+            </div>
+          </div>
+          <div class="modal fade show" id="cashbackmodal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content modal-sm">
+                <div class="modal-header vchr_header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Congratulations</h5>
+                  <button type="button" class="close color-purple" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body p-0">
+                  <form class="my-3">
+                    <h3 class="coupon-text">You have earned <strong id="money-text"></strong> /आपने <strong
+                        id="money-text-hindi"></strong> कमाए हैं|</h3>
+                    <div id="profile-comp">
+                      <p id="video-text">You have earn ₹ <%= cashback.profilecomplete%> for completing profile / आपने
+                          प्रोफाइल पूरा करने के लिए ₹ <%= cashback.profilecomplete%> कमाए हैं|</p>
+                    </div>
+                    <div id="upload-video">
+                      <p id="video-text" class="mx-2">Upload the video and earn ₹ <%= cashback.videoprofile %> / वीडियो
+                          अपलोड करें और ₹ <%= cashback.videoprofile%> कमाएं |</p>
+                      <a href="/candidate/myProfile#personal-info" id="a-profile"><button type="button"
+                          class="voucher-btn btn btn-sm ml-1" aria-label="upload-video"> <span aria-hidden="true"
+                            class="yes-cross">Upload video / वीडियो अपलोड</span></button></a>
+                    </div>
+                    <div id="apply-job">
+                      <h3 id="video-text">Apply on the jobs and earn ₹ <%= cashback.apply %> / नौकरियों पर आवेदन करें और
+                          ₹ <%= cashback.apply %> कमाएं|</h3>
+                      <a href="/candidate/searchjob"><button type="button" class="voucher-btn btn btn-sm ml-1"> <span
+                            aria-hidden="true" class="yes-cross">Apply now / अप्लाई करें</span> </button> </a>
+                    </div>
+                </div>
+                <input type="hidden" id="profile-comp" value="">
+                </form>
+              </div>
+            </div>
+          </div>
+          <script
+            src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE%>&callback=initMap&libraries=places&v=weekly"
+            defer></script>
+          <script>
+            $('#a-profile').click(() => {
+              $('#cashbackmodal').modal('hide')
+            })
+            function initMap() {
+              const options = {
+                componentRestrictions: { country: "in" },
+                types: ["establishment"]
+              };
+              const location = document.getElementById("work-loc")
+              const cllgLocation = document.getElementById("college-loc")
+              const autocomplete = new google.maps.places.Autocomplete(location, options);
+              google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                let place = autocomplete.getPlace();
+                document.getElementById('place').value = location.value;
+                document.getElementById('latitude').value = place.geometry.location.lat();
+                document.getElementById('longitude').value = place.geometry.location.lng();
+              });
+
+              $('.qua-row').each(function () {
+                let self = this
+                const collegeLoc = $(this).find('.college-loc')[0]
+                const collegeAutocomplete = new google.maps.places.Autocomplete(collegeLoc, options);
+                google.maps.event.addListener(collegeAutocomplete, 'place_changed', function () {
+                  let place = collegeAutocomplete.getPlace();
+                  $(self).find('.cllgPlace').val(collegeLoc.value);
+                  $(self).find('.cllgLatitude').val(place.geometry.location.lat())
+                  $(self).find('.cllgLongitude').val(place.geometry.location.lng());
+                });
+              })
+            }
+            window.initMap = initMap;
+          </script>
+          <script>
+            $('#preloader').hide();
+            const wpNumber = document.getElementById('candidate-whatsapp-number')
+            wpNumber.addEventListener('keypress', (e) => {
+              let k = e.which;
+              if (k > 58 || k < 48)
+                e.preventDefault();
+            })
+
+            const checkVideoValidation = (video) => {
+              let regex = /(\.mp4|\.mov|\.avi)$/i;
+              if (!regex.exec(video)) {
+                return false;
+              } else {
+                return true;
+              }
+            }
+            const checkVideoSize = (size) => {
+              let finalSize = ((size / 1024) / 1024);
+              if (finalSize > 10) {
+                return false
+              }
+              return true;
+            }
+            function uploadFile(e, section, id) {
+              let index = e.target.id.slice(-1)
+              let file = e.target.files[0];
+              let size = file.size;
+              let body = {
+                file: file
+              }
+
+              let saveButton = document.getElementById('save-button');
+              let inputField = document.getElementById(`${section}${+id}`);
+              let type = file.name;
+              header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+              if (checkVideoValidation(type) === false && checkVideoSize(size) === false) {
+                alert("You need to upload the video either in mp4,mov or avi format and should be less than 10MB");
+                inputField.value = ''
+              } else if (checkVideoSize(size) === false && checkVideoValidation(type) === true) {
+                alert("You need to upload the video less than 10MB");
+                inputField.value = ''
+              } else if (checkVideoSize(size) === true && checkVideoValidation(type) === false) {
+                alert("You need to upload the video either in mp4,mov or avi format");
+                inputField.value = ''
+              } else {
+                $('#save-button').attr('disabled', `disabled`)
+                $('#save-button').addClass('disabled')
+                $('#preloader').show();
+                axios.post('/api/uploadVideo', body, header)
+                  .then(result => {
+                    $('#preloader').hide();
+                    $('#save-button').removeClass('disabled')
+                    $('#save-button').removeAttr('disabled')
+                    if (result.data.status) {
+                      localStorage.setItem(`${section}Video${id}`, result.data.data.Key);
+                    }
+                  })
+              }
+            }
+            $(document).ready(function () {
+              $('#exp-field').hide()
+              $('#candidate-file').change(function (e) {
+                let file = e.target.files[0]
+                let body = {
+                  file: file
+                }
+                let type = file.name;
+                let size = file.size;
+                let candidateFile = document.getElementById('candidate-file');
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                if (checkImageValidation(type) === false && checkImageSize(size) === false) {
+                  alert("upload the image in jpg,jpeg or png format and should be less than 2MB");
+                  candidateFile.value = ''
+                } else if (checkImageValidation(type) === false && checkImageSize(size) === true) {
+                  alert("upload the image in jpg,jpeg or png format");
+                  candidateFile.value = ''
+                } else if (checkImageValidation(type) === true && checkImageSize(size) === false) {
+                  alert("uploaded image should be less than 2MB");
+                  candidateFile.value = ''
+                } else {
+                  axios.post('/api/uploadSingleFile', body, header)
+                    .then(result => {
+                      if (result.data.status) {
+                        localStorage.setItem("profilepic", result.data.data.Key)
+                        $('#profilepic').val(result.data.data.Key)
+                      }
+                    })
+                }
+              });
+
+              $('#uploadresume').change(function (e) {
+                let file = e.target.files[0]
+                let body = {
+                  file: file
+                }
+                let type = file.name;
+                let size = file.size
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                  alert("upload the cv in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                  e.target.value = ''
+                } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                  alert("uploaded cv size should less than 5MB");
+                  e.target.value = ''
+                } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                  alert("upload the cv in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                  e.target.value = ''
+                } else {
+                  axios.post('/api/uploadSingleFile', body, header)
+                    .then(result => {
+                      if (result.data.status) {
+                        localStorage.setItem("resume", result.data.data.Key)
+                        $('#resume').val(result.data.data.Key)
+                      }
+                    })
+                }
+              });
+              uploadVideoFile = (e) => {
+                let file = e.target.files[0];
+
+                let size = file.size;
+                let body = {
+                  file: file
+                }
+                let type = file.name;
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                if (checkVideoValidation(type) === false && checkVideoSize(size) === false) {
+                  alert("You need to upload the video either in mp4,mov or avi format and should be less than 10MB");
+                  e.target.value = ''
+                } else if (checkVideoSize(size) === false && checkVideoValidation(type) === true) {
+                  alert("You need to upload the video less than 10MB");
+                  e.target.value = ''
+                } else if (checkVideoSize(size) === true && checkVideoValidation(type) === false) {
+                  alert("You need to upload the video either in mp4,mov or avi format");
+                  e.target.value = ''
+                } else {
+                  $('#preloader').show();
+                  $('#save-button').attr('disabled', `disabled`)
+                  $('#save-button').addClass('disabled')
+                  axios.post('/api/uploadVideo', body, header)
+                    .then(result => {
+                      $('#preloader').hide();
+                      if (result.data.status) {
+                        $('#save-button').removeClass('disabled')
+                        $('#save-button').removeAttr('disabled')
+                        $('#video').val(result.data.data.Key)
+                      }
+                    })
+                    .catch(err => console.log(err))
+                }
+              }
+              $('#uploadVideo').change(function (e) {
+                let file = e.target.files[0];
+
+                let size = file.size;
+                let body = {
+                  file: file
+                }
+                let type = file.name;
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                if (checkVideoValidation(type) === false && checkVideoSize(size) === false) {
+                  alert("You need to upload the video either in mp4,mov or avi format and should be less than 10MB");
+                  e.target.value = ''
+                } else if (checkVideoSize(size) === false && checkVideoValidation(type) === true) {
+                  alert("You need to upload the video less than 10MB");
+                  e.target.value = ''
+                } else if (checkVideoSize(size) === true && checkVideoValidation(type) === false) {
+                  alert("You need to upload the video either in mp4,mov or avi format");
+                  e.target.value = ''
+                } else {
+                  $('#preloader').show();
+                  $('#save-button').attr('disabled', `disabled`)
+                  $('#save-button').addClass('disabled')
+                  axios.post('/api/uploadVideo', body, header)
+                    .then(result => {
+                      $('#preloader').hide();
+                      if (result.data.status) {
+                        $('#save-button').removeClass('disabled')
+                        $('#save-button').removeAttr('disabled')
+                        $('#video').val(result.data.data.Key)
+                      }
+                    })
+                    .catch(err => console.log(err))
+                }
+              })
+
+              function getSingleFields() {
+                const singleFields = Array.from(document.querySelectorAll('.single-field'));
+                const fields = {}
+                for (let i = 0; i < singleFields.length; i++) {
+                  if (singleFields[i].value === "Fresher") {
+                    fields["isExperienced"] = false;
+                  } else if (singleFields[i].value === "Experienced") {
+                    fields["isExperienced"] = true;
+                  }
+                  else {
+                    fields[singleFields[i].name] = singleFields[i].value;
+                  }
+                }
+                return fields;
+              }
+              $('select#exp-calc').change(function (e) {
+                let value = $('select#exp-calc').val();
+                let expDiv = $('#exp-div');
+                if (value === '') {
+                  $('#experience-div').html('');
+                  $('#exp-field').hide();
+                  $('#total-exp').hide();
+                  $('#addmoreexp').hide();
+                  return false
+                }
+                if (value === "Fresher") {
+                  $('#addmoreexp').hide();
+                  $('#experience-div').html('');
+                  $('#exp-field').hide();
+                  $('#total-exp').hide();
+                } else {
+                  const html = $('#experience-template template').html()
+                  $('#addmoreexp').show();
+                  $('#exp-field').show();
+                  $('#total-exp').show();
+                  $('#total-exp input').val(' ');
+                  $('#experience-div').html(html);
+                  let rows = $('.exp-row');
+                  if (rows && rows.length === 1) {
+                    $('.deleteexperience').remove();
+                  }
+                }
+              })
+              $('select#quali').change(function (e) {
+                let value = $('select#quali  :selected').text().trim();
+                let val = $('select#quali').val()
+                const quaDiv = document.getElementById('qualification-div');
+                if (value === "Upto 5th" || value === "10th" || value === "12th") {
+                  $('#addmore').hide()
+                  $('#qualification-div').html('')
+                  let html = $('#lowerqualificationtemplate template').html()
+                  $('#qualification-div').html(html)
+                } else if (val) {
+                  $('#lowerqualificationyear').hide()
+                  $('#qualification-div').html('')
+                  let html = $('#qualificationtemplate template').html();
+                  $('#addmore').show();
+                  $('#qualification-div').html(html);
+
+
+                  let rows = $('.qua-row');
+                  if (rows && rows.length === 1) {
+                    $('.deletequalification').remove();
+                  }
+                  initMap()
+
+                } else {
+                  $('#qualification-div').html('');
+                  $('#lowerqualificationyear').hide()
+                  $('#addmore').hide()
+                }
+              })
+
+              const getTechicalSkills = () => {
+                const initialArray = Array.from(document.querySelectorAll('#Technical-skills-section select'));
+                const finalArray = [];
+
+                $('#Technical-skills-section .skillrow').each(function () {
+                  let skillId = $(this).find('select').val()
+                  let uploadedvideo = $(this).find('#uploadedvideo')
+                  let hidden = $(this).find('input.techskill')
+                  let type = $(hidden).prop("type");
+                  let name = $(hidden).prop("name")
+                  let val = $(hidden).val()
+                  if ((val && skillId) || uploadedvideo.length > 0) {
+                    finalArray.push({ skillId, upload_url: val });
+                  }
+                })
+                for (let i = 0; i < initialArray.length; i++) {
+                  if (localStorage.getItem(`techSkillVideo${i}`) !== null) {
+                    finalArray.push({ skillId: initialArray[i].value, upload_url: localStorage.getItem(`techSkillVideo${i}`) });
+                    localStorage.removeItem(`techSkillVideo${i}`)
+                  }
+                }
+                return finalArray;
+              }
+              const getNonTechnicalSkills = () => {
+                const initialArray = Array.from(document.querySelectorAll('#non-technical-skills-section select'));
+                const finalArray = [];
+
+                $('#non-technical-skills-section .skillrow').each(function () {
+                  let skillId = $(this).find('select').val()
+                  let uploadedvideo = $(this).find('#uploadedvideo')
+                  let hidden = $(this).find('input.nontechskill')
+                  let type = $(hidden).prop("type");
+                  let name = $(hidden).prop("name")
+                  let val = $(hidden).val()
+                  if ((val && skillId) || uploadedvideo.length > 0) {
+                    finalArray.push({ skillId, upload_url: val });
+                  }
+                })
+
+                for (let i = 0; i < initialArray.length; i++) {
+                  if (localStorage.getItem(`nonTechSkillVideo${i}`) !== null) {
+                    finalArray.push({ skillId: initialArray[i].value, upload_url: localStorage.getItem(`nonTechSkillVideo${i}`) });
+                    localStorage.removeItem(`nonTechSkillVideo${i}`)
+                  }
+                }
+                return finalArray;
+              }
+              $('#save-button').bind('click', () => {
+                if (!validations()) {
+                  return false
+                }
+
+                const { highestQualification, yearOfPassing, totalExperience, isExperienced } = getSingleFields();
+                let body = {
+                  personalInfo: getPersonalInformation(),
+                  qualifications: getQualificationValues(),
+                  technicalskills: getTechicalSkills(),
+                  nontechnicalskills: getNonTechnicalSkills(),
+                  locationPreferences: getLocationPreferences(),
+                  experiences: getExperienceValues(),
+                  highestQualification: highestQualification,
+                  yearOfPassing: yearOfPassing,
+                  totalExperience: totalExperience
+                  , isExperienced: isExperienced
+                }
+                header = { headers: { 'x-auth': localStorage.getItem('token') } }
+                axios.post('/candidate/myprofile', body, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      document.getElementById('profile-comp').value = true
+                      $('#msg').show();
+                      $('#msg').text(result.data.message);
+                      launchModal(result.data.isProfileCompleted, result.data.isVideoCompleted, result.data.totalCashback[0].totalAmount)
+                    }
+                  })
+              }
+              )
+              $('#reset-button').bind('click', () => {
+                window.location.reload();
+              })
+              $('#removelogo').click(() => {
+                let html = $('#upload-image-template template').html();
+                $('#removelogo').parent().html(html)
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                let data = {
+                  key: $('#logo').val()
+                }
+                axios.post('/api/deleteSingleFile', data, header)
+                  .then(result => {
+                    if (result.status) {
+                      axios.post("/candidate/removelogo", data).then(() => console.log('deleted'))
+                      console.log('File deleted')
+                    }
+                  })
+                return false;
+              })
+              const checkCvValidation = (file) => {
+                let regex = /(\.docx|\.doc|\.pdf|\.jpg|\.jpeg|\.png)$/i
+                if (!regex.exec(file)) {
+                  return false;
+                } else {
+                  return true;
+                }
+              }
+
+              function getExperienceValues() {
+                let experienceArray = [];
+                $('.exp-row').each(function () {
+                  let self = this;
+                  let expObj = {};
+                  $(self).find('.form-control').each(function () {
+                    let type = $(this).prop("type");
+                    let name = $(this).prop("name");
+                    let val = $(this).val();
+                    if (val !== '' && type !== "button" && type !== "submit") {
+                      expObj[name] = val;
+                    }
+                  });
+                  if (!$.isEmptyObject(expObj)) {
+                    experienceArray.push(expObj);
+                  }
+                })
+
+                return experienceArray;
+              }
+              function getQualificationValues() {
+                let qualificationArray = []
+                $('.qua-row').each(function () {
+                  let self = this
+                  let qualiObj = {}
+                  $(self).find('.form-control').each(function () {
+                    let type = $(this).prop("type");
+                    let name = $(this).prop("name")
+                    let val = $(this).val();
+                    if (val !== '' && type != "button" && type != "submit") {
+                      qualiObj[name] = val
+                    }
+                  });
+                  if (!$.isEmptyObject(qualiObj)) {
+                    qualificationArray.push(qualiObj)
+                  }
+                })
+                return qualificationArray
+              }
+              function getPersonalInformation() {
+                let personalObj = {};
+                $('#personal-info').find('.form-control').each(function () {
+                  let type = $(this).prop("type");
+                  let name = $(this).prop("name")
+                  let val = $(this).val()
+                  if (type != "button" && type != "submit" && type != "file" && name !== "") {
+                    personalObj[name] = val;
+                  }
+                });
+                return personalObj;
+              }
+              function getLocationPreferences() {
+                let locationPrefObj = []
+                $('.locationpref.row').each(function () {
+                  let self = this
+                  let locObj = {}
+                  $(self).find('.form-control').each(function () {
+                    let type = $(this).prop("type");
+                    let name = $(this).prop("name")
+                    let val = $(this).val()
+                    if (val !== '' && type != "button" && type != "submit") {
+                      locObj[name] = val
+                    }
+                  });
+                  if (!$.isEmptyObject(locObj)) {
+                    locationPrefObj.push(locObj);
+                  }
+                })
+                return locationPrefObj;
+              }
+              function checkCVSize(size) {
+                let finalSize = ((size / 1024) / 1024);
+                if (finalSize > 5) {
+                  return false;
+                }
+                return true;
+              }
+            });
+            const launchModal = (profileCompleted, videoCompleted, cashback) => {
+              $('#cashbackmodal').modal('show')
+              $('#upload-video').hide();
+              $('#profile-comp').hide();
+              $('#apply-job').hide();
+              $('#money-text').text(`₹ ${cashback}`)
+              $('#money-text-hindi').text(`₹ ${cashback}`)
+              if (profileCompleted == 'false') {
+                $('#profile-comp').show();
+                $('#upload-video').hide();
+                $('#apply-job').hide();
+              } else if (videoCompleted == '') {
+                $('#profile-comp').hide();
+                $('#upload-video').show();
+                $('#apply-job').hide();
+              } else {
+                $('#profile-comp').hide();
+                $('#upload-video').hide();
+                $('#apply-job').show();
+              }
+            }
+            const personalstateChangeHandler = (event, cityId) => {
+              const stateId = event.target.value;
+              if (!stateId) {
+                $(`select#${cityId} option.candidatecitylist`).remove();
+                return false
+              }
+              let body = { stateId: stateId };
+              const selectCase = document.getElementById(cityId);
+              $.get('/candidate/getcitiesbyId', body).done((res) => {
+                $(`select#${cityId} option.candidatecitylist`).remove();
+                let options
+                for (let i = 0; i < res.cityValues.length; i++) {
+                  options = options + `<option value="${res.cityValues[i]._id}" class="text-capitalize candidatecitylist">${res.cityValues[i].name}</option>`
+                }
+                $(`select#${cityId}`).append(options);
+
+                let locVal = $('#state-field0').val()
+                if (!locVal) {
+                  $('#state-field0').val(stateId);
+                  $(`select#city-field0 option.candidatecitylist`).remove();
+                  let options
+                  for (let i = 0; i < res.cityValues.length; i++) {
+                    options = options + `<option value="${res.cityValues[i]._id}" class="text-capitalize candidatecitylist">${res.cityValues[i].name}</option>`
+                  }
+                  $(`select#city-field0`).append(options);
+                }
+              })
+            }
+
+            const expStateChangeHandler = (event) => {
+              const stateId = event.target.value
+              let row = $(event.target).closest('.exp-row')
+              const expId = event.target.attributes['cityClass']?.value || $(row).find('select.citycombo')
+              if (!stateId) {
+                $(`option.${expId}`).remove()
+                return false
+              }
+              let body = { stateId: stateId };
+              let options
+              $.get('/candidate/getcitiesbyId', body).done((res) => {
+                if (typeof expId === 'string') {
+                  $(`option.${expId}`).remove()
+                }
+                for (let i = 0; i < res.cityValues.length; i++) {
+                  options = options + `<option value="${res.cityValues[i]._id}" class="text-capitalize ${expId}">${res.cityValues[i].name}</option>`
+                }
+
+                if (typeof expId === 'string') {
+                  $(`select#compcity${expId}`).append(options);
+                } else {
+                  $(expId).find('option:not(:first)').remove()
+                  $(expId).append(options);
+                }
+              })
+            }
+
+
+            const stateChangeHandler = (event, cityId) => {
+              const stateId = event.target.value
+              let row = $(event.target).closest('.exp-row')
+
+              let body = { stateId: stateId };
+              let options
+              $.get('/candidate/getcitiesbyId', body).done((res) => {
+                $(`select#${cityId} option.prefcitylist`).remove();
+                for (let i = 0; i < res.cityValues.length; i++) {
+                  options = options + `<option value="${res.cityValues[i]._id}" class="text-capitalize prefcitylist">${res.cityValues[i].name}</option>`
+                }
+
+                $(`select#${cityId}`).append(options);
+              })
+            }
+
+            const qualificationchange = (event) => {
+              const qualificationId = event.target.value
+              if (!qualificationId) {
+                return false
+              }
+
+              let row = $(event.target).closest('.qua-row')
+              const subQualificationCombo = $(row).find('select.subqualification')
+              let body = { qualificationId };
+              let options = ''
+              $.get('/candidate/getSubQualification', body).done((res) => {
+                if (res.status) {
+                  for (let i = 0; i < res.subQualification.length; i++) {
+                    options = options + `<option value="${res.subQualification[i]._id}" class="text-capitalize">${res.subQualification[i].name}</option>`
+                  }
+
+                  $(subQualificationCombo).find('option:not(:first)').remove()
+                  $(subQualificationCombo).append(options);
+                }
+
+              })
+            }
+
+            const checkImageSize = (size) => {
+              let finalSize = ((size / 1024) / 1024);
+              if (finalSize > 2) {
+                return false
+              }
+              return true;
+            }
+
+            const checkImageValidation = (file) => {
+              let regex = /(\.jpg|\.jpeg|\.png)$/i
+              if (!regex.exec(file)) {
+                return false;
+              } else {
+                return true;
+              }
+            }
+            function deleteQualificationRow(ele) {
+              $(ele).closest('.qua-row').remove()
+            }
+            function deleteExperienceRow(ele) {
+              $(ele).closest('.exp-row').remove()
+            }
+            function addExperienceRow() {
+              let node = $('#experience-template template').html();
+              $('#experience-div').append(node);
+            }
+            function addQualificationrow() {
+              let html = $('#qualificationtemplate template').html()
+              $('#qualification-div').append(html);
+              initMap();
+            }
+            function removevideo(event) {
+              let hidden = $(event.target).parent().find('input[type=hidden]')
+              $(hidden).val('')
+              let uploadedvideo = $(event.target).parent().find('#uploadedvideo')
+              $(uploadedvideo).text('deleted')
+            }
+
+            $('#removeResume').click(() => {
+
+              let html = $('#upload-resume-template template').html();
+              $('#removeResume').parent().html(html)
+              header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+              let data = {
+                key: $('#resume').val()
+              }
+
+              axios.post('/api/deleteSingleFile', data, header)
+                .then(result => {
+                  if (result.status) {
+                    axios.post("/candidate/removeResume", header, data)
+                      .then(() => {
+                        console.log('deleted')
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                        res.send(err)
+                      })
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                  res.send(err)
+                })
+            })
+            $('#removeVideo').click(() => {
+              let html = $('#upload-profilevideo-template template').html();
+              $('#removeVideo').closest('div.profilevideo').html(html)
+              header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+              let data = {
+                key: $('#video').val()
+              }
+              axios.post('/api/deleteSingleFile', data, header)
+                .then(result => {
+                  if (result.status) {
+                    axios.post("/candidate/removeVideo", data, header)
+                      .then(() => {
+                        $('#video').val('')
+                        console.log('deleted')
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                        res.send(err)
+                      })
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                  res.send(err)
+                })
+            })
+            const checkWhatsappNumber = (number) => {
+              if (number.length == 10 || number.length == 0) return true
+              else return false
+            }
+
+            const checkPincode = (number) => {
+              if (number.length == 6 || number.length == 0) return true
+              else return false
+            }
+            const checkEmail = (emailArr) => {
+              let emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
+              for (let email of emailArr) {
+                if (!emailReg.test(email) && email.length != 0) return false
+              }
+              return true
+            }
+
+
+            function validations() {
+              $('#personal-info .error').removeClass('error')
+              $('#Experience-section .error').removeClass('error')
+              $('#qualification .error').removeClass('error')
+              $('#msg').hide();
+              let number = document.getElementById('candidate-whatsapp-number').value
+              let pincode = document.getElementById('candidate-pincode').value
+              let candidateEmail = [document.getElementById('candidate-email').value]
+              let companyEmail = document.querySelectorAll('#comapany-email')
+              const companyEmailArray = [...companyEmail].map(input => input.value);
+              const currentLocation = document.getElementById('work-loc')
+              const dateOfBirth = document.getElementById('candidate-dob')
+              let name = $('#candidate-name').val()
+              let gender = $('#user-gender').val()
+              let address = $('#candidate-address').val()
+              let dob = $('#candidate-dob').val()
+              let state = $('#state-field').val()
+              let city = $('#personalcity').val()
+              let highestQual = $('#quali').val()
+              let experience = $('#exp-calc').val()
+              let flag = true
+              let dobVal = dateOfBirth.value;
+              let currentLoc = currentLocation.value;
+              if (name.trim() === '') {
+                $('#msg').show();
+                $('#msg').text("Candidate name is required!");
+                $('#pd-name').addClass('error')
+                $('#candidate-name').focus()
+                flag = false
+              } if (number.trim() === '' || !checkWhatsappNumber(number)) {
+                if (!checkWhatsappNumber(number)) {
+                  $('#msg').show();
+                  $('#msg').text("WhatsApp Number can be 10 Digits Only!");
+                }
+                $('#pd-number').addClass('error')
+                $('#candidate-whatsapp-number').focus()
+                flag = false
+              } if (pincode.trim() === '' || !checkPincode(pincode)) {
+                if (!checkPincode(pincode)) {
+                  $('#msg').show();
+                  $('#msg').text("Pincode can be 6 Digits Only!");
+                }
+                $('#pd-pincode').addClass('error')
+                $('#candidate-pincode').focus()
+                flag = false
+              } if (!checkEmail(candidateEmail)) {
+                $('#msg').show();
+                $('#msg').text("Personal Email not Valid!");
+                $('#pd-email').addClass('error')
+                $('#candidate-email').focus()
+                flag = false
+              } if (!gender) {
+                $('#pd-gender').addClass('error')
+                $('#user-gender').focus()
+                flag = false
+              } if (!address) {
+                $('#pd-address').addClass('error')
+                $('#candidate-address').focus()
+                flag = false
+              } if (!state) {
+                $('#pd-state').addClass('error')
+                $('#state-field').focus()
+                flag = false
+              } if (!city) {
+                $('#city-div').addClass('error')
+                $('#personalcity').focus()
+                flag = false
+              } if (!highestQual) {
+                $('#highestQuali').addClass('error')
+                $('#quali').focus()
+                flag = false
+              } if (!experience) {
+                $('#isExp').addClass('error')
+                $('#exp-calc').focus()
+                flag = false
+              } if (currentLoc.trim() === "") {
+                $('#loc-field').addClass('error')
+                currentLocation.focus();
+                flag = false;
+              } if (dobVal.trim() === "") {
+                $('#dob-field').addClass('error');
+                dateOfBirth.focus()
+                flag = false
+              }
+              else if (!checkEmail(companyEmailArray)) {
+                $('#msg').show();
+                $('#msg').text("Company Email not Valid!");
+                flag = false
+              }
+              return flag
+            }
+
+            $('.chosen').chosen();
+          </script>
+          <% include ./partials/footer%>

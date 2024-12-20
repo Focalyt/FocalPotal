@@ -1,0 +1,151 @@
+<style>
+  @media only screen and (max-width: 576px) {
+    #totalCompanies {
+      text-align: left !important;
+    }
+  }
+</style>
+
+<% include ./partials/header %>
+<div
+  class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none"
+>
+  <div class="content-header-left col-md-9 col-12 mb-2">
+    <div class="row breadcrumbs-top">
+      <div class="col-12">
+        <h3 class="content-header-title float-left mb-0">Razorpay Payments</h3>
+        <div class="breadcrumb-wrapper col-12">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+            <li class="breadcrumb-item active">Razorpay Payments</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content-body">
+  <% include ./partials/flash %>
+  <section class="list-view">
+    <div class="row">
+      <div class="col-12 rounded equal-height-2 coloumn-2">
+        <div class="card">
+            <div class="row mb-2">
+                <div class="col-xl-12 col-lg-12">
+                  <form method="GET">
+                    <div class="row px-1">
+                        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12  mt-1">
+                            <label>Date</label>
+                            <input type="date" class="form-control" id="date" name="date" value="<%= date %>">
+                        </div>
+                            <div  class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mt-1 py-1">
+                                <button 
+                                  class="btn btn-success  waves-effect waves-light  text-white d-inline px-lg-3 px-md-3 px-sm-2"
+                                  id="submit-btn">Go</button>
+                            </div>
+                    </div>
+                  </form>
+                </div>
+            </div>
+
+          <div class="card-content">
+            <div class="table-responsive">
+              <table
+                class="table table-hover-animation mb-0 table-hover"
+                border="0"
+                width="100%"
+                cellpadding="5"
+                cellspacing="0"
+              >
+                <thead>
+                  <tr>
+                    <th>Order Id</th>
+                    <th>Payment Id</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Role</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Time</th>
+                    <th>Coins Allocation</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% paymentsData.forEach((payment, i)=> { %>
+                  <tr>
+                    <td><%= payment.order_id %></td>
+                    <td><%= payment.id %></td>
+                    <td><%= payment.notes.name %></td>
+                    <td><%= payment.notes.mobile %></td>
+                    <td><%= payment.notes.candidate ? 'Candidate' : 'Company' %></td>
+                    <td><%= payment.amount/100 %> <%= payment.notes.course? '(For Course)' : '' %></td>
+                    <td><%= payment.status %></td>
+                    <td><%= moment.unix(payment.created_at).utcOffset("+05:30").format("hh:mm a") %></td>
+                    <td id="coinsStatus<%= i %>">
+                      <a
+                        id="searchStatus<%= i %>"
+                        onclick="getStatus('<%=payment.id%>', '<%=i%>')"
+                        ><i class="fa-sharp fa-solid fa-magnifying-glass"></i
+                      ></a>
+                      <button
+                        class="btn btn-primary btn-sm text-white"
+                        id="updateCoins<%= i %>"
+                        onclick="updateCoins('<%=payment.notes.candidate || payment.notes.company%>', '<%=payment.id%>', '<%=payment.order_id%>', '<%=payment.amount/100%>', '<%=payment.status%>', '<%=payment.notes.offer%>', '<%=payment.notes.course%>')"
+                        style="display: none;"
+                        > <%=payment.notes.course?'Assign Course' : 'Allocate Coins'%></i
+                      ></button>
+                    </td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% include ./partials/footer %>
+  <script>
+    function updateCoins(userId, paymentId, orderId, amount, paymentStatus, offerId, courseId) {
+        let body = {
+            userId,
+            paymentId,
+            orderId,
+            amount,
+            paymentStatus,
+            offerId,
+            courseId
+        }
+      axios
+        .post(`/admin/razorpayPayments/allocateCoins`, body)
+        .then((res) => {
+            window.location.reload()
+        }).catch((err) => {
+            console.log(err.message)
+        })
+    }
+
+    function getStatus(id, i) {
+      axios
+        .get(`/admin/razorpayPayments/checkCoinsAllocation/${id}`, {
+          headers: { "x-auth": localStorage.getItem("token") },
+        })
+        .then((res) => {
+          if (res.data.paymentStatus) {
+            $(`#coinsStatus${i}`).text("Done");
+            $(`#coinsStatus${i}`).addClass("text-success");
+          } else {
+            if(res.data.view){
+            $(`#coinsStatus${i}`).text("Pending");
+            $(`#coinsStatus${i}`).addClass("text-danger");
+            }else{
+            $(`#searchStatus${i}`).hide()
+            $(`#updateCoins${i}`).show()
+            }
+          }
+        });
+    }
+</script>
+</div>

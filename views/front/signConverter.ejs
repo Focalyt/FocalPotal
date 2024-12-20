@@ -1,0 +1,342 @@
+<html class=" js no-touch cssanimations csstransitions">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>ASL - Americal sign language </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Focalyt">
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  
+  <style>
+  .signs img{padding:6px;border-radius:8px;filter:drop-shadow(-0.436px -4.981px 1.5px rgba(255,255,255,0.61));background-color:#f2f2f2;margin:5px 6px;box-shadow:0px 0px 10px rgba(255,255,255,1),0px 4px 2px rgba(0,0,0,0.15);transition:.3s;}
+  img.signcode{padding:6px;border-radius:8px;filter:drop-shadow(-0.436px -4.981px 1.5px rgba(255,255,255,0.61));background-color:#f2f2f2;margin:5px 6px;box-shadow:0px 0px 10px rgba(255,255,255,1),0px 4px 2px rgba(0,0,0,0.15)}
+  #heading{display:flex}
+  body{background:#f2f2f2!important}
+  .sign_keyboard{border:1px solid #e0e0e0;border-radius:20px}
+  .contact-form .form-group .form-control:hover{border:1px solid #228B22!important;box-shadow:5px 5px #228B22!important}
+  ul.keys li{display:inline-block;overflow:hidden;flex-direction:column;justify-content:center;align-items:center}
+  #speak_btn{border-radius:4px;background-color:#fcffff;border:1px solid #120449;padding:10px 50px;color:#140549;font-size:14px;transition:.3s;-webkit-box-shadow:4px 3px 0px 0px rgba(43,35,80,1);-moz-box-shadow:4px 3px 0px 0px rgba(43,35,80,1);box-shadow:4px 3px 0px 0px rgba(43,35,80,1);text-transform:uppercase;font-weight:700}
+  textarea#output{border:1px solid #228B22;border-radius:20px;transition:.3s;background:rgba(34,139,34,0.1)}
+  p.subsscript{text-align:center;border-radius:3px;padding:0px;color:#000;font-size:8px;top:-3px;position:absolute;right:12px;font-weight:800}
+  div#heading img{width:40px;height:auto;padding:1px}
+  div#inputSigns{transition:.3s}
+  ul.keys.mb-0{text-align:center}
+  .signs img:hover{box-shadow:0 2px 0 rgba(0,0,0,0.15)!important;cursor:pointer!important;transition:.5s;}
+  #speak_btn:hover {-webkit-box-shadow: 0px 8px 4px 0px rgba(43, 35, 80, 1);-moz-box-shadow: 0px 8px 4px 0px rgba(43, 35, 80, 1);box-shadow: 0px 8px 4px 0px rgba(43, 35, 80, 1);}
+  .typeSignsBox{ border: 1px solid #e0e0e0; border-radius: 20px;}
+  </style>
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/bootstrap-grid.css">
+  <link rel="stylesheet" href="/public_assets/css/icons.css">
+  <link rel="stylesheet" href="/public_assets/css/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/responsive.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/chosen.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/colors/colors.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/bootstrap.css">
+  <link rel="icon" type="image/x-icon" href="/images/ico/faviconnew.ico"
+  <link rel="stylesheet" href="../../../maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<html>
+
+
+<body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-11 mx-auto mt-5">
+          <div class="col-xl-12 mt-xl-5 mt-lg-2 mt-md-2 mt-sm-0 mt-0" id="addSignBox">
+            <div class="contact-form">
+              <div class="form-group form-primary pt-3 pb-3 mb-0" id="inputSigns">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-11 mx-auto mt-2 mb-2 text-left" id="heading">
+          <img src="/handsigns/K.png">
+          <img src="/handsigns/E.png">
+          <img src="/handsigns/Y.png">
+          <img src="/handsigns/P.png">
+          <img src="/handsigns/A.png">
+          <img src="/handsigns/D.png">
+          <span style="font-size: x-large; font-weight: bold;">(Keypad)</span>
+        </div>
+
+        <div class="col-xl-11 mx-auto mt-2">
+
+          <div class="col-xl-12 sign_keyboard">
+            <div class="contact-form">
+              <div class="form-group signs form-primary pt-3 pb-3 mb-0">
+                <ul class="keys mb-0">
+                  <li><img src="/handsigns/A.png" onclick="makeSign('A')">
+                    <p class="subsscript">A</p>
+                  </li>
+                  <li><img src="/handsigns/B.png" onclick="makeSign('B')">
+                    <p class="subsscript">B</p>
+                  </li>
+                  <li><img src="/handsigns/C.png" onclick="makeSign('C')">
+                    <p class="subsscript">C</p>
+                  </li>
+                  <li><img src="/handsigns/D.png" onclick="makeSign('D')">
+                    <p class="subsscript">D</p>
+                  </li>
+                  <li><img src="/handsigns/E.png" onclick="makeSign('E')">
+                    <p class="subsscript">E</p>
+                  </li>
+                  <li><img src="/handsigns/F.png" onclick="makeSign('F')">
+                    <p class="subsscript">F</p>
+                  </li>
+                  <li><img src="/handsigns/G.png" onclick="makeSign('G')">
+                    <p class="subsscript">G</p>
+                  </li>
+                  <li><img src="/handsigns/H.png" onclick="makeSign('H')">
+                    <p class="subsscript">H</p>
+                  </li>
+                  <li><img src="/handsigns/I.png" onclick="makeSign('I')">
+                    <p class="subsscript">I</p>
+                  </li>
+                  <li><img src="/handsigns/J.png" onclick="makeSign('J')">
+                    <p class="subsscript">J</p>
+                  </li>
+                  <li><img src="/handsigns/K.png" onclick="makeSign('K')">
+                    <p class="subsscript">K</p>
+                  </li>
+                  <li><img src="/handsigns/L.png" onclick="makeSign('L')">
+                    <p class="subsscript">L</p>
+                  </li>
+                  <li><img src="/handsigns/M.png" onclick="makeSign('M')">
+                    <p class="subsscript">M</p>
+                  </li>
+                  <li><img src="/handsigns/N.png" onclick="makeSign('N')">
+                    <p class="subsscript">N</p>
+                  </li>
+                  <li><img src="/handsigns/O.png" onclick="makeSign('O')">
+                    <p class="subsscript">O</p>
+                  </li>
+                  <li><img src="/handsigns/P.png" onclick="makeSign('P')">
+                    <p class="subsscript">P</p>
+                  </li>
+                  <li><img src="/handsigns/Q.png" onclick="makeSign('Q')">
+                    <p class="subsscript">Q</p>
+                  </li>
+                  <li><img src="/handsigns/R.png" onclick="makeSign('R')">
+                    <p class="subsscript">R</p>
+                  </li>
+                  <li><img src="/handsigns/S.png" onclick="makeSign('S')">
+                    <p class="subsscript">S</p>
+                  </li>
+                  <li><img src="/handsigns/T.png" onclick="makeSign('T')">
+                    <p class="subsscript">T</p>
+                  </li>
+                  <li><img src="/handsigns/U.png" onclick="makeSign('U')">
+                    <p class="subsscript">U</p>
+                  </li>
+                  <li><img src="/handsigns/V.png" onclick="makeSign('V')">
+                    <p class="subsscript">V</p>
+                  </li>
+                  <li><img src="/handsigns/W.png" onclick="makeSign('W')">
+                    <p class="subsscript">W</p>
+                  </li>
+                  <li><img src="/handsigns/X.png" onclick="makeSign('X')">
+                    <p class="subsscript">X</p>
+                  </li>
+                  <li><img src="/handsigns/Y.png" onclick="makeSign('Y')">
+                    <p class="subsscript">Y</p>
+                  </li>
+                  <li><img src="/handsigns/Z.png" onclick="makeSign('Z')">
+                    <p class="subsscript">Z</p>
+                  </li>
+                </ul>
+                <ul class="keys mb-0">
+                  <li><img src="/handsigns/0.png" onclick="makeSign(0)">
+                    <p class="subsscript">0</p>
+                  </li>
+                  <li><img src="/handsigns/1.png" onclick="makeSign(1)">
+                    <p class="subsscript">1</p>
+                  </li>
+                  <li><img src="/handsigns/2.png" onclick="makeSign(2)">
+                    <p class="subsscript">2</p>
+                  </li>
+                  <li><img src="/handsigns/3.png" onclick="makeSign(3)">
+                    <p class="subsscript">3</p>
+                  </li>
+                  <li><img src="/handsigns/4.png" onclick="makeSign(4)">
+                    <p class="subsscript">4</p>
+                  </li>
+                  <li><img src="/handsigns/5.png" onclick="makeSign(5)">
+                    <p class="subsscript">5</p>
+                  </li>
+                  <li><img src="/handsigns/6.png" onclick="makeSign(6)">
+                    <p class="subsscript">6</p>
+                  </li>
+                  <li><img src="/handsigns/7.png" onclick="makeSign(7)">
+                    <p class="subsscript">7</p>
+                  </li>
+                  <li><img src="/handsigns/8.png" onclick="makeSign(8)">
+                    <p class="subsscript">8</p>
+                  </li>
+                  <li><img src="/handsigns/9.png" onclick="makeSign(9)">
+                    <p class="subsscript">9</p>
+                  </li>
+                  <li><img src="/handsigns/space.png" onclick="makeSign('_')">
+                    <p class="subsscript">SPC</p>
+                  </li>
+                  <li><img src="/handsigns/backspace-arrow.png" onclick="backspace()">
+                    <p class="subsscript">BCK</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center pt-4 pb-4">
+        <button type="button" onclick="makeText()" class="btn-lg btn-primary mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-3"
+          id="speak_btn">Speak in English</button>
+        <button type="button" onclick="speakSpanish()"  class="btn-lg btn-primary mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-3 mx-4"
+          id="speak_btn">Speak in Spanish</button>
+      </div>
+      <div class="row">
+        <div class="col-xl-11 mx-auto">
+          <div class="contact-form">
+            <div class="form-group form-primary">
+              <textarea class="form-control mb-3 message-to pr-1" id="output" placeholder="Your Output"
+                rows="1"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.0/axios.min.js"
+integrity="sha512-OdkysyYNjK4CZHgB+dkw9xQp66hZ9TLqmS2vXaBrftfyJeduVhyy1cOfoxiKdi4/bfgpco6REu6Rb+V2oVIRWg=="
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+
+var voices
+  $(document).ready(function () {
+    window.speechSynthesis.cancel()
+    if ('speechSynthesis' in window) {
+      const speechSynthesis = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance();
+      let voiceOptions = ''
+      speechSynthesis.addEventListener("voiceschanged", () => {
+        voices = speechSynthesis.getVoices()
+        // if (voices.length > 0) {
+        //   voices.forEach(voice => {
+        //     if (voice.name === 'Google हिन्दी') {
+        //       voiceOptions += `<option selected="true" value="${voice.name}">${voice.name}</option>`
+        //     } else {
+        //       voiceOptions += `<option value="${voice.name}">${voice.name}</option>`
+        //     }
+
+        //   })
+        // }
+
+        $('#voicesList').html(voiceOptions)
+      })
+
+    }
+  })
+
+  function makeSign(char) {
+    $('#addSignBox').addClass('typeSignsBox')
+    let html = `<img  class="signcode" src="/handsigns/${char}.png"/>`
+    $('#inputSigns').append(html)
+  }
+
+  function makeText() {
+    let text = ''
+    $('.signcode').each((i,img) => {
+      let imagename = $(img).attr('src')
+      let char = imagename.substr(imagename.lastIndexOf('/') + 1, 1)
+      text+=char
+    })
+    text = text.replaceAll('_', ' ')
+    $('#output').val(text)
+    $('#output').text(text)
+    speak(text)
+  }
+
+  function speakSpanish() {
+    let text = ''
+    $('.signcode').each((i,img) => {
+      let imagename = $(img).attr('src')
+      let char = imagename.substr(imagename.lastIndexOf('/') + 1, 1)
+      text+=char
+    })
+    let message = $.trim(text.replace( /[\s\n\r\_]+/g, ' ' ))
+    let body = { message, lang: 'es' }
+
+    axios.post(`/translate`, body)
+        .then(res => {
+          $('#output').val(res.data.message)
+          $('#output').text(res.data.message)
+          speak(res.data.message, 'es');
+        }).catch((err) => {
+          console.log(err.message)
+        })
+
+  }
+
+  function backspace(){
+    $("#inputSigns :last-child").remove();
+    if(!$("#inputSigns :first-child").length){
+      $('#addSignBox').removeClass('typeSignsBox')
+    }
+  }
+
+  function speak(text, lang='en') {
+    if (!text) {
+        return false
+      }
+    if ('speechSynthesis' in window) {
+      const speechSynthesis = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance();
+
+      speechSynthesis.cancel()
+      // Set the text to be spoken
+      utterance.text = text;
+
+      utterance.lang = lang
+
+      // Retrieve the available voices
+
+      let voice ='Microsoft Swara Online (Natural) - Hindi (India)'
+      if(lang == 'es'){
+          voice = 'Microsoft Helena (es-ES, female)'
+        }
+      // Find a specific voice by name or language code
+      const selectedVoice = voices.find(vo => vo.name === voice);
+
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+      } else {
+        console.warn('Selected voice not found. Using default voice.');
+      }
+
+      // Set optional parameters (volume, rate, pitch, etc.)
+      utterance.volume = 1;
+      utterance.rate = 1;
+      utterance.pitch = 1;
+
+      // Speak the text
+      speechSynthesis.speak(utterance);
+    } else {
+      console.error('SpeechSynthesis API is not supported in this browser.');
+    }
+  }
+
+
+
+</script>

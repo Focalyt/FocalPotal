@@ -1,0 +1,203 @@
+<% include ../../partials/header %>
+<div
+  class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none"
+>
+  <div class="content-header-left col-md-9 col-12 mb-2">
+    <div class="row breadcrumbs-top">
+      <div class="col-12">
+        <h3 class="content-header-title float-left mb-0">
+          SMS Consumption
+        </h3>
+        <div class="breadcrumb-wrapper col-12">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+            <li class="breadcrumb-item active">Consumption</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content-body">
+  <% include ../../partials/flash %>
+  <section class="list-view">
+    <div class="row">
+      <div class="col-12 rounded equal-height-2 coloumn-2">
+        <div class="card">
+          <div class="row text-right ">
+            <div class="col-12 ">
+        
+              <div class="collectie mt-1 mr-1">
+                <div class=" bottomcontent ">
+                  <span class="totalCount pl-1">Total Messages: <%= totalMessages ? totalMessages : 0 %></span>	
+                </div>
+                </div>
+            </div>
+          </div>          
+          <div class="row mb-2">
+            <div class="col-xl-12 col-lg-5 col-lg-12">
+              <form method="GET">
+              <div class="row">
+                <div class="col-xl-2 col-lg-5 ml-1 mt-1">
+                  <label>Name</label>
+                  <input type="text" name="companyName" class="form-control" id="companyName" value="<%= data.companyName %>"
+                   maxlength="25">
+                </div>
+                <div class="col-xl-2 col-lg-5 ml-1 mt-1">
+                  <label>From Date</label>
+                  <input type="date" class="form-control" id="from-date" name="FromDate" value="<%= data.FromDate %>">
+                </div>
+                <div class="col-xl-2 col-lg-5 ml-1 mt-1">
+                  <label>To Date</label>
+                  <input type="date" class="form-control" id="to-date" name="ToDate" value="<%= data.ToDate %>">
+                </div>
+                <div class="col-xl-2 col-lg-5 ml-1 mt-1">
+                  <label>Template Name</label>
+                  <select class="form-control text-capitalize" name="templateName" id="templateName">
+                    <option value="">Select</option>
+                    <option value="All" <% if (data.templateName=='All' ) { %> selected <% }%> >All</option>
+                    <% templates.forEach((template)=> { %>
+                    <option class="text-capitalize" value= "<%= template._id %>" 
+                      <% if (data.templateName==template._id ) { %> selected <% }%>
+                      > <%= template.name %></option>
+                    <% }) %>
+                  </select>
+                </div>
+                
+                <div style="margin-top: 2.5rem !important;" class="col-xl-3 col-lg-12  text-center mt-3">
+                  <button 
+                    class="btn btn-success  waves-effect waves-light  text-white d-inline px-xl-1 px-lg-2"
+                    id="submit-btn">Go</button>
+                    <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1 px-xl-1 px-lg-2"
+                    href="/admin/smsUsage/consumption">RESET</a>
+                </div>
+              </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="table-responsive">
+              <table class="table table-hover-animation mb-0 table-hover">
+                <thead>
+                  <tr>
+                    <th>TEMPLATE ID</th>
+                    <th>TEMPLATE NAME</th>
+                    <th>DATE Of USAGE</th>
+                    <th>COMPANY NAME</th>
+                    <th>MESSAGES</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                    <% if(sms.length> 0) {%>
+                        <% sms.forEach((i)=>{%>
+                  <tr>
+                    <td class="text-capitalize"> <%= i.template[0]?.templateId %></td>
+                    <td class="text-capitalize">
+                        <%= i.template[0]?.name || 'NA' %>
+                    </td>
+                    <td><%= moment(i.createdAt).utcOffset("+05:30").format('MMM-DD-YYYY') || 'NA' %></td>
+                    <td class="text-capitalize">
+                      <%= i._company[0]?.name || 'NA' %>
+                    </td>
+                    <td class="text-capitalize"><%= i.messages || '0' %></td>
+                  </tr>
+                  <%}) %>
+                        <%} else{%>
+                          <tr>
+                            <td class="text-center" colspan="5">No record found</td>
+                          </tr>
+                          <%} %>
+                </tbody>
+              </table>
+              <% if (totalPages> 1) { %>
+                <ul class="pagination justify-content-end ml-2 mb-2">
+                  <% let first=1 %> <% let last=totalPages> 4 ? 4 : totalPages %>
+                  <% if (totalPages> 4 && page >= 2) { %> <% first=page - 1 %> <%
+                  last=page + 1 %> <% if (last> totalPages) last = totalPages %>
+                  <% } %> <% if (first> 1) { %>
+                  <li class="page-item">
+                    <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                  </li>
+                  <% } %> <% for (let i=first; i <=last; i +=1) { %> <% if
+                  (i===page) { %>
+                  <li class="active page-item">
+                    <a href="javascript:void()" class="page-link"> <%= i %> </a>
+                  </li>
+                  <% } else { %>
+                  <li class="page-item">
+                    <a class="page-link pageAnchor" href="<%= i %>"> <%= i %> </a>
+                  </li>
+                  <% } %> <% } %> <% if (totalPages> last) { %>
+                  <li class="page-item">
+                    <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="pageAnchor page-link" href="<%= totalPages %>"
+                      >Last</a
+                    >
+                  </li>
+                  <% } %>
+                </ul>
+                <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% include ../../partials/footer %>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const pageAnchors = document.querySelectorAll("a.pageAnchor");
+      const { origin, pathname, search } = window.location;
+      let searchParams = search.split("?")[1];
+      let obj;
+      let url = `${origin}${pathname}?`;
+      if (searchParams) {
+        obj = JSON.parse(
+          '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+          function (key, value) {
+            return key === "" ? value : decodeURIComponent(value);
+          }
+        );
+        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+        keyArr.forEach((x) => {
+          if (x !== "page") {
+            url += `${x}=${obj[x]}&`;
+          }
+        });
+      }
+      pageAnchors.forEach((el) => {
+        const n = el.getAttribute("href");
+        el.setAttribute("href", `${url}page=${n}`);
+      });
+    });
+
+    $('#submit-btn').click(()=>{
+						if(validate()){
+							return false
+						}
+					})
+					function validate(){
+						$('.error').removeClass('error')
+						let fromDate = $('#from-date').val();
+						let toDate = $('#to-date').val()
+						let hasError = false
+						let firstError
+						
+						if(fromDate && !toDate){
+							$('#to-date').parent().addClass('error')
+                            firstError = firstError ? firstError :$('#to-date')
+                            hasError = true
+						}
+						if(!fromDate && toDate){
+							$('#from-date').parent().addClass('error')
+                            firstError = firstError ? firstError :$('#from-date')
+                            hasError = true
+						}
+						$(firstError).focus()
+                        return hasError
+					}
+  </script>
+</div>

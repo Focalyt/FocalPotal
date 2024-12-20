@@ -1,0 +1,682 @@
+<% include ../partials/header %>
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Add Skill Test</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/college">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">Add Skill Test
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ../partials/flash %>
+            <form class="form-horizontal" action="" method="post" id="formData">
+                <section id="personal-info">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Skill Test Information</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Test Name</label>
+                                                <input type="text" class="form-control" name="name"
+                                                    value="<%= skillTest.name %>">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Category *</label>
+                                                <select class="form-control" name="_category" required>
+                                                    <option value="" disabled>Select Option</option>
+                                                    <option value="personality" class="text-capitalize"
+                                                        <%=skillTest._category=='personality' ? "selected" :"" %>
+                                                        >Personality
+                                                    </option>
+                                                    <option value="leadership" class="text-capitalize"
+                                                        <%=skillTest._category=='leadership' ? "selected" :"" %>
+                                                        >Leadership
+                                                    </option>
+                                                    <option value="technical skills" class="text-capitalize"
+                                                        <%=skillTest._category=='technical skills' ? "selected" :"" %>
+                                                        >
+                                                        Technical
+                                                        Skills</option>
+                                                    <option value="group discussions" class="text-capitalize"
+                                                        <%=skillTest._category=='group discussions' ? "selected" :"" %>
+                                                        >Group
+                                                        Discussions</option>
+
+
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Industry <span class="mandatory">*</span></label>
+                                                <select class="form-control" name="_industry" id="industry" required>
+                                                    <option disabled value="">Select Option</option>
+                                                    <% industry.forEach((i)=> { %>
+                                                        <option value="<%= i._id %>"
+                                                            <%=skillTest._industry.toString()==i._id.toString()
+                                                            ? "selected" :"" %>
+                                                            class="text-capitalize">
+                                                            <%= i.name %>
+                                                        </option>
+                                                        <% }); %>
+
+                                                </select>
+                                            </div>
+
+                                            <!-- <div class="col-xl-3 mb-1">
+                                                <label>Sub Industry <span class="mandatory">*</span></label>
+                                                <select class="form-control selectpicker" name="_subIndustry"
+                                                    id="subindustry" title="Select Option" data-actions-box="true"
+                                                    multiple required>
+                                                </select>
+                                            </div> -->
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Course <span class="mandatory">*</span></label>
+                                                <select class="form-control" id="qualification" name="_qualification"
+                                                    required>
+                                                    <option value="">Select Option</option>
+                                                    <% qualification.forEach((i)=> { %>
+                                                        <option value="<%= i._id %>"
+                                                            <%=skillTest._qualification.toString()==i._id.toString()
+                                                            ? "selected" :"" %> class="text-capitalize">
+                                                            <%= i.name %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Stream</label>
+                                                <select style="cursor: pointer;"
+                                                            class="form-control selectpicker" name="_subQualification"
+                                                            required id="subqualification" title="Select Option"
+                                                            data-actions-box="true" multiple>
+                                                            <% subQual.forEach((s)=> { %>
+                                                                <option value="<%= s._id %>" <%-
+                                                                    skillTest._subQualification.includes(s._id)?"selected":""
+                                                                    %>>
+                                                                    <%= s.name %>
+                                                                </option>
+
+                                                                <% }) %>
+                                                        </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Total Time (In Minutes)</label>
+                                                <input type="text" class="form-control" name="time"
+                                                    value="<%=skillTest.time%>">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Level of Difficulty *</label>
+                                                <select class="form-control" required name="level">
+                                                    <option value="" disabled>Select Option</option>
+                                                    <option value="0" <%=skillTest.level=='0' ? "selected" :"" %>
+                                                        class="text-capitalize text-success">Easy
+                                                    </option>
+                                                    <option value="1" <%=skillTest.level=='1' ? "selected" :"" %>
+                                                        class="text-capitalize text-warning">
+                                                        Medium
+                                                    </option>
+                                                    <option value="2" <%=skillTest.level=='2' ? "selected" :"" %>
+                                                        class="text-capitalize text-danger">Hard
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Web Cam Status</label>
+                                                <select class="form-control" name="webCam">
+                                                    <option value="" disabled>Select Option</option>
+                                                    <option value="0" <%=skillTest.webCam=='0' ? "selected" :"" %>
+                                                        class="text-capitalize text-success">On
+                                                    </option>
+                                                    <option value="1" <%=skillTest.webCam=='1' ? "selected" :"" %>
+                                                        class="text-capitalize text-danger">Off
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Pass Percentage</label>
+                                                <input type="text" class="form-control" name="passPercentage"
+                                                    value="<%=skillTest.passPercentage%>">
+                                            </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>Start Date</label>
+                                                    <% const startDate=moment(skillTest.startDate).format('YYYY-MM-DD'); %>
+                                                    <input type="date" class="form-control" name="startDate" value="<%= startDate %>">
+                                                </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>End Date</label>
+                                                    <% const endDate=moment(skillTest.endDate).format('YYYY-MM-DD'); %>
+                                                    <input type="date" class="form-control" name="endDate"
+                                                        value="<%= endDate %>">
+                                                </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>No of Credits</label>
+                                                    <input type="text" class="form-control" name="credits" value="<%= skillTest.credits%>">
+                                                </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>Opening Description</label>
+                                                    <textarea class="form-control" name="description" row="3"
+                                                        cols="2"><%=skillTest.description ? skillTest.description: '';%></textarea>
+                                                </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>Instructions</label>
+                                                    <textarea class="form-control" name="instruction" row="3"
+                                                        cols="2"><%=skillTest.instruction ? skillTest.instruction: '';%></textarea>
+                                                </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label class="col-form-label" for="input-normal">Upload
+                                                        Icon</label>
+                                                    <div class="row" id="image">
+                                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 firstImage">
+                                                            <div class="image-upload">
+                                                                <label for="filestwo">
+                                                                    <img src="/images/add_receipt.png" width="40px"
+                                                                        height="auto" id="outputtwo">
+                                                                    <p class="mt-1">Click to upload icon</p>
+                                                                </label>
+                                                                <input id="filestwo" data-id="image" type="file"
+                                                                    name="filecar"
+                                                                    class="my-logo-uploader form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                 <%= skilQues%>
+                <section id="tech">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Questions</h4>
+                                    <a class="appointdining btn btn-success text-white">+ ADD</a>
+                                </div>
+                               
+                                <div class="card-content">
+                                    <div class="card-body diningRows">
+                                        <% skilQues.forEach((c, i)=> { %>
+                                        <div class="row form-group newdiv">
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Question No *</label>
+                                                <input class="form-control" type="text" name="questionNo[]" required>
+                                            </div>
+                                           
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Skills (Technical) *</label>
+                                                <select class="form-control selectpicker" required name="_techSkill[]"
+                                                    title="Select Option" data-actions-box="true" multiple>
+                                                    <% techSkill.forEach((i)=> { %>
+                                                        <option value="<%= i._id %>" <%- skilQues[0]._skill.includes(i._id) ? "selected" : "" %> class="text-capitalize">
+                                                            <%= i.name %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Skills (Non-Technical) *</label>
+                                                <select class="form-control selectpicker" required name="_nonSkill[]"
+                                                    title="Select Option" data-actions-box="true" multiple>
+                                                    <% nonTechSkill.forEach((i)=> { %>
+                                                        <option value="<%= i._id %>" <%- skilQues[0]._skill.includes(i._id) ? "selected" : "" %> class="text-capitalize">
+                                                            <%= i.name %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Expected Time (In Seconds) *</label>
+                                                <input class="form-control" type="text" name="questiontime[]" required>
+                                            </div>
+                                            <div class="col-xl-10 mb-1">
+                                                <label>Question *</label>
+                                                <input class="form-control" type="text" name="question[]" required>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="row mb-1">
+                                                    <div class="col-xl-6">
+                                                        <fieldset>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">
+                                                                        <div class=""> Option 1&nbsp;<input
+                                                                                type="checkbox" class="rad"
+                                                                                name="option1"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="text" class="form-control" name="answer1"
+                                                                    aria-label="Text input with checkbox"
+                                                                    placeholder="Answer">
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <input class="form-control age d-none" type="number"
+                                                            placeholder="Weightage" name="weightage1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="row mb-1">
+                                                    <div class="col-xl-6">
+                                                        <fieldset>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">
+                                                                        <div class="">
+                                                                            Option 2&nbsp;
+                                                                            <input type="checkbox" class="rad"
+                                                                                name="option2">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    aria-label="Text input with checkbox" name="answer2"
+                                                                    placeholder="Answer">
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <input class="form-control age d-none" type="number"
+                                                            placeholder="Weightage" name="weightage2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="row mb-1">
+                                                    <div class="col-xl-6">
+                                                        <fieldset>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">
+                                                                        <div class="">
+                                                                            Option 3&nbsp;
+                                                                            <input type="checkbox" class="rad"
+                                                                                name="option3">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    aria-label="Text input with checkbox" name="answer3"
+                                                                    placeholder="Answer">
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <input class="form-control age d-none" type="number"
+                                                            placeholder="Weightage" name="weightage3">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="row mb-1">
+                                                    <div class="col-xl-6">
+                                                        <fieldset>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">
+                                                                        <div class="">
+                                                                            Option 4&nbsp;
+                                                                            <input type="checkbox" class="rad"
+                                                                                name="option4">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="text" class="form-control" name="answer4"
+                                                                    aria-label="Text input with checkbox"
+                                                                    placeholder="Answer">
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <input class="form-control age d-none" type="number"
+                                                            placeholder="Weightage" name="weightage4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% if( i>0 ) { %>
+                                                <div class="col-xl-12 text-right mb-1">
+                                                    <label class="col-form-label" for="input-small"></label>
+                                                    <button type="button" class="btn btn-ghost-danger btn btn-secondary removediv bg-danger"><i class="feather icon-minus"></i></button>
+                                                    </div>
+                                                    <% } %>
+                                        </div>
+                                        <%})%>
+                                        
+                                    </div>
+                                   
+                                    <div class="row">
+                                        <div class="col-xl-12 col-lg-12">
+                                            <div class="card">
+                                                <div class="card-content">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 text-right">
+                                                                <a type="reset" href="/admin/skillTest/add"
+                                                                    class="btn btn-danger" value="Reset">Reset</a>
+                                                                <button type="submit"
+                                                                    class="btn btn-success submitBtn">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </form>
+
+            <% include ../partials/footer %>
+                <script>
+                    const imageUploaders = document.querySelectorAll('.my-logo-uploader');
+                    const submitBtns = document.querySelectorAll('.submitBtn');
+                    imageUploaders.forEach((x) => {
+                        const idText = x.getAttribute('data-id');
+                        const id = document.querySelector(`#${idText}`);
+
+                        x.addEventListener('change', async (e) => {
+                            try {
+                                submitBtns.forEach((x) => { x.disabled = true; });
+                                const filesData = Array.from(e.target.files);
+                                if (!Array.isArray(filesData) || filesData.length <= 0) throw new Error('No image found!');
+
+                                const data = await Promise.all(filesData.map(async (file) => {
+                                    const ext = file.name.split('.').pop();
+                                    const res = await axios.get('/admin/s3upload', { params: { type: file.type, ext } });
+                                    if (!res || !res.data || !res.data.data) return null;
+                                    const { url, key } = res.data.data;
+                                    if (!url || !key) return null;
+                                    const upload = await axios.put(url, file, { headers: { 'Content-Type': file.type } });
+                                    if (upload || upload.status === 200) return key;
+                                    return null;
+                                }));
+
+                                const files = data.filter(x => !!x);
+
+                                if (files.length <= 0) throw new Error('Unable to upload any image!');
+
+                                files.forEach((f) => {
+                                    const div = document.createElement('div');
+                                    div.setAttribute('class', 'col-xl-12 col-md-12 col-sm-12 col-12');
+
+                                    const img = document.createElement('img');
+                                    img.setAttribute('src', `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`);
+                                    img.setAttribute('alt', 'img');
+                                    img.setAttribute('width', '40');
+                                    img.setAttribute('height', '40');
+                                    div.appendChild(img);
+
+                                    const input = document.createElement('input');
+                                    input.setAttribute('type', 'hidden');
+                                    input.setAttribute('name', idText);
+                                    input.setAttribute('value', f);
+                                    div.appendChild(input);
+
+                                    const p = document.createElement('p');
+                                    p.setAttribute('class', 'mt-1');
+                                    const rmBtn = document.createElement('a');
+                                    rmBtn.setAttribute('class', 'text-danger');
+                                    rmBtn.setAttribute('href', 'javascript:void(0)');
+                                    rmBtn.textContent = 'Remove';
+                                    rmBtn.addEventListener('click', () => {
+                                        div.parentNode.removeChild(div)
+                                        $('.firstImage').removeClass('d-none');
+                                    });
+                                    p.appendChild(rmBtn);
+                                    const viewBtn = document.createElement('a');
+                                    viewBtn.setAttribute('class', 'text-primary mr-2');
+                                    viewBtn.setAttribute('target', '_blank');
+                                    viewBtn.setAttribute('href', `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`);
+                                    viewBtn.textContent = 'View';
+                                    p.appendChild(viewBtn);
+                                    div.appendChild(p);
+                                    id.append(div);
+                                    $('.firstImage').addClass('d-none');
+                                });
+                                submitBtns.forEach((x) => { x.disabled = false; });
+                                x.value = '';
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        });
+                    });
+
+
+                    $('.appoint').click(() => {
+                        const html = $('.appenddiv').html();
+                        $('.wantdiv').before(html);
+                    });
+
+                    $(document).on('click', '.removediv', function () {
+                        $(this).closest('.newdiv').remove();
+                    });
+
+                    $(document).on('change', '.rad', function () {
+                        $(this).closest('.newdiv').find('.age').addClass('d-none');
+                        $(this).closest('.newdiv').find('input[type="checkbox"]').prop('checked', false);
+                        $(this).closest('.row').find('.d-none').removeClass('d-none');
+                        $(this).prop('checked', true);
+                    });
+
+                    $("#qualification").change(() => {
+						$("#subqualification").find("option").remove().end();
+						$("#subqualificationMain").removeClass("d-none");
+						const _qualification = $("#qualification").val();
+						if (_qualification && _qualification === "all") {
+							$("#subqualificationMain").addClass("d-none");
+						} else {
+							axios
+								.post("/panel/helper/getsubQual", {
+									_qualification,
+								})
+								.then(({ data }) => {
+									data.forEach((d) => {
+										if (d) {
+											$("#subqualification").append(
+												`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+											);
+										}
+									});
+									$("#subqualification").selectpicker("refresh");
+								})
+								.catch((e) => console.log(e));
+						}
+					});
+                    $('#industry').change(() => {
+                        $('#subindustry')
+                            .find('option')
+                            .remove()
+                            .end();
+                        axios.post('/helper/getsubInd', {
+                            _industry: $('#industry').val()
+                        })
+                            .then(({
+                                data
+                            }) => {
+                                data.forEach((d) => {
+                                    if (d) {
+                                        $('#subindustry').append(
+                                            `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+                                        );
+                                    }
+                                });
+                                $('#subindustry').selectpicker('refresh');
+                            })
+                            .catch(e => { console.log(e) });
+                    });
+
+
+
+
+                    $('.appointdining').click(() => {
+
+let tech;
+let nontech;
+const techSkill = "<%= JSON.stringify(techSkill) %>"
+const nonTechSkill = "<%= JSON.stringify(nonTechSkill) %>"
+
+JSON.parse(techSkill.replace(/&#34;/g, '"')).forEach((c) => {
+    tech += `<option value="${c._id}">${c.name}</option><br>`;
+});
+JSON.parse(nonTechSkill.replace(/&#34;/g, '"')).forEach((c) => {
+    nontech += `<option value="${c._id}">${c.name}</option><br>`;
+});
+$('.diningRows').append(` <div class="row newdiv border border-bottom-0 border-left-0 border-right-0 pt-2 pb-1">
+<div class="col-xl-3 mb-1">
+<label>Question No</label>
+<input class="form-control" type="text" name="questionNo">
+</div>
+<div class="col-xl-3 mb-1">
+<label>Skills (Technical)</label>
+<input type="text" class="hidden" name="_techSkill" value="_">
+<select class="form-control selectpicker" name="_techSkill" title="Select Option" data-actions-box="true" multiple>
+${tech}
+</select>
+</div>
+<div class="col-xl-3 mb-1">
+<label>Skills (Non-Technical)</label>
+<input type="text" class="hidden" name="_nonSkill" value="_">
+<select class="form-control selectpicker" name="_nonSkill" title="Select Option" data-actions-box="true" multiple>
+${nontech}
+</select>
+</div>
+<div class="col-xl-3 mb-1">
+<label>Expected Time (In Seconds)</label>
+<input class="form-control" type="text" name="questiontime">
+</div>
+<div class="col-xl-10 mb-1">
+<label>Question</label>
+<input class="form-control" type="text" name="question">
+</div>
+<div class="col-12">
+<div class="row mb-1">
+<div class="col-xl-6">
+<fieldset>
+    <div class="input-group">
+    <div class="input-group-prepend">
+        <div class="input-group-text">
+        <div class="">
+            Option 1&nbsp;
+            <input type="checkbox" class="rad" name="option1" >
+        </div>
+        </div>
+    </div>
+    <input type="text" class="form-control" name="answer1" aria-label="Text input with checkbox"
+        placeholder="Answer" required>
+    </div>
+</fieldset>
+</div>
+<div class="col-xl-6">
+<input class="form-control age d-none" type="number" placeholder="Weightage" name="weightage1" >
+</div>
+</div>
+</div>
+<div class="col-12">
+<div class="row mb-1">
+<div class="col-xl-6">
+<fieldset>
+    <div class="input-group">
+    <div class="input-group-prepend">
+        <div class="input-group-text">
+        <div class="">
+            Option 2&nbsp;
+            <input type="checkbox" class="rad" name="option2" >
+        </div>
+        </div>
+    </div>
+    <input type="text" class="form-control" name="answer2" aria-label="Text input with checkbox"
+        placeholder="Answer" required>
+    </div>
+</fieldset>
+</div>
+<div class="col-xl-6">
+<input class="form-control age d-none" type="number" placeholder="Weightage"  name="weightage2" >
+</div>
+</div>
+</div>
+<div class="col-12">
+<div class="row mb-1">
+<div class="col-xl-6">
+<fieldset>
+    <div class="input-group">
+    <div class="input-group-prepend">
+        <div class="input-group-text">
+        <div class="">
+            Option 3&nbsp;
+            <input type="checkbox" class="rad" name="option3" >
+        </div>
+        </div>
+    </div>
+    <input type="text" class="form-control" name="answer3" aria-label="Text input with checkbox"
+        placeholder="Answer" required>
+    </div>
+</fieldset>
+</div>
+<div class="col-xl-6">
+<input class="form-control age d-none" type="number" placeholder="Weightage" name="weightage3" >
+</div>
+</div>
+</div>
+<div class="col-12">
+<div class="row mb-1">
+<div class="col-xl-6">
+<fieldset>
+    <div class="input-group">
+    <div class="input-group-prepend">
+        <div class="input-group-text">
+        <div class="">
+            Option 4&nbsp;
+            <input type="checkbox" class="rad" name="option4" >
+        </div>
+        </div>
+    </div>
+    <input type="text" class="form-control" name="answer4" aria-label="Text input with checkbox"
+        placeholder="Answer" required>
+    </div>
+</fieldset>
+</div>
+<div class="col-xl-6">
+<input class="form-control age d-none" type="number" placeholder="Weightage" name="weightage4" >
+</div>
+</div>
+</div>
+<div class="col-xl-12 text-right">
+<label class="col-form-label" for="input-small"></label>
+<button type="button" class="btn btn-ghost-danger btn btn-secondary removediv bg-danger"><i class="feather icon-minus"></i></button>
+</div>
+</div>`)
+                        $('.selectpicker').selectpicker('render');
+                    });
+
+                    $(document).ready(function () {
+                        $("#formData").on('submit', function () {
+                            $('input[type=checkbox]:not(:checked)').each(function () {
+                                $(this).prop('checked', true).val(0);
+                            });
+                        })
+                    })
+
+
+                </script>s

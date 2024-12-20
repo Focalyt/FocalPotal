@@ -1,0 +1,218 @@
+<% include ../../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-12 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-9">
+					<h3 class="content-header-title float-left mb-0">Coins - Candidates</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Coins - Candidates</li>
+						</ol>
+					</div>
+				</div>
+				
+			</div>			
+			
+		</div>
+	</div>
+	<div class="content-body">
+		
+		<% include ../../partials/flash %>
+		
+			<section class="list-view">
+				
+				<div class="row">
+					
+					<div class="col-12 rounded equal-height-2 coloumn-2">
+						
+						<div class="card">
+                            <div class="row text-right">
+                                <div class="col-12">
+                                  <div class="collectie mt-1 mr-1">
+                                    <div class="bottomcontent">
+                                      <span class="totalCount pl-1">Total Candidates <%= count %></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+							<div class="row">
+							<div class="card-content col-12">
+								<div class="row mb-2">
+                                    <div class="col-xl-12 col-lg-12">
+                                      <form method="GET" id="filterForm">
+                                      
+                                      <div class="row">
+                                        <div class="col-xl-2 ml-1 mt-1">
+                                          <label>Name/ Mobile/ Whatsapp</label>
+                                          <input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>"
+                                           maxlength="25">
+                                        </div>
+                                        <div class="col-xl-2 ml-1 mt-1">
+                                          <label>Date</label>
+                                          <input type="date" class="form-control" id="date" name="date" value="<%= data.date %>">
+                                        </div>
+                                        
+                                        <div style="margin-top: 2.5rem !important;" class="col-xl-3 text-center mt-3">
+                                          <button 
+                                            class="btn btn-success  waves-effect waves-light  text-white d-inline "
+                                            id="submit-btn">Go</button>
+                                            <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
+                                            href="/admin/Coins/availedCandidates/<%= offerId %>">RESET</a>
+                                        </div>
+                                      </div>
+                                      </form>
+                                    </div>
+                                  </div>
+								<div class="table-responsive">
+									<% if (payments && payments.length> 0) { %>
+										<table id="tblexportData" class="table table-hover-animation mb-0 table-hover" width="100%">
+											<thead>
+												<tr>
+													<th>Offer</th>
+													<th>CANDIDATE NAME</th>
+													<th>MOBILE NO.</th>
+                                                    <th onclick="sorting('createdAt')" style="cursor: pointer;">Date <i id="createdAt" class="fa-solid fa-arrow-down danger cursors pointer" value="1"></i></th>
+												</tr>
+											</thead>
+											<tbody>
+												<% let count=0 %>
+													<% payments.forEach((l, i)=> { %>
+														<tr>
+															<td class="text-capitalize">
+                                                                <%= l._offer?.displayOffer ? l._offer?.displayOffer : "NA" %>
+                                                            </td>
+                                                            <td class="text-capitalize">
+                                                                <%= l._candidate?.name ? l._candidate?.name : "NA" %>
+                                                            </td>
+                                                            <td class="text-capitalize">
+                                                                <%= l._candidate?.mobile ? l._candidate?.mobile : "NA" %>
+                                                            </td>
+                                                            <td class="text-capitalize">
+                                                                <%= moment(l.createdAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A') %>
+                                                              </td>
+														</tr>
+														<% }) %>
+											</tbody>
+										</table>
+										<% } else { %>
+											<p class="text-center mt-3">No result found</p>
+											<% } %>
+
+												<% if (totalPages> 1) { %>
+													<ul class="pagination justify-content-end ml-2 mb-2">
+														<% let first=1 %>
+															<% let last=totalPages> 4 ? 4 :
+																totalPages %> <% if (totalPages> 4 && page >= 2) { %> <%
+																		first=page - 1 %>
+																		<% last=page + 1 %>
+																			<% if (last>
+																				totalPages) last = totalPages %> <% } %>
+																					<% if (first>
+																						1) { %>
+																						<li class="page-item">
+																							<a class="pageAnchor page-link"
+																								href="<%= 1 %>">First</a>
+																						</li>
+																						<% } %>
+																							<% for (let i=first; i
+																								<=last; i +=1) { %>
+																								<% if (i===page) { %>
+																									<li
+																										class="active page-item">
+																										<a href="javascript:void()"
+																											class="page-link">
+																											<%= i %>
+																										</a>
+																									</li>
+																									<% } else { %>
+																										<li
+																											class="page-item">
+																											<a class="page-link pageAnchor"
+																												href="<%= i %>">
+																												<%= i %>
+																											</a>
+																										</li>
+																										<% } %>
+																											<% } %>
+																												<% if
+																													(totalPages>
+																													last)
+																													{ %>
+																													<li
+																														class="page-item">
+																														<a class="pageAnchor page-link"
+																															href="<%= last + 1 %>">...</a>
+																													</li>
+																													<li
+																														class="page-item">
+																														<a class="pageAnchor page-link"
+																															href="<%= totalPages %>">Last</a>
+																													</li>
+																													<% }
+																														%>
+													</ul>
+													<% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+                </div>
+			</section>
+        <% include ../../partials/footer %>
+
+        <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const pageAnchors = document.querySelectorAll("a.pageAnchor");
+      const { origin, pathname, search } = window.location;
+      let searchParams = search.split("?")[1];
+      let obj;
+      let url = `${origin}${pathname}?`;
+      if (searchParams) {
+        obj = JSON.parse(
+          '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+          function (key, value) {
+            return key === "" ? value : decodeURIComponent(value);
+          }
+        );
+        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+        keyArr.forEach((x) => {
+          if (x !== "page") {
+            url += `${x}=${obj[x]}&`;
+          }
+        });
+      }
+      console.log(url,pageAnchors,"===>")
+      pageAnchors.forEach((el) => {
+        const n = el.getAttribute("href");
+        el.setAttribute("href", `${url}page=${n}`);
+      });
+
+      let order = '<%= sortingOrder%>'
+		let value = '<%= sortingValue%>'
+		let iconClass
+		if(order == -1){
+			iconClass = "fa-solid fa-arrow-down success"
+		}else{
+			iconClass = "fa-solid fa-arrow-up success"
+		}
+		$(`#${value}`).removeAttr('class')
+		$(`#${value}`).attr('class', iconClass)
+		$(`#${value}`).attr('value', `${order*-1}`)
+        
+    });
+    function sorting(value){
+		let order = $(`#${value}`).attr('value')
+		let str = `?`
+		let form = document.getElementById('filterForm');
+        let data = new FormData(form);
+		let obj = {}
+        for (let [key, value] of data) {
+			obj[key] = value
+			str += `${key}=${value}&`
+            }
+		window.location.href = `/admin/Coins/availedCandidates/<%= offerId %>/${str}value=${value}&order=${order}`
+	}
+        </script>
+</div>

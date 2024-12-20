@@ -1,0 +1,399 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Cities</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Cities</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<section class="list-view">
+				<div class="row">
+					<div class="col-6 equal-height-2">
+						<div class="card">
+							<div class="card-header border border-top-0 border-left-0 border-right-0">
+
+								<h4 class="card-title pb-1">Add/Edit City </h4>
+							</div>
+							
+							<div class="card-content">
+								<div class="card-body">
+									<form class="form-horizontal" action="" method="post" id="form">
+										<div class="row">
+											<div class="col-xl-4">
+												<label>City Name</label>
+												<input type="type" class="form-control" required
+													value="<%- cityName ? cityName : ''%>" name="name" id="city"
+													placeholder="City name" />
+											</div>
+											<div class="col-xl-4" id="work-loc">
+												<label>Location</label>
+												<input class="form-control" type="text" id="cur-loc"
+													value="<%= place %>" required>
+												<input type="hidden" id="place" name="place" value=""
+													class="form-control" />
+												<input type="hidden" id="latitude" name="latitude"
+													value="<%= latitude %>" class="form-control" />
+												<input type="hidden" id="longitude" name="longitude"
+													value="<%= longitude %>" class="form-control" />
+											</div>
+											<div class="col-xl-4">
+												<label>Select State</label>
+												<select class="form-control" name="stateId" id="state" required>
+													<option value="">Select Option</option>
+													<% states.forEach((s)=> { %>
+														<option value="<%= s.stateId %>" <% if (s.stateId===stateId) {
+															%> selected<% } %> class="text-capitalize">
+																<%= s.name %>
+														</option>
+														<% }) %>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-3">
+												<br />
+												<a id="submit-btn"
+													class="btn btn-success text-white font-small-3 <% if(view==true ) {%> disabled <% } %>"
+													<% if(view==true ) {%> disabled <% } %>>
+														Add
+											    </a>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 rounded equal-height-2 coloumn-2">
+						<div class="card">
+							<div class="row p-1">
+								<div class="col-xl-6">
+									<div class="row">
+										<div class="card-header">
+											<h4 class="card-title">All cities</h4>
+											
+										</div>
+										<div class="card-header">
+											<select class="form-control" onchange="getCityList(event)" name="stateId"
+												required>
+												<option value="">Select State</option>
+												<% states.forEach((s)=> { %>
+													<option value="<%= s.stateId %>"  <% if (s.stateId===stateId) { %> selected<% } %> class="text-capitalize">
+														<%= s.name %>
+													</option>
+													<% }) %>
+											</select>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="col-xl-6">
+             <div class="row">
+                 <div class="col-xl-12 text-right">
+                     <a href="" class="btn btn-outline-success">Import</a>
+                     <a href="" class="btn btn-outline-primary">Export</a>
+                   </div>
+             </div>
+         </div> -->
+							</div>
+							<div class="card-content">
+								<div class="table-responsive">
+									<% if (cities && cities.length> 0) { %>
+										<table class="table table-hover-animation mb-0 table-hover">
+											<thead>
+												<tr>
+													<th>City Name</th>
+													<th>State</th>
+													<th>Location</th>
+													<th>Status</th>
+													<% if (view === false) { %>
+													<th>Action</th>
+													<% } %>
+												</tr>
+											</thead>
+											<tbody>
+												<% let count=0 %>
+													<% cities.forEach((l, i)=>
+														{ %>
+														<tr>
+															<td class="text-capitalize">
+																<%= l.name %>
+															</td>
+															<td class="text-capitalize">
+																<%= l.stateId %>
+															</td>
+															<td class="text-capitalize">
+																<%= l.place %>
+															</td>
+															<% if (view === true) { %>
+																<td><%= l.status ? 'True' : 'False' %></td>
+																<%}else{%>
+															<td>
+																<div
+																class="custom-control custom-switch custom-control-inline">
+																	<input type="checkbox"
+																		onclick="myOnOffFunc('<%= l._id %>', '<%= l.status %>', 'cities');"
+																		class="custom-control-input"
+																		id="customSwitch<%= i %>" <% if(l.status==true ) {%> checked <% } %> />
+																	<label class="custom-control-label"
+																		for="customSwitch<%= i %>">
+																	</label>
+															</div>
+															</td>
+															<% } %>
+															<% if (view === false) { %>
+															<td valign="middle">
+																<a href="/admin/cities/edit/<%= l._id %>?stateId=<%= l.stateId %>">
+																	<i class="feather icon-edit fa-lg primary"></i>
+																</a>
+															</td>
+															<% } %>
+														</tr>
+														<% }) %>
+											</tbody>
+										</table>
+										<% } else { %>
+											<p class="text-center mt-3">No result found</p>
+											<% } %>
+												<% if (totalPages> 1) { %>
+													<ul class="pagination justify-content-end ml-2 mb-2">
+														<% let first=1 %>
+															<% let last=totalPages> 4 ? 4 :
+																totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+																	<% first=page - 1 %>
+																		<% last=page + 1 %>
+																			<% if (last> totalPages) last = totalPages
+																				%> <% } %>
+																					<% if (first> 1) { %>
+																						<li class="page-item">
+																							<a class="pageAnchor page-link"
+																								href="<%= 1 %>">First</a>
+																						</li>
+																						<% } %>
+																							<% for (let i=first; i
+																								<=last; i +=1) { %>
+																								<% if (i===page) { %>
+																									<li
+																										class="active page-item">
+																										<a href="javascript:void()"
+																											class="page-link">
+																											<%= i %>
+																										</a>
+																									</li>
+																									<% } else { %>
+																										<li
+																											class="page-item">
+																											<a class="page-link pageAnchor"
+																												href="<%= i %>">
+																												<%= i %>
+																											</a>
+																										</li>
+																										<% } %>
+																											<% } %>
+																												<% if
+																													(totalPages>
+																													last)
+																													{ %>
+																													<li
+																														class="page-item">
+																														<a class="pageAnchor page-link"
+																															href="<%= last + 1 %>">...</a>
+																													</li>
+																													<li
+																														class="page-item">
+																														<a class="pageAnchor page-link"
+																															href="<%= totalPages %>">Last</a>
+																													</li>
+																													<% }
+																														%>
+													</ul>
+													<% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<% include ../partials/footer %>
+			<script
+			src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE%>&callback=initMap&libraries=places&v=weekly"
+			defer></script>
+<script>
+
+			function initMap() {
+				const options = {
+					componentRestrictions: { country: "in" },
+					types: ["(cities)"]
+				};
+				const location = document.getElementById("cur-loc")
+				var _addEventListener = (location.addEventListener) ? location.addEventListener : location.attachEvent;
+				var arrowEvent = false;
+				function addEventListenerWrapper(type,listener){
+					if(type == 'keydown'){
+						orig_listener = listener;
+						listener = function(event){
+							var suggestion_selected = $('#cur-loc-selected').length > 0
+							if(event.which == 40 || event.which ==38){
+								arrowEvent = true
+							}
+	                        else if(event.which == 13 && !suggestion_selected && arrowEvent == false){
+								var simulated_downarrow = $.Event("keydown", {
+									keyCode: 40,
+                                    which: 40
+								});
+								orig_listener.apply(location, [simulated_downarrow]);
+							}
+							orig_listener.apply(location, [event]);
+						}
+					}
+					_addEventListener.apply(location, [type, listener]);
+				}
+				location.addEventListener = addEventListenerWrapper;
+                location.attachEvent = addEventListenerWrapper;
+				const autocomplete = new google.maps.places.Autocomplete(location, options);
+				google.maps.event.addListener(autocomplete, 'place_changed', function () {
+					let place = autocomplete.getPlace();
+					document.getElementById('place').value = location.value;
+					document.getElementById('latitude').value = place.geometry.location.lat();
+					document.getElementById('longitude').value = place.geometry.location.lng();
+				});
+			}
+			window.initMap = initMap;
+			</script>
+				<script>
+					function getCityList(event) {
+						window.location.href = `/admin/cities?stateId=${event.target.value}`;
+					}
+					function myOnOffFunc(id, status, model) {
+						// eslint-disable-line
+						let myStatus = true;
+						if (status === true || status === "true") {
+							myStatus = false;
+						}
+						$.ajax({
+							type: "POST",
+							url: "/admin/changestatus",
+							data: {
+								id,
+								status: myStatus,
+								model,
+							},
+							// success: () => location.reload(),
+						});
+					}
+				</script>
+				<script>
+					!(function () {
+						"use strict";
+						Array.isArray ||
+							(Array.isArray = function (r) {
+								return "[object Array]" === Object.prototype.toString.call(r);
+							});
+						var r = {
+							get: function () {
+								var r = window.location.search,
+									t = {};
+								return "" === r
+									? t
+									: ((r = r.slice(1)),
+										(r = r.split("&")),
+										r.map(function (r) {
+											var i, o;
+											(r = r.split("=")),
+												(i = r[0]),
+												(o = r[1]),
+												t[i]
+													? (Array.isArray(t[i]) || (t[i] = [t[i]]),
+														t[i].push(o))
+													: (t[i] = o);
+										}),
+										t);
+							},
+						};
+						if (window) {
+							if (window.qs)
+								throw new Error(
+									"Error bootstrapping qs: window.qs already set."
+								);
+							window.qs = r;
+						}
+					})();
+				</script>
+				<script>
+					document.addEventListener("DOMContentLoaded", () => {
+						const pageAnchors = document.querySelectorAll("a.pageAnchor");
+						const { origin, pathname, search } = window.location;
+						const obj = window.qs.get(search);
+						const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+						let url = `${origin}${pathname}?`;
+						keyArr.forEach((x) => {
+							if (x !== "page") {
+								url += `${x}=${obj[x]}&`;
+							}
+						});
+						pageAnchors.forEach((el) => {
+							const n = el.getAttribute("href");
+							el.setAttribute("href", `${url}page=${n}`);
+						});
+					});
+				</script>
+				<script>
+						$('#submit-btn').bind('click', () => {
+							if(!validateForm()){
+								let body = {}
+								const {search} = window.location
+								
+								$('#form').find('.form-control').each(function(){
+									let type = $(this).prop("type");
+                                    let name = $(this).prop("name")
+                                    let val = $(this).val()
+                                    if (val !== '' && type != "button" && type != "submit" && type != "file"&&name!=="") {
+										body[name] = val
+                                    }
+								})
+								
+								header = { headers: { 'x-auth': localStorage.getItem('token') } }
+								axios.post(`/admin/cities`, body, header)
+                                .then(result => {
+									window.location.href = `/admin/cities${search}`;
+								})
+							}
+						})
+					function validateForm(){
+						$('.error').removeClass('error')
+						const city = $("#city").val()
+						const state = $("#state").val()
+						const currentLocation=document.getElementById('cur-loc');
+                        let currentLoc=currentLocation.value;
+						let hasError = false
+                        let firstError
+						
+						if(currentLoc.trim()===""){
+                        $('#work-loc').addClass('error')
+                        firstError=firstError?firstError:$('#cur-loc')
+                        hasError = true
+					    }
+						if(!state){
+							$("#state").parent().addClass('error')
+							firstError=firstError?firstError:$('#state')
+                            hasError = true
+						}
+						if(!city){
+							$("#city").parent().addClass('error')
+							firstError=firstError?firstError:$('#city')
+                            hasError = true
+						}
+						$(firstError).focus()
+                        return hasError
+				}
+				</script>
+	</div>

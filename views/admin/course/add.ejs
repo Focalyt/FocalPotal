@@ -1,0 +1,1099 @@
+<% include ../partials/header %>
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Add Course</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                            <li class="breadcrumb-item active">Add Course</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ../partials/flash %>
+            <form class="form-horizontal" action="" id="addCourseForm">
+                <section id="personal-info">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Course Information</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <!-- <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1" id="sectorblock">
+                                            <label for="sector">Sector</label>
+                                            <select class="form-control" name="sector" id="sector" multiple>
+                                                <option value="">Select Sector</option>
+                                                <% sectors.forEach((sector) => { %>
+                                                    <option value="<%= sector._id %>"><%= sector.name %></option>
+                                                <% }); %>
+                                            </select>
+                                        </div> -->
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="sectorblock">
+                                                <label for="sector">Sector</label>
+                                                <select class="form-control" name="sector" id="sector">
+                                                    <option value="">Select Sector</option>
+                                                    <%sectors.forEach((sector,i)=>{%>
+                                                        <option value="<%=sector._id %>">
+                                                            <%=sector.name %>
+                                                        </option>
+                                                        <%})%>
+                                                </select>
+                                            </div>
+
+
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="courseblock">
+                                                <label>Course Level</label>
+                                                <select class="form-control" name="courseLevel" id="courseLevel">
+                                                    <option value="">Select Level</option>
+                                                    <option value="Certificate">Certificate</option>
+                                                    <option value="Diploma">Diploma</option>
+                                                    <option value="Advance Diploma">Advance Diploma</option>
+                                                    <option value="Degree">Degree</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="courseblock">
+                                                <label>Course Type</label>
+                                                <select class="form-control" name="courseType" id="courseType">
+                                                    <option value="">Select Type</option>
+                                                    <option value="course">Course Only</option>
+                                                    <option value="coursejob">Course and Job</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="nameblock">
+                                                <label>Name</label>
+                                                <input class="form-control" type="text" name="name" id="name">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="durationblock">
+                                                <label>Duration</label>
+                                                <input class="form-control" type="text" name="duration" id="duration">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Certifying Agency</label>
+                                                <input class="form-control" type="text" name="certifyingAgency"
+                                                    id="certifyingAgency">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Certifying Agency Website</label>
+                                                <input class="form-control" type="text" name="certifyingAgencyWebsite"
+                                                    id="certifyingAgencyWebsite">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="qualificationblock">
+                                                <label>Qualification</label>
+                                                <select class="form-control" name="qualification" id="qualification">
+                                                    <option value="">Select Qualification</option>
+                                                    <option value="10th">10th</option>
+                                                    <option value="Diploma">Diploma</option>
+                                                    <option value="Advance Diploma">Advance Diploma</option>
+                                                    <option value="Degree">Degree</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Age</label>
+                                                <input class="form-control" type="text" name="age" id="age">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Experience</label>
+                                                <input class="form-control" type="text" name="experience"
+                                                    id="experience">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="trainingblock">
+                                                <label>Training Mode</label>
+                                                <select class="form-control" name="trainingMode" id="trainingMode"
+                                                    onchange="toggleTrainingBlocks()">
+                                                    <option value="">Select Training</option>
+                                                    <option value="Online">Online</option>
+                                                    <option value="Offline">Offline</option>
+                                                    <option value="Blended">Blended</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="onlinetrainingblock" style="display: none;">
+                                                <label>Online training Timing </label>
+                                                <textarea class="form-control" type="text" name="onlineTrainingTiming"
+                                                    id="onlineTrainingTiming"></textarea>
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="offlinetrainingblock" style="display: none;">
+                                                <label>Offline training Timing </label>
+                                                <textarea class="form-control" type="text" name="offlineTrainingTiming"
+                                                    id="offlineTrainingTiming"></textarea>
+                                            </div>
+
+                                            <script>
+                                                function toggleTrainingBlocks() {
+                                                    var trainingMode = document.getElementById("trainingMode").value;
+                                                    var onlineBlock = document.getElementById("onlinetrainingblock");
+                                                    var offlineBlock = document.getElementById("offlinetrainingblock");
+
+                                                    if (trainingMode === "Online") {
+                                                        onlineBlock.style.display = "block";
+                                                        offlineBlock.style.display = "none";
+                                                    } else if (trainingMode === "Offline") {
+                                                        onlineBlock.style.display = "none";
+                                                        offlineBlock.style.display = "block";
+                                                    } else if (trainingMode === "Blended") {
+                                                        onlineBlock.style.display = "block";
+                                                        offlineBlock.style.display = "block";
+                                                    } else {
+                                                        onlineBlock.style.display = "none";
+                                                        offlineBlock.style.display = "none";
+                                                    }
+                                                }
+                                            </script>
+
+
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="addressblock">
+                                                <label>Address</label>
+                                                <select class="form-control" name="address" id="address"
+                                                    onchange="toggleAddressFields()">
+                                                    <option value="">Select Address</option>
+                                                    <option value="App">App</option>
+                                                    <option value="Address">Address</option>
+                                                    <option value="Both">Both</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="cityblock">
+                                            <label>City</label>
+                                            <input class="form-control" type="text" name="city" id="city">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                        id="stateblock">
+                                        <label>State</label>
+                                        <input class="form-control" type="text" name="state" id="state">
+                                    </div>
+                                            
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="applinkblock" style="display: none;">
+                                                <label>App link</label>
+                                                <input class="form-control" type="text" name="appLink" id="appLink">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="addressinputblock" style="display: none;">
+                                                <label>Address</label>
+                                                <input class="form-control" type="text" name="addressInput"
+                                                    id="addressInput">
+                                            </div>
+
+                                            <script>
+                                                function toggleAddressFields() {
+                                                    var selectedOption = document.getElementById("address").value;
+                                                    var appLinkBlock = document.getElementById("applinkblock");
+                                                    var addressInputBlock = document.getElementById("addressinputblock");
+
+                                                    if (selectedOption === "App") {
+                                                        appLinkBlock.style.display = "block";
+                                                        addressInputBlock.style.display = "none";
+                                                    } else if (selectedOption === "Address") {
+                                                        appLinkBlock.style.display = "none";
+                                                        addressInputBlock.style.display = "block";
+                                                    } else if (selectedOption === "Both") {
+                                                        appLinkBlock.style.display = "block";
+                                                        addressInputBlock.style.display = "block";
+                                                    } else {
+                                                        appLinkBlock.style.display = "none";
+                                                        addressInputBlock.style.display = "none";
+                                                    }
+                                                }
+                                            </script>
+
+
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="ojtblock">
+                                                <label>OJT</label>
+                                                <select class="form-control" name="ojt" id="ojt">
+                                                    <option value="">Select OJT</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Registration Charges</label>
+                                                <input class="form-control" type="text" name="registrationCharges"
+                                                    id="registrationCharges">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Course Fee</label>
+                                                <input class="form-control" type="text" name="courseFee" id="courseFee">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Cut Price</label>
+                                                <input class="form-control" type="text" name="cutPrice" id="cutPrice">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Exam Fee</label>
+                                                <input class="form-control" type="text" name="examFee" id="examFee">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Other fee if any</label>
+                                                <input class="form-control" type="text" name="otherFee" id="otherFee">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="emioptionblock">
+                                                <label>EMI Option Available</label>
+                                                <select class="form-control" name="emiOptionAvailable"
+                                                    id="emiOptionAvailable">
+                                                    <option value="">Select EMI Option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Max EMI Tenure</label>
+                                                <input class="form-control" type="text" name="maxEMITenure"
+                                                    id="maxEMITenure">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Stipend During Training</label>
+                                                <input class="form-control" type="text" name="stipendDuringTraining"
+                                                    id="stipendDuringTraining">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Last date for apply</label>
+                                                <input class="form-control" type="date" name="lastDateForApply"
+                                                    id="lastDateForApply">
+                                            </div>
+
+
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Youtube URL</label>
+												<input type="text" class="form-control" required placeholder="enter youtube url"
+													id="youtubeURL"/>
+                                            </div>
+
+
+
+                                            <div class="col-xl-6 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Required Documents</label>
+                                                <textarea class="form-control" name="requiredDocuments"
+                                                    id="requiredDocuments"></textarea>
+                                            </div>
+
+                                            <!-- <script
+                                                src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script> -->
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </section>
+                <section id="personal-info">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Add Docs</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <section id="imageGalaryTemplate">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                    <label for="videos">
+                                                        Add Videos
+                                                    </label>
+                                                    <input id="videos" type="file" multiple />
+                                                    <input type="hidden" class="form-control hiddenmediagroup"
+                                                        name="videos" id="hidden-videos" value="" />
+                                                </div>
+                                                <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
+                                                    id="brochures">
+                                                    <label for="brochure">
+                                                        
+                                                        Add Brochure
+                                                    </label>
+                                                    <input id="brochure" type="file"/>
+                                                    <input type="hidden" class="form-control hiddenmediagroup"
+                                                        name="brochure" id="hidden-brochure" value="" />
+                                                </div>
+
+                                                <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
+                                                    id="thumbnails">
+                                                    <label for="thumbnail">
+                                                        
+                                                        Add Thumbnail
+                                                    </label>
+                                                    <input id="thumbnail" type="file"/>
+                                                    <input type="hidden" class="form-control hiddenmediagroup"
+                                                        name="thumbnail" id="hidden-thumbnail" value="" />
+                                                </div>
+
+                                                <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
+                                                id="uploadgallery">
+                                                <label for="photos">
+                                                    Add Photos
+                                                </label>
+                                                <input id="photos" type="file" multiple />
+                                                <input type="hidden" class="form-control hiddenmediagroup"
+                                                    name="photos" id="hidden-photos" value="" />
+                                            </div>
+                                                <!-- <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                    <label for="audios">
+                                                        <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                            id="outputtwo">
+                                                        <p class="mt-1">Add Audios</p>
+                                                    </label>
+                                                    <input id="audios" type="file" multiple />
+                                                    <input type="hidden" class="form-control hiddenmediagroup"
+                                                        name="audios" id="hidden-audios" value="" />
+                                                </div> -->
+                                            </div>
+                                        </section>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="personal-info">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Testimonial Videos</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <section id="testimonialVideos">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                    <label for="testimonialvideos"></label>
+                                                    <input id="testimonialvideos" type="file" multiple />
+                                                    <input type="hidden" class="form-control hiddenmediagroup"
+                                                        name="testimonialvideos" id="hidden-testimonialvideos"
+                                                        value="" />
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="personal-info">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Extra Features</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <section id="extraFeatures">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                    <label>Course Feature</label>
+                                                    <textarea class="form-control courseFeature ckeditor"
+                                                        placeholder="Bulleted points" name="courseFeatures"></textarea>
+                                                </div>
+                                                <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                    <label>Important Terms</label>
+                                                    <textarea class="form-control importantTerms ckeditor"
+                                                        placeholder="Bulleted points" name="importantTerms"></textarea>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 px-3">
+                  <div class="card">
+                    <div class="card-content">
+                      <div class="card-content">
+                        <div class="card-body">
+                          <div class="row">
+                            <label for="contact-directly" class="px-1 h1 col-6">Do you want to Add the
+                              Dedicated
+                              Counsler Number?</label>
+                         
+                            <div class="col-xl-12 col-lg-12 col-12">
+                              <div class="form-check-inline">
+                                <input type="radio" id="contact-directly-yes" name="isContact" value="true"
+                                  onclick="showContactInfo()"/>
+                                  <label for="contact-directly-yes">Yes</label>
+                              </div>
+                              <div class="form-check-inline">
+                                <input type="radio" id="contact-directly-no" name="isContact" value="false"
+                                  onclick="hideContactInfo()"/>
+                                  <label for="contact-directly-no">No</label>
+                              </div>
+                            </div>
+                            <div class="col-12" id="contact-info" style="display: none;">
+                              <div class="row">
+                                <div class="col-xl-3 mb-1" id="counsler-name">
+                                  <label>Name</label><span class="mandatory"> </label>
+                                    <input type="text" class="form-control"
+                                      onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 32 || event.charCode == 8;"
+                                      name="nameof" id="counslername" placeholder="Name" value="">
+                                </div>
+                                <div class="col-xl-3 mb-1" id="counsler-phoneNumber">
+                                  <label>PhoneNumber</label><span class="mandatory"> *</span></label>
+                                  <input type="tel" class="form-control" id="counslerphonenumber"
+                                    pattern="[+]?[0-9]{1,3}\s?\d{9,12}" value=""
+                                    placeholder="Phone no" name="phoneNumberof"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10">
+                                </div>
+                                <div class="col-xl-3 mb-1 " id="counsler-whatsappNumber">
+                                  <label>Whatsapp Number</label><span class="mandatory"></label>
+                                    <input type="tel" class="form-control" id="counslerwhatsappnumber"
+                                      pattern="[+]?[0-9]{1,3}\s?\d{9,12}" value=""
+                                      placeholder="Whatsapp Number" name="whatsappNumberof"
+                                      onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10">
+                                </div>
+                                <div class="col-xl-3 mb-1" id="counsler-email">
+                                  <label>Email</label><span class="mandatory"></label>
+                                    <input class="form-control" type="email" name="emailof"
+                                      placeholder="Enter your email" id="counsleremail" value="">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                        <!-- Existing HTML for Dynamic Question and Answer Fields -->
+                        <section id="questionanswerTemplate">
+                            <template >
+                                <div class="row questionanswerrow">
+                                    <div class="col-xl-6 mb-1">
+                                        <label>Question</label>
+                                        <textarea name="question" class="form-control question" cols="50"
+                                            rows="1"></textarea>
+                                    </div>
+                                    <div class="col-xl-6 mb-1">
+                                        <label>Answer</label>
+                                        <textarea name="answer" class="form-control answer" cols="50"
+                                            rows="1"></textarea>
+                                    </div>
+                                </div>
+                            </template>
+                        </section>
+
+                        <div class="col-xl-12 col-lg-12">
+                                <div class="card mt-1">
+                                    <div class="card-content">
+                                        <div class="mt-2 px-2">
+                                            <!-- Existing question-answer pairs will be added here -->
+                                            <div id="questionanswerlist">
+                                                <div class="row questionanswerrow actuallist">
+                                                    <div class="col-xl-6 mb-1">
+                                                        <label>Question</label>
+                                                        <textarea name="question" class="form-control question"
+                                                            cols="50"
+                                                            rows="1">Do you offer a safe working environment?</textarea>
+                                                    </div>
+                                                    <div class="col-xl-6 mb-1">
+                                                        <label>Answer</label>
+                                                        <textarea name="answer" class="form-control answer" cols="50"
+                                                            rows="1">Do you offer a safe working environment?</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 mb-1 px-0 text-right">
+                                                <a class="btn btn-success text-white add-button">+ Add Another</a>
+                                            </div>
+                                        </div>
+
+                                        <script
+                                            src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script>
+                                        <script>
+                                            // Function to initialize CKEditor for existing and new question-answer pairs
+                                            function initializeCKEditor(selector, check) {
+                                                let ele = document.querySelector(selector)
+                                                if(check){
+                                                    ele.value = ''
+                                                }
+                                                // 
+                                                ClassicEditor
+                                                    .create(ele)
+                                                    .then(editor => {
+                                                        editor.model.document.on('change:data', () => {
+                                                            ele.value = editor.getData();
+                                                        });
+                                                        })
+                                                    .catch(error => {
+                                                        console.error(error);
+                                                    });
+                                            }
+
+                                            // Event listener to add a new question-answer pair when the button is clicked
+                                            document.querySelector('.add-button').addEventListener('click', function () {
+                                                let html = $('#questionanswerTemplate template').html();
+                                                $('#questionanswerlist').append(html);
+                                                initializeCKEditor('.questionanswerrow:last-of-type .question', true);
+                                                initializeCKEditor('.questionanswerrow:last-of-type .answer', true);
+                                            });
+
+                                            // // Initialize CKEditor for the existing fields
+                                            initializeCKEditor('.question', false);
+                                            initializeCKEditor('.answer', false);
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2 text-right">
+                            <button onclick="reset()" class="btn btn-danger waves-effect waves-light">Reset</button>
+                            <button id="sub-btn" type="button"
+                                class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
+                                Save
+                            </button>
+                        </div>
+
+
+                </section>
+            </form>
+
+
+    </div>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script> -->
+    <script>
+      
+     
+      function showContactInfo() {
+              document.getElementById("contact-info").style.display = "block";
+              var coinLabel = document.querySelector('label[for="25 coin"]');
+              coinLabel.style.display = "block";
+            }
+            function hideContactInfo() {
+              document.getElementById("contact-info").style.display = "none";
+              var coinLabel = document.querySelector('label[for="25 coin"]');
+              coinLabel.style.display = "none";
+            }
+            $(document).ready(function () {
+              if ($('#contact-directly-yes').prop('checked')) {
+                showContactInfo();
+              }
+            });
+
+
+            let isContactvalue = "";
+            $('input[name="isContact"]').click(function () {
+              isContactvalue = $('input[name="isContact"]:checked').val() === 'true';
+            });
+            const selectQualification = document.getElementById('jd-qua')
+            $('#jd-qua').change((event) => {
+              const value = selectQualification.options[selectQualification.selectedIndex].text;
+              if (value == '12th' || value == '10th' || value == 'Upto 5th') {
+                document.getElementById('isedited').value = true
+                document.getElementById('sub-qua-field').style.display = "block"
+                $('#jd-subqua-field').hide();
+              } else {
+                document.getElementById('sub-qua-field').style.display = "none"
+                document.getElementById('isedited').value = false
+                $('#jd-subqua-field').show();
+              }
+            })
+   
+        $('#media-group').change(function (e) {
+            const formData = new FormData();
+            let productimages = [];
+            if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 images");
+                $('#media-group').val('');
+            } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    if (!checkImageSize(size) || !checkImageValidation(type)){
+                        formData.append("files", e.target.files[i]);
+                    } else {
+                        $('#media-group').val('');
+                        alert("This format not accepted and each image should be 2MB")
+                        break;
+                    }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultipleFiles', formData, header)
+                    .then(result => {
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('.hiddenmediagroup').val(combinedKeys)
+                            result.data.Data.forEach(element => {
+                                let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                                $(html.innerHTML).insertBefore('#uploadgallery');
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
+        });
+
+        const checkImageSize = (size) => {
+            let finalSize = ((size / 1024) / 1024);
+            if (finalSize > 2) {
+              return false
+            }
+            return true;
+          }
+
+          const checkImageValidation = (file) => {
+            let regex = /(\/jpg|\/jpeg|\/png)$/i
+            return regex.test(file)
+          }
+
+        $('#image').change(function (e) {
+            let file = e.target.files[0]
+            let body = {
+                file: file
+            }
+            let type = file.name;
+            let size = file.size;
+            let candidateFile = document.getElementById('image');
+            if (checkImageValidation(type) === false && checkImageSize(size) === false) {
+                alert("upload the image in jpg,jpeg or png format and size should be less than 2MB");
+                candidateFile.value = ''
+            } else if (checkImageValidation(type) === false && checkImageSize(size) === true) {
+                alert("upload the image in jpg,jpeg or png format ");
+                candidateFile.value = ''
+            } else if (checkImageValidation(type) === false && checkImageSize(size) === false) {
+                alert("uploaded image size should be less than 2MB");
+                candidateFile.value = ''
+            }
+
+        })
+
+        // Extra Features Functionality
+        document.querySelector("#extraFeatures").addEventListener("change", function (event) {
+            let courseFeatures = document.querySelector(".courseFeature").value;
+            let importantTerms = document.querySelector(".importantTerms").value;
+        });
+
+        document.getElementById("testimonialvideos").addEventListener("change", function (e) {
+            
+            const formData = new FormData();
+            let productvideos = [];
+              if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 files");
+                $('#videos').val('');
+              } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                  let type = e.target.files[i].type;
+                  let size = e.target.files[i].size;
+                //   if (checkImageSize(size) && checkImageValidation(type)) {
+                    formData.append("files", e.target.files[i]);
+                //   } else {
+                //     $('#videos').val('');
+                //     alert("This format not accepted and each image should be 2MB")
+                //     break;
+                //   }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultiFiles', formData, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      let combinedKeys = ''
+                      combinedKeys = result.data.Data.map(img => {
+                        return img.Key
+                      });
+                      $('#hidden-testimonialvideos').val(combinedKeys)
+                    //   result.data.Data.forEach(element => {
+                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                    //     $(html.innerHTML).insertBefore('#uploadgallery');
+                    //   });
+                    }
+                  })
+                  .catch(err => {
+                    console.log('==> caught error ', err)
+                  })
+                }
+        });
+
+        document.getElementById("videos").addEventListener("change", function (e) {
+           
+            const formData = new FormData();
+            let productvideos = [];
+              if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 files");
+                $('#videos').val('');
+              } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                  let type = e.target.files[i].type;
+                  let size = e.target.files[i].size;
+                //   if (checkImageSize(size) && checkImageValidation(type)) {
+                    formData.append("files", e.target.files[i]);
+                //   } else {
+                //     $('#videos').val('');
+                //     alert("This format not accepted and each image should be 2MB")
+                //     break;
+                //   }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultiFiles', formData, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      let combinedKeys = ''
+                      combinedKeys = result.data.Data.map(img => {
+                        return img.Key
+                      });
+                      $('#hidden-videos').val(combinedKeys)
+                    //   result.data.Data.forEach(element => {
+                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                    //     $(html.innerHTML).insertBefore('#uploadgallery');
+                    //   });
+                    }
+                  })
+                  .catch(err => {
+                    console.log('==> caught error ', err)
+                  })
+                }
+        });
+
+        document.getElementById("photos").addEventListener("change", function (e) {
+            const formData = new FormData();
+            let productimages = [];
+              if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 images");
+                $('#media-group').val('');
+              } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                  let type = e.target.files[i].type;
+                  let size = e.target.files[i].size;
+                  if (checkImageSize(size) && checkImageValidation(type)) {
+                    formData.append("files", e.target.files[i]);
+                  } else {
+                    $('#media-group').val('');
+                    alert("This format not accepted and each image should be 2MB")
+                    break;
+                  }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultiFiles', formData, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      let combinedKeys = ''
+                      combinedKeys = result.data.Data.map(img => {
+                        return img.Key
+                      });
+                      $('#hidden-photos').val(combinedKeys)
+                    //   result.data.Data.forEach(element => {
+                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                    //     $(html.innerHTML).insertBefore('#uploadgallery');
+                    //   });
+                    }
+                  })
+                  .catch(err => {
+                    console.log('==> caught error ', err)
+                  })
+                }
+        });
+
+        $('#brochure').change(function (e) {
+                let file = e.target.files[0]
+                let body = {
+                  file: file
+                }
+                let type = file.name;
+                let size = file.size
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                  alert("upload the brochure in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                  e.target.value = ''
+                } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                  alert("uploaded brochure size should less than 5MB");
+                  e.target.value = ''
+                } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                  alert("upload the brochure in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                  e.target.value = ''
+                } else {
+                  axios.post('/api/uploadAdminFile', body, header)
+                    .then(result => {
+                        console.log('=============> here ', result)
+                      if (result.data.status) {
+                        $('#hidden-brochure').val(result.data.data.Key)
+                      }
+                    })
+                }
+              });
+
+        $('#thumbnail').change(function (e) {
+                let file = e.target.files[0]
+                let body = {
+                  file: file
+                }
+                let type = file.name;
+                let size = file.size
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                  alert("upload the thumbnail in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                  e.target.value = ''
+                } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                  alert("uploaded thumbnail size should less than 5MB");
+                  e.target.value = ''
+                } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                  alert("upload the thumbnail in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                  e.target.value = ''
+                } else {
+                  axios.post('/api/uploadAdminFile', body, header)
+                    .then(result => {
+                        console.log('=============> here ', result)
+                      if (result.data.status) {
+                        $('#hidden-thumbnail').val(result.data.data.Key)
+                      }
+                    })
+                }
+              });
+
+              const checkCvValidation = (file) => {
+                let regex = /(\.docx|\.doc|\.pdf|\.jpg|\.jpeg|\.png)$/i
+                if (!regex.exec(file)) {
+                  return false;
+                } else {
+                  return true;
+                }
+              }
+
+              function checkCVSize(size) {
+                let finalSize = ((size / 1024) / 1024);
+                if (finalSize > 5) {
+                  return false;
+                }
+                return true;
+              }
+
+
+        document.getElementById('sub-btn').addEventListener('click', (event) => {
+            event.preventDefault();
+            const haserrors = validations();
+            if (haserrors == "false" || haserrors == false) {
+                return false;
+            }
+            const selectedSector = document.getElementById("sector").value;
+            //current
+            const selectedSectors = Array.from(document.getElementById("sector").selectedOptions).map(option => option.value);
+
+            let body = {
+                sectors: selectedSectors,
+                courseLevel: document.getElementById("courseLevel").value,
+                name: document.getElementById("name").value,
+                duration: document.getElementById("duration").value,
+                certifyingAgency: $('#certifyingAgency').val(),
+                // certifyingAgencyWebsite: $('#certifyingAgencyWebsite').val(),
+                certifyingAgencyWebsite: document.getElementById('certifyingAgencyWebsite').value,
+                qualification: document.getElementById("qualification").value,
+                age: $('#age').val(),
+                brochure: $('#hidden-brochure').val(),
+                thumbnail: $('#hidden-thumbnail').val(),
+                youtubeURL:$('#youtubeURL').val(),
+                courseType: $('#courseType').val(),
+                experience: document.getElementById('experience').value,
+                trainingMode: $('#trainingMode').val(),
+                onlineTrainingTiming: document.getElementById("onlineTrainingTiming").value,
+                offlineTrainingTiming: document.getElementById("offlineTrainingTiming").value,
+                address: document.getElementById("address").value,
+                city: document.getElementById("city").value,
+                state: document.getElementById("state").value,
+                appLink: document.getElementById("appLink").value,
+                ojt: document.getElementById("ojt").value,
+                registrationCharges: $('#registrationCharges').val(),
+                courseFee: $('#courseFee').val(),
+                cutPrice: $('#cutPrice').val(),
+                examFee: $('#examFee').val(),
+                otherFee: $('#otherFee').val(),
+                emiOptionAvailable: $('#emiOptionAvailable').val(),
+                maxEMITenure: $('#maxEMITenure').val(),
+                stipendDuringTraining: $('#stipendDuringTraining').val(),
+                lastDateForApply: $('#lastDateForApply').val(),
+                requiredDocuments: $('#requiredDocuments').val(),
+                courseFeatures: $('.courseFeature').val(), // Get value of Course Features textarea
+                importantTerms: $('.importantTerms').val(),
+                faq: $('#faq').val(),
+                testimonialvideos: document.getElementById("hidden-testimonialvideos").value,
+                photos: document.getElementById("hidden-photos").value,
+                audios: document.getElementById("hidden-audios")?.value || '',
+                videos: document.getElementById("hidden-videos").value,
+                counslername:$('#counslername').val(),
+                counslerphonenumber:$('#counslerphonenumber').val(),
+                counslerwhatsappnumber:$('#counslerwhatsappnumber').val(),
+                counsleremail:$('#counsleremail').val(),
+                questionAnswers: Array.from(document.querySelectorAll(".questionanswerrow")).map(row => {
+                    let question = row.querySelector(".question").value;
+                    let answer = row.querySelector(".answer").value;
+                    return { Question: question, Answer: answer };
+                })
+
+            }
+
+
+            console.log('==============> Body ', body)
+            axios.post("/admin/courses/add", body).then((res) => {
+                if (res && res.status) {
+                    window.location.href = "/admin/courses"
+                }
+            }).catch(error => {
+                console.error('Error adding courses:', error);
+            });
+        })
+
+        // Function to add more Question and Answer fields
+        // function addQuestionAnswer() {
+        //     // Check if the template exists in the DOM
+        //     let template = document.querySelector('#questionanswerTemplate');
+        //     if (!template) {
+        //         console.error("Template not found!");
+        //         return;
+        //     }
+        //     let clonedTemplate = template.content.cloneNode(true);
+        //     document.querySelector('.container').appendChild(clonedTemplate);
+        //     // Initialize CKEditor for the new question and answer fields
+        //     ClassicEditor.create(clonedTemplate.querySelector('.question'));
+        //     ClassicEditor.create(clonedTemplate.querySelector('.answer'));
+        // }
+        // document.querySelector(".add-button").addEventListener("click", function () {
+        //     addQuestionAnswer();
+        // });
+
+        // // Initialize CKEditor for existing fields
+        // ClassicEditor.create(document.querySelector('.question'));
+        // ClassicEditor.create(document.querySelector('.answer'));
+
+        function validations() {
+            $('#sectorblock').removeClass('error')
+            $('#courseblock').removeClass('error')
+            $('#nameblock').removeClass('error')
+            $('#durationblock').removeClass('error')
+            $('#qualificationblock').removeClass('error')
+            $('#trainingblock').removeClass('error')
+
+            $('#ojtblock').removeClass('error')
+            $('#emioptionblock').removeClass('error')
+            $('addressblock').removeClass('error')
+            /*  $('cutPriceBlock').removeClass('error') */
+            var sectors = document.getElementById("sector").value;
+            var courseLevel = document.getElementById("courseLevel").value;
+            var name = document.getElementById("name").value;
+            var duration = document.getElementById("duration").value;
+            var certifyingAgency = $('#certifyingAgency').val();
+            // var certifyingAgencyWebsite = $('#certifyingAgencyWebsite').val();
+            var certifyingAgencyWebsite = document.getElementById('certifyingAgencyWebsite').value;
+            var qualification = document.getElementById("qualification").value;
+            var age = $('#age').val();
+            var experience = $('#experience').val();
+            var trainingMode = $('#trainingMode').val();
+            var onlineTrainingTiming = document.getElementById("onlineTrainingTiming").value;
+            var offlineTrainingTiming = document.getElementById("offlineTrainingTiming").value;
+            var address = document.getElementById("address").value;
+            var appLink = document.getElementById("appLink").value;
+            var ojt = document.getElementById("ojt").value;
+            var registrationCharges = $('#registrationCharges').val()
+            var courseFee = $('#courseFee').val();
+            var cutPrice = $('#cutPrice').val();
+            var examFee = $('#examFee').val();
+            var otherFee = $('#otherFee').val();
+            var emiOptionAvailable = $('#emiOptionAvailable').val();
+            var maxEMITenure = $('#maxEMITenure').val();
+            var stipendDuringTraining = $('#stipendDuringTraining').val();
+            var lastDateForApply = $('#lastDateForApply').val();
+            var requiredDocuments = $('#requiredDocuments').val();
+            var courseFeatures = $('#courseFeatures').val();
+            var importantTerms = $('#importantTerms').val();
+            var photos = $('#photos').val();
+            var audios = $('#audios').val();
+            var videos = $('#videos').val();
+            let faq = $('#faq').val();
+            let firstError = ''
+            let flag = true
+            if (emiOptionAvailable.trim() == "") {
+                $('#emioptionblock').addClass('error')
+                firstError = firstError ? firstError : $('#emiOptionAvailable')
+                flag = false
+            }
+            if (sectors.trim() === '') {
+                $('#sectorblock').addClass('error')
+                firstError = firstError ? firstError : $('#sector')
+                flag = false
+            } if (courseLevel.trim() === "") {
+                $('#courseblock').addClass('error')
+                firstError = firstError ? firstError : $('#courseLevel')
+                flag = false;
+            } if (qualification.trim() === '') {
+                $('#qualificationblock').addClass('error')
+                firstError = firstError ? firstError : $('#qualification')
+                flag = false
+            } if (ojt.trim() === "") {
+                $('#ojtblock').addClass('error')
+                firstError = firstError ? firstError : $('#ojt')
+                flag = false
+            }
+            if (name.trim() === "") {
+                $('#nameblock').addClass('error')
+                firstError = firstError ? firstError : $('#name')
+                flag = false
+            }
+            if (duration.trim() === "") {
+                $('#durationblock').addClass('error')
+                firstError = firstError ? firstError : $('#duration')
+                flag = false
+            }
+            if (trainingMode.trim() === "") {
+                $('#trainingblock').addClass('error')
+                firstError = firstError ? firstError : $('#trainingMode')
+                flag = false
+            }
+            if (address.trim() === '') {
+                $('#addressblock').addClass('error')
+                firstError = firstError ? firstError : $('#address')
+                flag = false
+            }
+            if (firstError) {
+                firstError.focus();
+            }
+            return flag;
+
+        }
+
+
+    </script>
+    <% include ../partials/footer %>
+        </div>

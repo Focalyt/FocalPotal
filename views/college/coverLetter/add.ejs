@@ -1,0 +1,235 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">
+						Add Cover Letter
+					</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Add Cover Letter</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<form class="form-horizontal" action="" method="post" id="formData">
+				<section id="personal-info">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">Cover Letter Information</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Title <span class="mandatory">*</span></label>
+												<input type="text" class="form-control" name="name" palaceholder="Title"
+													required />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Industry
+													<span class="mandatory">*</span></label>
+												<select style="cursor: pointer;" class="form-control text-capitalize"
+													name="_industry" id="industry" required>
+													<option value="">Select Option</option>
+													<option value="all">All</option>
+													<% industry.forEach((i)=> { %>
+														<option value="<%= i._id %>">
+															<%= i.name %>
+														</option>
+														<% }); %>
+												</select>
+											</div>
+											<!-- <div class="col-xl-3 mb-1" id="subindustryMain">
+										<label>Sub Industry</label>
+										<select
+											class="form-control selectpicker"
+											name="_subIndustry"
+											id="subindustry"
+											title="Select Option"
+											data-actions-box="true"
+											multiple
+										></select>
+									</div> -->
+											<div class="col-xl-3 mb-1">
+												<label>Course
+													<span class="mandatory">*</span></label>
+												<select style="cursor: pointer;" class="form-control text-capitalize"
+													id="qualification" name="_qualification" required>
+													<option value="">Select Option</option>
+													<option value="all">All</option>
+													<% qualification.forEach((i)=> { %>
+														<option value="<%= i._id %>">
+															<%= i.name %>
+														</option>
+														<% }); %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1" id="subqualificationMain">
+												<label>Stream
+													<span class="mandatory">*</span></label>
+												<select style="cursor: pointer;" class="form-control selectpicker"
+													name="_subQualification" id="subqualification" title="Select Option"
+													data-actions-box="true" multiple required></select>
+											</div>
+											<!-- start -->
+
+											<!-- end -->
+
+
+											<div class="col-xl-3 mb-1">
+												<label>Experience From</label>
+												<select style="cursor: pointer;" class="form-control text-capitalize"
+													name="experienceFrom" id="expStart">
+													<!-- <option value="">Select Option</option> -->
+													<% for (let i=0; i <=20; i++) { %>
+														<option value="<%= i %>" class="text-capitalize">
+															<%= i %>
+														</option>
+														<% }; %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Experience To</label>
+												<select style="cursor: pointer;" class="form-control text-capitalize"
+													name="experienceTo" id="expEnd">
+													<!-- <option value="">Select Option</option> -->
+													<% for (let i=0; i <=30; i++) { %>
+														<option value="<%= i %>" class="text-capitalize">
+															<%= i %>
+														</option>
+														<% }; %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Status</label>
+												<select style="cursor: pointer;" class="form-control text-capitalize"
+													name="active">
+													<option value="">Select Option</option>
+													<option value="0">Active</option>
+													<option value="1">In Active</option>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Subject Line</label>
+												<input type="text" class="form-control" name="subjectLine" />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Letter Content (Html)</label>
+												<textarea class="form-control" name="letterContent" row="3"
+													cols="2"></textarea>
+											</div>
+											<div class="col-xl-12 col-lg-12">
+												<div class="card">
+													<div class="card-content">
+														<div class="card-body">
+															<div class="row">
+																<div class="col-xl-12 text-right">
+																	<!-- <a type="reset" href="/panelcollege/coverLetter/add"
+																		class="btn btn-danger" value="Reset">Reset</a> -->
+																	<button type="submit"
+																		class="btn btn-success submitBtn">
+																		Save
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</form>
+			<div class="text-right cover-reset">
+				<button onclick="reset()"  class="btn btn-danger"
+					>Reset</button>
+			</div>
+			<% include ../partials/footer %>
+				<script>
+					$("#qualification").change(() => {
+						$("#subqualification").find("option").remove().end();
+						$("#subqualificationMain").removeClass("d-none");
+						const _qualification = $("#qualification").val();
+						if (_qualification && _qualification === "all") {
+							$("#subqualificationMain").addClass("d-none");
+						} else {
+							axios
+								.post("/panel/helper/getsubQual", {
+									_qualification,
+								})
+								.then(({ data }) => {
+									data.forEach((d) => {
+										if (d) {
+											$("#subqualification").append(
+												`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+											);
+										}
+									});
+									$("#subqualification").selectpicker("refresh");
+								})
+								.catch((e) => console.log(e));
+						}
+					});
+
+					$("#industry").change(() => {
+						$("#subindustry").find("option").remove().end();
+						$("#subindustryMain").removeClass("d-none");
+						const _industry = $("#industry").val();
+						if (_industry && _industry === "all") {
+							$("#subindustryMain").addClass("d-none");
+						} else {
+							axios
+								.post("/panel/helper/getsubInd", {
+									_industry,
+								})
+								.then(({ data }) => {
+									data.forEach((d) => {
+										if (d) {
+											$("#subindustry").append(
+												`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+											);
+										}
+									});
+									$("#subindustry").selectpicker("refresh");
+								})
+								.catch((e) => {
+									console.log(e);
+								});
+						}
+					});
+
+					$("#expStart").change(() => {
+						$("#expEnd")
+							.find("option")
+							.remove()
+							.end()
+							.append(
+								'<option disabled selected value="">Select Option</option>'
+							);
+
+						const srt = parseInt($("#expStart").val(), 10);
+						for (let i = srt + 1; i <= 40; i++) {
+							$("#expEnd").append(
+								`<option class='text-capitalize' value='${i}'>${i}</option>`
+							);
+						}
+					});
+					// reset form 
+					function reset() {
+                		window.location.reload();
+            		}
+				</script>
+	</div>

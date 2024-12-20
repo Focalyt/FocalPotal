@@ -1,0 +1,466 @@
+<html class=" js no-touch cssanimations csstransitions">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>ASL - Americal sign language </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Focalyt">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <!-- Styles -->
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/bootstrap-grid.css">
+  <link rel="stylesheet" href="/public_assets/css/icons.css">
+  <link rel="stylesheet" href="/public_assets/css/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/responsive.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/chosen.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/colors/colors.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/bootstrap.css">
+  <link rel="icon" type="image/x-icon" href="/images/ico/faviconnew.ico">
+  <link rel="stylesheet" href="../../../maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+    integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.4.0/lity.min.css">
+
+
+
+</head>
+<style>
+  .change{ -webkit-animation: waves 3s ease-in-out infinite; animation: waves 3s ease-in-out infinite; background: #218121a1 !important;}
+  .signs img{padding:6px;border-radius:8px;filter:drop-shadow(-0.436px -4.981px 1.5px rgba(255,255,255,0.61));background-color:#f2f2f2;margin:5px 6px;box-shadow:0px 0px 10px rgba(255,255,255,1),0px 4px 2px rgba(0,0,0,0.15);transition:.3s;}
+  img.signcode{padding:6px;border-radius:8px;filter:drop-shadow(-0.436px -4.981px 1.5px rgba(255,255,255,0.61));background-color:#f2f2f2;margin:5px 6px;box-shadow:0px 0px 10px rgba(255,255,255,1),0px 4px 2px rgba(0,0,0,0.15)}
+  #heading{display:flex}
+  body{background:#f2f2f2!important}
+  .sign_keyboard{border:1px solid #e0e0e0;border-radius:20px}
+  .contact-form .form-group .form-control:hover{border:1px solid #228B22!important;box-shadow:5px 5px #228B22!important}
+  ul.keys li{display:inline-block;overflow:hidden;flex-direction:column;justify-content:center;align-items:center}
+  .speak_btn{border-radius:4px;background-color:#fcffff;border:1px solid #120449;padding:10px 35px;color:#140549;font-size:14px;transition:.3s;-webkit-box-shadow:4px 3px 0px 0px rgba(43,35,80,1);-moz-box-shadow:4px 3px 0px 0px rgba(43,35,80,1);box-shadow:4px 3px 0px 0px rgba(43,35,80,1);text-transform:uppercase;font-weight:700}
+  textarea.textOutput{border:1px solid #228B22;border-radius:20px;transition:.3s;background:rgba(34,139,34,0.1)}
+  p.subsscript{text-align:center;border-radius:3px;padding:0px;color:#000;font-size:8px;top:-3px;position:absolute;right:12px;font-weight:800}
+  div#heading img{width:40px;height:auto;padding:1px}
+  div#inputSigns{transition:.3s}
+  ul.keys.mb-0{text-align:center}
+  .signs img:hover{box-shadow:0 2px 0 rgba(0,0,0,0.15)!important;cursor:pointer!important;transition:.5s;}
+  .speak_btn:hover {-webkit-box-shadow: 0px 8px 4px 0px rgba(43, 35, 80, 1);-moz-box-shadow: 0px 8px 4px 0px rgba(43, 35, 80, 1);box-shadow: 0px 8px 4px 0px rgba(43, 35, 80, 1);}
+  .typeSignsBox{ border: 1px solid #e0e0e0; border-radius: 20px;}
+  .changeMic{ color: #228B22}
+
+.mic-main {
+  position: relative;
+  display: inline-block;
+}
+
+.video {
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 100%;
+  background: transparent;
+  color: #fff;
+  display: inline-block;
+  background: #000000;
+  z-index: 999;
+}
+
+@keyframes waves {
+  0% {
+    -webkit-transform: scale(0.2, 0.2);
+    transform: scale(0.2, 0.2);
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  }
+  50% {
+    opacity: 0.9;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+  }
+  100% {
+    -webkit-transform: scale(0.9, 0.9);
+    transform: scale(0.9, 0.9);
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  }
+}
+
+.fa-play:before {
+  content: "\f04b";
+}
+
+.waves {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  border-radius: 100%;
+  right: -18px;
+  bottom: -18px;
+}
+        
+.wave-1 {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
+.wave-2 {
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+.wave-3 {
+  -webkit-animation-delay: 2s;
+  animation-delay: 2s;
+}
+
+.blink {
+      animation: blink 2s steps(5, start) infinite;
+      -webkit-animation: blink 1s steps(5, start) infinite;
+    }
+    @keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }
+    @-webkit-keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }
+
+</style>
+<html>
+
+
+<body>
+
+  <section>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-xl-12 mt-xl-5 mt-lg-2 mt-md-2 mt-sm-0 mt-0">
+            <div class="row">
+              <div class="contact-form col-xl-6">
+                <div class="form-group form-primary mt-5">
+                  <textarea class="form-control mb-3 message-to pr-1 textOutput" id="txtAreaEnglish" rows="1" placeholder="Your Output"></textarea>
+                </div>
+              </div>
+              <div class="contact-form col-xl-6">
+                <div class="form-group form-primary mt-5">
+                  <textarea class="form-control mb-3 message-to pr-1 textOutput" id="txtAreaSpanish" rows="1" placeholder="tu salida"></textarea>
+                </div>
+              </div>
+            </div>
+
+          <div class="row justify-content-center pt-xl-4 pt-sm-0 pb-2">
+
+            <button  class="speak_btn mx-2 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-3" id="startRecognitionEnglish">English
+              <div class="mic-main">
+                  <div class="waves-block">
+                    <div class="waves wave-1"></div>
+                    <div class="waves wave-2"></div>
+                    <div class="waves wave-3"></div>
+                  </div>
+                <i class="fa fa-microphone fa-lg pl-3"></i>
+              </div>
+            </button>
+
+            <button  class="speak_btn mx-2 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-3" id="startRecognitionSpanish">Spanish
+              <div class="mic-main">
+                  <div class="waves-block">
+                    <div class="waves wave-1"></div>
+                    <div class="waves wave-2"></div>
+                    <div class="waves wave-3"></div>
+                  </div>
+                <i class="fa fa-microphone fa-lg pl-3"></i>
+              </div>
+            </button>
+
+            <button id="stopRecognition"
+              class="speak_btn mx-2 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-3">Stop</button>
+            <button id="translate"
+              class="speak_btn mx-2 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-3">Translate</button>
+            <button id="listenEnglish"
+              class="speak_btn mx-2 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-3">Listen in English</button>
+              <button id="listen"
+              class="speak_btn mx-2 mt-xl-0 mt-lg-3 mt-md-3 mt-sm-3 mt-3">Listen in Spanish</button>
+          </div>
+
+          <div class="col-xl-12 mt-xl-5 mt-lg-2 mt-md-2 mt-sm-0 mt-0 signs" id="signBox">
+          <div class="contact-form">
+            <div class="form-group form-primary pt-3 pb-3" id="output">
+            </div>
+          </div>
+        </div>
+
+        </div>
+
+
+      </div>
+    </div>
+
+  </section>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.4.0/lity.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.0/axios.min.js"
+integrity="sha512-OdkysyYNjK4CZHgB+dkw9xQp66hZ9TLqmS2vXaBrftfyJeduVhyy1cOfoxiKdi4/bfgpco6REu6Rb+V2oVIRWg=="
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  $(function () {
+    // google.load("elements", "1", {
+    //       packages: "transliteration"
+    //     });
+
+    var voices
+
+    window.speechSynthesis.cancel()
+    if ('speechSynthesis' in window) {
+      const speechSynthesis = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance();
+      let voiceOptions = ''
+      speechSynthesis.addEventListener("voiceschanged", () => {
+        voices = speechSynthesis.getVoices()
+      })
+
+    }
+
+    try {
+      var recognition = new webkitSpeechRecognition();
+    } catch (e) {
+      var recognition = new SpeechRecognition();
+    }
+    let final_transcript = '';
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    recognition.onresult = function (event) {
+      let interim_transcript = '';
+      let txtRec = '';
+      for (var i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          final_transcript += event.results[i][0].transcript + '. ';
+        } else {
+          interim_transcript += event.results[i][0].transcript;
+        }
+      }
+
+      if(recognition.lang == 'es'){
+        $('#txtAreaSpanish').val(final_transcript);    
+      }else{
+        final_transcript = capitalize(final_transcript);
+        $('#txtAreaEnglish').val(final_transcript);  
+      }
+    
+    };
+
+    recognition.onerror = (e) => {
+      console.log('error', e)
+    }
+
+    recognition.onend = () => {
+      $('.blink').removeClass('blink')
+      $('.changeMic').removeClass('changeMic')
+      $('.waves').removeClass('change')
+      let path = new Audio('/notification/stop-13692.mp3')
+      path.play()
+    }
+
+    function capitalize(s) {
+      return s.replace(s.substr(0, 1), function (m) { return m.toUpperCase(); });
+    }
+
+
+    $('#startRecognitionEnglish').click(function () {
+      stop()
+      setTimeout(()=>{
+      let path = new Audio('/notification/beep-6-96243.mp3')
+      path.play()
+      final_transcript = ''
+      recognition.lang = 'en'
+      $('#startRecognitionEnglish i').addClass('blink changeMic')
+      $('#txtAreaEnglish').val('');
+      $('#txtAreaEnglish').focus();
+      $('#txtAreaSpanish').val('');
+      recognition.start();
+    }, 1000)
+    });
+
+    $('#startRecognitionSpanish').click(async function () {
+      stop()
+      setTimeout(()=>{
+        let path = new Audio('/notification/beep-6-96243.mp3')
+        path.play()
+        final_transcript = ''
+        recognition.lang = 'es'
+        $('#startRecognitionSpanish i').addClass('blink changeMic')
+        $('#txtAreaSpanish').val('');
+        $('#txtAreaSpanish').focus();
+        $('#txtAreaEnglish').val('');
+        recognition.start();
+      }, 1000)
+    });
+
+    $('#stopRecognition').click(function () {
+      stop()
+      let path = new Audio('/notification/stop-13692.mp3')
+      path.play()
+    });
+
+    function stop(){
+      recognition.stop();
+      $('#startRecognitionEnglish i').removeClass('blink changeMic')
+      $('#startRecognitionSpanish i').removeClass('blink changeMic')
+      $('.waves').removeClass('change')
+    }
+
+    recognition.addEventListener("speechstart", () => {
+      if(recognition.lang == 'en'){
+        $('#startRecognitionEnglish i').removeClass('blink')
+        $('#startRecognitionEnglish .waves').addClass('change')
+      }else{
+        $('#startRecognitionSpanish i').removeClass('blink')
+        $('#startRecognitionSpanish .waves').addClass('change')
+      }
+    });
+
+    recognition.addEventListener("speechend", () => {
+      $('.waves').removeClass('change')
+      $('.blink').removeClass('blink changeMic')
+      let path = new Audio('/notification/stop-13692.mp3')
+      path.play()
+    });
+
+    $('#listen').click(function () {
+      stop()
+      recognition.stop();
+      // var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=" + encodeURI($('#txtAreaEnglish').val());
+
+      // $.getJSON(url, function (data) {
+      //   var translatedText = data[0][0][0]
+      //   speak(translatedText)
+      // });
+
+    let text = $('#txtAreaEnglish').val()
+    if(!text){
+      text = $('#txtAreaSpanish').val()
+      speak(text, 'es')
+    }else{
+      let message = $.trim(text.replace( /[\s\n\r\_]+/g, ' ' ))
+    let body = { message, lang: 'es' }
+
+    axios.post(`/translate`, body)
+        .then(res => {
+          speak(res.data.message, 'es');
+        }).catch((err) => {
+          console.log(err.message)
+        })
+    }
+    });
+
+    $('#listenEnglish').click(function () {
+      stop()
+      let text = $('#txtAreaEnglish').val()
+      if(!text){
+        let message = $.trim($('#txtAreaSpanish').val().replace( /[\s\n\r\_]+/g, ' ' ))
+        let body = { message, lang: 'en' }
+        axios.post(`/translate`, body)
+        .then(res => {
+          speak(res.data.message, 'en');
+        }).catch((err) => {
+          console.log(err.message)
+        })
+      }else{
+        speak(text, 'en')
+      }
+    });
+
+    function speak(text, lang='es') {
+      if (!text) {
+        return false
+      }
+      if ('speechSynthesis' in window) {
+        const speechSynthesis = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance();
+
+        speechSynthesis.cancel()
+        // Set the text to be spoken
+        utterance.text = text;
+
+        // Retrieve the available voices
+
+        let voice = 'Microsoft Swara Online (Natural) - Hindi (India)'
+        if(lang == 'es'){
+          voice = 'Microsoft Helena (es-ES, female)'
+        }
+        utterance.lang = lang
+        // Find a specific voice by name or language code
+        const selectedVoice = voices.find(vo => vo.name === voice);
+
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+        } else {
+          console.warn('Selected voice not found. Using default voice.');
+        }
+
+        // Set optional parameters (volume, rate, pitch, etc.)
+        utterance.volume = 1;
+        utterance.rate = 0.8;
+        utterance.pitch = 1;
+
+        // Speak the text
+        speechSynthesis.speak(utterance);
+      } else {
+        console.error('SpeechSynthesis API is not supported in this browser.');
+      }
+    }
+
+    $('#translate').click(function () {
+    stop()
+    let message = $.trim($('#txtAreaEnglish').val().replace( /[^a-zA-Z0-9\s]+/g, ' ' )).replace(/\s+/g, ' ')
+    let body = { message, lang: 'es' }
+    if(!message){
+      body.message = $.trim($('#txtAreaSpanish').val())
+      body.lang = 'en'
+    }
+      axios.post(`/translate`, body)
+        .then(res => {
+          if(body.lang == 'en'){
+            message = $.trim(res.data.message.replace( /[^a-zA-Z0-9\s]+/g, ' ' )).replace(/\s+/g, ' ')
+            $('#txtAreaEnglish').val(res.data.message);
+          }else{
+            $('#txtAreaSpanish').val(res.data.message);
+          }
+                
+      $('#output').html('')
+      if(message){
+        $('#signBox').addClass('typeSignsBox')
+      }else{
+        $('#signBox').removeClass('typeSignsBox')
+      }
+      for(let char of message){
+        if(char == ' ') char = '_'
+         let html = `<img  class="signcode" src="/handsigns/${char.toUpperCase()}.png"/>`
+         $('#output').append(html)
+      }
+        }).catch((err) => {
+          console.log(err.message)
+        })
+          })
+
+  });
+
+
+// 
+
+</script>

@@ -1,0 +1,57 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Candidate Coin Offer</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Candidate Coin Offer</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../../partials/flash %>
+			<form class="form-horizontal" id="formData">
+				<section>
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">Contact</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Name
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" required name="name"
+													value='<%= contact?.name %>' readonly/>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Whatsapp
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" required name="whatsapp"
+													value='<%= contact?.whatsapp %>' readonly/>
+											</div><div class="col-xl-3 mb-1">
+												<label>Mobile
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" required name="mobile"
+													value='<%= contact?.mobile %>' readonly/>
+											</div>
+										</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	</div>
+	</form>
+	<% include ../partials/footer %>
+		</div>

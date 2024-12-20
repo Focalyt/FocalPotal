@@ -1,0 +1,68 @@
+<% include ../../partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static" data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns" id="inner_job_page">
+
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <% include ../../partials/flash %>
+          <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper">
+              <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                  <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                      <h3 class="content-header-title float-left mb-0">Videos </h3>
+                      <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/candidate/dashboard">Home</a>
+                          </li>
+                          <li class="breadcrumb-item"><a href="#">Watch Videos</a>
+                          </li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="content-body">
+                <div class="row">
+                  <div class="col-12 rounded equal-height-2 coloumn-2">
+                    <div class="card">
+                      <div class="card-content">
+                        <div class="col-xl-12">
+                          <div class="row">
+                            <%if(videos.length&&videos){%>
+                              <%for(let i=0;i<videos.length;i++){%>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 py-2">
+                                <span>
+                                  <em class="font-weight-bold"> Video Posted On :<%=moment(videos[i].createdAt).utcOffset("+05:30").format("DD MMM YYYY")%></em>
+                                </span>
+                                <div class="position-relative mt-2">
+                                  <img style="width:100%" src="/public_assets/images/resource/about-2.jpg"
+                                    class="img-fluid rounded  shadow videolinkclass" videolink="<%=videos[i].embedURL%>" alt="">
+                                  <a target="_blank" href="<%=videos[i].embedURL%>" class="glightbox play-btn mt-1">
+                                    <div class="pluscenter next-center">
+                                      <div class="pulse">
+                                        <img src="/public_assets/images/resource/ytplay.png" class="play-button">
+                                      </div>
+                                    </div>
+                                  </a>
+                                </div>
+                            </div>
+                            <%}}else{%>
+                            No Records found!
+                            <%}%>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+</div>
+</div>
+<% include ./partials/footer%>
+<script src="/js/scripts/pages/watchvideos.js"></script>

@@ -1,0 +1,297 @@
+<% include partials/header %>
+  <div class="content-header row">
+  </div>
+  <div class="content-body">
+    <% include partials/flash %>
+           <section id="admin_widgets">
+                 <!-- Candidate Data -->
+                 <div class="row">
+                   <div class="col-xl-12">
+                     <h3 class="headd">Candidates</h3>
+                   </div>
+                   <!-- Card One -->
+                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                     <div class="card">
+                       <h3 class="brder-blw pt-1 px-1">Signups</h3>
+                       <div class="col-xl-12">
+                         <div class="row">
+                           <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto">
+                             <div class="row">
+                               <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                               </div>
+                                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                 <p><a class="sm_btn"><%= weekCandidates ? weekCandidates : 0%></a></p>
+                                 <p><a class="sm_btn"> <%= monthCandidates ? monthCandidates : 0%></a></p>
+                                 <p><a class="sm_btn"><%= totalCandidates ? totalCandidates : 0  %></a></p>
+                                </div>
+                             </div>
+                           </div>
+                           <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12"  style="padding-left: 0px;">
+                            <div class="highlight_data bg-one text-center py-1 mt-1">
+                             <p class="text-white font-weight-bold">TD /YD /DB</p>
+                             <p class="text-white font-weight-bold"><%= dayCandidates ? dayCandidates : 0  %> /<%= yesterdayCandidates ? yesterdayCandidates :0 %> /<%= dayBeforeYesterdayCandidates ? dayBeforeYesterdayCandidates : 0 %></p>
+                            </div>
+                            <a href="/admin/candidate"><img src="/public_assets/images/bluearrow.png" class="img-fluid click_img" draggable="false"></a>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                   <!-- END Card One -->
+                   <!-- Card two -->
+                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="card">
+                      <h3 class="brder-blw pt-1 px-1">Applied Jobs</h3>
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div class="col-xl-7 col-lg-5 col-md-12 col-sm-12 col-12 my-auto">
+                            <div class="row">
+                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                               <p class="font-weight-bold">WTD</p>
+                               <p class="font-weight-bold">MTD</p>
+                               <p class="font-weight-bold">AT</p>
+                              </div>
+                               <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                <p><a class="sm_btn"><%= weekAppliedJobs ? weekAppliedJobs : 0%></a></p>
+                                <p><a class="sm_btn"><%= monthAppliedJobs ? monthAppliedJobs : 0%></a></p>
+                                <p><a class="sm_btn"><%= totalAppliedJobs ? totalAppliedJobs : 0  %></a></p>
+                               </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12"  style="padding-left: 0px;">
+                           <div class="highlight_data bg-three text-center py-1 mt-1">
+                            <p class="text-white font-weight-bold">TD /YD /DB</p>
+                            <p class="text-white font-weight-bold"><%= dayAppliedJobs ? dayAppliedJobs : 0  %> /<%= yesterdayAppliedJobs ? yesterdayAppliedJobs :0 %> /<%= dayBeforeYesterdayAppliedJobs? dayBeforeYesterdayAppliedJobs:0 %></p>
+                           </div>
+                           <a href="#"><img src="/public_assets/images/greenarrow.png" class="img-fluid click_img" draggable="false"></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <!-- END Card two -->
+                   <!-- Card three -->
+                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                     <div class="card">
+                       <h3 class="brder-blw pt-1 px-1">Hired</h3>
+                       <div class="col-xl-12">
+                         <div class="row">
+                           <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto">
+                             <div class="row">
+                               <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                               </div>
+                                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                 <p><a class="sm_btn"><%= weekHired ? weekHired : 0%></a></p>
+                                 <p><a class="sm_btn"><%= monthHired ? monthHired : 0%></a></p>
+                                 <p><a class="sm_btn"><%= totalHired ? totalHired : 0  %></a></p>
+                                </div>
+                             </div>
+                           </div>
+                           <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12"  style="padding-left: 0px;">
+                            <div class="highlight_data bg-three text-center py-1 mt-1">
+                             <p class="text-white font-weight-bold">TD /YD /DB</p>
+                             <p class="text-white font-weight-bold"><%= dayHired ? dayHired : 0  %> /<%=yesterdayHired?yesterdayHired:0  %> /<%= dayBeforeYesterdayHired ? dayBeforeYesterdayHired :0 %></p>
+                            </div>
+                            <a href="/admin/candidate"><img src="/public_assets/images/greenarrow.png" class="img-fluid click_img" draggable="false"></a>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                   <!-- END Card three -->
+                 </div>
+                 <!-- Candidate Data End -->
+         
+                 <!-- Companies Data -->
+                 <div class="row">
+                   <div class="col-xl-12">
+                     <h3 class="headd">Companies</h3>
+                   </div>
+                   <!-- Card One -->
+                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                     <div class="card">
+                       <h3 class="brder-blw pt-1 px-1">Signups</h3>
+                       <div class="col-xl-12">
+                         <div class="row">
+                           <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto">
+                             <div class="row">
+                               <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                               </div>
+                                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                 <p><a class="sm_btn"><%= weekCompanies ? weekCompanies : 0%></a></p>
+                                 <p><a class="sm_btn"><%= monthCompanies ? monthCompanies : 0%></a></p>
+                                 <p><a class="sm_btn"><%= totalCompanies ? totalCompanies : 0  %></a></p>
+                                </div>
+                             </div>
+                           </div>
+                           <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12"  style="padding-left: 0px;">
+                            <div class="highlight_data bg-one text-center py-1 mt-1">
+                             <p class="text-white font-weight-bold">TD /YD /DB</p>
+                             <p class="text-white font-weight-bold"><%= dayCompanies ? dayCompanies : 0  %> /<%= yesterdayCompanies? yesterdayCompanies :0 %> /<%= dayBeforeYesterdayCompanies ? dayBeforeYesterdayCompanies :0 %></p>
+                            </div>
+                            <a href="/admin/company"><img src="/public_assets/images/bluearrow.png" class="img-fluid click_img" draggable="false"></a>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                   <!-- END Card One -->
+                   <!-- Card two -->
+
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                     <div class="card">
+                       <h3 class="brder-blw pt-1 px-1">JD's</h3>
+                       <div class="col-xl-12">
+                         <div class="row">
+                           <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto">
+                             <div class="row">
+                               <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                               </div>
+                                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                 <p><a class="sm_btn"><%= weekJobs ? weekJobs : 0 %></a></p>
+                                 <p><a class="sm_btn"><%= monthJobs ? monthJobs : 0 %></a></p>
+                                 <p><a class="sm_btn"><%= jobs ? jobs : 0 %></a></p>
+                                </div>
+                             </div>
+                           </div>
+                           <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12"  style="padding-left: 0px;">
+                            <div class="highlight_data bg-two text-center py-1 mt-1">
+                             <p class="text-white font-weight-bold">TD /YD /DB</p>
+                             <p class="text-white font-weight-bold"><%= dayJobs ? dayJobs : 0 %> /<%= yesterdayJobs ? yesterdayJobs : 0 %> /<%= dayBeforeYesterdayJobs ? dayBeforeYesterdayJobs : 0 %></p>
+                            </div> 
+                            <a href="/admin/company"><img src="/public_assets/images/orangearrow.png" class="img-fluid click_img" draggable="false"></a>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                   <!-- END Card two -->
+                   <!-- Card three -->
+                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                     <div class="card">
+                       <h3 class="brder-blw pt-1 px-1">Shortlisted</h3>
+                       <div class="col-xl-12">
+                         <div class="row">
+                           <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto">
+                             <div class="row">
+                               <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                               </div>
+                                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                  <p><a class="sm_btn"><%= weekShortlisted ? weekShortlisted : 0%></a></p>
+                                  <p><a class="sm_btn"><%= monthShortlisted ? monthShortlisted : 0%></a></p>
+                                  <p><a class="sm_btn"><%= totalShortlisted ? totalShortlisted : 0  %></a></p>
+                                </div>
+                             </div>
+                           </div>
+                           <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12"  style="padding-left: 0px;">
+                            <div class="highlight_data bg-three text-center py-1 mt-1">
+                             <p class="text-white font-weight-bold">TD /YD /DB</p>
+                             <p class="text-white font-weight-bold"><%= dayShortlisted ? dayShortlisted : 0  %> /<%= yesterdayShortlisted ? yesterdayShortlisted.length :0 %> /<%= dayBeforeYesterdayShortlisted ? dayBeforeYesterdayShortlisted.length : 0 %></p>
+                            </div>
+                            <a href="/admin/company"><img src="/public_assets/images/greenarrow.png" class="img-fluid click_img" draggable="false"></a>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+                 <!-- Companies Data End -->
+         
+                 <!-- College Data -->
+                 <div class="row">
+                   <div class="col-xl-12">
+                     <h3 class="headd">Colleges</h3>
+                   </div>
+                   <!-- Card One -->
+                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                     <div class="card">
+                       <h3 class="brder-blw pt-1 px-1">Signups</h3>
+                       <div class="col-xl-12">
+                         <div class="row">
+                           <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto">
+                             <div class="row">
+                               <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                               </div>
+                                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                  <p><a class="sm_btn"><%= weekColleges ? weekColleges : 0%></a></p>
+                                  <p><a class="sm_btn"> <%= monthColleges ? monthColleges : 0%></a></p>
+                                  <p><a class="sm_btn"><%= totalColleges ? totalColleges : 0  %></a></p>
+                                </div>
+                             </div>
+                           </div>
+                           <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12"  style="padding-left: 0px;">
+                            <div class="highlight_data bg-one text-center py-1 mt-1">
+                             <div class="text-white font-weight-bold w-100">TD /YD /DB</div>
+                             <div class="text-white font-weight-bold w-100"><%= dayColleges ? dayColleges : 0  %> /<%= yesterdayColleges ? yesterdayColleges :0 %> /<%= dayBeforeYesterdayColleges ? dayBeforeYesterdayColleges : 0 %> </div>
+                            </div>
+                            <a href="/admin/college"><img src="/public_assets/images/bluearrow.png" class="img-fluid click_img" draggable="false"></a>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                   <!-- END Card One -->
+                 </div>
+                 <!-- College Data End -->
+         
+                  <!-- Payments Data -->
+                  <div class="row">
+                   <div class="col-xl-12">
+                     <h3 class="headd">Payments</h3>
+                   </div>
+                   <!-- Card One -->
+                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                     <div class="card">
+                       <h3 class="brder-blw pt-1 px-1">Payments</h3>
+                       <div class="col-xl-12">
+                         <div class="row">
+                           <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto">
+                             <div class="row">
+                               <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                               </div>
+                                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                  <p><a class="sm_btn"><%= weekRevenue ? weekRevenue : 0%></a></p>
+                                  <p><a class="sm_btn"> <%= monthRevenue ? monthRevenue : 0%></a></p>
+                                  <p><a class="sm_btn"><%= totalRevenue ? totalRevenue : 0  %></a></p>
+                                </div>  
+                             </div>
+                           </div>
+                           <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12"  style="padding-left: 0px;">
+                            <div class="highlight_data bg-one text-center py-1 mt-1">
+                             <p class="text-white font-weight-bold">TD /YD /DB</p>
+                             <p class="text-white font-weight-bold"><%= dayRevenue ? dayRevenue : 0%> /<%= yesterdayRevenue ? yesterdayRevenue : 0 %> /<%= dayBeforeYesterdayRevenue ? dayBeforeYesterdayRevenue :0 %></p>
+                            </div>
+                            <a href="/admin/Payments"><img src="/public_assets/images/bluearrow.png" class="img-fluid click_img" draggable="false"></a>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                   <!-- END Card One -->
+                 </div>
+                 <!-- Payments Data End -->         
+         
+               </section>
+         
+      <% include partials/footer %>

@@ -1,0 +1,381 @@
+<% include ../../partials/header %>
+
+<style>
+  .fliter-block {
+    display: block!important;
+}
+
+@media only screen and (max-width: 992px) {
+#filter-img{
+  width: 60px;
+}
+}
+
+</style>
+
+<body
+  class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static"
+  data-open="click"
+  data-menu="vertical-menu-modern"
+  data-col="2-columns"
+>
+  <% include ./partials/navbar%> <% include ./partials/leftpane%>
+  <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+      <% include ../../partials/flash %>
+      <div
+        class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none"
+      >
+        <div class="content-header-left col-md-9 col-12 mb-2">
+          <div class="row breadcrumbs-top">
+            <div class="col-12">
+              <h3 class="content-header-title float-left mb-0">Jobs Near Me</h3>
+              <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="/candidate/dashboard">Home</a>
+                  </li>
+                  <li class="breadcrumb-item"><a href="#">Jobs Near Me</a></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section>
+        <div class="row">
+          <div class="col-xl-12 col-lg-12">
+
+
+            <div id="accordion">
+              <div class="card mt-xl-0 mt-lg-0 mt-md-0 mt-sm-2 mt-2">
+                <div class="card-header  fliter-block pt-1" id="headingOne">
+                    <div class="row">
+                      <div class="col-6 my-auto"><h5 >
+                        Filter Data / डेटा फ़िल्टर करें </h5>
+                       </div>
+                      <div class="col-6 text-right">
+                        <img src="/images/filtern.png" class="btn btn-link collapsed py-0 mx-0 " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" width="90px" id="filter-img"    >
+                      </div>
+                    </div>
+                </div>
+            
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                  <div class="card-body px-1 py-0">
+                    <div class="card border border-top-1">
+                      <div id="filter">
+                        <div class="card-content">
+                          <div class="card-body p-0">
+                            <div class="row my-0 mx-0 py-2" id="allFields">
+                              <div
+                                class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12"
+                              >
+                                <label>Minimum Qualification</label>
+                                <select
+                                  class="form-control"
+                                  id="qualification"
+                                  name="qualification"
+                                >
+                                  <option value="">Select Option</option>
+                                  <% allQualification.forEach((qual)=> { %>
+                                  <option
+                                    value="<%= qual._id %>"
+                                    class="text-capitalize"
+                                  >
+                                    <%= qual.name %>
+                                  </option>
+                                  <% }); %>
+                                </select>
+                              </div>
+                              <div
+                                class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12"
+                              >
+                                <label>Experience(Yrs)</label>
+                                <select
+                                  class="form-control"
+                                  name="experience"
+                                  id="exp-field"
+                                >
+                                  <option value="">Select</option>
+                                  <option value="0">0</option>
+                                  <% for(let i=1; i<16; i++) {%>
+                                  <option value="<%= i %>"><%= i %></option>
+                                  <% } %>
+                                </select>
+                              </div>
+                              <div
+                                class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12"
+                              >
+                                <label>Industry</label>
+                                <select
+                                  class="form-control"
+                                  id="industry"
+                                  name="industry"
+                                >
+                                  <option value="">Select Option</option>
+                                  <% allIndustry.forEach((i)=> { %>
+                                  <option value="<%= i._id %>" class="text-capitalize">
+                                    <%= i.name %>
+                                  </option>
+                                  <% }); %>
+                                </select>
+                              </div>
+                              <div
+                                class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12"
+                              >
+                                <label>Job Type</label>
+                                <select
+                                  class="form-control"
+                                  id="jobType"
+                                  name="jobType"
+                                >
+                                  <option value="">Select Option</option>
+                                  <option value="Part Time">Part Time</option>
+                                  <option value="Full Time">Full Time</option>
+                                </select>
+                              </div>
+                              <div
+                                class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12"
+                              >
+                                <label>Minimum Offered Salary</label>
+                                <select
+                                  class="form-control"
+                                  id="minSalary"
+                                  name="minSalary"
+                                >
+                                  <option value="">Select Option</option>
+                                  <option value="5000">5000</option>
+                                  <option value="10000">10000</option>
+                                  <option value="15000">15000</option>
+                                  <option value="20000">20000</option>
+                                  <option value="30000">30000</option>
+                                  <option value="40000">40000</option>
+                                  <option value="50000">50000</option>
+                                  <option value="70000">70000</option>
+                                  <option value="80000">80000+</option>
+                                </select>
+                              </div>
+                              <div
+                                class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12"
+                              >
+                                <label>Technical Skills</label>
+                                <select
+                                  class="form-control text-capitalize"
+                                  name="techSkills"
+                                  id="techSkills"
+                                >
+                                  <option value="">Select</option>
+                                  <% skills.forEach((skills)=> { %>
+                                  <option
+                                    class="text-capitalize"
+                                    value="<%= skills._id %>"
+                                  >
+                                    <%= skills.name %>
+                                  </option>
+                                  <% }); %>
+                                </select>
+                              </div>
+                              <div
+                                class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12"
+                              >
+                                <label>State</label>
+                                <select class="form-control" id="state" name="state">
+                                  <option value="">Select Option</option>
+                                  <% allStates.forEach((state)=> { %>
+                                  <option
+                                    value="<%= state._id %>"
+                                    class="text-capitalize"
+                                  >
+                                    <%= state.name %>
+                                  </option>
+                                  <% }); %>
+                                </select>
+                              </div>
+                              <div
+                                class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 mt-2"
+                              >
+                                <button
+                                  class="btn btn-success waves-effect waves-light text-white d-inline"
+                                  id="search-button"
+                                  onclick="filter()"
+                                >
+                                  Go
+                                </button>
+                                <a
+                                  class="extra-ss btn btn-danger d-inline waves-effect waves-light mb-2 text-white mx-md-0 mx-0"
+                                  href="/candidate/nearbyJobs"
+                                  >RESET</a
+                                >
+                              </div>
+                                <div  class="cont" style="display:none">
+                                  <p id="companyNameMarker"></p>
+                                  <p id="stateCityMarker"></p>
+                                  <p id="industryMarker"></p>
+                                  <p id="qualificationMarker"></p>
+                                  <p id="salaryMarker"></p>
+                                  <p id="locationMarker"></p>
+                                  <a id="jobDetailsMarker"></a>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            
+          </div>
+          <div  id="error" style="color: red;"></div>
+          <div id="map" style="width: 100%; height: 400px" class="rounded"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="modal fade" id="popup" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-modal="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Complete Profile
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-unstyled">
+          <li class="mb-1">
+          </li>
+        </ul>
+        <h5 class="pb-1 mb-0">
+          Please set your location before looking for jobs nearby<br>
+          आस-पास की नौकरियों की तलाश करने से पहले कृपया मेरी प्रोफ़ाइल पर अपना स्थान निर्धारित करें।
+        </h5>
+      </div>
+      <div class="modal-footer">
+        <a href="/candidate/myProfile">
+          <button type="submit" class="btn btn-primary">Complete Profile</button>
+        </a>
+        <button type="button" class="btn btn-outline-light" data-dismiss="modal"><i
+          class="feather icon-x d-block d-lg-none"></i>
+        <span class="d-none d-lg-block">Cancel</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE %>&callback=initMap&libraries=&v=weekly"
+    async
+  ></script>
+  <script>
+    function initMap(filterData) {
+      axios
+        .get("/candidate/getNearbyJobsForMap", {
+          headers: {
+            "x-auth": localStorage.getItem("token"),
+            "Content-Type": "multipart/form-data",
+          },
+          params: filterData,
+        })
+        .then((res) => {
+          if(res.data.status == false){
+            $('#error').text('Add your Current Location')
+            const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 9,
+          });
+          }else{
+          const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 9,
+            center: {
+              lat: res.data.nearest?.location?.coordinates[1],
+              lng: res.data.nearest?.location?.coordinates[0],
+            },
+          });
+
+          for (let job of res.data.jobs) {
+            console.log(job)
+            let obj = {
+              lat: job.location.coordinates[1],
+              lng: job.location.coordinates[0],
+            };
+
+            let temp = $('.cont')
+            $('#companyNameMarker').text(job.displayCompanyName ? job.displayCompanyName : job._company[0].name)
+            $('#stateCityMarker').text(`${job.city[0]?.name}, ${job.state[0]?.name}`)
+            $('#industryMarker').text(`Industry: ${job._industry[0]?.name}`)
+            $('#qualificationMarker').text(`Qualification: ${job._qualification[0]?.name}`)
+            $('#salaryMarker').text(`Salary: ${
+              job.isFixed == true && job.amount
+                ? job.amount
+                : job.isFixed == false && job.min
+                ? job.min
+                : "NA"
+            }`)
+            $('#locationMarker').text(`Location: ${Math.round(job.distance / 1000)} km`)
+            $('#jobDetailsMarker').text('View Details')
+            $('#jobDetailsMarker').attr('href', `/candidate/job/${job._id}`)
+
+            let content =$(temp).html()
+            
+
+            let infowindow = new google.maps.InfoWindow({
+              content,
+            });
+
+            const marker = new google.maps.Marker({
+              position: obj,
+              icon: {
+                url: "/images/marker.png",
+                scaledSize: new google.maps.Size(35, 35),
+              },
+              map: map,
+              infowindow: infowindow,
+            });
+
+            google.maps.event.addListener(marker, "click", function () {
+              this.infowindow.open(map, this);
+            });
+          }
+    }});
+    }
+
+    function filter() {
+      let filterData = {};
+      $("#filter")
+        .find(".form-control")
+        .each(function () {
+          let type = $(this).prop("type");
+          let name = $(this).prop("name");
+          let val = $(this).val();
+          if (
+            type != "button" &&
+            type != "submit" &&
+            type != "file" &&
+            name !== ""
+          ) {
+            filterData[name] = val;
+          }
+        });
+      initMap(filterData);
+    }
+  </script>
+ <script>
+  $(document).ready(function() {
+    let lat = '<%= latitude%>';
+    let long = '<%=longitude%>';
+    if (!lat || !long) {
+      $('#popup').modal('show');
+    }
+  });
+    </script>
+    
+  <% include ./partials/footer%>
+</body>

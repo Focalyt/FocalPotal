@@ -1,0 +1,200 @@
+<% include ../partials/header %>
+      <% include ../partials/flash %>
+      <div
+      class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none"
+    >
+      <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+          <div class="col-12">
+            <h3 class="content-header-title float-left mb-0">
+                Video Gallery
+            </h3>
+            <div class="breadcrumb-wrapper col-12">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                <li class="breadcrumb-item active">Youtube Videos</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content-body">
+        <% include ../../partials/flash %>
+        <section class="list-view">
+          <div class="row">
+            <div class="col-12 rounded equal-height-2 coloumn-2">
+              <div class="card">
+                <div class="row p-1">
+                  <div class="col-xl-6 mt-1">
+                    <div class="row">
+                      <div class="archieve pl-1">
+                        <input style="margin-bottom: 4px" type="checkbox"
+                        onclick="archived()" <% if(isChecked=='true' ) {%> checked <%
+                        } %> id="checkbox1" /> &nbsp;
+                        <p>Show Archived</p>
+                      </div>
+                    </div>
+                  </div>
+                  <% if (view === false) { %>
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 text-right">
+                    <a
+                      href="/admin/uploadedVideos/addOrEditVideo"
+                      class="btn btn-primary"
+                      >+ Add Video Link </a
+                    >
+                  </div>
+                  <% } %>
+                </div>
+      
+                <div class="card-content">
+                    <div class="table-responsive">
+                        <table class="table table-hover-animation mb-0 table-hover">
+
+                          <thead>
+                            <tr>
+                              <th style="width:25%">Sequence</th>
+                              <th>Link</th>
+                              <th>Title</th>
+                              <th>Description</th>
+                              <th>Active</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody id="table-body">
+                            <%if (videos?.length>0) { %>
+                              <% videos.forEach((video, i)=> {%>
+                                <td>
+                                    <input type="number" id="video-seq" value="<%= video.sequence %>"
+                                    onblur="updateSequence(event,'<%= video._id %>')" name="sequence" maxlength="4" onkeypress="if(this.value.length==4) return false"
+                                    class="form-control w-50" data-id="<%= video._id %>">
+                                </td>
+                                <td>
+                                    <a href="<%=video.embedURL%>" target="_blank">View Video</a>
+                                </td>
+                                  <td>
+                                    <%=video.title%>
+                                  </td>
+                                  <td>
+                                    <%=video.description%>
+                                  </td>
+                                  <td>
+                                    <div class="custom-control custom-switch custom-control-inline">
+                                      <% if(video.status) { %>
+                                        <input type="checkbox"
+                                          onclick="myOnOffFunc('<%= video._id %>', '<%= video.status %>');"
+                                          class="custom-control-input " id="customSwitch<%= i %>" checked />
+                                        <label class="custom-control-label" for="customSwitch<%= i %>">
+                                        </label>
+                                        <% } else { %>
+                                          <input type="checkbox"
+                                            onclick="myOnOffFunc('<%= video._id %>', '<%= video.status %>');"
+                                            class="custom-control-input" id="customSwitch<%= i %>" />
+                                          <label class="custom-control-label" for="customSwitch<%= i %>">
+                                          </label>
+                                          <% } %>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <% if(isChecked=='false' && view === false) {%>
+                                      <a href="/admin/uploadedVideos/addOrEditVideo/<%= video._id%>">
+                                        <i class="feather icon-edit fa-lg primary"></i>
+                                      </a>
+                                      <% } %>
+                                      <!-- <a style="padding-left: 7px" href="/admin/uploadedVideos/addOrEditVideo/<%= video._id%>">
+                                        <i class="feather icon-eye fa-lg primary"></i>
+                                      </a> -->
+                                  </td>
+                                </tr> 
+                                <% })}else { %>
+                                    <tr>
+                                        <td class="text-center" colspan="9">
+                                          No record found
+                                        </td>
+                                      </tr>
+                                  <% }%>
+                          </tbody>
+                        </table>
+                        <% if (totalPages> 1) { %>
+                          <ul class="pagination justify-content-end ml-2 mb-2">
+                            <% let first=1 %>
+                              <% let last=totalPages> 4 ? 4 :
+                                totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                                  <% first=page - 1 %>
+                                    <% last=page + 1 %>
+                                      <% if (last> totalPages) last = totalPages
+                                        %> <% } %>
+                                          <% if (first> 1) { %>
+                                            <li class="page-item">
+                                              <a class="pageAnchor page-link" href="list?page=<%= 1 %>">First</a>
+                                            </li>
+                                            <% } %>
+                                              <% for (let i=first; i <=last; i +=1) { %>
+                                                <% if (i===page) { %>
+                                                  <li class="active page-item">
+                                                    <a href="javascript:void()" class="page-link">
+                                                      <%= i %>
+                                                    </a>
+                                                  </li>
+                                                  <% } else { %>
+                                                    <li class="page-item">
+                                                      <a class="page-link pageAnchor" href="list?page=<%= i %>">
+                                                        <%= i %>
+                                                      </a>
+                                                    </li>
+                                                    <% } %>
+                                                      <% } %>
+                                                        <% if (totalPages>
+                                                          last)
+                                                          { %>
+                                                          <li class="page-item">
+                                                            <a class="pageAnchor page-link"
+                                                              href="list?page=<%= last + 1 %>">...</a>
+                                                          </li>
+                                                          <li class="page-item">
+                                                            <a class="pageAnchor page-link"
+                                                              href="list?page=<%= totalPages %>">Last</a>
+                                                          </li>
+                                                          <% } %>
+                          </ul>
+                          <% } %>
+                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+       
+      </div>
+      
+         
+        <script>
+          function myOnOffFunc(id, status) {
+            let myStatus = true;
+            if (status === true || status === "true") {
+              myStatus = false;
+            }
+            let data = { id: id, status: myStatus }
+            let headers = { 'x-auth': localStorage.getItem('token') }
+            axios.patch(`/admin/uploadedVideos/changeStatus`, data, { headers: headers })
+              .then((res) => {
+                location.reload()
+              }).catch((err) => {
+                console.log(err);
+              })
+          }
+          function updateSequence(e, id) {
+          const val = e.target.value;
+          console.log("id",id)
+            axios.patch("/admin/uploadedVideos/updatesequence", { videoId: id, val }).then((res) => {
+            if (res.data.status === true) {
+             e.target.value = res.data.sequence
+           }
+         })
+    }
+    function archived() {
+      let checkbox = document.getElementById('checkbox1');
+      window.location.href = `/admin/uploadedVideos/list?status=${!checkbox.checked}`
+    }
+        </script>
+        <% include ../partials/footer%>

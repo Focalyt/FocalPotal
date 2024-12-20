@@ -1,0 +1,426 @@
+<html class=" js no-touch cssanimations csstransitions">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Resume Parser </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Focalyt">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <!-- Styles -->
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/bootstrap-grid.css">
+  <link rel="stylesheet" href="/public_assets/css/icons.css">
+  <link rel="stylesheet" href="/public_assets/css/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/responsive.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/chosen.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/colors/colors.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/bootstrap.css">
+  <link rel="icon" type="image/x-icon" href="/images/ico/faviconnew.ico">
+  <link rel="stylesheet" href="../../../maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+    integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.4.0/lity.min.css">
+
+
+
+</head>
+<style>
+  .change {
+    -webkit-animation: waves 3s ease-in-out infinite;
+    animation: waves 3s ease-in-out infinite;
+    background: #218121a1 !important;
+  }
+
+  .signs img {
+    padding: 6px;
+    border-radius: 8px;
+    filter: drop-shadow(-0.436px -4.981px 1.5px rgba(255, 255, 255, 0.61));
+    background-color: #f2f2f2;
+    margin: 5px 6px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 1), 0px 4px 2px rgba(0, 0, 0, 0.15);
+    transition: .3s;
+  }
+
+  img.signcode {
+    padding: 6px;
+    border-radius: 8px;
+    filter: drop-shadow(-0.436px -4.981px 1.5px rgba(255, 255, 255, 0.61));
+    background-color: #f2f2f2;
+    margin: 5px 6px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 1), 0px 4px 2px rgba(0, 0, 0, 0.15)
+  }
+
+  #heading {
+    display: flex
+  }
+
+  body {
+    background: #f2f2f2 !important
+  }
+
+  .sign_keyboard {
+    border: 1px solid #e0e0e0;
+    border-radius: 20px
+  }
+
+  .contact-form .form-group .form-control:hover {
+    border: 1px solid #228B22 !important;
+    box-shadow: 5px 5px #228B22 !important
+  }
+
+  ul.keys li {
+    display: inline-block;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+  }
+
+  .speak_btn {
+    border-radius: 4px;
+    background-color: #fcffff;
+    border: 1px solid #120449;
+    padding: 10px 35px;
+    color: #140549;
+    font-size: 14px;
+    transition: .3s;
+    -webkit-box-shadow: 4px 3px 0px 0px rgba(43, 35, 80, 1);
+    -moz-box-shadow: 4px 3px 0px 0px rgba(43, 35, 80, 1);
+    box-shadow: 4px 3px 0px 0px rgba(43, 35, 80, 1);
+    text-transform: uppercase;
+    font-weight: 700
+  }
+
+  textarea.textOutput {
+    border: 1px solid #228B22;
+    border-radius: 20px;
+    transition: .3s;
+    background: rgba(34, 139, 34, 0.1)
+  }
+
+  p.subsscript {
+    text-align: center;
+    border-radius: 3px;
+    padding: 0px;
+    color: #000;
+    font-size: 8px;
+    top: -3px;
+    position: absolute;
+    right: 12px;
+    font-weight: 800
+  }
+
+  div#heading img {
+    width: 40px;
+    height: auto;
+    padding: 1px
+  }
+
+  div#inputSigns {
+    transition: .3s
+  }
+
+  ul.keys.mb-0 {
+    text-align: center
+  }
+
+  .signs img:hover {
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15) !important;
+    cursor: pointer !important;
+    transition: .5s;
+  }
+
+  .speak_btn:hover {
+    -webkit-box-shadow: 0px 8px 4px 0px rgba(43, 35, 80, 1);
+    -moz-box-shadow: 0px 8px 4px 0px rgba(43, 35, 80, 1);
+    box-shadow: 0px 8px 4px 0px rgba(43, 35, 80, 1);
+  }
+
+  .typeSignsBox {
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+  }
+
+  .changeMic {
+    color: #228B22
+  }
+
+  .mic-main {
+    position: relative;
+    display: inline-block;
+  }
+
+  .video {
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 100%;
+    background: transparent;
+    color: #fff;
+    display: inline-block;
+    background: #000000;
+    z-index: 999;
+  }
+
+  @keyframes waves {
+    0% {
+      -webkit-transform: scale(0.2, 0.2);
+      transform: scale(0.2, 0.2);
+      opacity: 0;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+
+    50% {
+      opacity: 0.9;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    }
+
+    100% {
+      -webkit-transform: scale(0.9, 0.9);
+      transform: scale(0.9, 0.9);
+      opacity: 0;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+  }
+
+  .fa-play:before {
+    content: "\f04b";
+  }
+
+  .waves {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    border-radius: 100%;
+    right: -18px;
+    bottom: -18px;
+  }
+
+  .wave-1 {
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+  }
+
+  .wave-2 {
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+  }
+
+  .wave-3 {
+    -webkit-animation-delay: 2s;
+    animation-delay: 2s;
+  }
+
+  .blink {
+    animation: blink 2s steps(5, start) infinite;
+    -webkit-animation: blink 1s steps(5, start) infinite;
+  }
+
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+
+  @-webkit-keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+</style>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  .info-capsule {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  .info-table th,
+  .info-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .info-table th {
+    background-color: #f0f0f0;
+  }
+
+  .btn-light {
+    background-color: #edf4fb !important;
+    border-radius: 15px !important;
+    border-color: #82bcf7;
+    margin: 5px 2px 5px 2px;
+  }
+
+  .ring{
+    width:200px;
+    height:200px;
+    border: 0px solid #000;
+    border-radius: 50%;
+    position: absolute;
+  }
+  .ring:nth-child(1){
+    border-bottom-width:8px ;
+    border-color: rgb(255,255,255);
+    animation:rotate1 2s linear infinite;
+  }
+</style>
+<html>
+
+
+<body>
+  
+  <section>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12 mt-xl-5 mt-lg-2 mt-md-2 mt-sm-0 mt-0">
+          <div class="row">
+            <div class="contact-form col-xl-6">
+              <div class="form-group form-primary mt-5">
+                <input type="file" class="form-control" value="" onchange="fileChangeHandler(event)">
+              </div>
+            </div>
+          </div>
+
+          <div id="displaydata" class="row justify-content-center pt-xl-4 pt-sm-0 pb-2">
+            <div class="info-capsule">
+              <h2>Personal Information</h2>
+              <p><strong>Name:</strong> <span class="btn btn-light" id="name">test</span></p>
+              <p><strong>Email:</strong> <span class="btn btn-light" id="email">test</span></p>
+              <p><strong>Phone:</strong> <span class="btn btn-light" id="phone">test</span></p>
+              <p><strong>total-exp:</strong> <span class="btn btn-light" id="exp">test</span></p>
+              <p><strong>address:</strong> <span class="btn btn-light" id="add">tests</span></p>
+
+            </div>
+
+            <!-- Skills -->
+            <div class="info-capsule">
+              <h2>Technical Skills</h2>
+              <p id="technicalskills"></p>
+              <h2>Non-Technical Skills</h2>
+              <p id="nontechnicalskills"></p>
+            </div>
+            <!-- Work Experience -->
+          <div class="info-capsule">
+            <h2>Work Experience</h2>
+            <table class="info-table">
+              <thead>
+                <tr>
+                  <th>Company</th>
+                  <th>Position</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+              <tbody id="experiences">
+
+              </tbody>
+            </table>
+          </div>
+          </div>
+          
+        </div>
+
+      </div>
+
+    </div>
+
+
+    </div>
+    </div>
+
+  </section>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.4.0/lity.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.0/axios.min.js"
+  integrity="sha512-OdkysyYNjK4CZHgB+dkw9xQp66hZ9TLqmS2vXaBrftfyJeduVhyy1cOfoxiKdi4/bfgpco6REu6Rb+V2oVIRWg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  const preloader = $('#preloader');
+            preloader.show();
+            $('#displaydata').hide()
+  function fileChangeHandler(e) {
+    let file = e.target.files[0]
+    let body = {
+      file: file
+    }
+
+    header = { headers: { "Content-Type": "multipart/form-data" } }
+    preloader.hide();
+    axios.post('/parsedocument', body, header)
+      .then(result => {
+        let candidate = result.data.output
+        populateData(candidate)
+        preloader.hide();
+        $('#displaydata').show()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  function populateData(candidate) {
+      $('#name').text(candidate.name)
+      $('#email').text(candidate.email)
+      $('#phone').text(candidate.phone)
+      $('#linkedin').text(candidate.linkedin)
+      $('#skype').text(candidate.skype)
+      $('#address').text(candidate.address)
+      $('#exp').text(candidate.total_experience)
+      let techskills = ``
+      candidate.technical_skills?.forEach(item => {
+        techskills += `<span class="btn btn-light">${item}</span>`
+      })
+
+      $('#technicalskills').html(techskills)
+      let nontechskills = ``
+      candidate.non_technical_skills?.forEach(item => {
+        nontechskills += `<span class="btn btn-light">${item}</span>`
+      })
+
+      $('#nontechnicalskills').html(nontechskills)
+      let exp = ``
+      candidate.companies.forEach(item => {
+        exp += `<tr>
+                    <td>${item.name}</td>
+                    <td>${item.position}</td>
+                    <td>${item.start_date} - ${item.end_date}</td>
+                  </tr>`
+      })
+
+      $('#experiences').html(exp)
+    }
+
+</script>

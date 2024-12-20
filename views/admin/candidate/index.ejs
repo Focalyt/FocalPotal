@@ -1,0 +1,735 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-12 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-9">
+					<h3 class="content-header-title float-left mb-0">Candidates</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Candidates</li>
+						</ol>
+					</div>
+				</div>
+				
+			</div>			
+			
+		</div>
+	</div>
+	<div class="content-body">
+		
+		<% include ../partials/flash %>
+		
+			<section class="list-view">
+				
+				<div class="row">
+					
+					<div class="col-12 rounded equal-height-2 coloumn-2">
+						
+						<div class="card">
+							
+							<div class="row">
+
+								<div class=" col-xl-5 col-lg-6 col-md-4 col-sm-12 col-12  my-auto ">
+									<div class="archieve text-left px-1">
+										<input style="margin-bottom: 4px;" type="checkbox" onclick="archived()"<%-
+										isChecked=="true" ? "checked" : '' %>
+										id="checkbox1">
+										&nbsp;
+										<p>Show Archived</p>
+										
+									</div>
+
+								</div>
+
+
+								<div class="col-xl-7 col-lg-6 col-md-8 col-sm-12 col-12">
+
+									<div class="row">
+
+									
+
+									<% if (view === false) { %>
+										<div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+											<div class="mt-1 pr-1">
+												<a href="#"><img src="/images/conversation.png" alt=""  data-toggle="modal" data-target="#sendSMS" class="">
+												<span class="totalCount pl-1">Profile Completion SMS</span>
+											</a>
+											<h6 class="text-danger mr-1" id="smsHistory">
+												Last Sent :
+												<% if (smsHistory?.createdAt) { %>
+													<%= moment(smsHistory?.createdAt).utcOffset("+05:30").format('MMM DD YYYY') %> (<%= smsHistory?.count %>)
+												  <% } else { %>
+													0
+												  <% } %>
+												  
+		
+											  </h6>
+											  
+											</div>
+										</div>
+										<% } %> 
+										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+											<div class="collectie mt-1 mr-1 bottomcontent">
+											  <a href="#" class="d-flex align-items-center">
+												<img src="/images/csv.png" alt="" onclick="exportCandidates()" class="">
+												<span class="totalCount my-auto ml-1">Total Candidates: <%= count %></span>
+											  </a>
+											</div>
+										  </div>
+										  
+										
+
+								</div>
+
+
+							</div>
+
+
+							<div class="card-content col-12">
+								<div class="row mb-2">
+									<div class="col-xl-12 col-lg-12 px-3">
+									  <form method="GET" id="filterForm">
+										
+										<div class="row">
+											<div class="col-xl-2 mt-1">
+												<label>Name/ Mobile/ Whatsapp</label>
+												<input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>"
+												 maxlength="25">
+											</div>
+											<div class="col-xl-2 mt-1">
+												<label>From Date</label>
+												<input type="date" class="form-control" id="from-date" name="FromDate" value="<%= data.FromDate %>">
+											</div>
+											<div class="col-xl-2 mt-1">
+												<label>To Date</label>
+												<input type="date" class="form-control" id="to-date" name="ToDate" value="<%= data.ToDate %>">
+											</div>
+											<div class="col-xl-2 mt-1">
+												<label>Profile</label>
+												<select class="form-control text-capitalize" name="Profile" id="profile">
+													<option value="">Select</option>
+													<option class="text-capitalize" value= "All" 
+													<% if (data.Profile=='All' ) { %> selected <% }%> >All</option>
+													<option class="text-capitalize" value= "true" 
+													<% if (data.Profile=='true' ) { %> selected <% }%> >Completed</option>
+													<option class="text-capitalize" value= "false" 
+													<% if (data.Profile=='false' ) { %> selected <% }%> >Due</option>
+												</select>
+											</div>
+											<div class="col-xl-2 mt-1">
+												<label>Verfied</label>
+												<select class="form-control text-capitalize" name="verified">
+													<option value="">Select</option>
+													<option class="text-capitalize" value= true
+													<% if (data.verified == 'true') { %> selected <% }%> >Verified</option>
+													<option class="text-capitalize" value= false
+													<% if (data.verified == 'false') { %> selected <% }%> >Not Verified</option>
+												</select>
+											</div>
+											
+												<input type="hidden" class="form-control" name="status" value="<%- isChecked=='true' ? false : true%>">
+											
+											<div style="margin-top: 2.5rem !important;" class="col-xl-2 text-center mt-3">
+												<button 
+												  class="btn btn-success  waves-effect waves-light  text-white d-inline "
+												  id="submit-btn">Go</button>
+												  <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
+												  href="/admin/candidate">RESET</a>
+											</div>
+										</div>
+									  </form>
+									</div>
+								</div> 
+								<div class="table-responsive">
+									<% if (candidates && candidates.length> 0) { %>
+										<table id="tblexportData" class="table table-hover-animation mb-0 table-hover" width="100%">
+											<thead>
+												<tr>
+													<th class="three column wide" width="18%" onclick="sorting('createdAt')" style="cursor: pointer;">DATE <i id="createdAt" class="fa-solid fa-arrow-down danger cursors pointer" value="1"></i></th>
+													<th class="three column wide candidate-wrap" width="19%">CANDIDATE NAME</th>
+													<th class="one column wide" width="15%">MOBILE NO.</th>
+													<th class="one column wide" width="7%" onclick="sorting('refCount')" style="cursor: pointer;">Ref <i id="refCount" class="fa-solid fa-arrow-up danger" value="1"></i></th>
+													<th class="one column wide" width="7%" onclick="sorting('cashbackDue')" style="cursor: pointer;">DUE <i id="cashbackDue" class="fa-solid fa-arrow-up danger" value="1"></i></th>
+													<th class="one column wide" width="7%" onclick="sorting('cashbackPaid')" style="cursor: pointer;">PAID <i class="fa-solid fa-arrow-up danger" value="1" id="cashbackPaid"></i></th>
+													<th class="one column wide" width="7%" onclick="sorting('amountSpent')" style="cursor: pointer;">SPENT <i class="fa-solid fa-arrow-up danger" value="1" id="amountSpent"></i></th>
+													<th class="one column wide" width="5%">STATUS</th>
+													<th class="one column wide" width="5%">VISIBLE</th>
+													<% if (view === false) { %>
+													<th class="one column wide" width="10%" >Action</th>
+													<% } %>
+												</tr>
+											</thead>
+											<tbody>
+												<% let count=0 %>
+													<% candidates.forEach((l, i)=> { %>
+														<tr>
+															<td class="text-capitalize">
+																<%= l.createdAt ? moment(l.createdAt).utcOffset("+05:30").format('MMM DD YYYY  hh:mm A') : "NA" %>
+															</td>
+															<td class="text-capitalize candid-wrap">
+																<a  href="/admin/candidate/details/<%=l._id%>">	<%= l.name ? l.name : "NA" %></a>
+																<% if(l.verified == true){ %>
+																	<i class="fa-solid fa-circle-check" style="color: #28c76f ;"></i>
+																<% } %>
+															</td>
+															<td class="text-capitalize">
+																<%= l.mobile ? l.mobile : "NA" %>
+															</td>
+															<td class="text-capitalize">
+																<%= l.refCount ? l.refCount : 0 %>
+															</td>
+															<td class="text-capitalize">
+																<%=l.cashbackDue %>
+															</td>
+															<td class="text-capitalize">
+																<%=l.cashbackPaid %>
+															</td>
+															<td class="text-capitalize">
+																<%=l.amountSpent %>
+															</td>
+															<% if (view === true) { %>
+																<td><%= l.status ? 'True' : 'False' %></td>
+																<%}else{%>
+															<td>
+																<div class="custom-control custom-switch custom-control-inline"
+																	style="padding-left: 10px;">
+																		<input type="checkbox"
+																			onclick="myOnOffFunc('<%= l._id %>', '<%= l.status %>', 'candidate');"
+																			class="custom-control-input"
+																			id="customSwitch<%= i %>" <% if (l.status) { %> checked <% } %> />
+																		<label class="custom-control-label"
+																			for="customSwitch<%= i %>">
+																		</label>
+																</div>
+															</td>
+															<% } %>
+															<% if(view===true) {%>
+																<td><%= l.visibility ? 'True' : 'False' %></td>
+															<% }else{ %>
+																<td>
+																<div class="custom-control custom-switch custom-control-inline" style="padding-left: 10px;">
+																	<input type="checkbox" onclick="updateProfileVisible('<%= l.mobile %>', '<%= l.visibility %>');" class="custom-control-input" id="ctmSwitch<%= i %>" <% if (l.visibility) { %> checked <% } %> />
+																	<label class="custom-control-label" for="ctmSwitch<%= i %>">
+																	</label>
+															</div>
+															</td>
+															<% } %>
+															<% if (view === false) { %>
+															<td class="d-flex">
+																<a href="/admin/candidate/candidatedoc/<%= l._id %>" title="Document" class="pr-1">
+											                        <i class="feather icon-file-text		 fa-lg primary"></i>
+																</a>
+
+																<a href="/admin/candidate/edit/<%= l._id %>" title="Edit" class="pr-1">
+											                        <i class="feather icon-edit fa-lg primary"></i>
+																</a>
+																<a herf="#" title="Send Notification" class="pr-1">
+																	<i class="ficon feather icon-bell text-danger" data-toggle="modal"
+																	data-target="#notificationmodal" onclick="onNotificationsHandler('<%= l._id %>')" title="Send Notification"></i>
+																</a>
+																<% if (l.mobile){ %>
+																	<i class="feather icon-log-in fa-lg  primary cursor-pointer loginIcon" title="Login as Candidate" onclick="loginAs('<%=l.mobile %>')"></i>
+																
+																<%};%>
+															</td>
+															<% } %>
+														</tr>
+														<% }) %>
+											</tbody>
+										</table>
+										<% } else { %>
+											<p class="text-center mt-3">No result found</p>
+											<% } %>
+
+												<% if (totalPages> 1) { %>
+													<ul class="pagination justify-content-end ml-2 mb-2">
+														<% let first=1 %>
+															<% let last=totalPages> 4 ? 4 :
+																totalPages %> <% if (totalPages> 4 && page >= 2) { %> <%
+																		first=page - 1 %>
+																		<% last=page + 1 %>
+																			<% if (last>
+																				totalPages) last = totalPages %> <% } %>
+																					<% if (first>
+																						1) { %>
+																						<li class="page-item">
+																							<a class="pageAnchor page-link"
+																								href="<%= 1 %>">First</a>
+																						</li>
+																						<% } %>
+																							<% for (let i=first; i
+																								<=last; i +=1) { %>
+																								<% if (i===page) { %>
+																									<li
+																										class="active page-item">
+																										<a href="javascript:void()"
+																											class="page-link">
+																											<%= i %>
+																										</a>
+																									</li>
+																									<% } else { %>
+																										<li
+																											class="page-item">
+																											<a class="page-link pageAnchor"
+																												href="<%= i %>">
+																												<%= i %>
+																											</a>
+																										</li>
+																										<% } %>
+																											<% } %>
+																												<% if
+																													(totalPages>
+																													last)
+																													{ %>
+																													<li
+																														class="page-item">
+																														<a class="pageAnchor page-link"
+																															href="<%= last + 1 %>">...</a>
+																													</li>
+																													<li
+																														class="page-item">
+																														<a class="pageAnchor page-link"
+																															href="<%= totalPages %>">Last</a>
+																													</li>
+																													<% }
+																														%>
+													</ul>
+													<% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<input type="hidden" id="candidate-id" value="">
+			<div class="modal fade" id="sendSMS" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Profile Completion SMS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body pt-1" id="popup-body">
+                <p>Are you sure you want to send Bulk SMS </p>
+				<p class="text-right font-weight-bold text-danger mr-2"><i>Total Messages : <%= smsCount %></i></p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary"
+				onclick="sendSMS('<%= data?.name%>','<%= data?.FromDate %>','<%= data?.ToDate %>','<%= smsCount %>')"
+                  id="sendBtn" data-dismiss="modal">Send</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                    class="feather icon-x d-block d-lg-none"></i>
+                  <span class="d-none d-lg-block">Cancel</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+		<!--Notification modal start-->
+		<div class="modal fade" id="notificationmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Send Notifications</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body pt-1">
+			  <div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-1 text-left">
+				  <label>Status<span class="required text-danger"> *</span></label>
+				  <select class="form-control text-capitalize" id="notificationevent" value="">
+					<option value="">Select Option</option>
+				  </select>
+				</div>
+				<div class="col-xl-12 mb-1 text-left">
+				  <label>Message<span class="required text-danger"> *</span></label>
+				  <textarea class="form-control" cols="5" id="notificationmessage" value="" rows="3"></textarea>
+				</div>
+			  </div>
+			  <p class="text-success font-weight-bolder" id = 'successMsg' style="display: none;"></p>
+			  <p class="text-danger font-weight-bolder" id = 'errorMsg' style="display: none;"></p>
+			</div>
+			<div class="modal-footer">
+			  <button type="submit" class="btn btn-primary" id="sendBtn" onclick="sendNotifications()">Send</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <!--Notification modal end-->
+			<% include ../partials/footer %>
+				<script>
+					function exportCandidates(){
+						// $.ajax({
+						// 	type: "POST",
+						// 	url: "/admin/candidate/downloadCSV",
+						// 	success: (res) => {
+						// 		console.log(res)
+						// 		window.open(res.path, '_blank')
+						// 		// setTimeout(removeFile,20000)
+						// 	}
+						// });
+						const body={FromDate:$('#from-date').val(),ToDate:$('#to-date').val(), username:$('#username').val(), isProfileCompleted:$('#profile').val() }
+						axios.post(`/admin/candidate/downloadCSV`,body , { responseType: 'blob' }).then(res => {
+							    const href = URL.createObjectURL(res.data);
+                                window.open(href, '_blank')
+								}).catch((err) => {
+								console.log(err.message)
+								})
+					}
+					function updateProfileVisible(mobile,visibility){
+                        let field;
+						if(visibility=='true'){
+							field=false
+						}else{
+							field=true
+						}
+						$.ajax({
+							type: "POST",
+							url: "/admin/candidate/changeprofilestatus",
+							data: {
+								mobile,
+								status: field,
+							},
+							success: () => location.reload(),
+						});
+					}
+					function sendNotifications(){
+						const event=$('#notificationevent').val();
+						const message=$('#notificationmessage').val();
+                        const candidateId=$('#candidate-id').val();
+						const body={
+							title:event,
+							message:message,
+							candidateId
+						}
+						if(message&&event){
+							axios.post("/admin/candidate/sendNotification",body).then((res)=>{
+							  if(res.data.status){
+								$('#errorMsg').hide();
+								$('#errorMsg').text('');
+								$('#successMsg').show();
+								$('#successMsg').text(res.data.message)
+								window.location.reload();
+							  }else{
+								$('#successMsg').hide();
+								$('#successMsg').text('');
+								$('#errorMsg').show();
+								$('#errorMsg').text(res.data.message)
+							  }
+							})
+						}else{
+							$('#successMsg').hide();
+								$('#successMsg').text('');
+								$('#errorMsg').show();
+								$('#errorMsg').text("Please fill the required fields!")
+						}
+					}
+					function onNotificationsHandler(candidateId){
+						$('select option.notificationoption').remove();
+						document.getElementById('candidate-id').value=candidateId
+						let optionsName=['Signup','Profile Completion','Applied Jobs','Interview Scheduling','Shortlisting','Focalyt Earnings','Focalyt Alerts']
+						for(let i=0;i<optionsName.length;i++){
+								let option=document.createElement('option');
+								option.text=optionsName[i];
+								option.value=optionsName[i]
+								option.classList.add('notificationoption')
+								document.getElementById('notificationevent').append(option)
+							}
+					}
+					function removeFile() {
+						$.ajax({
+							type: "DELETE",
+							url: "/admin/candidate/deleteCSV",
+							success: (res) => {
+								if(res.status){
+									console.log('File Deleted')
+								} else {
+									console.log('File not Deleted')
+								}
+							}
+						});
+					}
+
+					function myOnOffFunc(id, status, model) {
+						// eslint-disable-line
+						let myStatus = true;
+						if (status === true || status === "true") {
+							myStatus = false;
+						}
+						$.ajax({
+							type: "POST",
+							url: "/admin/changestatus",
+							data: {
+								id,
+								status: myStatus,
+								model,
+							},
+							success: () => location.reload(),
+						});
+					}
+					function deleteRecord(id, status, model) {
+						// eslint-disable-line
+						let myStatus = true;
+						if (status === true || status === "true") {
+							myStatus = false;
+						}
+						var x = confirm("Are you sure you want to delete?");
+						if (x) {
+							$.ajax({
+								type: "POST",
+								url: "/admin/deleteRecord",
+								data: {
+									id,
+									status: myStatus,
+									model,
+								},
+								success: () => window.location.href = "/admin/candidate"
+							});
+						}
+					}
+				</script>
+				<script>
+					!(function () {
+						"use strict";
+						Array.isArray ||
+							(Array.isArray = function (r) {
+								return "[object Array]" === Object.prototype.toString.call(r);
+							});
+						var r = {
+							get: function () {
+								var r = window.location.search,
+									t = {};
+								return "" === r
+									? t
+									: ((r = r.slice(1)),
+										(r = r.split("&")),
+										r.map(function (r) {
+											var i, o;
+											(r = r.split("=")),
+												(i = r[0]),
+												(o = r[1]),
+												t[i]
+													? (Array.isArray(t[i]) || (t[i] = [t[i]]),
+														t[i].push(o))
+													: (t[i] = o);
+										}),
+										t);
+							},
+						};
+						if (window) {
+							if (window.qs)
+								throw new Error(
+									"Error bootstrapping qs: window.qs already set."
+								);
+							window.qs = r;
+						}
+					})();
+				</script>
+				<script>
+					document.addEventListener("DOMContentLoaded", () => {
+						let order = '<%= sortingOrder%>'
+						let value = '<%= sortingValue%>'
+						let iconClass
+						if(order == -1){
+							iconClass = "fa-solid fa-arrow-down success"
+						}else{
+							iconClass = "fa-solid fa-arrow-up success"
+						}
+						$(`#${value}`).removeAttr('class')
+						$(`#${value}`).attr('class', iconClass)
+						$(`#${value}`).attr('value', `${order*-1}`)
+
+						const pageAnchors = document.querySelectorAll("a.pageAnchor");
+						const { origin, pathname, search } = window.location;
+						const obj = window.qs.get(search);
+						const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+						let url = `${origin}${pathname}?`;
+						keyArr.forEach((x) => {
+							if (x !== "page") {
+								url += `${x}=${obj[x]}&`;
+							}
+						});
+						pageAnchors.forEach((el) => {
+							const n = el.getAttribute("href");
+							el.setAttribute("href", `${url}page=${n}`);
+						});
+					});
+					// show deleted data
+					function archived() {
+						let checkbox = document.getElementById('checkbox1');
+						window.location.href = `/admin/candidate?status=${!checkbox.checked}`
+					}
+
+					// show selected colleges
+					function selectedCollege() {
+						var e = document.getElementById("college");
+						var selectedItem = e.options[e.selectedIndex].value;
+						// alert(selectedItem);
+						var clgId = selectedItem;
+						// alert("isDeleted = " + isDeleted)
+						$.ajax({
+							type: "GET",
+							url: "/admin/candidate?clgId=" + `${clgId}`,
+							success: () => window.location.href = "/admin/candidate?clgId=" + `${clgId}`
+						});
+					}
+
+					// delete archieve data permanently
+					function deleteArchieve(id, isDeleted, model) {
+						// alert(isDeleted)
+						let myStatus = true;
+						if (isDeleted === true || isDeleted === "true") {
+							myStatus = true;
+						}
+
+						var x = confirm("Are you sure you want to delete?");
+						if (x) {
+							$.ajax({
+								type: "POST",
+								url: "/admin/deleteArchieve",
+								data: {
+									id,
+									isDeleted: myStatus,
+									model,
+								},
+								success: () => window.location.href = "/admin/candidate?isDeleted=true"
+							});
+						}
+					}
+				</script>
+
+				<script type="text/javascript">
+					
+					$('#submit-btn').click(()=>{
+						if(validate()){
+							return false
+						}
+					})
+					function validate(){
+						$('.error').removeClass('error')
+						let fromDate = $('#from-date').val();
+						let toDate = $('#to-date').val()
+						let hasError = false
+						let firstError
+						
+						if(fromDate && !toDate){
+							$('#to-date').parent().addClass('error')
+                            firstError = firstError ? firstError :$('#to-date')
+                            hasError = true
+						}
+						if(!fromDate && toDate){
+							$('#from-date').parent().addClass('error')
+                            firstError = firstError ? firstError :$('#from-date')
+                            hasError = true
+						}
+						$(firstError).focus()
+                        return hasError
+					}
+					function exportToExcel(tableID, filename = '') {
+
+						/* Get the HTML data using Element by Id */
+						var table = document.getElementById("tblexportData");
+
+						/* Declaring array variable */
+						var rows = [];
+
+						//iterate through rows of table
+						for (var i = 0, row; row = table.rows[i]; i++) {
+							//rows would be accessed using the "row" variable assigned in the for loop
+							//Get each cell value/column from the row
+							column1 = row.cells[0].innerText;
+							column2 = row.cells[1].innerText;
+							column3 = row.cells[2].innerText;
+							column4 = row.cells[3].innerText;
+							column5 = row.cells[4].innerText;
+
+							/* add a new records in the array */
+							rows.push(
+								[
+									column1,
+									column2,
+									column3,
+									column4,
+									column5
+								]
+							);
+
+						}
+						console.log("rows",rows,rows.length)
+						csvContent = "data:text/csv;charset=utf-8,";
+						/* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
+						rows.forEach(function (rowArray) {
+							row = rowArray.join(",");
+							csvContent += row + "\r\n";
+						});
+
+						/* create a hidden <a> DOM node and set its download attribute */
+						var encodedUri = encodeURI(csvContent);
+						var link = document.createElement("a");
+						link.setAttribute("href", encodedUri);
+						link.setAttribute("download", "candidates list");
+						document.body.appendChild(link);
+						/* download the data file named "Stock_Price_Report.csv" */
+						link.click();
+					}
+
+					function sendSMS(name,fromDate,toDate,count){
+						const params = window.location.search
+                        $('#sendBtn').addClass('disabled')
+						$.ajax({
+								type: "POST",
+								url: "/admin/candidate/bulkSMS",
+								data: {
+									isProfileCompleted : false,
+									name,
+									fromDate,
+									toDate,
+									count
+								},
+								success: () => {
+									let smsHistory = document.getElementById('smsHistory')
+									smsHistory.textContent="Last Sent : Just Now (<%= smsCount %>)" 
+									$('#sendBtn').removeClass('disabled')
+								},
+								error: () =>{
+									window.location.href = `/admin/candidate${params}`
+								}
+							});
+					}
+
+					function sorting(value){
+						let order = $(`#${value}`).attr('value')
+						let str = `?`
+						let form = document.getElementById('filterForm');
+                        let data = new FormData(form);
+						let obj = {}
+                        for (let [key, value] of data) {
+							obj[key] = value
+							str += `${key}=${value}&`
+                           }
+						window.location.href = `/admin/candidate${str}value=${value}&order=${order}`
+					}
+
+					function loginAs(mobile){
+						$.ajax({
+								type: "POST",
+								data: {mobile, module: 'candidate'},
+								url: "/api/loginAsCandidate",
+								success: (data) => {
+									if(data.role===3) {
+										localStorage.setItem("candidate", data.name);
+                                        localStorage.setItem("token", data.token);
+                                        window.location.href = "/candidate/dashboard";
+									}									
+								}
+							});
+					}
+					
+				</script>
+	</div>

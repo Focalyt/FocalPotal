@@ -1,0 +1,349 @@
+<% include ../../partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W39K27R"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <section>
+                <!-- Candidate Data -->
+                <div class="row">
+                  <div class="col-xl-12">
+                    <h3 class="headd">Candidates</h3>
+                  </div>
+                  <!-- Card One -->
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="card">
+                      <h3 class="brder-blw pt-1 px-1">Signups</h3>
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div
+                            class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto"
+                          >
+                            <div class="row">
+                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                              </div>
+                              <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                <p><a class="sm_btn"><%= weekCandidates %></a></p>
+                                <p><a class="sm_btn"><%= monthCandidates %></a></p>
+                                <p><a class="sm_btn"><%= totalCandidates %></a></p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                            <div class="highlight_data bg-one text-center py-1 mt-1">
+                              <h2 class="text-white font-weight-bold">Today</h2>
+                              <h2 class="text-white font-weight-bold"><%= dayCandidates %></h2>
+                            </div>
+                            <a href="#"
+                              ><img
+                                src="/public_assets/images/bluearrow.png"
+                                class="img-fluid click_img"
+                                draggable="false"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END Card One -->
+                  <!-- Card two -->
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="card">
+                      <h3 class="brder-blw pt-1 px-1">Shortlisted</h3>
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div
+                            class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto"
+                          >
+                            <div class="row">
+                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                              </div>
+                              <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                <p><a class="sm_btn"><%= weekShortlisted %></a></p>
+                                <p><a class="sm_btn"><%= monthShortlisted %></a></p>
+                                <p><a class="sm_btn"><%= totalShortlisted %></a></p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                            <div class="highlight_data bg-two text-center py-1 mt-1">
+                              <h2 class="text-white font-weight-bold">Today</h2>
+                              <h2 class="text-white font-weight-bold"><%= dayShortlisted %></h2>
+                            </div>
+                            <a href="#"
+                              ><img
+                                src="/public_assets/images/orangearrow.png"
+                                class="img-fluid click_img"
+                                draggable="false"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END Card two -->
+                  <!-- Card three -->
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="card">
+                      <h3 class="brder-blw pt-1 px-1">Hired</h3>
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div
+                            class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto"
+                          >
+                            <div class="row">
+                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                              </div>
+                              <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                <p><a class="sm_btn"><%= weekHired %></a></p>
+                                <p><a class="sm_btn"><%= monthHired %></a></p>
+                                <p><a class="sm_btn"><%= totalHired %></a></p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                            <div class="highlight_data bg-three text-center py-1 mt-1">
+                              <h2 class="text-white font-weight-bold">Today</h2>
+                              <h2 class="text-white font-weight-bold"><%= dayHired %></h2>
+                            </div>
+                            <a href="#"
+                              ><img
+                                src="/public_assets/images/greenarrow.png"
+                                class="img-fluid click_img"
+                                draggable="false"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END Card three -->
+                </div>
+                <!-- Candidate Data End -->
+          
+                <!-- Companies Data -->
+                <div class="row">
+                  <div class="col-xl-12">
+                    <h3 class="headd">Companies</h3>
+                  </div>
+                  <!-- Card One -->
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="card">
+                      <h3 class="brder-blw pt-1 px-1">Signups</h3>
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div
+                            class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto"
+                          >
+                            <div class="row">
+                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                              </div>
+                              <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                <p><a class="sm_btn"><%= weekCompanies %></a></p>
+                                <p><a class="sm_btn"><%= monthCompanies %></a></p>
+                                <p><a class="sm_btn"><%= totalCompanies %></a></p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                            <div class="highlight_data bg-one text-center py-1 mt-1">
+                              <h2 class="text-white font-weight-bold">Today</h2>
+                              <h2 class="text-white font-weight-bold"><%= dayCompanies %></h2>
+                            </div>
+                            <a href="#"
+                              ><img
+                                src="/public_assets/images/bluearrow.png"
+                                class="img-fluid click_img"
+                                draggable="false"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END Card One -->
+                  <!-- Card two -->
+          
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="card">
+                      <h3 class="brder-blw pt-1 px-1">JD's</h3>
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div
+                            class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto"
+                          >
+                            <div class="row">
+                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                              </div>
+                              <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                <p><a class="sm_btn"><%= weekJobs %></a></p>
+                                <p><a class="sm_btn"><%= monthJobs %></a></p>
+                                <p><a class="sm_btn"><%= totalJobs %></a></p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                            <div class="highlight_data bg-two text-center py-1 mt-1">
+                              <h2 class="text-white font-weight-bold">Today</h2>
+                              <h2 class="text-white font-weight-bold"><%= dayAppliedJobs %></h2>
+                            </div>
+                            <a href="#"
+                              ><img
+                                src="/public_assets/images/orangearrow.png"
+                                class="img-fluid click_img"
+                                draggable="false"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END Card two -->
+                  <!-- Card three -->
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="card">
+                      <h3 class="brder-blw pt-1 px-1">Shortlisted</h3>
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div
+                            class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto"
+                          >
+                            <div class="row">
+                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                              </div>
+                              <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                <p><a class="sm_btn"><%= weekShortlisted %></a></p>
+                                <p><a class="sm_btn"><%= monthShortlisted %></a></p>
+                                <p><a class="sm_btn"><%= totalShortlisted %></a></p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                            <div class="highlight_data bg-three text-center py-1 mt-1">
+                              <h2 class="text-white font-weight-bold">Today</h2>
+                              <h2 class="text-white font-weight-bold"><%= dayShortlisted %></h2>
+                            </div>
+                            <a href="#"
+                              ><img
+                                src="/public_assets/images/greenarrow.png"
+                                class="img-fluid click_img"
+                                draggable="false"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END Card three -->
+                  <!-- Card four -->
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="card">
+                      <h3 class="brder-blw pt-1 px-1">Hired</h3>
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div
+                            class="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-12 my-auto"
+                          >
+                            <div class="row">
+                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                              </div>
+                              <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                <p><a class="sm_btn"><%= weekHired %></a></p>
+                                <p><a class="sm_btn"><%= monthHired %></a></p>
+                                <p><a class="sm_btn"><%= totalHired %></a></p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                            <div class="highlight_data bg-four text-center py-1 mt-1">
+                              <h2 class="text-white font-weight-bold">Today</h2>
+                              <h2 class="text-white font-weight-bold"><%= dayHired %></h2>
+                            </div>
+                            <a href="#"
+                              ><img
+                                src="/public_assets/images/brownarrow.png"
+                                class="img-fluid click_img"
+                                draggable="false"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END Card four -->
+                  <!-- Card five -->
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="card">
+                      <h3 class="brder-blw pt-1 px-1">Applied Jobs</h3>
+                      <div class="col-xl-12">
+                        <div class="row">
+                          <div
+                            class="col-xl-7 col-lg-5 col-md-12 col-sm-12 col-12 my-auto"
+                          >
+                            <div class="row">
+                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                                <p class="font-weight-bold">WTD</p>
+                                <p class="font-weight-bold">MTD</p>
+                                <p class="font-weight-bold">AT</p>
+                              </div>
+                              <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                                <p><a class="sm_btn"><%= weekAppliedJobs %></a></p>
+                                <p><a class="sm_btn"><%= monthAppliedJobs %></a></p>
+                                <p><a class="sm_btn"><%= totalAppliedJobs %></a></p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                            <div class="highlight_data bg-three text-center py-1 mt-1">
+                              <h2 class="text-white font-weight-bold">Today</h2>
+                              <h2 class="text-white font-weight-bold"><%= dayAppliedJobs %></h2>
+                            </div>
+                            <a href="#"
+                              ><img
+                                src="/public_assets/images/greenarrow.png"
+                                class="img-fluid click_img"
+                                draggable="false"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END Card five -->
+                </div>
+                <!-- Companies Data End -->
+              </section>
+          </div>
+        </div>
+
+        <% include ./partials/footer%>

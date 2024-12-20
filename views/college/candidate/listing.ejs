@@ -1,0 +1,256 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Bulk Listing</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Bulk Listing</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<section class="list-view">
+				<div class="row">
+					<div class="col-12 rounded equal-height-2 coloumn-2">
+						<div class="card">
+							<div class="row p-1">
+								<div class="col-xl-6">
+									<div class="row">
+										<div class="card-header">
+											<h4 class="card-title">Bulk Listing</h4>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="col-xl-6">
+             <div class="row">
+                 <div class="col-xl-12 text-right">
+                     <a href="" class="btn btn-outline-success">Import</a>
+                     <a href="" class="btn btn-outline-primary">Export</a>
+                   </div>
+             </div>
+         </div> -->
+							</div>
+
+							<div class="card-content">
+								<div class="table-responsive">
+									<% if (imports && imports.length> 0) { %>
+										<table class="table table-hover-animation mb-0 table-hover">
+											<thead>
+												<tr>
+													<th>NAME</th>
+													<th>MESSAGE</th>
+													<th>TIME</th>
+												</tr>
+											</thead>
+											<tbody>
+												<% let count=0 %>
+													<% imports.forEach((l, i)=> { %>
+														<tr>
+															<td class="text-capitalize">
+																<%= l.name %>
+															</td>
+															<td class="text-capitalize">
+																<!-- <img
+												src="https://mmt-all.s3.ap-south-1.amazonaws.com/<%= l.image %>"
+												width="50"
+											/> -->
+																<%- l.message %>
+
+															</td>
+															<td>
+																<%= moment(l.createdAt).format('Do MMMM, YYYY HH:mm') %>
+															</td>
+
+
+
+
+
+															<!-- <td>
+																						<a class="btn btn-success"
+																							href="/college/candidate/createResume/<%= l._id %>">Create
+																							Resume</a>
+																					</td> -->
+
+
+															</a>
+
+															<% if(l.status) { %>
+
+
+																<% } else { %>
+
+
+																	</label>
+																	<% } %>
+								</div>
+								</td>
+								</tr>
+								<% }) %>
+									</tbody>
+									</table>
+									<% } else { %>
+										<p class="text-center mt-3">No result found</p>
+										<% } %>
+											<% if (totalPages> 1) { %>
+												<ul class="pagination justify-content-end ml-2 mb-2">
+													<% let first=1 %>
+														<% let last=totalPages> 4 ? 4 :
+															totalPages %> <% if (totalPages> 4 && page >= 2) { %> <%
+																	first=page - 1 %>
+																	<% last=page + 1 %>
+																		<% if (last>
+																			totalPages) last = totalPages %> <% } %>
+																				<% if (first>
+																					1) { %>
+																					<li class="page-item">
+																						<a class="pageAnchor page-link"
+																							href="<%= 1 %>">First</a>
+																					</li>
+																					<% } %>
+																						<% for (let i=first; i <=last; i
+																							+=1) { %>
+																							<% if (i===page) { %>
+																								<li
+																									class="active page-item">
+																									<a href="javascript:void()"
+																										class="page-link">
+																										<%= i %>
+																									</a>
+																								</li>
+																								<% } else { %>
+																									<li
+																										class="page-item">
+																										<a class="page-link pageAnchor"
+																											href="<%= i %>">
+																											<%= i %>
+																										</a>
+																									</li>
+																									<% } %>
+																										<% } %>
+																											<% if
+																												(totalPages>
+																												last)
+																												{ %>
+																												<li
+																													class="page-item">
+																													<a class="pageAnchor page-link"
+																														href="<%= last + 1 %>">...</a>
+																												</li>
+																												<li
+																													class="page-item">
+																													<a class="pageAnchor page-link"
+																														href="<%= totalPages %>">Last</a>
+																												</li>
+																												<% } %>
+												</ul>
+												<% } %>
+
+							</div>
+						</div>
+					</div>
+				</div>
+	</div>
+	</section>
+	<% include ../partials/footer %>
+		<script>
+			function myOnOffFunc(id, status, model) {
+				// eslint-disable-line
+				let myStatus = true;
+				if (status === true || status === "true") {
+					myStatus = false;
+				}
+				$.ajax({
+					type: "POST",
+					url: "/changestatus",
+					data: {
+						id,
+						status: myStatus,
+						model,
+					},
+					success: () => location.reload(),
+				});
+			}
+			function deleteRecord(id, status, model) {
+				// eslint-disable-line
+				let myStatus = true;
+				if (status === true || status === "true") {
+					myStatus = false;
+				}
+				var x = confirm("Are you sure you want to delete?");
+				if (x) {
+					$.ajax({
+						type: "POST",
+						url: "/deleteRecord",
+						data: {
+							id,
+							status: myStatus,
+							model,
+						},
+						success: () => (window.location.href = "/college/candidate"),
+					});
+				}
+			}
+		</script>
+		<script>
+			!(function () {
+				"use strict";
+				Array.isArray ||
+					(Array.isArray = function (r) {
+						return "[object Array]" === Object.prototype.toString.call(r);
+					});
+				var r = {
+					get: function () {
+						var r = window.location.search,
+							t = {};
+						return "" === r
+							? t
+							: ((r = r.slice(1)),
+								(r = r.split("&")),
+								r.map(function (r) {
+									var i, o;
+									(r = r.split("=")),
+										(i = r[0]),
+										(o = r[1]),
+										t[i]
+											? (Array.isArray(t[i]) || (t[i] = [t[i]]),
+												t[i].push(o))
+											: (t[i] = o);
+								}),
+								t);
+					},
+				};
+				if (window) {
+					if (window.qs)
+						throw new Error(
+							"Error bootstrapping qs: window.qs already set."
+						);
+					window.qs = r;
+				}
+			})();
+		</script>
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				const pageAnchors = document.querySelectorAll("a.pageAnchor");
+				const { origin, pathname, search } = window.location;
+				const obj = window.qs.get(search);
+				const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+				let url = `${origin}${pathname}?`;
+				keyArr.forEach((x) => {
+					if (x !== "page") {
+						url += `${x}=${obj[x]}&`;
+					}
+				});
+				pageAnchors.forEach((el) => {
+					const n = el.getAttribute("href");
+					el.setAttribute("href", `${url}page=${n}`);
+				});
+			});
+		</script>
+		</div>

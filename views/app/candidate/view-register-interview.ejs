@@ -1,0 +1,1351 @@
+<% include ../../partials/header %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/card-slider.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/slider-responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@2.1.99/css/materialdesignicons.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/css/slider-viewJob.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+
+  <style>
+    label.review {
+      display: block;
+    }
+
+    input.star {
+      display: none;
+    }
+
+    label.star {
+      float: right;
+      padding: 10px;
+      font-size: 30px !important;
+      color: #444;
+      transition: all .2s;
+    }
+
+    input.star:hover~label.star:before {
+      content: '\f005';
+      color: #ffd100;
+      transition: all .25s;
+    }
+
+    input.star:checked~label.star:before {
+      content: '\f005';
+      color: #ffd100;
+      transition: all .25s;
+    }
+
+    input.star-5:hover~label.star:before {
+      color: #FE7;
+      text-shadow: 0 0 20px #952;
+    }
+
+    input.star-5:checked~label.star:before {
+      color: #FE7;
+      text-shadow: 0 0 20px #952;
+    }
+
+    label.star:hover {
+      transform: rotate(-15deg) scale(1.3);
+    }
+
+    label.star:before {
+      content: '\f006';
+      font-family: FontAwesome;
+    }
+
+    input.star:checked~.rev-box {
+      height: 125px;
+      overflow: visible;
+    }
+  </style>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static" data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns" id="inner_job_page">
+
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <% include ../../partials/flash %>
+          <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper"></div>
+            <section class="ml-3">
+              <div class="container-fluid px-1">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-lg-8 col-md-8 column">
+                        <div class="job-single-sec">
+                          <div class="card-body px-0">
+                            <div class="job-single-head">
+                              <!-- <div class="job-thumb my-auto"> <img
+                          src="<%= jobDetails._company?.logo ? process.env.MIPIE_BUCKET_URL +'/' +jobDetails._company?.logo : '/images/logo90.png'%>"
+                          alt="" class="py-4 px-1 img-fluid" draggable="false"> </div> -->
+                              <span class="job-head-info">
+                                <h4 class="text-capitalize">
+                                  <%=jobDetails.title%>
+                                </h4>
+                                <span class="text-capitalize pt-1">
+                                  <%= jobDetails.displayCompanyName? jobDetails.displayCompanyName :
+                                    jobDetails._company?.name%>
+                                </span>
+                              </span>
+                            </div>
+                          </div>
+
+
+                          <div class="job-overview mx-1">
+                            <h3>Job Overview / नौकरी का अवलोकन</h3>
+                            <ul class="list-unstyled">
+                              <!-- <li><i class="la la-thumb-tack"></i>
+                        <h3 class="text-capitalize">
+                          <%=jobDetails.title%>
+                        </h3><span class="text-capitalize">
+                          Career Level / करियर स्तर
+                        </span>
+                      </li>
+                      <li><i class="la la-industry"></i>
+                        <h3>
+                          <%=jobDetails._industry?.name%>
+                        </h3><span class="text-capitalize">
+                          Industry / उद्योग
+                        </span>
+                      </li>
+                      <li><i class="la la-briefcase"></i>
+                        <h3 class="text-capitalize">
+                          <%=jobDetails._jobCategory?.name%>
+                        </h3><span class="text-capitalize">
+                          Job Type / नौकरी का प्रकार
+                        </span>
+                      </li> -->
+                              <li><i class="la la-money"></i>
+                                <h3>₹ <%=jobDetails.isFixed? jobDetails.amount||'NA' : jobDetails.min||'NA' + ' - ' +
+                                    jobDetails.max||'NA' %>
+                                </h3>
+
+                                <span class="text-capitalize">
+                                  Minimum Salary / न्यूनतम वेतन
+                                </span>
+                              </li>
+                              <li><i class="la la-shield"></i>
+                                <h3>
+                                  <% if(jobDetails.experience==0) { %>
+                                    Fresher
+                                    <% } else { %>
+                                      <%=jobDetails.experience%> Years
+                                        <% } %>
+                                </h3><span class="text-capitalize">
+                                  Experience / अनुभव
+                                </span>
+                              </li>
+                              <li><i class="la la-graduation-cap "></i>
+                                <h3>
+                                  <%=jobDetails._qualification?.name%>
+                                </h3><span class="text-capitalize">
+                                  Qualification / योग्यता
+                                </span>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="job-details mx-1">
+                            <% if(jobDetails.jobDescription){ %>
+                              <h3>Job Description / नौकरी का विवरण</h3>
+                              <p class="text-capitalize mb-0">
+                                <span>
+                                  <%= jobDetails.jobDescription %>
+                                </span>
+                              </p>
+                              <%} %>
+                                <% if(jobDetails.questionsAnswers.length>0){ %>
+                                  <h3>FAQ's</h3>
+                                  <p class="text-capitalize mb-0">
+                                    <span>
+
+                                      <% jobDetails.questionsAnswers.forEach((item)=> { %>
+                                        <div class="row questionanswerrow" style="margin-bottom: 1px;">
+                                          <div class="col-xl-12">
+                                            <p style="font-size: 14px; " class="mb-0"><b>Question</b>
+                                              <%= item.Question %>
+                                            </p>
+                                            <p style="font-size: 14px; "> <b>Answer:</b>
+                                              <%= item.Answer %>
+                                            </p>
+                                          </div>
+                                        </div>
+
+
+
+                                        <% }) %>
+
+                                    </span>
+                                  </p>
+                                  <%} %>
+
+                                    <% if(jobDetails._techSkills.length>0){%>
+                                      <h3 style="line-height:27px!important">Required Knowledge, Skills, and Abilities /
+                                        आवश्यक ज्ञान,
+                                        कौशल और क्षमताएं</h3>
+                                      <ul class="list-unstyled pl-3">
+                                        <% jobDetails._techSkills?.forEach((skill)=> { %>
+                                          <li class="text-capitalize">
+                                            <%=skill.name%>
+                                          </li>
+                                          <%});%>
+                                      </ul>
+                                      <%} %>
+                                        <% if(jobDetails.benifits.length>0){%>
+                                          <h3>Benefits / लाभ</h3>
+                                          <ul class="pl-3">
+                                            <% jobDetails.benifits?.forEach((benefit)=> { %>
+                                              <li class="text-capitalize">
+                                                <%=benefit%>
+                                              </li>
+                                              <%});%>
+                                          </ul>
+                                          <%} %>
+                                            <% if(jobDetails.remarks){ %>
+                                              <h3>Remarks / टिप्पणियां</h3>
+                                              <p>
+                                                <%=jobDetails.remarks %>
+                                              </p>
+                                              <%} %>
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <div class="col-lg-4 col-md-4 column mt-xl-2 mt-lg-3 mt-md-3 mt-sm-0 mt-0">
+                        <!-- register for interview -->
+<% if (!isRegisterInterview) { %>
+  <a class="apply-thisjob text-left px-1 d-xl-block d-lg-block d-md-block d-sm-none d-none apply-padding mb-0 mt-0 mb-md-2 mb-md-2"
+    href="#" title="registerApply" style="text-decoration: none;" data-toggle="modal" 
+    data-target="#registerApply" data-value="<%= isRegisterInterview %>"
+    data-bs-target="#editUser" data-bs-toggle="modal" id="apply-div-btn">
+    <i class="fa-regular fa-hand"></i>Register for Interview / साक्षात्कार के लिए पंजीकरण करें
+  </a>
+  <% } else { %>
+    <a class="apply-thisjob text-left px-1 d-xl-block d-lg-block d-md-block d-sm-none d-none apply-padding mb-0 mt-0 mb-md-2 disabled-button mb-md-2"
+      href="#" title=""><i class="fa-regular fa-hand"></i>
+      Registered for Interview / साक्षात्कार के लिए पंजीकृत
+    </a>
+    <% } %>
+                              <% if(!isApplied){ %>
+                                <a class="apply-thisjob  apply-div-field text-left px-0 d-xl-block d-lg-block d-md-block d-sm-none d-none py-4 mb-2 decoration-none "
+                                  href="#" title="apply" style="text-decoration: none;" data-toggle="modal"
+                                  data-target="#apply" data-value="<%= isApplied %>" data-bs-target="#editUser"
+                                  data-bs-toggle="modal" id="apply-div-btn"><i class="la la-paper-plane ml-2"></i>Apply
+                                  for Job /
+                                  नौकरी के लिए
+                                  आवेदन</a>
+                                <% } else { %>
+                                  <a class="apply-thisjob text-left px-0 py-3 d-xl-block d-lg-block d-md-block d-sm-none d-none disabled-button"
+                                    href="#" title=""><i class="la la-paper-plane ml-3"></i>Applied /
+                                    प्रयुक्त</a>
+                                  <%}%>
+                                    <% if(isApplied ) {%>
+                                      <a href="tel:<%=mobileNumber%>"
+                                        class="apply-thisjob text-left py-2 mt-2  d-xl-block d-lg-block d-md-block d-sm-none d-none call-btn px-1 decoration-none"
+                                        title=""> <i class="la la-phone  plane-font"></i>
+                                        Call To HR/ एचआर को कॉल करें
+                                      </a>
+                                      <%}else{%>
+                                        <a href="#"
+                                          class="apply-thisjob call-div-field text-left py-2 mt-2  d-xl-block d-lg-block d-md-block d-sm-none d-none call-btn px-2 decoration-none mb-3"
+                                          title="call-btn" data-toggle="modal" data-target="#apply"
+                                          data-value="<%= isApplied %>" data-bs-target="#editUser"
+                                          data-bs-toggle="modal"> <i class="la la-phone  plane-font"></i>
+                                          Call To HR/ एचआर को कॉल करें
+                                        </a>
+                                        <%}%>
+                                          <!-- Job Overview -->
+
+                                          <div class="extra-job-info mt-1 mb-4">
+                                            <!-- <span class="py-1 px-0"><i class="la la-clock-o"></i><strong>Posted On</strong>
+                                    <%=moment(jobDetails.updatedAt).utcOffset('+05:30').format('DD MMM YYYY') %>
+                </span> -->
+                                            <span class="text-capitalize px-0 py-1"><i
+                                                class="la la-map-pin"></i><strong>Location</strong>
+                                              <%=jobDetails.city?.name%>, <%=jobDetails.state?.name%>
+                                            </span>
+                                            <span class="text-capitalize px-0 py-1"><i
+                                                class="la la-male"></i><strong>Gender Preferance</strong>
+                                              <%= jobDetails.genderPreference ? jobDetails.genderPreference
+                                                : 'No Preferances' %>
+                                            </span>
+                                            <span class="text-capitalize px-0 py-1"><i
+                                                class="la la-briefcase"></i><strong>Work Type</strong>
+                                              <%=jobDetails.work?jobDetails.work:'NA'%>
+                                            </span>
+                                            <span class="text-capitalize px-0 py-1"><i
+                                                class="la la-money"></i><strong>Compensation</strong>
+                                              <%=jobDetails.compensation? jobDetails.compensation:'NA'%>
+                                            </span class="text-capitalize px-0 "><span class="py-2 px-0"><i
+                                                class="la la-building"></i><strong>Working
+                                                Type</strong>
+                                              <%=jobDetails.jobType? jobDetails.jobType : 'NA' %>
+                                            </span class="text-capitalize px-0 py-1"><span class="py-2 px-0"><i
+                                                class="la la-credit-card"></i><strong>Pay Type</strong>
+                                              <%=jobDetails.pay ? jobDetails.pay : 'NA' %>
+                                            </span>
+                                            <span class="text-capitalize px-0 py-1"><i
+                                                class="la la-rupee"></i><strong>Pay Frequency</strong>
+                                              <%=jobDetails.payOut? jobDetails.payOut : 'NA' %>
+                                            </span>
+                                          </div>
+                                          <a href="#"
+                                            class="apply-thisjob text-center py-2 mt-2  d-xl-block d-lg-block d-md-block d-sm-block d-block px-2 decoration-none rebase-job  mb-3 <%= reviewed ? 'disabled' : '' %> "
+                                            title="feedback-btn" data-toggle="modal" data-target="#feedback"> <i
+                                              class="fa-regular fa-comments"></i>
+                                            Give your Feedback/ अपनी प्रतिक्रिया दें
+                                          </a>
+                                          <!-- <div class="sharethis-inline-share-buttons "></div>  -->
+
+                                          <!-- Other buttons for job-related actions -->
+                                          <!-- Job applied action button -->
+                                          <% if(!isApplied){ %>
+                                            <a class="viewjob-apply apply-thisjob apply-div-field  text-left px-0 d-xl-none d-lg-none d-md-none d-sm-block d-block mt-xl-2 mt-lg-2 mt-md-2 mt-sm-1 mt-1 text-center"
+                                              href="#" title="" data-toggle="modal" data-target="#apply"
+                                              data-value="<%= isApplied %>" data-bs-target="#editUser"
+                                              data-bs-toggle="modal" id="apply-div-btn-mob"><i
+                                                class="la la-paper-plane ml-3"></i>Apply for
+                                              Job /
+                                              नौकरी के लिए
+                                              आवेदन</a>
+                                            <% } else { %>
+                                              <a class="viewjob-apply apply-thisjob text-left px-0 d-xl-none d-lg-none d-md-none d-sm-block d-block disabled-button mt-5"
+                                                href="#" title=""><i class="la la-paper-plane ml-3"></i>Applied /
+                                                प्रयुक्त</a>
+
+                                              <%}%>
+                                            <!-- Hr action Button -->
+                                                <a href="#"
+                                                  class="apply-thisjob call-div-field text-center py-2 px-0 d-xl-none d-lg-none d-md-none d-sm-block d-block w-100 same-plane call-btn mt-xl-2 mt-lg-2 mt-md-3 mt-sm-3 mt-3 "
+                                                  title="" data-value="<%= isApplied %>" data-bs-target="#editUser"
+                                                  onclick="validateActions()"> <i
+                                                    class="la la-phone ml-xl-3 mt-lg-3 mt-md-2 mt-sm-0 ml-xl-0 ml-lg-0 ml-md-1 ml-sm-2 ml-0 text-center-sm text-center-md text-center-lg text-center-xl plane-font"></i>
+                                                  Call To HR/एचआर को कॉल करें
+                                                </a>
+
+
+
+
+                      </div>
+                    </div>
+                    <input type="hidden" id="apply-field" value="true">
+                    <input type="hidden" id="has-applied" value="false">
+                    <input type="hidden" id="for-mobile" value="false">
+
+
+
+                    <!-- <%if(jobDetails._company.mediaGalaryVideo){%>   
+  <section class="mb-2">
+    <div class="container-fluid px-0">
+      <div class="row">
+        <div class="col-xl-12">
+            <div class="card-body px-0 pt-0">
+            
+              <h5>Video Gallery / वीडियो गैलरी </h5>
+              <div class="position-relative my-md-2 my-4">
+                <div class="row">
+                  <div class="col-xl-5 col-lg-5 col-md-6 col-sm-6 col-6">
+                    <img src="/public_assets/images/resource/about-2.jpg" class="img-fluid rounded    mt-2" alt="">
+                <a target="_blank" href="<%= process.env.MIPIE_BUCKET_URL+'/'+jobDetails._company.mediaGalaryVideo%>"
+                  class="glightbox play-btn">
+                  <div class="pluscenter">
+                    <div class="pulse">
+                      <img src="/public_assets/images/resource/ytplay.png" class="uplay">
+                    </div>
+                  </div>
+                </a>
+                  </div>
+                </div>
+                
+              </div>
+              
+          </div>
+      </div>
+    </div>
+    </div>
+  </section>
+  <%}%> -->
+                  </div>
+                </div>
+
+
+              </div>
+            </section>
+
+            <%if(jobDetails.jobVideo){%>
+              <section>
+                <div class="container-fluid px-3">
+                  <div class="card">
+
+                    <div class="card-body">
+                      <h5>Job Profile Video / जॉब प्रोफाइल वीडियो </h5>
+                      <section>
+                        <div class="container-fluid px-3">
+                          <div class="row">
+                            <div class="col-xl-12">
+                              <div class="card-body px-0">
+
+
+                                <div class="position-relative ">
+                                  <!-- <img src="/public_assets/images/resource/job-1.jpg" class="img-fluid rounded    mt-2" alt="">
+                       <a target="_blank" href="<%= process.env.MIPIE_BUCKET_URL+'/'+jobDetails.jobVideo%>"
+                         class="glightbox play-btn">
+                         <div class="pluscenter">
+                           <div class="pulse">
+                             <img src="/public_assets/images/resource/ytplay.png" class="uplay">
+                           </div>
+                         </div>
+                       </a> -->
+                                  <div class="row">
+                                    <div class="col-xl-5 col-lg-5 col-md-6 col-sm-6 col-6">
+                                      <img src="/public_assets/images/resource/job-1.jpg" class="img-fluid rounded "
+                                        alt="">
+                                      <a target="_blank"
+                                        href="<%= process.env.MIPIE_BUCKET_URL+'/'+jobDetails.jobVideo%>"
+                                        class="glightbox play-btn">
+                                        <div class="pluscenter">
+                                          <div class="pulse">
+                                            <img src="/public_assets/images/resource/ytplay.png" class="uplay">
+                                          </div>
+                                        </div>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <%}%>
+
+
+                <%if(jobDetails._company.mediaGallery.length>0){%>
+
+
+                  <section class="mt-0 ">
+                    <div class="container-fluid px-3">
+                      <div class="card">
+                        <div class="card-body pb-0">
+                          <div class="row">
+                            <div class="col-12 ">
+
+                              <%if(jobDetails._company.mediaGallery.length>0){%>
+                                <h5>Media Gallery / मीडिया गैलरी </h5>
+                                <%}%>
+
+                                  <div class="carousel-gallery">
+                                    <div class="swiper-container">
+                                      <div class="swiper-wrapper">
+                                        <%jobDetails._company.mediaGallery&&jobDetails._company.mediaGallery.forEach((img)=>
+                                          {%>
+                                          <div class="swiper-slide">
+                                            <a href="<%= process.env.MIPIE_BUCKET_URL +'/'+img%>"
+                                              data-fancybox="gallery">
+                                              <div class="image"
+                                                style="background-image: url('<%= process.env.MIPIE_BUCKET_URL%>/<%=img%>')">
+                                                <div class="overlay">
+                                                  <em class="mdi mdi-magnify-plus"></em>
+                                                </div>
+                                              </div>
+                                            </a>
+                                          </div>
+                                          <% }) %>
+                                      </div>
+                                      <%if(jobDetails._company.mediaGallery.length>0){%>
+                                        <div class="swiper-pagination mt-4"></div>
+                                        <%}%>
+                                    </div>
+                                  </div>
+
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+
+                  <%}%>
+
+
+                    <%if(jobDetails._company.mediaGalaryVideo){%>
+
+                      <section class="mb-2">
+                        <div class="container-fluid px-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-xl-12">
+                                  <div class="card-body px-0 pt-0 pb-0">
+
+                                    <h5>Video Gallery / वीडियो गैलरी </h5>
+                                    <div class="position-relative my-md-2 my-4">
+                                      <div class="row">
+                                        <div class="col-xl-5 col-lg-5 col-md-6 col-sm-6 col-6">
+                                          <img src="/public_assets/images/resource/about-2.jpg"
+                                            class="img-fluid rounded    mt-2" alt="">
+                                          <a target="_blank"
+                                            href="<%= process.env.MIPIE_BUCKET_URL+'/'+jobDetails._company.mediaGalaryVideo%>"
+                                            class="glightbox play-btn">
+                                            <div class="pluscenter">
+                                              <div class="pulse">
+                                                <img src="/public_assets/images/resource/ytplay.png" class="uplay">
+                                              </div>
+                                            </div>
+                                          </a>
+                                        </div>
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+          </div>
+          </section>
+          <%}%>
+
+
+
+
+            <!-- Modals -->
+
+            <div class="modal fade" id="apply" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <% if(canApply===true && hasCredit===true){ %>
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Apply Now</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body pt-1" id="popup-body">
+                      <ul class="list-unstyled">
+                        <li class="mb-1">
+                          <span class="credit font-weight-bold">
+                            Current Coins Balance: <%= candidate?.creditLeft %></span>
+                        </li>
+                      </ul>
+                      <h5 class="pb-1 mb-0">
+                        Apply for this job / इस नौकरी के लिए आवेदन
+                      </h5>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary" id="apply-btn"
+                        onclick="applyJob('<%= jobDetails._id %>')">Apply</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                          class="feather icon-x d-block d-lg-none"></i>
+                        <span class="d-none d-lg-block">Cancel</span></button>
+                    </div>
+                  </div>
+                  <% } else if(canApply===true && hasCredit===false){ %>
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Insufficient
+                          Coins
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body  py-xl-5 py-lg-4 py-md-3 py-sm-2 py-2 " id="popup-body">
+                        <ul class="list-unstyled">
+                          <li class="mb-1">
+                            <span class="credit font-weight-bold">
+                              Current Coins Balance: <%= candidate?.creditLeft %></span>
+                          </li>
+                        </ul>
+                        <h5 class="pb-1 mb-0">
+                          You need <%= coins.job %> COIN to apply for this Job/आपको इस नौकरी के लिए आवेदन करने के
+                            लिए <%= coins.job %> COIN की आवश्यकता है
+                        </h5>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-fix" onclick="getOffers()" data-toggle="modal" data-target="#coin_offer"
+                          data-dismiss="modal">Buy Coins</button>
+                        <button type="button" class="btn btn-cancel" data-dismiss="modal"><i
+                            class="feather icon-x d-block d-lg-none"></i>
+                          <span class="d-none d-lg-block">Cancel</span></button>
+                      </div>
+                    </div>
+                    <% } else { %>
+
+                      <% include ./partials/completeprofile%>
+
+                        <% } %>
+
+              </div>
+            </div>
+            <!-- Coin modal offer -->
+            <div class="modal fade show" id="coin_offer" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">COIN OFFERS
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body pt-1" id="popup-body">
+                    <ul class="list-unstyled">
+                      <li>
+                        <div class="col-xl-8 mx-auto" id="offers">
+
+                        </div>
+                      </li>
+                      <li class="mb-1">
+                        <span class="credit font-weight-bold">
+                          Current Coins Balance: <%= candidate.creditLeft %></span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary waves-effect waves-light" id="pay-button"
+                      data-toggle="modal" data-target="#redeemCashback">Pay
+                      Now</button>
+                    <button type="button" class="btn btn-outline-light waves-effect waves-danger"
+                      data-dismiss="modal"><i class="feather icon-x d-block d-lg-none"></i>
+                      <span class="d-none d-lg-block">Cancel</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Coin modal offer -->
+            <!-- Complete Profile Modal -->
+
+
+            <!-- <div class="modal fade show" id="complete-profile" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content" id="user-details">
+                    <div class="modal-header">
+                      <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Complete Profile</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body pt-1" id="popup-body">
+
+                    </div>
+                    <div class="col-xl-12 mb-1" id="gender-div">
+                      <select class="form-control single-field" value="" name="sex" id="gender">
+                        <option value="">Your Gender / आपका लिंग</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                    </div>
+                    <div class="col-xl-12 mb-1" id="experience-div">
+                      <select class="form-control single-field" value="" name="experience" id="experience">
+                        <option value="">Experience in Years / अनुभव </option>
+                        <option value="0">0</option>
+                        <% for(let i=1; i<16; i++) {%>
+                          <option value="<%= i %>">
+                            <%= i %>
+                          </option>
+                          <% } %>
+                      </select>
+                    </div>
+                    <div class="col-xl-12 mb-1" id="highest-qual-div">
+                      <select class="form-control single-field" value="" name="experience" id="highest-qual">
+                        <option value="">Highest Qualification / उच्चतम योग्यता </option>
+                      </select>
+                    </div>
+                    <div class="col-xl-12 mb-1" id="state-div">
+                      <select class="form-control single-field" value="" name="state" id="state"
+                        onchange="stateChangeHandler(event,'city')">
+                        <option value="">Current State / वर्तमान राज्य </option>
+                      </select>
+                    </div>
+                    <div class="col-xl-12 mb-1" id="city-div">
+                      <select class="form-control single-field" value="" name="experience" id="city">
+                        <option value="">Current City /वर्तमान शहर </option>
+                      </select>
+                    </div>
+                    <div class="col-xl-12 mb-1" id="pincode-div">
+                      <input type="number" class="form-control" name="pincode" id="pincode"
+                        placeholder="Pincode / पिनकोड" maxlength="10">
+                    </div>
+                    <div class="col-xl-12 mb-1" id="loc-field">
+                      <input class="form-control" type="text" id="work-loc" value=""
+                        placeholder="Your Location / वर्तमान स्थान">
+                      <input type="hidden" id="place" name="place" value="" class="form-control" />
+                      <input type="hidden" id="latitude" name="latitude" value="" class="form-control" />
+                      <input type="hidden" id="longitude" name="longitude" value="" class="form-control" />
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary waves-effect waves-light"
+                        onclick="updateAndApply()">Update and Apply</button>
+                      <button type="button" class="btn btn-outline-light waves-effect waves-danger"
+                        data-dismiss="modal"><i class="feather icon-x d-block d-lg-none"></i>
+                        <span class="d-none d-lg-block">Cancel</span></button>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+            <!-- apply voucers modal -->
+            <div class="modal fade show" id="redeemCashback" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-sm">
+                  <div class="modal-header vchr_header">
+                    <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Buy Coins / सिक्के
+                      खरीदें</h5>
+                    <button type="button" class="close color-purple" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body mode-dice p-0">
+                    <form class="my-3">
+                      <h3 class="coupon-text">If you have <strong>Coupon Code </strong>, apply here / यदि आपके पास
+                        <strong>कूपन
+                          कोड </strong>है, तो यहां आवेदन करें।</h3>
+                      <input type="text" name="voucherField" class="text-white mt-1"
+                        placeholder="Enter Code / कोड दर्ज करें" id="voucher" oninput="convert(event)"
+                        onkeypress="checkVouchers(event)" value="">
+                      <button type="button" class="voucher-btn disabled btn btn-sm ml-1" aria-label="Apply" id="add"
+                        disabled>
+                        <span aria-hidden="true" class="yes-cross" id="applyVoucher" onclick="apply(event)">Apply</span>
+                      </button>
+                    </form>
+                    <input type="hidden" class="form-control" id="offerId" value="" />
+                    <input type="hidden" class="form-control" id="amount" value="" />
+                    <input type="hidden" class="form-control" id="offerAmount" value="" />
+                    <input type="hidden" class="form-control" id="paymentVoucher" value="" />
+                    <p class="text-success font-weight-bolder font-italic" id='successMsg' style="display: none;"></p>
+                    <p class="text-danger font-weight-bolder font-italic" id='errorMsg' style="display: none;"></p>
+                  </div>
+                  <div class="modal-footer text-center">
+                    <button class="btn button-vchr shadow" role="button" onclick="applyVouchers(event)"
+                      id="applyButton">Pay /
+                      भुगतान करें ₹</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- after apply modal -->
+            <div class="modal fade" id="afterApply" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Applied successfully
+                    </h5>
+                    <button type="button" class="close" onClick="window.location.reload();" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body pt-1" id="popup-body">
+                    <h5 class="pb-1 mb-0 py-2">
+                      Before applying for this position, please make sure that you have thoroughly reviewed all the
+                      details. / इस पद के लिए आवेदन करने से पहले, कृपया सुनिश्चित करें कि आपने सभी विवरणों की पूरी
+                      समीक्षा की है। </h5>
+                  </div>
+                  <div class="modal-footer">
+                    <a type="submit" href="/candidate/searchjob" class="btn btn-primary text-white">Apply Now / आवेदन
+                      करें</a>
+                    <button type="button" class="btn btn-danger" onClick="window.location.reload();"><i
+                        class="feather icon-x d-block d-lg-none"></i>
+                      <span class="d-none d-lg-block">Cancel</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- after apply modal end -->
+
+            <!-- register modal -->
+            <div class="modal fade" id="registerApply" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <% if(canApply===true && hasCredit===true){ %>
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Register for
+                        Interview</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body pt-1" id="popup-body">
+                      <ul class="list-unstyled">
+                        <li class="mb-1">
+                          <span class="credit font-weight-bold">
+                            Current Coins Balance: <%= candidate?.creditLeft %></span>
+                        </li>
+                      </ul>
+                      <h5 class="pb-1 mb-0">
+                        Register For Interview / साक्षात्कार के लिए पंजीकरण करें
+                      </h5>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary" id="apply-btn"
+                        onclick="registerForInterview('<%= jobDetails._id %>')">Register</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                          class="feather icon-x d-block d-lg-none"></i>
+                        <span class="d-none d-lg-block">Cancel</span></button>
+                    </div>
+                  </div>
+                  <% } else if(canApply===true && hasCredit===false){ %>
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Insufficient
+                          Coins
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body  py-xl-5 py-lg-4 py-md-3 py-sm-2 py-2 " id="popup-body">
+                        <ul class="list-unstyled">
+                          <li class="mb-1">
+                            <span class="credit font-weight-bold">
+                              Current Coins Balance: <%= candidate?.creditLeft %></span>
+                          </li>
+                        </ul>
+                        <h5 class="pb-1 mb-0">
+                          You need <%= coins.job %> COIN to Register for Interview/साक्षात्कार के लिए पंजीकरण करने के
+                            लिए आपको <%= coins.job %> COIN की आवश्यकता है
+                        </h5>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-fix" onclick="getOffers()" data-toggle="modal" data-target="#coin_offer"
+                          data-dismiss="modal">Buy Coins</button>
+                        <button type="button" class="btn btn-cancel" data-dismiss="modal"><i
+                            class="feather icon-x d-block d-lg-none"></i>
+                          <span class="d-none d-lg-block">Cancel</span></button>
+                      </div>
+                    </div>
+                    <% } else { %>
+
+                      <% include ./partials/completeprofile%>
+
+                        <% } %>
+
+              </div>
+            </div>
+
+            <!-- register modal end -->
+
+            <!-- feedback modal start -->
+
+            <div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content review-border">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Feedback</h5>
+                    <button type="button" class="close" onClick="window.location.reload();" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body py-3" id="popup-body">
+                    <form id="review-form">
+                      <div class="row vfg">
+                        <div class="space-ex mb-2">
+                          <div class="col-12">
+                            <input class="star star-5" id="star-5-2" type="radio" name="rating" value="5" />
+                            <label class="star star-5" for="star-5-2"></label>
+                            <input class="star star-4" id="star-4-2" type="radio" name="rating" value="4" />
+                            <label class="star star-4" for="star-4-2"></label>
+                            <input class="star star-3" id="star-3-2" type="radio" name="rating" value="3" />
+                            <label class="star star-3" for="star-3-2"></label>
+                            <input class="star star-2" id="star-2-2" type="radio" name="rating" value="2" />
+                            <label class="star star-2" for="star-2-2"></label>
+                            <input class="star star-1" id="star-1-2" type="radio" name="rating" value="1" />
+                            <label class="star star-1" for="star-1-2"></label>
+                          </div>
+
+                        </div>
+
+                        <div class="col-12">
+                          <textarea rows="2" col="12" name="comment" value="" class="w-75 my-3""></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class=" modal-footer">
+          <button class="btn btn-primary text-white" onClick="sendReview('<%= jobDetails._id %>')">Send Feedback/ प्रतिक्रिया भेजें</button>
+          <button type="button" class="btn btn-danger py-2" onClick="window.location.reload();"><i
+              class="feather icon-x d-block d-lg-none"></i>
+            <span class="d-none d-lg-block">Cancel</span></button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  <!-- feedback modal end -->
+
+  <!-- <div id="stickymenu_bottom_mobile" class="d-flex align-items-center justify-content-center  text-center d-xl-none d-lg-none d-md-none d-sm-none d-block alert-bar" style="">
+          <div class="stickymenu-item stuck-text"><a href="/candidate/myProfile"><i class="fa-solid fa-user " aria-hidden="true"></i><span class="below-bar active ">My Profile</span></a></div>
+          <div class="stickymenu-item stuck-text"><a href="/candidate/myEarnings"><i class="fa-solid fa-coins " aria-hidden="true"></i><span class="below-bar active ">Call</span></a></div>
+          <div class="stickymenu-item stuck-text"><a href="/candidate/searchjob"><i class="fa-solid  fa-magnifying-glass " aria-hidden="true"></i><span class="below-bar active ">now
+        </div> -->
+  <!-- end -->
+  <script type="text/javascript"
+    src="https://platform-api.sharethis.com/js/sharethis.js#property=63d922685a2f67001342bdf8&product=inline-share-buttons&source=platform"
+    async="async"></script>
+
+  <!-- Complete Profile Modal End-->
+
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+
+
+  <script>
+    // $('#stickymenu_bottom_mobile').hide()  
+
+    document.getElementById('pay-button').onclick = function (e) {
+      $('#coin_offer').modal('hide');
+      let amount = $('input[name="offerName"]:checked').val()
+      let offerId = $('input[name="offerName"]:checked').attr('id');
+      setValues(offerId, amount)
+    }
+
+    function payment(e) {
+      let offerId = document.getElementById('offerId').value
+      let amount = $('#amount').val()
+      let data = {
+        offerId,
+        amount
+      }
+      axios({
+        method: 'post',
+        url: '/candidate/payment',
+        data,
+        headers: {
+          'x-auth': localStorage.getItem('token')
+        }
+      }).then((res) => {
+        let options = {
+          "key": '<%= process.env.MIPIE_RAZORPAY_KEY %>',
+          "amount": res.data.order.amount,
+          "currency": res.data.order.currency,
+          "name": "MiPie",
+          "description": "",
+          "image": "/images/logo/logo.png",
+          "order_id": res.data.order.id,
+          "handler": function (response) {
+            let data = {
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+              _candidate: res.data.candidate._id,
+              _offer: offerId,
+              amount
+            }
+            axios({
+              method: 'post',
+              url: '/candidate/paymentStatus',
+              data,
+              headers: {
+                'x-auth': localStorage.getItem('token')
+              }
+            }).then(res => {
+              window.location.reload()
+            }).catch(
+              (error) => {
+                console.log(error.message)
+              })
+          },
+          "prefill": {
+            "name": res.data.candidate.name,
+            "email": res.data.candidate.email,
+            "contact": res.data.candidate.mobile
+          },
+          "theme": {
+            "color": "#FC2B5A"
+          }
+        };
+        let rzp1 = new Razorpay(options);
+        rzp1.open();
+        e.preventDefault();
+      }).catch(
+        err => console.log(err.message)
+      )
+    }
+    $('.apply-div-field').click(() => {
+      $('#apply-field').val('true');
+    })
+    $('.call-div-field').click(() => {
+      $('#apply-field').val('false')
+    })
+
+    function applyJob(id) {
+      $('#apply-btn').addClass('disabled');
+      document.getElementById('apply-btn').setAttribute('disabled', true)
+      axios({
+        method: 'post',
+        url: `/candidate/job/${id}/apply`,
+        headers: {
+          'x-auth': localStorage.getItem('token')
+        }
+      })
+        .then(result => {
+          $('#apply-btn').removeClass('disabled');
+          document.getElementById('apply-btn').setAttribute('disabled', false)
+          if ($('#apply-field').val() == 'false') {
+            $('#apply').modal('hide');
+            if ($('#for-mobile').val() == 'true') {
+              $('#apply-div-btn-mob').html(`<i class="la la-paper-plane ml-3"></i>Applied / प्रयुक्त`)
+              $('#apply-div-btn-mob').addClass('disabled-button')
+              $('#has-applied').val('true');
+              window.location.href = "tel://" + '<%=mobileNumber%>'
+            } else {
+              $('#apply-div-btn').html(`<i class="la la-paper-plane ml-3"></i>Applied /प्रयुक्त`)
+              $('#apply-div-btn').addClass('disabled-button')
+              $('.call-div-field').removeAttr('data-toggle')
+              $('.call-div-field').removeAttr('data-target')
+              $('.call-div-field').attr('href', "tel://" + '<%=mobileNumber%>')
+              window.location.href = "tel://" + '<%=mobileNumber%>'
+            }
+          } else {
+            $('#apply').modal('hide');
+            $('#afterApply').modal('show');
+          }
+        }).catch(err => {
+          console.log(err.message)
+          window.location.reload()
+        })
+    }
+
+    /* register for intervies */
+    function registerForInterview(id) {
+      $('#apply-btn').addClass('disabled');
+      document.getElementById('apply-btn').setAttribute('disabled', true)
+      axios({
+        method: 'post',
+        url: `/candidate/job/${id}/registerInterviews`,
+        headers: {
+          'x-auth': localStorage.getItem('token')
+        }
+      })
+        .then(result => {
+          $('#apply-btn').removeClass('disabled');
+          document.getElementById('apply-btn').setAttribute('disabled', false)
+          if ($('#apply-field').val() == 'false') {
+            $('#apply').modal('hide');
+            if ($('#for-mobile').val() == 'true') {
+              $('#apply-div-btn-mob').html(`<i class="la la-paper-plane ml-3"></i>Registered for Interview `)
+              $('#apply-div-btn-mob').addClass('disabled-button')
+              $('#has-applied').val('true');
+              window.location.href = "tel://" + '<%=mobileNumber%>'
+            } else {
+              $('#apply-div-btn').html(`<i class="la la-paper-plane ml-3"></i>Registered for Interview`)
+              $('#apply-div-btn').addClass('disabled-button')
+              $('.call-div-field').removeAttr('data-toggle')
+              $('.call-div-field').removeAttr('data-target')
+              $('.call-div-field').attr('href', "tel://" + '<%=mobileNumber%>')
+              window.location.href = "tel://" + '<%=mobileNumber%>'
+            }
+          } else {
+            $('#registerApply').modal('hide');
+            // $('#afterApply').modal('show');
+          }
+        }).catch(err => {
+          console.log(err.message)
+          window.location.reload()
+        })
+    }
+
+    function getOffers() {
+      axios({
+        method: 'get',
+        url: `/candidate/getCoinOffers`,
+        headers: {
+          'x-auth': localStorage.getItem('token')
+        }
+      })
+        .then(res => {
+          let offers = document.getElementById('offers');
+          let html = ''
+          for (let i of res.data) {
+            html +=
+              `<div class="row inner-border my-2 text-white popup-bg py-1" ><div class="col-9 pr-0">${i.displayOffer}</div><div class="col-3 text-left"><span>  <input type="radio" id="${i._id}" name="offerName" value="${i.payAmount.$numberDecimal}" class="radio-size "> </span></div></div>`
+          }
+          offers.innerHTML = html
+          $('.radio-size').first().prop("checked", true)
+        })
+    }
+
+    function setValues(offerId, amount) {
+      let offer = document.getElementById('offerId')
+      let voucherAmount = document.getElementById('amount')
+      let offerAmount = document.getElementById('offerAmount')
+      offer.value = offerId;
+      voucherAmount.value = amount
+      offerAmount.value = amount
+      document.getElementById('applyButton').innerHTML = `Pay / भुगतान करें ₹ ${amount}`
+    }
+
+    function applyVouchers(e) {
+      let code = document.getElementById('voucher').value
+      if (code.trim() == '') {
+        return payment(e)
+      }
+      let amount = document.getElementById('offerAmount').value
+      let offer = document.getElementById('offerId').value
+      let data = {
+        amount,
+        code,
+        offerId: offer
+      }
+      axios({
+        method: 'put',
+        url: '/candidate/applyVoucher',
+        data,
+        headers: {
+          'x-auth': localStorage.getItem('token')
+        }
+      })
+        .then((res) => {
+          if (res.data.status == true && res.data.amount > 0) {
+            $('#errorMsg').hide();
+            $('#errorMsg').text('');
+            $('#successMsg').show();
+            $('#successMsg').text(res.data.message);
+            document.getElementById('amount').value = res.data.amount
+            document.getElementById('paymentVoucher').value = code
+            document.getElementById('applyButton').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+            return payment(e)
+          } else if (res.data.status == true && res.data.amount == 0) {
+            $('#errorMsg').hide();
+            $('#errorMsg').text('');
+            $('#successMsg').show();
+            $('#successMsg').text(res.data.message);
+            window.location.reload();
+          } else {
+            $('#successMsg').hide();
+            $('#successMsg').text('');
+            $('#errorMsg').show();
+            $('#errorMsg').text(res.data.message);
+            document.getElementById('voucher').value = ''
+            let offerAmount = document.getElementById('offerAmount').value
+            document.getElementById('applyButton').innerHTML = `Pay / भुगतान करें ₹ ${offerAmount}`
+          }
+
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+    const validateActions = () => {
+      const isApplied = '<%=isApplied%>'
+      if (isApplied == 'false' && $('#has-applied').val() == 'false') {
+        $('#apply-field').val('false')
+        $('#apply').modal('show')
+        $('#for-mobile').val('true')
+      } else {
+        window.location.href = "tel://" + '<%=mobileNumber%>'
+      }
+    }
+
+    const validatesActions = () => {
+      const isRegisterInterview = '<%=isRegisterInterview%>'
+      if (isRegisterInterview == 'false' && $('#has-applied').val() == 'false') {
+        $('#apply-field').val('false')
+        $('#registerApply').modal('show')
+        $('#for-mobile').val('true')
+      } else {
+        window.location.href = "tel://" + '<%=mobileNumber%>'
+      }
+    }
+
+    function convert(event) {
+      const val = event.target.value;
+      event.target.value = val.toUpperCase()
+
+      let applyButton = document.getElementById('add')
+      if (event.target.value.trim() !== '') {
+        applyButton.disabled = false
+        applyButton.classList.remove('disabled')
+      } else {
+        applyButton.disabled = true
+        applyButton.classList.add('disabled')
+      }
+    }
+
+    function checkVouchers(e) {
+      if (e.key === "Enter") {
+        e.preventDefault()
+        $('#apply').click()
+      }
+    }
+
+    function apply(e) {
+      let code = document.getElementById('voucher').value
+      let amount = document.getElementById('offerAmount').value
+      let offer = document.getElementById('offerId').value
+      let data = {
+        amount,
+        code,
+        offerId: offer
+      }
+      axios({
+        method: 'put',
+        url: '/candidate/applyVoucher',
+        data,
+        headers: {
+          'x-auth': localStorage.getItem('token')
+        }
+      })
+        .then((res) => {
+          if (res.data.status == true && res.data.amount > 0) {
+            $('#errorMsg').hide();
+            $('#errorMsg').text('');
+            $('#successMsg').show();
+            $('#successMsg').text(res.data.message);
+            document.getElementById('amount').value = res.data.amount
+            document.getElementById('paymentVoucher').value = code
+            document.getElementById('applyButton').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+          } else if (res.data.status && res.data.amount == 0) {
+            $('#errorMsg').hide();
+            $('#errorMsg').text('');
+            $('#successMsg').show();
+            $('#successMsg').text(res.data.message);
+            window.location.reload();
+          } else {
+            $('#successMsg').hide();
+            $('#successMsg').text('');
+            $('#errorMsg').show();
+            $('#errorMsg').text(res.data.message);
+            document.getElementById('voucher').value = ''
+            let offerAmount = document.getElementById('offerAmount').value
+            document.getElementById('applyButton').innerHTML = `Pay / भुगतान करें ₹ ${offerAmount}`
+          }
+
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+
+
+    function sendReview(_id) {
+      let data = {};
+      $('#review-form').serializeArray().forEach(ele => {
+        if (ele.name !== "") {
+          data[ele.name] = ele.value;
+        }
+      });
+
+      axios({
+        method: 'post',
+        url: `/candidate/review/${_id}`,
+        data,
+        headers: {
+          'x-auth': localStorage.getItem('token')
+        }
+      })
+        .then((res) => {
+          window.location.reload()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  </script>
+  <!-- slider gallery -->
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+
+  <!--  slider gallery end -->
+
+
+
+  <script>
+    const shareData = {
+      title: 'MDN',
+      text: 'Learn web development on MDN!',
+      url: 'https://developer.mozilla.org'
+    }
+
+    const btn = document.querySelector('button');
+    const resultPara = document.querySelector('.result');
+  </script>
+  <script>
+    $(function () {
+
+      var swiper = new Swiper('.carousel-gallery .swiper-container', {
+        effect: 'slide',
+        speed: 900,
+        slidesPerView: 3,
+        spaceBetween: 5,
+        simulateTouch: true,
+        autoplay: {
+          delay: 5000,
+          stopOnLastSlide: false,
+          disableOnInteraction: false
+        },
+        pagination: {
+          el: '.carousel-gallery .swiper-pagination',
+          clickable: true
+        },
+        breakpoints: {
+          // when window width is <= 320px
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 2
+          },
+          // when window width is <= 480px
+          425: {
+            slidesPerView: 2,
+            spaceBetween: 2
+          },
+          // when window width is <= 640px
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 2
+          }
+        }
+      });
+
+
+
+    });
+  </script>
+
+
+
+
+
+  <% include ./partials/footer%>

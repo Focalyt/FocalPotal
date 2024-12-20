@@ -1,0 +1,159 @@
+<% include ../partials/header %>
+
+	<!-- BEGIN: Content-->
+	<div class="app-content content">
+		<div class="content-overlay"></div>
+		<div class="header-navbar-shadow"></div>
+		<div class="content-wrapper">
+			<div class="content-header row"></div>
+			<div class="content-body">
+				<% include ../partials/flash %>
+					<section class="row flexbox-container">
+						<div class="col-xl-8 col-11 d-flex justify-content-center">
+							<div class="card bg-authentication rounded-0 mb-0 w-100">
+								<div class="row m-0">
+									<!-- <div
+								class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0"
+							>
+								<img
+									src="/images/pages/login.png"
+									alt="branding logo"
+								/>
+							</div> -->
+									<div class="col-lg-12 col-12 p-0">
+										<div class="card rounded-0 mb-0 px-2 w-100">
+											<div class="card-header pb-1">
+												<div class="card-title">
+													<h4 class="mb-0">Change Password</h4>
+												</div>
+											</div>
+
+											<div class="card-content">
+												<div class="card-body pt-1">
+
+													<form method="POST" action="" name="change" id="form">
+														<fieldset
+															class="form-label-group form-group position-relative has-icon-left">
+															<input type="password" class="form-control"
+																id="user-password1" placeholder="Old Password"
+																name="oldpassword" required />
+															<div class="form-control-position">
+																<i class="feather icon-lock"></i>
+															</div>
+															<div class="eyeIcon" onclick="hideUnhide1()">
+																<i id="hideEye1" class="feather icon-eye"></i>
+																<i id="hideEye2" class="feather icon-eye-off"></i>
+															</div>
+														</fieldset>
+														<fieldset
+															class="form-label-group form-group position-relative has-icon-left">
+															<input type="password" class="form-control"
+																id="user-password2" placeholder="New Password"
+																name="newpassword" required />
+															<div class="form-control-position">
+																<i class="feather icon-lock"></i>
+															</div>
+															<div class="eyeIcon" onclick="hideUnhide2()">
+																<i id="hideEye3" class="feather icon-eye"></i>
+																<i id="hideEye4" class="feather icon-eye-off"></i>
+															</div>
+														</fieldset>
+														<fieldset
+															class="form-label-group form-group position-relative has-icon-left">
+															<input type="password" class="form-control"
+																id="user-password3" placeholder="Confirm Password"
+																name="confirmpassword" required />
+															<div class="form-control-position">
+																<i class="feather icon-lock"></i>
+															</div>
+															<div class="eyeIcon" onclick="hideUnhide3()">
+																<i id="hideEye5" class="feather icon-eye"></i>
+																<i id="hideEye6" class="feather icon-eye-off"></i>
+															</div>
+														</fieldset>
+
+														<div
+															class="form-group d-flex justify-content-between align-items-center">
+															<div class="text-left"></div>
+														</div>
+
+														<button href="/changepassword" type="submit"
+															class="btn btn-primary float-right btn-inline">
+															Update
+														</button>
+													</form>
+												</div>
+											</div>
+											<div class="login-footer">
+												<div class="divider"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+			</div>
+		</div>
+	</div>
+	<% include ../partials//footer %>
+	<style>
+		.alertCompanySuccess {
+			left: 5% !important;
+			top: 0% !important;
+		}
+		.alertAdmin {
+			top: 0% !important;
+			   left: 8% !important;
+		}	
+	</style>
+		<script>
+			// hide unhide password 
+			function hideUnhide1() {
+				var x = document.getElementById("user-password1");
+				var y = document.getElementById("hideEye1");
+				var z = document.getElementById("hideEye2");
+
+				if (x.type === 'password') {
+					x.type = "text";
+					y.style.display = "inline-block";
+					z.style.display = "none";
+				} else {
+					x.type = "password";
+					y.style.display = "none";
+					z.style.display = "inline-block";
+				}
+			}
+
+			function hideUnhide2() {
+				var x = document.getElementById("user-password2");
+				var y = document.getElementById("hideEye3");
+				var z = document.getElementById("hideEye4");
+
+				if (x.type === 'password') {
+					x.type = "text";
+					y.style.display = "inline-block";
+					z.style.display = "none";
+				} else {
+					x.type = "password";
+					y.style.display = "none";
+					z.style.display = "inline-block";
+				}
+			}
+
+			function hideUnhide3() {
+				var x = document.getElementById("user-password3");
+				var y = document.getElementById("hideEye5");
+				var z = document.getElementById("hideEye6");
+
+				if (x.type === 'password') {
+					x.type = "text";
+					y.style.display = "inline-block";
+					z.style.display = "none";
+				} else {
+					x.type = "password"
+					y.style.display = "none";
+					z.style.display = "inline-block";
+				}
+			}
+		</script>

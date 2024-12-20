@@ -1,0 +1,320 @@
+<% include ../partials/header %>
+<style>
+  .table-size{
+    display: block!important;
+  }
+</style>
+  <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+      <div class="row breadcrumbs-top">
+        <div class="col-12">
+          <h3 class="content-header-title float-left mb-0">Job Listings</h3>
+          <div class="breadcrumb-wrapper col-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+              <li class="breadcrumb-item active">Job Listings</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-body">
+    <% include ../partials/flash %>
+    <section>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12">
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header  fliter-block  table-size p-1" id="headingOne">
+                  <div class="row">
+                    <div class="col-6 my-auto">
+                    <div class="archieve text-left">
+                      <input style="margin-bottom: 4px;" type="checkbox" onclick="archived()" <%-isChecked=="true"
+                        ? "checked" : '' %>
+                      id="checkbox1">
+                      &nbsp;
+                      <p>Show Archived</p>
+                
+                    </div>
+                  </div>
+                  <div class="col-6 ">
+                    <div class="text-right d-inline " style="float: right
+                    ;">
+                      <img src="/images/filtern.png" class="btn btn-link collapsed py-0 mx-0  "  data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" width="90px" id="filter-img"    >
+                    </div>
+                  </div>
+              </div>
+          
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body px-1 py-0">
+                  <div class="card border border-top-1">
+                    <div id="filter">
+                      <div class="card-content">
+                        <div class="card-body p-0">
+                          <form method="GET" id="filterForm">
+                          <div class="row p-1" id="allFields">
+                            <div class="col-xl-2 col-md-2 ">
+                              <label class="bold-text">Title</label>
+                              <input type="text" name="title" class="form-control" id="title"
+                                value="<%= data?.title %>" maxlength="25">
+                            </div>
+                            <div class="col-xl-2 col-md-2 ">
+                              <label>Company</label>
+                              <input type="text" name="displayCompanyName" class="form-control" id="company"
+                                value="<%= data?.displayCompanyName %>" maxlength="25">
+                            </div>
+                            <div class="col-xl-2 col-md-2">
+                              <label>From Date</label>
+                              <input type="date" class="form-control" name="FromDate" value="<%= data.FromDate %>" id="from-date">
+                            </div>
+                            <div class="col-xl-2 col-md-2">
+                              <label>To Date</label>
+                              <input type="date" class="form-control" name="ToDate" value="<%= data.ToDate %>" id="to-date">
+                            </div>
+                            <div class="col-xl-2 col-md-2">
+                              <label>Verification</label>
+                              <select class="form-control text-capitalize" name="verified">
+                                <option value="">Select</option>
+                                <option class="text-capitalize" value= false
+                                <% if (data.verified == 'false') { %> selected <% }%> >Due</option>
+                                <option class="text-capitalize" value= true
+                                <% if (data.verified == 'true') { %> selected <% }%> >Done</option>
+                              </select>
+                            </div>
+                            <input type="hidden" class="form-control" name="status"
+                              value="<%- isChecked=='true' ? false : true%>">
+
+                            <div class="col-xl-2 col-md-2 text-center mt-2">
+                              <button class="btn btn-success  waves-effect waves-light  text-white d-inline mx-1 px-xl-2 px-lg-1 px-md-1 px-sm-2 px-2 "
+                                id="submit-btn">Go</button>
+                              <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mt-2 px-xl-2 px-lg-1 px-md-1 px-sm-2 px-2 text-white"
+                                href="/admin/joblisting">RESET</a>
+                            </div>
+                          </div>
+
+                          </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover-animation mb-0 table-hover">
+                <thead>
+                  <tr>
+                    <th class="jd-sequence">Sequence</th>
+                    <th class="zig-width">Company</th>
+                    <th class="zig-width" >Title</th>
+                    <th>Exp</th>
+                    <th>Qualification</th>
+                    <th>Applications</th>
+                    <th>Rating</th>
+                    <th>Posted On</th>
+                    <th>Active</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body">
+                  <%if (jd?.length>0) { %>
+                    <% jd.forEach((curr, i)=> {%>
+                      <tr>
+                        <td>
+                          <input type="number" id="jd-seq" value="<%= curr.sequence %>"
+                            onblur="updateSequence(event,'<%= curr._id %>')" name="sequence" maxlength="4" onkeypress="if(this.value.length==4) return false"
+                            class="form-control w-50" data-id="<%= curr._id %>">
+                        </td>
+                        <td>
+                          <a href="/admin/company/View/<%= curr._company._id %>">
+                            <%= (curr&&curr.displayCompanyName||curr&&curr._company.name)  %>
+                          </a>
+                        </td>
+                        <td>
+                          <%= (curr && curr.title) || 'NA' %>
+                          <% if(curr.verified == true){ %>
+                            <i class="fa-solid fa-circle-check" style="color: #28c76f ;"></i>
+                          <% } %>
+                        </td>
+                        <td>
+                          <%= (curr && curr.experience) || 'Fresher' %>
+                        </td>
+                        <td>
+                          <%= (curr && curr._qualification?.name ) || 'NA' %>
+                        </td>
+                        <td>
+                          <%= curr && curr.applications %>
+                        </td>
+                        <td>
+                          <%= curr && curr.rating || 'NA' %>
+                        </td>
+                        <td>
+                          <%= moment(curr.createdAt).format('MMM DD YYYY') %>
+                        </td>
+                        <td>
+                          <div class="custom-control custom-switch custom-control-inline">
+                            <% if(curr.status) { %>
+                              <input type="checkbox" onclick="myOnOffFunc('<%= curr._id %>', '<%= curr.status %>');"
+                                class="custom-control-input" id="customSwitch<%= i %>" checked />
+                              <label class="custom-control-label" for="customSwitch<%= i %>">
+                              </label>
+                              <% } else { %>
+                                <input type="checkbox"
+                                  onclick="myOnOffFunc('<%= curr._id %>', '<%= curr.status %>');"
+                                  class="custom-control-input" id="customSwitch<%= i %>" />
+                                <label class="custom-control-label" for="customSwitch<%= i %>">
+                                </label>
+                                <% } %>
+                          </div>
+                        </td>
+                        <td><a href="/admin/joblisting/<%= jd[i]._id %>" class="btn btn-primary btn-sm">View</a>
+                        </td>
+                      </tr>
+                      <% });} else { %>
+                        <tr>
+                          <td class="text-center" colspan="7">
+                            No record found
+                          </td>
+                        </tr>
+                        <%}%>
+
+                </tbody>
+
+              </table>
+          </div>
+          <% if (totalPages> 1) { %>
+            <ul class="pagination justify-content-end ml-2 mb-2 text-right">
+              <% let first=1 %>
+                <% let last=totalPages> 4 ? 4 :
+                  totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                    <% first=page - 1 %>
+                      <% last=page + 1 %>
+                        <% if (last> totalPages) last = totalPages
+                          %> <% } %>
+                            <% if (first> 1) { %>
+                              <li class="page-item">
+                                <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                              </li>
+                              <% } %>
+                                <% for (let i=first; i <=last; i +=1) { %>
+                                  <% if (i===page) { %>
+                                    <li class="active page-item">
+                                      <a href="javascript:void()" class="page-link pagi_custom">
+                                        <%= i %>
+                                      </a>
+                                    </li>
+                                    <% } else { %>
+                                      <li class="page-item">
+                                        <a class="page-link pageAnchor pagi_customtwo" href="<%= i %>">
+                                          <%= i %>
+                                        </a>
+                                      </li>
+                                      <% } %>
+                                        <% } %>
+                                          <% if (totalPages>
+                                            last)
+                                            { %>
+                                            <li class="page-item">
+                                              <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                                            </li>
+                                            <li class="page-item">
+                                              <a class="pageAnchor page-link" href="<%= totalPages %>">Last</a>
+                                            </li>
+                                            <% } %>
+            </ul>
+            <% } %>
+
+          
+        </div>
+        <div  id="error" style="color: red;"></div>
+     
+      </div>
+      </div>
+      </div>
+    </section>
+  </div>
+
+
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const pageAnchors = document.querySelectorAll("a.pageAnchor");
+      const { origin, pathname, search } = window.location;
+      let searchParams = search.split("?")[1];
+      let obj;
+      let url = `${origin}${pathname}?`;
+      if (searchParams) {
+        obj = JSON.parse(
+          '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+          function (key, value) {
+            return key === "" ? value : decodeURIComponent(value);
+          }
+        );
+        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+        keyArr.forEach((x) => {
+          if (x !== "page") {
+            url += `${x}=${obj[x]}&`;
+          }
+        });
+      }
+      pageAnchors.forEach((el) => {
+        const n = el.getAttribute("href");
+        el.setAttribute("href", `${url}page=${n}`);
+      });
+    });
+    function myOnOffFunc(id, status) {
+      let myStatus = true;
+      if (status === true || status === "true") {
+        myStatus = false;
+      }
+      let data = { id: id, status: myStatus }
+      let headers = { 'x-auth': localStorage.getItem('token') }
+      axios.patch(`/admin/joblisting/changeStatus`, data, { headers: headers })
+        .then((res) => {
+          location.reload()
+        }).catch((err) => {
+          console.log(err)
+        })
+    }
+    function updateSequence(e, id) {
+      const val = e.target.value;
+      axios.patch("/admin/joblisting/updatesequence", { jobId: id, val }).then((res) => {
+        if (res.data.status === true) {
+          e.target.value = res.data.sequence
+        }
+      })
+    }
+    function archived() {
+      let checkbox = document.getElementById('checkbox1');
+      window.location.href = `/admin/joblisting?status=${!checkbox.checked}`
+    }
+
+    function validate(){
+						$('.error').removeClass('error')
+						let fromDate = $('#from-date').val();
+						let toDate = $('#to-date').val()
+						let hasError = false
+						let firstError
+						
+						if(fromDate && !toDate){
+							$('#to-date').parent().addClass('error')
+                            firstError = firstError ? firstError :$('#to-date')
+                            hasError = true
+						}
+						if(!fromDate && toDate){
+							$('#from-date').parent().addClass('error')
+                            firstError = firstError ? firstError :$('#from-date')
+                            hasError = true
+						}
+						$(firstError).focus()
+                        return hasError
+					}
+          $('#submit-btn').click(()=>{
+						if(validate()){
+							return false
+						}
+					})
+
+  </script>
+  <% include ../partials/footer %>

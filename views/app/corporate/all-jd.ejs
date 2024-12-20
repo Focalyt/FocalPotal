@@ -1,0 +1,291 @@
+<% include ./partials/header %>
+
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+      <% include ../../partials/flash %>
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Job Details</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/company/dashboard">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">Job Details</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="content-body">
+            <section class="list-view">
+              <div class="row">
+                <div class="col-12 px-3">
+                  <div class="card mt-1 mb-5">
+                    <div class="card-header border border-top-0 border-left-0 border-right-0 pb-1 px-0">
+                      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                        <h4 class="card-title">All Job Details</h4>
+                      </div>
+                      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 text-right">
+                        <% if(canAdd && isExist) {%>
+                          <a href="/company/addjobs" class="btn btn-primary">+ Add JD</a>
+                          <%} else if(!canAdd&&isExist){%>
+                            <a href="javascript:;" class="btn btn-primary" data-toggle="modal" data-target="#popup" data-dismiss="modal">+ Add JD</a>
+                            <%}%>
+                      </div>
+                    </div>
+                    <div class="card-content">
+                      <div class="table-responsive">
+                        <table class="table table-hover-animation mb-0 table-hover">
+
+                          <thead>
+                            <tr>
+                              <th class="company-jd-head">Title</th>
+                              <th class="inyears">Experience (In Years)</th>
+                              <th class="company-jd-head">Qualification</th>
+                              <th class="shortlisted">Shortlisted</th>
+                              <th class="company-jd-head-date">Date of posting</th>
+                              <th>Edit</th>
+                              <th>Copy</th>
+                              <th>Active</th>
+                              <th class="action-width ">ACTIONS</th>
+                            </tr>
+                          </thead>
+                          <tbody id="table-body">
+                            <%if (jd?.length>0) { %>
+                              <% jd.forEach((curr, i)=> {%>
+                                <%if(moment(curr.validity).utcOffset("+05:30") < moment().startOf("day")){%>
+                                <tr class="disable_button">
+                                  <td style="font-size:12.5px !important;color:#000;">
+                                    <%= (curr && curr.title) || 'NA' %>
+                                  </td>
+                                  <td style="font-size:12.5px !important;color:#000;">
+                                    <%= (curr && curr.experience) || 'Fresher' %>
+                                  </td>
+                                  <td style="font-size:12.5px !important;color:#000;">
+                                    <%= (curr && curr._qualification?.name ) || 'NA' %>
+                                  </td>
+                                  <td style="font-size:12.5px !important;color:#000;">
+                                    <%= shortlistedCandCount.find(elem=> elem._id?.job.toString() == curr._id.toString())?.count || '0' %>
+                                  </td>
+                                  <td style="font-size:12.5px !important;color:#000;">
+                                    <%= moment(curr.createdAt).format('MMM DD YYYY') %>
+                                  </td>
+                                  <td>
+                                    <a href="/company/editJobs/<%= jd[i]._id %>"><i class="fas fa-edit disable_button" style="color:black;"></i></a>
+                                  </td>
+                                  <td>
+                                    <% if(canAdd) {%>
+                                      <a href="/company/addjobs/<%= jd[i]._id %>"><i class="fas fa-copy disable_button"  style="color:black;"></i></a>
+                                      <%} else{%>
+                                        <a href="javascript:;" data-toggle="modal" data-target="#popup" data-dismiss="modal"><i class="fas fa-copy disable_button" style="color:black;"></i></a>
+                                        <%}%>
+                                  </td>
+                                  <td>
+                                    <div class="custom-control custom-switch custom-control-inline">
+                                      <% if(curr.status) { %>
+                                        <input type="checkbox"
+                                          onclick="myOnOffFunc('<%= curr._id %>', '<%= curr.status %>');"
+                                          class="custom-control-input " id="customSwitch<%= i %>" checked />
+                                        <label class="custom-control-label" for="customSwitch<%= i %>">
+                                        </label>
+                                        <% } else { %>
+                                          <input type="checkbox"
+                                            onclick="myOnOffFunc('<%= curr._id %>', '<%= curr.status %>');"
+                                            class="custom-control-input" id="customSwitch<%= i %>" />
+                                          <label class="custom-control-label" for="customSwitch<%= i %>">
+                                          </label>
+                                          <% } %>
+                                    </div>
+                                  </td>
+                                  <td class="px-0">
+                                    <%if(moment(curr.validity).utcOffset("+05:30") < moment().startOf("day")){%>
+                                     <span class="offer-valid bg-danger ml-1" >
+                                      Expired
+                                  </span>
+                                  <%}%>
+                                  </td>
+                                </tr> 
+                                <% } else { %>
+                                  <tr>
+                                    <td>
+                                      <%= (curr && curr.title) || 'NA' %>
+                                    </td>
+                                    <td>
+                                      <%= (curr && curr.experience) || 'Fresher' %>
+                                    </td>
+                                    <td>
+                                      <%= (curr && curr._qualification?.name ) || 'NA' %>
+                                    </td>
+                                    <td>
+                                      <%= shortlistedCandCount.find(elem=> elem._id?.job.toString() == curr._id.toString())?.count || '0' %>
+                                    </td>
+                                    <td>
+                                      <%= moment(curr.createdAt).format('MMM DD YYYY') %>
+                                    </td>
+                                    <td>
+                                      <a href="/company/editJobs/<%= jd[i]._id %>"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                      <% if(canAdd) {%>
+                                        <a href="/company/addjobs/<%= jd[i]._id %>"><i class="fas fa-copy"></i></a>
+                                        <%} else{%>
+                                          <a href="javascript:;" data-toggle="modal" data-target="#popup" data-dismiss="modal"><i class="fas fa-copy"></i></a>
+                                          <%}%>
+                                    </td>
+                                    <td>
+                                      <div class="custom-control custom-switch custom-control-inline">
+                                        <% if(curr.status) { %>
+                                          <input type="checkbox"
+                                            onclick="myOnOffFunc('<%= curr._id %>', '<%= curr.status %>');"
+                                            class="custom-control-input" id="customSwitch<%= i %>" checked />
+                                          <label class="custom-control-label" for="customSwitch<%= i %>">
+                                          </label>
+                                          <% } else { %>
+                                            <input type="checkbox"
+                                              onclick="myOnOffFunc('<%= curr._id %>', '<%= curr.status %>');"
+                                              class="custom-control-input" id="customSwitch<%= i %>" />
+                                            <label class="custom-control-label" for="customSwitch<%= i %>">
+                                            </label>
+                                            <% } %>
+                                      </div>
+                                    </td>
+                                    <td><a href="/company/jobs/<%= jd[i]._id %>" class="btn btn-primary btn-sm">View</a>
+                                      <%if(moment(curr.validity).utcOffset("+05:30") < moment().startOf("day")){%>
+                                       <span class="badge bg-danger ml-1" style="position: relative;">
+                                        Expired
+                                    </span>
+                                    <%}%>
+                                    </td>
+                                  </tr> 
+                                  <% }})}else{%>
+                                  <tr>
+                                    <td class="text-center" colspan="9">
+                                      No record found
+                                    </td>
+                                  </tr>
+                                  <%}%>
+
+                          </tbody>
+
+                        </table>
+                        <% if (totalPages> 1) { %>
+                          <ul class="pagination justify-content-end ml-2 mb-2">
+                            <% let first=1 %>
+                              <% let last=totalPages> 4 ? 4 :
+                                totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                                  <% first=page - 1 %>
+                                    <% last=page + 1 %>
+                                      <% if (last> totalPages) last = totalPages
+                                        %> <% } %>
+                                          <% if (first> 1) { %>
+                                            <li class="page-item">
+                                              <a class="pageAnchor page-link" href="jobs?page=<%= 1 %>">First</a>
+                                            </li>
+                                            <% } %>
+                                              <% for (let i=first; i <=last; i +=1) { %>
+                                                <% if (i===page) { %>
+                                                  <li class="active page-item">
+                                                    <a href="javascript:void()" class="page-link">
+                                                      <%= i %>
+                                                    </a>
+                                                  </li>
+                                                  <% } else { %>
+                                                    <li class="page-item">
+                                                      <a class="page-link pageAnchor" href="jobs?page=<%= i %>">
+                                                        <%= i %>
+                                                      </a>
+                                                    </li>
+                                                    <% } %>
+                                                      <% } %>
+                                                        <% if (totalPages>
+                                                          last)
+                                                          { %>
+                                                          <li class="page-item">
+                                                            <a class="pageAnchor page-link"
+                                                              href="jobs?page=<%= last + 1 %>">...</a>
+                                                          </li>
+                                                          <li class="page-item">
+                                                            <a class="pageAnchor page-link"
+                                                              href="jobs?page=<%= totalPages %>">Last</a>
+                                                          </li>
+                                                          <% } %>
+                          </ul>
+                          <% } %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div> 
+
+        <div class="modal fade" id="popup" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Complete Profile
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <ul class="list-unstyled">
+                <li class="mb-1">
+                  <span class="credit font-weight-bold">
+                    Current Coins Balance: <%= company?.creditLeft %></span>
+                </li>
+              </ul>
+              <h5 class="pb-1 mb-0">
+                Kindly complete your profile before adding Jobs / नौकरियाँ जोड़ने से पहले कृपया अपना प्रोफ़ाइल पूरा करें
+              </h5>
+            </div>
+            <div class="modal-footer">
+              <a href="/company/myProfile">
+                <button type="submit" class="btn btn-primary">Complete Profile</button>
+              </a>
+              <button type="button" class="btn btn-outline-light" data-dismiss="modal"><i
+                class="feather icon-x d-block d-lg-none"></i>
+              <span class="d-none d-lg-block">Cancel</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <script>
+          function myOnOffFunc(id, status) {
+            let myStatus = true;
+            if (status === true || status === "true") {
+              myStatus = false;
+            }
+            let data = { id: id, status: myStatus }
+            let headers = { 'x-auth': localStorage.getItem('token') }
+            axios.patch(`/company/changeStatus`, data, { headers: headers })
+              .then((res) => {
+                location.reload()
+              }).catch((err) => {
+                console.log(err)
+
+              })
+          }
+        </script>
+        <% include ./partials/footer%>

@@ -1,0 +1,217 @@
+<% include ../../partials/header %>
+<% include ../../partials/flash %>
+<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+  <div class="content-header-left col-md-9 col-12 mb-2">
+    <div class="row breadcrumbs-top">
+      <div class="col-12">
+        <h3 class="content-header-title float-left mb-0">
+          SMS Usage
+        </h3>
+        <div class="breadcrumb-wrapper col-12">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+            <li class="breadcrumb-item active">SMS Usage</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content-body">
+  <% include ../../partials/flash %>
+  <section class="list-view">
+    <div class="row">
+      <div class="col-12 rounded equal-height-2 coloumn-2">
+        <div class="card">
+          <div class="row ">
+            <div class="col-xl-12 mt-1">
+
+              <div class="row">
+                <div class="col-6 my-auto"><div class="archieve pl-1">
+                  <input style="margin-bottom: 4px" type="checkbox" onclick="archived()" <% if(isChecked=='true' ) {%>
+                    checked <%
+                    } %> id="checkbox1" /> &nbsp;
+                  <p>Show Archived</p>
+                </div></div>
+                <div class="col-6 text-right "><div class="launch pl-1 py-1 px-1">
+                  <a href="/admin/smsUsage/addTemplate" class="btn btn-primary  <% if(view==true ) {%> disabled <% } %>"
+                  <% if(view==true ) {%> disabled <% } %>>+ Add Template</a>
+                </div></div>
+              </div>
+
+              
+
+              <!--</div>-->
+                
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="table-responsive">
+              <table class="table table-hover-animation mb-0 table-hover">
+                <thead>
+                  <tr>
+                    <th class="text-capitalize">TEMPLATE ID</th>
+                    <th class="text-capitalize">ACTIVATION DATE</th>
+                    <th class="text-capitalize">MESSAGE</th>
+                    <th class="text-capitalize">Name</th>
+                    <th class="text-capitalize">TRANSACTION</th>
+                    <th class="text-capitalize">STATUS</th>
+                    <th class="text-capitalize">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(data.length> 0) {%>
+                  <% data.forEach((i)=>{%>
+                  <tr>
+                    <td class="text-capitalize">
+                      <%= i.templateId %>
+                    </td>
+                    <td class="text-capitalize">
+                      <%= moment(i.activationDate).utcOffset("+05:30").format('MMM DD YYYY')%>
+                    </td>
+                    <td class="text-capitalize">
+                      <%= i.message || 'NA' %>
+                    </td>
+                    <td class="text-capitalize">
+                      <%= i.name || 'NA' %>
+                    </td>
+                    <td class="text-capitalize">
+                      <%= i?.transactions ? i?.transactions : 0 %>
+                    </td>
+                    <% if (view === true) { %>
+                    <td><%= i.status ? 'True' : 'False' %></td>
+                    <%}else{%>
+                    <td>
+                      <div class="custom-control custom-switch custom-control-inline">
+                        <input type="checkbox" onclick="myOnOffFunc('<%= i._id %>', '<%= i.status %>');"
+                          class="custom-control-input" id="customSwitch<%= i %>" <% if(i.status==true ) {%> checked
+                          <% } %> />
+                        <label class="custom-control-label" for="customSwitch<%= i %>">
+                        </label>
+                      </div>
+                    </td>
+                    <% } %>
+                    <td valign="middle">
+                      <% if (view === false) { %>
+                      <a href="/admin/smsUsage/addTemplate/<%= i._id %>">
+                        <i class="feather icon-edit fa-lg primary"></i>
+                      </a>
+                      <% } %>
+                      <a style="padding-left: 7px" href="/admin/smsUsage/viewTemplate/<%= i._id %>">
+                        <i class="feather icon-eye fa-lg primary"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <%}) %>
+                  <%} else{%>
+                  <tr>
+                    <td class="text-center" colspan="7">No record found</td>
+                  </tr>
+                  <%} %>
+                </tbody>
+              </table>
+              <% if (totalPages> 1) { %>
+              <ul class="pagination justify-content-end ml-2 mb-2">
+                <% let first=1 %> <% let last=totalPages> 4 ? 4 : totalPages %>
+                <% if (totalPages> 4 && page >= 2) { %> <% first=page - 1 %> <%
+                  last=page + 1 %> <% if (last> totalPages) last = totalPages %>
+                <% } %> <% if (first> 1) { %>
+                <li class="page-item">
+                  <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                </li>
+                <% } %> <% for (let i=first; i <=last; i +=1) { %> <% if
+                  (i===page) { %>
+                <li class="active page-item">
+                  <a href="javascript:void()" class="page-link"> <%= i %> </a>
+                </li>
+                <% } else { %>
+                <li class="page-item">
+                  <a class="page-link pageAnchor" href="<%= i %>"> <%= i %> </a>
+                </li>
+                <% } %> <% } %> <% if (totalPages> last) { %>
+                <li class="page-item">
+                  <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                </li>
+                <li class="page-item">
+                  <a class="pageAnchor page-link" href="<%= totalPages %>">Last</a>
+                </li>
+                <% } %>
+              </ul>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% include ../../partials/footer %>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const pageAnchors = document.querySelectorAll("a.pageAnchor");
+      const {
+        origin,
+        pathname,
+        search
+      } = window.location;
+      let searchParams = search.split("?")[1];
+      let obj;
+      let url = `${origin}${pathname}?`;
+      if (searchParams) {
+        obj = JSON.parse(
+          '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+          function (key, value) {
+            return key === "" ? value : decodeURIComponent(value);
+          }
+        );
+        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+        keyArr.forEach((x) => {
+          if (x !== "page") {
+            url += `${x}=${obj[x]}&`;
+          }
+        });
+      }
+      pageAnchors.forEach((el) => {
+        const n = el.getAttribute("href");
+        el.setAttribute("href", `${url}page=${n}`);
+      });
+    });
+
+
+    function archived() {
+      let checkbox = document.getElementById("checkbox1");
+      if (checkbox.checked) {
+        $.ajax({
+          type: "GET",
+          url: "/admin/smsUsage/templates?status=false",
+          success: () =>
+            (window.location.href = "/admin/smsUsage/templates?status=false"),
+        });
+      } else {
+        $.ajax({
+          type: "GET",
+          url: "/admin/smsUsage/templates?status=true",
+          success: () =>
+            (window.location.href =
+              "/admin/smsUsage/templates?status=true"),
+        });
+      }
+    }
+
+    function myOnOffFunc(id, status) {
+      let myStatus = true;
+      if (status === true || status === "true") {
+        myStatus = false;
+      }
+      $.ajax({
+        type: "PUT",
+        url: "/admin/smsUsage/updateTemplate",
+        data: {
+          id,
+          status: myStatus,
+        },
+        success: () => location.reload(),
+      });
+    }
+  </script>

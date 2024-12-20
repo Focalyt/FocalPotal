@@ -1,0 +1,70 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Add Contact</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Add Contact</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../../partials/flash %>
+			<form class="form-horizontal" action="/admin/contact/addContact?contactId=<%= contact?._id%>" method="post" id="formData">
+				<section>
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">Contact</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Name
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" required name="name"
+													value='<%= contact?.name %>' />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Whatsapp
+													<span class="asterisk">*</span></label>
+												<input type="number" class="form-control" required name="whatsapp"
+													value='<%= contact?.whatsapp %>' onkeypress="if(this.value.length==10) return false" maxlength="10"/>
+											</div><div class="col-xl-3 mb-1">
+												<label>Mobile
+													<span class="asterisk">*</span></label>
+												<input type="number" class="form-control" required name="mobile"
+													value='<%= contact?.mobile %>' onkeypress="if(this.value.length==10) return false" maxlength="10"/>
+											</div>
+											<div class="col-xl-3 mt-2">
+												<button type="reset" id="reset-btn" class="btn btn-danger">
+                                                    Reset
+                                                </button>
+                                                <button type="submit submitBtn" class="btn btn-success">
+                                                    Save
+                                                </button>
+											</div>
+										</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	</div>
+	</form>
+	<script>
+		$('#reset-btn').click(()=>{
+			window.location.reload();
+		})
+	</script>
+	<% include ../partials/footer %>
+  </div>

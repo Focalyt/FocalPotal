@@ -1,0 +1,942 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Edit College</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Edit College</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<form class="form-horizontal" action="" method="post" id="formData">
+				<section id="personal-info">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">College Information</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>College Name
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" maxlength="50" required
+													name="collegeName" palaceholder="College Name"
+													value="<%- college.name ? college.name : 'NA'; %>" />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Website</label>
+												<input type="text" maxlength="50" class="form-control" name="website"
+													value="<%- college.website ? college.website :''; %>" />
+											</div>
+											<div class="col-xl-3 mb-1 d-none">
+												<label>Course
+													<span class="asterisk">*</span></label>
+												<select class="selectpicker form-control" title="Select Course"
+													data-actions-box="true" multiple required name="_qualification">
+													<% qualification.forEach((i,index)=> { %>
+														<option value="<%= i._id %>" <%-
+															college._qualification.includes(i._id)?"selected":"" %> >
+															<%= i.name %>
+														</option>
+														<% }); %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>University
+													<span class="asterisk">*</span></label>
+												<select style="width: 225px;" class="form-control text-capitalize chosen" required
+													name="_university">
+													<option value="">Select Option</option>
+													<% university.forEach((i)=> { %> <% if
+															(i._id.toString()===college._university?._id.toString()) { %>
+															<option value="<%= i._id %>" selected  class="text-capitalize">
+																<%= i.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= i._id %>"  class="text-capitalize">
+																	<%= i.name %>
+																</option>
+																<% } %>
+																	<!-- <option value="<%= i._id %>" class="text-capitalize"><%= i.name %></option> -->
+																	<% }); %>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Linkedin</label>
+												<input type="text" class="form-control" maxlength="50" name="linkedin"
+													value="<%- college.linkedin ? college.linkedin : ''; %>" />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Twitter</label>
+												<input type="text" class="form-control" maxlength="50" name="twitter"
+													value="<%- college.twitter ? college.twitter : ''; %>" />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>FaceBook</label>
+												<input type="text" class="form-control" maxlength="50" name="facebook"
+													value="<%- college.facebook ? college.facebook : ''; %>" />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Country <span class="asterisk">*</span></label>
+												<select style="cursor: pointer;" class="form-control" name="countryId"
+													id="country" required>
+													<option value="">Select Option</option>
+													<% country.forEach((i)=> { %>
+														<!-- <option value="<%= i.countryId %>" class="text-capitalize"><%= i.name %></option> -->
+														<% if (i.countryId.toString()===college.countryId?.toString()) {
+															%>
+															<option value="<%= i.countryId %>" selected>
+																<%= i.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= i.countryId %>">
+																	<%= i.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>State <span class="asterisk">*</span></label>
+												<select style="cursor: pointer;" class="form-control" name="stateId"
+													id="state" required>
+													<option value="">Select Option</option>
+													<% state.forEach((s)=> { %> <% if (s.stateId===college.stateId) { %>
+															<option value="<%= s.stateId %>" selected>
+																<%= s.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= s.stateId %>">
+																	<%= s.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>City <span class="asterisk">*</span></label>
+												<select style="cursor: pointer;" class="form-control" name="cityId"
+													required id="city">
+													<option value="">Select Option</option>
+													<% city.forEach((s)=> { %> <% if (s.cityId===college.cityId) { %>
+															<option value="<%= s.cityId %>" selected>
+																<%= s.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= s.cityId %>">
+																	<%= s.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>College Location</label>
+												<input class="form-control" type="text"  id="work-loc" value="<%= college?.place %>">
+												<input type="hidden" id="place" name="place" value="" class="form-control"/>
+												<input type="hidden" id="latitude" name="latitude" value="" class="form-control"/>
+												<input type="hidden" id="longitude" name="longitude" value="" class="form-control"/>  
+											   </div>
+											<div class="col-xl-3 mb-1">
+												<label>Zipcode</label>
+												<input type="text" class="form-control" name="zipcode" minlength="5"
+													maxlength="10"
+													value="<%- college.zipcode ? college.zipcode : ''; %>" />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Address</label>
+												<textarea maxlength="100" class="form-control" name="address" cols="3"
+													rows="3">
+<%- college.address ? college.address : ''; %></textarea>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Description</label>
+												<textarea maxlength="100" class="form-control" name="description"
+													cols="3" rows="3">
+<%- college.description ? college.description : ''; %></textarea>
+											</div>
+											<% if (college.logo && college.logo !=='' ) { %>
+												<div class="col-xl-3 mb-1">
+													<label class="col-form-label" for="input-normal">Upload Logo</label>
+													<div class="row" id="logo">
+														<div class="col-xl-12 col-md-12 col-sm-12 col-12 firstImage">
+															<div class="image-upload">
+																<label for="filestwo" style="cursor: pointer;">
+																	<img src="https://mmt-alls-1.s3.ap-south-1.amazonaws.com/<%= college.logo %>"
+																		width="40px" height="auto" id="outputtwo" />
+																	<p class="mt-1">
+																		Click to upload logo
+																	</p>
+																</label>
+																<input id="filestwo" data-id="logo" type="file"
+																	name="filecar" class="my-logo-uploader form-control"
+																	value="<%= college.logo %>" />
+															</div>
+														</div>
+													</div>
+												</div>
+												<% } %>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section id="Concerned-Person">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">Concerned Person</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Name <span class="asterisk">*</span></label>
+												<input class="form-control" maxlength="50" name="name" required
+													type="text"
+													value="<%- college._concernPerson?.name ? college._concernPerson?.name : ''; %>"
+													pattern="[a-zA-Z\s]+" />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Designation
+													<span class="asterisk">*</span></label>
+												<input class="form-control" maxlength="50" type="text"
+													name="designation" required
+													value="<%- college._concernPerson?.designation ? college._concernPerson?.designation  : ''; %>" />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Email <span class="asterisk">*</span></label>
+												<input class="form-control" maxlength="50" type="Email" name="email"
+													readonly required
+													value="<%- college._concernPerson?.email ? college._concernPerson?.email  : ''; %>" />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Contact Number
+													<span class="asterisk">*</span></label>
+												<input class="form-control" type="text" name="mobile"
+													pattern="^[\+\d]?(?:[\d-.\s()]*)$" minlength="10" maxlength="13"
+													required
+													value="<%- college._concernPerson?.mobile ? college._concernPerson?.mobile : ''; %>" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section id="tech">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">College Representative</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body diningRows">
+										<% if(CompanyExec.length){ %>
+											<% CompanyExec.forEach((c, i)=> { %>
+
+												<div class="row">
+													<input class="form-control" type="hidden"
+														value="<%- c._id ? c._id : ''; %>" name="_exeid[]" />
+													<div class="col-xl-2 mb-1">
+														<label>Name </label>
+														<input class="form-control" maxlength="50" type="text"
+															name="repName[]" value="<%- c.name ? c.name : ''; %>" />
+													</div>
+													<div class="col-xl-2 mb-1">
+														<label>Designation <span class="asterisk"></span></label>
+														<input class="form-control" maxlength="50" type="text"
+															name="repDesignation[]"
+															value="<%- c.designation ? c.designation : ''; %>" />
+													</div>
+													<div class="col-xl-2 mb-1">
+														<label>Email <span class="asterisk"></span></label>
+														<input class="form-control" maxlength="50" type="email"
+															name="repEmail[]" value="<%- c.email ? c.email : ''; %>" />
+													</div>
+													<div class="col-xl-2 mb-1">
+														<label>Contact Number</label>
+														<input class="form-control" type="text" name="repMobile[]"
+															pattern="^[\+\d]?(?:[\d-.\s()]*)$" minlength="10"
+															maxlength="13" value="<%- c.mobile ? c.mobile : ''; %>" />
+													</div>
+													<!-- <div class="col-xl-2 mb-1">
+										<label class="col-form-label" for="input-normal"
+											>Image</label
+										>
+										<div class="row" id="repImage">
+											<div
+												class="col-xl-12 col-md-12 col-sm-12 col-12 diningCleaa"
+											>
+												<div class="image-upload">
+													<label for="filesone">
+														<img
+															src="/images/add_receipt.png"
+															width="40px"
+															height="auto"
+															id="outputthree"
+														/>
+														<p class="mt-1">
+															Click to upload Image
+														</p>
+													</label>
+													<input
+														id="filesone"
+														data-id="repImage"
+														type="file"
+														name="fileexe"
+														class="my-executive-uploader form-control"
+													/>
+												</div>
+											</div>
+										</div>
+									</div> -->
+
+													<!-- <div class="col-xl-2 mt-2">
+                             <a class="appoint btn btn-success">+</a>
+                            </div> -->
+													<div class="col-xl-2 mt-2">
+														<% if(i==0 ) { %>
+															<a class="appoint btn btn-success">+</a>
+															<% }else{ %>
+																<button class="btn btn-danger removediv">
+																	-
+																</button>
+																<% } %>
+													</div>
+												</div>
+												<% }) %>
+													<% }else{ %>
+														<input class="form-control" type="hidden" value=""
+															name="_exeid[]" />
+														<div class="row mb-2">
+															<div class="col-xl-2 mb-1">
+																<label>Name</label>
+																<input class="form-control" maxlength="50" type="text"
+																	name="repName[]" value="" />
+															</div>
+															<div class="col-xl-2 mb-1">
+																<label>Designation <span
+																		class="asterisk"></span></label>
+																<input class="form-control" maxlength="50" type="text"
+																	name="repDesignation[]" value="" />
+															</div>
+															<div class="col-xl-2 mb-1">
+																<label>Email <span class="asterisk"></span></label>
+																<input class="form-control" maxlength="50" type="email"
+																	name="repEmail[]" value="" />
+															</div>
+															<div class="col-xl-2 mb-1">
+																<label>Contact Number</label>
+																<input class="form-control" type="number" minlength="10"
+																	pattern="[^0-9]" maxlength="13" name="repMobile[]"
+																	value="" />
+															</div>
+															<!-- <div class="col-xl-2 mb-1">
+										<label class="col-form-label" for="input-normal"
+											>Image</label
+										>
+										<div class="row" id="repImage">
+											<div
+												class="col-xl-12 col-md-12 col-sm-12 col-12 diningCleaa"
+											>
+												<div class="image-upload">
+													<label for="filesone">
+														<img
+															src="/images/add_receipt.png"
+															width="40px"
+															height="auto"
+															id="outputthree"
+														/>
+														<p class="mt-1">
+															Click to upload Image
+														</p>
+													</label>
+													<input
+														id="filesone"
+														data-id="repImage"
+														type="file"
+														name="fileexe"
+														class="my-executive-uploader form-control"
+													/>
+												</div>
+											</div>
+										</div>
+									</div> -->
+
+															<!-- <div class="col-xl-2 mt-2">
+                              <a class="appoint btn btn-success">+</a>
+                              </div> -->
+															<div class="col-xl-2 mt-2">
+																<a class="appoint btn btn-success">+</a>
+															</div>
+														</div>
+
+														<% } %>
+									</div>
+									<div class="row">
+										<div class="col-xl-12 col-lg-12">
+											<div class="card">
+												<div class="card-content">
+													<div class="card-body">
+														<div class="row">
+															<div class="col-xl-12 text-right">
+																<!-- <a type="reset" onclick="reset()" class="btn btn-danger"
+																	value="Reset">Reset</a> -->
+																<button type="submit" class="btn btn-success btnSubmit">
+																	Save
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</form>
+			<div class="text-right reset">
+				<button onclick="reset()"  class="btn btn-danger"
+					>Reset</button>
+			</div>
+			<% include ../partials/footer %>
+			<script
+			src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE%>&callback=initMap&libraries=places&v=weekly"></script>
+			<script>
+			  function initMap() {
+				
+				const options = {
+					componentRestrictions: { country: "in" },
+					types: ["establishment"]
+				};
+				
+				const location = document.getElementById("work-loc")
+				const autocomplete = new google.maps.places.Autocomplete(location, options);
+				google.maps.event.addListener(autocomplete, 'place_changed', function () {
+				let place = autocomplete.getPlace();
+				document.getElementById('place').value = location.value;
+				document.getElementById('latitude').value = place.geometry.location.lat();
+				document.getElementById('longitude').value = place.geometry.location.lng();
+			});
+			}
+			window.initMap = initMap;
+			</script>
+				<script>
+					const imageUploaders = document.querySelectorAll(".my-logo-uploader");
+					const submitBtns = document.querySelectorAll(".btnSubmit");
+					imageUploaders.forEach((x) => {
+						const idText = x.getAttribute("data-id");
+						const id = document.querySelector(`#${idText}`);
+
+						x.addEventListener("change", async (e) => {
+							try {
+								submitBtns.forEach((x) => {
+									x.disabled = true;
+								});
+								const filesData = Array.from(e.target.files);
+								if (!Array.isArray(filesData) || filesData.length <= 0)
+									throw new Error("No image found!");
+
+								const data = await Promise.all(
+									filesData.map(async (file) => {
+										const ext = file.name.split(".").pop();
+										const res = await axios.get("/admin/s3upload", {
+											params: { type: file.type, ext },
+										});
+										if (!res || !res.data || !res.data.data) return null;
+										const { url, key } = res.data.data;
+										if (!url || !key) return null;
+										const upload = await axios.put(url, file, {
+											headers: { "Content-Type": file.type },
+										});
+										if (upload || upload.status === 200) return key;
+										return null;
+									})
+								);
+
+								const files = data.filter((x) => !!x);
+
+								if (files.length <= 0)
+									throw new Error("Unable to upload any image!");
+
+								files.forEach((f) => {
+									const div = document.createElement("div");
+									div.setAttribute(
+										"class",
+										"col-xl-12 col-md-12 col-sm-12 col-12 mt-1"
+									);
+
+									const img = document.createElement("img");
+									img.setAttribute(
+										"src",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									img.setAttribute("alt", "img");
+									img.setAttribute("width", "40");
+									img.setAttribute("height", "40");
+									div.appendChild(img);
+
+									const input = document.createElement("input");
+									input.setAttribute("type", "hidden");
+									input.setAttribute("name", idText);
+									input.setAttribute("value", f);
+									div.appendChild(input);
+
+									const p = document.createElement("p");
+									p.setAttribute("class", "mt-1");
+									const rmBtn = document.createElement("a");
+									rmBtn.setAttribute("class", "text-danger");
+									rmBtn.setAttribute("href", "javascript:void(0)");
+									rmBtn.textContent = "Remove";
+									rmBtn.addEventListener("click", () => {
+										div.parentNode.removeChild(div);
+										$(".firstImage").removeClass("d-none");
+									});
+									p.appendChild(rmBtn);
+									const viewBtn = document.createElement("a");
+									viewBtn.setAttribute("class", "text-primary mr-2");
+									viewBtn.setAttribute("target", "_blank");
+									viewBtn.setAttribute(
+										"href",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									viewBtn.textContent = "View";
+									p.appendChild(viewBtn);
+									div.appendChild(p);
+									id.append(div);
+									$(".firstImage").addClass("d-none");
+								});
+								submitBtns.forEach((x) => {
+									x.disabled = false;
+								});
+								x.value = "";
+							} catch (err) {
+								console.log(err);
+							}
+						});
+					});
+
+					const imageUpload = document.querySelectorAll(".my-banner-uploader");
+					imageUpload.forEach((x) => {
+						const idText = x.getAttribute("data-id");
+						const id = document.querySelector(`#${idText}`);
+
+						x.addEventListener("change", async (e) => {
+							try {
+								submitBtns.forEach((x) => {
+									x.disabled = true;
+								});
+								const filesData = Array.from(e.target.files);
+								if (!Array.isArray(filesData) || filesData.length <= 0)
+									throw new Error("No image found!");
+
+								const data = await Promise.all(
+									filesData.map(async (file) => {
+										const ext = file.name.split(".").pop();
+										const res = await axios.get("/admin/s3upload", {
+											params: { type: file.type, ext },
+										});
+										if (!res || !res.data || !res.data.data) return null;
+										const { url, key } = res.data.data;
+										if (!url || !key) return null;
+										const upload = await axios.put(url, file, {
+											headers: { "Content-Type": file.type },
+										});
+										if (upload || upload.status === 200) return key;
+										return null;
+									})
+								);
+
+								const files = data.filter((x) => !!x);
+
+								if (files.length <= 0)
+									throw new Error("Unable to upload any image!");
+
+								files.forEach((f) => {
+									const div = document.createElement("div");
+									div.setAttribute(
+										"class",
+										"col-xl-12 col-md-12 col-sm-12 col-12 mt-1"
+									);
+
+									const img = document.createElement("img");
+									img.setAttribute(
+										"src",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									img.setAttribute("alt", "img");
+									img.setAttribute("width", "40");
+									img.setAttribute("height", "40");
+									div.appendChild(img);
+
+									const input = document.createElement("input");
+									input.setAttribute("type", "hidden");
+									input.setAttribute("name", idText);
+									input.setAttribute("value", f);
+									div.appendChild(input);
+
+									const p = document.createElement("p");
+									p.setAttribute("class", "mt-1");
+									const rmBtn = document.createElement("a");
+									rmBtn.setAttribute("class", "text-danger");
+									rmBtn.setAttribute("href", "javascript:void(0)");
+									rmBtn.textContent = "Remove";
+									rmBtn.addEventListener("click", () => {
+										div.parentNode.removeChild(div);
+										$(".bannerImage").removeClass("d-none");
+									});
+									p.appendChild(rmBtn);
+									const viewBtn = document.createElement("a");
+									viewBtn.setAttribute("class", "text-primary mr-2");
+									viewBtn.setAttribute("target", "_blank");
+									viewBtn.setAttribute(
+										"href",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									viewBtn.textContent = "View";
+									p.appendChild(viewBtn);
+									div.appendChild(p);
+									id.append(div);
+									$(".bannerImage").addClass("d-none");
+								});
+								submitBtns.forEach((x) => {
+									x.disabled = false;
+								});
+								x.value = "";
+							} catch (err) {
+								console.log(err);
+							}
+						});
+					});
+
+					const imageUploader = document.querySelectorAll(".my-gallery-uploader");
+					imageUploader.forEach((x) => {
+						const idText = x.getAttribute("data-id");
+						const id = document.querySelector(`#${idText}`);
+
+						x.addEventListener("change", async (e) => {
+							try {
+								submitBtns.forEach((x) => {
+									x.disabled = true;
+								});
+								const filesData = Array.from(e.target.files);
+								if (!Array.isArray(filesData) || filesData.length <= 0)
+									throw new Error("No image found!");
+
+								const data = await Promise.all(
+									filesData.map(async (file) => {
+										const ext = file.name.split(".").pop();
+										const res = await axios.get("/admin/s3upload", {
+											params: { type: file.type, ext },
+										});
+										if (!res || !res.data || !res.data.data) return null;
+										const { url, key } = res.data.data;
+										if (!url || !key) return null;
+										const upload = await axios.put(url, file, {
+											headers: { "Content-Type": file.type },
+										});
+										if (upload || upload.status === 200) return key;
+										return null;
+									})
+								);
+
+								const files = data.filter((x) => !!x);
+
+								if (files.length <= 0)
+									throw new Error("Unable to upload any image!");
+
+								files.forEach((f) => {
+									const div = document.createElement("div");
+									div.setAttribute(
+										"class",
+										"col-xl-3 col-md-3 col-sm-3 col-12"
+									);
+
+									const img = document.createElement("img");
+									img.setAttribute(
+										"src",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									img.setAttribute("alt", "img");
+									img.setAttribute("width", "40");
+									img.setAttribute("height", "40");
+									div.appendChild(img);
+
+									const input = document.createElement("input");
+									input.setAttribute("type", "hidden");
+									input.setAttribute("name", idText);
+									input.setAttribute("value", f);
+									div.appendChild(input);
+
+									const p = document.createElement("p");
+									p.setAttribute("class", "mt-1");
+									const rmBtn = document.createElement("a");
+									rmBtn.setAttribute("class", "text-danger");
+									rmBtn.setAttribute("href", "javascript:void(0)");
+									rmBtn.textContent = "Remove";
+									rmBtn.addEventListener("click", () =>
+										div.parentNode.removeChild(div)
+									);
+									p.appendChild(rmBtn);
+									const viewBtn = document.createElement("a");
+									viewBtn.setAttribute("class", "text-primary");
+									viewBtn.setAttribute("target", "_blank");
+									viewBtn.setAttribute(
+										"href",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									viewBtn.textContent = "View";
+									p.appendChild(viewBtn);
+									div.appendChild(p);
+									id.append(div);
+								});
+								submitBtns.forEach((x) => {
+									x.disabled = false;
+								});
+								x.value = "";
+							} catch (err) {
+								console.log(err);
+							}
+						});
+					});
+
+					const diningUploaders = document.querySelectorAll(
+						".my-executive-uploader"
+					);
+					diningUploaders.forEach((x) => {
+						const idText = x.getAttribute("data-id");
+						const id = x.closest(`#${idText}`);
+						x.addEventListener("change", async (e) => {
+							try {
+								submitBtns.forEach((x) => {
+									x.disabled = true;
+								});
+								const filesData = Array.from(e.target.files);
+								if (!Array.isArray(filesData) || filesData.length <= 0)
+									throw new Error("No image found!");
+
+								const data = await Promise.all(
+									filesData.map(async (file) => {
+										const ext = file.name.split(".").pop();
+										const res = await axios.get("/admin/s3upload", {
+											params: { type: file.type, ext },
+										});
+										if (!res || !res.data || !res.data.data) return null;
+										const { url, key } = res.data.data;
+										if (!url || !key) return null;
+										const upload = await axios.put(url, file, {
+											headers: { "Content-Type": file.type },
+										});
+										if (upload || upload.status === 200) return key;
+										return null;
+									})
+								);
+
+								const files = data.filter((x) => !!x);
+
+								if (files.length <= 0)
+									throw new Error("Unable to upload any image!");
+
+								files.forEach((f) => {
+									const div = document.createElement("div");
+									div.setAttribute(
+										"class",
+										"col-xl-12 col-md-12 col-sm-12 col-12"
+									);
+
+									const img = document.createElement("img");
+									img.setAttribute(
+										"src",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									img.setAttribute("alt", "img");
+									img.setAttribute("width", "50");
+									img.setAttribute("height", "50");
+									div.appendChild(img);
+
+									const input = document.createElement("input");
+									input.setAttribute("type", "hidden");
+									input.setAttribute("name", idText);
+									input.setAttribute("value", f);
+									div.appendChild(input);
+
+									const p = document.createElement("p");
+									p.setAttribute("class", "mt-1");
+									const rmBtn = document.createElement("a");
+									rmBtn.setAttribute("class", "text-danger");
+									rmBtn.setAttribute("href", "javascript:void(0)");
+									rmBtn.textContent = "Remove";
+									rmBtn.addEventListener("click", () => {
+										div.parentNode.removeChild(div);
+									});
+									rmBtn.addEventListener("click", () =>
+										div.parentNode.removeChild(div)
+									);
+									p.appendChild(rmBtn);
+									const viewBtn = document.createElement("a");
+									viewBtn.setAttribute("class", "text-primary mr-2");
+									viewBtn.setAttribute("target", "_blank");
+									viewBtn.setAttribute(
+										"href",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									viewBtn.textContent = "View";
+									p.appendChild(viewBtn);
+									div.appendChild(p);
+									$(`#${idText}`).append(div);
+									$(".diningCleaa").addClass("d-none");
+									$(".diningCleaa").closest(".row").removeAttr("id");
+								});
+								submitBtns.forEach((x) => {
+									x.disabled = false;
+								});
+								x.value = "";
+							} catch (err) {
+								console.log(err);
+							}
+						});
+					});
+
+					$("#country").change(() => {
+						$("#state")
+							.find("option")
+							.remove()
+							.end()
+							.append(
+								'<option disabled selected value="">Select Option</option>'
+							);
+						axios
+							.post("/admin/helper/getstate", {
+								countryId: $("#country").val(),
+							})
+							.then(({ data }) => {
+								data.forEach((d) => {
+									$("#state").append(
+										`<option class='text-capitalize' value='${d.stateId}'>${d.name}</option>`
+									);
+								});
+							})
+							.catch((e) => console.log(e));
+					});
+
+					$("#state").change(() => {
+						$("#city")
+							.find("option")
+							.remove()
+							.end()
+							.append(
+								'<option disabled selected value="">Select Option</option>'
+							);
+						axios
+							.post("/admin/helper/getcity", {
+								stateId: $("#state").val(),
+							})
+							.then(({ data }) => {
+								data.forEach((d) => {
+									$("#city").append(
+										`<option class='text-capitalize' value='${d.cityId}'>${d.name}</option>`
+									);
+								});
+							})
+							.catch((e) => console.log(e));
+					});
+
+					$(".btnSubmit").click(function () {
+						const password = $("#password").val();
+						const confirmPassword = $("#confirm_password").val();
+						if (password != confirmPassword) {
+							alert("Passwords do not match.");
+							return false;
+						}
+						return true;
+					});
+
+					$(".appoint").click(() => {
+						$(".diningRows").append(`  <div class="form-group row">
+        				<div class="col-xl-2 mb-1">
+							<label>Name </label>
+							<input class="form-control" type="text" name="repName"  maxlength="50">
+						</div>
+                    <div class="col-xl-2 mb-1">
+                        <label>Designation</label>
+                        <input class="form-control" type="text" name="repDesignation"  maxlength="50">
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                        <label>Email</label>
+                        <input class="form-control" type="email" name="repEmail"  maxlength="50">
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                            <label>Contact Number</label>
+                            <input class="form-control" type="text" name="repMobile" minlength="10" maxlength="13"
+							
+													>
+                        </div>
+                   
+						<div class="col-xl-2 mt-2">
+                 <button class="btn btn-danger removediv">-</button>
+                </div>
+                        </div>
+                        
+             
+    </div>`);
+					});
+
+					$(document).on("click", ".removediv", function () {
+						$(this).closest(".row").remove();
+					});
+
+					$("#password, #confirm_password").on("keyup", function () {
+						$("#message").removeClass("d-none");
+						if ($("#password").val() == $("#confirm_password").val()) {
+							$("#message").html("Matching").css("color", "green");
+							$("#message").addClass("d-none");
+						} else $("#message").html("Not Matching").css("color", "red");
+					});
+					function reset() {
+						window.location.reload();
+						// alert("hello ");
+						// `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+						// window.location.href = `/admin/college/edit/62d91f1705b26a4094b96c68`;
+					}
+				</script>
+				<!-- for search filter for universities -->
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+				<link rel="stylesheet"
+					href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+				<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+				<script type="text/javascript">
+					$(".chosen").chosen();
+				</script>
+				<script>
+					// function reset() {
+                	// 	window.location.reload();
+            		// }
+
+				</script>
+	</div>

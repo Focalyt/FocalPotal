@@ -1,0 +1,310 @@
+<% include ./partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+
+
+    <% include ./partials/navbar%>
+    <% include ./partials/leftpane%>
+   
+  <div class="app-content content basic-timeline">
+      <div class="content-overlay"></div>
+      <div class="header-navbar-shadow"></div>
+      <div class="content-wrapper">
+        <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+          <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+              <div class="col-12">
+                <h3 class="content-header-title float-left mb-0">Coins</h3>
+                <div class="breadcrumb-wrapper col-12">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/company/dashboard">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">Coins</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-body">
+          <section>
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-sm-3 mb-3 candidate-card">
+                <div class="card mt-1 mb-5">
+                  <div class="col-xl-12 py-1">
+                   <div class="row">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 my-auto">
+                      <h4 class="card-title">Latest Transactions / नवीनतम लेनदेन</h4>
+                    </div>
+                   </div>
+                  </div>
+                  <div class="card-content">
+                    <div class="table-responsive">
+                      <table class="table table-hover-animation mb-0 table-hover">
+                        <thead>
+                          <tr>
+                            <th>Date & Time</th>
+                            <th>Offer Name</th>
+                            <th>Amount Paid</th>
+                          </tr>
+                        </thead>
+                        <tbody id="table-body">
+                          <% if(latestTransactions.length > 0){ %>
+                            <% latestTransactions.forEach((latestTransactions)=> { %>
+                              <tr>
+                                <td><%= moment(latestTransactions.createdAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A') %></td>
+                                <td><%= latestTransactions._offer ? latestTransactions._offer.displayOffer : "NA" %></td>
+                                <td><%= latestTransactions.amount ? latestTransactions.amount : "NA" %></td>
+                              </tr>
+                              <% }) } else {%>
+                                <tr><td colspan="3" class="text-center">No Result Found</td></tr>
+                            <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-sm-3 mb-3 candidate-card">
+                <div class="card mt-1 mb-5">
+                  <div class="col-xl-12 py-1">
+                   <div class="row">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 my-auto ">
+                      <h4 class="card-title">Coin Offers / कॉइन ऑफर</h4>
+                    </div>
+                   </div>
+                  </div>
+                  <div class="card-content">
+                    <div class="table-responsive">
+                      <table class="table table-hover-animation mb-0 table-hover">
+                        <thead>
+                          <tr>
+                            <th>Offer Name</th>
+                            <th>Coins</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody id="table-body">
+                          <% if(coinOffers.length > 0){ %>
+                            <% coinOffers.forEach((offer)=> { %>
+                              <tr>
+                                <td><%= offer.displayOffer ? offer.displayOffer : "NA" %></td>
+                                <td><%= offer.getCoins ? offer.getCoins : "NA" %></td>
+                                <td><%= offer.payAmount ? offer.payAmount : "NA" %></td>
+                                <td><button id="pay-button" class="btn btn-primary btn-sm text-white"
+                                  data-toggle="modal" data-target="#applyvoucher" onclick="setValues('<%= offer._id %>', '<%= offer.payAmount %>')"
+                                  >Pay
+                                  Now</button></td>
+                              </tr>
+                              <% }) } else {%>
+                                <tr><td colspan="4" class="text-center">No Result Found</td></tr>
+                            <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+ <!-- apply voucers modal -->
+ <div class="modal fade show" id="applyvoucher" tabindex="-1" role="dialog"
+ aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+ <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content modal-sm">
+    <div class="modal-header vchr_header">
+      <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Buy Coins</h5>
+      <button type="button" class="close color-purple" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+        <div class="modal-body mode-dice p-0">
+          <form class="my-3">
+            <!-- <label for="voucherField"></label> -->
+            <h3 class="coupon-text">If you have <strong>Coupon Code </strong>, apply here</h3>
+            <input type="text" name="voucherField" class="text-white mt-1" placeholder="Enter Code" id="voucher" oninput="convert(event)" onkeypress="checkVouchers(event)">
+            <button type="button" class="voucher-btn disabled btn btn-sm ml-1"  aria-label="Apply" id="add" disabled> <span
+              aria-hidden="true" class="yes-cross" id="applyVoucher" onclick="apply(event)">Apply</span> </button>
+          </form>
+          <input type="hidden" class="form-control"  id="offerId" value="" />
+          <input type="hidden" class="form-control"  id="amount" value="" />
+          <input type="hidden" class="form-control"  id="offerAmount" value="" />
+          <input type="hidden" class="form-control" id="codevalue" value=""/>
+                    <p class="text-success font-weight-bolder font-italic" id="success-message"></p>
+          <p class="text-danger font-weight-bolder font-italic" id="error-message"></p>
+        </div>
+        <div class="modal-footer text-center">
+          <button class="btn button-vchr shadow" id="apply" role="button" onclick="payment(event)">Pay ₹</button>
+        </div>
+        </div>
+        </div>
+ </div>
+</div>
+<!-- end -->
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>  
+  <script>
+          function convert(event) {
+            const val = event.target.value;
+            event.target.value = val.toUpperCase()
+
+            let applyButton = document.getElementById('add')
+            if(event.target.value.trim() !== ''){
+            applyButton.disabled = false
+            applyButton.classList.remove('disabled')
+           }
+            else{
+            applyButton.disabled = true
+            applyButton.classList.add('disabled')
+           }
+          }
+          function checkVouchers(e){
+            if (e.key === "Enter") {
+              event.preventDefault();
+               payment(e)
+            }
+          }
+          function setValues(offerId, amount) {
+            let offer = document.getElementById('offerId')
+            let voucherAmount = document.getElementById('amount')
+            let offerAmount = document.getElementById('offerAmount')
+            offer.value = offerId;
+            voucherAmount.value = amount
+            offerAmount.value = amount
+            document.getElementById('apply').innerHTML = `Pay ₹ ${amount}`
+          }
+          function makePayment(e){
+            let voucherCode = document.getElementById('voucher').value
+            const offerId = document.getElementById('offerId').value;
+            const amount = document.getElementById('amount').value
+            let code=document.getElementById('codevalue').value
+            let data = {
+                offerId: offerId,
+                amount: amount
+            }
+              axios({method: 'post', url: '/company/payment', data, headers: { 'x-auth': localStorage.getItem('token') }}).then((res) => {
+              let options = {
+             "key": '<%= process.env.MIPIE_RAZORPAY_KEY %>',
+             "amount": res.data.order.amount, 
+             "currency": res.data.order.currency,
+             "name": "MiPie",
+             "description": "",
+             "image": "/images/logo/logo.png",
+             "order_id": res.data.order.id, 
+             "handler": function (response){
+                  let data = {
+                     paymentId: response.razorpay_payment_id,
+                     orderId: response.razorpay_order_id,
+                     _company: res.data.company._id,
+                     _offer: offerId,
+                     amount:amount,
+                     code:code
+                  }
+                  axios({method: 'post', url: '/company/paymentStatus', data, headers: { 'x-auth': localStorage.getItem('token') }}).then(res=>{
+                   window.location.reload()
+                  }).catch(
+                     (error) => {
+                         console.log(error.message)
+                     })
+               },
+             "prefill": {
+               "name": res.data.company.name,
+               "email": res.data.company.email,
+               "contact": res.data.company._concernPerson.mobile
+              },
+             "theme": {
+             "color": "#FC2B5A"
+             }
+             };
+             let rzp1 = new Razorpay(options);
+             rzp1.open();
+             e.preventDefault();
+             }).catch(
+               err=> console.log(err.message)
+               )      
+          }
+          function payment(e){
+            let voucherCode = document.getElementById('voucher').value 
+            if(voucherCode.trim()==""){
+              makePayment(e);
+            }else{
+            let code = document.getElementById('voucher').value
+            let amount = document.getElementById('offerAmount').value
+            let offer = document.getElementById('offerId').value
+           let  data = {
+            amount,
+            code,
+            offerId:offer
+          }
+            document.getElementById('codevalue').value=code
+            axios({method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') }})
+              .then((res) => {
+                if(res.data.status){
+                  $('#error-message').text('')
+                  $('#success-message').text(res.data.message);
+                  document.getElementById('amount').value = res.data.amount;
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                  makePayment(e);
+                }else if(res.data.status&&res.data.amount==0){
+                  $('#error-message').text('')
+                  $('#success-message').text(res.data.message);
+                  document.getElementById('amount').value = res.data.amount;
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                  window.location.reload();
+                }
+                else{
+                  document.getElementById('voucher').value=''
+                  document.getElementById('codevalue').value=''
+                  $('#error-message').text(res.data.message);
+                  document.getElementById('amount').value =document.getElementById('offerAmount').value ;
+                  $('#success-message').text('');
+                  let offerAmount = document.getElementById('offerAmount').value
+                  document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
+                }
+              })
+      }
+    }
+   
+    function apply(e){
+            let code = document.getElementById('voucher').value
+            let amount = document.getElementById('offerAmount').value
+            let offer = document.getElementById('offerId').value
+           let  data = {
+            amount,
+            code,
+            offerId:offer
+          }
+            document.getElementById('codevalue').value=code
+            axios({method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') }})
+              .then((res) => {
+                if(res.data.status&&res.data.amount>0){
+                  $('#error-message').text('')
+                  $('#success-message').text(res.data.message);
+                  document.getElementById('amount').value = res.data.amount;
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                }else if(res.data.status&&res.data.amount==0){
+                  $('#error-message').text('')
+                  $('#success-message').text(res.data.message);
+                  document.getElementById('amount').value = res.data.amount;
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                  window.location.reload();
+                }else{
+                  document.getElementById('voucher').value=''
+                  document.getElementById('codevalue').value=''
+                  $('#error-message').text(res.data.message);
+                  document.getElementById('amount').value =document.getElementById('offerAmount').value ;
+                  $('#success-message').text('');
+                  let offerAmount = document.getElementById('offerAmount').value
+                  document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
+                }
+              })
+      }
+  
+
+  </script>
+  <% include ./partials/footer%>

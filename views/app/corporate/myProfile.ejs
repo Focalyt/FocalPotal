@@ -1,0 +1,947 @@
+<% include ./partials/header %>
+
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Company Profile</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/company/dashboard">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">Company Profile</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section id="imageGalaryTemplate">
+              <template>
+                <div>
+                  <div class="col-xl-1 mb-1 galleryImage" style="align-self: center;">
+                    <div class="image-upload">
+                      <label for="media-group">
+                        <img src="" height="auto" width="80" class="pointer">
+                      </label>
+                      <i class="feather  icon-x remove_uploaded_pic" onclick="removepic(this)"></i>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </section>
+
+            <section id="executiveTemplate">
+              <template>
+                <div class="row executiverow">
+                  <div class="col-xl-2 mb-1">
+                    <label>Name</label>
+                    <input class="form-control" type="text" value="" name="name"
+                      onkeypress="if(this.value.length==25) return false" maxlength="25">
+                  </div>
+                  <div class="col-xl-2 mb-1">
+                    <label>Designation</label>
+                    <input class="form-control" type="text" value="" name="designation"
+                      onkeypress="if(this.value.length==25) return false" maxlength="25">
+                  </div>
+                  <div class="col-xl-2 mb-1">
+                    <label>Image</label>
+                    <input class="form-control" type="file" onchange="changeExecutiveImage(event,this)" value=""
+                      name="image">
+                    <input type="hidden" class="form-control hiddenimg" name="image" value="" />
+                  </div>
+                  <div class="col-xl-2 mb-1">
+                    <label>Linkedin URL</label>
+                    <input class="form-control" type="text" value="" name="linkedin">
+                  </div>
+                </div>
+
+              </template>
+            </section>
+
+            <section id="Concerned-Person">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                  <div class="card">
+                    <div class="card-header border border-top-0 border-left-0 border-right-0">
+                      <h4 class="card-title pb-1">Concerned Person</h4>
+                    </div>
+                    <div class="card-content">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Name <span class="mandatory"> *</span></label>
+                            <input type="text" name="name" class="form-control" id="username" value="<%=user.name%>"
+                              maxlength="25" required>
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Email<span class="mandatory"> *</span></label>
+                            <input type="email" name="email" class="form-control" id="email" value="<%=user.email%>"
+                              onkeypress="if(this.value.length==50) return false" maxlength="50" required>
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Contact Number<span class="mandatory"> *</span></label>
+                            <input type="number" name="mobile" class="form-control" id="contact-number"
+                              value="<%=user.mobile%>" disabled>
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>WhatsApp<span class="mandatory"> *</span></label>
+                            <input type="tel" onkeypress="if(this.value.length==10) return false" name="whatsapp"
+                              class="form-control" id="whatsapp-number" value="<%=user.whatsapp || user.mobile%>"
+                              maxlength="10" required>
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Designation<span class="mandatory"> *</span></label>
+                            <input class="form-control" onkeypress="if(this.value.length==25) return false"
+                              maxlength="25" name="designation" type="text" id="designation"
+                              value="<%=user.designation%>">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+
+            <section id="companyinformation">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                  <div class="card">
+                    <div class="card-header border border-top-0 border-left-0 border-right-0">
+                      <h4 class="card-title pb-1">Company Information</h4>
+                    </div>
+                    <div class="card-content">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-1">
+                            <label>Company Name <span class="mandatory"> *</span></label>
+                            <input type="text" name="name" class="form-control" id="company-name"
+                              value="<%=company.name%>" onkeypress="if(this.value.length==30) return false"
+                              maxlength="30" required>
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-1">
+                            <label>Industry <span class="mandatory"> *</span></label>
+                            <select class="form-control text-capitalize" id="industry" name="industry" value="">
+                              <option value="">Select Option</option>
+                              <% industry.forEach((i)=> { %>
+                                <% if (company._industry?.toString()==i._id.toString()) { %>
+                                  <option value="<%= i._id %>" class="text-capitalize" selected>
+                                    <%= i.name %>
+                                  </option>
+                                  <% } else { %>
+                                    <option value="<%= i._id %>" class="text-capitalize">
+                                      <%= i.name %>
+                                    </option>
+                                    <% } %>
+                                      <% }); %>
+                            </select>
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6  mb-1 d-none">
+                            <label>Sub Industries <span class="mandatory"> *</span></label>
+                            <select class="form-control text-capitalize" name="subindustry" id="sub-industry" value="">
+                              <option value="">Select Option</option>
+                              <% subIndustry.forEach((i)=> { %>
+                                <% if (company._subIndustry?.toString()==i._id.toString()) { %>
+                                  <option value="<%= i._id %>" class="text-capitalize" selected>
+                                    <%= i.name %>
+                                  </option>
+                                  <% } else { %>
+                                    <option value="<%= i._id %>" class="text-capitalize">
+                                      <%= i.name %>
+                                    </option>
+                                    <% } %>
+                                      <% }); %>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Email</label>
+                            <input type="email" onkeypress="if(this.value.length==50) return false" name="email"
+                              maxlength="50" class="form-control" value="<%=company.email%>" id="company-email">
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Linkedin URL</label>
+                            <input type="text" name="linkedin" class="form-control" value="<%=company.linkedin%>"
+                              id="linkedin-url">
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Twitter URL</label>
+                            <input type="text" name="twitter" class="form-control" value="<%=company.twitter%>"
+                              maxlength="100" id="twitter-url" onkeypress="if(this.value.length==100) return false">
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Facebook URL</label>
+                            <input type="text" name="facebook" class="form-control" value="<%=company.facebook%>"
+                              id="facebook-url" onkeypress="if(this.value.length==100) return false">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>HO Address</label>
+                            <textarea class="form-control" name="headOAddress" id="ho-address" cols="0"
+                              onkeypress="if(this.value.length==150) return false" maxlength="150"
+                              rows="3"><%=company.headOAddress%></textarea>
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Description</label>
+                            <textarea class="form-control" name="description" id="description" cols="3" rows="3"
+                              onkeypress="if(this.value.length==500) return false" maxlength="500"><%=company.description%></textarea>
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1 d-none">
+                            <label>Country</label>
+                            <input type="text" id="country" name="country" value="India" class="form-control" disabled>
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>State <span class="mandatory"> *</span></label>
+                            <select class="form-control" name="stateId" id="state" value="">
+                              <option value="">Select Option</option>
+                              <% state.forEach((i)=> { %>
+                                <% if (company.stateId==i._id) { %>
+                                  <option value="<%= i._id %>" class="text-capitalize" selected>
+                                    <%= i.name %>
+                                  </option>
+                                  <% } else { %>
+                                    <option value="<%= i._id %>" class="text-capitalize">
+                                      <%= i.name %>
+                                    </option>
+                                    <% } %>
+                                      <% }); %>
+                            </select>
+                          </div>
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>City <span class="mandatory"> *</span></label>
+                            <select class="form-control" name="cityId" id="city" value="">
+                              <option value="">Select City</option>
+                              <% city.forEach((i)=> { %>
+                                <% if (company.cityId==i._id) { %>
+                                  <option value="<%= i._id %>" class="text-capitalize cityclass" selected>
+                                    <%= i.name %>
+                                  </option>
+                                  <% } else { %>
+                                    <option value="<%= i._id %>" class="text-capitalize cityclass">
+                                      <%= i.name %>
+                                    </option>
+                                    <% } %>
+                                      <% }); %>
+
+                            </select>
+                          </div>
+                         <!-- <div class="col-xl-6 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Current Location</label>
+                            <input class="form-control" type="text"  id="work-loc" value="<%= company.place %>">
+                            <input type="hidden" id="place" name="place" value="" class="form-control"/>
+                            <input type="hidden" id="latitude" name="latitude" value="" class="form-control"/>
+                            <input type="hidden" id="longitude" name="longitude" value="" class="form-control"/>  
+                           </div>-->
+
+                           <div class="col-xl-3" id="loc-field">
+                            <label for="work-loc">Current Location<span class="mandatory"> *</span></label>
+                            <div class="input-group mb-2">
+                            <div class="input-group-prepend bg-locat">
+                            <div class="input-group-text bg-intext"><img src="/images/isist.png" id="siteforcomp" ></div>
+                            </div>
+                             <input type="text" class="form-control" id="work-loc" value="<%= company.place %>">
+                              <input type="hidden" id="place" name="place" value="" class="form-control" />
+                              <input type="hidden" id="latitude" name="latitude" value="" class="form-control" />
+                              <input type="hidden" id="longitude" name="longitude" value="" class="form-control" />
+                            </div>
+                          </div>
+                      
+
+                          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                            <label>Zipcode</label>
+                            <input type="number" onkeypress="if(this.value.length==6) return false" name="zipcode"
+                              maxlength="6" value="<%= company.zipcode %>" class="form-control" id="zipcode">
+                          </div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-xl-12">
+                            <h5>Media Gallery</h5>
+                          </div>
+                          <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2  mb-1 mt-1" style="align-self: center;">
+                            <div class="image-upload"></div>
+
+                            <% if (company.logo) { %>
+                              <label for="uploadlogo" style="cursor: pointer;">
+                                <img src="<%= process.env.MIPIE_BUCKET_URL +'/' + company.logo %>"
+                                  class="pointer companylogo" height="auto" width="60%">
+                                <img style="display:none" class="custom-cursor-pointer default"
+                                  src="/images/add_receipt.png" width="60%" height="auto" id="logopic" /></label>
+                              <i class="feather icon-x remove_uploaded_pic" style="color:red;" id="removelogo"></i>
+                              Company Logo
+                              <% } else { %>
+                                <label for="uploadlogo" style="cursor: pointer; align-self: center;">
+                                  <img class="custom-cursor-pointer default" src="/images/add_receipt.png" width="80"
+                                    height="auto" id="logopic" /></label>
+                                <i style="display:none" id="removelogo" class="feather  icon-x remove_uploaded_pic"
+                                  style="color:red;"></i>
+                                <p class="mt-1 custom-cursor-pointer">
+                                  <label>Upload logo</label>
+                                </p>
+                                <% } %>
+
+                                  <input id="uploadlogo" data-id="logo" type="file" name="filelogo"
+                                    class="my-logo-uploader form-control" style="display:none;" />
+                                  <input type="hidden" class="form-control hiddenlogo" name="logo" id="logo"
+                                    value="<%=company.logo %>" />
+                          </div>
+                          <% if (company.mediaGallery.length>0) { %>
+                            <% company.mediaGallery.forEach((i)=> { %>
+                              <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 galleryImage" style="align-self: center;">
+                                <div class="image-upload">
+                                  <label for="media-group">
+                                    <img src="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>" height="auto" width="60%"
+                                      class="pointer img-fluid">
+                                  </label>
+                                  <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
+                                  <i class="feather  icon-x remove_uploaded_pic" style="color:red;" value="<%=i%>"
+                                    onclick="removepic(this)"></i>
+                                </div>
+                              </div>
+                              <% }); %>
+                                <% }%>
+
+                                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3 mb-1" id="uploadgallery" style="align-self: center;">
+                                    <div class="image-upload">
+                                      <label for="media-group">
+                                        <img src="/images/icons/jd_one.png" class="pointer img-fluid">
+                                      </label>
+                                      <!-- <i class="feather  icon-x remove_uploaded_pic"></i>
+                                      <i class="feather  icon-plus add_multiple_gal"></i> -->
+                                      <input id="media-group" type="file" multiple />
+                                      <input type="hidden" class="form-control hiddenmediagroup" name="mediaGallery"
+                                        id="mediagroup" value="" />
+                                    </div>
+                                    <label>Workplace Pics</label>
+                                  </div>
+
+
+                                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3 mb-1" style="align-self: center;">
+                                    <% if (company.mediaGalaryVideo) { %>
+                                      <div id="videosection">
+                                      <a id="uploadedvideo" target="_blank"
+                                        href="<%= process.env.MIPIE_BUCKET_URL +'/' + company.mediaGalaryVideo %>"
+                                        class="pointer img-fluid" style="white-space: nowrap;">
+                                        Uploaded Video
+                                      </a>
+                                      <i class="feather  icon-x remove_uploaded_pic" style="color:red;" value="<%=company.mediaGalaryVideo%>"
+                                        onclick="removevideo(this)"></i>
+                                      </div>
+                                      <% } else { %>
+                                        <div class="image-upload videoupload">
+                                          <label for="workspace-video">
+                                            <img id="uplvideo" src="/images/icons/jd_two.png" class="pointer img-fluid">
+                                          </label>
+                                          <input type="file" id="workspace-video" />
+                                          <input type="hidden" class="form-control hiddenvideo" name="mediaGalaryVideo"
+                                            id="mediavideo" value="" />
+                                          <label id="uploadlabel">Workplace Video</label>
+                                        </div>
+                                        <div class="uploadedvideo" style="display:none">
+                                          <a id="uploadedvideo" target="_blank" href="" class="pointer img-fluid">
+                                            Uploaded Video
+                                          </a>
+                                          <i class="feather  icon-x remove_uploaded_pic" style="color:red;"
+                                            onclick="removevideo(this)"></i>
+                                        </div>
+                                        <% } %>
+                                  </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="executiveinfo">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                  <div class="card">
+                    <div class="card-header border border-top-0 border-left-0 border-right-0">
+                      <h4 class="card-title pb-1">Company Executive</h4>
+                    </div>
+                    <div class="card-content">
+                      <div class="card-body">
+                        <div id="executivelist">
+                          <% if (company.companyExecutives.length>0) { %>
+
+                            <% company.companyExecutives.forEach((exec,index)=> { %>
+                              <div class="row executiverow">
+                                <div class="col-xl-2 col-lg-4  mb-1">
+                                  <label>Name</label>
+                                  <input class="form-control" type="text" value="<%= exec.name%>" name="name"
+                                    maxlength="25" onkeypress="if(this.value.length==25) return false">
+                                </div>
+                                <div class="col-xl-2 col-lg-4 mb-1">
+                                  <label>Designation</label>
+                                  <input class="form-control" type="text" value="<%= exec.designation%>"
+                                    name="designation" onkeypress="if(this.value.length==25) return false"
+                                    maxlength="25">
+                                </div>
+                                <div class="col-xl-2 col-lg-4 mb-1">
+                                  <label>Image</label>
+                                  <% if (exec.image) { %>
+                                    <br><img src="<%= process.env.MIPIE_BUCKET_URL +'/' + exec.image %>"
+                                      class=" pointer" height="60" width="80">
+                                    <input type="hidden" class="form-control hiddenimg" name="image"
+                                      value="<%=exec.image %>" />
+                                    <% } else { %>
+                                      <input class="form-control" type="file"
+                                        onchange="changeExecutiveImage(event,this)" value="" name="image" id="image">
+                                      <input type="hidden" class="form-control hiddenimg" name="image" value="" />
+                                      <% } %>
+                                </div>
+                                <div class="col-xl-2 mb-1">
+                                  <label>Linkedin URL</label>
+                                  <input class="form-control" type="text" value="<%= exec.linkedin%>" name="linkedin">
+                                </div>
+                                <% if (index===0) { %>
+                                  <div class="col-xl-2 my-auto ">
+                                    <a class="btn btn-success text-white" id="add-button">+</a>
+                                  </div>
+                                  <% } %>                                  
+                              </div>
+
+                              <% }); %>
+
+                                <% } else { %>
+                                  <div class="row executiverow">
+                                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 mb-1">
+                                      <label>Name</label>
+                                      <input class="form-control" type="text" value="" name="name"
+                                        onkeypress="if(this.value.length==25) return false" maxlength="25">
+                                    </div>
+                                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 mb-1">
+                                      <label>Designation</label>
+                                      <input class="form-control" type="text" value="" name="designation"
+                                        onkeypress="if(this.value.length==25) return false" maxlength="25">
+                                    </div>
+                                    <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-1">
+                                      <label>Image</label>
+                                      <input class="form-control" type="file"
+                                        onchange="changeExecutiveImage(event,this)" value="" name="image">
+                                      <input type="hidden" class="form-control hiddenimg" name="image" value="" />
+                                    </div>
+                                    <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 mb-1">
+                                      <label>Linkedin URL</label>
+                                      <input class="form-control" type="text" value="" name="linkedin">
+                                    </div>
+                                    <div class="col-xl-3  col-lg-1 col-md-1 col-sm-6 col-4 my-auto text-right">
+                                      <a class="btn btn-success text-white px-sm-2" id="add-button">+</a>
+                                    </div>
+                                    
+                                  </div>
+                                  <% } %>
+                              
+                        </div>
+                        <div class="row">
+                          <div class="col-xl-12 col-lg-4 col-md-4 col-sm-6 col-8 mt-xl-2  mt-lg-2 mt-md-2 text-right">
+                            <a class="btn btn-danger px-xl-3 px-lg-2 px-md-2 px-sm-2" value="Reset" id="reset-btn">Reset</a>
+                            <a class="btn btn-success text-white ml-xl-2 ml-md-1 ml-sm-2 ml-lg-2 px-xl-3 px-lg-2 px-md-2 px-sm-2" id="save-button">Save</a>
+                          </div>
+                          </div>
+                       
+ <!--- 
+                        <div class="row">
+                          <div class="col-xl-12">
+                            <div id="msg" style="color:red; display:none;">
+                            </div>
+                          </div>
+                        </div> -->
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+        <script
+          src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE%>&callback=initMap&libraries=places&v=weekly"
+          defer></script>
+        <script>
+          function initMap() {
+            
+            const options = {
+                componentRestrictions: { country: "in" },
+                types: ["establishment"]
+            };
+            const location = document.getElementById("work-loc")
+            const autocomplete = new google.maps.places.Autocomplete(location, options);
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            let place = autocomplete.getPlace();
+            document.getElementById('place').value = location.value;
+            document.getElementById('latitude').value = place.geometry.location.lat();
+            document.getElementById('longitude').value = place.geometry.location.lng();
+        });
+        }
+        window.initMap = initMap;
+        </script>
+        <script>
+          const username = document.getElementById('username')
+          username.addEventListener('keypress', (e) => {
+            let k = e.which;
+            if (k >= 65 && k <= 90) { }
+            else if (k >= 97 && k <= 122) { }
+            else if (k == 32) { }
+            else { e.preventDefault() }
+          })
+          const wpNumber = document.getElementById('whatsapp-number')
+          wpNumber.addEventListener('keypress', (e) => {
+            let k = e.which;
+            if (k > 58 || k < 48)
+              e.preventDefault();
+          })
+
+          const checkUrl = (url) => {
+            let regex = /^(http|https):\/\/(.*)/
+            return regex.test(url)
+          }
+
+          const checkUrlArray = (urlArray) => {
+            let regex = /^(http|https):\/\/(.*)/
+            for (let url of urlArray) {
+              if (!regex.test(url) && url.length != 0) return false
+            }
+            return true
+          }
+
+          const checkWhatsappNumber = (number) => {
+            if (number.length == 10) return true
+            else return false
+          }
+
+          const checkPincode = (number) => {
+            if (number.length == 6 || number.length == 0) return true
+            else return false
+          }
+          const checkEmail = (email) => {
+            if (!email) {
+              return false
+            }
+            let emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
+            return emailReg.test(email);
+          }
+          const checkImageSize = (size) => {
+            let finalSize = ((size / 1024) / 1024);
+            if (finalSize > 2) {
+              return false
+            }
+            return true;
+          }
+
+          const checkImageValidation = (file) => {
+            let regex = /(\/jpg|\/jpeg|\/png)$/i
+            return regex.test(file)
+          }
+
+          $(document).ready(function () {
+            $('#uploadlogo').change(function (e) {
+              let filename = e.target.files[0].name
+              let type = e.target.files[0].type;
+              let size = e.target.files[0].size;
+              if (!checkImageSize(size) || !checkImageValidation(type)) {
+                $('#uploadlogo').val('');
+                alert("This format not accepted and each image should be 2MB")
+              } else {
+                let body = {
+                  file: e.target.files[0]
+                }
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadSingleFile', body, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      $('#logo').val(result.data.data.Key)
+                      $('#logopic').attr('src', result.data.data.Location)
+                      $('#removelogo').show();
+                    }
+                  })
+              }
+            });
+
+            $('#removelogo').click(() => {
+              $('#logopic').attr('src', `/images/add_receipt.png`)
+              $('#removelogo').hide();
+              header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+              let data = {
+                key: $('#logo').val()
+              }
+              axios.post('/api/deleteSingleFile', data, header)
+                .then(result => {
+                  $('.companylogo').hide()
+                  $('#logopic').show()
+                  if (result.status) {
+                    axios.post("/company/removelogo", data).then(() => console.log('deleted'))
+                  }
+                })
+              return false;
+            })
+            const checkVideoSize = (size) => {
+              let finalSize = ((size / 1024) / 1024);
+              if (finalSize > 10) {
+                return false
+              }
+              return true;
+            }
+            $('#media-group').change(function (e) {
+              const formData = new FormData();
+              let productimages = [];
+              if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 images");
+                $('#media-group').val('');
+              } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                  let type = e.target.files[i].type;
+                  let size = e.target.files[i].size;
+                  if (checkImageSize(size) && checkImageValidation(type)) {
+                    formData.append("files", e.target.files[i]);
+                  } else {
+                    $('#media-group').val('');
+                    alert("This format not accepted and each image should be 2MB")
+                    break;
+                  }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultipleFiles', formData, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      let combinedKeys = ''
+                      combinedKeys = result.data.Data.map(img => {
+                        return img.Key
+                      });
+                      $('.hiddenmediagroup').val(combinedKeys)
+                      result.data.Data.forEach(element => {
+                        let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                        $(html.innerHTML).insertBefore('#uploadgallery');
+                      });
+                    }
+                  })
+                  .catch(err => {
+                    console.log('==> caught error ', err)
+                  })
+              }
+            });
+
+            $('#workspace-video').change(function (e) {
+              let filename = e.target.files[0].name
+              let body = {
+                file: e.target.files[0]
+              }
+              const file = body.file;
+              let size = file.size;
+              if (checkVideoValidation(filename) && checkVideoSize(size)) {
+                $('#save-button').attr("disabled", true);
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+
+                axios.post('/api/uploadVideo', body, header)
+                  .then(result => {
+                    $('#save-button').removeAttr("disabled");
+                    if (result.data.status) {
+                      $('#mediavideo').val(result.data.data.key)
+                      $('#uploadedvideo').attr('href', result.data.data.Location)
+                      $('.uploadedvideo').show()
+                      $('.videoupload').hide()
+                    }
+                  })
+                  .catch(err => {
+                    $('#save-button').removeAttr("disabled");
+                    console.log('=> caught error ', err)
+                  })
+              } else {
+                $('#save-button').removeAttr("disabled");
+                alert('This format not supported and video should be less than 10MB')
+              }
+            });
+
+            $('#state').change(function (e) {
+              let stateId = e.target.value
+
+              header = { headers: { 'x-auth': localStorage.getItem('token') } }
+
+              axios.get('/company/getcitiesbyId', { params: { stateId } }, header)
+                .then(result => {
+                  if (result.data.cityValues.length > 0) {
+                    $('select#city option.cityclass').remove();
+                    let options
+                    result.data.cityValues.forEach(i => {
+                      options = options + `<option value="${i._id}" class="text-capitalize cityclass">${i.name}</option>`
+                    })
+                    $('select#city').append(options);
+                  }
+                })
+            });
+
+            $('#add-button').bind('click', () => {
+              let html = $('#executiveTemplate template').html();
+              $('#executivelist').append(html);
+            })
+
+            $('#image').change(function (e) {
+              let file = e.target.files[0]
+              let body = {
+                file: file
+              }
+              let type = file.name;
+              let size = file.size;
+              let candidateFile = document.getElementById('image');
+              if (checkImageValidation(type) === false && checkImageSize(size) === false) {
+                alert("upload the image in jpg,jpeg or png format and size should be less than 2MB");
+                candidateFile.value = ''
+              } else if (checkImageValidation(type) === false && checkImageSize(size) === true) {
+                alert("upload the image in jpg,jpeg or png format ");
+                candidateFile.value = ''
+              } else if (checkImageValidation(type) === false && checkImageSize(size) === false) {
+                alert("uploaded image size should be less than 2MB");
+                candidateFile.value = ''
+              }
+
+            })
+
+            $('#save-button').bind('click', () => {
+              
+              if (!validateForm()) {
+                let body = {
+                  concernedPerson: getPersonInformation(),
+                  companyInfo: getCompanyInfo(),
+                  executiveinfo: getExecutiveInfo()
+                }
+                header = { headers: { 'x-auth': localStorage.getItem('token') } }
+
+                axios.post('/company/myprofile', body, header)
+                  .then(result => {
+                    window.location.href = "/company/myprofile";
+                  })
+              }
+            })
+            $('#reset-btn').bind('click', () => {
+              window.location.href = "/company/myprofile";
+            })
+
+            function validateForm() {
+              $('.error').removeClass('error')
+              $('#msg').hide();
+
+              let number = document.getElementById('whatsapp-number').value
+              let pincode = document.getElementById('zipcode').value
+              let companyEmail = document.getElementById('company-email').value
+              let email = document.getElementById('email').value
+              let name = $('#username.form-control').val().trim()
+              let designation = $('#designation')
+              let companyName = $('#company-name.form-control').val().trim()
+              let industry = $('#industry')
+              // let subindustry = $('#sub-industry')
+              let state = $('#state')
+              let city = $('#city')
+              const currentLocation=document.getElementById('work-loc')
+              let currentLoc=currentLocation.value;
+              let hasError = false
+              let firstError
+              if (!name) {
+                $('#username.form-control').parent().addClass('error');
+                firstError = firstError ? firstError : $('#username.form-control')
+                hasError = true
+              }
+
+              if(currentLoc.trim()===""){
+              $('#loc-field').addClass('error')
+              firstError=firstError?firstError:$('#work-loc')
+              hasError = true
+            }
+
+              if (!checkEmail(email)) {
+                $('#email').parent().addClass('error')
+                firstError = firstError ? firstError :$('#email')
+                hasError = true
+              }
+
+              if (!checkWhatsappNumber(number)) {
+                $('#whatsapp-number').parent().addClass('error')
+                firstError = firstError ? firstError :$('#whatsapp-number')
+                hasError = true
+              }
+
+              if (!$(designation).val().trim()) {
+                $('#designation').parent().addClass('error');
+                firstError = firstError ? firstError :$('#designation')
+                hasError = true
+              }
+
+              if (!companyName) {
+                $('#company-name.form-control').parent().addClass('error')
+                firstError = firstError ? firstError :$('#company-name.form-control')
+                hasError = true
+              }
+
+              if (!$(industry).val()) {
+                $(industry).parent().addClass('error')
+                firstError = firstError ? firstError :industry
+                hasError = true
+              }
+              // if (!$(subindustry).val()) {
+              //   $(subindustry).parent().addClass('error')
+              //   firstError = firstError ? firstError :subindustry
+              //   hasError = true
+              // }
+
+              if (!$(state).val().trim()) {
+                $(state).parent().addClass('error')
+                firstError = firstError ? firstError :state
+                hasError = true
+              }
+              if (!$(city).val().trim()) {
+                $(city).parent().addClass('error')
+                firstError = firstError ? firstError :city
+                hasError = true
+              }
+              $(firstError).focus()
+              return hasError
+            }
+            function populateimageToElement(html, imgPath, key) {
+              var template = document.createElement('template');
+              html = html.trim(); // Never return a text node of whitespace as the result
+              template.innerHTML = html;
+              let img = $(template.content).find('img')
+              let i = $(template.content).find('i.remove_uploaded_pic')
+              $(i).attr('value', key)
+              $(img).attr('src', imgPath)
+              return template.content.firstChild;
+            }
+
+            function getPersonInformation() {
+              let personalObj = {}
+              $('#Concerned-Person').find('.form-control').each(function () {
+                let type = $(this).prop("type");
+                let name = $(this).prop("name")
+                let val = $(this).val()
+                if (val !== '' && type != "button" && type != "submit" && type != "file"&&name!=="") {
+                  personalObj[name] = val
+                }
+              });
+              return personalObj;
+            }
+
+            function getCompanyInfo() {
+              let personalObj = {}
+              $('#companyinformation').find('.form-control').each(function () {
+                let type = $(this).prop("type");
+                let name = $(this).prop("name")
+                let val = $(this).val()
+                if (val !== '' && type != "button" && type != "submit" && type != "file") {
+                  personalObj[name] = val
+                }
+              });
+              return personalObj;
+            }
+
+            function getExecutiveInfo() {
+              let executiveArray = []
+              $('#executiveinfo .executiverow').each(function () {
+                let self = this
+                let locObj = {}
+                $(self).find('.form-control').each(function () {
+                  let type = $(this).prop("type");
+                  let name = $(this).prop("name")
+                  let val = $(this).val()
+                  if (val !== '' && type != "button" && type != "submit" && type != "file") {
+                    locObj[name] = val
+                  }
+                });
+                if (!$.isEmptyObject(locObj)) {
+                  executiveArray.push(locObj)
+                }
+
+              })
+              return executiveArray
+            }
+
+            const checkVideoValidation = (video) => {
+              let regex = /(\.mp4|\.mov|\.avi)$/i;
+              if (!regex.exec(video)) {
+                return false;
+              } else {
+                return true;
+              }
+            }
+
+          })
+          function changeExecutiveImage(e, element) {
+            let filename = e.target.files[0].name
+            let body = {
+              file: e.target.files[0]
+            }
+            let size = body.file.size;
+            let type = body.file.type;
+
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            if (checkImageValidation(type) && checkImageSize(size) === false) {
+              axios.post('/api/uploadSingleFile', body, header)
+                .then(result => {
+                  if (result.data.status) {
+                    let ctrl = $(e.target).next('input.hiddenimg');
+                    $(ctrl).val(result.data.data.Key)
+                  }
+                })
+            } else {
+              alert("This format not supported and uploaded image should be less than 2MB");
+              element.value = '';
+            }
+          }
+          function removepic(e) {
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            let data = {
+              key: e.attributes.value.textContent
+            }
+            axios.post('/api/deleteSingleFile', data, header)
+              .then(result => {
+                if (result.status) {
+                  let parentdiv = $(e).closest('div.galleryImage')
+                  $(parentdiv).remove();
+                  axios.post("/company/removeimage", data).then(() => console.log('deleted'))
+                }
+              })
+            return false;
+          }
+
+          function removevideo(e) {
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            if(e.attributes.value){
+              let data = {
+              key: e.attributes.value.textContent
+            }
+            axios.post('/api/deleteSingleFile', data, header)
+              .then(result => {
+                if (result.status) {
+                  let videosection = $('videosection')
+                  $(videosection).remove();
+                  axios.post("/company/removevideo", data).then(() => console.log('deleted'))
+                }
+                location.reload()
+              })
+            } else {
+              location.reload()
+            }
+           
+            return false;
+          }
+        </script>
+        <% include ./partials/footer%>

@@ -1,0 +1,208 @@
+<% include ../partials/header %>
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Add Mock Interview</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">Add Mock Interview
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ../partials/flash %>
+            <form class="form-horizontal" action="" method="post" id="formData">
+                <section id="personal-info">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Mock Interview Information</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Name <span class="mandatory">*</span></label>
+                                                <input type="text" class="form-control" name="name" palaceholder="Name"
+                                                    required>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Category <span class="mandatory">*</span></label>
+                                                <select style="cursor: pointer;" class="form-control" name="_category"
+                                                    required>
+                                                    <option value="">Select Option</option>
+                                                    <option value="personality" class="text-capitalize">Personality
+                                                    </option>
+                                                    <option value="leadership" class="text-capitalize">Leadership
+                                                    </option>
+                                                    <option value="technical skills" class="text-capitalize">Technical
+                                                        Skills</option>
+                                                    <option value="group discussions" class="text-capitalize">Group
+                                                        Discussions</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Industry <span class="mandatory">*</span></label>
+                                                <select style="cursor: pointer;" class="form-control selectpicker"
+                                                    name="_industry" title="Select Option" data-actions-box="true"
+                                                    multiple required>
+                                                    <% industry.forEach((i)=> { %>
+                                                        <option value="<%= i._id %>" class="text-capitalize">
+                                                            <%= i.name %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Skills (technical) <span class="mandatory">*</span></label>
+                                                <select class="form-control selectpicker" name="_skill"
+                                                    title="Select Option" data-actions-box="true" multiple required>
+                                                    <% techSkill.forEach((i)=> { %>
+                                                        <option value="<%= i._id %>" class="text-capitalize">
+                                                            <%= i.name %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Skills (non-technical) <span class="mandatory">*</span></label>
+                                                <select class="form-control selectpicker" name="_skill"
+                                                    title="Select Option" data-actions-box="true" multiple required>
+                                                    <% nonTechSkill.forEach((i)=> { %>
+                                                        <option value="<%= i._id %>" class="text-capitalize">
+                                                            <%= i.name %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Courses <span class="mandatory">*</span></label>
+                                                <select class="form-control selectpicker" name="_streams"
+                                                    title="Select Option" data-actions-box="true" multiple required>
+                                                    <% qualification.forEach((i)=> { %>
+                                                        <option value="<%= i._id %>" class="text-capitalize">
+                                                            <%= i.name %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Time Limits</label>
+                                                <input type="text" class="form-control" name="timeLimit"
+                                                    placeholder="In Minutes">
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Total Marks</label>
+                                                <input type="text" class="form-control" name="marks"
+                                                    placeholder="Marks">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="tech">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Questions</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body diningRows">
+                                        <div class="row">
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Question No <span class="mandatory">*</span></label>
+                                                <input class="form-control" type="text" name="questionNo[]" required>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Description</label>
+                                                <textarea class="form-control" name="description[]" cols="2"
+                                                    rows="2"></textarea>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <label>Comments</label>
+                                                <textarea class="form-control" name="comments[]" cols="2"
+                                                    rows="2"></textarea>
+                                            </div>
+                                            <div class="col-xl-3 mt-3">
+                                                <a class="appoint btn btn-success">+ ADD</a>
+                                            </div>
+                                        </div>
+                                        <div class="wantdiv"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-12 col-lg-12">
+                                            <div class="card">
+                                                <div class="card-content">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 text-right">
+                                                                <!-- <a type="reset" href="/panel/college/mockInterview/add"
+                                                                    class="btn btn-danger" value="Reset">Reset</a> -->
+                                                                <button type="submit"
+                                                                    class="btn btn-success">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </form>
+            <div class="text-right reset">
+				<button onclick="reset()"  class="btn btn-danger"
+					>Reset</button>
+			</div>
+            <div class="d-none appenddiv">
+                <div class="row newdiv">
+                    <div class="col-xl-3 mb-1">
+                        <label>Question No</label>
+                        <input class="form-control" type="text" name="questionNo">
+                    </div>
+                    <div class="col-xl-3 mb-1">
+                        <label>Description</label>
+                        <textarea class="form-control" name="description" cols="2" rows="2"></textarea>
+                    </div>
+                    <div class="col-xl-3 mb-1">
+                        <label>Comments</label>
+                        <textarea class="form-control" name="comments" cols="2" rows="2"></textarea>
+                    </div>
+                    <div class="col-xl-3 ">
+                        <label class="col-form-label mt-3" for="input-small"></label>
+                        <button type="button" class="btn btn-ghost-danger btn btn-secondary removediv bg-danger"><i
+                                class="feather icon-minus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <% include ../partials/footer %>
+                <script>
+                    $('.appoint').click(() => {
+                        const html = $('.appenddiv').html();
+                        $('.wantdiv').before(html);
+                    });
+
+                    $(document).on('click', '.removediv', function () {
+                        $(this).closest('.newdiv').remove();
+                    });
+
+                    function reset() {
+                        window.location.reload();
+                    }
+                </script>

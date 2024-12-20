@@ -1,0 +1,200 @@
+<% include ../partials/header %>
+<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+	<div class="content-header-left col-md-9 col-12 mb-2">
+		<div class="row breadcrumbs-top">
+			<div class="col-12">
+				<h3 class="content-header-title float-left mb-0">All Courses</h3>
+				<div class="breadcrumb-wrapper col-12">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+						<li class="breadcrumb-item active">All Courses</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content-body">
+	<section class="list-view">
+		<div class="row">
+			<div class="col-12 rounded equal-height-2 coloumn-2">
+				<div class="card">
+					<div class="row p-1">
+						<div class="col-xl-6">
+							<div class="row">
+								<div class="archieve pl-1">
+									<input style="margin-bottom: 4px;" type="checkbox" onclick="archived()" <%-isChecked=="true"
+									? "checked" : '' %>
+								  id="checkbox1">
+									&nbsp;
+									<p>Show Archived </p>
+									<span class="checkmark"></span>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="row mb-2"> 
+						<div class="col-xl-12 col-lg-12">
+							<form method="GET">
+								<div class="row">
+									<div class="col-xl-2 ml-1 mt-1">
+										<label>Name</label>
+										<input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>"
+											maxlength="25">
+									</div>
+									<div class="col-xl-2 ml-1 mt-1">
+										<label>From Date</label>
+										<input type="date" class="form-control" id="from-date" name="FromDate" value="<%= data.FromDate %>">
+									</div>
+									<div class="col-xl-2 ml-1 mt-1">
+										<label>To Date</label>
+										<input type="date" class="form-control" id="to-date" name="ToDate" value="<%= data.ToDate %>">
+									</div>
+									<div class="col-xl-2 ml-1 mt-1">
+										<label>Profile</label>
+										<select class="form-control text-capitalize" name="Profile" id="profile">
+											<option value="">Select</option>
+											<option class="text-capitalize" value="All">All</option>
+											<option class="text-capitalize" value="true">Completed</option>
+											<option class="text-capitalize" value="false">Due</option>
+										</select>
+									</div>
+										<input type="hidden" class="form-control" name="status" value="true">
+									<div style="margin-top: 2.5rem !important;" class="col-xl-3 text-center mt-3">
+										<button class="btn btn-success  waves-effect waves-light  text-white d-inline "
+											id="submit-btn">Go</button>
+										<a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
+											href="/admin/courses">RESET</a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="card-content">
+						<div class="table-responsive">
+
+							<table class="table table-hover-animation mb-0 table-hover">
+								<thead>
+									<tr>
+										<th>Sector</th>
+										<th>Course Level</th>
+										<th>Course Name</th>
+										<!--th>No of Students</th!-->
+										<th>Duration</th>
+										<th>Certificate Agency</th>
+										<th>Certificate Agency Website</th>
+										<th>Status</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+                                  <%courses.forEach((course,i)=>{%>
+                                   <tr>
+									<td><%course?.sectors.forEach((sector,i)=>{%>
+										<option value="<%=sector._id %>"><%=sector.name %></option>
+										<%})%></td>
+									<td><%=course.courseLevel%></td>
+									<td><%=course.name%></td>
+									<td><%=course.duration%></td>
+									<td><%=course.certifyingAgency%></td>
+									<td><%=course.certifyingAgencyWebsite%></td>
+									<td>
+										<div
+																		class="custom-control custom-switch custom-control-inline">
+																			<input type="checkbox"
+																				onclick="myOnOffFunc('<%= course._id %>', `<%= course.status %>`);"
+																				class="custom-control-input"
+																				id="customSwitch<%= i %>" <% if (course.status) { %> checked <% } %> />
+																			<label class="custom-control-label"
+																				for="customSwitch<%= i %>">
+																			</label>
+																	</div>
+									</td>
+									</td>
+									<td valign="middle" class="qualification-action-custom-class d-flex justify-content-center">
+										
+
+										<a href="/admin/courses/edit/<%=course._id %>">
+											<i class="feather icon-edit fa-lg primary"></i>
+										</a>
+									</td>
+								   </tr>
+								  <%})%>
+								
+
+								</tbody>
+							</table>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="text-right reset">
+
+	</div>
+	<script>
+		 function myOnOffFunc(id, status) {
+      let data = { id: id, status: !(status=='true') }
+      let headers = { 'x-auth': localStorage.getItem('token') }
+      axios.patch(`/admin/courses/changeStatus`, data, { headers: headers })
+        .then((res) => {
+          location.reload()
+        }).catch((err) => {
+          console.log(err)
+        })
+    }
+	function archived() {
+      let checkbox = document.getElementById('checkbox1');
+      window.location.href = `/admin/courses?status=${!checkbox.checked}`
+    }
+	$('#submit-btn').click(()=>{
+						if(validate()){
+							return false
+						}
+					})
+					function validate(){
+						$('.error').removeClass('error')
+						let fromDate = $('#from-date').val();
+						let toDate = $('#to-date').val()
+						let hasError = false
+						let firstError
+						
+						if(fromDate && !toDate){
+							$('#to-date').parent().addClass('error')
+                            firstError = firstError ? firstError :$('#to-date')
+                            hasError = true
+						}
+						if(!fromDate && toDate){
+							$('#from-date').parent().addClass('error')
+                            firstError = firstError ? firstError :$('#from-date')
+                            hasError = true
+						}
+						$(firstError).focus()
+                        return hasError
+					}
+					document.addEventListener("DOMContentLoaded", () => {
+						const pageAnchors = document.querySelectorAll("a.pageAnchor");
+						const { origin, pathname, search } = window.location;
+						const obj = window.qs.get(search);
+						const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+						let url = `${origin}${pathname}?`;
+						keyArr.forEach((x) => {
+							if (x !== "page") {
+								url += `${x}=${obj[x]}&`;
+							}
+						});
+						pageAnchors.forEach((el) => {
+							const n = el.getAttribute("href");
+							el.setAttribute("href", `${url}page=${n}`);
+						});
+					});
+
+	</script>
+	<% include ../partials/footer %>
+
+</div>

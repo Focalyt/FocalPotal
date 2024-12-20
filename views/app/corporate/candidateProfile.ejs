@@ -1,0 +1,889 @@
+
+
+<% include ./partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns" id="inner_job_page">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <div id="preloader"></div>
+
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper"></div>
+          <section id="Concerned-Person ">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 px-3 hiring-head">
+                <%if (hiringStatus) { %>
+                
+                  <div class="card mb-2 ">
+                    <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                      <h4 class="card-title"><img src="/images/icons/hiring.png"
+                          class="img-fluid pr-1">Hiring Status</h4>
+                    </div>
+                    <div class="card-content">
+                      <div class="table-responsive">
+                        <table class="table table-hover-animation mb-0 table-hover">
+                          <thead>
+                            <tr>
+                              <th>Current Status</th>
+                              <th>Status Change Date</th>
+                              <th>JD</th>
+                              <th>Event DATE/TIME</th>
+                              <th>COMMENT</th>
+                              <th>Concerned Person</th>
+                              <th>ACTION</th>
+                            </tr>
+                          </thead>
+                          <tbody id="table-body">
+                            <tr>
+                              <td class="text-capitalize">
+                                <%= hiringStatus.status ? hiringStatus.status : "NA" %>
+                              </td>
+                              <td title='<%= moment(hiringStatus.updatedAt).utcOffset("+05:30").format('DD-MMM-YYYY hh:mm A') %>'>
+                                <%= hiringStatus.updatedAt ? moment(hiringStatus.updatedAt).utcOffset("+05:30").format('DD MMM YYYY hh:mm A') : "NA" %>
+                              </td>
+                              <td class="text-capitalize">
+                                <%= hiringStatus.job ? hiringStatus.job.title : "NA" %>
+                              </td>
+                              <td> <%= hiringStatus.eventDate ? moment(hiringStatus.eventDate).utcOffset("+05:30").format('DD MMM YYYY') : 'NA' %> </td>
+                              <td title="<%= hiringStatus.comment %>">
+                                <%= hiringStatus.comment ? hiringStatus.comment : "NA" %>
+                              </td>
+                              <td> <%= hiringStatus.concernedPerson ? (company?.companyExecutives?.filter(executive => hiringStatus.concernedPerson == executive._id ))[0]?.name : 'NA' %> </td>
+                              <td>
+                                <a href="#" class="btn btn-primary me-3 waves-effect waves-light btn-sm"
+                                  style="font-size: 12px;" data-toggle="modal"
+                                  data-target="#updateStatus">Click</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                
+                <% } %>
+                <div class="row">
+                  <div class="col-xl-4">
+                    <div class="card bg-white shadow">
+                      <div class="card-body">
+                        <div class="user-avatar-section">
+                          <div class="d-flex align-items-center flex-column border-bottom mb-2 pb-2">
+                            <% if (candidate.image) { %>
+                              <img class="img-fluid rounded mb-2 mt-2" height="60" width="80"
+                                src="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.image %>" alt="User avatar">
+                              <% } else { %>
+                                <img class="img-fluid rounded mb-2 mt-2" src="/images/elements/1.png" alt="User avatar">
+                                <% } %>
+                                  <div class="user-info text-center">
+                                    <h4 class="text-capitalize">
+                                      <%=candidate.name?candidate.name:'NA'%>
+                                    </h4>
+                                    <span class="exp-badge bg-label-secondary">
+                                      <%=candidate.isExperienced? 'Experienced' : 'Fresher' %>
+                                    </span>
+                                  </div>
+                          </div>
+                        </div>
+                        <div class="info-container">
+                          <ul class="list-unstyled">
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Gender:</span>
+                              <span class="text-capitalize">
+                                <%=candidate.sex?candidate.sex:'NA'%>
+                              </span>
+                            </li>
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Mobile No.</span>
+                              <% if (candidate.mobile==0) { %>
+                                <span class="mobile">xxxxxxxxxx</span>
+                                <% } else { %>
+                                  <span class="mobile">
+                                    <%=candidate.mobile%>
+                                  </span>
+                                  <% } %>
+                            </li>
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Email:</span>
+                              <span class="email">
+                                <%=candidate.email%>
+                              </span>
+                            </li>
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Experience:</span>
+                              <span class="exp-badge bg-label-success">
+                                <%=candidate.totalExperience?candidate.totalExperience + ' Years' : 'Fresher' %>
+                              </span>
+                            </li>
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Highest Qualification:</span>
+                              <span class="text-capitalize">
+                                <%= qualification.find(i=>i._id == candidate.highestQualification)?.name %>
+                              </span>
+                            </li>
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Residence:</span>
+                              <% if (candidate.city && candidate.state) { %>
+                                <span class="text-capitalize">
+                                  <%=candidate.city?.name%> (<%=candidate.state?.name%>)
+                                </span>
+                                <% } else if (candidate.state) { %>
+                                  <span class="text-capitalize">
+                                    <%=candidate.state?.name%>
+                                  </span>
+                                  <% } else if (candidate.city) { %>
+                                    <span class="text-capitalize">
+                                      <%=candidate.city?.name%>
+                                    </span>
+                                    <% } else { %>
+                                      <span> NA</span>
+                                      <% } %>
+                            </li>
+                          </ul>
+                          <div class="d-flex justify-content-center">
+                            <% if (masked===true) { %>
+                              <button id="maskunmask" onclick="maskUnmask('<%=candidate._id %>')"
+                                class="masked btn btn-primary me-3 waves-effect waves-light btn-sm"
+                                data-bs-target="#editUser" data-bs-toggle="modal">UNMASK</button>
+                              <% } %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Profile section -->
+                    <section id="profile">
+                      <div class="col-xl-12" id="mipie_profile">
+                        <div class="row">
+                          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-one px-0 text-center">
+                            <img src="/images/icons/profile.png" class="img-fluid pt-1">
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
+                            <h5 class="p-0 m-0">Focalyt Profile</h5>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right"
+                            data-bs-target="#editUser" data-bs-toggle="modal" target="_blank" aria-disabled
+                            onclick="addTextContent('<%= candidate._id%>')" id="loader">
+                            <a class="dwnload btn">DOWNLOAD&nbsp;<i
+                                class="feather icon-arrow-down text-white font-weight-bold"></i></a>
+                          </div>
+                        </div>
+                      </div>
+
+                      <%if (candidate.resume && masked == false) { %>
+                        <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume">
+                          <div class="row">
+                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-two px-0 text-center">
+                              <img src="/images/icons/resume.png" class="img-fluid pt-1">
+                            </div>
+                            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
+                              <h5 class="p-0 m-0">Resume</h5>
+                            </div>
+                            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right">
+                              <a class="dwnload btn" onclick="downloadCandidateResume()" id="resumeButton"
+                                target="_blank">DOWNLOAD&nbsp;<i
+                                  class="feather icon-arrow-down text-white font-weight-bold"></i></a>
+                            </div>
+                          </div>
+                        </div>
+                        <% } else if(candidate.resume) {%>
+                          <!-- <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume"> -->
+                            <div class="row pt-1">
+                          <img src="/images/disable_button.jpg" class="img-fluid"/>
+                            </div>
+                          <!-- </div> -->
+                          <% }%>
+                    </section>
+                    
+                  </div>
+                  <div class="col-xl-8">
+                    <!-- User Pills -->
+                    <ul class="nav nav-pills flex-column flex-md-row mb-3 d-none">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="javascript:void(0);">
+                          <i class="ti ti-user-check ti-xs me-1"></i>QUALIFICATION</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">
+                          <i class="ti ti-lock ti-xs me-1"></i>SKILLS</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);l">
+                          <i class="ti ti-currency-dollar ti-xs me-1"></i>EXPERIENCE</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);"><i class="ti ti-bell ti-xs me-1"></i>LOCATION
+                          PREFERENCES</a>
+                      </li>
+                    </ul>
+                    <!--/ User Pills -->
+                    <!-- Project table -->
+                    <div class="content-body">
+                      <section class="list-view">
+                        <div class="row">
+                              <div class="col-12">
+                                <div class="card mb-0 mb-sm-0 mb-md-2 mb-lg-2 mb-xl-2 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-4 mt-4">
+                                  <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                    <h4 class="card-title"><img src="/images/icons/qualification.png"
+                                        class="img-fluid pr-1">Qualification</h4>
+                                  </div>
+                                  <div class="card-content">
+                                    <div class="table-responsive">
+                                      <table class="table table-hover-animation mb-0 table-hover">
+                                        <thead>
+                                          <tr>
+                                            <th>Qualification</th>
+                                            <th>College</th>
+                                            <th>University</th>
+                                            <th>Grade/CGPA</th>
+                                            <th>Year of Passing</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id="table-body">
+                                          <%if (candidate.qualifications?.length>0) { %>
+                                          <% candidate.qualifications.forEach((i)=> { %>
+                                            <tr>
+                                              <td class="text-capitalize">
+                                                <%=i.Qualification?.name ? i.Qualification?.name : 'NA' %>
+                                              </td>
+                                              <td class="text-capitalize">
+                                                <%=i.College?i.College:'NA' %>
+                                              </td>
+                                              <td class="text-capitalize">
+                                                <%=i.University ? i.University.name : 'NA' %>
+                                              </td>
+                                              <td class="text-capitalize">
+                                                <%=i.Result?i.Result:'NA' %>
+                                              </td>
+                                              <td>
+                                                <%=i.PassingYear ? i.PassingYear:'NA' %>
+                                              </td>
+                                            </tr>
+                                            <% });} else { %>
+                                              <tr>
+                                                <td class="text-center" colspan="5">
+                                                  No record found
+                                                </td>
+                                              </tr>
+                                              
+                                                <%}%>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
+                                <div class="card mt-1 mb-0 mb-sm-0 mb-md-2 mb-lg-2 mb-xl-2">
+                                  <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                    <h4 class="card-title"><img src="/images/icons/technicalskill.png"
+                                        class="img-fluid pr-1">Technical Skills</h4>
+                                  </div>
+                                  <div class="card-content">
+                                    <div class="table-responsive">
+                                      <table class="table table-hover-animation mb-0 table-hover">
+                                        <thead>
+                                          <tr>
+                                            <th>Technical</th>
+                                            <th>Media</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id="table-body">
+                                          <%if (candidate.techSkills?.length>0) { %>
+                                          <% candidate.techSkills.forEach((i)=> { %>
+                                            <tr>
+                                              <td class="text-capitalize">
+                                                <%=i.id.name%>
+                                              </td>
+                                              <td><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + i.URL %>"
+                                                  target="_blank">View</a></td>
+                                            </tr>
+                                            <% });} else { %>
+                                              <tr>
+                                                <td class="text-center" colspan="2">
+                                                  No record found
+                                                </td>
+                                              </tr>
+                                              
+                                                <%}%>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card mt-1 mb-0 mb-sm-0 mb-md-2 mb-lg-2 mb-xl-2">
+                                  <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                    <h4 class="card-title"><img src="/images/icons/technicalskill.png"
+                                        class="img-fluid pr-1">Non Technical Skills</h4>
+                                  </div>
+                                  <div class="card-content">
+                                    <div class="table-responsive">
+                                      <table class="table table-hover-animation mb-0 table-hover">
+                                        <thead>
+                                          <tr>
+                                            <th>Non Technical</th>
+                                            <th>Media</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id="table-body">
+                                          <%if (candidate.nonTechSkills?.length>0) { %>
+                                          <% candidate.nonTechSkills.forEach((i)=> { %>
+                                            <tr>
+                                              <td class="text-capitalize">
+                                                <%=i.id.name %>
+                                              </td>
+                                              <td><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + i.URL %>"
+                                                  target="_blank">View</a></td>
+                                            </tr>
+                                            <% });} else { %>
+                                              <tr>
+                                                <td class="text-center" colspan="2">
+                                                  No record found
+                                                </td>
+                                              </tr>
+                                              
+                                                <%}%>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12">
+                                <div class="card mt-1 mb-0 mb-sm-0 mb-md-2 mb-lg-2 mb-xl-2">
+                                  <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                    <h4 class="card-title"><img src="/images/icons/experince.png"
+                                        class="img-fluid pr-1">Experience</h4>
+                                  </div>
+                                  <div class="card-content">
+                                    <div class="table-responsive">
+                                      <table class="table table-hover-animation mb-0 table-hover">
+                                        <thead>
+                                          <tr>
+                                            <th>Duration</th>
+                                            <th>Company Name</th>
+                                            <th>Industry</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id="table-body">
+                                          <%if (candidate.experiences?.length>0) { %>
+                                          <% candidate.experiences.forEach((i)=> { %>
+                                            <tr>
+                                              <td>
+                                                <%=i.FromDate? moment(i.FromDate).format('MMM-YYYY') : ' NA ' %> To
+                                                  <%=i.ToDate? moment(i.ToDate).format('MMM-YYYY') : ' NA ' %>
+                                              </td>
+                                              <td class="text-capitalize">
+                                                <%=i.Company_Name? i.Company_Name : 'NA' %>
+                                              </td>
+                                              <td class="text-capitalize">
+                                                <%=i.Industry_Name?.name ? i.Industry_Name?.name : 'NA' %>
+                                              </td>
+                                            </tr>
+                                            <% });} else { %>
+                                              <tr>
+                                                <td class="text-center" colspan="3">
+                                                  No record found
+                                                </td>
+                                              </tr>
+                                              
+                                                <%}%>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12">
+                                <div class="card mt-1 mb-5">
+                                  <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                    <h4 class="card-title"><img src="/images/icons/location.png"
+                                        class="img-fluid pr-1">Location Preferences</h4>
+                                  </div>
+                                  <div class="card-content">
+                                    <div class="table-responsive">
+                                      <table class="table table-hover-animation mb-0 table-hover">
+                                        <thead>
+                                          <tr>
+                                            <th>Location 1</th>
+                                            <th>Location 2</th>
+                                            <th>Location 3</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id="table-body">
+                                          <%if (candidate.locationPreferences?.length>0) { %>
+                                          <tr>
+                                           
+                                            <td class="text-capitalize">
+                                              <%=candidate.locationPreferences[0]?.city?.name %>
+                                            </td>
+                                            <td class="text-capitalize">
+                                              <%=candidate.locationPreferences[1]?.city?.name %>
+                                            </td>
+                                            <td class="text-capitalize">
+                                              <%=candidate.locationPreferences[2]?.city?.name %>
+                                            </td>
+                                          </tr>
+                                          <%} else { %>
+                                            <tr>
+                                              <td class="text-center" colspan="3">
+                                                No record found
+                                              </td>
+                                            </tr>
+                                            
+                                              <%}%>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                      </section>
+                    </div>
+                    <!-- /Project table -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+        <div class="modal fade" id="updateStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Update Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body pt-1" id="popup-body">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Status<span class="required text-danger"> *</span></label>
+                    <select class="form-control text-capitalize" id="hiringStatus" value="" onchange="changeButton()">
+                      <option value="">Select Option</option>
+                      <option value="shortlisted" <% if (hiringStatus?.status=='shortlisted') { %> selected <% }%>>Shortlisted
+                      </option>
+                      <option value="interview due" <% if (hiringStatus?.status=='interview due') { %> selected <% }%>>Interview Due</option>
+                      <option value="interviewed" <% if (hiringStatus?.status=='interviewed') { %> selected <% }%>>Interviewed
+                      </option>
+                      <option value="on hold" <% if (hiringStatus?.status=='on hold') { %> selected <% }%>>On Hold</option>
+                      <option value="offer letter rollout" <% if (hiringStatus?.status=='offer letter rollout') { %> selected <% }%>>Offer Letter Rollout</option>
+                      <option value="hiring on hold" <% if (hiringStatus?.status=='hiring on hold') { %> selected <% }%> >Hiring on Hold</option>
+                      <option value="hired" <% if (hiringStatus?.status=='hired') { %> selected <% }%> >Hired</option>
+                      <option value="rejected" <% if (hiringStatus?.status=='rejected') { %> selected <% }%> >Rejected</option>
+                    </select>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Select JD</label>
+                    <select class="form-control text-capitalize" id="hiringJob" value="">
+                      <option value="">Select Option</option>
+                      <% jobs.forEach((job)=> { %>
+                          <option value="<%= job._id %>" <% if (job?._id.toString()==hiringStatus?.job?._id) { %> selected <% }%>>
+                            <%= job.title %>
+                          </option>
+                              <% }); %>
+                    </select>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Event Date/Time</label>
+                    <input type="date" class="form-control" name="eventDate" value="<%= hiringStatus?.eventDate ? moment(hiringStatus?.eventDate).utcOffset('+05:30').format('YYYY-MM-DD') : '' %>" id="eventDate">
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Select Concerned Person</label>
+                    <select class="form-control text-capitalize" value="" id="concernedPerson">
+                      <option value="">Select Option</option>
+                      <% company.companyExecutives?.forEach((executive)=> { %>
+                        <option value="<%= executive._id %>" <% if (hiringStatus?.concernedPerson == executive._id ) { %> selected <% }%> > <%= executive.name %></option>
+                      <% }); %>
+                    </select>
+                  </div>
+                  <div class="col-xl-12 mb-1 text-left">
+                    <label>Comment</label>
+                    <textarea class="form-control" cols="5" id="hiringComment" value="" rows="3"><%= hiringStatus?.comment %></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary <%= hiringStatus?.status ? '' : 'disabled' %>"
+                  onclick="updateStatus('<%=candidate._id%>')" <%=hiringStatus?.status ? '' : 'disabled' %>
+                  id="updateBtn">Update</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                    class="feather icon-x d-block d-lg-none"></i>
+                  <span class="d-none d-lg-block">Cancel</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="addCoins" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">            
+            <div class="modal-header">
+              <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle" >Insufficient Coins</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+                <div class="modal-body pt-1" id="popup-body">
+                <h5 class="pb-1 mb-0 mt-1">
+                 You need <%= coins.shortlist %> Coin to Shortlist the Candidate
+                </h5>
+                <ul class="list-unstyled">
+                  <li class="mb-1">
+                    <span class="credit font-weight-bold">
+                      Current Coins Balance: <%= company?.creditLeft %></span>
+                  </li>
+                </ul>
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-primary" onclick="getOffers()" data-toggle="modal" data-target="#coin_offer" data-dismiss="modal">Buy Coins</button>
+                  <button type="button" class="btn btn-outline-light" data-dismiss="modal"><i
+                    class="feather icon-x d-block d-lg-none"></i>
+                  <span class="d-none d-lg-block">Cancel</span></button>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coin modal offer -->
+        <div class="modal fade show" id="coin_offer" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">COIN OFFERS
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body pt-1" id="popup-body">
+              <ul class="list-unstyled">
+                <li>
+                  <div class="col-xl-8 mx-auto" id="offers">
+                   
+                  </div>
+                </li>
+                <li class="mb-1">
+                  <span class="credit font-weight-bold">
+                    Current Coins Balance: <%= company?.creditLeft  %></span>
+                </li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#applyvoucher" id="pay-button">Pay Now</button>
+              <button type="button" class="btn btn-outline-light waves-effect waves-light"
+                data-dismiss="modal"><i class="feather icon-x d-block d-lg-none"></i>
+                <span class="d-none d-lg-block">Cancel</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Coin modal offer -->
+      <div class="modal fade show" id="applyvoucher" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content modal-sm">
+         <div class="modal-header vchr_header">
+           <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Buy Coins</h5>
+           <button type="button" class="close color-purple" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">×</span>
+           </button>
+         </div>
+             <div class="modal-body mode-dice p-0">
+               <form class="my-3">
+                <h3 class="coupon-text">If you have <strong>Coupon Code </strong>, apply here</h3>
+                <input type="text" name="voucherField" class="text-white mt-1" placeholder="Enter Code" id="voucher" oninput="convert(event)" onkeypress="checkVouchers(event)">
+                <button type="button" class="voucher-btn disabled btn btn-sm ml-1"  aria-label="Apply" id="add" disabled> <span
+                aria-hidden="true" class="yes-cross" id="applyVoucher" onclick="apply(event)">Apply</span> </button>
+                 
+               </form>
+               <input type="hidden" class="form-control"  id="offerId" value="" />
+               <input type="hidden" class="form-control"  id="amount" value="" />
+               <input type="hidden" class="form-control"  id="offerAmount" value="" />
+               <input type="hidden" class="form-control" id="codevalue" value=""/>
+                         <p class="text-success font-weight-bolder font-italic" id="success-message"></p>
+               <p class="text-danger font-weight-bolder font-italic" id="error-message"></p>
+             </div>
+             <div class="modal-footer text-center">
+              <button class="btn button-vchr shadow" role="button" onclick="payment(event)" id="apply">Pay ₹</button>
+             </div>
+             </div>
+             </div>
+      </div>
+
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+         document.getElementById('pay-button').onclick = function(e){
+          $('#coin_offer').modal('hide');
+              let amount = $('input[name="offerName"]:checked').val()
+              let offerId = $('input[name="offerName"]:checked').attr('id');
+              setValues(offerId, amount)
+            }
+            function makePayment(e){
+            let voucherCode = document.getElementById('voucher').value
+            const offerId = document.getElementById('offerId').value;
+            const amount = document.getElementById('amount').value
+            let code=document.getElementById('codevalue').value
+            let data = {
+                offerId: offerId,
+                amount: amount
+              }
+              axios({method: 'post', url: '/company/payment', data, headers: { 'x-auth': localStorage.getItem('token') }}).then((res) => {
+              let options = {
+             "key": '<%= process.env.MIPIE_RAZORPAY_KEY %>',
+             "amount": res.data.order.amount, 
+             "currency": res.data.order.currency,
+             "name": "MiPie",
+             "description": "",
+             "image": "/images/logo/logo.png",
+             "order_id": res.data.order.id, 
+             "handler": function (response){
+                  let data = {
+                     paymentId: response.razorpay_payment_id,
+                     orderId: response.razorpay_order_id,
+                     _company: res.data.company._id,
+                     _offer: offerId,
+                     amount:amount,
+                     code:code
+                  }
+                  axios({method: 'post', url: '/company/paymentStatus', data, headers: { 'x-auth': localStorage.getItem('token') }}).then(res=>{
+                   window.location.reload()
+                  }).catch(
+                     (error) => {
+                         console.log(error.message)
+                     })
+               },
+             "prefill": {
+               "name": res.data.company.name,
+               "email": res.data.company.email,
+               "contact": res.data.company._concernPerson.mobile
+              },
+             "theme": {
+             "color": "#FC2B5A"
+             }
+             };
+             let rzp1 = new Razorpay(options);
+             rzp1.open();
+             e.preventDefault();
+             }).catch(
+               err=> console.log(err.message)
+               )      
+          }
+          function payment(e){
+            let voucherCode = document.getElementById('voucher').value 
+            if(voucherCode.trim()==""){
+              makePayment(e);
+            }else{
+              let code = document.getElementById('voucher').value
+              let amount = document.getElementById('offerAmount').value
+              let offer = document.getElementById('offerId').value
+           let  data = {
+            amount,
+            code,
+            offerId:offer
+          }
+            document.getElementById('codevalue').value=code
+            axios({method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') }})
+              .then((res) => {
+                if(res.data.status&&res.data.amount>0){
+                  $('#error-message').text('')
+                  $('#success-message').text(res.data.message);
+                  document.getElementById('amount').value = res.data.amount;
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                  makePayment(e);
+                }else if(res.data.status&&res.data.amount==0){
+                  $('#error-message').text('')
+                  $('#success-message').text(res.data.message);
+                  document.getElementById('amount').value = res.data.amount;
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                  window.location.reload();
+                }else{
+                  document.getElementById('voucher').value=''
+                  document.getElementById('codevalue').value=''
+                  $('#error-message').text(res.data.message)
+                  let offerAmount = document.getElementById('offerAmount').value
+                  document.getElementById('amount').value =document.getElementById('offerAmount').value ;
+                  $('#success-message').text('');
+                }
+              })
+      }
+    }
+    function apply(e){
+            let code = document.getElementById('voucher').value
+            let amount = document.getElementById('offerAmount').value
+            let offer = document.getElementById('offerId').value
+           let  data = {
+            amount,
+            code,
+            offerId:offer
+          }
+            document.getElementById('codevalue').value=code
+            axios({method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') }})
+              .then((res) => {
+                if(res.data.status){
+                  $('#error-message').text('')
+                  $('#success-message').text(res.data.message);
+                  document.getElementById('amount').value = res.data.amount;
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                }
+                else if(res.data.status&&res.data.amount==0){
+                  $('#error-message').text('')
+                  $('#success-message').text(res.data.message);
+                  document.getElementById('amount').value = res.data.amount;
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                  window.location.reload();
+                }
+                else{
+                  document.getElementById('voucher').value=''
+                  document.getElementById('codevalue').value=''
+                  $('#error-message').text(res.data.message);
+                  document.getElementById('amount').value =document.getElementById('offerAmount').value ;
+                  $('#success-message').text('');
+                  let offerAmount = document.getElementById('offerAmount').value
+                  document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
+                }
+              })
+      }
+   
+      function checkVouchers(e){
+            if (e.key === "Enter") {
+              event.preventDefault();
+               payment(e)
+            }
+          }
+          function maskUnmask(id) {
+            const body = { userId: id };
+            if ($('#maskunmask').hasClass('masked')) {
+              axios({ method: 'get', url: "/company/get-candidate-details", params: { userId: id }, headers: { 'x-auth': localStorage.getItem('token') } }).then((res) => {
+                  $('.mobile').html(res.data.mobile)
+                  $('.email').html(res.data.email)
+                  $('#maskunmask').hide()
+                  $('#loader').removeClass('disabled')
+                  $('#loader').removeAttr('disabled')
+                  axios({
+                    method: 'get', url: '/company/getCreditCount', headers: { 'x-auth': localStorage.getItem('token') }
+                  }).then((res) => {
+                    let credit = res.data.credit
+                    if (!credit) { credit = 0 }
+                    $('#userCredit').text(credit)
+                    window.location.reload()
+                  })
+                }).catch(
+                (error) => {
+                  if(error.response.status == 400){
+                    $('#addCoins').modal()
+                  }
+                })
+            }
+            else {
+              $('.mobile').html('xxxxxxxxxx')
+              $('.email').html('xxxxxxxxxx')
+              $('#maskunmask').addClass('masked')
+              $('#maskunmask').text('UNMASK')
+            }
+          }
+
+          const element = document.getElementById('mipie_profile')
+          const preloader = $('#preloader');
+          preloader.hide();
+          function addTextContent(id) {
+            preloader.show();
+            axios.get(`/company/createResume/${id}`, {
+              headers: { 'x-auth': localStorage.getItem('token') }
+            }).then(res => {
+              preloader.hide();
+              window.open(res.data.uploadData, '_blank')
+            }).catch((err) => {
+              preloader.hide();
+              console.log(err.message)
+            })
+          }
+          function downloadCandidateResume() {
+            const url = "<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.resume %>"
+            window.open(url, '_blank')
+          }
+
+          function updateStatus(id) {
+            let status = document.getElementById('hiringStatus').value
+            let job = document.getElementById('hiringJob').value
+            let comment = document.getElementById('hiringComment').value
+            let eventDate = $('#eventDate').val()
+            let concernedPerson = $('#concernedPerson').val()
+            let body = {
+              candidate: id,
+              status: status,
+              job: job,
+              comment: comment,
+              eventDate: eventDate,
+              concernedPerson: concernedPerson
+            }
+
+            axios({ method: 'post', url: `/company/candidate/statusUpdate`, data: body, headers: { 'x-auth': localStorage.getItem('token') } })
+              .then(result => {
+                window.location.reload()
+              })
+          }
+
+          function changeButton() {
+            let hiringStatus = document.getElementById('hiringStatus').value
+            if (hiringStatus) {
+              $('#updateBtn').removeAttr('disabled')
+              $('#updateBtn').removeClass('disabled')
+            } else {
+              $('#updateBtn').attr('disabled', 'disabled')
+              $('#updateBtn').addClass('disabled')
+            }
+          }
+          function convert(event) {
+          const val = event.target.value;
+          event.target.value = val.toUpperCase()
+
+          let applyButton = document.getElementById('add')
+            if(event.target.value.trim() !== ''){
+            applyButton.disabled = false
+            applyButton.classList.remove('disabled')
+           }
+            else{
+            applyButton.disabled = true
+            applyButton.classList.add('disabled')
+           }
+        }
+         
+          function setValues(offerId, amount) {
+            let offer = document.getElementById('offerId')
+            let voucherAmount = document.getElementById('amount')
+            let offerAmount = document.getElementById('offerAmount')
+            offer.value = offerId;
+            voucherAmount.value = amount
+            offerAmount.value = amount
+            document.getElementById('apply').innerHTML = `Pay ₹ ${amount}`
+          }
+          function getOffers(){
+              axios({ method: 'get', url: `/company/getCoinOffers`, headers: { 'x-auth': localStorage.getItem('token') } })
+                .then(res => {
+                  let offers = document.getElementById('offers');
+                  let html =''
+                  for(let i of res.data){
+                    html += `<div class="row inner-border my-2 text-white popup-bg py-1" ><div class="col-9 pr-0">${i.displayOffer}</div><div class="col-3 text-left"><span>  <input type="radio" id="${i._id}" name="offerName" value="${i.payAmount.$numberDecimal}" class="radio-size"> </span></div></div>`
+                  }
+                  offers.innerHTML = html
+                  $('.radio-size').first().prop("checked", true)
+                })
+            }
+
+        </script>
+
+
+          <% include ./partials/footer%>

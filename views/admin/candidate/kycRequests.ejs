@@ -1,0 +1,292 @@
+<% include ../partials/header %>
+<div
+  class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none"
+>
+  <div class="content-header-left col-md-12 col-12 mb-2">
+    <div class="row breadcrumbs-top">
+      <div class="col-9">
+        <h3 class="content-header-title float-left mb-0">KYC Requests</h3>
+        <div class="breadcrumb-wrapper col-12">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+            <li class="breadcrumb-item active">KYC Requests</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content-body">
+  <% include ../partials/flash %>
+
+  <section class="list-view">
+    <div class="row">
+      <div class="col-12 rounded equal-height-2 coloumn-2">
+        <div class="card">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-1"></div>
+
+          <div class="row text-right">
+            <div class="col-12">
+              <div class="collectie mt-1 mr-1">
+                <div class="bottomcontent">
+                  <span class="totalCount pl-1">Total Requests: <%= count || 0 %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="row mb-2">
+              <div class="col-xl-12 col-lg-12">
+                <form method="GET" id="filterForm">
+                
+                <div class="row">
+                  <div class="col-xl-2 ml-1 mt-1">
+                    <label>Name/ Mobile/ Whatsapp</label>
+                    <input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>"
+                     maxlength="25">
+                  </div>
+                  <div class="col-xl-2 ml-1 mt-1">
+                    <label>Date</label>
+                    <input type="date" class="form-control" id="date" name="date" value="<%= data.date %>">
+                  </div>
+                  
+                  <div style="margin-top: 2.5rem !important;" class="col-xl-3 text-center mt-3">
+                    <button 
+                      class="btn btn-success  waves-effect waves-light  text-white d-inline "
+                      id="submit-btn">Go</button>
+                      <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
+                      href="/admin/candidate/kycRequest">RESET</a>
+                  </div>
+                </div>
+                </form>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table
+                id="tblexportData"
+                class="table table-hover-animation mb-0 table-hover"
+              >
+                <thead>
+                  <tr>
+                    <th>CANDIDATE NAME</th>
+                    <th>MOBILE NO.</th>
+                    <th>AADHAR NUMBER</Canvas></th>
+                    <th>DOCUMENT</Canvas></th>
+                    <th>PAN NUMBER</Canvas></th>
+                    <th>DOCUMENT</Canvas></th>
+                    <th>UPI</Canvas></th>
+                    <th>DATE & TIME</th>
+                    <th>STATUS</th>
+                    <% if (view == false) { %>
+                    <th>ACTION</th>
+                    <% } %>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (kycRequests.length > 0) { %>
+                  <% kycRequests.forEach((kyc, i)=> { %>
+                  <tr>
+                    <td class="text-capitalize"><a  href="/admin/candidate/details/<%=kyc._candidate._id%>"><%= kyc._candidate ? kyc._candidate.name : "NA" %></a></td>
+                    <td><%= kyc._candidate ? kyc._candidate.mobile : "NA" %></td>
+                    <td><%= kyc.aadharCard ? kyc.aadharCard : 'NA' %></td>
+                    <% if (kyc.aadharCardImage) { %>
+                    <td>
+                        <span><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + kyc.aadharCardImage %>"
+                        target="_blank">View Aadhar</span>
+                    </td>
+                    <% } else { %>
+                        <td>NA</td>
+                    <% } %>
+                    <td><%= kyc.panCard ? kyc.panCard : 'NA' %></td>
+                    <% if (kyc.panCardImage) { %>
+                        <td>
+                            <span><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + kyc.panCardImage %>"
+                            target="_blank">View PAN</span>
+                        </td>
+                        <% } else { %>
+                            <td>NA</td>
+                        <% } %>    
+                    <td><%= kyc?._candidate.upi ? kyc?._candidate.upi : 'NA' %></td>
+                    <td><%= moment(kyc.updatedAt).utcOffset('+05:30').format('DD MMM YYYY, hh:mm A')  %></td>
+                    <td class="text-capitalize"><%= kyc?.status ? kyc?.status : 'Due' %></td>
+                    <% if (view == false) { %>
+                      <td id="actionButton<%=i%>">
+                        <button
+                        class="btn btn-success btn-sm text-white <% if (kyc.status) { %> disabled <% }%> "
+                        onclick="kycRequest(true, '<%= kyc._candidate._id %>', '<%= i %>')"
+                        <% if (kyc.kycCompleted) { %> disabled <% }%>
+                        >Accept</i
+                      ></button>
+                      <button
+                        class="btn btn-danger btn-sm text-white <% if (kyc.status) { %> disabled <% }%>"
+                        data-toggle="modal" data-target="#decline" onclick="kycDetails('<%= kyc._candidate._id %>')"
+                        <% if (kyc.kycCompleted) { %> disabled <% }%>
+                        >Decline</i
+                      ></button>
+                      </td>
+                      <% } %>
+                  </tr>
+                  <% }) } else {%>
+                    <tr><td colspan="10" class="text-center">No Results Found</td></tr>
+                    <%}%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <% if (totalPages> 1) { %>
+            <ul class="pagination justify-content-end ml-2 mb-2">
+              <% let first=1 %>
+                <% let last=totalPages> 4 ? 4 :
+                  totalPages %> <% if (totalPages> 4 && page >= 2) { %> <%
+                      first=page - 1 %>
+                      <% last=page + 1 %>
+                        <% if (last>
+                          totalPages) last = totalPages %> <% } %>
+                            <% if (first>
+                              1) { %>
+                              <li class="page-item">
+                                <a class="pageAnchor page-link"
+                                  href="<%= 1 %>">First</a>
+                              </li>
+                              <% } %>
+                                <% for (let i=first; i
+                                  <=last; i +=1) { %>
+                                  <% if (i===page) { %>
+                                    <li
+                                      class="active page-item">
+                                      <a href="javascript:void()"
+                                        class="page-link">
+                                        <%= i %>
+                                      </a>
+                                    </li>
+                                    <% } else { %>
+                                      <li
+                                        class="page-item">
+                                        <a class="page-link pageAnchor"
+                                          href="<%= i %>">
+                                          <%= i %>
+                                        </a>
+                                      </li>
+                                      <% } %>
+                                        <% } %>
+                                          <% if
+                                            (totalPages>
+                                            last)
+                                            { %>
+                                            <li
+                                              class="page-item">
+                                              <a class="pageAnchor page-link"
+                                                href="<%= last + 1 %>">...</a>
+                                            </li>
+                                            <li
+                                              class="page-item">
+                                              <a class="pageAnchor page-link"
+                                                href="<%= totalPages %>">Last</a>
+                                            </li>
+                                            <% }
+                                              %>
+            </ul>
+            <% } %>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--Decline Cashback MODAL -->
+  <div class="modal fade show" id="decline" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">
+          Decline KYC
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body pt-1" id="popup-body">
+        <h5>Are You Sure You Want To Decline ?</h5>
+        <input type="hidden" class="form-control"  id="candidateId" value="" />
+        <textarea class="form-control" placeholder="Add comment" id="comment"></textarea>
+      </div>
+      <p id="error" class="text-danger"></p>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary waves-effect waves-light" 
+        onclick="declineRequest()">Yes</button>
+        <button type="button" class="btn btn-outline-light waves-effect waves-danger"
+          data-dismiss="modal"><i class="feather icon-x d-block d-lg-none"></i>
+          <span class="d-none d-lg-block">No</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END -->
+  
+  <% include ../partials/footer %>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const pageAnchors = document.querySelectorAll("a.pageAnchor");
+      const { origin, pathname, search } = window.location;
+      let searchParams = search.split("?")[1];
+      let obj;
+      let url = `${origin}${pathname}?`;
+      if (searchParams) {
+        obj = JSON.parse(
+          '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+          function (key, value) {
+            return key === "" ? value : decodeURIComponent(value);
+          }
+        );
+        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+        keyArr.forEach((x) => {
+          if (x !== "page") {
+            url += `${x}=${obj[x]}&`;
+          }
+        });
+      }
+      pageAnchors.forEach((el) => {
+        const n = el.getAttribute("href");
+        el.setAttribute("href", `${url}page=${n}`);
+      });
+    });
+    function kycRequest(isAccepted, candidateId, i){
+      let body = {
+        kycCompleted: isAccepted,
+        _candidate: candidateId
+      }
+      let header = { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" }
+      axios.post('/admin/candidate/kycRequest', body, header).then(res => {
+        window.location.reload()
+      }).catch(err => {
+        console.log(err.message)
+      })
+
+    }
+
+    function kycDetails(candidateId){
+      const candidate = document.getElementById("candidateId")
+      candidate.value = candidateId
+    }
+    function declineRequest(){
+      const candidateId =  $(`#candidateId`).val()
+      let comment = $(`#comment`).val()
+      if(comment.trim() == ''){
+        $(`#comment`).addClass("error")
+        $(`#comment`).focus()
+        return false
+      }
+      let body = {
+        kycCompleted: false,
+        _candidate:candidateId,
+        comment
+      }
+      let header = { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" }
+      axios.post('/admin/candidate/kycRequest', body, header).then(res => {
+        window.location.reload()
+      }).catch(err => {
+        console.log(err.message)
+      })
+    }
+  </script>
+</div>

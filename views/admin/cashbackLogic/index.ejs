@@ -1,0 +1,177 @@
+<% include ../partials/header %>
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+	<div class="content-overlay"></div>
+	<% include ../partials/flash %>
+	<div class="content-wrapper null-margin">
+		
+		<div class="content-body">
+			
+			<section class="row flexbox-container">
+				<div class="col-xl-8 col-11 d-flex justify-content-center">
+					<div class="card bg-authentication rounded-0 mb-0 w-100">
+						<div class="row m-0">
+						
+							<div class="col-lg-12 col-12 p-0">
+								<div class="card rounded-0 mb-0 px-2 w-100">
+									<div class="card-header pb-1">
+										<div class="card-title">
+											<h4 class="mb-0">Cash Back Offers</h4>
+										</div>
+									</div>
+
+									<div class="card-content">
+										<div class="card-body pt-1">
+											<form method="POST" action="" name="email" id="form">
+                                                <div class="row">
+                                                        <div class="col-6"><label for=""><strong>Profile Complete</strong></label>
+                                                        <fieldset class="form-label-group form-group position-relative">
+                                                            <input onkeypress="if(this.value.length==7) return false" maxlength="7"
+                                                                type="number"
+                                                                class="form-control"
+                                                                value="<%= cbLogic?.profilecomplete %>"
+                                                                name="profilecomplete"
+                                                                step=".01"
+                                                            
+                                                            />
+                                                            <div class="form-control-position">
+                                                            </div>
+                                                        </fieldset>
+                                                        </div>
+                                                        <div class="col-6">
+                                                        <label for=""><strong>Video Profile</strong></label>
+                                                        <fieldset class="form-label-group form-group position-relative">
+                                                            <input onkeypress="if(this.value.length==7) return false" maxlength="7"
+                                                                type="number"
+                                                                class="form-control"
+                                                                value="<%= cbLogic?.videoprofile %>"
+                                                                name="videoprofile"
+                                                                step=".01"
+                                                            />
+                                                            
+                                                        </fieldset>
+                                                     </div>
+                                                    </div>
+                                                    <div class="row">
+                                                    <div class="col-6">                                                    
+                                                        <label for=""><strong>Shortlisted</strong></label>
+                                                        <fieldset class="form-label-group form-group position-relative">
+                                                            <input onkeypress="if(this.value.length==7) return false" maxlength="7"
+                                                                type="number"
+                                                                class="form-control"
+                                                                value="<%= cbLogic?.shortlisted%>"
+                                                                name="shortlisted"
+                                                                step=".01"
+                                                            />
+                                                            
+                                                        </fieldset>                                                       
+                                                    </div>
+                                                        <div class="col-6">
+                                                            <label for=""><strong>Hired</strong></label>
+                                                            <fieldset class="form-label-group form-group position-relative">
+                                                                <input onkeypress="if(this.value.length==7) return false" maxlength="7"
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    value="<%= cbLogic?.hired%>"
+                                                                    name="hired"
+                                                                    step=".01"
+                                                                />
+                                                                
+                                                            </fieldset>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <label for=""><strong>Apply</strong></label>                                                       
+                                                            <fieldset class="form-label-group form-group position-relative">
+                                                                <input onkeypress="if(this.value.length==7) return false" maxlength="7"
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    id="name"
+                                                                    value="<%= cbLogic?.apply%>"
+                                                                    name="apply"
+                                                                    step=".01"
+                                                                />
+                                                                
+                                                            </fieldset>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for=""><strong>Threshold</strong></label>
+                                                            <fieldset class="form-label-group form-group position-relative">
+                                                                <input onkeypress="if(this.value.length==7) return false" maxlength="7"
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    id="name"
+                                                                    value="<%= cbLogic?.threshold%>"
+                                                                    name="threshold"
+                                                                    step=".01"
+                                                                />
+                                                                
+                                                            </fieldset>                                                    
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <label for=""><strong>Referral</strong></label>                                                       
+                                                            <fieldset class="form-label-group form-group position-relative">
+                                                                <input onkeypress="if(this.value.length==2) return false" maxlength="2"
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    id="name"
+                                                                    value="<%= cbLogic?.Referral%>"
+                                                                    name="Referral"
+                                                                    step="01"
+                                                                />
+                                                            </fieldset>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for=""><strong>Streak Duration</strong></label>                                                       
+                                                            <fieldset class="form-label-group form-group position-relative">
+                                                                <input onkeypress="if(this.value.length==3) return false" maxlength="3"
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    id="name"
+                                                                    value="<%= cbLogic?.streakDuration%>"
+                                                                    name="streakDuration"
+                                                                    step="01"
+                                                                />
+                                                            </fieldset>
+                                                        </div>
+                                                    </div>
+
+												<div
+													class="form-group d-flex justify-content-between align-items-center"
+												>
+													<div class="text-left"></div>
+												</div>
+
+												<button href="#" type="submit" class="btn btn-primary float-right btn-inline">
+													Save
+												</button>
+											</form>
+										</div>
+									</div>
+									<div class="login-footer">
+										<div class="divider"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+<style>
+	.alertAdminSuccess {
+		left: 5% !important;
+		top: 0% !important;
+	}
+	.alertAdmin {
+		top: 0% !important;
+		   left: 8% !important;
+	}	
+</style>
+<% include ../partials/footer %>

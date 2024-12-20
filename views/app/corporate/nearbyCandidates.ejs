@@ -1,0 +1,309 @@
+<% include ./partials/header %>
+<style>
+  .fliter-block {
+    display: block!important;
+}
+
+@media only screen and (max-width: 992px) {
+#filter-img{
+  width: 60px;
+}
+}
+
+</style>
+<body
+  class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static"
+  data-open="click"
+  data-menu="vertical-menu-modern"
+  data-col="2-columns"
+>
+  <% include ./partials/navbar%> <% include ./partials/leftpane%>
+  <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+      <div
+        class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none"
+      >
+        <div class="content-header-left col-md-9 col-12 mb-2">
+          <div class="row breadcrumbs-top">
+            <div class="col-12">
+              <h3 class="content-header-title float-left mb-0">Candidates Near Me</h3>
+              <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="/company/dashboard">Home</a>
+                  </li>
+                  <li class="breadcrumb-item"><a href="#">Candidates Near Me</a></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="row">
+          <div class="col-xl-12 col-lg-12">
+            <div id="accordion">
+              <div class="card">
+            <div class="card-header  fliter-block px-1 pt-1 " id="headingOne">
+              <div class="row">
+                <div class="col-6 my-auto"><h5 >
+                  Filter Data / डेटा फ़िल्टर करें </h5>
+                 </div>
+                <div class="col-6 text-right">
+                  <img src="/images/filtern.png" class="btn btn-link collapsed py-0 mx-0 " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" width="90px" id="filter-img"    >
+                </div>
+              </div>
+             </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body px-0 py-0">
+            <div class="card">
+              <div id="filter">
+                <div class="card-content">
+                  <div class="card-body px-0">
+                    <div class="row my-0 mx-0" id="allFields">
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                          <label>Set Location As Per JD</label>
+                          <select class="form-control text-capitalize" name="jdLocation" id="jdLocation-field">
+                              <option value="">Select</option>
+                              <% jdLocation.forEach((jd)=> { %>
+                              <option value="<%= jd.location?.coordinates %>" class="text-capitalize">
+                                <%= jd.title %>
+                              </option>
+                                <% }); %>
+                          </select>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                            <label>Qualification</label>
+                            <select class="form-control text-capitalize" name="highestQualification"
+                              id="qualification-field">
+                              <option value="">Select</option>
+                              <% qualification.forEach((i)=> { %>
+                                  <option value="<%= i._id %>" class="text-capitalize">
+                                    <%= i.name %>
+                                  </option>
+                                    <% }); %>
+                            </select>
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                            <label>Sub Qualification</label>
+                            <select class="form-control text-capitalize" name="subQualification" id="subQualification">
+                              <option value="">Select</option>
+                              <% subQualification?.forEach((subQualification)=> { %>
+                                <option class="text-capitalize" value="<%= subQualification._id %>"> <%= subQualification.name %></option>
+                              <% }); %>
+                            </select>
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1" >
+                            <label>Experience</label>
+                            <select class="form-control" name="experience" id="exp-field">
+                              <option value="">Select</option>
+                              <% for(let i=0; i<16; i++) {%>
+                                <option value="<%= i %>"><%= i %></option>
+                             <% } %>
+                            </select>
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                            <label>Gender</label>
+                            <select class="form-control text-capitalize" name="gender" id="gender">
+                              <option value="">Select</option>
+                              <option class="text-capitalize" value="Male" >Male</option>
+                              <option class="text-capitalize" value="Female" >Female</option>
+                            </select>
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                            <label>Preferred State</label>
+                            <select class="form-control text-capitalize" name="state" id="state"
+                              onchange="stateDropDown(event,'city')">
+                              <option value="">Select</option>
+                              <% state.forEach((i)=> { %>
+                                  <option value="<%= i._id %>" class="text-capitalize cityclass">
+                                    <%= i.name %>
+                                  </option>
+                              <% }); %>
+                            </select>
+                          </div>                        
+                          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                            <label>Preferred City</label>
+                            <select class="form-control text-capitalize" name="city" id="city">
+                              <option value="">Select</option>
+                            </select>
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                            <label>Tech Skills</label>
+                            <select class="form-control text-capitalize" name="techSkills" id="techSkills">
+                              <option value="">Select</option>
+                              <% skills.forEach((skills)=> { %>
+                                <% if (skills.type == 'technical') { %>
+                                  <option  class="text-capitalize"
+                                   value="<%= skills._id %>" ><%= skills.name %></option>
+                                <% } %>
+                              <% }); %>
+                            </select>
+                          </div>
+                          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 ml-0 mt-1">
+                            <label>Non Tech Skills</label>
+                            <select class="form-control text-capitalize" name="nonTechSkills" id="nonTechSkills">
+                              <option value="">Select</option>
+                              <% skills.forEach((skills)=> { %>
+                                <% if (skills.type == 'non technical') { %>
+                                  <option class="text-capitalize"
+                                   value="<%= skills._id %>" ><%= skills.name %></option>
+                                <% } %>
+                              <% }); %>
+                            </select>
+                          </div>                              
+                           <div  class="col-xl-12  mt-xl-3 mt-lg-2 mt-md-3 mt-sm-2 mt-2 text-right">
+                            <button 
+                              class="btn btn-success  waves-effect waves-light  text-white d-inline px-xl-3 px-lg-3 px-md-2 px-sm-1 px-1"
+                              id="submit-btn" onclick="filter()" >Go</button>
+                              <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-sm-1 mx-0 px-xl-3 px-lg-3 px-md-2 px-sm-1 px-1"
+                              href="/company/nearbyCandidates">RESET</a>
+                            </div>
+                          <div  class="cont" style="display:none">
+                            <p id="candidateNameMarker"></p>
+                            <p id="genderExperienceMarker"></p>
+                            <p id="qualificationMarker"></p>
+                            <p id="branchMarker"></p>
+                            <p id="locationMarker"></p>
+                            <a id="candidateDetailsMarker"></a>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+          <div class="ml-5" id="error" style="color: red;"></div>
+          <div id="map" style="width: 100%; height: 400px"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE %>&callback=initMap&libraries=&v=weekly"
+    async
+  ></script>
+  <script>
+    function initMap(filterData) {
+      let locationArray = [];
+      axios
+        .get("/company/getNearbyCandidatesForMap", {
+          headers: {
+            "x-auth": localStorage.getItem("token"),
+            "Content-Type": "multipart/form-data",
+          },
+          params: filterData,
+        })
+        .then((res) => {
+          if(res.data.status == false){
+            $('#error').text('Add your Current Location')
+            const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 9,
+          })
+          }else{
+          const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 9,
+            center: {
+              lat: res.data.nearest?.location?.coordinates[1],
+              lng: res.data.nearest?.location?.coordinates[0],
+            },
+          });
+          for (let candidate of res.data.candidates) {
+            let obj = {
+              lat: candidate.location.coordinates[1],
+              lng: candidate.location.coordinates[0],
+            };
+            let temp = $('.cont')
+            $('#candidateNameMarker').text(candidate.name)
+            $('#genderExperienceMarker').text(`${candidate.sex}, ${candidate.isExperienced == true ? 'Experienced' : 'Fresher'}`)
+            $('#qualificationMarker').text(`Qualification: ${candidate.highestQualification[0]?.name ? candidate.highestQualification[0]?.name : 'NA'}`)
+            $('#locationMarker').text(`Location: ${Math.round(candidate.distance / 1000)} km`)
+            $('#candidateDetailsMarker').text('View Details')
+            $('#candidateDetailsMarker').attr('href', `/company/candidate/${candidate._id}`)
+
+            let content =$(temp).html()
+            
+            let infowindow = new google.maps.InfoWindow({
+              content,
+            });
+            const marker = new google.maps.Marker({
+              position: obj,
+              icon: {
+                url: "/images/marker.png",
+                scaledSize: new google.maps.Size(35, 35),
+              },
+              map: map,
+              infowindow: infowindow,
+            });
+            google.maps.event.addListener(marker, "click", function () {
+              this.infowindow.open(map, this);
+            });
+          }
+        }
+        });
+    }
+    function filter() {
+      let filterData = {};
+      $("#filter")
+        .find(".form-control")
+        .each(function () {
+          let type = $(this).prop("type");
+          let name = $(this).prop("name");
+          let val = $(this).val();
+          if (
+            type != "button" &&
+            type != "submit" &&
+            type != "file" &&
+            name !== ""
+          ) {
+            filterData[name] = val;
+          }
+        });
+      initMap(filterData);
+    }
+    $('#state').change(function (e) {
+            let stateId = e.target.value
+
+            header = { headers: { 'x-auth': localStorage.getItem('token') } }
+
+            axios.get('/company/getcities', { params: { stateId } }, header)
+              .then(result => {
+                if (result.data.cities.length > 0) {
+                  $('option.cityclass').remove();
+                  let options
+                  result.data.cities.forEach(i => {
+                    options = options + `<option value="${i.cityId}" class="text-capitalize cityclass">${i.name}</option>`
+                  })
+                  $('select#city').append(options);
+                }
+              })
+          });
+
+          const stateDropDown = (event, cityId) => {
+            const stateId = event.target.value;
+            let body = { stateId: stateId };
+            const selectCase = document.getElementById(city);
+            if (!stateId) {
+              $(`select#${cityId} option.companycitylist`).remove();
+            } else {
+              $.get('/company/getcitiesbyId', body).done((res) => {
+                $(`select#${cityId} option.companycitylist`).remove();
+                let options;
+                for (let i = 0; i < res.cityValues.length; i++) {
+                  options =
+                    options +
+                    `<option value="${res.cityValues[i]._id}" class="text-capitalize companycitylist">${res.cityValues[i].name}</option>`;
+                }
+                $(`select#${cityId}`).append(options);
+              });
+            }
+          };
+
+  </script>
+  <% include ./partials/footer%>
+</body>

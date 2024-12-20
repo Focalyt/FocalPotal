@@ -1,0 +1,293 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">
+						Job Sub Category
+					</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Job Sub Category</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<section class="list-view">
+				<div class="row">
+					<div class="col-6 equal-height-2">
+						<div class="card">
+							<div class="card-header border border-top-0 border-left-0 border-right-0">
+								<% if (jobSubName || jobSubJC) { %>
+									<h4 class="card-title pb-1">Update Job Sub Category</h4>
+									<% } else { %>
+										<h4 class="card-title pb-1">Add Job Sub Category</h4>
+										<% } %>
+							</div>
+							<div class="card-content">
+								<div class="card-body">
+									<form class="form-horizontal" action="" method="post">
+										<div class="row">
+
+											<div class="col-xl-4 mb-1">
+												<label>Select Job Category</label>
+												<select style="cursor: pointer;" class="form-control"
+													name="_jobCategory" required>
+													<option value="">Select Option</option>
+													<% jobCat.forEach((s)=> { %> <% if (jobSubJC &&
+															jobSubJC.toString()===s._id.toString()) { %>
+															<option value="<%= s._id %>" class="text-capitalize"
+																selected>
+																<%= s.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= s._id %>" class="text-capitalize">
+																	<%= s.name %>
+																</option>
+																<% } %>
+																	<% }) %>
+												</select>
+											</div>
+											<div class="col-xl-4 mb-1">
+												<label>Job Sub Category</label>
+												<input type="type" class="form-control" minlength="1" maxlength="50"
+													required value="<%- jobSubName ? jobSubName : ''%>" name="name"
+													placeholder="Sub Category name" />
+											</div>
+											<div class="col-xl-4 mb-1 job-btn">
+												<br />
+												<% if (jobSubName || jobSubJC) { %>
+													<button type="submit" 
+													class="btn btn-success font-small-3 <% if(view==true ) {%> disabled <% } %>"
+													<% if(view==true ) {%> disabled <% } %>>
+														Update
+													</button>
+													<% } else { %>
+														<button type="submit" 
+														class="btn btn-success font-small-3 <% if(view==true ) {%> disabled <% } %>"
+														<% if(view==true ) {%> disabled <% } %>>
+															Add
+														</button>
+														<% } %>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 rounded equal-height-2 coloumn-2">
+						<div class="card">
+							<div class="row p-1">
+								<div class="col-xl-6">
+									<div class="row">
+										<div class="card-header">
+											<h4 class="card-title">All Job Sub Categories</h4>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="col-xl-6">
+             <div class="row">
+                 <div class="col-xl-12 text-right">
+                     <a href="" class="btn btn-outline-success">Import</a>
+                     <a href="" class="btn btn-outline-primary">Export</a>
+                   </div>
+             </div>
+         </div> -->
+							</div>
+							<div class="card-content">
+								<div class="table-responsive">
+									<% if (jobSubCats && jobSubCats.length> 0) { %>
+										<table class="table table-hover-animation mb-0 table-hover">
+											<thead>
+												<tr>
+													<th>Job Sub Category Name</th>
+													<th>Job Category</th>
+													<th>Status</th>
+													<% if (view === false) { %>
+													<th>Action</th>
+													<% } %>
+												</tr>
+											</thead>
+											<tbody>
+
+												<% let count=0 %>
+													<% jobSubCats.forEach((l, i)=> {
+														%>
+														<tr>
+															<td class="text-capitalize">
+																<%= l.name %>
+															</td>
+															<td class="text-capitalize">
+																<%= l._jobCategory.name %>
+															</td>
+															<% if (view === true) { %>
+																<td><%= l.status ? 'True' : 'False' %></td>
+																<%}else{%>
+															<td>
+																<div
+																	class="custom-control custom-switch custom-control-inline">
+																		<input type="checkbox"
+																			onclick="myOnOffFunc('<%= l._id %>', '<%= l.status %>', 'jobSubCategory');"
+																			class="custom-control-input"
+																			id="customSwitch<%= i %>" <% if(l.status==true ) {%> checked <% } %> />
+																		<label class="custom-control-label"
+																			for="customSwitch<%= i %>">
+																		</label>
+																</div>
+															</td>
+															<% } %>
+															<% if (view === false) { %>
+															<td valign="middle">
+																<a href="/admin/jobSubCategory/edit/<%= l._id %>">
+																	<i class="feather icon-edit fa-lg primary" style="margin-left: -15px;"></i>
+																</a>
+															</td>
+															<% } %>
+														</tr>
+														<% }) %>
+											</tbody>
+										</table>
+										<% } else { %>
+											<p class="text-center mt-3">No result found</p>
+											<% } %>
+												<% if (totalPages> 1) { %>
+													<ul class="pagination justify-content-end ml-2 mb-2">
+														<% let first=1 %>
+															<% let last=totalPages> 4 ? 4 :
+																totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+																	<% first=page - 1 %>
+																		<% last=page + 1 %>
+																			<% if (last> totalPages) last = totalPages
+																				%> <% } %>
+																					<% if (first> 1) { %>
+																						<li class="page-item">
+																							<a class="pageAnchor page-link"
+																								href="<%= 1 %>">First</a>
+																						</li>
+																						<% } %>
+																							<% for (let i=first; i
+																								<=last; i +=1) { %>
+																								<% if (i===page) { %>
+																									<li
+																										class="active page-item">
+																										<a href="javascript:void()"
+																											class="page-link">
+																											<%= i %>
+																										</a>
+																									</li>
+																									<% } else { %>
+																										<li
+																											class="page-item">
+																											<a class="page-link pageAnchor"
+																												href="<%= i %>">
+																												<%= i %>
+																											</a>
+																										</li>
+																										<% } %>
+																											<% } %>
+																												<% if
+																													(totalPages>
+																													last)
+																													{ %>
+																													<li
+																														class="page-item">
+																														<a class="pageAnchor page-link"
+																															href="<%= last + 1 %>">...</a>
+																													</li>
+																													<li
+																														class="page-item">
+																														<a class="pageAnchor page-link"
+																															href="<%= totalPages %>">Last</a>
+																													</li>
+																													<% }
+																														%>
+													</ul>
+													<% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<% include ../partials/footer %>
+				<script>
+					function myOnOffFunc(id, status, model) {
+						// eslint-disable-line
+						let myStatus = true;
+						if (status === true || status === "true") {
+							myStatus = false;
+						}
+						$.ajax({
+							type: "POST",
+							url: "/admin/changestatus",
+							data: {
+								id,
+								status: myStatus,
+								model,
+							},
+							success: () => location.reload(),
+						});
+					}
+				</script>
+				<script>
+					!(function () {
+						"use strict";
+						Array.isArray ||
+							(Array.isArray = function (r) {
+								return "[object Array]" === Object.prototype.toString.call(r);
+							});
+						var r = {
+							get: function () {
+								var r = window.location.search,
+									t = {};
+								return "" === r
+									? t
+									: ((r = r.slice(1)),
+										(r = r.split("&")),
+										r.map(function (r) {
+											var i, o;
+											(r = r.split("=")),
+												(i = r[0]),
+												(o = r[1]),
+												t[i]
+													? (Array.isArray(t[i]) || (t[i] = [t[i]]),
+														t[i].push(o))
+													: (t[i] = o);
+										}),
+										t);
+							},
+						};
+						if (window) {
+							if (window.qs)
+								throw new Error(
+									"Error bootstrapping qs: window.qs already set."
+								);
+							window.qs = r;
+						}
+					})();
+				</script>
+				<script>
+					document.addEventListener("DOMContentLoaded", () => {
+						const pageAnchors = document.querySelectorAll("a.pageAnchor");
+						const { origin, pathname, search } = window.location;
+						const obj = window.qs.get(search);
+						const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+						let url = `${origin}${pathname}?`;
+						keyArr.forEach((x) => {
+							if (x !== "page") {
+								url += `${x}=${obj[x]}&`;
+							}
+						});
+						pageAnchors.forEach((el) => {
+							const n = el.getAttribute("href");
+							el.setAttribute("href", `${url}page=${n}`);
+						});
+					});
+				</script>
+	</div>

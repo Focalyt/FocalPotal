@@ -1,0 +1,282 @@
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content" id="user-details">
+    <div class="modal-header">
+      <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Complete Profile</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body pt-1" id="popup-body">
+
+    </div>
+    <div class="col-xl-12 mb-1" id="gender-div">
+      <select class="form-control single-field" value="" name="sex" id="gender">
+        <option value="">Your Gender / आपका लिंग</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+    </div>
+    <div class="col-xl-12 mb-1" id="dob-div">
+      <input type="text" name="dob" class="form-control" value="" id="dob" placeholder="Date of Birth/जन्म तिथि"
+       onfocus="(this.type='date')" onblur="this.value ? '' :(this.type='text')">
+    </div>
+    <div class="col-xl-12 mb-1" id="experience-div">
+      <select class="form-control single-field" value="" name="experience" id="experience">
+        <option value="">Experience in Years / अनुभव </option>
+        <option value="0">Fresher</option>
+        <% for(let i=1; i<16; i++) {%>
+          <option value="<%= i %>">
+            <%= i %>
+          </option>
+          <% } %>
+      </select>
+    </div>
+    <div class="col-xl-12 mb-1" id="highest-qual-div">
+      <select class="form-control single-field" value="" name="experience" id="highest-qual">
+        <option value="">Highest Qualification / उच्चतम योग्यता </option>
+      </select>
+    </div>
+    <div class="col-xl-12 mb-1" id="state-div">
+      <select class="form-control single-field" value="" name="state" id="state"
+        onchange="stateChangeHandler(event,'city')">
+        <option value="">Current State / वर्तमान राज्य </option>
+      </select>
+    </div>
+    <div class="col-xl-12 mb-1" id="city-div">
+      <select class="form-control single-field" value="" name="experience" id="city">
+        <option value="">Current City /वर्तमान शहर </option>
+      </select>
+    </div>
+    <div class="col-xl-12 mb-1" id="pincode-div">
+      <input type="number" class="form-control" name="pincode" id="pincode" placeholder="Pincode / पिनकोड"
+        maxlength="10">
+    </div>
+    <div class="col-xl-12 mb-1" id="loc-field">
+      <input class="form-control" type="text" id="work-loc" value="" placeholder="Your Location / वर्तमान स्थान">
+      <input type="hidden" id="place" name="place" value="" class="form-control" />
+      <input type="hidden" id="latitude" name="latitude" value="" class="form-control" />
+      <input type="hidden" id="longitude" name="longitude" value="" class="form-control" />
+      <input type="hidden" name="address" id="address" value="">
+    </div>
+    <input type="hidden" id="whatsapp" value=""/>
+    <input type="hidden" id="mobile" value=""/>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary waves-effect waves-light"
+        onclick="updateAndApply('<%=jobDetails._id%>')">Update and
+        Apply</button>
+      <button type="button" class="btn btn-outline-light waves-effect waves-danger" data-dismiss="modal"><i
+          class="feather icon-x d-block d-lg-none"></i>
+        <span class="d-none d-lg-block">Cancel</span></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE%>&callback=initMap&libraries=places&v=weekly"
+defer></script>
+
+<script>
+
+  $(document).ready(function () {
+    window.initMap = initMap;
+    axios.get('/candidate/completeProfile', { headers: { 'x-auth': localStorage.getItem('token') } })
+      .then(res => {
+        if (res.data.candidate.sex) {
+          $('#gender').val(res.data.candidate.sex)
+        } else {
+          $('#gender-div').addClass('error')
+          $('#gender').focus()
+        }
+        if(res.data.candidate.whatsapp){
+          $('#whatsapp').val(res.data.candidate.whatsapp)
+        }
+        $('#mobile').val(res.data.candidate.mobile);
+        if (res.data.candidate.totalExperience) {
+          $('#experience').val(res.data.candidate.totalExperience)
+        } else {
+          if (res.data.candidate.isExperienced === true || res.data.candidate.isExperienced === false) {
+            $('#experience').val(0)
+          } else {
+            $('#experience-div').addClass('error')
+            $('#experience').focus()
+          }
+        }
+        if (res.data.candidate.place) {
+            $('#work-loc').val(res.data.candidate.place)
+            $('#longitude').val(res.data.candidate.longitude)
+            $('#latitude').val(res.data.candidate.latitude)
+            $('#place').val(res.data.candidate.place)
+            $('#address').val(res.data.candidate.address)
+          }else {
+          $('#loc-field').addClass('error')
+          $('#location').focus()
+        }
+
+        $('#state').find('option:not(:first)').remove()
+        $('#highest-qual').find('option:not(:first)').remove()
+        let options
+        for (let state of res.data.state) {
+          if (res.data.candidate.state == state._id) {
+            options = options + `<option value="${state._id}" selected  class="text-capitalize">${state.name}</option>`
+          } else {
+            options = options + `<option value="${state._id}" class="text-capitalize">${state.name}</option>`
+          }
+        }
+        $('#state').append(options)
+
+        if (!res.data.candidate.state) {
+          $('#state-div').addClass('error')
+          $('#state').focus()
+        }
+
+        $('#city').find('option:not(:first)').remove()
+        options = ''
+        for (let city of res.data.city) {
+          if (res.data.candidate.city == city._id) {
+            options = options + `<option value="${city._id}" selected  class="candidatecitylist text-capitalize">${city.name}</option>`
+          } else {
+            options = options + `<option value="${city._id}" class="candidatecitylist text-capitalize">${city.name}</option>`
+          }
+        }
+
+        $('#city').append(options)
+        if (!res.data.candidate.city) {
+          $('#city-div').addClass('error')
+          $('#city').focus()
+        }
+        options = ''
+        for (let highestQualification of res.data.highestQualification) {
+          if (res.data.candidate.highestQualification == highestQualification._id) {
+            options = options + `<option value="${highestQualification._id}" selected class="text-capitalize">${highestQualification.name}</option>`
+          } else {
+            options = options + `<option value="${highestQualification._id}" class="text-capitalize">${highestQualification.name}</option>`
+          }
+        }
+        $('#highest-qual').append(options)
+
+        if (!res.data.candidate.highestQualification) {
+          $('#highest-qual-div').addClass('error')
+          $('#highestQualification').focus()
+        }
+
+        if (res.data.candidate.pincode) {
+          $('#pincode').val(res.data.candidate.pincode)
+        } else {
+          $('#pincode-div').addClass('error')
+          $('#pincode').focus()
+        }
+
+        if (res.data.candidate.dob) {
+          $('#dob').prop("type", "date")
+          $('#dob').val(res.data.dob)
+        } else {
+          $('#dob-div').addClass('error')
+        }
+
+      })
+
+  })
+
+  function updateAndApply(jobId) {
+    $('#user-details .error').removeClass('error')
+    let gender = $('#gender').val()
+    let state = $('#state').val()
+    let city = $('#city').val()
+    let pincode = $('#pincode').val()
+    let highestQualification = $('#highest-qual').val()
+    let experience = $('#experience').val()
+    let longitude = $('#longitude').val()
+    let latitude = $('#latitude').val()
+    let whatsapp=$('#whatsapp').val();
+    let place = $('#place').val()
+    let address = $('#address').val()
+    let dob = $('#dob').val();
+    let mobile=$('#mobile').val();
+    let location = $('#work-loc').val()
+    if (!gender) {
+      $('#gender-div').addClass('error')
+    } if (!state) {
+      $('#state-div').addClass('error')
+    } if (!city) {
+      $('#city-div').addClass('error')
+    } if (!pincode) {
+      $('#pincode-div').addClass('error')
+    } if (!highestQualification) {
+      $('#highest-qual-div').addClass('error')
+    } if (!experience) {
+      $('#experience-div').addClass('error')
+    } if (!place || !longitude || !latitude || !location) {
+      $('#loc-field').addClass('error')
+    } if (!dob) {
+      $('#dob-div').addClass('error')
+    }
+
+    if (gender && state && city && pincode && highestQualification && experience
+      && longitude && latitude && place && location) {
+        let body;
+          body = {
+            highestQualification,
+            personalInfo: {
+              sex: gender,
+              state,
+              city,
+              pincode,
+              place,
+              longitude,
+              latitude,
+              whatsapp:whatsapp||mobile,
+              address: address || place,
+              dob
+            },
+            totalExperience: experience,
+            isExperienced: experience == 0 ? false : true
+          }
+        
+      axios.post('/candidate/myprofile', body, { headers: { 'x-auth': localStorage.getItem('token') } })
+        .then(res => {
+          let id='<%= jobDetails._id %>'
+          axios({ method: 'post', url: `/candidate/job/${id}/apply`, headers: { 'x-auth': localStorage.getItem('token') } })
+                      .then(result => {
+                          window.location.reload()
+                      }).catch(err => {
+                        console.log(err.message)
+                         window.location.reload()
+                      })
+        }).catch(err => console.log(err.message))
+  }
+
+  }
+
+  function initMap() {
+    const options = {
+      componentRestrictions: { country: "in" },
+      types: ["establishment"]
+    };
+    const location = document.getElementById("work-loc")
+    const autocomplete = new google.maps.places.Autocomplete(location, options);
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+      let place = autocomplete.getPlace();
+      document.getElementById('place').value = location.value;
+      document.getElementById('latitude').value = place.geometry.location.lat();
+      document.getElementById('longitude').value = place.geometry.location.lng();
+    });
+  }
+
+  const stateChangeHandler = (event, cityId) => {
+      const stateId = event.target.value;
+      if (!stateId) {
+        $(`select#${cityId} option.candidatecitylist`).remove();
+        return false
+      }
+      let body = { stateId: stateId };
+      const selectCase = document.getElementById(city);
+      $.get('/candidate/getcitiesbyId', body).done((res) => {
+        $(`select#${cityId} option.candidatecitylist`).remove();
+        let options
+        for (let i = 0; i < res.cityValues.length; i++) {
+          options = options + `<option value="${res.cityValues[i]._id}" class="text-capitalize candidatecitylist">${res.cityValues[i].name}</option>`
+        }
+        $(`select#${cityId}`).append(options);
+      })
+    }
+
+</script>

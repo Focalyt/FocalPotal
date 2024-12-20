@@ -1,0 +1,119 @@
+<% include ./partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+      <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+          <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+              <div class="row breadcrumbs-top">
+                <div class="col-12">
+                  <h2 class="content-header-title float-left mb-0">Ongoing Candidates</h2>
+                  <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="/company/dashboard">Home</a>
+                      </li>
+                      <li class="breadcrumb-item active">Ongoing Candidates</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-body">
+            <% include ../../partials/flash %>
+            <section class="list-view">
+              <div class="row">
+                <div class="col-12">
+                  <div class="card mt-1 mb-5">
+                    <div class="card-header border border-top-0 border-left-0 border-right-0">
+                      <h4 class="card-title pb-1">Ongoing Candidates</h4>
+                      <h6 class="text-bold-500 ">
+                      Candidate Count: <%= ongoingCandidates?.length %>
+                      </h6 >
+                    </div>
+                    <div class="col-xl-12 col-lg-12 mt-2">
+                      <form method="GET">
+                        <div class="row">
+                          <div class="col-xl-4">
+                            <label>Name/ Mobile/ Whatsapp</label>
+                            <input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>"
+                             maxlength="25">
+                          </div>
+                          <div class="col-xl-4">
+                            <h6>Hiring Status</h6>
+                            <select class="form-control" id="status-control" name="status" value="">
+                              <option value="" <% if (status=='') { %> selected <% }%>>Select Option</option>
+                            <option value="interview due" <% if (status=='interview due') { %> selected <% }%>>Interview Due</option>
+                              <option value="interviewed" <% if (status=='interviewed') { %> selected <% }%>>Interviewed</option>
+                              <option value="on hold" <% if (status=='on hold') { %> selected <% }%>>On Hold</option>
+                              <option value="offer letter rollout" <% if (status=='offer letter rollout') { %> selected <% }%>>Offer Letter Rollout</option>
+                              <option value="hiring on hold" <% if (status=='hiring on hold') { %> selected <% }%>>Hiring on Hold</option>
+                              <option value="hired" <% if (status=='hired') { %> selected <% }%>>Hired</option>
+                            </select>
+                            </div>
+                            <div class="col-xl-2">
+                              <label>&nbsp;</label> <br><button
+                                class="btn btn-success  waves-effect waves-light text-white"
+                                id="submit-btn">SUBMIT</button>
+                            </div>
+                        </div> 
+                      </form>
+                    </div>
+                    <div class="card-content">
+                      <div class="table-responsive mt-1">
+                        <table class="table table-hover-animation mb-0 table-hover">
+                          <thead>
+                            <tr>
+                              <th>CANDIDATES</th>
+                              <th>Qualification</th>
+                              <th>Hiring Stage</th>
+                              <th>Experience</th>
+                              <th>ACTIONS</th>
+                            </tr>
+                          </thead>
+                          <tbody id="table-body" class="text-capitalize">
+                            <% if(ongoingCandidates?.length > 0){ %>
+                                <% ongoingCandidates.forEach((ongoing)=> { %>
+                                  <tr>
+                                    <td>
+                                      <%= ongoing.candidate[0]?.name %>
+                                    </td>
+                                    <td><%= (qualifications?.filter(q => ongoing.candidate[0]?.highestQualification == q._id ))[0]?.name %></td>
+                                    <td><%= ongoing?.status ? ongoing?.status : 'NA' %></td>
+                                    <td><%= !ongoing.candidate[0]?.isExperienced ? 'Fresher' : ongoing.candidate[0]?.totalExperience ? ongoing.candidate?.totalExperience  + ' Years': 'NA' %></td>
+                                    <td class="actions " id="socail-iconw" >
+                                      <a href="/company/candidate/<%=ongoing.candidate[0]?._id%>?src=onGoing"><i
+                                        class="fa-regular fa-user fa-lg"></i></a>
+                                        <a href="https://wa.me/91<%= ongoing?.candidate[0]?.whatsapp %>" target="_blank"> <img src="/public_assets/images/whatsappicon.png" class="mx-1" style="width: 1.5rem;"></a> 
+                                        <a href="tel:<%= ongoing?.candidate[0]?.mobile %>"> <img src="/public_assets/images/telephone.png" style="width: 1.5rem;"> </a>     
+                                    </td>
+                                  </tr>
+                                <% }) } else {%>
+                                    <tr><td colspan="5" class="text-center">No Result Found</td></tr>
+                                <%}%>        
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="sidenav-overlay"></div>
+      <div class="drag-target"></div>
+      </div>
+      <script>
+
+        </script>
+
+        <% include ./partials/footer%>
+
+          <script src="https://kit.fontawesome.com/ce5729505d.js" crossorigin="anonymous"></script>

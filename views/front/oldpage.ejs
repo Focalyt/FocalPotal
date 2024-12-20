@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html class=" js no-touch cssanimations csstransitions">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Focalyt - Top Blue Collar Job Board in India | Powered by Focal Skill</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Focalyt">
+
+  <!-- Styles -->
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/bootstrap-grid.css">
+  <link rel="stylesheet" href="/public_assets/css/icons.css">
+  <link rel="stylesheet" href="/public_assets/css/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/responsive.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/chosen.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/colors/colors.css">
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+  <link rel="icon" type="image/x-icon" href="/images/ico/faviconnew.ico"
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <style>
+    .apply-padding {
+      margin-bottom: 10px;
+    }
+
+   
+    @media only screen and (max-width: 768px) {
+    .call-btn{
+      width: 100%!important;
+    }
+
+      }
+  </style>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-W39K27R');</script>
+  <!-- End Google Tag Manager -->
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W39K27R"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div class="theme-layout" id="scrollup">
+    <% include ./partials/navbar %>
+
+    <!-- APPLY GIF -->
+    <a
+      class="d-xl-none d-lg-none d-md-none d-sm-block d-block"
+      href="/jobdetails"
+    >
+      <img
+        src="/mipieIn/images/applyforjob.gif"
+        class="img-fluid"
+        id="apply-now"
+        alt="Apply for job"
+    /></a>
+    <!-- END -->
+    <section>
+      <div class="block double-gap-top double-gap-bottom">
+        <div
+          data-velocity="-.1"
+          style="
+            background: url(mipieIn/images/resource/banner_home.webp) repeat
+              scroll 50% 422.28px transparent;
+          "
+          class="parallax scrolly-invisible layer blackish"
+        ></div>
+        <!-- PARALLAX BACKGROUND IMAGE -->
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-lg-12">
+              <div class="form-location-sec">
+                <h3><strong>रोजगार खोजने का सबसे आसान तरीका !</strong></h3>
+              </div>
+            </div>
+
+            <div class="container">
+              <div class="row text-center">
+                <div class="col-lg-12">
+                  <a href="/candidate/register" target="_blank"
+                    ><img
+                      src="/mipieIn/images/job.png"
+                      class="img-fluid"
+                      draggable="false"
+                  /></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="job-desc">
+      <template>
+        <div class="job-listing">
+          <div class="job-title-sec">
+            <div class="c-logo">
+              <img
+                src="/mipieIn/images/resource/ma.png"
+                alt=""
+                id="company_logo"
+              />
+            </div>
+            <h3><a href="#" title="" id="title"></a></h3>
+            <span id="company-name"></span>
+            <span class="job-lctn" id="job-location"></span>
+          </div>
+          <a
+            href="/candidate/register"
+            target="_blank"
+            title=""
+            class="aply-btn"
+            >Apply Now</a
+          >
+          <span class="job-is ft" id="job-type"></span>
+        </div>
+      </template>
+    </section>
+    <form method="get" id="myForm">
+      <section class="portfolio mt-xl-5 mt-lg-5 mt-md-3 mt-sm-2 mt-1">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-12 text-center">
+              <h2 class="font-weight-bold"><span class="color_zz">Featured</span> Jobs</h2>
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-12">
+              <ul id="portfolio-flters" class="d-flex justify-content-center">
+                <li class="">
+                  <select class="form-control" name="qualification" id="qualification">
+                    <option value="">Select Qualification</option>
+                    <% allQualification.forEach((i)=> { %> <% if(i._id==data.qualification){ %>
+                        <option selected value="<%= i._id %>" class="text-capitalize">
+                          <%= i.name %>
+                        </option>
+                        <% } else { %>
+                          <option value="<%= i._id %>" class="text-capitalize">
+                            <%= i.name %>
+                          </option>
+                          <% } %>
+                            <% }); %>
+                  </select>
+                </li>
+                <li class="">
+                  <select class="form-control" name="experience" id="experience">
+                    <option value="">Select Experience</option>
+                    <option value="0" <% if (data.experience=='0' ) { %> selected <% }%>>0</option>
+                    <% for(let i=1; i<16; i++) {%>
+                      <option value="<%= i %>" <% if (data.experience==i ) { %> selected <% }%> ><%= i %>
+                      </option>
+                      <% } %>
+                  </select>
+                </li>
+                <li class="">
+                  <select class="form-control" name="industry" id="industry">
+                    <option value="">Select Industry</option>
+                    <% allIndustry.forEach((i)=> { %> <% if(i._id==data.industry){ %>
+                        <option selected value="<%= i._id %>" class="text-capitalize">
+                          <%= i.name %>
+                        </option>
+                        <% } else { %>
+                          <option value="<%= i._id %>" class="text-capitalize">
+                            <%= i.name %>
+                          </option>
+                          <% } %>
+                            <% }); %>
+                  </select>
+                </li>
+                <li class="">
+                  <select class="form-control" id="jobType" name="jobType">
+                    <option value="">Select JobType</option>
+                    <option value="Part Time" <% if(data.jobType=="Part Time" ) {%> selected <% } %>>Part
+                        Time</option>
+                    <option value="Full Time" <% if(data.jobType=="Full Time" ) {%> selected <% } %>>Full
+                        Time</option>
+                  </select>
+                </li>
+                <li class="">
+                  <select class="form-control" id="state" name="state">
+                    <option value="">Select State</option>
+                    <% allStates.forEach((i)=> { %> <% if(i._id==data.state){ %>
+                        <option selected value="<%= i._id %>" class="text-capitalize">
+                          <%= i.name %>
+                        </option>
+                        <% } else { %>
+                          <option value="<%= i._id %>" class="text-capitalize">
+                            <%= i.name %>
+                          </option>
+                          <% } %>
+                            <% }); %>
+                  </select>
+                </li>
+                <li class="">
+                  <select class="form-control" id="Salary" name="Salary">
+                    <option value="">Select Salary</option>
+                    <option value="5000" <% if(data.Salary=="5000" ) {%> selected <% } %>>5000</option>
+                    <option value="10000" <% if(data.Salary=="10000" ) {%> selected <% } %>>10000
+                    </option>
+                    <option value="15000" <% if(data.Salary=="15000" ) {%> selected <% } %>>15000
+                    </option>
+                    <option value="20000" <% if(data.Salary=="20000" ) {%> selected <% } %>>20000
+                    </option>
+                    <option value="30000" <% if(data.Salary=="30000" ) {%> selected <% } %>>30000
+                    </option>
+                    <option value="40000" <% if(data.Salary=="40000" ) {%> selected <% } %>>40000
+                    </option>
+                    <option value="50000" <% if(data.Salary=="50000" ) {%> selected <% } %>>50000
+                    </option>
+                    <option value="70000" <% if(data.Salary=="70000" ) {%> selected <% } %>>70000
+                    </option>
+                    <option value="80000" <% if(data.Salary=="80000" ) {%> selected <% } %>>80000+
+                    </option>
+                  </select>
+                </li>
+                <li class="text-center">
+                  <a href="/">
+                    <i class="fa fa-refresh color_zz" style="padding: 10px;"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+
+    <section>
+      <div class="pt-xl-5 pt-lg-5 pt-md-5 pt-sm-5 pt-0">
+        <div class="container">
+          <% recentJobs.forEach((recentJob)=> { %>
+            <div class="row pointer" onclick="gotoJob('<%=recentJob._id%>')">
+              <div class="col-lg-8 column">
+                <div class="job-single-sec">
+                  <div class="job-single-head border-0 pb-0 mt-xl-0 mt-lg-0 mt-md-2 mt-sm-2 mt-0">
+                    <div class="job-head-info">
+                      <h5 class="text-capitalize">
+                        <%=recentJob.title%>
+                      </h5>
+                      <span class="text-capitalize">
+                        <%= recentJob.displayCompanyName?recentJob.displayCompanyName : recentJob._company?.name%>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="job-overview mt-2">
+                    <ul class="mb-xl-0 mb-lg-2 mb-md-2 mb-sm-0 mb-0">
+                      <li><i class="la la-money"></i>
+                        <h3>₹ <%=recentJob.isFixed? recentJob.amount || 'NA' : (recentJob.min || 'NA' ) + ' - ' +
+                            (recentJob.max || 'NA' ) %>
+                        </h3>
+                        <span class="text-capitalize">
+                          Minimum Salary / न्यूनतम वेतन
+                        </span>
+                      </li>
+                      <li><i class="la la-shield"></i>
+                        <h3>
+                          <% if(recentJob.experience==0) { %>
+                            Fresher
+                            <% } else { %>
+                              <%=recentJob.experience%> Years
+                                <% } %>
+                        </h3><span>
+                          Experience / अनुभव
+                        </span>
+                      </li>
+                      <li><i class="la la-line-chart "></i>
+                        <h3>
+                          <%=recentJob._qualification?.name%>
+                        </h3><span class="text-capitalize">
+                          Qualification / योग्यता
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 column mt-xl-4 mt-lg-4 mt-md-3 mt-sm-2 mt-1">
+                  <a class="apply-thisjob text-left d-xl-block d-lg-block d-md-block d-sm-none d-none apply-padding same-plane call-btn mb-1 px-1" title="" href="/candidate/login?returnUrl=/candidate/job/<%=recentJob._id%>">
+                    <i class="la la-phone plane-font"></i>Call to HR / HR  को कॉल करें
+                  </a>
+                <a class="apply-thisjob text-left px-0 d-xl-block d-lg-block d-md-block d-sm-none d-none apply-padding mb-0"
+                  href="/candidate/login?returnUrl=/candidate/job/<%=recentJob._id%>" title=""><i
+                    class="la la-paper-plane ml-1 "></i>   Apply for Job / नौकरी के लिए आवेदन</a>
+                <!-- Job Overview -->
+                <div class="extra-job-info mt-1">
+                  <span class="px-1"><i class="la la-map"></i><strong>Location</strong>
+                    <%=recentJob.city?.name%>, <%=recentJob.state?.name%>
+                  </span>
+                </div>
+                <a class="apply-thisjob text-left d-xl-none d-lg-none d-md-none d-sm-block d-block apply-padding same-plane call-btn mb-1 px-1" title="" href="/candidate/login?returnUrl=/candidate/job/<%=recentJob._id%>">
+                  <i class="la la-phone plane-font"></i>Call to HR / HR  को कॉल करें
+                </a>
+                <a class="apply-thisjob text-left px-1 d-xl-none d-lg-none d-md-none d-sm-block d-block w-100"
+                  href="/candidate/login?returnUrl=/candidate/job/<%=recentJob._id%>" title=""><i
+                    class="la la-paper-plane "></i>Apply for Job / नौकरी के लिए आवेदन</a>
+              </div>
+            </div>
+            <hr>
+            <%});%>
+
+              <% if (totalPages> 1) { %>
+                <ul class="pagination justify-content-end ml-2 mb-2 text-right">
+                  <% let first=1 %>
+                    <% let last=totalPages> 4 ? 4 :
+                      totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                        <% first=page - 1 %>
+                          <% last=page + 1 %>
+                            <% if (last> totalPages) last = totalPages
+                              %> <% } %>
+                                <% if (first> 1) { %>
+                                  <li class="page-item">
+                                    <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                                  </li>
+                                  <% } %>
+                                    <% for (let i=first; i <=last; i +=1) { %>
+                                      <% if (i===page) { %>
+                                        <li class="active page-item">
+                                          <a href="javascript:void()" class="page-link pagi_custom">
+                                            <%= i %>
+                                          </a>
+                                        </li>
+                                        <% } else { %>
+                                          <li class="page-item">
+                                            <a class="page-link pageAnchor pagi_customtwo" href="<%= i %>">
+                                              <%= i %>
+                                            </a>
+                                          </li>
+                                          <% } %>
+                                            <% } %>
+                                              <% if (totalPages>
+                                                last)
+                                                { %>
+                                                <li class="page-item">
+                                                  <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                                                </li>
+                                                <li class="page-item">
+                                                  <a class="pageAnchor page-link" href="<%= totalPages %>">Last</a>
+                                                </li>
+                                                <% } %>
+                </ul>
+                <% } %>
+
+        </div>
+      </div>
+
+    </section>
+
+    <section class="seeker mb-5">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="row">
+              <div class="col-xl-4 rec py-5 text-center">
+                <h3 class="text-white pt-2">STAFFING CONSULTANT</h3>
+                <p class="text-white text-center mx-auto">
+                  Post Job in 30 Seconds! It's that Easy! Hire Freshers & Entry
+                  Level Candidates from all over India.
+                </p>
+                <a
+                  href="/company/register"
+                  target="_blank"
+                  class="btn btn-apply"
+                  title=""
+                  >Post New Job</a
+                >
+              </div>
+              <div class="col-xl-4 emp py-5 text-center">
+                <h3 class="text-white pt-2">COMPANY</h3>
+                <p class="text-white text-center mx-auto">
+                  Hire the Right Talent with Right Skills. With access to a
+                  greater talent pool, find the right candidates with Focalyt
+                </p>
+                <a
+                  href="/company/register"
+                  target="_blank"
+                  class="btn btn-apply"
+                  title=""
+                  >Search Candidates</a
+                >
+              </div>
+              <div class="col-xl-4 rec py-5 text-center">
+                <h3 class="text-white pt-2">COLLEGE / INSTITUTES</h3>
+                <p class="text-white text-center mx-auto">
+                  Connect with 1000+ Companies on Focalyt. We assist Campuses for
+                  Placement of their students.
+                </p>
+                <a
+                  href="/college/register"
+                  target="_blank"
+                  class="btn btn-apply"
+                  title=""
+                  >Join Our Network</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="heading">
+              <h2>Focalyt Gallery</h2>
+              <span
+                >Campus Placements/ Campus Recruitment drives are conducted by
+                Focalyt in various ITI institutes for providing job opportunities
+                to the students who are pursuing their particular academic
+                courses. Campus Placements offer a student a wonderful
+                opportunity to get placed during the course of his academic
+                pursuits, and provide him the comforts of a safe and secure
+                future.
+              </span>
+            </div>
+            <div class="container mt-5">
+              <div class="carousel-container position-relative row">
+                <div
+                  id="myCarousel"
+                  class="carousel slide"
+                  data-ride="carousel"
+                >
+                  <div class="carousel-inner">
+                    <div class="carousel-item active" data-slide-number="0">
+                      <img
+                        src="/mipieIn/images/mipie-g-1.jpg"
+                        class="d-block w-100"
+                        alt="..."
+                        data-remote="https://source.unsplash.com/Pn6iimgM-wo/"
+                        data-type="image"
+                        data-toggle="lightbox"
+                        data-gallery="example-gallery"
+                      />
+                    </div>
+                    <div class="carousel-item" data-slide-number="1">
+                      <img
+                        src="/mipieIn/images/mipie-g-2.jpg"
+                        class="d-block w-100"
+                        alt="..."
+                        data-remote="https://source.unsplash.com/tXqVe7oO-go/"
+                        data-type="image"
+                        data-toggle="lightbox"
+                        data-gallery="example-gallery"
+                      />
+                    </div>
+                    <div class="carousel-item" data-slide-number="2">
+                      <img
+                        src="/mipieIn/images/mipie-g-1.jpg"
+                        class="d-block w-100"
+                        alt="..."
+                        data-remote="https://source.unsplash.com/qlYQb7B9vog/"
+                        data-type="image"
+                        data-toggle="lightbox"
+                        data-gallery="example-gallery"
+                      />
+                    </div>
+                    <div class="carousel-item" data-slide-number="3">
+                      <img
+                        src="/mipieIn/images/mipie-g-2.jpg"
+                        class="d-block w-100"
+                        alt="..."
+                        data-remote="https://source.unsplash.com/QfEfkWk1Uhk/"
+                        data-type="image"
+                        data-toggle="lightbox"
+                        data-gallery="example-gallery"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Carousel Navigation -->
+                <div
+                  id="carousel-thumbs"
+                  class="carousel slide"
+                  data-ride="carousel"
+                >
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <div class="row mx-0">
+                        <div
+                          id="carousel-selector-0"
+                          class="thumb col-4 col-sm-2 px-1 py-2 selected"
+                          data-target="#myCarousel"
+                          data-slide-to="0"
+                        >
+                          <img
+                            src="/mipieIn/images/mipie-g-1.jpg"
+                            class="img-fluid"
+                            alt="..."
+                          />
+                        </div>
+                        <div
+                          id="carousel-selector-1"
+                          class="thumb col-4 col-sm-2 px-1 py-2"
+                          data-target="#myCarousel"
+                          data-slide-to="1"
+                        >
+                          <img
+                            src="/mipieIn/images/mipie-g-2.jpg"
+                            class="img-fluid"
+                            alt="..."
+                          />
+                        </div>
+                        <div
+                          id="carousel-selector-2"
+                          class="thumb col-4 col-sm-2 px-1 py-2"
+                          data-target="#myCarousel"
+                          data-slide-to="2"
+                        >
+                          <img
+                            src="/mipieIn/images/mipie-g-1.jpg"
+                            class="img-fluid"
+                            alt="..."
+                          />
+                        </div>
+                        <div
+                          id="carousel-selector-3"
+                          class="thumb col-4 col-sm-2 px-1 py-2"
+                          data-target="#myCarousel"
+                          data-slide-to="3"
+                        >
+                          <img
+                            src="/mipieIn/images/mipie-g-2.jpg"
+                            class="img-fluid"
+                            alt="..."
+                          />
+                        </div>
+                        <div
+                          id="carousel-selector-3"
+                          class="thumb col-4 col-sm-2 px-1 py-2"
+                          data-target="#myCarousel"
+                          data-slide-to="0"
+                        >
+                          <img
+                            src="/mipieIn/images/mipie-g-1.jpg"
+                            class="img-fluid"
+                            alt="..."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /row -->
+            </div>
+            <!-- /container -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border border-top-0 border-right-0 border-left-0">
+      <div class="block">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="heading">
+                <span>
+                  <img src="/mipieIn/images/fs1.png" width="150" height="70" />
+                </span>
+                <span
+                  ><b><i>Focalyt's Skilling Partner</i></b> - Focal Skill, is a
+                  team of professionals from various streams, committed to reach
+                  out to the youth in the rural & urban region and equip them
+                  with the knowledge and skill. Our core responsibility is to
+                  empower them with livelihood opportunities and train them to
+                  handle business opportunities and future job opportunities
+                  using skill development.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="d-none">
+      <div class="block">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 column">
+              <script
+                src="https://static.elfsight.com/platform/platform.js"
+                data-use-service-core
+                defer
+              ></script>
+              <div
+                class="elfsight-app-d5da1b36-7e71-4f09-8ae5-8e936ed16ead"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <% include ./partials/footer %>
+
+  </div>
+  <script>
+        $(document).ready(function () {
+      $('#qualification').on('change', function () {
+        document.getElementById("myForm").submit();
+      });
+      $('#experience').on('change', function () {
+        document.getElementById("myForm").submit();
+      });
+      $('#industry').on('change', function () {
+        document.getElementById("myForm").submit();
+      });
+      $('#jobType').on('change', function () {
+        document.getElementById("myForm").submit();
+      });
+      $('#state').on('change', function () {
+        document.getElementById("myForm").submit();
+      });
+      $('#Salary').on('change', function () {
+        document.getElementById("myForm").submit();
+      });
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+      const pageAnchors = document.querySelectorAll("a.pageAnchor");
+      const { origin, pathname, search } = window.location;
+      let searchParams = search.split('?')[1];
+      let obj;
+      let url = `${origin}${pathname}?`;
+      if (searchParams) {
+        obj = JSON.parse('{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
+        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+        keyArr.forEach((x) => {
+          if (x !== "page") {
+            url += `${x}=${obj[x]}&`;
+          }
+        });
+      }
+      pageAnchors.forEach((el) => {
+        const n = el.getAttribute("href");
+        el.setAttribute("href", `${url}page=${n}`);
+      });
+    });
+    function gotoJob(jobId) {
+      window.location = `/jobdetails/${jobId}`
+    }
+  </script>

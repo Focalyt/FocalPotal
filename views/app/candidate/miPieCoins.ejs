@@ -1,0 +1,396 @@
+<% include ../../partials/header %>
+
+
+
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+  data-menu="vertical-menu-modern" data-col="2-columns">
+
+
+    <% include ./partials/navbar%>
+    <% include ./partials/leftpane%>
+    <% include ../../partials/flash %>
+  <div class="app-content content basic-timeline">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+      <div class="content-header row">
+        <div
+          class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-sm-3  mb-sm-0 mb-0 candidate-card ">
+          <div class="card mb-2">
+            <div class="col-xl-12 py-1">
+              <div class="row">
+                <div class="col-xl-12 my-auto">
+                  <h4 class="card-title mb-0"><strong>COINS : <%= candidate.creditLeft%> </strong></h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-body">
+        <!-- Coins Section Starts -->
+        <section id="company_dashboard">
+          <div class="row">
+            <% if(coinOffers.length > 0){ %>
+            <% coinOffers.forEach((offer,i)=> { %>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-xl-2 mb-lg-2 mb-md-2 mb-sm-2 mb-2">
+              <% if(i%4 == 0) {%>
+              <div class="col-xl-12 Company_card py-1 one">
+                <%} else if(i%4 == 1) {%>
+                <div class="col-xl-12 Company_card py-1 two">
+                  <%} else if(i%4 == 2) {%>
+                  <div class="col-xl-12 Company_card py-1 three">
+                    <%} else if(i%4 == 3) {%>
+                    <div class="col-xl-12 Company_card py-1 four">
+                      <%}%>
+                  <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 text-center px-0">
+                      <img src="/images/icons/credits.png" class="img-fluid">
+                    </div>
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6 col-6">
+                    <h2 class="text-white"><%= offer.getCoins ? offer.getCoins : "NA" %> Coins</h2>
+                      <p class="text-white font-weight-bold">For ₹<%= offer.payAmount ? offer.payAmount : "NA" %></p>
+                      <a class="btn btn-outline-cs waves-effect waves-light " href="#" id="pay-button" data-toggle="modal"
+                     data-target="#redeemCashback" onclick="setValues('<%= offer._id %>', '<%= offer.payAmount %>')">Pay Now<i class="fa fa-chevron-right text-white fa-view" aria-hidden="true"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% }) } %>
+            </div>
+        </section>
+        <section>
+          <!-- END -->
+          <div class="row">
+            <div
+              class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-sm-3  mb-sm-0 mb-0 candidate-card ">
+              <div class="card mb-3">
+                <div class="col-xl-12 py-1">
+                  <div class="row">
+                    <div class="col-xl-12 my-auto">
+                      <h4 class="card-title mb-0">Latest Transactions / नवीनतम लेनदेन</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <div class="table-responsive">
+                    <table class="table table-hover-animation mb-0 table-hover">
+                      <thead>
+                        <tr>
+                          <th>Date & Time</th>
+                          <th>Offer Name</th>
+                          <th>Amount Paid</th>
+                        </tr>
+                      </thead>
+                      <tbody id="table-body">
+                        <% if(latestTransactions.length > 0){ %>
+                        <% latestTransactions.forEach((latestTransactions)=> { %>
+                        <tr>
+                          <td>
+                            <%= moment(latestTransactions.createdAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A') %>
+                          </td>
+                          <td><%= latestTransactions._offer ? latestTransactions._offer.displayOffer : "NA" %></td>
+                          <td><%= latestTransactions.amount ? latestTransactions.amount : "NA" %></td>
+                        </tr>
+                        <% }) } else {%>
+                        <tr>
+                          <td colspan="3" class="text-center">No Result Found</td>
+                        </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
+                    <% if (totalPages> 1) { %>
+                      <ul class="pagination justify-content-end ml-2 mb-2 text-right mr-1">
+                        <% let first=1 %>
+                          <% let last=totalPages> 4 ? 4 :
+                            totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                              <% first=page - 1 %>
+                                <% last=page + 1 %>
+                                  <% if (last> totalPages) last = totalPages
+                                    %> <% } %>
+                                      <% if (first> 1) { %>
+                                        <li class="page-item">
+                                          <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                                        </li>
+                                        <% } %>
+                                          <% for (let i=first; i <=last; i +=1) { %>
+                                            <% if (i===page) { %>
+                                              <li class="active page-item">
+                                                <a href="javascript:void()" class="page-link pagi_custom">
+                                                  <%= i %>
+                                                </a>
+                                              </li>
+                                              <% } else { %>
+                                                <li class="page-item">
+                                                  <a class="page-link pageAnchor pagi_customtwo" href="<%= i %>">
+                                                    <%= i %>
+                                                  </a>
+                                                </li>
+                                                <% } %>
+                                                  <% } %>
+                                                    <% if (totalPages>
+                                                      last)
+                                                      { %>
+                                                      <li class="page-item">
+                                                        <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                                                      </li>
+                                                      <li class="page-item">
+                                                        <a class="pageAnchor page-link" href="<%= totalPages %>">Last</a>
+                                                      </li>
+                                                      <% } %>
+                      </ul>
+                      <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+
+    <!-- apply voucers modal -->
+    <div class="modal fade show" id="redeemCashback" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content modal-sm">
+            <div class="modal-header vchr_header">
+              <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Buy Coins / सिक्के खरीदें</h5>
+              <button type="button" class="close color-purple" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+        <div class="modal-body mode-dice p-0">
+          <form class="my-3">
+            <h3 class="coupon-text">If you have <strong>Coupon Code </strong>, apply here / यदि आपके पास <strong>कूपन कोड </strong>है, तो यहां आवेदन करें।</h3>
+            <input type="text" name="voucherField" class="text-white mt-1" placeholder="Enter Code / कोड दर्ज करें" id="voucher" oninput="convert(event)" onkeypress="checkVouchers(event)" value="">
+            <button type="button" class="voucher-btn disabled btn btn-sm ml-1"  aria-label="Apply" id="add" disabled> <span
+              aria-hidden="true" class="yes-cross" id="applyVoucher" onclick="apply(event)">Apply</span> </button>
+          </form>
+          <input type="hidden" class="form-control"  id="offerId" value="" />
+          <input type="hidden" class="form-control"  id="amount" value="" />
+          <input type="hidden" class="form-control"  id="offerAmount" value="" />
+          <input type="hidden" class="form-control"  id="paymentVoucher" value="" />
+          <p class="text-success font-weight-bolder font-italic" id = 'successMsg' style="display: none;"></p>
+          <p class="text-danger font-weight-bolder font-italic" id = 'errorMsg' style="display: none;"></p>
+        </div>
+        <div class="modal-footer text-center">
+          <button class="btn button-vchr shadow" role="button" onclick="applyVouchers(event)" id="apply">Pay / भुगतान करें ₹</button>
+        
+        </div>
+                      </div>
+                </div>
+          </div>
+              <!-- end -->
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+              const pageAnchors = document.querySelectorAll("a.pageAnchor");
+              const { origin, pathname, search } = window.location;
+              let searchParams = search.split("?")[1];
+              let obj;
+              let url = `${origin}${pathname}?`;
+              if (searchParams) {
+                obj = JSON.parse(
+                  '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+                  function (key, value) {
+                    return key === "" ? value : decodeURIComponent(value);
+                  }
+                );
+                const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+                keyArr.forEach((x) => {
+                  if (x !== "page") {
+                    url += `${x}=${obj[x]}&`;
+                  }
+                });
+              }
+              pageAnchors.forEach((el) => {
+                const n = el.getAttribute("href");
+                el.setAttribute("href", `${url}page=${n}`);
+              });
+            });
+  </script>
+  <script>
+    
+          function payment(e){
+          let amount = document.getElementById('amount').value
+          let offerId = document.getElementById('offerId').value
+          let voucher = document.getElementById('paymentVoucher').value
+          let data = {
+            offerId,
+            amount
+          }
+         axios({method: 'post', url: '/candidate/payment', data, headers: { 'x-auth': localStorage.getItem('token') }}).then((res) => {
+        let options = {
+          "key": '<%= process.env.MIPIE_RAZORPAY_KEY %>',
+          "amount": res.data.order.amount,
+          "currency": res.data.order.currency,
+          "name": "MiPie",
+          "description": "",
+          "image": "/images/logo/logo.png",
+          "order_id": res.data.order.id,
+          "handler": function (response) {
+            let data = {
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+              _candidate: res.data.candidate._id,
+              _offer: offerId,
+              amount,
+              voucher
+            }
+            axios({
+              method: 'post',
+              url: '/candidate/paymentStatus',
+              data,
+              headers: {
+                'x-auth': localStorage.getItem('token')
+              }
+            }).then(res => {
+              window.location.reload()
+            }).catch(
+              (error) => {
+                console.log(error.message)
+              })
+          },
+          "prefill": {
+            "name": res.data.candidate.name,
+            "email": res.data.candidate.email,
+            "contact": res.data.candidate.mobile
+          },
+          "theme": {
+            "color": "#FC2B5A"
+          }
+        };
+        let rzp1 = new Razorpay(options);
+        rzp1.open();
+        e.preventDefault();
+      }).catch(
+        err => console.log(err.message)
+      )
+    }
+    function setValues(offerId,amount){
+    let offer = document.getElementById('offerId')
+    let voucherAmount = document.getElementById('amount')
+    let offerAmount = document.getElementById('offerAmount')
+    offer.value = offerId;
+    voucherAmount.value = amount
+    offerAmount.value = amount
+    document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${amount}`
+    }
+
+  function applyVouchers(e){
+    let code = document.getElementById('voucher').value
+    if(code.trim() == ''){
+      return payment(e)
+    }
+    let amount = document.getElementById('offerAmount').value
+    let offer = document.getElementById('offerId').value
+    let data = {
+            amount,
+            code,
+            offerId:offer
+          }
+         axios({method: 'put', url: '/candidate/applyVoucher', data, headers: { 'x-auth': localStorage.getItem('token') }})
+         .then((res)=>{
+          if(res.data.status == true&&res.data.amount>0){
+          $('#errorMsg').hide();
+          $('#errorMsg').text('');
+          $('#successMsg').show();
+          $('#successMsg').text(res.data.message);
+          document.getElementById('amount').value=res.data.amount
+          document.getElementById('paymentVoucher').value = code
+          document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+          return payment(e)
+        }else if(res.data.status== true && res.data.amount==0){
+          $('#errorMsg').hide();
+          $('#errorMsg').text('');
+          $('#successMsg').show();
+          $('#successMsg').text(res.data.message);
+          document.getElementById('amount').value=res.data.amount
+          document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+          window.location.reload();
+        }
+          else{
+          $('#successMsg').hide();
+          $('#successMsg').text('');
+          $('#errorMsg').show();
+          $('#errorMsg').text(res.data.message);
+          document.getElementById('voucher').value = ''
+          let offerAmount = document.getElementById('offerAmount').value
+          document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${offerAmount}`
+          }
+         })
+         .catch((err)=>{
+          console.log(err)
+         })
+  }
+  function convert(event){
+    const val=event.target.value;
+    event.target.value=val.toUpperCase()
+   let applyButton = document.getElementById('add')
+   if(event.target.value.trim() !== ''){
+    applyButton.disabled = false
+    applyButton.classList.remove('disabled')
+   }
+   else{
+    applyButton.disabled = true
+    applyButton.classList.add('disabled')
+   }
+  }
+
+   function checkVouchers(e){
+            if (e.key === "Enter") {
+              e.preventDefault()
+              $('#apply').click()
+            }
+          }
+    function apply(e){
+      let code = document.getElementById('voucher').value
+      let amount = document.getElementById('offerAmount').value
+      let offer = document.getElementById('offerId').value
+      let data = {
+            amount,
+            code,
+            offerId:offer
+          }
+         axios({method: 'put', url: '/candidate/applyVoucher', data, headers: { 'x-auth': localStorage.getItem('token') }})
+         .then((res)=>{
+          if(res.data.status == true && res.data.amount>0){
+          $('#errorMsg').hide();
+          $('#errorMsg').text('');
+          $('#successMsg').show();
+          $('#successMsg').text(res.data.message);
+          document.getElementById('amount').value=res.data.amount
+          document.getElementById('paymentVoucher').value = code
+          document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+        }else if(res.data.status&& res.data.amount==0){
+          $('#errorMsg').hide();
+          $('#errorMsg').text('');
+          $('#successMsg').show();
+          $('#successMsg').text(res.data.message);
+          document.getElementById('amount').value=res.data.amount
+          document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+          window.location.reload();
+        }
+          else{
+          $('#successMsg').hide();
+          $('#successMsg').text('');
+          $('#errorMsg').show();
+          $('#errorMsg').text(res.data.message);
+          document.getElementById('voucher').value = ''
+          let offerAmount = document.getElementById('offerAmount').value
+          document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${offerAmount}`
+          }
+          
+         })
+         .catch((err)=>{
+          console.log(err)
+         })
+    }
+  </script>
+  <% include ./partials/footer%>

@@ -1,0 +1,157 @@
+<% include ../../partials/header %>
+
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+          <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper">
+              <% include ../../partials/flash %>
+              <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                  <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                      <h3 class="content-header-title float-left mb-0">Apply for Loan</h3>
+                      <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/candidate/dashboard">Home</a>
+                          </li>
+                          <li class="breadcrumb-item"><a href="#">Apply for Loan</a>
+                          </li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                    <h3 class="card-title pb-1">Loan Application / ऋण आवेदन </h3>
+                  </div>
+              <div class="content-body">
+                <section id="requestLoan-section">
+                    <form action="" method="post" class="col-xl-12">
+                        <div class="row mt-2">
+                            <div class="col-xl-3 col-lg-3 col-ms-3 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-2 mb-sm-2 mb-2" id="purpose">
+                              <label>Select Purpose / उद्देश्य का चयन करें<span class="mandatory"> *</span></label>
+                              <select class="form-control text-capitalize" id="loanPurpose" name="purpose" value="">
+                                <option value="">Select Option</option>
+                                <option value="<%= loanpurpose.Bike %>">Bike Loan / बाइक लोन</option>
+                                <option value="<%= loanpurpose.Home %>">Home Loan / घर के लिए</option>
+                                <option value="<%= loanpurpose.Wedding %>">Marriage / शादी</option>
+                                <option value="<%= loanpurpose.Education %>">Education / शिक्षा</option>
+                                <option value="<%= loanpurpose.Car %>">Car Loan / कार लोन</option>
+                                <option value="<%= loanpurpose.Business %>">For Business / व्यापार के लिए</option>
+                                <option value="<%= loanpurpose.Others %>">Others / अन्य</option>
+                              </select>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-ms-3 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-2 mb-sm-2 mb-2" id="amount">
+                              <label>Select Amount / राशि का चयन करें<span class="mandatory"> *</span></label>
+                              <select class="form-control text-capitalize" id="loanAmount" name="amount" value="">
+                                <option value="">Select Option</option>
+                                <option value="20000">Rs. 20,000</option>
+                                <option value="50000">Rs. 50,000</option>
+                                <option value="80000">Rs. 80,000</option>
+                                <option value="100000">Rs. 1,00,000</option>
+                                <option value="200000">Rs. 2,00,000</option>
+                                <option value="500000">Rs. 5,00,000</option>
+                              </select>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-ms-3 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-2 mb-sm-2 mb-2" id="salary">
+                              <label>Current Salary / वर्तमान वेतन </label>
+                              <input type="number" name="salary" class="form-control" value="" 
+                              onkeypress="if(this.value.length==6) return false" id="loan-salary" maxlength="10">
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-ms-3 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-2 mb-sm-2 mb-2" id="remarks">
+                              <label>Remarks / टिप्पणियां</label>
+                              <input type="text" class="form-control" id="remarks" name="remarks" 
+                              onkeypress="if(this.value.length==100) return false" value="">
+                            </div>
+                          </div>
+                        <div class="row mt-2 requestLoan-btn">
+                            <div class="col-12  mb-2" >
+                                <a href="/candidate/requestLoan" class="btn btn-danger">Reset</a>
+                                <button type="submit" class="btn btn-success" id="submit-btn">Submit</button>
+                             </div>
+                        </div>
+                        <div class="row mb-1">
+                          <div class="col-xl-12">
+                            <div id="msg" style="color:red; display:none;">
+                            </div>
+                            <div id="success" style="color:green; display:none;">
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+  <script>
+    $('#submit-btn').bind('click', (e)=>{
+      let loanPurpose = $('#loanPurpose').val()
+      let loanAmount = $('#loanAmount').val()
+      let flag = true
+
+      if(loanPurpose.trim() === ''){
+        $('#purpose').addClass('error')
+        $('#loanPurpose').focus()
+        flag = false
+      }
+      if(loanAmount.trim() === ''){
+        $('#amount').addClass('error')
+        $('#loanAmount').focus()
+        flag = false
+      }
+
+      if(flag === false){
+        return false
+      }
+      else{
+        e.preventDefault();
+        let body = {}
+        $('#requestLoan-section').find('.form-control').each(function () {
+                    let type = $(this).prop("type");
+                    let name = $(this).prop("name")
+                    let val = $(this).val()
+                    if (val !== '' && type != "button" && type != "submit") {
+                      body[name] = val
+                    }
+            });
+         let header = { headers: { 'x-auth': localStorage.getItem('token') } }
+                axios.post('/candidate/requestLoan', body, header)
+                  .then(result => {
+                    console.log(result)
+                    if(result.data.status === false){
+                      $('#msg').show()
+                      $("#success").hide()
+                      $('#msg').text(result.data.message)
+                    }
+                    if(result.data.status === true){
+                      $('#msg').hide()
+                      $("#success").show()
+                      $("#success").text(result.data.message)
+                  }
+                })
+         }
+         
+    })
+    $(document).ready(function () {
+      let errMessage = "<%= errMessage %>"
+      console.log(errMessage)
+      if(errMessage){
+        $('#submit-btn').addClass("disabled")
+        $('#submit-btn').attr("disabled")
+        $('#msg').show()
+        $('#msg').text(errMessage)
+      }
+    })
+  </script>
+<% include ./partials/footer %>
+

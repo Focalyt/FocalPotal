@@ -1,0 +1,164 @@
+<% include ./partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Roles</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Roles</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ./partials/flash %>
+			<section class="list-view">
+				<div class="row">
+					<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 equal-height-2">
+						<div class="card">
+							<div class="card-header border border-top-0 border-left-0 border-right-0">
+
+								<h4 class="card-title pb-1">Add Role</h4>
+							</div>
+							<div class="card-content">
+								<div class="card-body">
+									<form class="form-horizontal" action="" method="post">
+										<div class="row">
+											<div class="col-xl-4 mb-1">
+												<label>Role Type</label>
+												<select class="form-control" name="role"
+												<% if(!user) {%> required <% } %> >
+												<option value="">Select Option</option>
+												<option value="0" <% if(user && user.role == 0 ) {%> selected <% } %> >Admin</option>
+                                                <option value="10" <% if(user && user.role == 10 ) {%> selected <% } %> >View</option>
+											</select>
+											</div>
+											<div class="col-xl-4 mb-1">
+												<label>Email Id</label>
+												<input type="email" class="form-control"
+													value="<%= user ? user.email : '' %>" name="email"
+													placeholder="Email" 
+													<% if(!user) {%> required <% } %>/>
+											</div>
+                                            <div class="col-xl-4 mb-1">
+												<label>Password</label>
+												<input type="password" class="form-control"
+													value="" name="password"
+													placeholder="Password"
+													<% if(!user) {%> required <% } %> />
+											</div>
+											<div class="col-xl-12 mb-1 text-right">
+												<br />
+
+												<button type="submit" class="btn btn-success font-small-3 <% if(view==true ) {%> disabled <% } %>" <% if(view==true ) {%> disabled <% } %>>
+												  <%= user ? 'Update' : 'Add' %>
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 rounded equal-height-2 coloumn-2">
+						<div class="card">
+							<div class="row pb-1">
+								<div class="col-xl-6">
+									<div class="row">
+										<div class="card-header">
+											<h4 class="card-title">All Roles</h4>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-content">
+								<div class="table-responsive">
+										<table class="table table-hover-animation mb-0 table-hover">
+											<thead>
+												<tr>
+													<th>Role</th>
+													<th>Email Id</th>
+                                                    <th>Password</th>
+													<th>Status</th>
+													<% if (view === false) { %>
+													<th>Action</th>
+													<% } %>
+												</tr>
+											</thead>
+											<tbody>
+                                                <% if (users && users.length> 0) { %>
+                                                    <% users.forEach((user)=> { %>
+                                                        <tr>
+                                                            <td class="text-capitalize">
+																<%= user.role == 0 ? 'Admin' : 'View' %>
+															</td>
+                                                            <td>
+																<%= user.email %>
+															</td>
+                                                            <td>
+																***********
+															</td>
+															<% if (view === true) { %>
+																<td><%= user.status ? 'True' : 'False' %></td>
+																<%}else{%>
+															<td>
+																<div
+																	class="custom-control custom-switch custom-control-inline">
+                                                                    
+																		<input type="checkbox"
+																			onclick="myOnOffFunc('<%= user._id %>', '<%= user.status %>', 'users');"
+																			class="custom-control-input"
+																			id="customSwitch<%= user._id %>" <% if (user.status) { %> checked<% } %> />
+																		<label class="custom-control-label"
+																			for="customSwitch<%= user._id %>">
+																		</label>
+																		
+																</div>
+															</td>
+															<% } %>
+															<% if (view === false) { %>
+                                                            <td valign="middle">
+																<a href="/admin/roles/edit/<%= user._id%>">
+																	<i class="feather icon-edit fa-lg primary"></i>
+																</a>
+															</td>
+															<% } %>
+                                                        </tr>
+                                                <% })} else { %>
+											        <p class="text-center mt-3">No result found</p>
+											    <% } %>
+											</tbody>
+										</table>
+												
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<% include ./partials/footer %>
+				
+	</div>
+
+    <script>
+        function myOnOffFunc(id, status, model) {
+						let myStatus = true;
+						if (status === true || status === "true") {
+							myStatus = false;
+						}
+						$.ajax({
+							type: "POST",
+							url: "/admin/changestatus",
+							data: {
+								id,
+								status: myStatus,
+								model,
+							},
+                            success: () => location.reload()
+						}); 
+					}
+    </script>

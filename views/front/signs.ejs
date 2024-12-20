@@ -1,0 +1,191 @@
+<html class=" js no-touch cssanimations csstransitions">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>ASL - Americal sign language </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Focalyt">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <!-- Styles -->
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/bootstrap-grid.css">
+  <link rel="stylesheet" href="/public_assets/css/icons.css">
+  <link rel="stylesheet" href="/public_assets/css/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/responsive.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/chosen.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/colors/colors.css">
+  <link rel="stylesheet" type="text/css" href="/public_assets/css/bootstrap.css">
+  <link rel="icon" type="image/x-icon" href="/images/ico/faviconnew.ico"
+  <link rel="stylesheet" href="../../../maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+    integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<html>
+
+
+<body>
+
+  <section>
+    <div class="block double-gap-top double-gap-bottom">
+      <div data-velocity="-.1"
+        style="background: url(https://cdn.prod.www.manager-magazin.de/images/151cbdaa-b0c9-4453-9a93-1a4d0b5f95bb_w1600_r1.8273184102329831_fpx49_fpy97.jpg) repeat scroll 50% 422.28px transparent;"
+        class="parallax scrolly-invisible layer blackish"></div>
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-lg-12">
+            <div class="form-location-sec my-1">
+              <h3><strong>ASL- Language Converter</strong> </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-xl-12 mt-xl-5 mt-lg-2 mt-md-2 mt-sm-0 mt-0">
+          <div class="contact-form ">
+            <div class="form-group form-primary mt-5">
+              <textarea class="form-contro mb-3 message-to pr-1" onKeyPress="addSign(event)" id="english"
+                placeholder="Please type in English" rows="1">This is a test</textarea>
+            </div>
+          </div>
+          <div class="row justify-content-center pt-4 pb-4">
+            <button type="button" onclick="makeSign()" class="btn-lg btn-primary mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-3">Convert to Sign</button>
+          </div>
+          <!-- </div> -->
+          <div class="col-xl-12 mt-xl-5 mt-lg-2 mt-md-2 mt-sm-0 mt-0"
+            style="border:1px solid !important; min-height: 90px;">
+            <div class="contact-form">
+              <div class="form-group form-primary pt-3 pb-3" id="output">
+              </div>
+            </div>
+          </div>
+
+          <div class="row justify-content-center pt-4 pb-xl-2 pb-sm-0">
+            <select id="voicesList" class="mr-xl-4">
+
+            </select>
+            <button type="button" onclick="makeText()"
+              class="btn-lg btn-primary mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3 mt-3">Speak</button>
+
+          </div>
+
+          <div class="contact-form ">
+            <div class="form-group form-primary">
+              <textarea class="form-contro mb-3 message-to pr-1" id="englishAgain" rows="1" disabled></textarea>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </section>
+
+</body>
+<script>
+  var voices
+  $(document).ready(function () {
+    window.speechSynthesis.cancel()
+    if ('speechSynthesis' in window) {
+      const speechSynthesis = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance();
+      let voiceOptions = ''
+      speechSynthesis.addEventListener("voiceschanged", () => {
+        voices = speechSynthesis.getVoices()
+        if (voices.length > 0) {
+          voices.forEach(voice => {
+            if (voice.name === 'Google हिन्दी') {
+              voiceOptions += `<option selected="true" value="${voice.name}">${voice.name}</option>`
+            } else {
+              voiceOptions += `<option value="${voice.name}">${voice.name}</option>`
+            }
+
+          })
+        }
+
+        $('#voicesList').html(voiceOptions)
+      })
+
+    }
+  })
+  function makeSign() {
+    let value = $('#english').val().split('')
+    let html = ''
+    value.forEach(char => {
+      var regex = /^[A-Za-z0-9]+$/;
+      var isValid = regex.test(char);
+      if (char === ' ' || !isValid) {
+        html += `<img class="signcode" src="/handsigns/_.png"/>`
+      } else {
+        html += `<img  class="signcode" src="/handsigns/${char.toUpperCase()}.png"/>`
+      }
+    })
+    $('#output').html(html)
+  }
+
+  function makeText() {
+    let text = ''
+    $('.signcode').each((i, img) => {
+      let imagename = $(img).attr('src')
+      let char = imagename.substr(imagename.lastIndexOf('/') + 1, 1)
+      text += char
+    })
+    text = text.replaceAll('_', ' ')
+
+    $('#englishAgain').val(text)
+    $('#englishAgain').text(text)
+    speak(text)
+  }
+
+  function speak(text) {
+    if (!text) {
+        return false
+      }
+    if ('speechSynthesis' in window) {
+      const speechSynthesis = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance();
+
+      speechSynthesis.cancel()
+      // Set the text to be spoken
+      utterance.text = text;
+
+      // Retrieve the available voices
+
+      let voice = 'Microsoft Swara Online (Natural) - Hindi (India)'
+      // Find a specific voice by name or language code
+      const selectedVoice = voices.find(vo => vo.name === voice);
+
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+      } else {
+        console.warn('Selected voice not found. Using default voice.');
+      }
+
+      // Set optional parameters (volume, rate, pitch, etc.)
+      utterance.volume = 1;
+      utterance.rate = 1;
+      utterance.pitch = 1;
+    
+      // Speak the text
+      speechSynthesis.speak(utterance);
+    } else {
+      console.error('SpeechSynthesis API is not supported in this browser.');
+    }
+  }
+
+
+
+</script>

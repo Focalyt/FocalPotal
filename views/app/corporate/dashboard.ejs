@@ -1,0 +1,299 @@
+<% include ./partials/header %>
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+  data-menu="vertical-menu-modern" data-col="2-columns">
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W39K27R"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <% include ./partials/navbar%>
+  <% include ./partials/leftpane%>
+
+  <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+      <div class="content-header row">
+      </div>
+      <div class="content-body">
+        <section id="company_dashboard">
+          <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-xl-2 mb-lg-2 mb-md-2 mb-sm-2 mb-2 mx-auto">
+              <div class="col-xl-12 Company_card text-center py-1 one">
+                <img src="/images/icons/user_avatar.png" class="img-fluid">
+                <h5 class="text-white pt-2 mb-0" id="company-name">Welcome <%= company?.name %></h5>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-xl-2 mb-lg-2 mb-md-2 mb-sm-2 mb-2 mx-auto">
+              <div class="col-xl-12 Company_card py-2 two">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 text-center px-0">
+                    <img src="/images/icons/white_suitcase.png" class="img-fluid">
+                  </div>
+                  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6 col-6">
+                    <h2 class="text-white"><%= vacancyCount %></h2>
+                    <p class="text-white">Total Job Post</p>
+                    <a class="btn btn-outline-cs" href="/company/list/jobs">View<i class="fa fa-chevron-right text-white fa-view"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-xl-2 mb-lg-2 mb-md-2 mb-sm-2 mb-2 mx-auto">
+              <div class="col-xl-12 Company_card py-2 three">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 text-center px-0">
+                    <img src="/images/icons/shortlist.png" class="img-fluid">
+                  </div>
+                  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6 col-6">
+                    <h2 class="text-white"><%= shortlistedCandidates %></h2>
+                    <p class="text-white">Shortlisted</p>
+                    <a class="btn btn-outline-cs" href="candidate/shortlisted">View<i class="fa fa-chevron-right text-white fa-view"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-xl-2 mb-lg-2 mb-md-2 mb-sm-2 mb-2 mx-auto">
+              <div class="col-xl-12 Company_card py-2 four">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 text-center px-0">
+                    <img src="/images/icons/credits.png" class="img-fluid">
+                  </div>
+                  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6 col-6">
+                    <h2 class="text-white"><%= company?.creditLeft %></h2>
+                    <p class="text-white">Available Credits</p>
+                    <a class="btn btn-outline-cs" href="#">View<i class="fa fa-chevron-right text-white fa-view"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 mb-xl-2 mb-lg-2 mb-md-2 mb-sm-2 mb-2 mx-auto d-none">
+              <div class="col-xl-12 Company_card py-2 five">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 text-center px-0">
+                    <img src="/images/icons/bag.png" class="img-fluid">
+                  </div>
+                  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-6 col-6">
+                    <h2 class="text-primary">02</h2>
+                    <p class="text-primary">Total Job Post</p>
+                    <a class="btn btn-outline-cs">View<i class="fa fa-chevron-right text-white fa-view"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="dashboard-analytics" class="d-none">
+          <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="card bg-analytics text-white">
+                <div class="card-content">
+                  <div class="card-body text-center">
+                    <img src="https://mentorryimgs.s3.ap-south-1.amazonaws.com/app-assets/images/elements/decore-left.png" class="img-left" alt="
+            card-img-left">
+                    <img src="https://mentorryimgs.s3.ap-south-1.amazonaws.com/app-assets/images/elements/decore-right.png" class="img-right" alt="
+            card-img-right">
+                    <div class="avatar avatar-xl bg-primary shadow mt-0">
+                      <div class="avatar-content">
+                        <i class="feather icon-award white font-large-1"></i>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <h1 class="mb-2 text-white" id="company-name">Welcome <%= company?.name %></h1>                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-lg-3 col-md-6 col-12">
+              <div class="card">
+                 <div class="card-header d-flex flex-column align-items-start pb-0">
+                  <div class="avatar bg-rgba-primary p-50 m-0">
+                    <div class="avatar-content">
+                      <i class="feather icon-users text-primary font-medium-5"></i>
+                    </div>
+                  </div>
+                 <h2 class="text-bold-700 mt-1 mb-25"><a href="/portal/design/dashboard/candidate/your-profile.html" class="btn btn-primary shadow waves-effect waves-light">Complete Your Profile<i class="feather icon-chevrons-right"></i></a></h2>
+                 <br> <p class="mb-0">Profile Status <b id="profile-status"></b></p>
+                <br>  
+                 </div> -->
+                <!-- <div class="card-content" style="position: relative;">   
+                <div class="resize-triggers"><div class="expand-trigger"><div style="width: 380px; height: 1px;"></div></div><div class="contract-trigger"></div></div></div>
+              </div>
+            </div> --> 
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="card">
+                <div class="card-header d-flex flex-column align-items-start pb-0">
+                  <p class="mb-1">Total Job Post</p>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <h2 class="text-bold-700 ">
+                          <%= vacancyCount %>
+                        </h2>
+                      </div>
+                      <div class="col">
+                        <a href="/company/list/jobs" class="btn btn-primary btn-sm text-right">View</a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="card-content">
+                  <!-- <div id="subscribe-gain-chart"></div> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <div class="card">
+                <div class="card-header d-flex flex-column align-items-start pb-0">
+                  <p class="mb-1">Shortlisted Candidates</p>
+                  <div class="container">
+                  <div class="row">
+                    <div class="col"><h2 class="text-bold-700">
+                      <%= shortlistedCandidates %>
+                    </h2></div>
+                    <div class="col"> <a href="candidate/shortlisted" class="btn btn-primary btn-sm text-right">View</a></div>
+                  </div>
+                </div>                
+                </div>
+                <div class="card-content">
+                  <div>
+                    <!-- <div id="orders-received-chart"></div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>          
+        </section>
+         <section id="jobs_update">
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-sm-3 mb-3 candidate-card">
+              <div class="card mt-1 mb-5">
+                <div class="col-xl-12 py-1">
+                 <div class="row">
+                  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 my-auto">
+                    <h4 class="card-title text-capitalize">Ongoing Interviews</h4>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-right">
+                    <a href="/company/onGoingHiring" class="btn btn-outline-primary btn-sm text-capitalize">View All</a>
+                  </div>
+                 </div>
+                </div>
+                <div class="card-content">
+                  <div class="table-responsive">
+                    <table class="table table-hover-animation mb-0 table-hover">
+                      <thead>
+                        <tr>
+                          <th>Candidates</th>
+                          <th>Qualification</th>
+                          <th>Hiring Stage</th>
+                          <th>Experience</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="table-body" class="text-capitalize">
+                        <% if(ongoingCandidates?.length > 0){ %>
+                        <% ongoingCandidates.forEach((can)=> { %>
+                          <tr>
+                            <td><%= can.candidate?.name %></td>
+                            <td><%= (qualifications?.filter(q => can.candidate?.highestQualification == q._id ))[0]?.name %></td>
+                            <td><%= can.status ? can.status : 'NA' %></td>
+                            <td><%= !can.candidate?.isExperienced ? 'Fresher' : can.candidate?.totalExperience ? can.candidate?.totalExperience  + ' Years': 'NA' %></td>
+                            <td class="actions">
+                              <a href="/company/candidate/<%=can.candidate._id%>"><i
+                                class="fa-regular fa-user"></i></a>
+                            </td>
+                          </tr>
+                          <% }) } else {%>
+                            <tr><td colspan="5"><a href="/company/list-candidates"><img src="/images/pages/shortlist.jpg" class="img-fluid"/></a></td></tr>
+                            <%}%>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-sm-3 mb-3 candidate-card">
+              <div class="card mt-1 mb-5">
+                <div class="col-xl-12 py-1">
+                 <div class="row">
+                  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 my-auto ">
+                    <h4 class="card-title text-capitalize">Interested Candidates</h4>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-right">
+                    <a href="#" class="btn btn-outline-primary btn-sm">View All</a>
+                  </div>
+                 </div>
+                </div>
+                <div class="card-content">
+                  <div class="table-responsive">
+                    <table class="table table-hover-animation mb-0 table-hover">
+                      <thead>
+                        <tr>
+                          <th>Candidates</th>
+                          <th>Qualification</th>
+                          <th>JD title</th>
+                          <th>Experience</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="table-body" class="text-capitalize">
+                        <% if (appliedCandidates && appliedCandidates.length > 0) { %>
+                          <% appliedCandidates.forEach((candidate) => { %>
+                          <tr>
+                            <td><%= candidate._candidate.name || 'NA' %></td>
+                            <td><%= candidate._candidate?.highestQualification?.name || 'NA' %></td>
+                            <td><%= candidate._job.title || 'NA' %></td>
+                            <td><%= candidate._candidate.totalExperience ? candidate._candidate.totalExperience : 'Fresher' %></td>
+                            <td class="actions">
+                              <a href="/company/candidate/<%= candidate._candidate._id %>">
+                                <i class="fa-regular fa-user"></i>
+                              </a>
+                            </td>
+                          </tr>
+                          <% }) } else {%>
+                            <tr><td colspan="5"><a href="/company/list/jobs"><img src="/images/pages/add_job.jpg" class="img-fluid"/></a></td></tr>
+                            <%}%>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      </div>
+      </div>      
+      </div>
+    </div>
+  </div>
+
+ 
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+  <!-- <script>
+     const userEmail=localStorage.getItem("registeredEmail");
+     const body={userMail:userEmail};
+    $.get("/app/corporate/checkCompany",body).done((res)=>{
+      const companyName=document.getElementById('company-name');
+      const userName=document.getElementById('user-name');
+       if(res.status===200){
+        console.log(res)
+        localStorage.setItem("company",res.companyInfo);
+        companyName.innerHTML=`Welcome ${res.companyName}`;
+        userName.innerHTML=res.userName
+       }
+    })
+    const logoutBlock=document.getElementById('logout-block');
+    const logoutDiv=document.getElementById('logout-div')
+    logoutBlock.addEventListener('click',()=>{
+      if(logoutDiv.style.display==="none"){
+        logoutDiv.style.display="block";
+      }else{
+        logoutDiv.style.display="none";
+      }
+    })
+  </script> -->
+
+  <% include ./partials/footer%>

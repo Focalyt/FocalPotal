@@ -1,0 +1,262 @@
+<% include ./partials/header %>
+
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Interested Candidates</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/company/dashboard">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">Interested Candidates</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section id="Concerned-Person ">
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12">
+                    <div class="card">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0">
+                        <h4 class="card-title pb-1">Interested Candidates</h4>
+                        <p id="subscription"></p>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="card mb-0">
+                            <div class="card-content">
+                              <div class="table-responsive">
+                                <table class="table table-hover-animation mb-0 table-hover" id="table">
+                                  <thead>
+                                    <tr>
+                                      <th>Date</th>
+                                      <th>Display Name</th>
+                                      <th>Title</th>
+                                      <th class="long_text">Candidate</th>
+                                      <th>Qualification</th>
+                                      <th>Experience</th>
+                                      <th >Location</th>
+                                      <th>ACTIONS</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table-body">
+                                    <% if (appliedCandidates && appliedCandidates.length > 0) { %>
+                                        <% appliedCandidates.forEach((candidate) => { %>
+                                        <tr>
+                                            <td><%= moment(candidate.createdAt).utcOffset("+05:30").format('MMM DD YYYY')%></td>
+                                            <td><%= candidate._job?.displayCompanyName || company.name || 'NA' %></td>
+                                            <td><%= candidate._job?.title || 'NA' %></td>
+                                            <td><%= candidate._candidate.name || 'NA' %></td>
+                                            <td><%= candidate._candidate?.highestQualification?.name || 'NA' %></td>
+                                            <td><%= candidate._candidate.totalExperience ? candidate._candidate.totalExperience : 'Fresher' %></td>
+                                            <td><%= candidate._candidate?.city?.name || 'NA' %> , <%= candidate._candidate?.state?.name || 'NA' %></td>
+                                            <td>
+                                                <a href="/company/candidate/<%= candidate._candidate._id %>">
+                                                    <i class="feather icon-eye fa-lg primary"></i>
+                                                </a>
+
+                                                <!-- <a data-toggle="modal" data-target="#updateStatus" 
+                                                onclick="setValues('<%= candidate._candidate._id %>', '<%= candidate._job?.title  %>','<%= candidate._job?._id  %>')">
+                                                    <i class="feather icon-x fa-lg primary"></i>
+                                                </a> -->
+
+
+                                            </td>
+                                        </tr>
+                                        <% }) %> <%} else {%>
+                                          <tr><td colspan="8" class="text-center">No Result Found</td></tr>
+                                          <%} %>
+                                  </tbody>
+                                </table>
+                                
+                            <!-- pagination -->
+                            <% if (totalPages> 1) { %>
+                                <ul class="pagination justify-content-end ml-2 mb-2">
+                                  <% let first=1 %>
+                                    <% let last=totalPages> 4 ? 4 :
+                                      totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                                        <% first=page - 1 %>
+                                          <% last=page + 1 %>
+                                            <% if (last> totalPages) last = totalPages
+                                              %> <% } %>
+                                                <% if (first> 1) { %>
+                                                  <li class="page-item">
+                                                    <a class="pageAnchor page-link"
+                                                      href="<%= 1 %>">First</a>
+                                                  </li>
+                                                  <% } %>
+                                                    <% for (let i=first; i <=last; i +=1) { %>
+                                                      <% if (i===page) { %>
+                                                        <li class="active page-item">
+                                                          <a href="javascript:void()" class="page-link">
+                                                            <%= i %>
+                                                          </a>
+                                                        </li>
+                                                        <% } else { %>
+                                                          <li class="page-item">
+                                                            <a class="page-link pageAnchor"
+                                                              href="<%= i %>">
+                                                              <%= i %>
+                                                            </a>
+                                                          </li>
+                                                          <% } %>
+                                                            <% } %>
+                                                              <% if (totalPages>
+                                                                last)
+                                                                { %>
+                                                                <li class="page-item">
+                                                                  <a class="pageAnchor page-link"
+                                                                    href="<%= last + 1 %>">...</a>
+                                                                </li>
+                                                                <li class="page-item">
+                                                                  <a class="pageAnchor page-link"
+                                                                    href="<%= totalPages %>">Last</a>
+                                                                </li>
+                                                                <% } %>
+                                </ul>
+                                <% } %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                
+            </section>
+          </div>
+
+        </div>
+        </div>
+
+        <!-- Reject status modal -->
+        <!-- <div class="modal fade" id="updateStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Update Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body pt-1" id="popup-body">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Status<span class="required text-danger"> *</span></label>
+                    <input type="text" class="form-control text-capitalize" name="status" id="hiringStatus" value="rejected" disabled>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Select JD</label>
+                        <input type="text" class="form-control text-capitalize" name="jobDetails" id="hiringJob" value="" disabled>
+                    </select>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Event Date/Time</label>
+                    <input type="date" class="form-control" name="eventDate" value="" id="eventDate">
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                    <label>Select Concerned Person</label>
+                    <select class="form-control text-capitalize" value="" id="concernedPerson">
+                      <option value="">Select Option</option>
+                      <% company.companyExecutives?.forEach((executive,i)=> { %>
+                        <option value="<%= executive._id %>"> <%= executive.name %></option>
+                      <% }); %>
+                    </select>
+                  </div>
+                  <div class="col-xl-12 mb-1 text-left">
+                    <label>Comment</label>
+                    <textarea class="form-control" cols="5" id="hiringComment" value="" rows="3"></textarea>
+                  </div>
+                  <input type="hidden" name="candidateId" value="" id="candidateId">
+                  <input type="hidden" name="jid" value="" id="jid">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"
+                  onclick="updateStatus()" 
+                  id="updateBtn">Update</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                    class="feather icon-x d-block d-lg-none"></i>
+                  <span class="d-none d-lg-block">Cancel</span></button>
+              </div>
+            </div>
+          </div>
+        </div> -->
+<!-- modal end -->
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const pageAnchors = document.querySelectorAll("a.pageAnchor");
+          const { origin, pathname, search } = window.location;
+          let searchParams = search.split("?")[1];
+          let obj;
+          let url = `${origin}${pathname}?`;
+          if (searchParams) {
+            obj = JSON.parse(
+              '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+              function (key, value) {
+                return key === "" ? value : decodeURIComponent(value);
+              }
+            );
+            const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+            keyArr.forEach((x) => {
+              if (x !== "page") {
+                url += `${x}=${obj[x]}&`;
+              }
+            });
+          }
+          pageAnchors.forEach((el) => {
+            const n = el.getAttribute("href");
+            el.setAttribute("href", `${url}page=${n}`);
+          });
+        });
+
+        // function setValues(id,title,jid){
+        //     $('#candidateId').val(id)
+        //     $('#hiringJob').val(title)
+        //     $('#jobId').val(jid)
+        // }
+
+        // function updateStatus() {
+        //     let status = document.getElementById('hiringStatus').value
+        //     let job = document.getElementById('jid').value
+        //     let comment = document.getElementById('hiringComment').value
+        //     let eventDate = $('#eventDate').val()
+        //     let concernedPerson = $('#concernedPerson').val()
+        //     let candidate = $('#candidateId').val()
+        //     let body = {
+        //       candidate,
+        //       status: status,
+        //       job: job,
+        //       comment: comment,
+        //       eventDate: eventDate,
+        //       concernedPerson: concernedPerson
+        //     }
+
+        //     axios({ method: 'post', url: `/company/candidate/rejectedCand`, data: body, headers: { 'x-auth': localStorage.getItem('token') } })
+        //       .then(result => {console.log(result)
+        //         window.location.reload()
+        //       })
+        //   }
+
+
+    </script>
+
+<% include ./partials/footer%>

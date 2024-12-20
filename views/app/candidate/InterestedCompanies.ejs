@@ -1,0 +1,419 @@
+<% include ../../partials/header %>
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+      <% include ../../partials/flash %>
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Shortlisting</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/candidate/dashboard">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">Shortlisting / शॉर्टलिस्टइंग
+                        </li>
+                      </ol>
+                  </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="content-body">
+              <div class="row">
+                <div class="col-12">
+                    <section class="forlrgscreen d-xl-block d-lg-block d-md-block d-sm-none d-none" >
+                      <div class="container-fluid pt-xl-2 pt-lg-0 pt-md-0 pt-sm-5 pt-0">
+                        <% if(hiringStatus&&hiringStatus.length){%>
+                        <% hiringStatus?.forEach((hiring, i)=> { %>
+                          <div class="row pointer" >
+                            <div class="col-lg-12 col-md-12 column">
+                              <div class="job-single-sec">
+                                <div class="job-single-head border-0 pb-0">
+                                  <div class="job-thumb my-auto"> <img 
+                                      src="<%=hiring.company?.logo ? process.env.MIPIE_BUCKET_URL +'/' +job.company?.logo : '/images/logo90.png'%>"
+                                      class="p-1"> </div>
+                                  <div class="job-head-info">
+                                    <span class="text-capitalize set-lineh">
+                                      <%= hiring.company ? hiring.company.name : "NA" %>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="job-overview mt-1">
+                                  <ul class="mb-xl-2 mb-lg-2 mb-md-2 mb-sm-0 mb-0 list-unstyled">
+                                    <li class=""><i class="la la-thumb-tack"></i>
+                                      <h3 class="text-capitalize jobDetails-wrap">
+                                        <%= hiring.updatedAt ?  moment(hiring.updatedAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A') : "NA" %>
+                                      </h3><span class="text-capitalize jobDetails-wrap ">
+                                        Date & Time / दिनांक
+                                      </span>
+                                    </li>
+                                    <li><i class="la la-university"></i>
+                                      <h3 class="jobDetails-wrap" >
+                                        <%= hiring.company ? hiring.company.name : "NA" %>
+                                      </h3><span class="text-capitalize jobDetails-wrap">
+                                        Company/ कंपनी
+                                      </span>
+                                    </li>
+                                    <li><i class="la la-building-o"></i>
+                                      <h3 class="jobDetails-wrap">
+                                        <%= hiring.company?._industry ? hiring.company?._industry?.name : "NA" %>
+                                      </h3>
+                                      <span class="text-capitalize jobDetails-wrap">
+                                        Industry Name / उद्योग का नाम
+                                      </span>
+                                    </li>
+                                    <li><i class="la la-shield"></i>
+                                      <h3 class="jobDetails-wrap">
+                                        <%= hiring.company?.cityId ? cities.find(city => city._id == hiring.company?.cityId)?.name : "NA" %>
+                                      </h3><span class="jobDetails-wrap">
+                                       City / शहर
+                                      </span>
+                                    </li>
+                                    <li><i class="la la-puzzle-piece"></i>
+                                      <h3 class="jobDetails-wrap">
+                                        <%= hiring?.status ?  hiring?.status : "NA" %>
+                                      </h3><span class="jobDetails-wrap">
+                                       Status / स्थति
+                                      </span>
+                                    </li>
+                                    <li><i class="la la-weixin"></i>
+                                      <h3 class="jobDetails-wrap">
+                                        <%= hiring?.comment ? hiring?.comment :"NA" %>
+                                      </h3><span class="jobDetails-wrap">
+                                       Comments / टिप्पणी
+                                      </span>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <% }); %>
+                      <% } else{%>
+                       <h4 class="text-center"> No Results found</h4>
+                        <%} %>
+        
+                      </div>
+                    </section>
+                    <section class="forsmallscrn d-xl-none d-lg-none d-md-none d-sm-block d-block">
+                      <div class="container-fluid pt-xl-2 pt-lg-0 pt-md-0 pt-sm-5 pt-0">
+                        <% if(hiringStatus&&hiringStatus.length){%>
+                        <% hiringStatus?.forEach((hiring, i)=> { %>
+                          <div class="row pointer" >
+                            <div class="col-lg-12 col-md-12 column">
+                              <div class="job-single-sec">
+                                <div class="job-single-head border-0 pb-0">
+                                  <div class="job-thumb my-auto"> <img 
+                                      src="<%=hiring.company?.logo ? process.env.MIPIE_BUCKET_URL +'/' +job.company?.logo : '/images/logo90.png'%>"
+                                      class="p-1"> </div>
+                                  <div class="job-head-info">
+                                    <span class="text-capitalize set-lineh">
+                                      <%= hiring.company ? hiring.company.name : "NA" %>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="job-overview mt-1">
+                                  <ul class="mb-xl-2 mb-lg-2 mb-md-2 mb-sm-0 mb-0 list-unstyled">
+                                    <li class=""><i class="la la-thumb-tack"></i>
+                                      <h3 class="text-capitalize jobDetails-wrap">
+                                        <%= hiring.updatedAt ?  moment(hiring.updatedAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A') : "NA" %>
+                                      </h3><span class="text-capitalize jobDetails-wrap ">
+                                        Date & Time / दिनांक
+                                      </span>
+                                    </li>
+                                    <li><i class="la la-university"></i>
+                                      <h3 class="jobDetails-wrap" >
+                                        <%= hiring.company ? hiring.company.name : "NA" %>
+                                      </h3><span class="text-capitalize jobDetails-wrap">
+                                        Company/ कंपनी
+                                      </span>
+                                    </li>
+                                    <li><i class="la la-building-o"></i>
+                                      <h3 class="jobDetails-wrap">
+                                        <%= hiring.company?._industry ? hiring.company?._industry?.name : "NA" %>
+                                      </h3>
+                                      <span class="text-capitalize jobDetails-wrap">
+                                        Industry Name / उद्योग का नाम
+                                      </span>
+                                    </li>
+                                    <li><i class="la la-shield"></i>
+                                      <h3 class="jobDetails-wrap">
+                                        <%= hiring.company?.cityId ? cities.find(city => city._id == hiring.company?.cityId)?.name : "NA" %>
+                                      </h3><span class="jobDetails-wrap">
+                                       City / शहर
+                                      </span>
+                                    </li>
+                                    <li><i class="la la-puzzle-piece"></i>
+                                      <h3 class="jobDetails-wrap">
+                                        <%= hiring?.status ?  hiring?.status : "NA" %>
+                                      </h3><span class="jobDetails-wrap">
+                                       Status / स्थति
+                                      </span>
+                                    </li>
+                                    <li><i class="la la-weixin"></i>
+                                      <h3 class="jobDetails-wrap">
+                                        <%= hiring?.comment ? hiring?.comment :"NA" %>
+                                      </h3><span class="jobDetails-wrap">
+                                       Comments / टिप्पणी
+                                      </span>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <hr>
+                          <% }); %>
+                      <% } else{%>
+                       <h4 class="text-center"> No Results found</h4>
+                        <%} %>
+        
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div> -->
+              <div class="card">
+                <div class="card-content">
+                  <div class="row">
+                    <div class="col-12">
+                        <section class="forlrgscreen d-xl-block d-lg-block d-md-block d-sm-none d-none" >
+                          <div class="container-fluid pt-xl-0 pt-lg-0 pt-md-0 pt-sm-2 pt-0">
+                            <% if(hiringStatus&&hiringStatus.length){%>
+                            <% hiringStatus?.forEach((hiring, i)=> { %>
+                              <div class="row pointer" >
+                                <div class="col-lg-12 col-md-12 column py-2">
+                                  <div class="job-single-sec">
+                                    <div class="job-single-head border-0 pb-0">
+                                      <div class="job-thumb my-auto"> <img 
+                                          src="<%=hiring.company?.logo ? process.env.MIPIE_BUCKET_URL +'/' +job.company?.logo : '/images/logo90.png'%>"
+                                          class="p-1"> </div>
+                                      <div class="job-head-info">
+                                        <span class="text-capitalize set-lineh">
+                                          <%= hiring.company ? hiring.company.name : "NA" %>
+                                        </span>
+                                      </div>
+                                    </div>
+                                    <div class="job-overview mt-1">
+                                      <ul class="mb-xl-2 mb-lg-2 mb-md-2 mb-sm-0 mb-0 list-unstyled">
+                                        <li class=""><i class="la la-thumb-tack"></i>
+                                          <h3 class="text-capitalize jobDetails-wrap">
+                                            <%= hiring.updatedAt ?  moment(hiring.updatedAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A') : "NA" %>
+                                          </h3><span class="text-capitalize jobDetails-wrap ">
+                                            Date & Time / दिनांक
+                                          </span>
+                                        </li>
+                                        <li><i class="la la-university"></i>
+                                          <h3 class="jobDetails-wrap" >
+                                            <%= hiring.company ? hiring.company.name : "NA" %>
+                                          </h3><span class="text-capitalize jobDetails-wrap">
+                                            Company/ कंपनी
+                                          </span>
+                                        </li>
+                                        <li><i class="la la-building-o"></i>
+                                          <h3 class="jobDetails-wrap">
+                                            <%= hiring.company?._industry ? hiring.company?._industry?.name : "NA" %>
+                                          </h3>
+                                          <span class="text-capitalize jobDetails-wrap">
+                                            Industry Name / उद्योग का नाम
+                                          </span>
+                                        </li>
+                                        <li><i class="la la-shield"></i>
+                                          <h3 class="jobDetails-wrap">
+                                            <%= hiring.company?.cityId ? cities.find(city => city._id == hiring.company?.cityId)?.name : "NA" %>
+                                          </h3><span class="jobDetails-wrap">
+                                           City / शहर
+                                          </span>
+                                        </li>
+                                        <li><i class="la la-puzzle-piece"></i>
+                                          <h3 class="jobDetails-wrap">
+                                            <%= hiring?.status ?  hiring?.status : "NA" %>
+                                          </h3><span class="jobDetails-wrap">
+                                           Status / स्थति
+                                          </span>
+                                        </li>
+                                        <li><i class="la la-weixin"></i>
+                                          <h3 class="jobDetails-wrap">
+                                            <%= hiring?.comment ? hiring?.comment :"NA" %>
+                                          </h3><span class="jobDetails-wrap">
+                                           Comments / टिप्पणी
+                                          </span>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <% }); %>
+                          <% } else{%>
+                           <h4 class="text-center"> No Results found</h4>
+                            <%} %>
+            
+                          </div>
+                        </section>
+                        <section class="forsmallscrn d-xl-none d-lg-none d-md-none d-sm-block d-block">
+                          <div class="container-fluid pt-xl-2 pt-lg-0 pt-md-0 pt-sm-2 pt-2">
+                            <% if(hiringStatus&&hiringStatus.length){%>
+                            <% hiringStatus?.forEach((hiring, i)=> { %>
+                              <div class="row pointer" >
+                                <div class="col-lg-12 col-md-12 column">
+                                  <div class="job-single-sec">
+                                    <div class="job-single-head border-0 pb-0">
+                                      <div class="job-thumb my-auto"> <img 
+                                          src="<%=hiring.company?.logo ? process.env.MIPIE_BUCKET_URL +'/' +job.company?.logo : '/images/logo90.png'%>"
+                                          class="p-1"> </div>
+                                      <div class="job-head-info">
+                                        <span class="text-capitalize set-lineh">
+                                          <%= hiring.company ? hiring.company.name : "NA" %>
+                                        </span>
+                                      </div>
+                                    </div>
+                                    <div class="job-overview mt-1">
+                                      <ul class="mb-xl-2 mb-lg-2 mb-md-2 mb-sm-0 mb-0 list-unstyled">
+                                        <li class=""><i class="la la-thumb-tack"></i>
+                                          <h3 class="text-capitalize jobDetails-wrap">
+                                            <%= hiring.updatedAt ?  moment(hiring.updatedAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A') : "NA" %>
+                                          </h3><span class="text-capitalize jobDetails-wrap ">
+                                            Date & Time / दिनांक
+                                          </span>
+                                        </li>
+                                        <li><i class="la la-university"></i>
+                                          <h3 class="jobDetails-wrap" >
+                                            <%= hiring.company ? hiring.company.name : "NA" %>
+                                          </h3><span class="text-capitalize jobDetails-wrap">
+                                            Company/ कंपनी
+                                          </span>
+                                        </li>
+                                        <li><i class="la la-building-o"></i>
+                                          <h3 class="jobDetails-wrap">
+                                            <%= hiring.company?._industry ? hiring.company?._industry?.name : "NA" %>
+                                          </h3>
+                                          <span class="text-capitalize jobDetails-wrap">
+                                            Industry Name / उद्योग का नाम
+                                          </span>
+                                        </li>
+                                        <li><i class="la la-shield"></i>
+                                          <h3 class="jobDetails-wrap">
+                                            <%= hiring.company?.cityId ? cities.find(city => city._id == hiring.company?.cityId)?.name : "NA" %>
+                                          </h3><span class="jobDetails-wrap">
+                                           City / शहर
+                                          </span>
+                                        </li>
+                                        <li><i class="la la-puzzle-piece"></i>
+                                          <h3 class="jobDetails-wrap">
+                                            <%= hiring?.status ?  hiring?.status : "NA" %>
+                                          </h3><span class="jobDetails-wrap">
+                                           Status / स्थति
+                                          </span>
+                                        </li>
+                                        <li><i class="la la-weixin"></i>
+                                          <h3 class="jobDetails-wrap">
+                                            <%= hiring?.comment ? hiring?.comment :"NA" %>
+                                          </h3><span class="jobDetails-wrap">
+                                           Comments / टिप्पणी
+                                          </span>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <hr>
+                              <% }); %>
+                          <% } else{%>
+                           <h4 class="text-center"> No Results found</h4>
+                            <%} %>
+            
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <% if (totalPages> 1) { %>
+                <ul class="pagination justify-content-end ml-2 mb-2 text-right">
+                  <% let first=1 %>
+                    <% let last=totalPages> 4 ? 4 :
+                      totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                        <% first=page - 1 %>
+                          <% last=page + 1 %>
+                            <% if (last> totalPages) last = totalPages
+                              %> <% } %>
+                                <% if (first> 1) { %>
+                                  <li class="page-item">
+                                    <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                                  </li>
+                                  <% } %>
+                                    <% for (let i=first; i <=last; i +=1) { %>
+                                      <% if (i===page) { %>
+                                        <li class="active page-item">
+                                          <a href="javascript:void()" class="page-link pagi_custom">
+                                            <%= i %>
+                                          </a>
+                                        </li>
+                                        <% } else { %>
+                                          <li class="page-item">
+                                            <a class="page-link pageAnchor pagi_customtwo" href="<%= i %>">
+                                              <%= i %>
+                                            </a>
+                                          </li>
+                                          <% } %>
+                                            <% } %>
+                                              <% if (totalPages>
+                                                last)
+                                                { %>
+                                                <li class="page-item">
+                                                  <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                                                </li>
+                                                <li class="page-item">
+                                                  <a class="pageAnchor page-link" href="<%= totalPages %>">Last</a>
+                                                </li>
+                                                <% } %>
+                </ul>
+                <% } %>
+            </div>
+          </div>
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+        </div>
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+      const pageAnchors = document.querySelectorAll("a.pageAnchor");
+      const { origin, pathname, search } = window.location;
+      let searchParams = search.split("?")[1];
+      let obj;
+      let url = `${origin}${pathname}?`;
+      if (searchParams) {
+        obj = JSON.parse(
+          '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+          function (key, value) {
+            return key === "" ? value : decodeURIComponent(value);
+          }
+        );
+        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+        keyArr.forEach((x) => {
+          if (x !== "page") {
+            url += `${x}=${obj[x]}&`;
+          }
+        });
+      }
+      pageAnchors.forEach((el) => {
+        const n = el.getAttribute("href");
+        el.setAttribute("href", `${url}page=${n}`);
+      });
+    });
+ </script>
+
+        <% include ./partials/footer%>
+
+     

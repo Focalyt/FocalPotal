@@ -1,0 +1,86 @@
+<% include ../../partials/header %>
+
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+  data-menu="vertical-menu-modern" data-col="2-columns">
+
+  <% include ./partials/navbar%>
+  <% include ./partials/leftpane%>
+  <% include ../../partials/flash %>
+  <div id="preloader"></div>
+
+  <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+      <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+          <div class="row breadcrumbs-top">
+            <div class="col-12">
+              <h3 class="content-header-title float-left mb-0">Share Profile</h3>
+              <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="/candidate/dashboard">Home</a>
+                  </li>
+                  <li class="breadcrumb-item active">Share Profile</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-body">
+        <section>
+          <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 px-0">
+                  <div class="table-content shadow-cashback shadow-cashback both-border ">
+                    <div class="tab_head font-weight-bolder both-border py-1 px-1">Share Profile</div>
+
+                    <div class="mipie-refer py-2 px-1 both-border-top" style="overflow-wrap: break-word;">
+                      <h5 >This is your Profile Link / यह आपका प्रोफ़ाइल लिंक है</h5>
+                      <h5> Click on button below to share your CV on whatsapp / व्हाट्सएप पर अपना सीवी साझा करने के लिए नीचे दिए गए बटन पर क्लिक करें</h5>
+                      <a class="btn btn-success  waves-effect waves-light  text-white mt-1"
+                       href="javascript:" onclick="shareCV()">Share Now / शेयर करे</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+    </div>
+  </div>
+  </div>
+
+  <script>
+    const preloader = $('#preloader');
+    preloader.hide();
+
+    function shareCV(){
+        preloader.show();
+        axios.get(`/candidate/createResume`, {
+            headers: { 'x-auth': localStorage.getItem('token') }
+        }).then(res => {
+            preloader.hide();
+            let text = getText(res.data.uploadData)
+            let url = `https://wa.me/?text=` + encodeURIComponent(text)
+            window.open(url)
+        }).catch((err) => {
+            preloader.hide();
+            console.log(err.message)
+        })
+    }
+function getText(url){
+    let text = `Hello 
+Please review my profile.
+${url}
+
+नमस्कार
+कृपया  मेरी प्रोफ़ाइल की समीक्षा करें।
+${url}`
+
+return text;
+}
+  </script>
+  <% include ./partials/footer %>

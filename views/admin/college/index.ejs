@@ -1,0 +1,408 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Colleges</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Colleges</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<section class="list-view">
+				<div class="row">
+					<div class="col-12 rounded equal-height-2 coloumn-2">
+						<div class="card">
+							<div class="row p-1">
+								<div class="col-xl-6">
+									<div class="row">
+										<div class="archieve pl-1">
+											<input style="margin-bottom: 4px;" type="checkbox" onclick="archived()" <%-
+												isChecked=="true" ? "checked" : '' %>
+											id="checkbox1">
+											&nbsp;
+											<p>Show Archived</p>
+											<span class="checkmark"></span>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="custom-control custom-switch custom-control-inline">
+									<input type="checkbox" class="custom-control-input" />
+									<label class="custom-control-label">
+									</label>
+								</div> -->
+								<!-- <div class="col-xl-6">
+									<div class="archieveOuter">
+										<div class="archieve">
+											<p>Show Archived</p>
+
+											<input type="checkbox" onclick="archived()" <%- isChecked=="true"
+												? "checked" : '' %>
+											id="checkbox1">
+											<span class="checkmark"></span>
+										</div>
+									</div>
+								</div> -->
+
+								<!-- <div class="col-xl-6">
+             <div class="row">
+                 <div class="col-xl-12 text-right">
+                     <a href="" class="btn btn-outline-success">Import</a>
+                     <a href="" class="btn btn-outline-primary">Export</a>
+                   </div>
+             </div>
+         </div> -->
+							</div>
+							<div class="row mb-2">
+								<div class="col-xl-12 col-lg-12">
+								  <form method="GET">
+									<div class="row">
+										<div class="col-xl-2 ml-1 mt-1">
+											<label>Name</label>
+											<input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>"
+                                             maxlength="25">
+										</div>
+										<div class="col-xl-2 ml-1 mt-1">
+											<label>From Date</label>
+											<input type="date" class="form-control" id="from-date" name="FromDate" value="<%= data.FromDate %>">
+										</div>
+										<div class="col-xl-2 ml-1 mt-1">
+											<label>To Date</label>
+											<input type="date" class="form-control" id="to-date" name="ToDate" value="<%= data.ToDate %>">
+										</div>
+										<div class="col-xl-2 ml-1 mt-1">
+											<label>Profile</label>
+											<select class="form-control text-capitalize" name="Profile" id="profile">
+												<option value="">Select</option>
+												<option class="text-capitalize" value= "All" 
+												<% if (data.Profile=='All' ) { %> selected <% }%> >All</option>
+												<option class="text-capitalize" value= "true" 
+												<% if (data.Profile=='true' ) { %> selected <% }%> >Completed</option>
+												<option class="text-capitalize" value= "false" 
+												<% if (data.Profile=='false' ) { %> selected <% }%> >Due</option>
+											</select>
+										</div>
+				
+											<input type="hidden" class="form-control" name="status" value="<%- isChecked=='true' ? false : true%>">
+										
+										<div style="margin-top: 2.5rem !important;" class="col-xl-3 text-center mt-3">
+											<button 
+											  class="btn btn-success  waves-effect waves-light  text-white d-inline "
+											  id="submit-btn">Go</button>
+											  <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
+											  href="/admin/college">RESET</a>
+										</div>
+									</div>
+								  </form>
+								</div>
+							</div>
+
+							<div class="card-content">
+								<div class="table-responsive">
+									<% if (colleges && colleges.length> 0) { %>
+										<table class="table table-hover-animation mb-0 table-hover">
+											<thead>
+												<tr>
+													<th>Date OF JOINING</th>
+													<th>Name</th>
+													<th>University</th>
+													<!--th>No of Students</th!-->
+													<th>Website</th>
+													<th>Concerned Person</th>
+													<th>Email</th>
+													<th>Status</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<% let count=0 %>
+													<% colleges.forEach((l, i)=> {
+														%>
+														<tr>
+															<td class="text-capitalize">
+																<%= l.createdAt ? moment(l.createdAt).utcOffset("+05:30").format('MMM DD YYYY  hh:mm A') : "NA" %>
+															</td>
+															<td class="text-capitalize">
+																<%= l.name %>
+															</td>
+															<td class="">
+																<%= l._university !=null ? l._university.name : "NA" %>
+															</td>
+															<!--td class="text-capitalize">0</td-->
+
+															<td class="">
+																<%= l.website ? l.website : ' NA' ;%>
+															</td>
+
+															<td class="text-capitalize">
+																<%= l?._concernPerson?.name %>
+															</td>
+															<td class="">
+																<%= l?._concernPerson?.email %>
+															</td>
+															<% if (view === true) { %>
+																<td><%= l.status ? 'True' : 'False' %></td>
+																<%}else{%>
+
+															<td class="">
+																<div
+																	class="custom-control custom-switch custom-control-inline">
+																		<input type="checkbox"
+																			onclick="myOnOffFunc('<%= l._id %>', '<%= l.status %>', 'college');"
+																			class="custom-control-input"
+																			id="customSwitch<%= i %>" <% if (l.status) { %> checked <% } %> />
+																		<label class="custom-control-label"
+																			for="customSwitch<%= i %>">
+																		</label>
+																</div>
+															</td>
+															<% } %>
+
+
+															<td valign="middle"
+																class="qualification-action-custom-class">
+																<!-- <a href="/admin/college/edit/<%= l._id %>">
+                  <i class="feather icon-edit fa-lg primary"></i>
+				  
+                </a> -->
+																<% if (isChecked=="true" || view == true){ %>
+																	<a style="padding-left: 7px"
+																		href="/admin/college/view/<%= l._id %>">
+																		<i class="feather icon-eye fa-lg primary"></i>
+																	</a>
+																	<%}else{%>
+																		<a href="/admin/college/edit/<%= l._id %>">
+																			<i
+																				class="feather icon-edit fa-lg primary"></i>
+																		</a>
+																		<a style="padding-left: 7px"
+																			href="/admin/college/view/<%= l._id %>">
+																			<i
+																				class="feather icon-eye fa-lg primary"></i>
+																		</a>
+
+																		<% if (l._concernPerson?._id ){ %>
+																			<i class="fa fa-sign-in fa-lg ml-1 primary cursor-pointer"
+																				title="Login as College"
+																				onclick="loginAs('<%=l._concernPerson?._id%>')"></i>
+
+																			<%}};%>
+															</td>
+														</tr>
+														<% }) %>
+											</tbody>
+										</table>
+										<% } else { %>
+											<p class="text-center mt-3">No result found</p>
+											<% } %>
+												<% if (totalPages> 1) { %>
+													<ul class="pagination justify-content-end ml-2 mb-2">
+														<% let first=1 %>
+															<% let last=totalPages> 4 ? 4 :
+																totalPages %> <% if (totalPages> 4 && page >= 2) {
+																	%>
+																	<% first=page - 1 %>
+																		<% last=page + 1 %>
+																			<% if (last> totalPages) last =
+																				totalPages
+																				%> <% } %>
+																					<% if (first> 1) { %>
+																						<li class="page-item">
+																							<a class="pageAnchor page-link"
+																								href="<%= 1 %>">First</a>
+																						</li>
+																						<% } %>
+																							<% for (let i=first; i
+																								<=last; i +=1) { %>
+																								<% if (i===page) { %>
+																									<li
+																										class="active page-item">
+																										<a href="javascript:void()"
+																											class="page-link">
+																											<%= i %>
+																										</a>
+																									</li>
+																									<% } else { %>
+																										<li
+																											class="page-item">
+																											<a class="page-link pageAnchor"
+																												href="<%= i %>">
+																												<%= i %>
+																											</a>
+																										</li>
+																										<% } %>
+																											<% } %>
+																												<% if
+																													(totalPages>
+																													last)
+																													{
+																													%>
+																													<li
+																														class="page-item">
+																														<a class="pageAnchor page-link"
+																															href="<%= last + 1 %>">...</a>
+																													</li>
+																													<li
+																														class="page-item">
+																														<a class="pageAnchor page-link"
+																															href="<%= totalPages %>">Last</a>
+																													</li>
+																													<% }
+																														%>
+													</ul>
+													<% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<% include ../partials/footer %>
+				<script>
+					function myOnOffFunc(id, status, model) {
+						// eslint-disable-line
+						let myStatus = true;
+						if (status === true || status === "true") {
+							myStatus = false;
+						}
+						$.ajax({
+							type: "POST",
+							url: "/admin/changestatus",
+							data: {
+								id,
+								status: myStatus,
+								model,
+							},
+							success: () => location.reload(),
+						});
+					}
+				</script>
+				<script>
+					!(function () {
+						"use strict";
+						Array.isArray ||
+							(Array.isArray = function (r) {
+								return "[object Array]" === Object.prototype.toString.call(r);
+							});
+						var r = {
+							get: function () {
+								var r = window.location.search,
+									t = {};
+								return "" === r
+									? t
+									: ((r = r.slice(1)),
+										(r = r.split("&")),
+										r.map(function (r) {
+											var i, o;
+											(r = r.split("=")),
+												(i = r[0]),
+												(o = r[1]),
+												t[i]
+													? (Array.isArray(t[i]) || (t[i] = [t[i]]),
+														t[i].push(o))
+													: (t[i] = o);
+										}),
+										t);
+							},
+						};
+						if (window) {
+							if (window.qs)
+								throw new Error(
+									"Error bootstrapping qs: window.qs already set."
+								);
+							window.qs = r;
+						}
+					})();
+				</script>
+				<script>
+					$('#submit-btn').click(()=>{
+						if(validate()){
+							return false
+						}
+					})
+					function validate(){
+						$('.error').removeClass('error')
+						let fromDate = $('#from-date').val();
+						let toDate = $('#to-date').val()
+						let hasError = false
+						let firstError
+						
+						if(fromDate && !toDate){
+							$('#to-date').parent().addClass('error')
+                            firstError = firstError ? firstError :$('#to-date')
+                            hasError = true
+						}
+						if(!fromDate && toDate){
+							$('#from-date').parent().addClass('error')
+                            firstError = firstError ? firstError :$('#from-date')
+                            hasError = true
+						}
+						$(firstError).focus()
+                        return hasError
+					}
+					document.addEventListener("DOMContentLoaded", () => {
+						const pageAnchors = document.querySelectorAll("a.pageAnchor");
+						const { origin, pathname, search } = window.location;
+						const obj = window.qs.get(search);
+						const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+						let url = `${origin}${pathname}?`;
+						keyArr.forEach((x) => {
+							if (x !== "page") {
+								url += `${x}=${obj[x]}&`;
+							}
+						});
+						pageAnchors.forEach((el) => {
+							const n = el.getAttribute("href");
+							el.setAttribute("href", `${url}page=${n}`);
+						});
+					});
+
+					// show deleted data
+					function archived() {
+						var checkbox = document.getElementById('checkbox1');
+						if (checkbox.checked) {
+							var status = false;
+							// alert("isDeleted = " + isDeleted)
+							$.ajax({
+								type: "GET",
+								url: "/admin/college?status=false",
+								success: () => window.location.href = "/admin/college?status=false"
+							});
+						} else {
+							var status = true;
+							// alert("isDeleted = " + isDeleted);
+							$.ajax({
+								type: "GET",
+								url: "/admin/college?status=true",
+								success: () => window.location.href = "/admin/college?status=true"
+							});
+						}
+					}
+
+					function loginAs(id) {
+						$.ajax({
+							type: "POST",
+							data: { id, module: 'college' },
+							url: "/api/loginAs",
+							success: (data) => {
+								if (data.role === 2) {
+									localStorage.setItem("collegeName", data.collegeName);
+									localStorage.setItem("collegeId", data.collegeId);
+									localStorage.setItem("name", data.name);
+									localStorage.setItem("token", data.token);
+									window.location.href = "/college/myprofile"
+								}
+								
+							}
+						});
+					}
+
+				</script>
+	</div>

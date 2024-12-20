@@ -1,0 +1,848 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Add College</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Add College</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<form class="form-horizontal" action="" method="post" id="formData">
+				<section id="personal-info">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">College Information</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>College Name
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" required name="collegeName"
+													palaceholder="College Name" maxlength="50"
+													value='<%= formData.collegeName %>' />
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Website</label>
+												<input type="text" class="form-control" maxlength="50" name="website"
+													value='<%= formData.website %>' />
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Course
+													<span class="asterisk">*</span></label>
+												<select style="cursor: pointer;" class="form-control text-capitalize"
+													title="Select Course" data-actions-box="true" required
+													name="_qualification">
+													<option value="">Select Option</option>
+													<% qualification.forEach((i)=> { %>
+														<option value="<%= i._id %>" class="text-capitalize">
+															<%= i.name %>
+														</option>
+													<% }); %>
+												</select>
+											</div>
+
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>University
+													<span class="asterisk">*</span></label>
+												<select class="form-control text-capitalize chosen" required name="_university">
+													<option value="">Select Option</option>
+													<% university.forEach((i)=> { %>
+														<option value="<%= i._id %>" class="text-capitalize">
+															<%= i.name %>
+														</option>
+														<% }); %>
+												</select>
+											</div>
+										
+										
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Linkedin</label>
+												<input type="text" maxlength="50" class="form-control" name="linkedin"
+													value='<%= formData.linkedin %>' />
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Twitter</label>
+												<input type="text" maxlength="50" class="form-control" name="twitter"
+													value='<%= formData.twitter %>' />
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>FaceBook</label>
+												<input type="text" maxlength="50" class="form-control" name="facebook"
+													value='<%= formData.facebook %>' />
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Country <span class="asterisk">*</span></label>
+												<select style="cursor: pointer;" class="form-control" name="countryId"
+													id="country" required>
+													<option value="">Select Option</option>
+													<% country.forEach((i)=> { %>
+														<option value="<%= i.countryId %>" class="text-capitalize">
+															<%= i.name %>
+														</option>
+														<% }); %>
+												</select>
+											</div>
+										
+									
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>State <span class="asterisk">*</span></label>
+												<select style="cursor: pointer;" class="form-control" name="stateId"
+													id="state" required>
+													<option value="">Select Option</option>
+												</select>
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>City <span class="asterisk">*</span></label>
+												<select style="cursor: pointer;" class="form-control" name="cityId"
+													required id="city">
+													<option value="">Select Option</option>
+												</select>
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Zipcode</label>
+												<input type="text" class="form-control" name="zipcode" minlength="5"
+													maxlength="10" value='<%= formData.zipcode %>' />
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Address</label>
+												<textarea class="form-control" name="address" cols="0" rows="1"
+													maxlength="100"><%= formData.address %></textarea>
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Description</label>
+												<textarea class="form-control" maxlength="100" name="description"
+													cols="3" rows="3"><%= formData.description %></textarea>
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 custom-cursor-pointer">
+												<label class="col-form-label custom-cursor-pointer"
+													for="input-normal">Upload Logo</label>
+												<div class="row" id="logo">
+													<div
+														class="col-xl-12 col-md-12 col-sm-12 col-12 firstImage custom-cursor-pointer">
+														<div class="image-upload">
+															<label for="filestwo" style="cursor: pointer;">
+																<img class="custom-cursor-pointer"
+																	src="/images/add_receipt.png" width="40px"
+																	height="auto" id="outputtwo" />
+																<p class="mt-1 custom-cursor-pointer">
+																	Click to upload logo
+																</p>
+															</label>
+															<input id="filestwo" data-id="logo" type="file"
+																name="filecar" class="my-logo-uploader form-control" />
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- <div class="col-xl-3 mb-1">
+                        <label class="col-form-label" for="input-normal">Upload Banner</label>
+                        <div class="row" id="banner">
+                          <div class="col-xl-12 col-md-12 col-sm-12 col-12 bannerImage">
+                            <div class="image-upload">
+                              <label for="filesbanner">
+                                <img src="/images/add_receipt.png" width="40px" height="auto" id="output">
+                                <p class="mt-1">Click to upload Banner</p>
+                              </label>
+                              <input id="filesbanner" data-id="banner" type="file" name="filebanner"
+                                class="my-banner-uploader form-control" />
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+											<!-- <div class="col-xl-12 mb-1">
+                        <label class="col-form-label" for="input-small">Media Gallery</label>
+                        <div class="row" id="mediaGallery">
+                          <div class="col-xl-3 col-md-3 col-sm-3 col-12">
+                            <div class="image-upload">
+                              <label for="files">
+                                <img src="/images/add_receipt.png" width="25%" height="auto" id="outputo">
+                                <p class="mt-1">Click to upload</p>
+                              </label>
+                              <input id="files" data-id="mediaGallery" type="file" name="files"
+                                class="my-gallery-uploader form-control" multiple />
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section id="Concerned-Person">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">Concerned Person</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Name <span class="asterisk">*</span></label>
+												<input class="form-control text-capitalize kol" name="name" required type="text"
+													pattern="[a-zA-Z\s]+" maxlength="50" value='<%= formData.name %>' />
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12  mb-1">
+												<label>Designation
+													<span class="asterisk">*</span></label>
+												<input class="form-control text-capitalize" type="text" name="designation" required
+													maxlength="50" value='<%= formData.designation %>' />
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Email <span class="asterisk">*</span></label>
+												<input class="form-control" maxlength="50" type="Email" name="email"
+													required value='<%= formData.email %>' />
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Contact Number
+													<span class="asterisk">*</span></label>
+												<input class="form-control" type="text" name="mobile"
+													pattern="^[\+\d]?(?:[\d-.\s()]*)$" minlength="10" maxlength="13"
+													required value='<%= formData.mobile %>' />
+											</div>
+										</div>
+										<!-- <div class="row">
+                      <div class="col-xl-3 mb-1">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" id="password" required>
+                      </div>
+                      <div class="col-xl-3 mb-1">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm_password" required>
+                        <span id="message"></span>
+                      </div>
+                    </div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section id="tech">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">College Representative</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body diningRows">
+										<div class="row mb-2">
+											<div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Name</label>
+												<input class="form-control text-capitalize" maxlength="50" type="text" name="repName[]"
+													value='<%= formData.repName %>' />
+											</div>
+											<div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Designation <span class="asterisk"></span></label>
+												<input class="form-control text-capitalize" maxlength="50" type="text"
+													name="repDesignation[]" value='<%= formData.repDesignation %>' />
+											</div>
+											<div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Email <span class="asterisk"></span></label>
+												<input class="form-control" maxlength="50" type="email"
+													name="repEmail[]" value='<%= formData.repEmail %>' />
+											</div>
+											<div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Contact Number </label>
+												<input class="form-control" type="text" name="repMobile[]"
+													minlength="10" maxlength="13" value='<%= formData.repMobile %>' />
+											</div>
+											<!-- <div class="col-xl-2 mb-1 custom-cursor-pointer">
+										<label
+											class="col-form-label custom-cursor-pointer"
+											for="input-normal"
+											>Image</label
+										>
+										<div class="row" id="repImage">
+											<div
+												class="col-xl-12 col-md-12 col-sm-12 col-12 diningCleaa custom-cursor-pointer"
+											>
+												<div
+													class="image-upload custom-cursor-pointer"
+												>
+													<label for="filesone">
+														<img
+															class="custom-cursor-pointer"
+															src="/images/add_receipt.png"
+															width="40px"
+															height="auto"
+															id="outputthree"
+														/>
+														<p class="mt-1 custom-cursor-pointer">
+															Click to upload Image
+														</p>
+													</label>
+													<input
+														id="filesone"
+														data-id="repImage"
+														type="file"
+														name="fileexe"
+														class="my-executive-uploader form-control"
+													/>
+												</div>
+											</div>
+										</div>
+									</div> -->
+											<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-right">
+												<a class="appoint btn btn-success text-white mt-2 px-lg-2">+</a>
+											</div>
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2 text-right">
+												<button onclick="reset()"  class="btn btn-danger"
+					>Reset</button>
+												<button type="submit" class="btn btn-success btnSubmit px-lg-2 ml-1">
+													Save
+												</button>
+
+											</div>
+											
+										</div>
+									</div>
+							<!---	<div class="row">
+										<div class="col-xl-12 col-lg-12">
+											<div class="card">
+												<div class="card-content">
+													<div class="card-body">
+														<div class="row">
+															<div class="col-xl-12 text-right">
+																 <a type="reset" href="/admin/college/add"
+																	class="btn btn-danger" value="Reset">Reset</a>
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</form>
+			<div class="text-right reset">
+				
+			</div>
+			<% include ../partials/footer %>
+				<script>
+					const imageUploaders = document.querySelectorAll(".my-logo-uploader");
+					const submitBtns = document.querySelectorAll(".btnSubmit");
+					imageUploaders.forEach((x) => {
+						const idText = x.getAttribute("data-id");
+						const id = document.querySelector(`#${idText}`);
+
+						x.addEventListener("change", async (e) => {
+							try {
+								submitBtns.forEach((x) => {
+									x.disabled = true;
+								});
+								const filesData = Array.from(e.target.files);
+								if (!Array.isArray(filesData) || filesData.length <= 0)
+									throw new Error("No image found!");
+
+								const data = await Promise.all(
+									filesData.map(async (file) => {
+										const ext = file.name.split(".").pop();
+										const res = await axios.get("/admin/s3upload", {
+											params: { type: file.type, ext },
+										});
+										if (!res || !res.data || !res.data.data) return null;
+										const { url, key } = res.data.data;
+										if (!url || !key) return null;
+										const upload = await axios.put(url, file, {
+											headers: { "Content-Type": file.type },
+										});
+										if (upload || upload.status === 200) return key;
+										return null;
+									})
+								);
+
+								const files = data.filter((x) => !!x);
+
+								if (files.length <= 0)
+									throw new Error("Unable to upload any image!");
+
+								files.forEach((f) => {
+									const div = document.createElement("div");
+									div.setAttribute(
+										"class",
+										"col-xl-12 col-md-12 col-sm-12 col-12 mt-1"
+									);
+
+									const img = document.createElement("img");
+									img.setAttribute(
+										"src",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									img.setAttribute("alt", "img");
+									img.setAttribute("width", "40");
+									img.setAttribute("height", "40");
+									div.appendChild(img);
+
+									const input = document.createElement("input");
+									input.setAttribute("type", "hidden");
+									input.setAttribute("name", idText);
+									input.setAttribute("value", f);
+									div.appendChild(input);
+
+									const p = document.createElement("p");
+									p.setAttribute("class", "mt-1");
+									const rmBtn = document.createElement("a");
+									rmBtn.setAttribute("class", "text-danger");
+									rmBtn.setAttribute("href", "javascript:void(0)");
+									rmBtn.textContent = "Remove ";
+									rmBtn.addEventListener("click", () => {
+										div.parentNode.removeChild(div);
+										$(".firstImage").removeClass("d-none");
+									});
+									p.appendChild(rmBtn);
+									const viewBtn = document.createElement("a");
+									viewBtn.setAttribute("class", "text-primary mr-2");
+									viewBtn.setAttribute("target", "_blank");
+									viewBtn.setAttribute(
+										"href",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									viewBtn.textContent = "View";
+									p.appendChild(viewBtn);
+									div.appendChild(p);
+									id.append(div);
+									$(".firstImage").addClass("d-none");
+								});
+								submitBtns.forEach((x) => {
+									x.disabled = false;
+								});
+								x.value = "";
+							} catch (err) {
+								console.log(err);
+							}
+						});
+					});
+
+					const imageUpload = document.querySelectorAll(".my-banner-uploader");
+					imageUpload.forEach((x) => {
+						const idText = x.getAttribute("data-id");
+						const id = document.querySelector(`#${idText}`);
+
+						x.addEventListener("change", async (e) => {
+							try {
+								submitBtns.forEach((x) => {
+									x.disabled = true;
+								});
+								const filesData = Array.from(e.target.files);
+								if (!Array.isArray(filesData) || filesData.length <= 0)
+									throw new Error("No image found!");
+
+								const data = await Promise.all(
+									filesData.map(async (file) => {
+										const ext = file.name.split(".").pop();
+										const res = await axios.get("/admin/s3upload", {
+											params: { type: file.type, ext },
+										});
+										if (!res || !res.data || !res.data.data) return null;
+										const { url, key } = res.data.data;
+										if (!url || !key) return null;
+										const upload = await axios.put(url, file, {
+											headers: { "Content-Type": file.type },
+										});
+										if (upload || upload.status === 200) return key;
+										return null;
+									})
+								);
+
+								const files = data.filter((x) => !!x);
+
+								if (files.length <= 0)
+									throw new Error("Unable to upload any image!");
+
+								files.forEach((f) => {
+									const div = document.createElement("div");
+									div.setAttribute(
+										"class",
+										"col-xl-12 col-md-12 col-sm-12 col-12 mt-1"
+									);
+
+									const img = document.createElement("img");
+									img.setAttribute(
+										"src",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									img.setAttribute("alt", "img");
+									img.setAttribute("width", "40");
+									img.setAttribute("height", "40");
+									div.appendChild(img);
+
+									const input = document.createElement("input");
+									input.setAttribute("type", "hidden");
+									input.setAttribute("name", idText);
+									input.setAttribute("value", f);
+									div.appendChild(input);
+
+									const p = document.createElement("p");
+									p.setAttribute("class", "mt-1");
+									const rmBtn = document.createElement("a");
+									rmBtn.setAttribute("class", "text-danger");
+									rmBtn.setAttribute("href", "javascript:void(0)");
+									rmBtn.textContent = "Remove ";
+									rmBtn.addEventListener("click", () => {
+										div.parentNode.removeChild(div);
+										$(".bannerImage").removeClass("d-none");
+									});
+									p.appendChild(rmBtn);
+									const viewBtn = document.createElement("a");
+									viewBtn.setAttribute("class", "text-primary mr-2");
+									viewBtn.setAttribute("target", "_blank");
+									viewBtn.setAttribute(
+										"href",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									viewBtn.textContent = "View";
+									p.appendChild(viewBtn);
+									div.appendChild(p);
+									id.append(div);
+									$(".bannerImage").addClass("d-none");
+								});
+								submitBtns.forEach((x) => {
+									x.disabled = false;
+								});
+								x.value = "";
+							} catch (err) {
+								console.log(err);
+							}
+						});
+					});
+
+					const imageUploader = document.querySelectorAll(".my-gallery-uploader");
+					imageUploader.forEach((x) => {
+						const idText = x.getAttribute("data-id");
+						const id = document.querySelector(`#${idText}`);
+
+						x.addEventListener("change", async (e) => {
+							try {
+								submitBtns.forEach((x) => {
+									x.disabled = true;
+								});
+								const filesData = Array.from(e.target.files);
+								if (!Array.isArray(filesData) || filesData.length <= 0)
+									throw new Error("No image found!");
+
+								const data = await Promise.all(
+									filesData.map(async (file) => {
+										const ext = file.name.split(".").pop();
+										const res = await axios.get("/admin/s3upload", {
+											params: { type: file.type, ext },
+										});
+										if (!res || !res.data || !res.data.data) return null;
+										const { url, key } = res.data.data;
+										if (!url || !key) return null;
+										const upload = await axios.put(url, file, {
+											headers: { "Content-Type": file.type },
+										});
+										if (upload || upload.status === 200) return key;
+										return null;
+									})
+								);
+
+								const files = data.filter((x) => !!x);
+
+								if (files.length <= 0)
+									throw new Error("Unable to upload any image!");
+
+								files.forEach((f) => {
+									const div = document.createElement("div");
+									div.setAttribute(
+										"class",
+										"col-xl-3 col-md-3 col-sm-3 col-12"
+									);
+
+									const img = document.createElement("img");
+									img.setAttribute(
+										"src",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									img.setAttribute("alt", "img");
+									img.setAttribute("width", "40");
+									img.setAttribute("height", "40");
+									div.appendChild(img);
+
+									const input = document.createElement("input");
+									input.setAttribute("type", "hidden");
+									input.setAttribute("name", idText);
+									input.setAttribute("value", f);
+									div.appendChild(input);
+
+									const p = document.createElement("p");
+									p.setAttribute("class", "mt-1");
+									const rmBtn = document.createElement("a");
+									rmBtn.setAttribute("class", "text-danger");
+									rmBtn.setAttribute("href", "javascript:void(0)");
+									rmBtn.textContent = "Remove ";
+									rmBtn.addEventListener("click", () =>
+										div.parentNode.removeChild(div)
+									);
+									p.appendChild(rmBtn);
+									const viewBtn = document.createElement("a");
+									viewBtn.setAttribute("class", "text-primary");
+									viewBtn.setAttribute("target", "_blank");
+									viewBtn.setAttribute(
+										"href",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									viewBtn.textContent = "View";
+									p.appendChild(viewBtn);
+									div.appendChild(p);
+									id.append(div);
+								});
+								submitBtns.forEach((x) => {
+									x.disabled = false;
+								});
+								x.value = "";
+							} catch (err) {
+								console.log(err);
+							}
+						});
+					});
+
+					const diningUploaders = document.querySelectorAll(
+						".my-executive-uploader"
+					);
+					diningUploaders.forEach((x) => {
+						const idText = x.getAttribute("data-id");
+						const id = x.closest(`#${idText}`);
+						x.addEventListener("change", async (e) => {
+							try {
+								submitBtns.forEach((x) => {
+									x.disabled = true;
+								});
+								const filesData = Array.from(e.target.files);
+								if (!Array.isArray(filesData) || filesData.length <= 0)
+									throw new Error("No image found!");
+
+								const data = await Promise.all(
+									filesData.map(async (file) => {
+										const ext = file.name.split(".").pop();
+										const res = await axios.get("/admin/s3upload", {
+											params: { type: file.type, ext },
+										});
+										if (!res || !res.data || !res.data.data) return null;
+										const { url, key } = res.data.data;
+										if (!url || !key) return null;
+										const upload = await axios.put(url, file, {
+											headers: { "Content-Type": file.type },
+										});
+										if (upload || upload.status === 200) return key;
+										return null;
+									})
+								);
+
+								const files = data.filter((x) => !!x);
+
+								if (files.length <= 0)
+									throw new Error("Unable to upload any image!");
+
+								files.forEach((f) => {
+									const div = document.createElement("div");
+									div.setAttribute(
+										"class",
+										"col-xl-12 col-md-12 col-sm-12 col-12"
+									);
+
+									const img = document.createElement("img");
+									img.setAttribute(
+										"src",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									img.setAttribute("alt", "img");
+									img.setAttribute("width", "50");
+									img.setAttribute("height", "50");
+									div.appendChild(img);
+
+									const input = document.createElement("input");
+									input.setAttribute("type", "hidden");
+									input.setAttribute("name", idText);
+									input.setAttribute("value", f);
+									div.appendChild(input);
+
+									const p = document.createElement("p");
+									p.setAttribute("class", "mt-1");
+									const rmBtn = document.createElement("a");
+									rmBtn.setAttribute("class", "text-danger");
+									rmBtn.setAttribute("href", "javascript:void(0)");
+									rmBtn.textContent = "Remove ";
+									rmBtn.addEventListener("click", () => {
+										div.parentNode.removeChild(div);
+									});
+									rmBtn.addEventListener("click", () =>
+										div.parentNode.removeChild(div)
+									);
+									p.appendChild(rmBtn);
+									const viewBtn = document.createElement("a");
+									viewBtn.setAttribute("class", "text-primary mr-2");
+									viewBtn.setAttribute("target", "_blank");
+									viewBtn.setAttribute(
+										"href",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									viewBtn.textContent = "View";
+									p.appendChild(viewBtn);
+									div.appendChild(p);
+									$(`#${idText}`).append(div);
+									$(".diningCleaa").addClass("d-none");
+									$(".diningCleaa").closest(".row").removeAttr("id");
+								});
+								submitBtns.forEach((x) => {
+									x.disabled = false;
+								});
+								x.value = "";
+							} catch (err) {
+								console.log(err);
+							}
+						});
+					});
+
+					$("#country").change(() => {
+						$("#state")
+							.find("option")
+							.remove()
+							.end()
+							.append(
+								'<option disabled selected value="">Select Option</option>'
+							);
+						axios
+							.post("/admin/helper/getstate", {
+								countryId: $("#country").val(),
+							})
+							.then(({ data }) => {
+								data.forEach((d) => {
+									$("#state").append(
+										`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+									);
+								});
+							})
+							.catch((e) => console.log(e));
+					});
+
+					$("#state").change(() => {
+						$("#city")
+							.find("option")
+							.remove()
+							.end()
+							.append(
+								'<option disabled selected value="">Select Option</option>'
+							);
+						axios
+							.post("/admin/helper/getcity", {
+								stateId: $("#state").val(),
+							})
+							.then(({ data }) => {
+								data.forEach((d) => {
+									$("#city").append(
+										`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+									);
+								});
+							})
+							.catch((e) => console.log(e));
+					});
+
+					$(".btnSubmit").click(function () {
+						// const password = $("#password").val();
+						// const confirmPassword = $("#confirm_password").val();
+						// if (password != confirmPassword) {
+						//   alert("Passwords do not match.");
+						//   return false;
+						// }
+						return true;
+					});
+
+					$(".appoint").click(() => {
+						$(".diningRows").append(`  <div class="form-group row">
+								<div class="col-xl-2 mb-1">
+										<label>Name</label>
+										<input class="form-control text-capitalize" type="text" name="repName">
+									</div>
+									<div class="col-xl-2 mb-1">
+										<label>Designation</label>
+										<input class="form-control text-capitalize" type="text" name="repDesignation" >
+									</div>
+									<div class="col-xl-2 mb-1">
+										<label>Email</label>
+										<input class="form-control" type="email" name="repEmail" >
+									</div>
+									<div class="col-xl-2 mb-1">
+											<label>Contact Number</label>
+											<input class="form-control" type="text" name="repMobile" minlength="10" maxlength="13">
+										</div>
+									<div class="col-xl-2 mt-2">
+										<button class="btn btn-danger removediv">-</button>
+									</div>
+                        	</div>
+                        
+             
+    </div>`);
+					});
+
+					$(document).on("click", ".removediv", function () {
+						$(this).closest(".row").remove();
+					});
+
+					// $('#password, #confirm_password').on('keyup', function () {
+					//   $('#message').removeClass('d-none');
+					//   if ($('#password').val() == $('#confirm_password').val()) {
+					//     $('#message').html('Matching').css('color', 'green');
+					//     $('#message').addClass('d-none');
+					//   } else
+					//     $('#message').html('Not Matching').css('color', 'red');
+					// });
+
+
+					// dropdown search filter
+					// function filterFunction() {
+					// 	var input, filter, ul, li, a, i;
+					// 	input = document.getElementById("myInput");
+					// 	filter = input.value.toUpperCase();
+					// 	div = document.getElementById("myDropdown");
+					// 	a = div.getElementsByTagName("option");
+					// 	for (i = 0; i < a.length; i++) {
+					// 		txtValue = a[i].textContent || a[i].innerText;
+					// 		if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					// 			a[i].style.display = "";
+					// 		} else {
+					// 			a[i].style.display = "none";
+					// 		}
+					// 	}
+					// }
+
+					function reset() {
+                		window.location.href = "/admin/college/add";
+            		}
+
+				</script>
+				<!-- for search filter for universities -->
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+				<link rel="stylesheet"
+					href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+				<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+				<script type="text/javascript">
+					$(".chosen").chosen();
+				</script>
+	</div>

@@ -1,0 +1,137 @@
+<% include ../partials/header %>
+
+    <body
+        class="vertical-layout vertical-menu-modern 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page"
+        data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+        <!-- BEGIN: Content-->
+        <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper">
+                <div class="content-header row">
+                </div>
+                <div class="content-body">
+                    <% include ../partials/flash %>
+                        <section class="row flexbox-container">
+                            <div class="col-xl-7 col-11 d-flex justify-content-center">
+                                <div class="card bg-authentication rounded-0 mb-0">
+                                    <div class="row m-0">
+                                        <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
+                                            <img src="/images/pages/login.png" alt="branding logo">
+                                        </div>
+                                        <div class="col-lg-6 col-12 p-0">
+                                            <div class="card rounded-0 mb-0 px-2">
+                                                <div class="card-header pb-1">
+                                                    <div class="card-title">
+                                                        <h4 class="mb-0">Forgot Password</h4>
+                                                    </div>
+                                                </div>
+                                                <p class="px-2">Please enter your registered email to receive password.
+                                                </p>
+
+                                                <div class="card-content">
+                                                    <div class="card-body pt-1">
+
+
+                                                        <form method="POST" action="" name="forget" id="form">
+                                                            <fieldset
+                                                                class="form-label-group form-group position-relative has-icon-left">
+                                                                <input class="custom-placeholder" type="email"
+                                                                    class="form-control" id="user-email"
+                                                                    placeholder="Email" name="email" required>
+                                                                <div class="form-control-position">
+                                                                    <i style="top:3px" class="feather icon-mail"></i>
+                                                                </div>
+                                                                <label class="custum-label"
+                                                                    for="user-email">Email</label>
+                                                            </fieldset>
+
+
+                                                            <div
+                                                                class="form-group d-flex justify-content-between align-items-center">
+                                                                <div class="text-left">
+                                                                    <fieldset class="checkbox">
+                                                                        <div
+                                                                            class="vs-checkbox-con vs-checkbox-primary">
+                                                                            <input type="checkbox">
+                                                                            <!-- <span class="vs-checkbox">
+                                                                        <span class="vs-checkbox--check">
+                                                                            <i class="vs-icon feather icon-check"></i> -->
+                                                                            </span>
+                                                                            </span>
+                                                                            <!-- <span class="">Remember me</span> -->
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </div>
+
+                                                            </div>
+                                                            <br><br><br>
+
+                                                            <button type="submit"
+                                                                class="btn btn-primary float-right btn-inline">
+                                                                Send</button>
+
+                                                        </form>
+                                                        <button onclick="redirect()"
+                                                            class="btn btn-outline-primary backBtn float-left btn-inline">Back
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="login-footer">
+                                                    <div class="divider">
+
+                                                    </div>
+                                                    <!-- <div class="divider">
+
+                                                    </div> -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                </div>
+            </div>
+        </div>
+        <!-- END: Content-->
+
+
+        <!-- BEGIN: Vendor JS-->
+        <script src="/js/vendors/js/vendors.min.js"></script>
+        <!-- BEGIN Vendor JS-->
+
+        <!-- BEGIN: Page Vendor JS-->
+        <!-- END: Page Vendor JS-->
+        <script>
+            // hide alert after 5 seconds
+            window.setTimeout(() => {
+                $('.alert').fadeTo(500, 0).slideUp(500, () => {
+                    $('.alert').remove();
+                });
+            }, 5000);
+            window.setTimeout(() => {
+                $('.alertLoginSuccess').fadeTo(500, 0).slideUp(500, () => {
+                    $('.alertLoginSuccess').remove();
+                });
+            }, 5000);
+
+            function redirect() {
+                window.location.href = "/admin/login";
+            }
+        </script>
+        <!-- BEGIN: Theme JS-->
+        <script src="/js/core/app-menu.js"></script>
+        <script src="/js/core/app.js"></script>
+        <script src="/js/scripts/components.js"></script>
+        <!-- END: Theme JS-->
+
+        <!-- BEGIN: Page JS-->
+        <!-- END: Page JS-->
+
+    </body>
+    <!-- END: Body-->
+
+    </html>

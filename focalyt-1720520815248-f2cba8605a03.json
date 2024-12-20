@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "focalyt-1720520815248",
+  "private_key_id": "f2cba8605a03d8f3ebfb41544005d8703dce5d06",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDF/iaEpEDJBr4F\ngfDz+53gr4Y5zDfgfJt9x94LfwpDoenizzXvMAtwM5IwTwJGwQxuCDb1ucote/Lt\nhlL6BuUlC/PQBaZVb4oeslXba8JW83UqrOOsiwfi59kBPBgbBqyF+CSwq/YHQGrv\n9rtVGlXfMIyGD+jzQou5pWuB9F8UMuDVLTT632lULffYe2nZAtuUIMY/qOi30rKJ\nkH1NUJybvIsQzkBqQ2MEJqCJm99KitjWIHu7M/d53AJ5OSXVf7CBhbyha7bhuNCD\ncWZk+7SEzShMzGY6Z5p+DJGLjAKdu3Ke/12tkiPSm5d1X/vjwh5SmRKasBu/T2yP\npGQeOgzNAgMBAAECggEAAmmO0ZXovipJXWrQY0ChE1BAK+sbkS4jfNxXDb/OAbXy\n0hMhPplQwly2fsUvq2oFuz95X/QUDQrSEmfNEgPMfe+P2GyBMtBJmAcnOaWt9/4+\nYrc5jOwiu/aEM9omFwo1RuqXk9l8hWkZBHR2otpPyojeZXHDLleUuT3VOf+euvHA\nPYiXhkT7vFZiaHho2UHpEn+d9mbEO+XGPotSLwqYPy4ri5QLFuW2J1pD9eOa5qvt\nVF8pZjncFvOa2e8HAdO6FnpIsbVK/laL4LsPTh+eoJJJ1WW3w/HI1Wa4yjS4ygSK\n5P+oHobultDoaxYs0OMWvDEhicMmucpRP+pfDP315wKBgQD3732rdycB4An4io9T\nTBIo5nO6TnIHILWXszndrqn7tUgsKuV1qmmmtIHXikPcUkTXoSzWh4oBegDMCSwR\n9xINiiK+FnxRvSUQOkmRSVNUAEKbU71NeVtTns4uAyQzKj0IwHOslTU6cTtcUqgg\nKNCLuMTqtXuv0g3ZTwTwsG3cZwKBgQDMbsvkSgJ2GTYxXV6ZyH0tBFZ/MULcP201\nqmUjRUYyC1mwQEpce05B+zDyoEO4gGx5+kjWnEHTHUoLJOi1VpQi0hPpOaq4xxvv\n92wb5vFkyNs2Wd0w6E47RVZfY19Q5a6IJyU4z5HvEllDUA2mfZQ9EhjZ3Pf9+rUj\nm8uLW4UMqwKBgCpVVAnQ4HIrhMhRMEOyu28MWjo3ZrTc2uS6D2lQh2mY/Ge+M0ux\n+zQhogHhc9DMo0CGHpfKsL+ryzMLZeDzZLu3GFOIl1WFjCyHJ0SNVpMDMFxBIhN2\nYyeV9/JXSvkJfz5dTeLr3xjJeK881cQX8/PHaqgAsMvGe+Lc4SUPmtKFAoGBAIp9\nYHi1vncc2z6T3xtU25/ceXBPAdlMyoH5fexn6IbMc6TX2MhP7BL8xQsIkPfzYAk+\nCYwBbQJErD1icpcuIMp6AG0V2Na2Y/Grbrx0NgGto/ts41BXf2/dqAaUviSChDrO\nMgQLcfRAPOJB4A1yszKwCM/GRuXyqjWGPFya0kZjAoGBAIa7f+rT0cVtiECl5Y2n\nNvFo9GGIgF87LMbFQBJtCi97wkr4Akt3RHxkRQvIb/5eD37IuzKjpZHoN8Y8G+zb\nIQABgbRrbj3j1MN7If9wAGQHAlidqn52MoOtt/wMq9NjQk3uN5+cG3IqAdLX6pK/\nQioswbpXtl0IWtRnfnFg3Bhh\n-----END PRIVATE KEY-----\n",
+  "client_email": "focalytservice@focalyt-1720520815248.iam.gserviceaccount.com",
+  "client_id": "105654506982390278863",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/focalytservice%40focalyt-1720520815248.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

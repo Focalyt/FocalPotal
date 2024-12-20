@@ -1,0 +1,38 @@
+<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+      <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                  <li class="nav-item mr-auto"><a class="navbar-brand">
+                              <a href="/college/myprofile"><img class="img-fluid logocs" src="/images/logo/logo.png">
+                              </a></li>
+                  <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
+                                    class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i
+                                    class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary"
+                                    data-ticon="icon-disc"></i></a></li>
+            </ul>
+      </div>
+      <div class="shadow-bottom"></div>
+      <div class="main-menu-content border border-left-0 border-right-0 border-bottom-0">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                  </li>
+                  <li class="nav-item <% if(menu==='dashboard') {%>active<%}%>"><a href="/college/dashboard"><i class="fa-solid fa-house"></i><span class="menu-title" data-i18n="Todo">Dashboard 
+                        </span></a>
+                  </li>
+                  <li class="nav-item <% if(menu==='myprofile') {%>active<%}%>"><a href="/college/myProfile"><i
+                                    class="fa-solid  fa-user"></i><span class="menu-title" data-i18n="Todo">Your
+                                    Profile</span></a>
+                  </li>
+                  <li class="nav-item <% if(menu==='upload') {%>active<%}%>"><a href="/college/uploadCandidates"><i class="fa-solid fa-user-doctor"></i></i><span class="menu-title" data-i18n="Todo">Upload
+                                    Candidates</span></a>
+                  </li>
+                  <li class="nav-item <% if(menu==='uploadTemplates') {%>active<%}%>"><a href="/college/uploadTemplates"><i class="fa-solid fa-pen-to-square"></i><span class="menu-title" data-i18n="Todo">Upload
+                        Templates</span></a>
+                  </li>
+                  <li class="nav-item <% if(menu==='myStudents') {%>active<%}%>"><a href="/college/myStudents"><i class="fa-solid fa-graduation-cap"></i><span class="menu-title" data-i18n="Todo">My 
+                                    Students</span></a>
+                  </li>
+                  <li class="nav-item <% if(menu==='Jobs') {%>active<%}%>"><a href="/college/availablejobs"><i class="fa-solid fa-briefcase"></i><span class="menu-title" data-i18n="Todo">Available
+                                    Jobs</span></a>
+                  </li>
+
+      </div>
+</div>

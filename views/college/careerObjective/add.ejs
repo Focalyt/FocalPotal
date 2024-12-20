@@ -1,0 +1,151 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Career Objectives</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Career Objectives</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<section class="list-view">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-header border border-top-0 border-left-0 border-right-0">
+								<h4 class="card-title pb-1">Career Objectives</h4>
+							</div>
+							<div class="card-content">
+								<div class="card-body">
+									<form class="form-horizontal" action="" method="post">
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Name <span class="mandatory">*</span></label>
+												<input type="text" class="form-control" maxlength="50" name="name"
+													value="" required />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<div class="form-group">
+													<label>Course (Stream) <span class="mandatory">*</span></label>
+													<select class="selectpicker form-control" title="Select Course"
+														data-actions-box="true" multiple required name="_qual">
+														<% qualification.forEach((i)=> { %> <% if (i.qual && i.qual._id)
+																{ %>
+																<option value="<%= i._id %>-<%= i.qual._id %>"
+																	class="text-capitalize">
+																	<%= i.name %>(<%= i.qual.name %>)
+																</option>
+																<% } else { %>
+																	<option value="<%= i._id %>"
+																		class="text-capitalize">
+																		<%= i.name %>
+																	</option>
+																	<% } %>
+																		<% }); %>
+													</select>
+												</div>
+											</div>
+											<div class="col-xl-3">
+												<div class="form-group">
+													<label>Experience From</label>
+													<select style="cursor: pointer;" class="form-control"
+														name="expStart" required id="expStart">
+														<!-- <option>Select Option</option> -->
+														<% for (let i=0; i <=20; i++) { %>
+															<option value="<%= i %>" class="text-capitalize">
+																<%= i %>
+															</option>
+															<% }; %>
+													</select>
+												</div>
+											</div>
+											<div class="col-xl-3">
+												<div class="form-group">
+													<label>Experience To</label>
+													<select style="cursor: pointer;" class="form-control" name="expEnd"
+														required id="expEnd">
+														<!-- <option>Select Option</option> -->
+														<% for (let i=0; i <=30; i++) { %>
+															<option value="<%= i %>" class="text-capitalize">
+																<%= i %>
+															</option>
+															<% }; %>
+													</select>
+												</div>
+											</div>
+
+											<div class="col-xl-3 mb-1">
+												<div class="form-group">
+													<label>Technical</label>
+													<select class="selectpicker form-control"
+														title="Select Technical Skill" data-actions-box="true" multiple
+														name="_skill">
+														<% techSkill.forEach((i)=> { %>
+															<option value="<%= i._id %>">
+																<%= i.name %>
+															</option>
+															<% }); %>
+													</select>
+												</div>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<div class="form-group">
+													<label>Non Technical</label>
+													<select class="selectpicker form-control"
+														title="Select Non Technical Skill" data-actions-box="true"
+														multiple name="_skill">
+														<% nonTechSkill.forEach((i)=> { %>
+															<option value="<%= i._id %>">
+																<%= i.name %>
+															</option>
+															<% }); %>
+													</select>
+												</div>
+											</div>
+											<div class="col-xl-3">
+												<label>Objectives (500 Characters)</label>
+												<textarea cols="4" rows="4" class="form-control"
+													placeholder="Type your objectives Here" name="objectives"
+													maxlength="500"></textarea>
+											</div>
+											<div class="col-xl-12 my-auto text-right">
+												<button type="submit" class="btn btn-success font-small-3">
+													Add
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<% include ../partials/footer %>
+				<script>
+					$("#expStart").change(() => {
+						$("#expEnd")
+							.find("option")
+							.remove()
+							.end()
+							.append(
+								'<option disabled selected value="">Select Option</option>'
+							);
+
+						const srt = parseInt($("#expStart").val(), 10);
+						for (let i = srt + 1; i <= 40; i++) {
+							$("#expEnd").append(
+								`<option class='text-capitalize' value='${i}'>${i}</option>`
+							);
+						}
+					});
+				</script>
+	</div>

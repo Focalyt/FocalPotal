@@ -1,0 +1,212 @@
+<% include ../../partials/header %>
+
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+  data-menu="vertical-menu-modern" data-col="2-columns">
+
+
+  <% include ./partials/navbar%>
+  <% include ./partials/leftpane%>
+  <% include ../../partials/flash %>
+  <div class="app-content content basic-timeline">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+      <div class="content-header row">
+      </div>
+      <div class="content-body">
+        <section class="money-rain py-3">
+          <div class="mipie-earn px-2">
+            <h4 class="font-weight-bold now-padding"> Now you can earn with Focalyt</h4>
+            <h4 class="font-weight-bold"> अब आप Focalyt से कमा सकते हैं</h4>
+          </div>
+          <div class="container-fluid ">
+            <div class="row">
+              <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12 ">
+                <h4 class="font-weight-bolder mt-3">Rules / नियम:</h4>
+              <!---  <ul class="list-unstyled">
+                  <li class="pt-1  "><img src="/images/nikelogo.png" class="d-inline" > <h5 class="font-weight-bold d-inline" >Complete your profile and earn upto रु 50 / अपना प्रोफ़ाइल पूरा करें और रु50 तक कमाएँ</h5>  </li>
+                  <li class="pt-1 "><img src="/images/nikelogo.png"  class="d-inline"> <h5 class="font-weight-bold d-inline " >Apply on the jobs and earn upto  रु 10 / नौकरियों पर आवेदन करें और रु 10 तक कमाएं</h5></li>
+                  <li class="pt-1 "><img src="/images/nikelogo.png"  class="d-inline"> <h5 class="font-weight-bold d-inline">Focalyt will pay you रु .5 if your profile gets shortlisted /यदि आपकी प्रोफ़ाइल को शॉर्टलिस्ट 
+                  </h5>
+                <h5 class="lower-text font-weight-bold">किया जाता है तो Focalyt आपको रु .5 का भुगतान करेगा</h5></li>
+                </ul> -->
+                 
+                <div class="single-footer">
+                  <ul class="contact-info list list-unstyled">
+                      <li class="pt-1 "><img src="/images/nikelogo.png" alt="check icon"><h5 class="font-weight-bold font-stick" >Complete your profile and earn upto रु <%= thresholdCashback.profilecomplete %> / अपना प्रोफ़ाइल पूरा करें और रु<%= thresholdCashback.profilecomplete %> तक कमाएँ</h5></li>
+                      <li class="pt-1 "><img src="/images/nikelogo.png" alt="check icon"><h5 class="font-weight-bold font-stick" >Apply on the jobs and earn upto  रु <%= thresholdCashback.apply %> / नौकरियों पर आवेदन करें और रु <%= thresholdCashback.apply %> तक कमाएं</h5></li></li>
+                      <li class="pt-1 "><img src="/images/nikelogo.png" alt="check icon"><h5 class="font-weight-bold font-stick">Focalyt will pay you रु <%= thresholdCashback.shortlisted %> if your profile gets shortlisted /
+                        यदि आपकी प्रोफ़ाइल को शॉर्टलिस्ट किया जाता है तो Focalyt आपको रु <%= thresholdCashback.shortlisted %> का भुगतान करेगा </h5></li>
+                      <li class="pt-1 "><img src="/images/nikelogo.png" alt="check icon"><h5 class="font-weight-bold font-stick">Please ensure that you are applying on Focalyt every week or else your money will be forfeited / कृपया सुनिश्चित करें कि आप हर सप्ताह Focalyt पर आवेदन कर रहे हैं अन्यथा आपका पैसा जब्त कर लिया जाएगा </h5></li>
+                        
+                  </ul>
+                </div>
+                <h5 class="mt-3 extra-wallet font-stick ">Don't wait, Complete your Profile, Apply on the Jobs and Start earning with Focalyt/</h5>
+                <h5 class="font-weight-bolder font-stick mt-2">प्रतीक्षा न करें, अपना प्रोफ़ाइल पूरा करें, नौकरियों के लिए आवेदन करें और Focalyt पर कमाई शुरू करें
+                </h5>
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-0 col-sm-0 col-0"></div>
+            </div>
+          </div>
+
+        </section>
+        
+
+
+        <section>
+            <div class="container-fluid mt-3 px-0">              
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 mt-0">
+                  <div class="applied_card rounded card_shad">
+                    <div class="headerr border-bottom ">
+                      <div class="row py-1 px-xl-1 px-lg-1 px-md-2 px-sm-2 px-2 ">
+                        <div class="col-7 pt-1 pr-0 font-weight-bolder header_fix text-left "> <img src="/images/inter-first.png" class="mx-xl-1 mx-lg-1 mx-md-1 mx-sm-1 mx-0 mr-1"> Active
+                          Profile</div>
+                        <div class="col-5 text-right pl-0">
+                          <div class="btn btn-md icon-fearure text-white  bott_size mt-0 mr-xl-1 mr-lg-1 mr-md-1 mr-sm-1  mr-0 ">Earn <span
+                              style="font-size: 18px; " class="font-weight-bolder">₹ <%= thresholdCashback.profilecomplete %></span></div>
+  
+                        </div>
+  
+                      </div>
+                    </div>
+                    <div class="row">
+                    <div class="profile-body p-2 first-set ">
+                        Complete your Profile and earn Rs <%= thresholdCashback.profilecomplete %>/- .Please note that you need to provide complete information on City, State, Qualification, Experience, Skills and Current Google Location
+                        <br>
+                        <br>
+                        अपनी प्रोफ़ाइल पूरी करें और <%= thresholdCashback.profilecomplete %>/- रुपये कमाएँ। कृपया ध्यान दें कि आपको शहर, राज्य, योग्यता, अनुभव, कौशल और वर्तमान Google स्थान पर पूरी जानकारी प्रदान करने की आवश्यकता है।
+                    </div>
+                  </div>
+                    <a href="/candidate/myProfile/#personal-info" class="btn-block btn card-bottom-one text-white">
+                     Click here 
+                    </a>
+  
+                  </div>
+                </div>
+  
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-4 mt-5">
+                  <div class="applied_card rounded card_shad">
+                    <div class="headerr border-bottom ">
+                      <div class="row py-1 px-xl-1 px-lg-1 px-md-2 px-sm-2 px-2">
+                        <div class="col-7 pr-0 pt-1 font-weight-bolder header_fix text-left "> <img src="/images/you-tube.png" class="mx-xl-1 mx-lg-1 mx-md-1 mx-sm-1 mx-0"> Video
+                          Profile</div>
+                        <div class="col-5 text-right pl-0">
+                          <div class="btn btn-md icon-fearure-two text-white  bott_size mt-0 mr-xl-1 mr-lg-1 mr-md-1 mr-sm-1  mr-0 ">Earn <span
+                              style="font-size: 18px; " class="font-weight-bolder">₹ <%= thresholdCashback.videoprofile %></span></div>
+  
+                        </div>
+  
+                      </div>
+                    </div>
+                    <div class="row">
+                    <div class="profile-body p-2 second-set">
+                        Upload Your Video Profile and earn Rs <%= thresholdCashback.videoprofile %> /-. Kindly review the sample video under My Profile. Please make sure you are uploading your own video or else we will blacklist your profile.
+                        <br><br>
+                        अपनी वीडियो प्रोफाइल अपलोड करें और <%= thresholdCashback.videoprofile %>/- रुपये कमाएं। कृपया मेरी प्रोफ़ाइल के अंतर्गत नमूना वीडियो की समीक्षा करें। कृपया सुनिश्चित करें कि आप अपना स्वयं का वीडियो अपलोड कर रहे हैं अन्यथा हम आपकी प्रोफ़ाइल को ब्लैकलिस्ट कर देंगे।
+                    </div>
+                  </div>
+                    <a href="/candidate/myProfile/#personal-info" class="btn-block btn card-bottom-two text-white">
+                     Click here 
+                    </a>
+  
+                  </div>
+                </div>
+                
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-xl-5 mt-lg-4 mt-md-4 mt-sm-4 mt-5">
+                  <div class="applied_card rounded card_shad">
+                    <div class="headerr border-bottom ">
+                      <div class="row py-1 px-xl-1 px-lg-1 px-md-2 px-sm-2 px-2">
+                        <div class="col-7 pt-1 pr-0 font-weight-bolder header_fix text-left "> <img src="/images/search-job.png" class="mx-xl-1 mx-lg-1 mx-md-1 mx-sm-1 mx-0 mr-1"> Job
+                          Apply</div>
+                        <div class="col-5 text-right pl-0">
+                          <div class="btn btn-md icon-fearure-three text-white  bott_size  mr-xl-1 mr-lg-1 mr-md-1 mr-sm-1  mr-0 ">Earn <span
+                              style="font-size: 18px; " class="font-weight-bolder">₹ <%= thresholdCashback.apply %></span></div>
+  
+                        </div>
+  
+                      </div>
+                    </div>
+                    <div class="row">
+                    <div class="profile-body apply-width p-2">
+                        Apply for the Jobs in Focalyt and earn Rs <%= thresholdCashback.apply %>/- for each application. Kindly ensure that you are completing your profile before applying for the job
+                        <br><br>
+                        Focalyt में नौकरियों के लिए आवेदन करें और प्रत्येक आवेदन के लिए <%= thresholdCashback.apply %>/- रुपये कमाएं। कृपया सुनिश्चित करें कि आप नौकरी के लिए आवेदन करने से पहले अपना प्रोफाइल पूरा कर रहे हैं।
+                    </div>
+                  </div>
+                    <a href="/candidate/nearbyJobs" class="btn-block btn card-bottom-three text-white">
+                     Click here 
+                    </a>
+  
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-xl-5 mt-lg-4 mt-md-4 mt-sm-4 mt-5 mb-3 ">
+                  <div class="applied_card rounded card_shad">
+                    <div class="headerr border-bottom ">
+                      <div class="row py-1 px-2">
+                        <div class="col-7 pr-0 pt-1 font-weight-bolder header_fix text-left "> <img src="/images/searching.png" class=" mx-xl-1 mx-lg-1 mx-md-1 mx-sm-1 mx-0 source-kp mr-1">On Shortlisting</div>
+                        <div class="col-5 text-right pl-0">
+                          <div class="btn btn-md icon-fearure-four text-white  bott_size mt-0 mr-xl-1 mr-lg-1 mr-md-1 mr-sm-1  mr-0 ">Earn <span
+                              style="font-size: 18px;" class="font-weight-bolder">₹ <%= thresholdCashback.shortlisted %></span></div>
+  
+                        </div>
+  
+                      </div>
+                    </div>
+                    <div class="row">
+                    <div class="profile-body p-2">
+                        Complete your profile so that the company can shortlist your profile. On one shortlist, you will earn Rs <%= thresholdCashback.shortlisted %>/- . Make sure you are completing your profile to get shortlisted.
+                        <br><br>
+                        अपनी प्रोफ़ाइल पूरी करें ताकि कंपनी आपकी प्रोफ़ाइल को शॉर्टलिस्ट कर सके। एक शॉर्टलिस्ट पर, आप <%= thresholdCashback.shortlisted %>/- रुपये कमाएंगे। शॉर्टलिस्ट होने के लिए सुनिश्चित करें कि आप अपना प्रोफ़ाइल पूरा कर रहे हैं।
+                    </div>
+                  </div>
+                    <a href="/candidate/myProfile" class="btn-block btn card-bottom-four text-white">
+                     Click here 
+                    </a>
+  
+                  </div>
+                </div>
+
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-xl-1 mt-lg-1 mt-md-1 mt-sm-1 mt-2 mb-3 ">
+                  <div class="applied_card rounded card_shad">
+                    <div class="headerr border-bottom ">
+                      <div class="row py-1 px-2">
+                        <div class="col-7 pr-0 pt-1 font-weight-bolder header_fix text-left"> <img src="/images/referal.png"
+                            class=" mx-xl-1 mx-lg-1 mx-md-1 mx-sm-1 mx-0 refer-img">
+                          Refer and Earn </div>
+                        <div class="col-5 text-right pl-0">
+                          <div class="btn btn-md icon-fearure-five text-white  bott_size mt-0 mr-xl-1 mr-lg-1 mr-md-1 mr-sm-1  mr-0 ">
+                            Earn <span style="font-size: 18px;" class="font-weight-bolder">₹ <%= thresholdCashback.Referral %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="profile-body p-2">
+                        Refer your friend and earn Rs <%= thresholdCashback.Referral %><br>अपने दोस्त को रेफर करें और <%=
+                            thresholdCashback.Referral %> रुपये कमाएं
+                            <br>
+                            Please note: You will receive cashback once the candidate has completed his profile.<br>
+                            कृपया ध्यान दें: उम्मीदवार द्वारा इस प्रोफ़ाइल को पूरा करने के बाद आपको कैशबैक प्राप्त होगा।
+                      </div>
+                    </div>
+                    <a href="/candidate/referral" class="btn-block btn card-bottom-five text-white">
+                      Click here
+                    </a>
+                  </div>
+                </div>
+
+
+              
+              </div>
+            </div>
+        
+        </section>
+       </div>
+    </div>
+  </div>
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+  <% include ./partials/footer%>

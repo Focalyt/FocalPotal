@@ -1,0 +1,17 @@
+
+
+
+@media only screen and (min-width: 1200px)  {
+    .full-btn{
+        width: 92%!important;
+    }
+  }
+  
+    @media only screen and (max-width: 768px) {
+    .call-btn{
+      width: 100%!important;
+      .full-btn{
+        width: 10%!important;
+    }
+    }
+  }

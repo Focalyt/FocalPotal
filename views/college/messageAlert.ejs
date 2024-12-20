@@ -1,0 +1,100 @@
+<% include partials/header %>
+<% include partials/flash %>
+<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-12">
+                <h3 class="content-header-title float-left mb-0">Message & Alerts</h3>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/college">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">Message & Alerts
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-body">
+    <!-- Data list view starts -->
+    <section class="list-view">
+        <div class="row">
+            <div class="col-12 equal-height-2">
+                <div class="card">
+                    <div class="card-header border border-top-0 border-left-0 border-right-0">
+                    <h4 class="card-title pb-1">Message & Alerts</h4>
+                    </div>
+                    <div class="card-content">
+                    <div class="card-body">
+                        <form class="form-horizontal" action="" method="post">
+                        <div class="row">
+                            <div class="col-xl-3 mb-1">
+                                <label>Select Passing Year</label>
+                                <input type="text" class="form-control datepicker" name="sessionStart" placeholder="Session Start Year" required>
+                            </div>
+                            <div class="col-xl-3 mb-1">
+                                <label>Select Qualifications</label>
+                                <select class="form-control" id="qual" name="_qualification" required>
+                                    <option>Select Option</option>
+                                    <% qualification.forEach((i) => { %>
+                                        <option value="<%= i._id %>" class="text-capitalize"><%= i.name %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <div class="col-xl-3 mb-1">
+                                <label>Select Sub Qualifications</label>
+                                <select class="form-control" name="_subQualification" id="subQua" required>
+                                    <option>Select Option</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-3 mb-1">
+                                <label>Message (160 character limit)</label>
+                                <textarea class="form-control" cols="4" rows="4" name="message"></textarea>
+                                </div>
+                            <div class="col-xl-3 mb-1"><br>
+                                <button type="submit" class="btn btn-success font-small-3">Update</button>
+                                <button type="submit" class="btn btn-success font-small-3">Add</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Data list view end -->
+</div>
+<% include partials/footer %>
+<script type="text/javascript">
+    $(function() {
+        $('.datepicker').datepicker({
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years"
+        });
+    });
+
+    $('#qual').change(() => {
+    $('#subQua')
+      .find('option')
+      .remove()
+      .end()
+      .append('<option disabled selected value="">Select Option</option>');
+    axios.post('/helper/getsubQual', {
+      _qualification: $('#qual').val()
+    })
+    .then(({
+        data
+    }) => {
+        data.forEach((d) => {
+            $('#subQua').append(
+                `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+            );
+        });
+    })
+    .catch(e => console.log(e));
+   });
+</script>

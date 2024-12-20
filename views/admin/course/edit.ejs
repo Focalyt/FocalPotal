@@ -1,0 +1,1346 @@
+<% include ../partials/header %>
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Edit Course</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                            <li class="breadcrumb-item active">Edit Course</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ../partials/flash %>
+            <form action="/admin/courses/edit/<%= course._id %>" method="POST"></form>
+            <section id="personal-info">
+
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1">Course Information</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="sectorblock">
+                                            <label for="sector">Sector</label>
+                                            <select class="form-control" name="sector" id="sector">
+                                                <%course.sectors.forEach((sector,i)=>{%>
+                                                    <option value="<%=sector._id %>">
+                                                        <%=sector.name %>
+                                                    </option>
+                                                    <%})%>
+                                                        <td>
+                                                            <%sectors.forEach((sector,i)=>{%>
+                                                                <option value="<%=sector._id %>">
+                                                                    <%=sector.name %>
+                                                                </option>
+                                                                <%})%>
+                                                        </td>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="courseblock">
+                                            <label>Course Level</label>
+                                            <select class="form-control" name="courseLevel" id="courseLevel">
+                                                <option value="">Select Level</option>
+                                                <option value="Certificate" <% if(course.courseLevel==="Certificate" ) {
+                                                    %> selected <% } %>>Certificate</option>
+                                                <option value="Diploma" <% if(course.courseLevel==="Diploma" ) { %>
+                                                    selected <% } %>>Diploma</option>
+                                                <option value="Advance Diploma" <%
+                                                    if(course.courseLevel==="Advance Diploma" ) { %> selected <% } %>
+                                                        >Advance Diploma</option>
+                                                <option value="Degree" <% if(course.courseLevel==="Degree" ) { %>
+                                                    selected <% } %>>Degree</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                        id="courseblock">
+                                        <label>Course Type</label>
+                                        <select class="form-control" name="courseType" id="courseType">
+                                            <option value="">Select Type</option>
+                                            <option value="course"<% if(course.courseType==="course" ) {%> selected <% } %>>Course Only</option>
+                                            <option value="coursejob" <% if(course.courseType==="coursejob" ) {%> selected <% } %>>Course and Job</option>
+                                        </select>
+                                    </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1" id="nameblock">
+                                            <label>Name</label>
+                                            <input class="form-control" type="text" value="<%=course.name%>" id="name">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="durationblock">
+                                            <label>Duration</label>
+                                            <input class="form-control" type="text" value="<%=course.duration%>"
+                                                id="duration">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Certifying Agency</label>
+                                            <input class="form-control" type="text" value="<%=course.certifyingAgency%>"
+                                                id="certifyingAgency">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label for="certifyingAgencyWebsite">Certifying Agency Website</label>
+                                            <input id="certifyingAgencyWebsite" class="form-control" type="text"
+                                                value="<%=course.certifyingAgencyWebsite%>">
+                                        </div>
+
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="qualificationblock">
+                                            <label>Qualification</label>
+                                            <select class="form-control" name="qualification" id="qualification">
+                                                <option value="">Select Qualification</option>
+                                                <option value="10th" <% if(course.qualification==="10th" ) { %> selected
+                                                    <% } %>>10th
+                                                </option>
+                                                <option value="Diploma" <% if(course.qualification==="Diploma" ) { %>
+                                                    selected <% } %>>Diploma</option>
+                                                <option value="Advance Diploma" <%
+                                                    if(course.qualification==="Advance Diploma" ) { %> selected <% } %>
+                                                        >Advance Diploma</option>
+                                                <option value="Degree" <% if(course.qualification==="Degree" ) { %>
+                                                    selected <% } %>>Degree</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Age</label>
+                                            <input class="form-control" type="text" value="<%=course.age%>" id="age">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Experience</label>
+                                            <input class="form-control" type="text" value="<%=course.experience%>"
+                                                id="experience">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="trainingblock">
+                                            <label>Training Mode</label>
+                                            <select class="form-control" name="trainingMode" id="trainingMode"
+                                                onchange="toggleTrainingBlocks()">
+                                                <option value="">Select Training</option>
+                                                <option value="Online" <% if(course.trainingMode==="Online" ) { %>
+                                                    selected <% } %> >Online</option>
+                                                <option value="Offline" <% if(course.trainingMode==="Offline" ) { %>
+                                                    selected <% } %> >Offline</option>
+                                                <option value="Blended" <% if(course.trainingMode==="Blended" ) { %>
+                                                    selected <% } %>>Blended</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="onlinetrainingblock" style="display: none;">
+                                            <label>Online training Timing </label>
+                                            <input class="form-control" type="text"
+                                                value="<%=course.onlineTrainingTiming%>" id="onlineTrainingTiming">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="offlinetrainingblock" style="display: none;">
+                                            <label>Offline training Timing </label>
+                                            <input class="form-control" type="text"
+                                                value="<%=course.offlineTrainingTiming%>" id="offlineTrainingTiming">
+                                        </div>
+
+                                        <script>
+                                            function toggleTrainingBlocks() {
+                                                var trainingMode = document.getElementById("trainingMode").value;
+                                                var onlineBlock = document.getElementById("onlinetrainingblock");
+                                                var offlineBlock = document.getElementById("offlinetrainingblock");
+
+                                                if (trainingMode === "Online") {
+                                                    onlineBlock.style.display = "block";
+                                                    offlineBlock.style.display = "none";
+                                                } else if (trainingMode === "Offline") {
+                                                    onlineBlock.style.display = "none";
+                                                    offlineBlock.style.display = "block";
+                                                } else if (trainingMode === "Blended") {
+                                                    onlineBlock.style.display = "block";
+                                                    offlineBlock.style.display = "block";
+                                                } else {
+                                                    onlineBlock.style.display = "none";
+                                                    offlineBlock.style.display = "none";
+                                                }
+                                            }
+                                        </script>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="addressblock">
+                                            <label>Address</label>
+                                            <select class="form-control" name="address" id="address"
+                                                onchange="toggleAddressFields()">
+                                                <option value="">Select Address</option>
+                                                <option value="App" <% if(course.address==="App" ) { %> selected <% } %>
+                                                        >App</option>
+                                                <option value="Address" <% if(course.address==="Address" ) { %> selected
+                                                    <% } %>>Address
+                                                </option>
+                                                <option value="Both" <% if(course.address==="Both" ) { %> selected <% }
+                                                        %>>Both</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="cityblock">
+                                            <label>City</label>
+                                            <input class="form-control" type="text" name="city" id="city" value="<%=course.city%>">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                        id="stateblock">
+                                        <label>State</label>
+                                        <input class="form-control" type="text" name="state" id="state" value="<%=course.state%>">
+                                    </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="applinkblock" style="display: none;">
+                                            <label>App link</label>
+                                            <input class="form-control" type="text" value="<%=course.appLink%>">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="addressinputblock" style="display: none;">
+                                            <label>Address</label>
+                                            <input class="form-control" type="text" value="<%=course.Address%>">
+                                        </div>
+
+                                        <script>
+                                            function toggleAddressFields() {
+                                                var selectedOption = document.getElementById("address").value;
+                                                var appLinkBlock = document.getElementById("applinkblock");
+                                                var addressInputBlock = document.getElementById("addressinputblock");
+
+                                                if (selectedOption === "App") {
+                                                    appLinkBlock.style.display = "block";
+                                                    addressInputBlock.style.display = "none";
+                                                } else if (selectedOption === "Address") {
+                                                    appLinkBlock.style.display = "none";
+                                                    addressInputBlock.style.display = "block";
+                                                } else {
+                                                    appLinkBlock.style.display = "none";
+                                                    addressInputBlock.style.display = "none";
+                                                }
+                                            }
+                                        </script>
+
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1" id="ojtblock">
+                                            <label>OJT</label>
+                                            <select class="form-control" name="ojt" id="ojt">
+                                                <option value="">Select OJT</option>
+                                                <option value="Yes" <% if(course.ojt==="Yes" ) { %> selected <% } %>>Yes
+                                                </option>
+                                                <option value="No" <% if(course.ojt==="No" ) { %> selected <% } %>>No
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Registration Charges</label>
+                                            <input class="form-control" type="text"
+                                                value="<%=course.registrationCharges%>" id="registrationCharges">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Cut Price</label>
+                                            <input class="form-control" type="text" value="<%=course.courseFee%>"
+                                                id="courseFee">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Course Fee</label>
+                                            <input class="form-control" type="text" value="<%= course.cutPrice %>"
+                                                id="cutPrice">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Exam Fee</label>
+                                            <input class="form-control" type="text" value="<%=course.examFee%>"
+                                                id="examFee">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Other fee if any</label>
+                                            <input class="form-control" type="text" value="<%=course.otherFee%>"
+                                                id="otherFee">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="emioptionblock">
+                                            <label>EMI Option Available</label>
+                                            <select class="form-control" name="emiOptionAvailable"
+                                                id="emiOptionAvailable">
+                                                <option value="">Select EMI Option</option>
+                                                <option value="Yes" <% if(course.emiOptionAvailable==="Yes" ) { %>
+                                                    selected <% } %>>Yes</option>
+                                                <option value="No" <% if(course.emiOptionAvailable==="No" ) { %>
+                                                    selected <% } %>>No</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Max EMI Tenure</label>
+                                            <input class="form-control" type="text" value="<%= course.maxEMITenure %>"
+                                                id="maxEMITenure" name="maxEMITenure">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Stipend During Training</label>
+                                            <input class="form-control" type="text"
+                                                value="<%=course.stipendDuringTraining%>" id="stipendDuringTraining"
+                                                name="stipendDuringTraining">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Last date for apply</label>
+                                            <input class="form-control" type="date" value="<%=course.lastDateForApply%>"
+                                                name="lastDateForApply" id="lastDateForApply">
+                                        </div>
+                                        <div class="col-xl-3 mb-1">
+                                            <label>Youtube URL</label>
+                                            <input type="text" class="form-control" required placeholder="enter youtube url" value="<%=course.youtubeURL%>"
+                                                id="youtubeURL"/>
+                                        </div>
+                                        <div class="col-xl-6 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <label>Required Documents</label>
+                                            <textarea class="form-control" name="requiredDocuments"
+                                                id="requiredDocuments" value="<%=course.requiredDocuments%>"></textarea>
+                                        </div>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+            <section id="personal-info">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1">Add Docs</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <section id="imageGalaryTemplate">
+                                        <div class="row">
+
+
+                                            <% if (course.videos.length>0) { %>
+                                                <% course.videos.forEach((i)=> { %>
+                                                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 videogallery" style="align-self: center;">
+                                                    <div class="image-upload">
+                                                      <label for="media-group">
+                                                        <a id="uploadedvideo" target="_blank"
+                                                                href="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>"
+                                                                class="pointer img-fluid">
+                                                                Uploaded Video
+                                                            </a>
+                                                        
+                                                      </label>
+                                                      <i class="feather  icon-x remove_uploaded_pic" style="color:red;" value="<%=i%>"
+                                                        onclick='removevideo("<%=course._id%>", this)'></i>
+                                                    </div>
+                                                  </div>
+                                                  <% }); %>
+                                                    <% }%>
+
+
+                                            <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                <label for="videos">
+                                                    <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                        id="outputtwo"> -->
+                                                    Add Videos
+                                                </label>
+                                                <input id="videos" type="file" multiple />
+                                                <input type="hidden" class="form-control hiddenmediagroup" name="videos"
+                                                    id="hidden-videos" />
+                                            </div>
+
+
+
+
+                                            <% if (course.photos.length>0) { %>
+                                                <% course.photos.forEach((i)=> { %>
+                                                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 galleryImage" style="align-self: center;">
+                                                    <div class="image-upload">
+                                                      <label for="media-group">
+                                                        <img src="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>" height="auto" width="60%"
+                                                          class="pointer img-fluid">
+                                                      </label>
+                                                      <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
+                                                      <i class="feather  icon-x remove_uploaded_pic" style="color:red;" value="<%=i%>"
+                                                        onclick='removepic("<%=course._id%>", this)'></i>
+                                                    </div>
+                                                  </div>
+                                                  <% }); %>
+                                                    <% }%>
+                                            <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                <label for="photos">
+                                                    <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                        id="outputtwo"> -->
+                                                    Add Photos
+                                                </label>
+                                                <input id="photos" type="file" multiple/>
+                                                <input type="hidden" class="form-control hiddenmediagroup" name="photos"
+                                                    id="hidden-photos" />
+                                            </div>
+
+                                            <% if (course.brochure!== '') { %>
+                                                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 brochureImage" style="align-self: center;">
+                                                    <div class="image-upload">
+                                                      <label for="media-group">
+                                                       <a target="_blank"
+                                                       href="<%= process.env.MIPIE_BUCKET_URL +'/' + course.brochure %>"
+                                                       class="pointer img-fluid">Uploaded Brochure</a>
+                                                      </label>
+                                                      <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
+                                                      <i class="feather  icon-x remove_uploaded_pic" style="color:red;"
+                                                        onclick='removebrochure("<%=course._id%>", "<%=course.brochure%>", this)'></i>
+                                                    </div>
+                                                  </div>
+                                                    <% }%>
+
+                                                    <div class="col-xl-3 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
+                                                    id="brochures">
+                                                    <label for="brochure">
+                                                        <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                            id="uploadbrochure"> -->
+                                                        Add Brochure
+                                                    </label>
+                                                    <input id="brochure" type="file"/>
+                                                    <input type="hidden" class="form-control hiddenmediagroup"
+                                                        name="brochure" id="hidden-brochure" value="" />
+                                                </div>
+
+
+                                                <% if (course.thumbnail && course.thumbnail!== '') { %>
+                                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 thumbnailImage" style="align-self: center;">
+                                                      <div class="image-upload">
+                                                        <label for="media-group">
+                                                         <a target="_blank"
+                                                         href="<%= process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail %>"
+                                                         class="pointer img-fluid">Uploaded Thumbnail</a>
+                                                        </label>
+                                                        <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
+                                                        <i class="feather  icon-x remove_uploaded_pic" style="color:red;"
+                                                          onclick='removethumbnail("<%=course._id%>", "<%=course.thumbnail%>", this)'></i>
+                                                      </div>
+                                                    </div>
+                                                      <% }%>
+  
+                                                      <div class="col-xl-3 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
+                                                      id="thumbnails">
+                                                      <label for="thumbnail">
+                                                          <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                              id="uploadbrochure"> -->
+                                                          Add Thumbnail
+                                                      </label>
+                                                      <input id="thumbnail" type="file"/>
+                                                      <input type="hidden" class="form-control hiddenmediagroup"
+                                                          name="thumbnail" id="hidden-thumbnail" value="" />
+                                                  </div>
+
+
+
+                                            <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                <label for="audios">
+                                                    <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                        id="outputtwo">
+                                                    <p class="mt-1">Add Audios</p>
+                                                </label>
+                                                <input id="audios" type="file" multiple />
+                                                <input type="hidden" class="form-control hiddenmediagroup" name="audios"
+                                                    id="hidden-audios" />
+                                            </div> -->
+                                        </div>
+                                    </section>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 px-3">
+                  <div class="card">
+                    <div class="card-content">
+                      <div class="card-content">
+                        <div class="card-body">
+                          <div class="row">
+                            <label for="contact-directly" class="px-1 h1 col-6">Do you want to Add the
+                              Dedicated
+                              Counsler Number?</label>
+                         
+                            <div class="col-xl-12 col-lg-12 col-12">
+                              <div class="form-check-inline">
+                                <input type="radio" id="contact-directly-yes" name="isContact" value="true"
+                                  onclick="showContactInfo()"/>
+                                  <label for="contact-directly-yes">Yes</label>
+                              </div>
+                              <div class="form-check-inline">
+                                <input type="radio" id="contact-directly-no" name="isContact" value="false"
+                                  onclick="hideContactInfo()"/>
+                                  <label for="contact-directly-no">No</label>
+                              </div>
+                            </div>
+                            <div class="col-12" id="contact-info" style="display: none;">
+                              <div class="row">
+                                <div class="col-xl-3 mb-1" id="counsler-name">
+                                  <label>Name</label><span class="mandatory"> </label>
+                                    <input type="text" class="form-control"
+                                      onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 32 || event.charCode == 8;"
+                                      name="nameof" id="counslername" placeholder="Name" value="<%=course.counslername%>" >
+                                </div>
+                                    <div class="col-xl-3 mb-1" id="counsler-phoneNumber">
+                                    <label>PhoneNumber</label><span class="mandatory"> *</span></label>
+                                    <input type="tel" class="form-control" id="counslerphonenumber"
+                                      pattern="[+]?[0-9]{1,3}\s?\d{9,12}"
+                                       placeholder="Phone no" name="phoneNumberof"
+                                       onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                         maxlength="10" value="<%=course.counslerphonenumber%>" />
+
+                                    </div>
+                                <div class="col-xl-3 mb-1 " id="counsler-whatsappNumber">
+                                  <label>Whatsapp Number</label><span class="mandatory"></label>
+                                    <input type="tel" class="form-control" id="counslerwhatsappnumber"
+                                    pattern="[+]?[0-9]{1,3}\s?\d{9,12}"
+                                    placeholder="Whatsapp Number" name="whatsappNumberof"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10" value="<%=course.counslerwhatsappnumber%>" > 
+                                </div>
+                                <div class="col-xl-3 mb-1" id="counsler-email">
+                                  <label>Email</label><span class="mandatory"></label>
+                                    <input class="form-control" type="email" name="emailof"
+                                      placeholder="Enter your email" id="counsleremail" value="<%=course.counsleremail%>" >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+            <section id="personal-info">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1">Testimonial Videos</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <section id="testimonialVideos">
+                                        <div class="row">
+                                            <% if (course.testimonialvideos.length>0) { %>
+                                                <% course.testimonialvideos.forEach((i)=> { %>
+                                                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 testimonialgallery" style="align-self: center;">
+                                                    <div class="image-upload">
+                                                      <label for="media-group">
+                                                        <a id="uploadedvideo" target="_blank"
+                                                                href="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>"
+                                                                class="pointer img-fluid">
+                                                                Uploaded Video
+                                                            </a>
+                                                        
+                                                      </label>
+                                                      <i class="feather  icon-x remove_uploaded_pic" style="color:red;" value="<%=i%>"
+                                                        onclick='removetestimonial("<%=course._id%>", "<%=i%>", this)'></i>
+                                                    </div>
+                                                  </div>
+                                                  <% }); %>
+                                                    <% }%>
+                                            <div class="col-xl-3 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                <label for="testimonialvideos">
+                                                    <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                        id="outputtwo"> -->
+                                                </label>
+                                                <input id="testimonialvideos" type="file" multiple />
+                                                <input type="hidden" class="form-control hiddenmediagroup"
+                                                    name="testimonialvideos" id="hidden-testimonialvideos" />
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+            <section id="personal-info">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1">Extra Features</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <section id="extraFeatures">
+                                        <div class="row">
+                                            <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                <label>Course Feature</label>
+                                                <textarea class="form-control courseFeature ckeditor"
+                                                    placeholder="Bulleted points" name="courseFeatures"
+                                                    id="courseFeatures"></textarea>
+                                            </div>
+                                            <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                <label>Important Terms</label>
+                                                <textarea class="form-control importantTerms ckeditor"
+                                                    placeholder="Bulleted points" name="importantTerms"
+                                                    id="importantTerms"></textarea>
+                                            </div>
+                                           </div>
+                                    </section>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <section id="questionanswerTemplate">
+                        <template >
+                            <div class="row questionanswerrow">
+                                <div class="col-xl-6 mb-1">
+                                    <label>Question</label>
+                                    <textarea name="question" class="form-control question" cols="50"
+                                        rows="1"></textarea>
+                                </div>
+                                <div class="col-xl-6 mb-1">
+                                    <label>Answer</label>
+                                    <textarea name="answer" class="form-control answer" cols="50"
+                                        rows="1"></textarea>
+                                </div>
+                            </div>
+                        </template>
+                    </section>
+                    <div class="col-xl-12 col-lg-12">
+                            <div class="card mt-1">
+                                <div class="card-content">
+                                    <div class="mt-2 px-2">
+                                        <!-- Existing question-answer pairs will be added here -->
+                                        <div id="questionanswerlist">
+                                            <% if (course.questionAnswers.length>0) { %>
+                                                <% course.questionAnswers.forEach((q, index)=> { %>
+                                            <div class="row questionanswerrow actuallist">
+                                                <div class="col-xl-6 mb-1">
+                                                    <label>Question</label>
+                                                    <textarea name="question" class="form-control question<%=index%>"
+                                                        cols="50"
+                                                        rows="1"><%=q.Question%></textarea>
+                                                </div>
+                                                <div class="col-xl-6 mb-1">
+                                                    <label>Answer</label>
+                                                    <textarea name="answer<%=index%>" class="form-control answer<%=index%>" cols="50"
+                                                        rows="1"><%=q.Answer%></textarea>
+                                                </div>
+                                            </div>
+                                            <% }); %>
+                                        <% }%>
+                                        </div>
+                                        <div class="col-xl-12 mb-1 px-0 text-right">
+                                            <a class="btn btn-success text-white add-button">+ Add Another</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2 text-right">
+                        <button onclick="reset()" class="btn btn-danger waves-effect waves-light">Reset</button>
+                        <button id="sub-btn" type="button"
+                            class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
+                            Save
+                        </button>
+                    </div>
+
+
+            </section>
+            </form>
+    </div>
+                                    <script
+                                        src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script>
+                                    <script>
+
+                                        function showContactInfo() {
+              document.getElementById("contact-info").style.display = "block";
+              var coinLabel = document.querySelector('label[for="25 coin"]');
+              coinLabel.style.display = "block";
+            }
+            function hideContactInfo() {
+              document.getElementById("contact-info").style.display = "none";
+              var coinLabel = document.querySelector('label[for="25 coin"]');
+              coinLabel.style.display = "none";
+            }
+            $(document).ready(function () {
+              if ($('#contact-directly-yes').prop('checked')) {
+                showContactInfo();
+              }
+            });
+
+
+
+
+
+
+                                        // Function to initialize CKEditor for existing and new question-answer pairs
+                                        function initializeCKEditor(selector, check) {
+                                            let ele = document.querySelector(selector)
+                                            if(check){
+                                                ele.value = ''
+                                            }
+                                            // 
+                                            ClassicEditor
+                                                .create(ele)
+                                                .then(editor => {
+                                                    editor.model.document.on('change:data', () => {
+                                                        ele.value = editor.getData();
+                                                    });
+                                                    })
+                                                .catch(error => {
+                                                    console.error(error);
+                                                });
+                                        }
+
+                                        // Event listener to add a new question-answer pair when the button is clicked
+                                        document.querySelector('.add-button').addEventListener('click', function () {
+                                            let html = $('#questionanswerTemplate template').html();
+                                            $('#questionanswerlist').append(html);
+                                            initializeCKEditor('.questionanswerrow:last-of-type .question', true);
+                                            initializeCKEditor('.questionanswerrow:last-of-type .answer', true);
+                                        });
+
+                                        // // Initialize CKEditor for the existing fields
+                                        setTimeout(() => {
+                                            $('.questionanswerrow').each(function(i) {
+                                                    initializeCKEditor('.question' + i, false);
+                                                    initializeCKEditor('.answer' + i, false);
+                                                });
+                                        }, 500)
+                                       
+                                        function removetestimonial(courseId, i, e) {
+                                            let data = {
+                                            key: e.attributes.value.textContent
+                                            }
+                                            axios.post('/api/deletefile', data)
+                                            .then(result => {
+                                                if (result.status) {
+                                                let parentdiv = $(e).closest('div.testimonialgallery')
+                                                $(parentdiv).remove();
+                                                axios.post("/admin/courses/removetestimonial", {courseId, key: e.attributes.value.textContent}).then(() => console.log('deleted'))
+                                                }
+                                            })
+                                            return false;
+                                        }
+
+                                        function removevideo(courseId, e) {
+                                            let data = {
+                                            key: e.attributes.value.textContent
+                                            }
+                                            axios.post('/api/deletefile', data)
+                                            .then(result => {
+                                                if (result.status) {
+                                                let parentdiv = $(e).closest('div.videogallery')
+                                                $(parentdiv).remove();
+                                                axios.post("/admin/courses/removevideo", {courseId, key: e.attributes.value.textContent}).then(() => console.log('deleted'))
+                                                }
+                                            })
+                                            return false;
+                                        }
+
+                                        function removepic(courseId, e) {
+                                            let data = {
+                                            key: e.attributes.value.textContent
+                                            }
+                                            axios.post('/api/deletefile', data)
+                                            .then(result => {
+                                                if (result.status) {
+                                                let parentdiv = $(e).closest('div.galleryImage')
+                                                $(parentdiv).remove();
+                                                axios.post("/admin/courses/removephoto", {courseId, key: e.attributes.value.textContent}).then(() => console.log('deleted'))
+                                                }
+                                            })
+                                            return false;
+                                        }
+
+                                        function removebrochure(courseId, brochure, e) {
+                                            let data = {
+                                            key: brochure
+                                            }
+                                            axios.post('/api/deletefile', data)
+                                            .then(result => {
+                                                if (result.status) {
+                                                let parentdiv = $(e).closest('div.brochureImage')
+                                                $(parentdiv).remove();
+                                                axios.post("/admin/courses/removebrochure", {courseId: courseId, key: brochure}).then(() => console.log('deleted'))
+                                                }
+                                            })
+                                            return false;
+                                        }
+
+                                        function removethumbnail(courseId, thumbnail, e) {
+                                            let data = {
+                                            key: thumbnail
+                                            }
+                                            axios.post('/api/deletefile', data)
+                                            .then(result => {
+                                                if (result.status) {
+                                                let parentdiv = $(e).closest('div.thumbnailImage')
+                                                $(parentdiv).remove();
+                                                axios.post("/admin/courses/removethumbnail", {courseId: courseId, key: thumbnail}).then(() => console.log('deleted'))
+                                                }
+                                            })
+                                            return false;
+                                        }
+                                    
+        const checkImageSize = (size) => {
+            let finalSize = ((size / 1024) / 1024);
+            if (finalSize > 2) {
+            return false
+            }
+            return true;
+        }
+
+        const checkImageValidation = (file) => {
+            let regex = /(\/jpg|\/jpeg|\/png)$/i
+            return regex.test(file)
+        }
+
+        document.getElementById("testimonialvideos").addEventListener("change", function (e) {            
+            const formData = new FormData();
+            let productvideos = [];
+              if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 files");
+                $('#videos').val('');
+              } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                  let type = e.target.files[i].type;
+                  let size = e.target.files[i].size;
+                //   if (checkImageSize(size) && checkImageValidation(type)) {
+                    formData.append("files", e.target.files[i]);
+                //   } else {
+                //     $('#videos').val('');
+                //     alert("This format not accepted and each image should be 2MB")
+                //     break;
+                //   }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultiFiles', formData, header)
+                  .then(result => {
+                    debugger
+                    if (result.data.status) {
+                      let combinedKeys = ''
+                      combinedKeys = result.data.Data.map(img => {
+                        return img.Key
+                      });
+                      $('#hidden-testimonialvideos').val(combinedKeys)
+                    //   result.data.Data.forEach(element => {
+                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                    //     $(html.innerHTML).insertBefore('#uploadgallery');
+                    //   });
+                    }
+                  })
+                  .catch(err => {
+                    console.log('==> caught error ', err)
+                  })
+                }
+        });
+
+        document.getElementById("videos").addEventListener("change", function (e) {
+           
+            const formData = new FormData();
+            let productvideos = [];
+              if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 files");
+                $('#videos').val('');
+              } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                  let type = e.target.files[i].type;
+                  let size = e.target.files[i].size;
+                //   if (checkImageSize(size) && checkImageValidation(type)) {
+                    formData.append("files", e.target.files[i]);
+                //   } else {
+                //     $('#videos').val('');
+                //     alert("This format not accepted and each image should be 2MB")
+                //     break;
+                //   }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultiFiles', formData, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      let combinedKeys = ''
+                      combinedKeys = result.data.Data.map(img => {
+                        return img.Key
+                      });
+                      $('#hidden-videos').val(combinedKeys)
+                    //   result.data.Data.forEach(element => {
+                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                    //     $(html.innerHTML).insertBefore('#uploadgallery');
+                    //   });
+                    }
+                  })
+                  .catch(err => {
+                    console.log('==> caught error ', err)
+                  })
+                }
+        });
+
+        document.getElementById("photos").addEventListener("change", function (e) {
+            const formData = new FormData();
+            let productimages = [];
+              if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 images");
+                $('#media-group').val('');
+              } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                  let type = e.target.files[i].type;
+                  let size = e.target.files[i].size;
+                  if (checkImageSize(size) && checkImageValidation(type)) {
+                    formData.append("files", e.target.files[i]);
+                  } else {
+                    $('#media-group').val('');
+                    alert("This format not accepted and each image should be 2MB")
+                    break;
+                  }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultiFiles', formData, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      let combinedKeys = ''
+                      combinedKeys = result.data.Data.map(img => {
+                        return img.Key
+                      });
+                      $('#hidden-photos').val(combinedKeys)
+                    //   result.data.Data.forEach(element => {
+                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                    //     $(html.innerHTML).insertBefore('#uploadgallery');
+                    //   });
+                    }
+                  })
+                  .catch(err => {
+                    console.log('==> caught error ', err)
+                  })
+                }
+        });
+
+        $('#thumbnail').change(function (e) {
+                let file = e.target.files[0]
+                let body = {
+                  file: file
+                }
+                let type = file.name;
+                let size = file.size
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                  alert("upload the thumbnail in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                  e.target.value = ''
+                } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                  alert("uploaded thumbnail size should less than 5MB");
+                  e.target.value = ''
+                } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                  alert("upload the thumbnail in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                  e.target.value = ''
+                } else {
+                  axios.post('/api/uploadAdminFile', body, header)
+                    .then(result => {
+                        console.log('=============> here ', result)
+                      if (result.data.status) {
+                        $('#hidden-thumbnail').val(result.data.data.Key)
+                      }
+                    })
+                }
+              });
+
+            
+
+        $('#brochure').change(function (e) {
+                let file = e.target.files[0]
+                let body = {
+                  file: file
+                }
+                let type = file.name;
+                let size = file.size
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                  alert("upload the brochure in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                  e.target.value = ''
+                } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                  alert("uploaded brochure size should less than 5MB");
+                  e.target.value = ''
+                } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                  alert("upload the brochure in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                  e.target.value = ''
+                } else {
+                  axios.post('/api/uploadAdminFile', body, header)
+                    .then(result => {
+                        console.log('=============> here ', result)
+                      if (result.data.status) {
+                        $('#hidden-brochure').val(result.data.data.Key)
+                      }
+                    })
+                }
+              });
+
+              const checkCvValidation = (file) => {
+                let regex = /(\.docx|\.doc|\.pdf|\.jpg|\.jpeg|\.png)$/i
+                if (!regex.exec(file)) {
+                  return false;
+                } else {
+                  return true;
+                }
+              }
+
+              function checkCVSize(size) {
+                let finalSize = ((size / 1024) / 1024);
+                if (finalSize > 5) {
+                  return false;
+                }
+                return true;
+              }
+
+                                    
+                                    
+                                    
+                                    
+                                    </script>
+                                
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- <scrip>
+        $('#add-button').bind('click', () => {
+            let html = $('#questionanswerTemplate template').html();
+            $('#questionanswerlist').append(html);
+        })
+    </scrip> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        const imageUploaders = document.querySelectorAll(".hiddenmediagroup");
+        imageUploaders.forEach((x) => {
+            const idText = x.getAttribute("data-id");
+            const id = document.querySelector(`#${idText}`);
+
+            x.addEventListener("change", async (e) => {
+                try {
+                    submitBtns.forEach((x) => {
+                        x.disabled = true;
+                    });
+                    const filesData = Array.from(e.target.files);
+                    if (!Array.isArray(filesData) || filesData.length <= 0)
+                        throw new Error("No image found!");
+
+                    const data = await Promise.all(
+                        filesData.map(async (file) => {
+                            const ext = file.name.split(".").pop();
+                            const res = await axios.get("/admin/s3upload", {
+                                params: { type: file.type, ext },
+                            });
+                            if (!res || !res.data || !res.data.data) return null;
+                            const { url, key } = res.data.data;
+                            if (!url || !key) return null;
+                            const upload = await axios.put(url, file, {
+                                headers: { "Content-Type": file.type },
+                            });
+                            if (upload || upload.status === 200) return key;
+                            return null;
+                        })
+                    );
+
+                    const files = data.filter((x) => !!x);
+
+                    if (files.length <= 0)
+                        throw new Error("Unable to upload any image!");
+
+                    files.forEach((f) => {
+                        const div = document.createElement("div");
+                        div.setAttribute(
+                            "class",
+                            "col-xl-12 col-md-12 col-sm-12 col-12 mt-1"
+                        );
+
+                        const img = document.createElement("img");
+                        img.setAttribute(
+                            "src",
+                            `<%= process.env.MIPIE_BUCKET_URL %>/${f}`
+                        );
+                        img.setAttribute("alt", "img");
+                        img.setAttribute("width", "40");
+                        img.setAttribute("height", "40");
+                        div.appendChild(img);
+
+                        const input = document.createElement("input");
+                        input.setAttribute("type", "hidden");
+                        input.setAttribute("name", idText);
+                        input.setAttribute("value", f);
+                        div.appendChild(input);
+
+                        const p = document.createElement("p");
+                        p.setAttribute("class", "mt-1");
+                        const rmBtn = document.createElement("a");
+                        rmBtn.setAttribute("class", "text-danger");
+                        rmBtn.setAttribute("href", "javascript:void(0)");
+                        rmBtn.textContent = "Remove ";
+                        rmBtn.addEventListener("click", () => {
+                            div.parentNode.removeChild(div);
+                            $(".firstImage").removeClass("d-none");
+                        });
+                        p.appendChild(rmBtn);
+                        const viewBtn = document.createElement("a");
+                        viewBtn.setAttribute("class", "text-primary mr-2");
+                        viewBtn.setAttribute("target", "_blank");
+                        viewBtn.setAttribute(
+                            "href",
+                            `<%= process.env.MIPIE_BUCKET_URL %>/${f}`
+                        );
+                        viewBtn.textContent = "View";
+                        p.appendChild(viewBtn);
+                        div.appendChild(p);
+                        id.append(div);
+                        $(".firstImage").addClass("d-none");
+                    });
+                    submitBtns.forEach((x) => {
+                        x.disabled = false;
+                    });
+                    x.value = "";
+                } catch (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+
+        function getQuestionAnswers() {
+            const questionAnswersArray = [];
+            const elements = document.querySelectorAll('#questionanswerlist .questionanswerrow');
+            elements.forEach((item) => {
+                const formControls = item.querySelectorAll('.form-control');
+                const question = formControls[0].value.trim();
+                const answer = formControls[1].value.trim();
+                if (question !== "" && answer !== "") {
+                    questionAnswersArray.push({ Question: question, Answer: answer });
+                }
+            });
+            return questionAnswersArray;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("requiredDocuments").value = `<%=course.requiredDocuments %>`;
+            document.getElementById("hidden-brochure").value = `<%=course.brochure %>`;
+            document.getElementById("hidden-thumbnail").value = `<%=course.thumbnail %>`;
+            document.getElementById("courseFeatures").value = `<%=course.courseFeatures%>`;
+            document.getElementById("importantTerms").value = `<%=course.importantTerms %>`;
+            document.getElementById("hidden-testimonialvideos").value = '<%= course.testimonialvideos.join(", ") %>'.split(", ");
+            document.getElementById("hidden-videos").value = '<%= course.videos.join(", ") %>'.split(", ");
+            document.getElementById("hidden-photos").value = '<%= course.photos.join(", ") %>'.split(", ");
+            // document.getElementById("hidden-audios").value = '<%= course.audios.join(", ") %>'.split(", ");
+        });
+
+        // Update hidden input for testimonial videos
+        // document.getElementById("testimonialvideos").addEventListener("change", function (event) {
+        //     const files = Array.from(event.target.files);
+        //     const hiddenInput = document.getElementById("hidden-testimonialvideos");
+        //     hiddenInput.value = files.map(file => file.name).join(', ');
+        // });
+        // Update hidden input for videos
+        // document.getElementById("videos").addEventListener("change", function (event) {
+        //     const files = Array.from(event.target.files);
+        //     const hiddenInput = document.getElementById("hidden-videos");
+        //     hiddenInput.value = files.map(file => file.name).join(', ');
+        // });
+        // Update hidden input for photos
+        // document.getElementById("photos").addEventListener("change", function (event) {
+        //     const files = Array.from(event.target.files);
+        //     const hiddenInput = document.getElementById("hidden-photos");
+        //     hiddenInput.value = files.map(file => file.name).join(', ');
+        // });
+        // Update hidden input for audios
+        // document.getElementById("audios").addEventListener("change", function (event) {
+        //     const files = Array.from(event.target.files);
+        //     const hiddenInput = document.getElementById("hidden-audios");
+        //     hiddenInput.value = files.map(file => file.name).join(', ');
+        // });
+
+        document.getElementById('sub-btn').addEventListener('click', async (event) => {
+            event.preventDefault();
+            const hasErrors = validations();
+            if (hasErrors === false) {
+                return false;
+            }
+            const questionAnswers = getQuestionAnswers();
+            console.log('Question Answers:', questionAnswers);
+            const selectedSectors = Array.from(document.getElementById("sector").selectedOptions).map(option => option.value);
+            const certifyingAgencyWebsiteValue = document.getElementById("certifyingAgencyWebsite").value;
+
+            let body = {
+                sectors: selectedSectors,
+                courseLevel: document.getElementById("courseLevel").value,
+                name: document.getElementById("name").value,
+                duration: document.getElementById("duration").value,
+                certifyingAgency: $('#certifyingAgency').val(),
+                certifyingAgencyWebsite: certifyingAgencyWebsiteValue,
+                qualification: document.getElementById("qualification").value,
+                age: $('#age').val(),
+                brochure: $('#hidden-brochure').val(),
+                thumbnail: $('#hidden-thumbnail').val(),
+                youtubeURL:$('#youtubeURL').val(),
+                courseType: $('#courseType').val(),
+                experience: $('#experience').val(),
+                trainingMode: $('#trainingMode').val(),
+                onlineTrainingTiming: document.getElementById("onlineTrainingTiming").value,
+                offlineTrainingTiming: document.getElementById("offlineTrainingTiming").value,
+                address: document.getElementById("address").value,
+                city: document.getElementById("city").value,
+                state: document.getElementById("state").value,
+                // appLink: document.getElementById("appLink").value,
+                ojt: document.getElementById("ojt").value,
+                registrationCharges: $('#registrationCharges').val(),
+                courseFee: $('#courseFee').val(),
+                cutPrice: $('#cutPrice').val(),
+                examFee: $('#examFee').val(),
+                otherFee: $('#otherFee').val(),
+                emiOptionAvailable: $('#emiOptionAvailable').val(),
+                maxEMITenure: $('#maxEMITenure').val(),
+                stipendDuringTraining: $('#stipendDuringTraining').val(),
+                lastDateForApply: $('#lastDateForApply').val(),
+                requiredDocuments: $('#requiredDocuments').val(),
+                courseFeatures: $('#courseFeatures').val(),
+                importantTerms: $('#importantTerms').val(),
+                // faq: $('#faq').val(),
+                testimonialvideos: document.getElementById("hidden-testimonialvideos").value,
+                photos: document.getElementById("hidden-photos").value,
+                audios: document.getElementById("hidden-audios")?.value || '',
+                videos: document.getElementById("hidden-videos").value,
+                counslername:$("#counslername").val(),
+                counslerphonenumber: $("#counslerphonenumber").val(),  
+                counsleremail:$("#counsleremail").val(),
+                counslerwhatsappnumber:$("#counslerwhatsappnumber").val(),  
+                // Other fields...
+                // questionAnswers: Array.from(document.getElementById("questionanswerTemplate")).map(row => {
+
+                //     let question = row.querySelector(".question").value;
+                //     console.log('question: ', question);
+                //     let answer = row.querySelector(".answer").value;
+                //     console.log('answer: ', answer);
+                //     return { Question: question, Answer: answer };
+                // })
+                questionAnswers: questionAnswers
+            };
+            console.log(JSON.stringify(body), "body");
+            // Send updated data to the server
+            axios.post(`/admin/courses/edit/<%=course._id %>`, body)
+                .then((res) => {
+                    if (res && res.status) {
+                        window.location.href = "/admin/courses";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating course:', error);
+                });
+        });
+
+        function validations() {
+            $('#sectorblock').removeClass('error')
+            $('#courseblock').removeClass('error')
+            $('#nameblock').removeClass('error')
+            $('#durationblock').removeClass('error')
+            $('#qualificationblock').removeClass('error')
+            $('#trainingblock').removeClass('error')
+            $('#ojtblock').removeClass('error')
+            $('#emioptionblock').removeClass('error')
+            $('addressblock').removeClass('error')
+            var sectors = document.getElementById("sector").value;
+            let certifyingAgency = $('#certifyingAgency').val();
+            let experience = $('#experience').val();
+            let trainingMode = $('#trainingMode').val();
+            var courseLevel = document.getElementById("courseLevel").value;
+            var name = document.getElementById("name").value;
+            var duration = document.getElementById("duration").value;
+            var qualification = document.getElementById("qualification").value;
+            let onlineTrainingTiming = $('#onlineTrainingTiming').val();
+            let offlineTrainingTiming = $('#offlineTrainingTiming').val()
+            var address = document.getElementById("address").value;
+            var ojt = document.getElementById("ojt").value;
+            let certifyingAgencyWebsite = $('#certifyingAgencyWebsite').val();
+            let age = $('#age').val();
+            let registrationCharges = $('#registrationCharges').val()
+            let courseFee = $('#courseFee').val();
+            let cutPrice = document.getElementById("cutPrice").value;
+            let examFee = $('#examFee').val();
+            let otherFee = $('#otherFee').val();
+            let emiOptionAvailable = $('#emiOptionAvailable').val();
+            let maxEMITenure = $('#maxEMITenure').val()
+            let stipendDuringTraining = $('#stipendDuringTraining').val();
+            let lastDateForApply = $('#lastDateForApply').val();
+            let requiredDocuments = $('#requiredDocuments').val();
+            let courseFeatures = $('#courseFeatures').val();
+            let importantTerms = $('#importantTerms').val();
+            let questionAnswers = $('#questionAnswers').val();
+            let testimonialvideos = document.getElementById("hidden-testimonialvideos").value;
+            let photos = document.getElementById("hidden-photos").value;
+            let audios = document.getElementById("hidden-audios")?.value || '';
+            let videos = document.getElementById("hidden-videos").value;
+
+            // let faq = $('#faq').val();
+            let firstError = ''
+            let flag = true
+            if (emiOptionAvailable.trim() == "") {
+                $('#emioptionblock').addClass('error')
+                firstError = firstError ? firstError : $('#emiOptionAvailable')
+                flag = false
+            }
+            if (sectors.trim() === '') {
+                $('#sectorblock').addClass('error')
+                firstError = firstError ? firstError : $('#sector')
+                flag = false
+            } if (courseLevel.trim() === "") {
+                $('#courseblock').addClass('error')
+                firstError = firstError ? firstError : $('#courseLevel')
+                flag = false;
+            } if (qualification.trim() === '') {
+                $('#qualificationblock').addClass('error')
+                firstError = firstError ? firstError : $('#qualification')
+                flag = false
+            } if (ojt.trim() === "") {
+                $('#ojtblock').addClass('error')
+                firstError = firstError ? firstError : $('#ojt')
+                flag = false
+            }
+            if (name.trim() === "") {
+                $('#nameblock').addClass('error')
+                firstError = firstError ? firstError : $('#name')
+                flag = false
+            }
+            if (duration.trim() === "") {
+                $('#durationblock').addClass('error')
+                firstError = firstError ? firstError : $('#duration')
+                flag = false
+            }
+            if (trainingMode.trim() === "") {
+                $('#trainingblock').addClass('error')
+                firstError = firstError ? firstError : $('#trainingMode')
+                flag = false
+            } if (duration.trim() === "") {
+                $('#durationblock').addClass('error')
+                firstError = firstError ? firstError : $('#ojt')
+                flag = false
+            }
+            if (address.trim() === '') {
+                $('#addressblock').addClass('error')
+                firstError = firstError ? firstError : $('#address')
+                flag = false
+            }
+            if (firstError) {
+                firstError.focus();
+            }
+            console.log('requiredDocuments: ', requiredDocuments);
+            return flag;
+        }
+
+    </script>
+    <% include ../partials/footer %>
+        </div>

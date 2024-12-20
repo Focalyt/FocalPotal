@@ -1,0 +1,391 @@
+<% include ../partials/header %>
+<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+    <div class="content-header-left col-md-12 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-9">
+                <h3 class="content-header-title float-left mb-0">Registrations</h3>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Registrations</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-body">
+    <% include ../partials/flash %>
+    <section class="list-view">
+        <div class="row">
+            <div class="col-12 rounded equal-height-2 coloumn-2">
+                <div class="card">
+                    <div class="row">
+                        <div class="card-content col-12">
+                            <div class="row mb-2">
+                                <div class="col-xl-12 col-lg-12 px-3">
+                                    <form method="GET" id="filterForm">
+                                        <div class="row">
+                                            <div class="col-xl-3 mt-1">
+                                                <label>Name/ Mobile/ Whatsapp</label>
+                                                <input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>" maxlength="25">
+                                            </div>
+                                            <div style="margin-top: 2.5rem !important;" class="col-xl-3 text-center mt-3">
+                                                <button class="btn btn-success waves-effect waves-light text-white d-inline" id="submit-btn">Go</button>
+                                                <a class="extra-ss btn btn-danger d-inline waves-effect waves-light mb-2 text-white mx-1" href="/admin/courses/registrations">RESET</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <% if (candidates && candidates.length> 0) { %>
+                                <table id="tblexportData" class="table table-hover-animation mb-0 table-hover" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="three column wide" width="18%" style="cursor: pointer;" onclick="sorting('createdAt')">DATE <i  class="fa-solid fa-arrow-down success cursors pointer" value="1"></i></th>
+                                            <th class="three column wide candidate-wrap" width="19%" onclick="sorting('name')">CANDIDATE NAME</th>
+                                            <th class="one column wide" width="15%">MOBILE NO.</th>
+                                            <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('courseName')">Course <i class="" value="1"></i></th>
+                                            <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('registrationCharges')">Reg Fee <i  class="" value="1"></i></th>
+                                            <th class="one column wide" width="7%"  style="cursor: pointer;" >Reg Status <i  class="" value="1"></i></th>
+                                            <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('sector')">Sector <i class="" value="1"></i></th>
+                                            <% if (view === false) { %>
+                                            <th class="one column wide" width="10%">Action</th>
+                                            <% } %>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% candidates.forEach((l, i)=> { %>
+                                        <tr>
+                                            <td class="text-capitalize">
+                                                <%= l.createdAt ? moment(l.createdAt).utcOffset("+05:30").format('MMM DD YYYY  hh:mm A') : "N/A" %>
+                                            </td>
+                                            <td class="text-capitalize candid-wrap">
+                                                <%= l.name ? l.name : "N/A" %>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <%= l.mobile ? l.mobile : "N/A" %>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <%= l.courseName ? l.courseName : "N/A" %>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <%= l.registrationCharges ? l.registrationCharges : "N/A" %>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <%= l.registrationFee ? l.registrationFee : "Unpaid" %>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <%= l.sector ? l.sector : "N/A" %>
+                                            </td>
+                                            <% if (view === false) { %>
+                                            <td class="text-capitalize">
+                                                <a class="btn <% if (l.courseStatus == 0) { %>btn-danger<% } else { %>btn-success<% } %> waves-effect waves-light text-white d-inline btn-sm" onclick="handleActionClick('<%= l._id %>', '<%= l.remarks %>', '<%= l.assignDate %>', '<%= l.url %>')">
+                                                    <% if (l.courseStatus == 0) { %>
+                                                    DUE
+                                                    <% } else { %>
+                                                    Assigned
+                                                    <% } %>
+                                                </a>
+                                            </td>
+                                            <% } %>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                                <% } else { %>
+                                <p class="text-center mt-3">No result found</p>
+                                <% } %>
+								<% if (totalPages && totalPages> 1) { %>
+									<ul class="pagination justify-content-end ml-2 mb-2">
+										<% let first=1 %>
+											<% let last=totalPages> 4 ? 4 :
+												totalPages %> <% if (totalPages> 4 && page >= 2) { %> <%
+														first=page - 1 %>
+														<% last=page + 1 %>
+															<% if (last>
+																totalPages) last = totalPages %> <% } %>
+																	<% if (first>
+																		1) { %>
+																		<li class="page-item">
+																			<a class="pageAnchor page-link"
+																				href="<%= 1 %>">First</a>
+																		</li>
+																		<% } %>
+																			<% for (let i=first; i
+																				<=last; i +=1) { %>
+																				<% if (i===page) { %>
+																					<li
+																						class="active page-item">
+																						<a href="javascript:void()"
+																							class="page-link">
+																							<%= i %>
+																						</a>
+																					</li>
+																					<% } else { %>
+																						<li
+																							class="page-item">
+																							<a class="page-link pageAnchor"
+																								href="<%= i %>">
+																								<%= i %>
+																							</a>
+																						</li>
+																						<% } %>
+																							<% } %>
+																								<% if
+																									(totalPages>
+																									last)
+																									{ %>
+																									<li
+																										class="page-item">
+																										<a class="pageAnchor page-link"
+																											href="<%= last + 1 %>">...</a>
+																									</li>
+																									<li
+																										class="page-item">
+																										<a class="pageAnchor page-link"
+																											href="<%= totalPages %>">Last</a>
+																									</li>
+																									<% }
+																										%>
+									</ul>
+									<% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <input type="hidden" id="candidate-id" value="">
+    <!--Assign/Due modal start-->
+    <div class="modal fade" id="courseAssignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Assign Course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-1">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                            <label>Date</label>
+                            <input class="form-control text-capitalize" type="date" value="" id="assignDate">
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                            <label>Course URL</label>
+                            <input class="form-control text-capitalize" type="text" value="courseURL" id="courseURL">
+                        </div>
+                        <div class="col-xl-12 mb-1 text-left">
+                            <label>Remarks</label>
+                            <textarea class="form-control" cols="5" value="courseRemarks" rows="3" id="courseRemarks"></textarea>
+                        </div>
+                    </div>
+                    <p class="text-success font-weight-bolder" id="successMsg" style="display: none;"></p>
+                    <p class="text-danger font-weight-bolder" id="errorMsg" style="display: none;"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" onClick="assignCourse()">Assigned</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Assign/Due modal end-->
+</div>
+<% include ../partials/footer %>
+<script>
+    function handleActionClick(id, remarks, assignDate, url) {
+		const formattedDate = new Date(assignDate).toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+}).split('/').reverse().join('-');
+		console.log('assignDate: ', assignDate);
+	$('#courseAssignModal').modal('show');
+    $('#courseAssignModal').data('id', id);
+    $('#courseAssignModal #courseRemarks').text(remarks); 
+    $('#courseAssignModal').data('remarks', remarks); 
+    $('#courseAssignModal #courseURL').val(url); 
+    $('#courseAssignModal').data('url', url); 
+    $('#courseAssignModal').data('assignDate', assignDate);
+    $('#courseAssignModal #assignDate').val(formattedDate); 
+    }
+
+    function assignCourse() {
+		event.preventDefault();
+        const id = $('#courseAssignModal').data('id');
+        const remarks = $('#courseAssignModal').data('remarks');
+        // const assignDate = $('#courseAssignModal').data('assignDate');
+    
+        const courseURL = $('#courseURL').val();
+        const courseRemarks = $('#courseRemarks').val();
+		const isoAssignDate = new Date($('#assignDate').val()).toISOString();
+
+
+        const updateCourse = {
+            url: courseURL,
+            remarks: courseRemarks,
+            courseStatus: 0, 
+            assignDate: isoAssignDate
+
+        };
+        axios.put(`/admin/courses/assignCourses/${id}`, updateCourse)
+        .then(response => {
+            console.log("aaaaaa");
+            window.location.href = "/admin/courses/registrations"
+        })
+        .catch(error => {
+            console.error(error);
+            alert('An error occurred while assigning the course.');
+        });
+    }
+
+// function formatDate(date) {
+//     const year = date.getFullYear();
+//     const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero if needed
+//     const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if needed
+//     return `${year}-${month}-${day}`;
+// }
+
+    function updateProfileVisible(mobile,visibility){
+        let field;
+        if(visibility=='true'){
+            field=false
+        }else{
+            field=true
+        }
+        $.ajax({
+            type: "POST",
+            url: "/admin/candidate/changeprofilestatus",
+            data: {
+                mobile,
+                status: field,
+            },
+            success: () => location.reload(),
+        });
+    }
+    function myOnOffFunc(id, status, model) {
+        // eslint-disable-line
+        let myStatus = true;
+        if (status === true || status === "true") {
+            myStatus = false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/admin/changestatus",
+            data: {
+                id,
+                status: myStatus,
+                model,
+            },
+            success: () => location.reload(),
+        });
+    }
+</script>
+<script>
+    !(function () {
+        "use strict";
+        Array.isArray ||
+            (Array.isArray = function (r) {
+                return "[object Array]" === Object.prototype.toString.call(r);
+            });
+        var r = {
+            get: function () {
+                var r = window.location.search,
+                    t = {};
+                return "" === r
+                    ? t
+                    : ((r = r.slice(1)),
+                    (r = r.split("&")),
+                    r.map(function (r) {
+                        var i, o;
+                        (r = r.split("=")),
+                            (i = r[0]),
+                            (o = r[1]),
+                            t[i]
+                                ? (Array.isArray(t[i]) || (t[i] = [t[i]]), t[i].push(o))
+                                : (t[i] = o);
+                    }),
+                    t);
+            },
+        };
+        if (window) {
+            if (window.qs)
+                throw new Error(
+                    "Error bootstrapping qs: window.qs already set."
+                );
+            window.qs = r;
+        }
+    })();
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let order = '<%= sortingOrder%>'
+        let value = '<%= sortingValue%>'
+        let iconClass
+        if(order == -1){
+            iconClass = "fa-solid fa-arrow-down success"
+        }else{
+            iconClass = "fa-solid fa-arrow-up success"
+        }
+        $(`#${value}`).removeAttr('class')
+        $(`#${value}`).attr('class', iconClass)
+        $(`#${value}`).attr('value', `${order*-1}`)
+        const pageAnchors = document.querySelectorAll("a.pageAnchor");
+        const { origin, pathname, search } = window.location;
+        const obj = window.qs.get(search);
+        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+        let url = `${origin}${pathname}?`;
+        keyArr.forEach((x) => {
+            if (x !== "page") {
+                url += `${x}=${obj[x]}&`;
+            }
+        });
+        pageAnchors.forEach((el) => {
+            const pageNumber = el.getAttribute("href");
+            el.setAttribute("href", `${url}page=${pageNumber}`);
+        });
+    });
+
+    function sorting(value){
+        let order = $(`#${value}`).attr('value')
+        let str = `?`
+        let form = document.getElementById('filterForm');
+        let data = new FormData(form);
+        let obj = {}
+        for (let [key, value] of data) {
+            obj[key] = value
+            str += `${key}=${value}&`
+        }
+        window.location.href = `/admin/courses/registrations${str}value=${value}&order=${order}`
+    }
+</script>
+<script type="text/javascript">
+    $('#submit-btn').click(()=>{
+        if(validate()){
+            return false
+        }
+    })
+    function validate(){
+        $('.error').removeClass('error')
+        let fromDate = $('#from-date').val();
+        let toDate = $('#to-date').val()
+        let hasError = false
+        let firstError
+        if(fromDate && !toDate){
+            $('#to-date').parent().addClass('error')
+            firstError = firstError ? firstError :$('#to-date')
+            hasError = true
+        }
+        if(!fromDate && toDate){
+            $('#from-date').parent().addClass('error')
+            firstError = firstError ? firstError :$('#from-date')
+            hasError = true
+        }
+        $(firstError).focus()
+        return hasError
+    }
+</script>

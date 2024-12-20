@@ -1,0 +1,271 @@
+<% include ./partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">JD</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/company/dashboard">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">JD</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <section id="Concerned-Person">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 px-3">
+                <div class="card">
+                  <div class="card-header border border-top-0 border-left-0 border-right-0 pb-1">
+                    <div class="col-xl-6">
+                      <h4 class="card-title">JOB Brief</h4>
+                    </div>
+                    <div class="col-xl-6 text-right">
+                      <a href="/company/list/jobs" class="btn btn-primary">All JDs</a>
+                    </div>
+                  </div>
+                    <div class="card-content">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-xl-2 mb-1">
+                            <label>Display Organization Name</label>
+                            <input class="form-control text-capitalize" value="<%=jd.displayCompanyName%>" readonly>
+                            </select>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Title</label>
+                            <input class="form-control text-capitalize" value="<%=jd.title%>" readonly>
+                            </select>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Industry</label>
+                            <input class="form-control text-capitalize" value="<%=jd._industry?.name%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>job Category</label>
+                            <input class="form-control text-capitalize" value="<%=jd._jobCategory?.name%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Experience (In Years)</label>
+                            <input class="form-control" value="<%= jd.experience == '0' ? 'Fresher' : jd.experience%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Qualification</label>
+                            <input class="form-control text-capitalize" value="<%=jd._qualification?.name%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Sub Qualification</label>
+                            <input class="form-control text-capitalize" value="<%= jd._subQualification?.map((i) => i.name).join(', ') %>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>State (Job Location)</label>
+                            <input class="form-control text-capitalize" value="<%=jd.state?.name%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>City (Job Location)</label>
+                            <input class="form-control text-capitalize" value="<%=jd.city?.name%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Work Location</label>
+                            <input class="form-control text-capitalize" value="<%=jd.place%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Number of Vacancies</label>
+                            <input class="form-control" value="<%=jd.noOfPosition%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Gender Preferences</label>
+                            <input class="form-control text-capitalize" value="<%=jd.genderPreference ? jd.genderPreference : 'No Preference' %>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <div class="demo-inline-spacing">
+                              <label>Job Type</label>
+                              <input class="form-control text-capitalize" value="<%=jd.jobType%>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <div class="demo-inline-spacing">
+                              <label>Compensation</label>
+                              <input class="form-control text-capitalize" value="<%=jd.compensation%>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <div class="demo-inline-spacing">
+                              <label>Pay</label>
+                              <input class="form-control" value="<%=jd.pay%>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <div class="demo-inline-spacing">
+                              <label>Shift</label>
+                              <input class="form-control text-capitalize" value="<%=jd.shift%>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <div class="demo-inline-spacing">
+                              <label>Work Type</label>
+                              <input class="form-control text-capitalize" value="<%=jd.work%>" readonly>
+                            </div>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Additional Benefits</label>
+                            <input class="form-control text-capitalize" value="<%=jd.benifits%>" readonly>
+                          </div>
+                          <div class="col-xl-2">
+                            <Label>Remarks</Label>
+                            <input class="form-control" value="<%=jd.remarks%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Payout</label>
+                            <input class="form-control" value="<%=jd.payOut%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Tech Skills Required</label>
+                            <input class="form-control text-capitalize" value="<%= jd._techSkills?.map((i) => i.name).join(', ') %>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Non Tech Skills Required</label>
+                            <input class="form-control text-capitalize" value="<%= jd._nonTechSkills?.map((i) => i.name).join(', ') %>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Requirement (If any)</label>
+                            <input class="form-control text-capitalize" value="<%=jd.requirement%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Amount(Monthly in Rs.)</label>
+                            <input class="form-control" value="<%=jd.amount%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Min Salary(Monthly in Rs.)</label>
+                            <input class="form-control" value="<%=jd.min%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Max Salary(Monthly in Rs.)</label>
+                            <input class="form-control" value="<%=jd.max%>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                            <label>Job Description</label>
+                            <input class="form-control"
+                              value="<%=jd.jobDescription%>"
+                              readonly>
+                          </div>
+                               <% if (jd.isContact === true) { %>
+                          <div class="col-xl-2 mb-1">
+                        <label>Name</label>
+                            <input class="form-control" value="<%= jd.nameof %>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                        <label>PhoneNumber</label>
+                            <input class="form-control" value="<%= jd.phoneNumberof %>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                        <label>WhatsappNumber</label>
+                            <input class="form-control" value="<%= jd.whatsappNumberof %>" readonly>
+                          </div>
+                          <div class="col-xl-2 mb-1">
+                        <label>Email</label>
+                            <input class="form-control" value="<%= jd.emailof %>" readonly>
+                          </div>
+                        <% } %>
+                          <div class="col-xl-2 mb-1">
+                            <label>Job Video</label>
+                            <% if (jd.jobVideo) { %>
+                            <div class="image-upload">
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="inputGroupPrepend2"><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + jd.jobVideo %>"
+                                    target="_blank">View JD</a></span>
+                                </div>
+                              </div> 
+                              </div>                               
+                                <%}else{%>
+                                  <input class="form-control"
+                              value="No Video"
+                              readonly>
+                              <% } %>
+                      </div>
+                      </div>
+                      
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <section class="list-view">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 px-3">
+                <div class="card">
+                  <div class="card-header border border-top-0 border-left-0 border-right-0 pb-1">
+                    <div class="col-xl-6">
+                      <h4 class="card-title">Applied Candidates</h4>
+                    </div>
+                    </div>
+                  <div class="card-content">
+                    <div class="table-responsive ">
+                      <table class="table table-hover-animation mb-0 table-hover">
+                        <thead>
+                          <tr>
+                          <th>Candidates</th>
+                          <th>Gender</th>
+                          <th>Qualification</th>
+                          <th>Branch</th>
+                          <th>Experience</th>
+                          <th>Action</th>
+                          <th>Applied on</th>
+                          </tr>
+                        </thead>
+                        <tbody id="table-body" class="text-capitalize">
+                          <% if(appliedCandidates?.length > 0){ %>
+                          <% appliedCandidates.forEach((candidate)=> { %>
+                            <tr>
+                              <td><%= candidate?._candidate?.name %></td>
+                              <td><%= candidate?._candidate?.sex %></td>
+                              <td><%= (qualifications?.find(q => candidate?._candidate?.highestQualification == q._id ))?.name %></td>
+                              <td><%= candidate?._candidate?.qualifications[0]?.Qualification?.name ? candidate?._candidate?.qualifications[0]?.Qualification?.name : "NA" %></td>
+                              <td><%= !candidate?._candidate?.isExperienced ? 'Fresher' : candidate?._candidate?.totalExperience ? candidate?._candidate.totalExperience + ' Years' : 'NA' %></td>
+                              <td><%= moment(candidate?._candidate.createdAt).format('MMM DD YYYY')%></td>
+                              <td class="actions" id="socail-iconw">
+                                <a href="/company/candidate/<%=candidate?._candidate._id%>"><i
+                                  class="fa-regular fa-user fa-lg"></i></a>
+                                 <a href="https://wa.me/91<%= candidate?._candidate?.whatsapp %>" target="_blank"> <img src="/public_assets/images/whatsappicon.png" width="18%" class="mx-1"></a> 
+                                 <a href="tel:<%= candidate?._candidate?.mobile %>"> <img src="/public_assets/images/telephone.png" width="18.5%"> </a>
+                              </td>
+                            </tr>
+                            <% }) } else {%>
+                              <tr><td class="text-center" colspan="6">No Record Found</td></tr>
+                              <%}%>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                </div>
+            </div>
+             
+            </section>
+            </div>
+
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+
+
+        <% include ./partials/footer%>
+
+        

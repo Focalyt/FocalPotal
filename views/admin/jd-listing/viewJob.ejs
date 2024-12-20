@@ -1,0 +1,853 @@
+<% include ../partials/header %>
+  <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+      <div class="row breadcrumbs-top">
+        <div class="col-12">
+          <h3 class="content-header-title float-left mb-0">Job Listings</h3>
+          <div class="breadcrumb-wrapper col-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+              <li class="breadcrumb-item active">Job Listings</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-body">
+    <% include ../partials/flash %>
+      <section id="Concerned-Person">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12">
+            <div class="card">
+              <div
+                class="card-header border border-top-0 border-left-0 border-right-0 pb-1 px-xl-0 px-lg-0 px-md-1 px-sm-1 px-1">
+                <div class="col-xl-6 lg-6 md-4 sm-4 col-4">
+                  <h4 class="card-title">JOB Brief</h4>
+                </div>
+                <div class="col-xl-6 lg-6 md-8 sm-8 col-8 text-right">
+                  <a href="/admin/joblisting" class="btn btn-primary">All JDs</a>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-2 mb-1">
+                      <label>Display Organization Name</label>
+                      <input class="form-control text-capitalize" value="<%=jd.displayCompanyName%>" readonly>
+                      </select>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Title</label>
+                      <input class="form-control text-capitalize" value="<%=jd.title%>" readonly>
+                      </select>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Industry</label>
+                      <input class="form-control text-capitalize" value="<%=jd._industry?.name%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>job Category</label>
+                      <input class="form-control text-capitalize" value="<%=jd._jobCategory?.name%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Experience (In Years)</label>
+                      <input class="form-control" value="<%= jd.experience == '0' ? 'Fresher' : jd.experience%>"
+                        readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Qualification</label>
+                      <input class="form-control text-capitalize" value="<%=jd._qualification?.name%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Sub Qualification</label>
+                      <input class="form-control text-capitalize"
+                        value="<%= jd._subQualification?.map((i) => i.name).join(', ') %>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>State (Job Location)</label>
+                      <input class="form-control text-capitalize" value="<%=jd.state?.name%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>City (Job Location)</label>
+                      <input class="form-control text-capitalize" value="<%=jd.city?.name%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Work Location</label>
+                      <input class="form-control text-capitalize" value="<%=jd.place%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Number of Vacancies</label>
+                      <input class="form-control" value="<%=jd.noOfPosition%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Gender Preferences</label>
+                      <input class="form-control text-capitalize"
+                        value="<%=jd.genderPreference ? jd.genderPreference : 'No Preference' %>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <div class="demo-inline-spacing">
+                        <label>Job Type</label>
+                        <input class="form-control text-capitalize" value="<%=jd.jobType%>" readonly>
+                      </div>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <div class="demo-inline-spacing">
+                        <label>Compensation</label>
+                        <input class="form-control text-capitalize" value="<%=jd.compensation%>" readonly>
+                      </div>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <div class="demo-inline-spacing">
+                        <label>Pay</label>
+                        <input class="form-control" value="<%=jd.pay%>" readonly>
+                      </div>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <div class="demo-inline-spacing">
+                        <label>Shift</label>
+                        <input class="form-control text-capitalize" value="<%=jd.shift%>" readonly>
+                      </div>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <div class="demo-inline-spacing">
+                        <label>Work Type</label>
+                        <input class="form-control text-capitalize" value="<%=jd.work%>" readonly>
+                      </div>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Additional Benefits</label>
+                      <input class="form-control text-capitalize" value="<%=jd.benifits%>" readonly>
+                    </div>
+                    <div class="col-xl-2">
+                      <Label>Remarks</Label>
+                      <input class="form-control" value="<%=jd.remarks%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Payout</label>
+                      <input class="form-control" value="<%=jd.payOut%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Tech Skills Required</label>
+                      <input class="form-control text-capitalize"
+                        value="<%= jd._techSkills?.map((i) => i.name).join(', ') %>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Non Tech Skills Required</label>
+                      <input class="form-control text-capitalize"
+                        value="<%= jd._nonTechSkills?.map((i) => i.name).join(', ') %>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Requirement (If any)</label>
+                      <input class="form-control text-capitalize" value="<%=jd.requirement%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Amount(Monthly in Rs.)</label>
+                      <input class="form-control" value="<%=jd.amount%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Min Salary(Monthly in Rs.)</label>
+                      <input class="form-control" value="<%=jd.min%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Max Salary(Monthly in Rs.)</label>
+                      <input class="form-control" value="<%=jd.max%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Job Description</label>
+                      <input class="form-control" value="<%=jd.jobDescription%>" readonly>
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Cut Price</label>
+                      <input class="form-control" value="<%=jd.cutprice%>" readonly>
+                    </div>  
+                    <div class="col-xl-2 mb-1">
+                      <label>Apply Coins Reduction</label>
+                      <input class="form-control" value="<%= coinsVal %>" maxlength="4" id="applycoinsField"
+                        onblur="changeApplyCoins('<%= jd._id %>')" onkeypress="return numberOnly(event)">
+                    </div>
+                    <div class="col-xl-2 mb-1">
+                      <label>Job Video</label>
+                      <% if (jd.jobVideo) { %>
+                        <div class="image-upload">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="inputGroupPrepend2"><a
+                                  href="<%= process.env.MIPIE_BUCKET_URL +'/' + jd.jobVideo %>" target="_blank">View
+                                  JD</a></span>
+                            </div>
+                          </div>
+                        </div>
+                        <%}else{%>
+                          <input class="form-control" value="No Video" readonly>
+                          <% } %>
+                    </div>
+
+                    <!-- <div class="col-xl-12 text-right">
+                      <a class="btn <%= jd.verified == true ? 'btn-danger' : 'btn-success' %> waves-effect waves-light text-white"
+                        id="save-button" onclick="updateVerification('<%= jd._id %>', '<%= jd.verified %>')">
+                        <%= jd.verified==true ? 'Not Verify' : 'Verify' %>
+                      </a>
+                    </div> -->
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <form id="courseForm">
+        <section id="Concerned-Person">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12">
+              <div class="card">
+                <div
+                  class="card-header border border-top-0 border-left-0 border-right-0 pb-1 px-xl-0 px-lg-0 px-md-1 px-sm-1 px-1">
+                  <div class="col-xl-6 lg-6 md-4 sm-4 col-4">
+                    <h4 class="card-title">Align Courses</h4>
+                  </div>
+                  <div class="col-xl-12 text-right mb-md-2">
+                    <button class="btn btn-success add-button" onclick="addSelect()">Add</button>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <div class="card-body courseRows">
+                    <div class="row">
+                      <% if (jd._courses && jd._courses.length > 0) { %>
+                        <% jd._courses.forEach(sectorObj=> { %>
+                          <div class="col-xl-4 mb-1">
+                            <label>Sector</label>
+                            <select class="form-control" name="SelectSector" id="addedSector">
+                              <option value="<%= sectorObj.sectors._id %>">
+                                <%= sectorObj?.sectors?.name %>
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-xl-4 mb-1">
+                            <label for="courseLevel">Course Level</label>
+                            <select class="form-control" name="SelectCourseLevel" id="addedcourseLevel">
+                              <option value="<%= sectorObj.courseLevel._id %>">
+                                <%= sectorObj?.courseLevel?.courseLevel %>
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-xl-4 mb-1">
+                            <label>Name</label>
+                            <select class="form-control" name="SelectName" id="addedCourseName">
+                              <option value="<%= sectorObj.name._id %>">
+                                <%= sectorObj?.name?.name %>
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-xl-12 text-right mb-md-2">
+                            <!-- Remove Button -->
+                            <button class="btn btn-danger remove-button"
+                              onclick="removeSelectCourseObj('<%= jd._id %>', '<%= sectorObj._id %>')">Remove</button>
+                            <!-- Not Verify Button -->
+                            <!-- <a class="btn <%= sectorObj.isVerifie == false ? 'btn-danger' : 'btn-success' %> waves-effect waves-light text-white"
+                              id="isVerifie_<%= sectorObj._id %>" value="<%= sectorObj.isVerifie %>"
+                              onclick="updateVerification('<%= jd._id %>', '<%= sectorObj.isVerifie %>', '<%= sectorObj._id %>')">
+                              <%= sectorObj.isVerifie==true ? 'Verify' : 'Not Verify' %>
+                            </a> -->
+                            <!-- current changes -->
+                          <!--   <a class="btn <%= sectorObj.verified == false ? 'btn-danger' : 'btn-success' %> waves-effect waves-light text-white"
+                              id="verified<%= sectorObj._id %>" value="<%= sectorObj.verified %>"
+                              onclick="updateVerifications('<%= jd._id %>', '<%= sectorObj.verified %>', '<%= sectorObj._id %>')">
+                              <%= sectorObj.verified==true ? 'Verify' : 'Not Verify' %>
+                            </a> -->
+                            <!-- Recommended Button -->
+                            <a class="btn <%= sectorObj.isRecommended == false ? 'btn-danger' : 'btn-success' %> waves-effect waves-light text-white"
+                              id="isRecommended_<%= sectorObj._id %>" value="<%= sectorObj.isRecommended %>"
+                              onclick="updateRecommendation('<%= jd._id %>', '<%= sectorObj.isRecommended %>', '<%= sectorObj._id %>')">
+                              <%= sectorObj.isRecommended==true ? 'Recommended' : 'Not Recommended' %>
+                            </a>
+                          </div>
+                          <% }); %>
+                            <%}else{%>
+                              <div class="col-xl-4 mb-1">
+                                <label>Sector</label>
+                                <select class="form-control" name="SelectSector" id="sector" onchange="fetchCourses()">
+                                  <option value="">Select Sector</option>
+                                  <% sector.forEach(sectorObj=> { %>
+                                    <option value="<%= sectorObj._id %>">
+                                      <%= sectorObj.name %>
+                                    </option>
+                                    <% }); %>
+                                </select>
+                              </div>
+                              <div class="col-xl-4 mb-1">
+                                <label for="courseLevel">Course Level</label>
+                                <select class="form-control" name="SelectCourseLevel" id="courseLevel"
+                                  onchange="fetchCourseNames()">
+                                  <option>Select Course Level</option>
+                                  <% courses.forEach(option=> { %>
+                                    <option value="<%= option._id %>">
+                                      <%= option.courseLevel %>
+                                    </option>
+                                    <% }); %>
+                                </select>
+                              </div>
+                              <div class="col-xl-4 mb-1">
+                                <label>Name</label>
+                                <select class="form-control" name="SelectName" id="courseName"><strong>Select Course Name</strong>
+                                </select>
+                              </div>
+                           
+                              <div class="col-xl-12 text-right mb-md-2">
+                                <a class="btn <%= jd.isRecommended == true ? 'btn-danger' : 'btn-success' %> waves-effect waves-light text-white"
+                                  id="save-button"
+                                  onclick="updateRecommendation('<%= jd._id %>', '<%= jd.isRecommended %>')">
+                                  <%= jd.isRecommended==true ? 'Not Recommended' : 'Recommended' %>
+                                </a>
+                              </div>
+                              <% } %>
+                              <div class="col-xl-12 text-right mb-md-2">
+                                <a class="btn <%= jd.verified == true ? 'btn-danger' : 'btn-success' %> waves-effect waves-light text-white"
+                                  id="save-button" onclick="updateVerification('<%= jd._id %>', '<%= jd.verified %>')">
+                                  <%= jd.verified==true ? 'Not Verify' : 'Verify' %>
+                                </a>
+                              </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                      <div class="card">
+                        <div class="card-content">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-xl-12 text-right">
+                                <button class="btn btn-success" onclick="saveCourseDetails('<%= jd._id %>')">
+                                  Save
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </form>
+      <div class="text-right reset">
+        <button onclick="reset()" class="btn btn-danger">Reset</button>
+      </div>
+
+      <section id="Job-Description">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+              <div
+                class="card-header border border-top-0 border-left-0 border-right-0 pb-1 px-xl-0 px-lg-0 px-md-1 px-sm-1 px-1">
+                <div class="col-xl-6 lg-6 md-4 sm-4 col-4 px-xl-1 px-lg-1 px-md-1 px-sm-0 px-0">
+                  <h4 class="card-title">
+                    Description
+                  </h4>
+                </div>
+                <div class="col-xl-6 lg-6 md-8 sm-8 col-8 text-right px-xl-1 px-lg-1 px-md-1 px-sm-0 px-0">
+                  <div class="speak-btn">
+                    <button type="button" onclick="speakEnglish()" class="btn btn-eng btn-sm"><img
+                        src="/images/icons/icons8-speak-21.png" alt="" class="img-fluid">
+                      English</button>
+                    <button type="button" onclick="speakHindi()" class="btn btn-hindi btn-sm"><img
+                        src="/images/icons/icons8-speak-21.png" alt="" class="img-fluid">
+                      Hindi</button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <p id="jobdescription">
+                        <%=jd.displayCompanyName%> is looking for <%=jd.title%> in <%=jd._industry.name%> sector. The
+                              minimum Qualification required is <%=jd._qualification?.name%>. Job is available in
+                                <%=jd.city?.name%> , <%=jd.state?.name%>. It's a <%=jd.jobType %> Job.
+                                      <% if(jd?.genderPreference !='no preference' ){ %>
+                                        <%= jd.genderPreference ? `Only ` + jd.genderPreference + ` candidates are
+                                          eligible for this job.` : '' %>
+                                          <% } %>
+                                            <%= jd.benifits
+                                              ? 'We will also offer incentives along with the fixed salary.' : '' %>
+                                              <% if(jd.shift && jd.shift !='NA' ) {%>
+                                                Please note that this job position is for <%= jd.shift %>
+                                                  <%} %>
+                                                    <% if(jd.experience=='0' ){%>
+                                                      Freshers can also apply to this job.
+                                                      <%} else{%>
+                                                        The candidate should have minimum experience of <%=jd.experience
+                                                          %> years.
+                                                          <%}%>
+
+                                                            Minimum Salary Offered is ₹ <%= jd.isFixed ? jd.amount :
+                                                              jd.min %> per month.
+
+                                                              <% if(jd.remarks && jd.remarks.trim() !=='' ) {%>
+                                                                Additional Comments from <%=jd.displayCompanyName%> :
+                                                                  <%= jd.remarks %>
+                                                                    <%}%>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="list-view">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12">
+            <div class="card">
+              <div
+                class="card-header border border-top-0 border-left-0 border-right-0 pb-1 px-xl-0 px-lg-0 px-md-1 px-sm-1 px-1">
+                <div class="col-xl-6">
+                  <h4 class="card-title">Reviews</h4>
+                </div>
+                <div class="col-xl-6 text-right">
+                  <h4 class="card-title">Average Rating: <%= averageRating %>
+                  </h4>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="table-responsive ">
+                  <table class="table table-hover-animation mb-0 table-hover">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Candidate</th>
+                        <th>Rating</th>
+                        <th>Comment</th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-body" class="text-capitalize">
+                      <% if(reviews?.length> 0){ %>
+                        <% reviews.forEach((review)=> { %>
+                          <tr>
+                            <td>
+                              <%= moment(review.createdAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A') %>
+                            </td>
+                            <td>
+                              <%= review.candidate?.name %>
+                            </td>
+                            <td>
+                              <%= review?.rating %>
+                            </td>
+                            <td>
+                              <%= review?.comment %>
+                            </td>
+                          </tr>
+                          <% }) } else {%>
+                            <tr>
+                              <td class="text-center" colspan="6">No Record Found</td>
+                            </tr>
+                            <%}%>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+      <section class="list-view">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12">
+            <div class="card">
+              <div
+                class="card-header border border-top-0 border-left-0 border-right-0 pb-1 px-xl-0 px-lg-0 px-md-1 px-sm-1 px-1">
+                <div class="col-xl-6">
+                  <h4 class="card-title">Applied Candidates</h4>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="table-responsive ">
+                  <table class="table table-hover-animation mb-0 table-hover">
+                    <thead>
+                      <tr>
+                        <th>Candidates</th>
+                        <th>Gender</th>
+                        <th>Qualification</th>
+                        <th>Branch</th>
+                        <th>Experience</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-body" class="text-capitalize">
+                      <% if(appliedCandidates?.length> 0){ %>
+                        <% appliedCandidates.forEach((candidate)=> { %>
+                          <tr>
+                            <td>
+                              <%= candidate?.name %>
+                            </td>
+                            <td>
+                              <%= candidate?.sex %>
+                            </td>
+                            <td>
+                              <%= (qualifications?.find(q=> candidate?.highestQualification == q._id ))?.name %>
+                            </td>
+                            <td>
+                              <%= candidate?.qualifications[0]?.Qualification?.name ?
+                                candidate?.qualifications[0]?.Qualification?.name : "NA" %>
+                            </td>
+                            <td>
+                              <%= !candidate?.isExperienced ? 'Fresher' : candidate?.totalExperience ?
+                                candidate.totalExperience + ' Years' : 'NA' %>
+                            </td>
+                            <td class="actions">
+                              <a href="/admin/candidate/details/<%=candidate._id%>"><i
+                                  class="fa-regular fa-user"></i></a>
+                            </td>
+                          </tr>
+                          <% }) } else {%>
+                            <tr>
+                              <td class="text-center" colspan="6">No Record Found</td>
+                            </tr>
+                            <%}%>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+  </div>
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+  <% include ../partials/footer %>
+    <script>
+      var voices
+      $(function () {
+        window.speechSynthesis.cancel()
+        if ('speechSynthesis' in window) {
+          const speechSynthesis = window.speechSynthesis;
+          const utterance = new SpeechSynthesisUtterance();
+          let voiceOptions = ''
+          speechSynthesis.addEventListener("voiceschanged", () => {
+            voices = speechSynthesis.getVoices()
+          })
+
+        }
+
+      })
+
+
+      function speakHindi() {
+        let message = $.trim($('#jobdescription').text().replace(/[\s\n\r]+/g, ' '))
+        body = { message }
+        header = { headers: { 'x-auth': localStorage.getItem('token') } }
+
+        axios.post(`/admin/vacancy/translate`, body, header)
+          .then(res => {
+            console.log(res)
+            speak(res.data.message, 'hi')
+          }).catch((err) => {
+            console.log(err.message)
+          })
+      }
+      changeApplyCoins = (_id) => {
+        let applyReduction = parseFloat($('#applycoinsField').val());
+        if (applyReduction && applyReduction > 0) {
+          axios.put(`/admin/joblisting/${_id}`, { applyReduction }).then((res) => {
+            if (res.status) {
+              console.log("Coins status updated!");
+            }
+          })
+        }
+      }
+      function speakEnglish() {
+        let content = $.trim($('#jobdescription').text().replace(/[\s\n\r]+/g, ' '))
+        speak(content)
+      }
+
+      function speak(text, lang = 'en') {
+        if (!text) {
+          return false
+        }
+
+        let utt = []
+
+        if (lang === 'hi') {
+          utt = text.split('।')
+        } else {
+          utt = text.split('.')
+        }
+
+        if ('speechSynthesis' in window) {
+          const speechSynthesis = window.speechSynthesis;
+          speechSynthesis.cancel()
+          utt.forEach(element => {
+            const utterance = new SpeechSynthesisUtterance();
+            utterance.text = element;
+            utterance.lang = lang
+            let voice = 'Microsoft Swara Online (Natural) - Hindi (India)'
+            let selectedVoice = voices.find(vo => vo.name === voice);
+            if (selectedVoice) {
+              utterance.voice = selectedVoice;
+            } else {
+              selectedVoice = voices.find(vo => vo.name === 'hi-IN');
+              console.warn('Selected voice not found. Using default voice.');
+            }
+            utterance.volume = 1;
+            utterance.rate = 1;
+            utterance.pitch = 1;
+            // Speak the text
+            speechSynthesis.speak(utterance);
+          });
+        }
+      }
+
+      function numberOnly(event) {
+        const charCode = (event.which) ? event.which : event.keyCode;
+        if (charCode == 46 && event.target.value.indexOf('.') !== -1) {
+          return false;
+        }
+        if (charCode > 31 && (charCode != 46 && charCode < 48 || charCode > 57)) {
+          return false;
+        }
+        return true;
+      }
+      
+      // function updateVerification(_id, isVerifie, courseId) {
+      //   isVerifie = isVerifie == 'true' ? false : true;
+      //   let applyReduction = parseFloat($('#applycoinsField').val());
+      //   axios.put(`/admin/joblisting/${_id}`, { isVerifie, applyReduction, courseId }).then((res) => {
+      //     window.location.reload()
+      //   })
+      // }
+      function updateVerification(_id, verified) {
+        verified = verified == 'true' ? false : true;
+        let applyReduction = parseFloat($('#applycoinsField').val());
+        axios.put(`/admin/joblisting/${_id}`, { verified, applyReduction }).then((res) => {
+          window.location.reload()
+        })
+      }
+
+      function updateRecommendation(_id, isRecommended, courseId) {
+        isRecommended = isRecommended == 'true' ? false : true;
+        axios.put(`/admin/joblisting/${_id}`, { isRecommended, courseId }).then((res) => {
+          window.location.reload()
+        })
+      }
+      function getCourseViaSector(selectElement) {
+        // Log the selected element for debugging
+        console.log('selectElement: ', selectElement);
+
+        // Retrieve the selected sector ID from the <select> element
+        const selectedSectorId = selectElement.value;
+
+        // Construct the URL with the query parameter
+        // Replace `_id` with the actual job listing ID
+        const url = `/admin/joblisting/${_id}?sectorId=${selectedSectorId}`;
+
+        // Redirect the user to the new URL
+        window.location.href = url;
+      }
+
+      function fetchCourses() {
+        // Get the selected sector ID
+        const selectedSectorId = document.getElementById('sector').value;
+
+        // Make a request to fetch courses based on the selected sector ID
+        fetch(`/admin/courses/getCourseViaSector?sectorId=${selectedSectorId}`)
+          .then(response => response.json())
+          .then(data => {
+            // Update the courses dropdown with the fetched courses
+            const coursesDropdown = document.getElementById('courseLevel');
+            // Clear previous options
+            coursesDropdown.innerHTML = '';
+            // Add new options
+            data.data.forEach(course => {
+              const option = document.createElement('option');
+              option.value = course._id;
+              option.text = course.courseLevel;
+              coursesDropdown.appendChild(option);
+            });
+            fetchCourseNames();
+          })
+          .catch(error => {
+            console.error('Error fetching courses:', error);
+          });
+      }
+
+      function fetchCourseNames() {
+        // Get the selected course level
+        const selectedCourseLevel = document.getElementById('courseLevel').value;
+        console.log('selectedCourseLevel:dd ', selectedCourseLevel);
+
+        // Make a request to fetch course names based on the selected course level
+        fetch(`/admin/courses/getCourseDetailById?courseId=${selectedCourseLevel}`)
+          .then(response => response.json())
+          .then(data => {
+            // Update the Name dropdown with the fetched course names
+            const courseNameDropdown = document.getElementById('courseName');
+            courseNameDropdown.innerHTML = ''; // Clear previous options
+            data.data.forEach(courseName => {
+              const option = document.createElement('option');
+              option.value = courseName._id;
+              option.text = courseName.name;
+              courseNameDropdown.appendChild(option);
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching course names:', error);
+          });
+      }
+      let counter = 1;
+      // Function to add a new row of select elements
+      function addSelect() {
+        counter++;
+        event.preventDefault();
+        // Create a new row with select elements
+        const newRow = `
+      <div class="row" id="row-${counter}">
+        <!-- Sector Select -->
+        <div class="col-xl-4 mb-1">
+                        <label>Sector</label>
+                        <select class="form-control" name="SelectSector" id="sector" onchange="fetchCourses()">
+                          <option value="">Select Sector</option>
+                          <% sector.forEach(sectorObj=> { %>
+                            <option value="<%= sectorObj._id %>">
+                              <%= sectorObj.name %>
+                            </option>
+                            <% }); %>
+                        </select>
+
+                      </div>
+        <!-- Course Level Select -->
+        <div class="col-xl-4 mb-1">
+                        <label for="courseLevel">Course Level</label>
+                        <select class="form-control" name="SelectCourseLevel" id="courseLevel"
+                          onchange="fetchCourseNames()">
+                          <% courses.forEach(option=> { %>
+                            <option value="<%= option._id %>">
+                              <%= option.courseLevel %>
+                            </option>
+                            <% }); %>
+                        </select>
+                      </div>
+        <!-- Name Select -->
+        <div class="col-xl-4 mb-1">
+                        <label>Name</label>
+                        <select class="form-control" name="SelectName" id="courseName">
+                        </select>
+                      </div>
+        
+        <!-- Remove Button -->
+        <div class="col-xl-12 text-right mb-md-2">
+          <button class="btn btn-danger remove-button" onclick="removeSelect(${counter})">Remove</button>
+        </div>
+      </div>
+    `;
+
+        // Append the new row to the container
+        document.querySelector('.courseRows').insertAdjacentHTML('beforeend', newRow);
+      }
+
+      // Function to remove a row of select elements
+      function removeSelect(rowNumber) {
+        const rowToRemove = document.getElementById(`row-${rowNumber}`);
+        rowToRemove.remove();
+      }
+      function removeSelectCourseObj(_id, courseId,) {
+        axios.put(`/admin/joblisting/removeCourse/${_id}`, { courseId }).then((res) => {
+          window.location.reload()
+        })
+      }
+      function removeRow(button) {
+        event.preventDefault();
+        // Find the parent row element
+        const row = button.closest('.row');
+        if (!row) return; // Exit if row not found
+
+        // Get the index of the row
+        const rowIndex = Array.from(row.parentNode.children).indexOf(row);
+        console.log('rowIndex: ', rowIndex);
+        // Remove the row from the DOM
+        row.remove();
+      }
+
+
+
+      //for Reset Button
+      function reset() {
+        window.location.reload();
+      }
+
+      function saveCourseDetails(id) {
+        event.preventDefault()
+        // const addedCourseVerifie = [];
+        const addedCourseReco = []
+        // const isVerifieAnchors = document.querySelectorAll('[id^="isVerifie_"]'); // Select all elements with IDs starting with "isVerifie_"
+        // isVerifieAnchors.forEach(anchor => {
+        //   const value = anchor.getAttribute('value');
+        //   console.log('value: ', value);
+        //   addedCourseVerifie.push(value);
+        // });
+        const isRecommendedAnchors = document.querySelectorAll('[id^="isRecommended_"]');
+        isRecommendedAnchors.forEach(anchor => {
+          const value = anchor.getAttribute('value');
+          console.log('value: ', value);
+          addedCourseReco.push(value);
+        });
+        // console.log('addedCourseVerifie: ', addedCourseVerifie);
+        console.log('addedCourseReco: ', addedCourseReco);
+
+
+        const addedSelectedSectors = Array.from(document.querySelectorAll('#addedSector option:checked'))
+          .map(option => option.value);
+        const addedSelectedCourseLevels = Array.from(document.querySelectorAll('#addedcourseLevel option:checked'))
+          .map(option => option.value);
+        const addedSelectedCourseNames = Array.from(document.querySelectorAll('#addedCourseName option:checked'))
+          .map(option => option.value);
+        const selectedSectors = Array.from(document.querySelectorAll('#sector option:checked'))
+          .map(option => option.value);
+        const selectedCourseLevels = Array.from(document.querySelectorAll('#courseLevel option:checked'))
+          .map(option => option.value);
+        const selectedCourseNames = Array.from(document.querySelectorAll('#courseName option:checked'))
+          .map(option => option.value);
+
+        const coursesData = [];
+
+        // Combine the added and selected sectors, course levels, and names
+        const allSectors = [...addedSelectedSectors, ...selectedSectors];
+        const allCourseLevels = [...addedSelectedCourseLevels, ...selectedCourseLevels];
+        const allCourseNames = [...addedSelectedCourseNames, ...selectedCourseNames];
+
+        // Loop through each selected sector and push the corresponding course data
+        allSectors.forEach((sector, index) => {
+          coursesData.push({
+            sectors: sector,
+            courseLevel: allCourseLevels[index],
+            name: allCourseNames[index],
+            // isVerifie: addedCourseVerifie[index] || false,
+            isRecommended: addedCourseReco[index] || false
+          });
+        });
+
+        // Create data object with the selected sector, course level, and name
+        const data = {
+          _courses: coursesData
+        };
+
+        // Perform the PUT request with the updated data
+        axios.put(`/admin/joblisting/${id}`, data)
+          .then((res) => {
+            // Handle success if needed
+            window.location.href= "/admin/joblisting" /*  window.location.reload() */
+          })
+          .catch(error => {
+            console.error('Error saving data', error);
+          });
+      }
+
+
+    </script>

@@ -1,0 +1,749 @@
+<% include ../../partials/header %>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/public_assets/css/icons.css">
+  <link rel="stylesheet" href="/public_assets/css/slider-responsive.css">
+  <link rel="stylesheet" href="/public_assets/css/animate.min.css">
+
+  <body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static  pose-lead"
+    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+
+      <% include ../../partials/flash %>
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12 my-auto">
+                    <h3 class="content-header-title float-left mb-0">Search Job</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                          <a href="/candidate/dashboard">Home</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#">Search Job</a></li>
+                      </ol>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <section id="personal-info">
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12">
+                    <div id="accordion">
+                      <div class="card mt-xl-0 mt-lg-0 mt-md-0 mt-sm-2 mt-2 mb-0">
+                        <div class="card-header fliter-block py-1" id="headingOne">
+                          <div class="row">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-7 col-6 my-auto ">
+                              <h5 class="mt-1">Search Job / नौकरी खोजें</h5>
+                            </div>
+                            
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-5 col-6 text-right my-auto">
+                              <div class="d-flex flex-wrap align-items-center justify-content-end">
+                                <img src="/images/icons/listing.png" onclick="viewMap()" class="btn btn-link collapsed py-0 mx-0 px-1 list"
+                                  id="view">
+                                <img src="/images/filtern.png" class="btn btn-link collapsed py-0 mx-0" data-toggle="collapse"
+                                  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="filter-img">
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                        <form>
+                          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body px-1 py-0">
+                              <div class="card border border-top-1">
+                                <div id="filter">
+                                  <div class="card-content">
+                                    <div class="card-body">
+                                      <div class="row my-0 mx-0" id="allFields">
+                                        <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                          <label>Company Name</label>
+                                          <input type="text" name="name" class="form-control" id="username"
+                                            value="<%= data?.name %>" maxlength="25">
+                                        </div>
+                                        <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                          <label>Minimum Qualification</label>
+                                          <select class="form-control" id="qualification" name="qualification">
+                                            <option value="">Select Option</option>
+                                            <% allQualification.forEach((i)=> { %> <% if(i._id==data.qualification){ %>
+                                                <option selected value="<%= i._id %>" class="text-capitalize">
+                                                  <%= i.name %>
+                                                </option>
+                                                <% } else { %>
+                                                  <option value="<%= i._id %>" class="text-capitalize">
+                                                    <%= i.name %>
+                                                  </option>
+                                                  <% } %>
+                                                    <% }); %>
+                                          </select>
+                                        </div>
+                                        <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                          <label>Experience(Yrs)</label>
+                                          <select class="form-control" name="experience" id="exp-field">
+                                            <option value="">Select</option>
+                                            <option value="0" <% if (data.experience=='0' ) { %> selected <% }%>>0
+                                            </option>
+                                            <% for(let i=1; i<16; i++) {%>
+                                              <option value="<%= i %>" <% if (data.experience==i ) { %> selected <% }%>
+                                                  >
+                                                  <%= i %>
+                                              </option>
+                                              <% } %>
+                                          </select>
+                                        </div>
+                                        <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                          <label>Industry </label>
+                                          <select class="form-control" id="industry" name="industry">
+                                            <option value="">Select Option</option>
+                                            <% allIndustry.forEach((i)=> { %> <% if(i._id==data.industry){ %>
+                                                <option selected value="<%= i._id %>" class="text-capitalize">
+                                                  <%= i.name %>
+                                                </option>
+                                                <% } else { %>
+                                                  <option value="<%= i._id %>" class="text-capitalize">
+                                                    <%= i.name %>
+                                                  </option>
+                                                  <% } %>
+                                                    <% }); %>
+                                          </select>
+                                        </div>
+                                        <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                          <label>Job Type</label>
+                                          <select class="form-control" id="jobType" name="jobType">
+                                            <option value="">Select Option</option>
+                                            <option value="Part Time" <% if(data.jobType=="Part Time" ) {%> selected <%
+                                                } %>>Part
+                                                Time</option>
+                                            <option value="Full Time" <% if(data.jobType=="Full Time" ) {%> selected <%
+                                                } %>>Full
+                                                Time</option>
+                                          </select>
+                                        </div>
+                                        <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                          <label>Minimum Offered Salary</label>
+                                          <select class="form-control" id="minSalary" name="minSalary">
+                                            <option value="">Select Option</option>
+                                            <option value="5000" <% if(data.minSalary=="5000" ) {%> selected <% } %>
+                                                >5000
+                                            </option>
+                                            <option value="10000" <% if(data.minSalary=="10000" ) {%> selected <% } %>
+                                                >10000
+                                            </option>
+                                            <option value="15000" <% if(data.minSalary=="15000" ) {%> selected <% } %>
+                                                >15000
+                                            </option>
+                                            <option value="20000" <% if(data.minSalary=="20000" ) {%> selected <% } %>
+                                                >20000
+                                            </option>
+                                            <option value="30000" <% if(data.minSalary=="30000" ) {%> selected <% } %>
+                                                >30000
+                                            </option>
+                                            <option value="40000" <% if(data.minSalary=="40000" ) {%> selected <% } %>
+                                                >40000
+                                            </option>
+                                            <option value="50000" <% if(data.minSalary=="50000" ) {%> selected <% } %>
+                                                >50000
+                                            </option>
+                                            <option value="70000" <% if(data.minSalary=="70000" ) {%> selected <% } %>
+                                                >70000
+                                            </option>
+                                            <option value="80000" <% if(data.minSalary=="80000" ) {%> selected <% } %>
+                                                >80000+
+                                            </option>
+                                          </select>
+                                        </div>
+                                        <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                          <label>Technical Skills</label>
+                                          <select class="form-control text-capitalize" name="techSkills"
+                                            id="techSkills">
+                                            <option value="">Select</option>
+                                            <% skills.forEach((skills)=> { %>
+                                              <% if (skills.type=='technical' ) { %>
+                                                <option class="text-capitalize" value="<%= skills._id %>" <% if
+                                                  (data.techSkills==skills._id ) { %> selected <% }%> ><%= skills.name
+                                                      %>
+                                                </option>
+                                                <% } %>
+                                                  <% }); %>
+                                          </select>
+                                        </div>
+                                        <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                                          <label>State</label>
+                                          <select class="form-control" id="state" name="state">
+                                            <option value="">Select Option</option>
+                                            <% allStates.forEach((i)=> { %> <% if(i._id==data.state){ %>
+                                                <option selected value="<%= i._id %>" class="text-capitalize">
+                                                  <%= i.name %>
+                                                </option>
+                                                <% } else { %>
+                                                  <option value="<%= i._id %>" class="text-capitalize">
+                                                    <%= i.name %>
+                                                  </option>
+                                                  <% } %>
+                                                    <% }); %>
+                                          </select>
+                                        </div>
+                                   
+                                     <div class="col-xl-6 col-lg-6 col-md-8 col-sm-12 col-12 my-xl-2 my-lg-2 my-md-2 my-sm-2 my-1 px-xl-1 px-lg-1 px-md-1 px-sm-0 px-0">
+                                      <div id="form-wrapper ">
+                                        <label class="px-1">Jobs Near Me (KMs)</label>                                   
+                                          <div id="debt-amount-slider">
+                                            <input type="radio" name="distance" id="1" value="50" <% if(data.distance=='50' ) { %> checked <%}%> >
+                                            <label for="1" data-debt-amount="50 km"></label>
+                                            <input type="radio" name="distance" id="2" value="100" <% if(data.distance=='100' ) { %> checked <%}%> >
+                                            <label for="2" data-debt-amount="100 km"></label>
+                                            <input type="radio" name="distance" id="3" value="250" <% if(data.distance=='250' ) { %> checked <%}%> >
+                                            <label for="3" data-debt-amount="250 km"></label>
+                                            <input type="radio" name="distance" id="4" value="500" <% if(data.distance=='500' ) { %> checked <%}%> >
+                                            <label for="4" data-debt-amount="500 km"></label>
+                                            <input type="radio" name="distance" id="5" value="all" <% if(!data.distance || data.distance=='all' ) { %> checked <%}%> >
+                                            <label for="5" data-debt-amount="500+ km"></label>
+                                            <div id="debt-amount-pos"></div>
+                                          </div>                                        
+                                      </div>
+                                     </div>
+
+                                      <div class="col-xl-6 col-lg-6 col-md-4 col-sm-12 col-12 mt-3 text-right">
+                                        <input type="hidden" id="jobView" name="jobView" value="<%= data.jobView %>">
+                                        <button class="btn btn-success  waves-effect waves-light  text-white d-inline px-xl-2 px-lg-2 px-md-2 px-sm-2 px-1 py-1 mx-2"
+                                          id="search-button" type="submit">
+                                          Go
+                                        </button>
+                                        <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-md-0 mx-0 px-xl-2 px-lg-2 px-md-2 px-sm-2 px-1"
+                                          href="/candidate/searchjob">RESET</a>
+                                      </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+
+
+
+
+              <section class="searchjobspage">
+                
+
+                <div class="forlrgscreen">
+                  <div class="pt-xl-2 pt-lg-0 pt-md-0 pt-sm-5 pt-0">
+                   
+
+                        <div class="course_nw mb-3">
+                          <div class="row justify-content-sm-center justify-content-md-start">
+                            <% if (jobs && jobs.length> 0) { %>
+                              <% jobs.forEach((recentJob)=> { %>
+                             <div class="col-lg-6 col-md-6 col-sm-9">
+                              <div class="cr_nw_in">
+                                <a href="/candidate/job/<%= recentJob._id%>" class="video-bttn position-relative d-block">
+                                <img src="/images/pages/video_thum1.png" class="video_thum img-fluid" alt="">
+                                </a>
+                                <div class="course_inf">
+                                  <a href="/candidate/job/<%= recentJob._id%>">
+                                  <h5><%= recentJob.displayCompanyName?recentJob.displayCompanyName :
+                                    recentJob._company[0]?.name%></h5>
+                                  <span class="job_cate"><%=recentJob.title ? recentJob.title : 'NA' %></span>  
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                    <div class="course_spec">
+                                      <div class="spe_icon">
+                                        <i class="la la-money"></i>
+                                      </div>
+                                      <div class="spe_detail">
+                                        <h3 class="jobDetails-wrap">₹ <%=recentJob.isFixed? recentJob.amount || 'NA' :
+                                          (recentJob.min || 'NA' ) + ' - ' + (recentJob.max || 'NA' ) %>
+                                      </h3>
+                                      <span class="text-capitalize jobDetails-wrap">
+                                        Minimum Salary / न्यूनतम वेतन
+                                      </span>
+                                      </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                      <div class="course_spec">
+                                        <div class="spe_icon">
+                                          <i class="la la-shield"></i>
+                                        </div>
+                                        <div class="spe_detail">
+                                          <h3 class="jobDetails-wrap">
+                                            <% if(recentJob.experience==0) { %>
+                                              Fresher
+                                              <% } else { %>
+                                                <%=recentJob.experience%> Years
+                                                  <% } %>
+                                          </h3><span class="jobDetails-wrap">
+                                            Experience / अनुभव
+                                          </span>
+                                        </div>
+                                      </div>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                        <div class="course_spec">
+                                          <div class="spe_icon">
+                                            <i class="la la-shield"></i>
+                                          </div>
+                                          <div class="spe_detail">
+                                            <h3 class="jobDetails-wrap">
+                                              <%=recentJob.qualifications[0]?.name%>
+                                            </h3><span class="text-capitalize jobDetails-wrap">
+                                              Qualification / योग्यता
+                                            </span>
+                                          </div>
+                                        </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                          <div class="course_spec">
+                                            <div class="spe_icon">
+                                              <i class="la la-map"></i>
+                                            </div>
+                                            <div class="spe_detail">
+                                              <h3 class="jobDetails-wrap">Location</h3><span class="text-capitalize jobDetails-wrap">
+                                                <%=Math.round(recentJob.distance)%> Kms ,<%=recentJob.city[0]?.name%>,
+                                        <%=recentJob.state[0]?.name%>
+                                              </span>
+                                            </div>
+                                          </div>
+                                          </div>
+                                  </div>
+                                </a>
+
+                                  <div class="act_btn mt-2 row">
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-0 mb-sm-2 mb-2">
+                                      <a class="apply-thisjob text-left apply-padding same-plane call-btn px-1" title="" href="/candidate/login?returnUrl=/candidate/job/6450f0c73bc5622248ee9177">
+                                        <i class="la la-phone plane-font"></i>
+                                        Call Now
+                                      </a>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                      <a class="apply-thisjob text-left px-1 apply-padding mb-0 mt-0"
+                                      href="/candidate/job/<%= recentJob._id%>" title=""><i class="la la-paper-plane"></i>
+                                      Apply
+                                      for Job / नौकरी के लिए आवेदन</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                             </div>
+
+                             <% }); %>
+                             <% } else{%>
+                               <h4 class="text-center"> No Jobs found</h4>
+                               <%} %>
+                          </div>
+                          </div>
+                        <!-- <hr> -->
+
+                  </div>
+                </div>
+                <div class="forsmallscrn d-none">
+                  <div class="container search-page pt-xl-5 pt-lg-0 pt-md-0 pt-sm-0 pt-0">
+                    <% if (jobs && jobs.length> 0) { %>
+                      <% jobs.forEach((recentJob)=> { %>
+                        
+                            <div class="row pointer">
+                              <div class="card-body px-0"> 
+                              <div class="col-lg-8 col-md-7 column">
+                                <div class="job-single-sec">
+                                  <div class="job-single-head border-0 pb-0">
+                                    <!-- <div class="job-thumb my-auto"> <img
+                                        src="<%=recentJob._company?.logo ? process.env.MIPIE_BUCKET_URL +'/' +recentJob._company?.logo : '/images/logo90.png'%>"
+                                        class="p-1"> </div> -->
+                                    <div class="job-head-info">
+                                      <h6 class="text-capitalize font-weight-bolder">
+                                        <%=recentJob.title ? recentJob.title : 'NA' %>
+                                      </h6>
+                                      <span class="text-capitalize set-lineh ">
+                                        <%= recentJob.displayCompanyName?recentJob.displayCompanyName :
+                                          recentJob._company?.name%>
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <a href="/candidate/job/<%= recentJob._id%>">
+                                  <div class="job-overview mt-1">
+                                    <ul class="mb-xl-2 mb-lg-2 mb-md-2 mb-sm-0 mb-0 list-unstyled">
+                                      <!-- <li class=""><i class="la la-thumb-tack"></i>
+                                        <h3 class="text-capitalize jobDetails-wrap">
+                                          <%=recentJob.title ? recentJob.title : 'NA' %>
+                                        </h3><span class="text-capitalize jobDetails-wrap ">
+                                          Career Level / करियर स्तर
+                                        </span>
+                                      </li> -->
+                                      <!-- <li><i class="la la-puzzle-piece"></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <%=recentJob?.industry[0]?.name ? recentJob?.industry[0]?.name : 'NA' %>
+                                        </h3><span class="text-capitalize jobDetails-wrap">
+                                          Industry / उद्योग
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-puzzle-piece"></i>
+                                        <h3 class="text-capitalize jobDetails-wrap">
+                                          <%=recentJob?._jobCategory[0]?.name ? recentJob?._jobCategory[0]?.name : 'NA' %>
+                                        </h3><span class="text-capitalize jobDetails-wrap">
+                                          Job Type / नौकरी का प्रकार
+                                        </span>
+                                      </li> -->
+                                      <li><i class="la la-money"></i>
+                                        <h3 class="jobDetails-wrap">₹ <%=recentJob.isFixed? recentJob.amount || 'NA' :
+                                            (recentJob.min || 'NA' ) + ' - ' + (recentJob.max || 'NA' ) %>
+                                        </h3>
+                                        <span class="text-capitalize jobDetails-wrap">
+                                          Minimum Salary / न्यूनतम वेतन
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-shield"></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <% if(recentJob.experience==0) { %>
+                                            Fresher
+                                            <% } else { %>
+                                              <%=recentJob.experience%> Years
+                                                <% } %>
+                                        </h3><span class="jobDetails-wrap">
+                                          Experience / अनुभव
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-line-chart "></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <%=recentJob.qualifications[0]?.name%>
+                                        </h3><span class="text-capitalize jobDetails-wrap">
+                                          Qualification / योग्यता
+                                        </span>
+                                      </li>
+
+                                      <li><i class="la la-map"></i>
+                                        <h3 class="jobDetails-wrap">
+                                          Location
+                                        </h3><span class="text-capitalize jobDetails-wrap">
+                                          <%=Math.round(recentJob.distance)%> Kms, <%= recentJob.city[0].name %>
+                                              <%= recentJob.state[0].name %>
+                                        </span>
+                                      </li>
+
+                                      <!-- <div class="extra-job-infonew mt-1">
+                                            <span class="d-none" ><i class="la la-clock-o "></i><strong>Posted On</strong>
+                                              <%=moment(recentJob.updatedAt).utcOffset('+05:30').format('DD MMM YYYY') %>
+                                            </span>
+                                            <span class="my-1" ><i class="la la-map "></i><strong>Location</strong>
+                                              <%=recentJob.city?.name%>, <%=recentJob.state?.name%>
+                                            </span>
+                                          </div> -->
+                                    </ul>
+                                  </div>
+                                </a>
+                                </div>
+                              </div>
+                              <div class="col-lg-4 col-md-5 column mt-xl-4 mt-lg-5 mt-md-5 mt-sm-3 mt-2">
+                                <a class="apply-thisjob text-left px-0 d-xl-block d-lg-block d-md-block d-sm-none d-none apply-padding text-center"
+                                  href="/candidate/job/<%= recentJob._id%>" title=""><i class="la la-paper-plane  "></i>
+                                  Apply
+                                  for Job / नौकरी के लिए आवेदन</a>
+                                <!-- Job Overview -->
+                                <div class="row ">
+                                    <div class="col-6 same-plane mt-2">
+                                      <a class="apply-thisjob text-center py-1 px-0 d-xl-none d-lg-none d-md-none d-sm-block d-block w-100 same-plane" href="/candidate/job/<%= recentJob._id%>" title="">
+                                        <i class="la la-paper-plane ml-xl-3 mt-lg-3 mt-md-2 mt-sm-0 ml-xl-0 ml-lg-0 ml-md-1 ml-sm-2 ml-0 text-center-sm text-center-md text-center-lg text-center-xl plane-font"></i>Apply / आवेदन
+                                      </a>
+                                    </div>
+                                    <div class="col-6 same-plane mt-2">
+                                      <a class="apply-thisjob text-center py-1 px-0 d-xl-none d-lg-none d-md-none d-sm-block d-block w-100 same-plane call-btn" title="" href="/candidate/job/<%= recentJob._id%>" >
+                                        <i class="la la-phone ml-xl-3 mt-lg-3 mt-md-2 mt-sm-0 ml-xl-0 ml-lg-0 ml-md-1 ml-sm-2 ml-0 text-center-sm text-center-md text-center-lg text-center-xl plane-font"></i>Call / कॉल
+                                      </a>
+                                    </div>
+                                </div>
+                              </div>
+                             </div>
+                            </div>
+                           
+                        
+                        <% }); %>
+                          <% } %>
+                  </div>
+                </div>
+                <% if (totalPages> 1) { %>
+                  <ul class="pagination justify-content-end ml-2 mb-2 text-right">
+                    <% let first=1 %>
+                      <% let last=totalPages> 4 ? 4 :
+                        totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                          <% first=page - 1 %>
+                            <% last=page + 1 %>
+                              <% if (last> totalPages) last = totalPages
+                                %> <% } %>
+                                  <% if (first> 1) { %>
+                                    <li class="page-item">
+                                      <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                                    </li>
+                                    <% } %>
+                                      <% for (let i=first; i <=last; i +=1) { %>
+                                        <% if (i===page) { %>
+                                          <li class="active page-item">
+                                            <a href="javascript:void()" class="page-link pagi_custom">
+                                              <%= i %>
+                                            </a>
+                                          </li>
+                                          <% } else { %>
+                                            <li class="page-item">
+                                              <a class="page-link pageAnchor pagi_customtwo" href="<%= i %>">
+                                                <%= i %>
+                                              </a>
+                                            </li>
+                                            <% } %>
+                                              <% } %>
+                                                <% if (totalPages>
+                                                  last)
+                                                  { %>
+                                                  <li class="page-item">
+                                                    <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                                                  </li>
+                                                  <li class="page-item">
+                                                    <a class="pageAnchor page-link" href="<%= totalPages %>">Last</a>
+                                                  </li>
+                                                  <% } %>
+                  </ul>
+                  <% } %>
+              </section>
+
+
+
+
+
+              <section class="map" style="display: none;">
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12">
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                      <div class="card-body px-1 py-0">
+                        <div class="card border border-top-1">
+                          <div id="filter">
+                            <div class="card-content">
+                              <div class="card-body p-0">
+                                <div class="row my-0 mx-0" id="allFields">
+                                  <div class="cont" style="display:none">
+                                    <p id="companyNameMarker"></p>
+                                    <p id="stateCityMarker"></p>
+                                    <p id="industryMarker"></p>
+                                    <p id="qualificationMarker"></p>
+                                    <p id="salaryMarker"></p>
+                                    <p id="locationMarker"></p>
+                                    <a id="jobDetailsMarker"></a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          <div class="col-xl-12 col-lg-12">
+
+                <div id="error" style="color: red;"></div>
+                <div id="map" style="width: 100%; height: 400px" class="rounded"></div>
+                </div>
+            </div>
+          </div>
+          </div>
+          <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Complete Profile
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <ul class="list-unstyled">
+                    <li class="mb-1">
+                    </li>
+                  </ul>
+                  <h5 class="pb-1 mb-0">
+                    Please set your location before looking for jobs nearby<br>
+                    आस-पास की नौकरियों की तलाश करने से पहले कृपया मेरी प्रोफ़ाइल पर अपना स्थान निर्धारित करें।
+                  </h5>
+                </div>
+                <div class="modal-footer">
+                  <a href="/candidate/myProfile">
+                    <button type="submit" class="btn btn-primary">Complete Profile</button>
+                  </a>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal"><i
+                      class="feather icon-x d-block d-lg-none"></i>
+                    <span class="d-none d-lg-block">Cancel</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          </section>
+          </div>
+
+          </div>
+
+
+          <script
+            src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE %>&libraries=&v=weekly"
+            ></script>
+          <script>
+            function initMap() {
+              let filterData = {};
+              $("#filter")
+                .find(".form-control")
+                .each(function () {
+                  let type = $(this).prop("type");
+                  let name = $(this).prop("name");
+                  let val = $(this).val();
+                  if (
+                    type != "button" &&
+                    type != "submit" &&
+                    type != "file" &&
+                    name !== ""
+                  ) {
+                    filterData[name] = val;
+                    let $radio = $('input[name=distance]:checked');
+                    let dist = $radio.val();
+                    if(dist && dist != 'all'){
+                      filterData['distance'] = dist
+                    }
+                  }
+                });
+              axios
+                .get("/candidate/getNearbyJobsForMap", {
+                  headers: {
+                    "x-auth": localStorage.getItem("token"),
+                    "Content-Type": "multipart/form-data",
+                  },
+                  params: filterData,
+                })
+                .then((res) => {
+                  if (res.data.status == false) {
+                    $('#error').text('Add your Current Location')
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                      zoom: 9,
+                    });
+                  } else {
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                      zoom: 9,
+                      center: {
+                        lat: res.data.nearest?.location?.coordinates[1],
+                        lng: res.data.nearest?.location?.coordinates[0],
+                      },
+                    });
+
+                    for (let job of res.data.jobs) {
+                      let obj = {
+                        lat: job.location.coordinates[1],
+                        lng: job.location.coordinates[0],
+                      };
+
+                      let temp = $('.cont')
+                      $('#companyNameMarker').text(job.displayCompanyName ? job.displayCompanyName : job._company[0].name)
+                      $('#stateCityMarker').text(`${job.city[0]?.name}, ${job.state[0].name}`)
+                      $('#industryMarker').text(`Industry: ${job._industry[0].name}`)
+                      $('#qualificationMarker').text(`Qualification: ${job._qualification[0].name}`)
+                      $('#salaryMarker').text(`Salary: ${job.isFixed == true && job.amount
+                        ? job.amount
+                        : job.isFixed == false && job.min
+                          ? job.min
+                          : "NA"
+                        }`)
+                      $('#locationMarker').text(`Location: ${Math.round(job.distance / 1000)} km`)
+                      $('#jobDetailsMarker').text('View Details')
+                      $('#jobDetailsMarker').attr('href', `/candidate/job/${job._id}`)
+
+                      let content = $(temp).html()
+
+
+                      let infowindow = new google.maps.InfoWindow({
+                        content,
+                      });
+
+                      const marker = new google.maps.Marker({
+                        position: obj,
+                        icon: {
+                          url: "/images/marker.png",
+                          scaledSize: new google.maps.Size(35, 35),
+                        },
+                        map: map,
+                        infowindow: infowindow,
+                      });
+
+                      google.maps.event.addListener(marker, "click", function () {
+                        this.infowindow.open(map, this);
+                      });
+                    }
+                  }
+                });
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+              const pageAnchors = document.querySelectorAll("a.pageAnchor");
+              const { origin, pathname, search } = window.location;
+              let searchParams = search.split("?")[1];
+              let obj;
+              let url = `${origin}${pathname}?`;
+              if (searchParams) {
+                obj = JSON.parse(
+                  '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+                  function (key, value) {
+                    return key === "" ? value : decodeURIComponent(value);
+                  }
+                );
+                const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+                keyArr.forEach((x) => {
+                  if (x !== "page") {
+                    url += `${x}=${obj[x]}&`;
+                  }
+                });
+              }
+              pageAnchors.forEach((el) => {
+                const n = el.getAttribute("href");
+                el.setAttribute("href", `${url}page=${n}`);
+              });
+            });
+
+            function viewMap(e) {
+              initMap()
+              let $img = $('#view');
+              if ($img.hasClass('list')) {
+                $img.prop('src', '/images/icons/map.png');
+                $('.map').toggle(true);
+                $('.searchjobspage').hide();
+                $('.txt-view').text('Map');
+                $img.removeClass('list').addClass('map2');
+                $('#jobView').val('map')
+              } else {
+                $img.prop('src', '/images/icons/listing.png');
+                $('.map').toggle(false);
+                $('.searchjobspage').show();
+                $('.txt-view').text('List');
+                $img.removeClass('map2').addClass('list');
+                $('#jobView').val('list')
+              }
+            }
+
+            $(document).ready(() => {
+              if ($('#jobView').val() == 'map') {
+                viewMap()
+              }
+            })
+
+          </script>
+          <% include ./partials/footer%>
+  </body>

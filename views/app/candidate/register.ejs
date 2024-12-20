@@ -1,0 +1,411 @@
+<% include ../../partials/header %>
+
+    <body
+        class="vertical-layout vertical-menu-modern 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page"
+        data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+        <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper">
+                <div class="content-header row">
+                </div>
+                <div class="content-body" id="login_card">
+                    <section class="row flexbox-container">
+                        <div class="col-xl-6 d-flex justify-content-center mx-auto">
+                            <div class="col-xl-12 card bg-authentication mb-0 shadow">
+                                <div class="row m-0">
+                                    <div class="col-lg-4 text-center align-self-center px-1 py-0 logo_sec">
+                                        <img src="/images/logo/logo.png" alt="branding logo"
+                                            class="img-fluid brand_logo">
+                                    </div>
+                                    <div class="col-lg-8 col-12 p-0">
+                                        <div class="card rounded-0 mb-0 px-xl-2 px-lg-2 px-md-2 px-sm-0 px-0">
+                                            <div class="card-header pb-1 px-1">
+                                                <div class="card-title">
+                                                    <h4 class="">Candidate Portal / उम्मीदवार पोर्टल</h4>
+                                                </div>
+                                            </div>
+                                            <p class="card-header pt-0">Please signup for a new account / कृपया एक नए
+                                                खाते के लिए साइन अप करें।</p>
+                                            <div class="card-content">
+                                                <div class="card-body px-1">
+                                                    <ul class="nav nav-tabs justify-content-left" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="service-tab-center"
+                                                                data-toggle="tab" aria-controls="service-center"
+                                                                role="tab" aria-selected="false">Login / लॉग इन करें</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="home-tab-center"
+                                                                data-toggle="tab" href="#" aria-controls="home-center"
+                                                                role="tab" aria-selected="true">Signup / साइन अप
+                                                                करें</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane" id="service-center"
+                                                            aria-labelledby="service-tab-center" role="tabpanel">
+                                                            <div class="card rounded-0 mb-0">
+                                                                <div class="card-content">
+                                                                    <div class="card-body p-0">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane active" id="home-center"
+                                                            aria-labelledby="home-tab-center" role="tabpanel">
+                                                            <div class="card rounded-0 mb-0">
+                                                                <div class="card-content">
+                                                                    <div class="card-body p-0">
+                                                                        <form action="" method="post">
+                                                                            <fieldset
+                                                                                class="form-label-group form-group position-relative has-icon-left">
+                                                                                <input type="text" class="form-control"
+                                                                                    id="first-name"
+                                                                                    onkeypress="if(this.value.length==15) return false"
+                                                                                    placeholder="First Name / पहला नाम"
+                                                                                    value="">
+
+
+                                                                                <div class="form-control-position">
+                                                                                    <i class="feather icon-user"></i>
+                                                                                </div>
+                                                                                <label for="user-name"></label>
+                                                                            </fieldset>
+
+                                                                            <fieldset
+                                                                                class="form-label-group form-group position-relative has-icon-left">
+                                                                                <input type="text" class="form-control"
+                                                                                    id="last-name"
+                                                                                    onkeypress="if(this.value.length==15) return false"
+                                                                                    placeholder="Last Name / उपनाम"
+                                                                                    value="">
+
+
+                                                                                <div class="form-control-position">
+                                                                                    <i class="feather icon-user"></i>
+                                                                                </div>
+                                                                                <label for="user-name"></label>
+                                                                            </fieldset>
+
+                                                                            <fieldset
+                                                                                class="form-label-group form-group position-relative has-icon-left">
+                                                                                <input type="text" class="form-control"
+                                                                                    id="user-mail"
+                                                                                    onkeypress="if(this.value.length==30) return false"
+                                                                                    placeholder="Email ID / ईमेल आईडी"
+                                                                                    value="">
+                                                                                <div class="form-control-position">
+                                                                                    <i class="feather icon-mail"></i>
+                                                                                </div>
+                                                                                <label for="user-name"></label>
+                                                                            </fieldset>
+
+                                                                            <!-- Added by rajat -->
+                                                                            <fieldset
+                                                                                class="input-group form-label-group form-group position-relative has-icon-left">
+                                                                                <input type="tel" class="form-control"
+                                                                                    maxlength="10"
+                                                                                    onkeypress="if(this.value.length==10) return false"
+                                                                                    id="user-number" pattern="[0-9]{10}"
+                                                                                    value=""
+                                                                                    placeholder="Mobile / मोबाइल"
+                                                                                    aria-label="Mobile Number"
+                                                                                    aria-describedby="basic-addon2">
+                                                                                <div class="form-control-position">
+                                                                                    <i class="feather icon-phone"></i>
+                                                                                </div>
+                                                                                <div class="input-group-append">
+                                                                                    <button
+                                                                                        class="btn btn-primary float-right btn-inline waves-effect waves-light text-white"
+                                                                                        type="button"
+                                                                                        id="generate-otp">Send
+                                                                                        OTP <span
+                                                                                            class="d-xl-inline d-lg-inline d-md-inline d-sm-none d-none">/
+                                                                                            ओटीपी भेजें</span></button>
+                                                                                </div>
+                                                                            </fieldset>
+
+                                                                            <fieldset
+                                                                                class="form-label-group position-relative has-icon-left">
+                                                                                <input type="number"
+                                                                                    class="form-control" id="user-otp"
+                                                                                    placeholder="Enter your OTP / अपना ओटीपी दर्ज करें"
+                                                                                    value="" disabled>
+                                                                                <div class="form-control-position">
+                                                                                    <i class="feather icon-lock"></i>
+                                                                                </div>
+                                                                                <label for="user-otp">Enter the
+                                                                                    OTP</label>
+                                                                            </fieldset>
+                                                                            <p class="pt-0 px-0">I agree to <a
+                                                                                    href="/employersTermsofService"
+                                                                                    target="_blank">Employers terms of
+                                                                                    use</a> and <a
+                                                                                    href="/userAgreement"
+                                                                                    target="_blank">User Agreement</a>.
+                                                                            </p>
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                                                    <a class="btn btn-primary btn-block waves-effect waves-light text-white"
+                                                                                        id="submit-button"
+                                                                                        style="padding: 1rem;">Signup</a>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                                                    <div class="btn btn-primary btn-block waves-effect waves-light text-white "
+                                                                                        id="resend-btn"
+                                                                                        style="padding: 1rem;">Resend
+                                                                                        OTP
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- Error messages -->
+                                                                            <div>
+                                                                                &nbsp;
+                                                                            </div>
+                                                                            <div id="error"
+                                                                                style="color:rgb(243, 56, 56); font-weight: bold; display:none;">
+                                                                            </div>
+                                                                            <div id="success"
+                                                                                style="color:green;font-weight: bold; display:none;">
+                                                                            </div>
+                                                                            <div id="msg"></div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.0/axios.min.js"
+            integrity="sha512-OdkysyYNjK4CZHgB+dkw9xQp66hZ9TLqmS2vXaBrftfyJeduVhyy1cOfoxiKdi4/bfgpco6REu6Rb+V2oVIRWg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript">
+            const signupBtn = document.getElementById('submit-button');
+            let input = document.getElementById("user-otp");
+            const generateOTP = document.getElementById('generate-otp');
+            const phoneNumber = document.getElementById('user-number');
+            const resendBtn = document.getElementById('resend-btn');
+            $('#service-tab-center').attr('href', `/candidate/login${window.location.search}`)
+
+            $(resendBtn).hide();
+            $(signupBtn).hide();
+            const otpField = document.getElementById("user-otp");
+            resendBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                const body = { mobile: phoneNumber.value }
+                $.get("/api/resendOTP", body).then((res) => {
+                    if (res.status === true) {
+                        $('#error').text(' ')
+                        $('#error').hide()
+                        $('#success').show();
+                        $('#success').text("OTP resent");
+                        $('#resend-btn').addClass('disabled');
+                        let time = 20000;
+                        let interval = setInterval(function () {
+                            time = time - 1000; //reduce each second
+                            let timeleft = (time / 1000) % 60
+                            $('#resend-btn').text(`Resend in ${timeleft} secs`)
+                            if (time <= 0) {
+                                $('#resend-btn').text('Resend OTP');
+                                clearInterval(interval)
+                                $('#resend-btn').removeClass('disabled')
+                            }
+                        }, 1000);
+                    } else {
+                        $('#error').text(res.data.message);
+                        $('#error').show()
+                        $('#success').text(' ');
+                        $('#success').hide();
+                    }
+                })
+            })
+
+            phoneNumber.addEventListener('input', (event) => {
+                if (event.target.value.length === 10 || event.target.value.length === 12) {
+                    let pattern = /[0-9]{10,12}/gm;
+                    let test = pattern.test(event.target.value);
+                    const body = { mobile: event.target.value }
+                    console.log(event.target.value)
+                    if (test === true) {
+                        $('#error').text(" ");
+                        $('#error').hide();
+                        generateOTP.addEventListener('click', (event) => {
+                            input.focus();
+                            event.preventDefault();
+                            axios.post("/api/sendOtptoRegisterCandidate", body).then((res) => {
+                                if (res.data.status === true) {
+                                    $('#error').hide()
+                                    $('#success').show();
+                                    $('#success').text("OTP sent successfully.");
+                                    otpField.disabled = false;
+                                    $(generateOTP).hide();
+                                    $(signupBtn).show();
+                                    $(resendBtn).show();
+                                    $('#resend-btn').addClass('disabled')
+                                    let time = 20000;
+                                    let interval = setInterval(function () {
+                                        time = time - 1000; //reduce each second
+                                        let timeleft = (time / 1000) % 60
+                                        $('#resend-btn').text(`Resend in ${timeleft} secs`)
+                                        if (time <= 0) {
+                                            $('#resend-btn').text('Resend OTP');
+                                            clearInterval(interval)
+                                            $('#resend-btn').removeClass('disabled')
+                                        }
+                                    }, 1000);
+                                } else {
+                                    $('#error').text(res.data.message);
+                                    $('#error').show()
+                                    $('#success').hide();
+                                }
+                            })
+                        })
+                    } else {
+                        $('#success').text(" ");
+                        $('#success').hide();
+                        $('#error').show();
+                        $('#error').text("Enter a valid mobile number");
+                        otpField.disabled = true
+                    }
+                } else {
+                    $('#success').text(" ");
+                    $('#success').hide();
+                    $('#error').show();
+                    $('#error').text("Enter a valid mobile number");
+                    otpField.disabled = true
+                }
+            })
+            otpField.addEventListener('input', (event) => {
+                if (event.target.value.length === 4) {
+                    $('#error').text(' ');
+                    $('#error').hide();
+                } else {
+                    $('#success').text(' ');
+                    $('#success').hide()
+                    $('#error').show();
+                    $('#error').text("Incorrect OTP");
+                }
+            })
+            const firstName = document.getElementById('first-name');
+            const lastName = document.getElementById('last-name');
+            const email = document.getElementById('user-mail');
+            const checkEmail = (email) => {
+                let emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
+                return emailReg.test(email);
+            }
+            firstName.addEventListener('keypress', (e) => {
+                let k = e.which;
+                if (k >= 65 && k <= 90) { }
+                else if (k >= 97 && k <= 122) { }
+                else { e.preventDefault() }
+            })
+            lastName.addEventListener('keypress', (e) => {
+                let k = e.which;
+                if (k >= 65 && k <= 90) { }
+                else if (k >= 97 && k <= 122) { }
+                else { e.preventDefault() }
+            })
+            phoneNumber.addEventListener('keypress', (e) => {
+                let k = e.which;
+                if (k > 58 || k < 48)
+                    e.preventDefault();
+            })
+
+            signupBtn.addEventListener('click', () => {
+                if (email.value.length && !checkEmail(email.value)) {
+                    $('#msg').show()
+                    $('#msg').text('Not a Valid Email!')
+                }
+                else if (firstName.value.length !== 0 && lastName.value.length !== 0 && phoneNumber.value.length !== 0 && otpField.value.length !== 0) {
+                    let body;
+                    body = { mobile: phoneNumber.value, otp: otpField.value }
+                    axios.post('/api/verifyOtp', body).then((res) => {
+                        if (res.data.status === true) {
+                            $('#error').text(' ');
+                            $('#error').hide();
+                            $('#success').show();
+                            $('#success').text("OTP verified");
+                            body = { firstName: firstName.value, lastName: lastName.value, email: email.value, mobile: phoneNumber.value };
+                            axios.post("/candidate/register", body).then((res) => {
+                                if (res.data.status) {
+                                    body = { mobile: phoneNumber.value }
+                                    axios.post("/api/otpCandidateLogin", body).then((res) => {
+                                        if (res.data.status === true) {
+                                            localStorage.setItem("candidate", res.data.name);
+                                            localStorage.setItem("registeredEmail", res.data.email);
+                                            localStorage.setItem("token", res.data.token);
+                                            let returnUrl = getReturnUrl()
+                                            if (returnUrl) {
+                                                window.location.href = returnUrl
+                                            } else {
+                                                window.location.href = "/candidate/dashboard";
+                                            }
+                                        } else {
+                                            $('#success').text(" ");
+                                            $('#success').hide();
+                                            $('#error').show();
+                                            $('#error').text("Login failed !!!");
+                                            window.location.href = "/candidate/login"
+                                        }
+                                    })
+                                } else {
+                                    $('#success').text(" ");
+                                    $('#success').hide();
+                                    $('#error').show();
+                                    $('#error').text(res.data.error);
+                                }
+                            })
+                        } else {
+                            $('#success').text(' ');
+                            $('#success').hide()
+                            $('#error').show();
+                            $('#error').text("Incorrect OTP");
+                        }
+                    })
+                } else {
+                    $('#success').text(" ");
+                    $('#success').hide();
+                    $('#error').show();
+                    $('#error').text("Please fill all the fields !!!");
+                }
+            })
+
+            input.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    document.getElementById("submit-button").click();
+                }
+            });
+            phoneNumber.addEventListener('keypress', (e) => {
+                if (e.key === "Enter" && e.target.value.length === 10) {
+                    e.preventDefault();
+                    generateOTP.click();
+                    setTimeout(() => {
+                        input.focus();
+                    }, 600)
+                }
+            })
+            function getReturnUrl() {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.values?.length > 0) {
+                    return decodeURIComponent(urlParams.get('returnUrl'));
+                } else {
+                    return false
+                }
+            }
+        </script>
+    </body>
+
+    </html>

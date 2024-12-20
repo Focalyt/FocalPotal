@@ -1,0 +1,306 @@
+<% include ../../partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <% include ../../partials/flash %>
+          <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper">
+              <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                  <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                      <h3 class="content-header-title float-left mb-0">Applied Jobs</h3>
+                      <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/candidate/dashboard">Home</a>
+                          </li>
+                          <li class="breadcrumb-item active">Applied Jobs</li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              
+
+              <div class="content-body">
+                <div class="row">
+                  <div class="col-12">
+                    <section class="forlrgscreen">
+                      <div class="container-fluid pt-xl-2 pt-lg-0 pt-md-0 pt-sm-5 pt-0">
+                        <% if (jobs && jobs.length> 0) { %>
+                          <% jobs.forEach((job)=> { %>
+                            <div class="row pointer">
+                              <div class="col-lg-8 col-md-7 column">
+                                <div class="job-single-sec">
+                                  <div class="job-single-head border-0 pb-0">
+                                    <div class="job-thumb my-auto"> <img
+                                        src="<%=job._company[0]?.logo ? process.env.MIPIE_BUCKET_URL +'/' +job._company[0]?.logo : '/images/logo90.png'%>"
+                                        class="p-1"> </div>
+                                    <div>
+                                      <h6 class="text-capitalize font-weight-bolder">
+                                        <%= ! job.vacancy[0]?.title ? "NA" : job.vacancy[0]?.title  %>
+                                      </h6>
+                                      <span class="text-capitalize set-lineh">
+                                        <%= !job._company[0]?.name ? "NA" : job._company[0]?.name %>
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <a href="/candidate/job/<%= job.vacancy[0]._id%>">
+                                  <div class="job-overview mt-1">
+                                    <ul class="mb-xl-2 mb-lg-2 mb-md-2 mb-sm-0 mb-0 list-unstyled">
+                                      <li class=""><i class="la la-thumb-tack"></i>
+                                        <h3 class="text-capitalize jobDetails-wrap">
+                                          <%= ! job.qualifications[0]?.name ? "NA" :  job.qualifications[0]?.name %>
+                                        </h3><span class="text-capitalize jobDetails-wrap ">
+                                          Qualification / योग्यता
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-university"></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <%= !job._company[0]?.name ? "NA" : job._company[0]?.name %>
+                                        </h3><span class="text-capitalize jobDetails-wrap">
+                                          Company Name / कंपनी का नाम
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-puzzle-piece"></i>
+                                        <h3 class="text-capitalize jobDetails-wrap">
+                                          <%= !job.vacancy[0].jobType ? "NA" : job.vacancy[0].jobType %>
+                                        </h3><span class="text-capitalize jobDetails-wrap">
+                                          Job Type / नौकरी का प्रकार
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-building-o"></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <%= ! job.industry[0]?.name ? "NA" : job.industry[0]?.name %>
+                                        </h3>
+                                        <span class="text-capitalize jobDetails-wrap">
+                                          Industry Name / उद्योग का नाम
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-shield"></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <%= ! job.city[0]?.name ? "NA" : job.city[0]?.name %>
+                                        </h3><span class="jobDetails-wrap">
+                                          City / शहर
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-line-chart "></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <%= !job.state[0]?.name ? "NA" : job.state[0]?.name %>
+                                        </h3><span class="text-capitalize jobDetails-wrap">
+                                          State / राज्य
+                                        </span>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  </a>
+                                </div>
+                              </div>
+                              <div class="col-lg-4 col-md-5 column mt-xl-4 mt-lg-5 mt-md-5 mt-sm-3 pt-xl-1 pt-lg-1 pt-md-1 pt-sm-0 pt-0">
+                                <!-- Job Overview -->
+                                <div class="extra-job-info mt-1">
+                                  <span><i class="la la-clock-o"></i><strong>Posted On</strong>
+                                    <%=moment(job.vacancy[0].createdAt).utcOffset('+05:30').format('DD MMM YYYY') %>
+                                  </span>
+                                  <span><i class="la la-map "></i><strong>Location</strong>
+                                   <%=job.city[0]?.name%>,
+                                   <%=job.state[0]?.name%>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <hr>
+                            <% }); %>
+                              <% } else{%>
+                                <h4 class="text-center"> No Results found</h4>
+                                <%} %>
+
+                      </div>
+                    </section>
+
+                    <section class="forsmallscrn d-xl-none d-lg-none d-md-none d-sm-block d-block">
+                      <div class="container-fluid pt-xl-2 pt-lg-0 pt-md-0 pt-sm-5 pt-0">
+                        <% if (jobs && jobs.length> 0) { %>
+                          <% jobs.forEach((job)=> { %>
+                            <div class="row pointer">
+                              <div class="col-lg-8 col-md-7 column">
+                                <div class="job-single-sec">
+                                  <div class="job-single-head border-0 pb-0">
+                                    <div class="job-thumb my-auto"> <img
+                                        src="<%=job._company[0]?.logo ? process.env.MIPIE_BUCKET_URL +'/' +job._company[0]?.logo : '/images/logo90.png'%>"
+                                        class="p-1"> </div>
+                                    <div class="">
+                                      <h6 class="text-capitalize font-weight-bolder">
+                                        <%= ! job.vacancy[0]?.title ? "NA" : job.vacancy[0]?.title  %>
+                                      </h6>
+                                      <span class="text-capitalize set-lineh">
+                                        <%= !job._company[0]?.name ? "NA" : job._company[0]?.name %>
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <a href="/candidate/job/<%= job.vacancy[0]._id%>">
+                                  <div class="job-overview mt-1">
+                                    <ul class="mb-xl-2 mb-lg-2 mb-md-2 mb-sm-0 mb-0 list-unstyled">
+                                      <li class=""><i class="la la-thumb-tack"></i>
+                                        <h3 class="text-capitalize jobDetails-wrap">
+                                          <%= ! job.qualifications[0]?.name ? "NA" :  job.qualifications[0]?.name %>
+                                        </h3><span class="text-capitalize jobDetails-wrap ">
+                                          Qualification / योग्यता
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-university"></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <%= !job._company[0]?.name ? "NA" : job._company[0]?.name %>
+                                        </h3><span class="text-capitalize jobDetails-wrap">
+                                          Company Name / कंपनी का नाम
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-puzzle-piece"></i>
+                                        <h3 class="text-capitalize jobDetails-wrap">
+                                          <%= !job.vacancy[0].jobType ? "NA" : job.vacancy[0].jobType %>
+                                        </h3><span class="text-capitalize jobDetails-wrap">
+                                          Job Type / नौकरी का प्रकार
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-building-o"></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <%= ! job.industry[0]?.name ? "NA" : job.industry[0]?.name %>
+                                        </h3>
+                                        <span class="text-capitalize jobDetails-wrap">
+                                          Industry Name / उद्योग का नाम
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-shield"></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <%= ! job.city[0]?.name ? "NA" : job.city[0]?.name %>
+                                        </h3><span class="jobDetails-wrap">
+                                          City / शहर
+                                        </span>
+                                      </li>
+                                      <li><i class="la la-line-chart "></i>
+                                        <h3 class="jobDetails-wrap">
+                                          <%= !job.state[0]?.name ? "NA" : job.state[0]?.name %>
+                                        </h3><span class="text-capitalize jobDetails-wrap">
+                                          State / राज्य
+                                        </span>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  </a>
+                                </div>
+                              </div>
+
+
+                              <% if (job.vacancy[0].isContact?.toString()==="true") { %>
+                                <div class="col-lg-4 col-md-5 column mt-xl-1 mt-lg-1 mt-md-1 mt-sm-1 mt-0">
+                                  <div class="row">
+                                    <div class="col-12 same-plane pr-0 pr-md-1 pr-sm-1">
+                                      <a href="tel:<%=job.vacancy[0].phoneNumberof%>" class="apply-thisjob text-center py-1 px-0 d-xl-none d-lg-none d-md-none d-sm-block d-block w-100 same-plane call-btn"title="">
+                                        <i class="la la-phone ml-xl-3 mt-lg-3 mt-md-2 mt-sm-0 ml-xl-0 ml-lg-0 ml-md-1 ml-sm-2 ml-0 text-center-sm text-center-md text-center-lg text-center-xl plane-font"></i>Call / कॉल
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              <% } %>
+                              
+
+                                <div class="extra-job-info mt-1">
+                                  <span><i class="la la-clock-o"></i><strong>Posted On</strong>
+                                    <%=moment(job.vacancy[0].createdAt).utcOffset('+05:30').format('DD MMM YYYY') %>
+                                  </span>
+                                  <span><i class="la la-map "></i><strong>Location</strong>
+                                   <%=job.city[0]?.name%>,
+                                   <%=job.state[0]?.name%>
+                                  </span>
+                                </div>
+                            </div>
+                            
+                            <hr>
+                            <% }); %>
+                              <% } else{%>
+                                <h4 class="text-center"> No Results found</h4>
+                                <%} %>
+
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+              <% if (totalPages> 1) { %>
+                <ul class="pagination justify-content-end ml-2 mb-2 text-right">
+                  <% let first=1 %>
+                    <% let last=totalPages> 4 ? 4 :
+                      totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                        <% first=page - 1 %>
+                          <% last=page + 1 %>
+                            <% if (last> totalPages) last = totalPages
+                              %> <% } %>
+                                <% if (first> 1) { %>
+                                  <li class="page-item">
+                                    <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                                  </li>
+                                  <% } %>
+                                    <% for (let i=first; i <=last; i +=1) { %>
+                                      <% if (i===page) { %>
+                                        <li class="active page-item">
+                                          <a href="javascript:void()" class="page-link pagi_custom">
+                                            <%= i %>
+                                          </a>
+                                        </li>
+                                        <% } else { %>
+                                          <li class="page-item">
+                                            <a class="page-link pageAnchor pagi_customtwo" href="<%= i %>">
+                                              <%= i %>
+                                            </a>
+                                          </li>
+                                          <% } %>
+                                            <% } %>
+                                              <% if (totalPages>
+                                                last)
+                                                { %>
+                                                <li class="page-item">
+                                                  <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                                                </li>
+                                                <li class="page-item">
+                                                  <a class="pageAnchor page-link" href="<%= totalPages %>">Last</a>
+                                                </li>
+                                                <% } %>
+                </ul>
+                <% } %>
+            </div>
+            </div>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                const pageAnchors = document.querySelectorAll("a.pageAnchor");
+                const { origin, pathname, search } = window.location;
+                let searchParams = search.split("?")[1];
+                let obj;
+                let url = `${origin}${pathname}?`;
+                if (searchParams) {
+                  obj = JSON.parse(
+                    '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+                    function (key, value) {
+                      return key === "" ? value : decodeURIComponent(value);
+                    }
+                  );
+                  const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+                  keyArr.forEach((x) => {
+                    if (x !== "page") {
+                      url += `${x}=${obj[x]}&`;
+                    }
+                  });
+                }
+                pageAnchors.forEach((el) => {
+                  const n = el.getAttribute("href");
+                  el.setAttribute("href", `${url}page=${n}`);
+                });
+              });
+            </script>
+                <% include ./partials/footer%>
+  </body>

@@ -1,0 +1,156 @@
+<% include ../../partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static" data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns" id="inner_job_page">
+
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <div class="app-content content">
+          <% include ../../partials/flash %>
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper"></div>
+          <section id="Concerned-Person ">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 px-3">
+                
+                  
+                    <div class="card bg-white shadow">
+                      <div class="card-header bg-white border-bottom">
+                        <h4>About Focalyt</h4>
+                      </div>
+                      <div class="card-body">
+                        
+                        We are one of the growing job portals for First Time Job Seekers.<br>
+                        We support colleges by offering placement opportunities to their candidates.<br>
+                        To become part of Focalyt, kindly upload template details in excel, pdf or zip.
+                      </div>
+                    </div>
+                  
+                
+
+
+              </div>
+            
+              <div class="col-xl-6 col-lg-6 px-3">
+                  <div class="card-header bg-white p-1">
+                    <h4>Upload Templates</h4>
+                  </div>
+                    <div class="card bg-white shadow">
+                      <div class="card-body">
+                        
+                        <div class="row mt-2">
+                          <% if (collegeDocs?.length>0) { %>
+                            <% collegeDocs.forEach((doc)=> { %>
+                              <div class="col-xl-2 col-lg-3 col-md-1 col-sm-1 col-1 mb-1 galleryImage" style="align-self: center;">
+                                <div class="image-upload  d-flex justify-content-center">
+                                  <label for="media-group">
+                                    <a href="<%= process.env.MIPIE_BUCKET_URL +'/' + doc.path %>" target="_blank"><i class="fa-solid fa-file" style="font-size:48px;" ></i></a>
+                                   
+                                  </label>
+                                  <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
+                                 
+                                </div>
+                                <div class="image-upload d-flex justify-content-center text-break">
+                                   <%=doc.name%>
+                                </div>
+                                <div class="image-upload d-flex justify-content-center pt-1">
+                                  <i class="feather fa-2xl  icon-x remove_uploaded_pic cursor-pointer" title="Remove Document" style="color:red;" value="<%=doc.path%>"
+                                    onclick="removefile(this, '<%=doc._id%>')"></i>
+                                </div>
+                              </div>
+                              <% }); %>
+                                <% }%>
+                                  <div class="col-xl-2 mb-1" id="uploadgallery"
+                                    style="white-space: nowrap;align-self: center;">
+                                    <div class="image-upload">
+                                      <label for="media-group">
+                                        <img src="/images/icons/jd_one.png" class="pointer img-fluid">
+                                      </label>
+                                      <input id="media-group" type="file" />
+                                      <input type="hidden" class="form-control hiddenmediagroup" name="candidateFiles"
+                                        id="mediagroup" value="" />
+                                    </div>
+                                    <label>Upload Templates</label>
+                                  </div>
+
+                        </div>
+                      </div>
+                    
+                </div>
+
+
+              </div>
+            </div>
+          </section>
+        </div>
+        <script>
+        $('#media-group').change(function (e) {
+              let file = e.target.files[0]
+              let filename = e.target.files[0].name
+              let type = e.target.files[0].type;
+              let size = e.target.files[0].size;
+              if (!checkFileSize(size) || !checkFileValidation(type)) {
+                $('#media-group').val('');
+                alert("This format is not accepted and each file should be 2MB")
+              } else {
+                let body = {
+                  file: e.target.files[0]
+                }
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadSingleFile', body, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      axios.post(`/college/uploadTemplates`, {path: result.data.data.Key, name: filename }, header)
+                      .then((res) => {
+                        location.reload()
+                      }).catch((err) => {
+                        console.log(err)
+
+                      })
+                    }
+                  })
+              }
+            });
+
+          function removefile(e, id) {
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            let data = {
+              key: e.attributes.value.textContent
+            }
+            axios.post('/api/deleteSingleFile', data, header)
+              .then(result => {
+                if (result.status) {
+                  let parentdiv = $(e).closest('div.galleryImage')
+                  $(parentdiv).remove();
+                  axios.post("/college/removeDocument", {id}).then(() => console.log('deleted'))
+                }
+              })
+            return false;
+          }
+          const checkFileSize = (size) => {
+            let finalSize = ((size / 1024) / 1024);
+            if (finalSize > 2) {
+              return false
+            }
+            return true;
+          }
+
+          const checkFileValidation = (file) => {
+            let regex = /(\/vnd.ms-excel|\/vnd.openxmlformats-officedocument.spreadsheetml.sheet|\/pdf|\/zip)$/i
+            return regex.test(file)
+          }
+
+          function populateimageToElement(html, imgPath, key) {
+            var template = document.createElement('template');
+            html = html.trim(); // Never return a text node of whitespace as the result
+            template.innerHTML = html;
+            let img = $(template.content).find('img')
+            let i = $(template.content).find('i.remove_uploaded_pic')
+            $(i).attr('value', key)
+            $(img).attr('src', imgPath)
+            return template.content.firstChild;
+          }
+        </script>
+
+        <% include ./partials/footer%>

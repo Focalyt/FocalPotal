@@ -1,0 +1,142 @@
+<% include ./partials/header %>
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Report</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                            <li class="breadcrumb-item active">Report</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ./partials/flash %>
+            <section class="list-view">
+                <div class="row">
+                    <div class="col-12 equal-height-2">
+                        <div class="card">
+                            <div class="card-header border border-top-0 border-left-0 border-right-0">
+
+                                <h4 class="card-title pb-1">Hiring Status Report</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <form class="form-horizontal" action="" method="get">
+                                        <div class="row">
+                                            <div class="col-xl-2 mb-1">
+                                                <label>Month </label>
+                                                <select class="form-control text-capitalize" name="hiringStatusMonth"
+                                                    id="hiringStatusMonth">
+                                                    <option value="1" <% if (presentMonth=='1' ) { %> selected <% }%>
+                                                            >January</option>
+                                                    <option value="2" <% if (presentMonth=='2' ) { %> selected <% }%>
+                                                            >February</option>
+                                                    <option value="3" <% if (presentMonth=='3' ) { %> selected <% }%>
+                                                            >March</option>
+                                                    <option value="4" <% if (presentMonth=='4' ) { %> selected <% }%>
+                                                            >April</option>
+                                                    <option value="5" <% if (presentMonth=='5' ) { %> selected <% }%>
+                                                            >May</option>
+                                                    <option value="6" <% if (presentMonth=='6' ) { %> selected <% }%>
+                                                            >June</option>
+                                                    <option value="7" <% if (presentMonth=='7' ) { %> selected <% }%>
+                                                            >July</option>
+                                                    <option value="8" <% if (presentMonth=='8' ) { %> selected <% }%>
+                                                            >August</option>
+                                                    <option value="9" <% if (presentMonth=='9' ) { %> selected <% }%>
+                                                            >September</option>
+                                                    <option value="10" <% if (presentMonth=='10' ) { %> selected <% }%>
+                                                            >October</option>
+                                                    <option value="11" <% if (presentMonth=='11' ) { %> selected <% }%>
+                                                            >November</option>
+                                                    <option value="12" <% if (presentMonth=='12' ) { %> selected <% }%>
+                                                            >December</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-2 mb-1">
+                                                <label>Year </label>
+                                                <select class="form-control text-capitalize" name="hiringStatusYear"
+                                                    id="hiringStatusYear">
+                                                    <% for (let i=2021; i <=2030; i++) { %>
+                                                        <option value="<%= i %>" <% if (presentYear==i) { %> selected <%
+                                                                }%> ><%= i %>
+                                                        </option>
+                                                        <% } %>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-2 mb-1">
+                                                <label>Hiring Status </label>
+                                                <select class="form-control text-capitalize" name="hiringStatus"
+                                                    id="hiringStatus">
+                                                    <option value="">Select Status</option>
+                                                    <option value="">All</option>
+                                                    <option value="shortlisted">Shortlisted</option>
+                                                    <option value="interview due">Interview Due</option>
+                                                    <option value="interviewed">Interviewed</option>
+                                                    <option value="on hold">On Hold</option>
+                                                    <option value="offer letter rollout">Offer Letter Rollout</option>
+                                                    <option value="hiring on hold">Hiring on Hold</option>
+                                                    <option value="hired">Hired</option>
+                                                    <option value="rejected">Rejected</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <i class="fa-solid fa-file-csv fa-2xl mt-3 mr-1"
+                                                    style="color:green;cursor:pointer" title="Export to CSV"
+                                                    onclick="exportCSV()"></i> <h5 style="display: inline-block">Hiring Status Export</h5> 
+                                            </div>
+                                            <div class="col-xl-3 mb-1">
+                                                <i class="fa-solid fa-file-csv fa-2xl mt-3 mr-1"
+                                                    style="color:green;cursor:pointer" title="Export to CSV"
+                                                    onclick="exportAppliedCSV()"></i>  <h5 style="display: inline-block"> Applied Candidate Export </h5> 
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <% include ./partials/footer %>
+
+    </div>
+
+    <script>
+
+        function exportCSV() {
+            let month = $('#hiringStatusMonth').val()
+            let year = $('#hiringStatusYear').val()
+            let status = $('#hiringStatus').val()
+            let params = { month, year }
+            if (status) {
+                params['status'] = status
+            }
+            axios.get('/admin/report/hiringStatus', { params }).then(res => {
+                window.open(res.data.path, '_blank')
+            }).catch((err) => {
+                console.log(err.message)
+            })
+        }
+
+        function exportAppliedCSV() {
+            let month = $('#hiringStatusMonth').val()
+            let year = $('#hiringStatusYear').val()
+            let params = { month, year }
+            if (status) {
+                params['status'] = status
+            }
+            axios.get('/admin/report/appliedCandidates', { params, responseType: 'blob' }).then(res => {
+                const href = URL.createObjectURL(res.data);
+                window.open(href, '_blank')
+            }).catch((err) => {
+                console.log(err.message)
+            })
+        }
+
+    </script>

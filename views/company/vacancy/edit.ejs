@@ -1,0 +1,553 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Edit Vacancy</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">Edit Vacancy</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+			<form class="form-horizontal" action="" method="post" id="formData">
+				<section id="personal-info">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">Vacancy Information</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Job Name</label>
+												<input type="text" class="form-control" maxlength="50"
+													value="<%= vacancy.name %>" name="name" required />
+											</div>
+											<!-- <div class="col-xl-3 mb-1">
+												<label>Select Company</label>
+												<select class="form-control text-capitalize" name="_company" required>
+													<option value="" disabled>
+														Select option
+													</option>
+													<% company.forEach((c)=> { %> <% if
+															(c._id.toString()===vacancy._company.toString()) { %>
+															<option value="<%= c._id %>" class="text-capitalize"
+																selected>
+																<%= c.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= c._id %>" class="text-capitalize">
+																	<%= c.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div> -->
+											<div class="col-xl-3 mb-1">
+												<label>Type of Vacancy</label>
+												<select style="cursor: pointer;" class="form-control text-capitalize"
+													name="_vacancyType" required>
+													<option value="" disabled>
+														Select option
+													</option>
+													<% vacancyType.forEach((v)=> { %> <% if
+															(v._id.toString()===vacancy._vacancyType.toString()) { %>
+															<option value="<%= v._id %>" selected>
+																<%= v.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= v._id %>">
+																	<%= v.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Country</label>
+												<select style="cursor: pointer;" class="form-control text-capitalize"
+													name="countryId" id="country" required>
+													<option value="" disabled>
+														Select option
+													</option>
+													<% country.forEach((i)=> { %> <% if
+															(i.countryId===vacancy.countryId) { %>
+															<option value="<%= i.countryId %>" selected>
+																<%= i.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= i.countryId %>">
+																	<%= i.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>State</label>
+												<select style="cursor: pointer;" class="form-control" name="stateId"
+													id="state" required>
+													<option value="" disabled>
+														Select option
+													</option>
+													<% state.forEach((s)=> { %> <% if (s.stateId===vacancy.stateId) { %>
+															<option value="<%= s.stateId %>" selected>
+																<%= s.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= s.stateId %>">
+																	<%= s.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>City</label>
+												<select style="cursor: pointer;" class="form-control" name="cityId"
+													id="city" required>
+													<option value="" disabled>
+														Select option
+													</option>
+													<% city.forEach((s)=> { %> <% if (s.cityId===vacancy.cityId) { %>
+															<option value="<%= s.cityId %>" selected>
+																<%= s.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= s.cityId %>">
+																	<%= s.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Number of Positions</label>
+												<select style="cursor: pointer;" class="form-control"
+													name="noOfPosition" required>
+													<option value="" disabled>
+														Select option
+													</option>
+													<% for (let i=1; i <=20; i++) { %>
+														<% if (i===vacancy.noOfPosition) { %>
+															<option value="<%= i %>" selected>
+																<%= i %>
+															</option>
+															<% } else { %>
+																<option value="<%= i %>">
+																	<%= i %>
+																</option>
+																<% } %>
+																	<% } %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Concerned Person</label>
+												<input type="text" class="form-control"
+													value="<%- vacancy.concernedPerson ? vacancy.concernedPerson : 'NA'; %>"
+													name="concernedPerson" maxlength="50" required />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Designation</label>
+												<input type="text" class="form-control"
+													value="<%- vacancy.designation ? vacancy.designation : 'NA';%>"
+													name="designation" maxlength="50" required />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Email</label>
+												<input class="form-control" maxlength="50" type="email"
+													value="<%- vacancy.email ? vacancy.email : 'NA'; %>" name="email"
+													required />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Contact Number</label>
+												<input class="form-control" type="text"
+													value="<%- vacancy.mobile ? vacancy.mobile : 'NA'; %>" name="mobile"
+													pattern="^[\+\d]?(?:[\d-.\s()]*)$" minlength="10" maxlength="13"
+													required />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Course</label>
+												<select style="cursor: pointer;" class="form-control text-capitalize"
+													name="_qualification" required id="qual">
+													<option value="" disabled>
+														Select option
+													</option>
+													<% qualification.forEach((q)=> { %> <% if
+															(q._id.toString()===vacancy._qualification.toString()) { %>
+															<option value="<%= q._id %>" selected>
+																<%= q.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= q._id %>">
+																	<%= q.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label value="">Stream</label>
+												<select style="cursor: pointer;" required
+													class="form-control text-capitalize" name="_subQualification"
+													id="subQua">
+													<option disabled>Select option</option>
+													<% subqual.forEach((q)=> { %> <% if
+															(q._id.toString()===vacancy._subQualification.toString()) {
+															%>
+															<option value="<%= q._id %>" selected>
+																<%= q.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= q._id %>">
+																	<%= q.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<div class="form-group">
+													<label>Skills</label>
+													<select class="selectpicker form-control text-capitalize"
+														title="Select skills" data-actions-box="true" multiple required
+														name="_skills">
+														<% skill.forEach((s)=> { %> <% if
+																(vacancy._skills.indexOf(s._id)>= 0) { %>
+																<option value="<%= s._id %>" selected>
+																	<%= s.name %>
+																</option>
+																<% } else { %>
+																	<option value="<%= s._id %>">
+																		<%= s.name %>
+																	</option>
+																	<% } %>
+																		<% }); %>
+													</select>
+												</div>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Industry</label>
+												<select style="cursor: pointer;" class="form-control text-capitalize"
+													name="_industry" id="industry" required>
+													<option value="" disabled>
+														Select option
+													</option>
+													<% industry.forEach((n)=> { %> <% if
+															(n._id.toString()===vacancy._industry.toString()) { %>
+															<option value="<%= n._id %>" selected>
+																<%= n.name %>
+															</option>
+															<% } else { %>
+																<option value="<%= n._id %>">
+																	<%= n.name %>
+																</option>
+																<% } %>
+																	<% }); %>
+												</select>
+											</div>
+
+											<div class="col-xl-3 mb-1">
+												<label>Description</label>
+												<textarea class="form-control" maxlength="100" cols="3" rows="3"
+													name="description">
+<%- vacancy.description ? vacancy.description : 'NA'; %></textarea>
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Upload </label>
+												<div class="row" id="document">
+													<% let clas='' %>
+														<% if (vacancy.document) { %>
+															<div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-1">
+																<img src="https://mmt-alls-1.s3.ap-south-1.amazonaws.com/<%= vacancy.document %>"
+																	width="40" height="40" />
+																<input type="hidden" name="document"
+																	value="<%= vacancy.document %>" />
+																<p class="mt-1 text-left">
+																	<a class="rmvClass text-danger"
+																		href="javascript:void(0)">Remove
+																	</a>
+																	<a class="text-primary mr-2" target="_blank"
+																		href="https://mmt-alls-1.s3.ap-south-1.amazonaws.com/<%= vacancy.document %>">View</a>
+																</p>
+															</div>
+															<% clas='d-none' ; %>
+																<% } %>
+																	<div
+																		class="col-xl-12 col-md-12 col-sm-12 col-12 mt-1 firstImage <%= clas %>">
+																		<div class="image-upload">
+																			<label for="filestwo"
+																				style="cursor: pointer;">
+																				<img src="/images/add_receipt.png"
+																					width="40px" height="auto"
+																					id="outputtwo" />
+																				<p class="mt-1">
+																					Click to upload Image
+																				</p>
+																			</label>
+																			<input data-id="document" type="file"
+																				id="filestwo"
+																				onchange="validateFileType()"
+																				name="filebrand"
+																				class="my-logo-uploader form-control" />
+																		</div>
+																	</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-3 mb-1">
+												<label>Package</label>
+												<input type="text" class="form-control" maxlength="50"
+													value="<%- vacancy.package ? vacancy.package : 'NA';%>"
+													name="package" required />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Opening Date</label>
+												<% const openDate=moment(vacancy.openingDate).format('YYYY-MM-DD'); %>
+													<input type="date" class="form-control" value="<%= openDate %>"
+														name="openingDate" required />
+											</div>
+											<div class="col-xl-3 mb-1">
+												<label>Closing Date</label>
+												<% const closeDate=moment(vacancy.closingDate).format('YYYY-MM-DD'); %>
+													<input type="date" class="form-control" value="<%= closeDate %>"
+														name="closingDate" required />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-12 text-right">
+												<!-- <a type="reset" onclick="reset()" class="btn btn-danger"
+													value="Reset">Reset</a> -->
+												<button type="submit" class="btn btn-success">
+													Save
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</form>
+			<div class="text-right vaccency">
+				<button onclick="reset()"  class="btn btn-danger"
+					>Reset</button>
+			</div>
+			<% include ../partials/footer %>
+				<script>
+					const imageUploaders = document.querySelectorAll(".my-logo-uploader");
+					const submitBtns = document.querySelectorAll(".submitBtn");
+					imageUploaders.forEach((x) => {
+						const idText = x.getAttribute("data-id");
+						const id = document.querySelector(`#${idText}`);
+
+						x.addEventListener("change", async (e) => {
+							try {
+								submitBtns.forEach((x) => {
+									x.disabled = true;
+								});
+								const filesData = Array.from(e.target.files);
+								if (!Array.isArray(filesData) || filesData.length <= 0)
+									throw new Error("No image found!");
+
+								const data = await Promise.all(
+									filesData.map(async (file) => {
+										const ext = file.name.split(".").pop();
+										const res = await axios.get("/admin/s3upload", {
+											params: { type: file.type, ext },
+										});
+										if (!res || !res.data || !res.data.data) return null;
+										const { url, key } = res.data.data;
+										if (!url || !key) return null;
+										const upload = await axios.put(url, file, {
+											headers: { "Content-Type": file.type },
+										});
+										if (upload || upload.status === 200) return key;
+										return null;
+									})
+								);
+
+								const files = data.filter((x) => !!x);
+
+								if (files.length <= 0)
+									throw new Error("Unable to upload any image!");
+
+								files.forEach((f) => {
+									const div = document.createElement("div");
+									div.setAttribute(
+										"class",
+										"col-xl-12 col-md-12 col-sm-12 col-12 mt-1"
+									);
+
+									const img = document.createElement("img");
+									img.setAttribute(
+										"src",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									img.setAttribute("alt", "img");
+									img.setAttribute("width", "40");
+									img.setAttribute("height", "40");
+									div.appendChild(img);
+
+									const input = document.createElement("input");
+									input.setAttribute("type", "hidden");
+									input.setAttribute("name", idText);
+									input.setAttribute("value", f);
+									div.appendChild(input);
+
+									const p = document.createElement("p");
+									p.setAttribute("class", "mt-1");
+									const rmBtn = document.createElement("a");
+									rmBtn.setAttribute("class", "text-danger");
+									rmBtn.setAttribute("href", "javascript:void(0)");
+									rmBtn.textContent = "Remove ";
+									rmBtn.addEventListener("click", () => {
+										div.parentNode.removeChild(div);
+										$(".firstImage").removeClass("d-none");
+									});
+									p.appendChild(rmBtn);
+									const viewBtn = document.createElement("a");
+									viewBtn.setAttribute("class", "text-primary mr-2");
+									viewBtn.setAttribute("target", "_blank");
+									viewBtn.setAttribute(
+										"href",
+										`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+									);
+									viewBtn.textContent = "View";
+									p.appendChild(viewBtn);
+									div.appendChild(p);
+									id.append(div);
+									$(".firstImage").addClass("d-none");
+								});
+								submitBtns.forEach((x) => {
+									x.disabled = false;
+								});
+								x.value = "";
+							} catch (err) {
+								console.log(err);
+							}
+						});
+					});
+
+					$(".rmvClass").click(function () {
+						$(this).closest("div").remove();
+						$(".firstImage").removeClass("d-none");
+					});
+
+					$("#industry").change(() => {
+						$("#subInd")
+							.find("option")
+							.remove()
+							.end()
+							.append(
+								'<option disabled selected value="">Select Option</option>'
+							);
+						axios
+							.post("/helper/getsubInd", {
+								_industry: $("#industry").val(),
+							})
+							.then(({ data }) => {
+								data.forEach((d) => {
+									$("#subInd").append(
+										`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+									);
+								});
+							})
+							.catch((e) => console.log(e));
+					});
+
+					$("#country").change(() => {
+						$("#state")
+							.find("option")
+							.remove()
+							.end()
+							.append(
+								'<option disabled selected value="">Select Option</option>'
+							);
+						axios
+							.post("/panel/helper/getstate", {
+								countryId: $("#country").val(),
+							})
+							.then(({ data }) => {
+								data.forEach((d) => {
+									$("#state").append(
+										`<option class='text-capitalize' value='${d.stateId}'>${d.name}</option>`
+									);
+								});
+							})
+							.catch((e) => console.log(e));
+					});
+
+					$("#state").change(() => {
+						$("#city")
+							.find("option")
+							.remove()
+							.end()
+							.append(
+								'<option disabled selected value="">Select Option</option>'
+							);
+						axios
+							.post("/panel/helper/getcity", {
+								stateId: $("#state").val(),
+							})
+							.then(({ data }) => {
+								data.forEach((d) => {
+									$("#city").append(
+										`<option class='text-capitalize' value='${d.cityId}'>${d.name}</option>`
+									);
+								});
+							})
+							.catch((e) => console.log(e));
+					});
+
+					$("#qual").change(() => {
+						$("#subQua")
+							.find("option")
+							.remove()
+							.end()
+							.append(
+								'<option disabled selected value="">Select Option</option>'
+							);
+						axios
+							.post("/panel/helper/getsubQual", {
+								_qualification: $("#qual").val(),
+							})
+							.then(({ data }) => {
+								data.forEach((d) => {
+									$("#subQua").append(
+										`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+									);
+								});
+							})
+							.catch((e) => console.log(e));
+					});
+
+					// reset form
+					function reset() {
+						window.location.reload();
+					}
+					function validateFileType() {
+						var fileName = document.getElementById("filestwo").value;
+						var idxDot = fileName.lastIndexOf(".") + 1;
+						var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+						if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+							//TO DO
+						} else {
+							alert("Only jpg/jpeg and png files are allowed!");
+						}
+					}
+				</script>
+	</div>

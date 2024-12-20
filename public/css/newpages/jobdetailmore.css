@@ -1,0 +1,60 @@
+.btn.cta-callnow {
+    background: #fff;
+    color: #FC2B5A;
+    font-family: inter;
+    border-radius: 50px;
+    font-weight: 500;
+    padding: 4px 10px;
+    width: 90%;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+.similar-job-description{
+    padding: 15px 0 10px 15px;
+}
+.similar-job-description h2{
+    font-size: 40px;
+    font-family: "Gilroy-Bold" , sans-serif; 
+    font-weight: 400;
+}
+
+.job-price{
+    font-size: 16px;
+    text-align: center; 
+    color: #FC2B5A; 
+    font-size: 16px; 
+    font-family: "Gilroy-Medium" , sans-serif;
+     font-weight: 400; 
+    word-wrap: break-word;
+}
+.similar-job-description img {
+    width: 16px;
+}
+.similar-job-description li{
+    font-size: 16px;
+}
+@media (max-width:1190px) {
+.container_image img{
+    width: 40%;
+    position: absolute;
+    right:0;
+    bottom: 0;
+}    
+}
+@media (max-width:767px) {
+    .container_image img{
+        width: 95%;
+        position: absolute;
+        right:0;
+        bottom: 0;
+    }    
+    }
+
+@media (max-width:767px){
+    .course_details_col {
+        background: rgba(217, 217, 217, 0.3)!important;
+        border: 1px solid #FC2B5A;
+        padding: 30px 30px;    
+    }
+}

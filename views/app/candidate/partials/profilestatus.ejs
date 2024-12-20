@@ -1,0 +1,253 @@
+
+<section Id="profile_status" class="mt-3 mb-xl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-0">
+  <div class="row">
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+      <a href="/candidate/cashback">
+        <div class="card">
+          <div class="card-body profile_step_col-new done shadow card-yellow yellow-ribbon px-0 py-1">
+            <div class="row">
+              <div class="col-6 text-center">
+                <img src="/images/icons/wallet-t.png" class="img-fluid px-1">
+              </div>
+              <div class="col-6 px-0 ">
+                <h5 class="pt-1 mb-0 candid-box">My Earnings /</h5>
+                <p class=" profile-status ">मेरी कमाई
+                </p>
+
+              </div>
+            </div>
+            <div class="bg-stripfour">
+              <p class="mt-2 mb-0 candid-box candid-boxtext text-center text-white citric">
+                &#8377; <%=totalCashback[0]?.totalAmount ? totalCashback[0]?.totalAmount : 0 %>
+              </p>
+            </div>
+            <div class="fixed-at-corner__corner fixed-at-corner__corner--br">
+              <img src="/images/icons/go-arrow.png" class="img-fluid">
+            </div>
+          </div>
+
+        </div>
+      </a>
+    </div>
+    <% if(!profile.profiledetails||!profile.qualification||!profile.experience){%>
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+      <a href="/candidate/myProfile">
+        <div class="card">
+          <div class="card-body profile_step_col-new done org-ribbon shadow px-0 py-1">
+            <div class="row">
+              <div class=" col-6 text-center">
+
+                <img src="/images/icons/dashlogo.png" class="img-fluid px-1">
+                
+
+              </div>
+              <div class=" col-6 px-0">
+                <h5 class="pt-1 mb-0 candid-box">Profile Details /</h5>
+                <p class=" profile-status ">प्रोफ़ाइल विवरण</p>
+
+              </div>
+            </div>
+            <div class="bg-file">
+              <p class="mt-2 mb-0 candid-box candid-boxtext text-center text-white citric">
+                <%= (profile.profiledetails && profile.qualification && profile.experience)? 'Completed' : 'Due' %>
+              </p>
+            </div>
+            <div class="fixed-at-corner__corner fixed-at-corner__corner--br org-ribbon">
+              <% if(profile.profiledetails && profile.qualification && profile.experience) {%>
+              <i class="fa-solid fa-check status_done hifun"></i>
+              <% } %>
+            </div>
+
+          </div>
+        </div>
+      </a>
+    </div>
+    <% } else {%>
+      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+        <a href="/candidate/InterestedCompanies">
+          <div class="card">
+            <div class="card-body profile_step_col-new done shadow card-green green-ribbon px-0 py-1 ">
+              <div class="row">
+                <div class="col-6 text-center">
+  
+                  <img src="/images/icons/job-alloc.png" class="img-fluid px-1">
+                  
+  
+                </div>
+                <div class="col-6 px-0">
+                  <h5 class="pt-1 mb-0 candid-box">Shortlisting /</h5>
+                  <p class=" profile-status ">शॉर्टलिस्टिंग</p>
+  
+                </div>
+              </div>
+              <div class="bg-stripone">
+                <p class="mt-2 mb-0 candid-box candid-boxtext text-center pt-0 text-white citric" >
+                  <%=shortlistedCount? shortlistedCount : 0 %>
+                </p>
+              </div>
+              <div class="fixed-at-corner__corner fixed-at-corner__corner--br">
+                <img src="/images/icons/go-arrow.png" class="img-fluid">
+              </div>
+  
+            </div>
+          </div>
+        </a>
+      </div>
+      <% } %>
+      
+    <!-- <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+      <a href="/candidate/myProfile/#qualification">
+        <div class="card ">
+          <div class="card-body profile_step_col-new done shadow blue-card blue-ribbon">
+            <div class="row">
+              <div class="col-6 text-center">
+
+                <img src="/images/icons/cap.png" class="img-fluid">
+                <p class="mt-1 mb-0 candid-box candid-boxtext text-center">
+                  <%=profile.qualification? 'Completed' : 'Due' %>
+                </p>
+
+              </div>
+              <div class="col-6 px-0 ">
+                <h5 class="pt-1 mb-0 candid-box">Qualification /</h5>
+                <p class=" profile-status ">योग्यता</p>
+
+              </div>
+            </div>
+            <div class="fixed-at-corner__corner fixed-at-corner__corner--br tag-blue">
+              <% if(profile.qualification) {%>
+              <i class="fa-solid fa-check status_done"></i>
+              <% } %>
+
+
+            </div>
+
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+      <a href="/candidate/myProfile/#Experience-section">
+        <div class="card">
+          <div class="card-body profile_step_col-new done shadow card-green green-ribbon">
+            <div class="row">
+              <div class="col-6 text-center">
+
+                <img src="/images/icons/light.png" class="img-fluid">
+                <p class="mt-1 mb-0 candid-box candid-boxtext text-center">
+                  <%=profile.experience? 'Completed' : 'Due' %>
+                </p>
+
+              </div>
+              <div class="col-6 px-0">
+                <h5 class="pt-1 mb-0 candid-box">Experience /</h5>
+                <p class=" profile-status ">अनुभव</p>
+
+              </div>
+            </div>
+            <div class="fixed-at-corner__corner fixed-at-corner__corner--br">
+              <% if(profile.experience) {%>
+              <i class="fa-solid fa-check status_done"></i>
+              <% } %>
+            </div>
+
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+      <a href="/candidate/myProfile/#skills-and-profile">
+        <div class="card">
+          <div class="card-body profile_step_col-new done shadow card-yellow yellow-ribbon">
+            <div class="row">
+              <div class="col-6 text-center">
+
+                <img src="/images/icons/dashlogo.png" class="img-fluid">
+                <p class="mt-1 mb-0 candid-box candid-boxtext text-center">
+                  <%=profile.skills? 'Completed' : 'Due' %>
+                </p>
+
+              </div>
+              <div class="col-6 px-0 ">
+                <h5 class="pt-1 mb-0 candid-box">Skills /</h5>
+                <p class=" profile-status ">कौशल</p>
+
+              </div>
+            </div>
+            <div class="fixed-at-corner__corner fixed-at-corner__corner--br">
+              <% if(profile.experience) {%>
+              <i class="fa-solid fa-check status_done"></i>
+              <% } %>
+            </div>
+          </div>
+
+        </div>
+      </a>
+    </div> -->
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+      <a href="/candidate/searchjob">
+        <div class="card">
+          <div class="card-body profile_step_col-new done org-ribbon shadow job-pink px-0 py-1">
+            <div class="row">
+              <div class=" col-6 text-center">
+
+                <img src="/images/icons/jobinhandt.png" class="img-fluid px-1">
+                
+
+              </div>
+              <div class=" col-6 px-0">
+                <h5 class="pt-1 mb-0 candid-box">Available Jobs
+                  /</h5>
+                <p class=" profile-status ">उपलब्ध नौकरियां
+                </p>
+
+              </div>
+            </div>
+            <div class="bg-striptwo">
+              <p class="mt-2 mb-0 candid-box candid-boxtext text-center text-white citric">
+                <%=jobsCount? jobsCount : 0 %>
+              </p>
+            </div>
+            <div class="fixed-at-corner__corner fixed-at-corner__corner--br purple-ribbon">
+              <img src="/images/icons/go-arrow.png" class="img-fluid ">
+            </div>
+
+          </div>
+        </div>
+      </a>
+    </div>
+    
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+      <a href="/candidate/Coins">
+        <div class="card">
+          <div class="card-body profile_step_col-new done org-ribbon shadow mipie-blue text-white px-0 py-1">
+            <div class="row">
+              <div class=" col-6 text-center">
+
+                <img src="/images/icons/coins-stack.png" class="img-fluid px-1">
+                
+
+              </div>
+              <div class=" col-6 px-0">
+                <h5 class="pt-1 mb-0 candid-box">Coins /</h5>
+                <p class=" profile-status "> सिक्के
+                </p>
+
+              </div>
+            </div>
+            <div class="bg-stripthree">
+              <p class="mt-2 mb-0 candid-box candid-boxtext text-center text-white citric">
+                <%=candidate?.creditLeft? candidate?.creditLeft : 0 %>
+              </p>
+            </div>
+            <div class="fixed-at-corner__corner fixed-at-corner__corner--br org-ribbon">
+              <img src="/images/icons/go-arrow.png" class="img-fluid">
+            </div>
+
+          </div>
+        </div>
+      </a>
+    </div>
+  </div> 
+
+</section>

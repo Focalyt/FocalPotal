@@ -1,0 +1,408 @@
+
+<nav class="header-navbar navbar-expand-lg navbar navbar-with-menu floating-nav navbar-theme navbar-shadow">
+  <div class="navbar-wrapper">
+    <div class="navbar-container content">
+      <div class="navbar-collapse" id="navbar-mobile">
+        <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+          <ul class="nav navbar-nav">
+            <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs"
+                href="#"><i class="ficon feather icon-menu"></i></a></li>
+          </ul>
+          <ul class="nav navbar-nav bookmark-icons d-none">
+            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="mailto:info@Focalyt.in" target="_top"
+                data-toggle="tooltip" data-placement="top" title="Email"><i
+                  class="ficon feather icon-mail text-white"></i></a></li>
+          </ul>
+        </div>
+        <ul class="nav navbar-nav float-right">
+          <li class="nav-item nav-search">
+            <div class="search-input">
+              <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
+              <input class="input" type="text" placeholder="Explore Vuexy..." tabindex="-1" data-search="template-list">
+              <div class="search-input-close"><i class="feather icon-x"></i></div>
+              <ul class="search-list search-list-main"></ul>
+            </div>
+          </li>
+          <li class="dropdown dropdown-notification nav-item  d-none"><a class="nav-link nav-link-label" href="#"
+              data-toggle="dropdown"><i class="ficon feather icon-bell text-white"></i><span
+                class="badge badge-pill badge-primary badge-up">5</span></a>
+            <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right d-none">
+              <li class="dropdown-menu-header">
+                <div class="dropdown-header m-0 p-2">
+                  <h3 class="white">5 New</h3><span class="notification-title">App Notifications</span>
+                </div>
+              </li>
+              <li class="scrollable-container media-list"><a class="d-flex justify-content-between"
+                  href="javascript:void(0)">
+                  <div class="media d-flex align-items-start">
+                    <div class="media-left"><i class="feather icon-plus-square font-medium-5 primary"></i></div>
+                    <div class="media-body">
+                      <h6 class="primary media-heading">You have new order!</h6><small class="notification-text">
+                        Are
+                        your going to meet me tonight?</small>
+                    </div><small>
+                      <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">9 hours ago</time></small>
+                  </div>
+                </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                  <div class="media d-flex align-items-start">
+                    <div class="media-left"><i class="feather icon-download-cloud font-medium-5 success"></i></div>
+                    <div class="media-body">
+                      <h6 class="success media-heading red darken-1">99% Server load</h6><small
+                        class="notification-text">You got new order of goods.</small>
+                    </div><small>
+                      <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">5 hour ago</time></small>
+                  </div>
+                </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                  <div class="media d-flex align-items-start">
+                    <div class="media-left"><i class="feather icon-alert-triangle font-medium-5 danger"></i></div>
+                    <div class="media-body">
+                      <h6 class="danger media-heading yellow darken-3">Warning notifixation</h6><small
+                        class="notification-text">Server have 99% CPU usage.</small>
+                    </div><small>
+                      <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Today</time></small>
+                  </div>
+                </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                  <div class="media d-flex align-items-start">
+                    <div class="media-left"><i class="feather icon-check-circle font-medium-5 info"></i></div>
+                    <div class="media-body">
+                      <h6 class="info media-heading">Complete the task</h6><small class="notification-text">Cake
+                        sesame snaps cupcake</small>
+                    </div><small>
+                      <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last week</time></small>
+                  </div>
+                </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                  <div class="media d-flex align-items-start">
+                    <div class="media-left"><i class="feather icon-file font-medium-5 warning"></i></div>
+                    <div class="media-body">
+                      <h6 class="warning media-heading">Generate monthly report</h6><small
+                        class="notification-text">Chocolate cake oat cake tiramisu marzipan</small>
+                    </div><small>
+                      <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last month</time></small>
+                  </div>
+                </a></li>
+              <li class="dropdown-menu-footer"><a class="dropdown-item p-1 text-center text-white"
+                  href="javascript:void(0)">Read
+                  all notifications</a></li>
+            </ul>
+          </li>
+          <div class="bell my-auto">
+            <a href="/candidate/notifications"><i class="fa-solid fa-bell " style="color: #fff; font-size: 22px;"></i>
+            <span class="badge text-bg-secondary" id="notification"></span></a>
+            </div>
+          <li class="dropdown dropdown-user nav-item" id="logout-block"><a
+              class="dropdown-toggle nav-link dropdown-user-link special-name" href="#" data-toggle="dropdown">         
+              <div class="user-nav d-sm-flex d-flex">
+                <span class="user-name text-bold-600 text-white text-capitalize mb-0 mipie-cand-name" id="user-name"></span>
+                <span class="text-white">
+                  <ul class="list-unstyled">
+                    <li>
+                      <span class="user-status text-white">Coins: </span>
+                      <span class="font-weight-bold text-white" id="userCredit">
+                      </span>
+                    </li>
+                  </ul>
+                </span>
+              </div>
+                <span class="text-center pl-1">
+                    <img src="" alt="profile-status" class="img-fluid" id='profile-visibility-status'>
+                   </span>
+                  </a>
+            <div class="dropdown-menu dropdown-menu-right" id="logout-div">
+              <a class="dropdown-item" href="/candidate/myProfile"><i class="feather icon-edit"></i> Edit
+                Profile</a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profilevisible"><i class="feather icon-user"></i> Show profile</a>
+              <div class="dropdown-divider"></div><a class="dropdown-item" onclick="logout()" href="#"><i
+                  class="feather icon-power"></i>
+                Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="modal fade show" id="profilevisible" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-sm">
+<div class="modal-header vchr_header">
+<h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Show Profile / प्रोफ़ाइल दिखाएं</h5>
+<button type="button" class="close color-purple" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">×</span>
+</button>
+</div>
+<div class="modal-body px-0 py-0">
+<h3 class="coupon-text line-cop my-xl-1 my-lg-1 my-md-3 my-sm-3 my-3">Show my profile to the company/ कंपनी को मेरा प्रोफ़ाइल दिखाएं </h3>
+<div class="modal-footer custom-blue">
+  <button type="button" class="btn btn-md ml-1 voucher-btn text-white" onclick="updateProfileStatus(false)">No / नहीं </button>
+  <button type="button" class="btn btn-md ml-1 voucher-btn text-white" onclick="updateProfileStatus(true)">Yes / हाँ</button>
+</div>
+<p class="text-success font-weight-bolder font-italic" id="success-message"></p>
+<p class="text-danger font-weight-bolder fontShow my profile to the company-italic" id="error-message"></p>
+</div>
+</div>
+</div>
+</div>
+
+      <!-- Modal -->
+      <!-- data-backdrop="static" -->
+      <div class="modal fade" id="login_preregister" tabindex="-1" role="dialog" aria-labelledby="login_preregisterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header text-left">
+              <h5 class="modal-title text-white font-weight-normal" id="exampleModalLongTitle">VERIFY YOUR NUMBER</h5>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xl-7 col-lg-7 col-md-6 col-sm-6 col-6">
+                  <input class="form-control" type="number" value="" id="user-input" disabled>
+                </div>
+                <div class="col-xl-5 col-lg-5 col-md-4 col-sm-6 col-6 verify_btnn">
+                  <button type="button" id="generate-otp" class="btn btn-primary btn-sm d-block w-100"><img src="/images/icons/send_otp.png" class="img-fluid" draggable="false">Send OTP</button>
+                </div>
+                <div class="col-xl-5 col-lg-5 col-md-4 col-sm-6 col-6" style="display: none;">
+                  <button type="button" class="btn btn-primary btn-sm d-block w-100" id="resend-btn"><img src="/images/icons/call-icon.png" class="img-fluid" draggable="false"><span class="pl-1">OTP on call</span></button>
+                </div>
+                <div class="col-xl-12 smbt_otp mt-1">
+                  <!-- <input class="form-control" type="number" placeholder="Enter OTP"> -->
+                  <label class="sr-only" for="otp-input">Enter OTP</label>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><img src="/images/icons/otp_img.png" class="img-fluid" draggable="false"></div>
+                    </div>
+                    <input type="text" class="form-control" id="otp-input" placeholder="Enter OTP">
+                  </div>
+                </div>
+              </div>
+              <p class="text-success font-weight-bolder font-italic" id="succ-message"></p>
+              <p class="text-danger font-weight-bolder fontShow my profile to the company-italic" id="err-message"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary btn-sm" id="verify-login-btn"><img src="/images/icons/verify.png" class="img-fluid" draggable="false">VERIFY</button>
+              <button type="button" class="btn btn-primary btn-sm" id="changeNumber"><img src="/images/icons/edit_number.png" class="img-fluid" draggable="false">CHANGE NUMBER</button>
+            </div>
+          </div>
+        </div>
+      </div>
+<script src="https://kit.fontawesome.com/9f033fe1e6.js" crossorigin="anonymous"></script>
+<script>
+  $('.bell').on('click', function() {
+  window.location.href = '/candidate/notifications';
+});
+
+$('#user-name').text(localStorage.getItem('candidate'))
+$('#name-of-user').text(localStorage.getItem('candidate'))
+const logoutBlock = document.getElementById('logout-div');
+logoutBlock.addEventListener('click', () => {
+  $('#logout-div').toggleClass('show');
+})
+
+  const logout = e => {
+    $.ajax({
+      type: 'GET',
+      url: '/api/logout',
+      headers: { 'x-auth': localStorage.getItem('token') },
+      success: (res) => {
+        localStorage.clear()
+        sessionStorage.clear();
+        window.location.href = '/candidate/login'
+      }
+    });
+  }
+  $(document).ready(function(){
+    const userInput = document.getElementById("user-input");
+    $.ajax({
+    type: 'GET',
+    url: '/candidate/getCreditCount',
+    headers: { 'x-auth': localStorage.getItem('token') },
+    success: function(data){
+      let credit = data.credit
+      if(!credit) {credit = 0}
+        $('#userCredit').text(credit)
+      }
+  })
+  $.ajax({
+    type: 'GET',
+    url: '/candidate/notificationCount',
+    headers: { 'x-auth': localStorage.getItem('token')},
+    success: function(data){
+      let count = data?.count ? data.count : 0
+      $('#notification').text(count)
+    }
+  })
+  $.ajax({
+    type:'GET',
+    url:'/candidate/verification',
+    headers: { 'x-auth': localStorage.getItem('token')},
+    success: function(data){
+      if(data.data.verified !== undefined && data.data.verified === false){
+        $('#login_preregister').modal({backdrop: 'static', keyboard: false},'show');
+        $('#user-input').val(data.data.mobile)
+        userInput.disabled = true;
+      }
+    }
+  })
+  
+  const generateOTP = document.getElementById('generate-otp')
+  const loginBtn = document.getElementById('verify-login-btn')
+  const otp = document.getElementById('otp-input')
+  const resendBtn = document.getElementById("resend-btn");
+  
+  $(otp).keypress((e)=>{
+    if(e.which === 13){
+      $(loginBtn).click()
+    }
+  })
+  generateOTP.addEventListener('click', (event) => {
+    let body = { mobile: userInput.value }
+    axios.post("/api/sendCandidateOtp", body).then((res) => {
+      $("err-message").text(' ');
+      $('err-message').hide();
+      $('#generate-otp').closest('div').hide();
+      $('#resend-btn').closest('div').show();
+
+      $('#succ-message').text("OTP sent successfully")
+      $('#resend-btn').addClass('disabled');
+let time = 20000;
+let interval = setInterval(function () {
+    time = time - 1000; // reduce each second
+    let timeleft = (time / 1000) % 60;
+    $('#resend-btn').find('span').text(`Resend in ${timeleft} secs`);
+    $('#resend-btn').find('span').css('padding-left', '10px'); // add left padding
+    if (time <= 0) {
+        $('#resend-btn').find('span').text('OTP on call');
+        clearInterval(interval);
+        $('#resend-btn').removeClass('disabled');
+        $('#resend-btn').find('span').css('padding-left', '10px'); // remove the padding
+    }
+}, 1000);
+
+    })
+  })
+  loginBtn.addEventListener('click', () => { 
+                    if (otp.value.length === 4) {
+                        let body;
+                        body = {
+                            mobile: userInput.value,
+                            otp: otp.value
+                        }
+                        axios.post('/api/verifyOtp', body)
+                            .then((res) => {
+                                if (res.data.status === true) {
+                                    $('#err-message').text(" ");
+                                    $('#err-message').hide()
+                                    $('#succ-message').show()
+                                    $('#succ-message').text("Mobile Number Verified")
+                                    const body = { mobile: userInput.value , verified: true }
+                                    let header = { headers: { 'x-auth': localStorage.getItem('token') } }
+
+                                    axios.post('/candidate/verification',body,header).then((res)=>{
+                                      if(res.data.status == true)
+                                      window.location.reload();
+                                    }).catch((err) => {
+                                    console.log("Err response in verification ====>", err)
+                                    return res.status(500).send({
+                                      status: false,
+                                      message: err
+                                    })
+                                  })
+                                } else {
+                                    $('#succ-message').text(" ");
+                                    $('#succ-message').hide();
+                                    $('#err-message').show();
+                                    $('#err-message').text("Incorrect OTP");
+                                }
+                            }).catch((err) => {
+                                console.log("Err response in otp====>", err)
+                                return res.status(500).send({
+                                    status: false,
+                                    message: err
+                                })
+                            })
+                    } else {
+                        $('#succ-message').hide();
+                        $('#err-message').text("Incorrect OTP");
+                        $('#err-message').show();
+                    }
+                })
+  
+  resendBtn.addEventListener('click', (event) => {
+            if ($(resendBtn).hasClass('disabled')) {
+                return false
+            }
+            event.preventDefault();
+            const body = { mobile: userInput.value }
+            $.get("/api/resendOTP", body).then((res) => {
+                if (res.status === true) {
+                    $('#err-message').text(' ')
+                    $('#err-message').hide()
+                    $('#succ-message').show();
+                    $('#succ-message').text("OTP resend");
+                    $('#resend-btn').addClass('disabled');
+                    let time = 20000;
+                    let interval = setInterval(function () {
+                        time = time - 1000; //reduce each second
+                        let timeleft = (time / 1000) % 60
+                        $('#resend-btn').find('span').text(`Resend in ${timeleft} secs`)
+                        if (time <= 0) {
+                            $('#resend-btn').find('span').text('OTP on call');
+                            clearInterval(interval)
+                            $('#resend-btn').removeClass('disabled')
+                        }
+                    }, 1000);
+                } else {
+                    $('#err-message').text(res.data.message);
+                    $('#err-message').show()
+                    $('#succ-message').text(' ');
+                    $('#succ-message').hide();
+                }
+            })
+        })
+        
+})
+  $(document).on("click", function(e) {
+  var logoutDiv = $("#logout-div");
+  if (!logoutDiv.is(e.target) && logoutDiv.has(e.target).length === 0) {
+    logoutDiv.removeClass("show");
+  }
+});
+const updateProfileStatus=(status)=>{
+  const body={status:status};
+  axios.post("/candidate/updateprofilestatus",body).then((res)=>{
+     if(res.data.status){
+      $('#error-message').text('');
+      $('#success-message').text(res.data.message);
+      window.location.reload()
+     }else{
+      $('#error-message').text(res.data.message);
+      $('#success-message').text('');
+     }
+  }).catch((err)=>{
+    $('#error-message').text(err.message);
+    $('#success-message').text('');
+  })
+}
+axios.get("/candidate/getcandidatestatus").then((res)=>{
+  if(res.data.visibility){ document.getElementById('profile-visibility-status').src="/images/confirm.png"
+  }else{
+    document.getElementById('profile-visibility-status').src="/images/notconfirm.png" 
+    if(!localStorage.getItem("modalShown")){
+      $('#profilevisible').modal('show');
+      localStorage.setItem('modalShown',true)
+    }
+  }
+})
+
+$('#changeNumber').bind('click',()=>{
+  $.ajax({
+      type: 'GET',
+      url: '/api/logout',
+      headers: { 'x-auth': localStorage.getItem('token') },
+      success: (res) => {
+        localStorage.clear()
+        sessionStorage.clear();
+        window.location.href = '/candidate/login'
+      }
+    });
+})
+</script>

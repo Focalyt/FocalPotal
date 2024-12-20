@@ -1,0 +1,150 @@
+<% include ../../partials/header %>
+
+<!-- pwa add -->
+<link rel="manifest" href="/manifest.json">
+<!-- pwa end -->
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+  data-menu="vertical-menu-modern" data-col="2-columns">
+<!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-W39K27R');</script>
+  <!-- End Google Tag Manager -->
+
+  <% include ./partials/navbar%>
+  <% include ./partials/leftpane%>
+  <% include ../../partials/flash %>
+  <div class="app-content content basic-timeline">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+      <div class="content-header row">
+      </div>
+      <div class="content-body  mb-4">
+    <a href="/candidate/cashback">
+            <div class="  height-structure bannerCan">
+              <!-- <h5 class="mb-2">Welcome <span class="font-italic text-primary" id="user-name"></span></h5> -->
+            </div>
+        </a>
+        <% include ./partials/profilestatus%>
+        <section id="jobs_update  ">
+          <div class="row">
+            <% if (hiringStatus?.length > 0) { %>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-2 mb-sm-0 mb-0 candidate-card">
+              <div class="card mt-1 mb-2">
+                <div class="col-xl-12 py-1">
+                  <div class="row">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 my-auto">
+                      <h4 class="card-title mb-0" id="wrapping-bottom">Interested Companies / इच्छुक कंपनियां</h4>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-right my-auto">
+                      <a href="/candidate/InterestedCompanies" class="btn btn-outline-primary btn-sm">View All</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <div class="table-responsive">
+                    <table class="table table-hover-animation mb-0 table-hover">
+                      <thead>
+                        <tr>
+                          <th>Date & Time</th>
+                          <th>Company</th>
+                          <th>Industry</th>
+                          <th>City</th>
+                        </tr>
+                      </thead>
+                      <tbody id="table-body">
+                        <% hiringStatus?.forEach((hiring, i)=> { %>
+                        <tr>
+                          <td>
+                            <%= hiring.updatedAt ?  moment(hiring.updatedAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A') : "NA" %>
+                          </td>
+                          <td><%= hiring.company ? hiring.company.name : "NA" %></td>
+                          <td><%= hiring.company?._industry ? hiring.company?._industry?.name : "NA" %></td>
+                          <td>
+                            <%= hiring.company?.cityId ? cities.find(city => city._id == hiring.company?.cityId)?.name : "NA" %>
+                          </td>
+                        </tr>
+                        <% }) %>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% } %>
+            <% if (candidate?.appliedJobs?.length > 0) { %>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-xl-0 mb-lg-0 mb-md-sm-0 mb-0 candidate-card">
+              <div class="card mt-1 mb-2">
+                <div class="col-xl-12 py-1">
+                  <div class="row">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 my-auto " >
+                      <h4 class="card-title mb-0" id="wrapping-bottom">Latest Applied Jobs / नवीनतम लागू नौकरियां</h4>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 text-right my-auto">
+                      <a href="/candidate/appliedJobs" class="btn btn-outline-primary btn-sm">View All</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <div class="table-responsive">
+                    <table class="table table-hover-animation mb-0 table-hover">
+                      <thead>
+                        <tr>
+                          <th>Company</th>
+                          <th>Industry</th>
+                          <th>City</th>
+                          <th>State</th>
+                        </tr>
+                      </thead>
+                      <tbody id="table-body">
+                        <% candidate.appliedJobs.forEach((l, i)=> { %>
+                        <tr>
+                          <td><%= l._company ? l._company.name : "NA" %></td>
+                          <td><%= l._industry ? l._industry.name : "NA" %></td>
+                          <td><%= l.city ? l.city.name : "NA" %></td>
+                          <td><%= l.state ? l.state.name : "NA" %></td>
+                        </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% } %>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+
+  <script>
+    $('#user-name').text(localStorage.getItem('candidate'))
+  </script>
+
+
+<!-- A2HS JS -->
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/public/service-worker.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful with scope:', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('ServiceWorker registration failed:', error);
+        });
+    });
+  }
+</script>
+
+
+  <% include ./partials/footer%>

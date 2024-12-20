@@ -1,0 +1,126 @@
+<% include ../partials/header %>
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+	<div class="content-overlay"></div>
+	<% include ../partials/flash %>
+	<div class="content-wrapper null-margin">
+		
+		<div class="content-body">
+			
+			<section class="row flexbox-container">
+				<div class="col-xl-8 col-11 d-flex justify-content-center">
+					<div class="card bg-authentication rounded-0 mb-0 w-100">
+						<div class="row m-0">
+						
+							<div class="col-lg-12 col-12 p-0">
+								<div class="card rounded-0 mb-0 px-2 w-100">
+									<div class="card-header pb-1">
+										<div class="card-title">
+											<h4 class="mb-0">Edit Coins Value</h4>
+										</div>
+									</div>
+
+									<div class="card-content">
+										<div class="card-body pt-1">
+											<form method="POST" action="" name="email" id="form">
+                                                <label for=""><strong>Apply Job</strong></label>
+												<fieldset class="form-label-group form-group position-relative has-icon-left">
+													<input onkeypress="if(this.value.length==4) return false" maxlength="4"
+														type="number"
+														class="form-control"
+														value="<%= coinsInfo?.job%>"
+														name="job"
+													
+													/>
+													<div class="form-control-position">
+													</div>
+												</fieldset>
+                                                <label for=""><strong>Send Sms</strong></label>
+												<fieldset class="form-label-group form-group position-relative has-icon-left">
+													<input onkeypress="if(this.value.length==4) return false" maxlength="4"
+														type="number"
+														class="form-control"
+														value="<%= coinsInfo?.SMS%>"
+														name="SMS"
+													/>
+													
+												</fieldset>
+                                                <label for=""><strong>Shortlist Candidate</strong></label>
+												<fieldset class="form-label-group form-group position-relative has-icon-left">
+													<input onkeypress="if(this.value.length==4) return false" maxlength="4"
+														type="number"
+														class="form-control"
+														value="<%= coinsInfo?.shortlist%>"
+														name="shortlist"
+													/>
+													
+												</fieldset>
+												<label for=""><strong>Default Candidate Coins</strong></label>
+												<fieldset class="form-label-group form-group position-relative has-icon-left">
+													<input onkeypress="if(this.value.length==4) return false" maxlength="4"
+														type="number"
+														class="form-control"
+														value="<%= coinsInfo?.candidateCoins%>"
+														name="candidateCoins"
+													/>
+													
+												</fieldset>
+												<label for=""><strong>Default Company Coins</strong></label>
+												<fieldset class="form-label-group form-group position-relative has-icon-left">
+													<input onkeypress="if(this.value.length==4) return false" maxlength="4"
+														type="number"
+														class="form-control"
+														id="name"
+														value="<%= coinsInfo?.companyCoins%>"
+														name="companyCoins"
+													/>
+													
+												</fieldset>
+
+												<label for=""><strong>contact coins premium service</strong></label>
+												<fieldset class="form-label-group form-group position-relative has-icon-left">
+													<input onkeypress="if(this.value.length==4) return false" maxlength="4"
+														type="number"
+														class="form-control"
+														id="name"
+														value="<%= coinsInfo?.contactcoins%>"
+														name="contactcoins"
+													/>
+												</fieldset>
+
+												<div
+													class="form-group d-flex justify-content-between align-items-center"
+												>
+													<div class="text-left"></div>
+												</div>
+
+												<button href="#" type="submit" class="btn btn-primary float-right btn-inline">
+													Update
+												</button>
+											</form>
+										</div>
+									</div>
+									<div class="login-footer">
+										<div class="divider"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+<style>
+	.alertAdminSuccess {
+		left: 5% !important;
+		top: 0% !important;
+	}
+	.alertAdmin {
+		top: 0% !important;
+		   left: 8% !important;
+	}	
+</style>
+<% include ../partials/footer %>
