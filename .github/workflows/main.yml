@@ -13,8 +13,21 @@ jobs:
       # Step 1: Checkout Code
       - name: Checkout Code
         uses: actions/checkout@v3
+     # Step 2: Set up Node.js (if applicable)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          
+     # Step 3: Install Dependencies
+      - name: Install Dependencies
+        run: npm install
 
-      # Step 2: Configure AWS Credentials
+      # Step 4: Build Project
+      - name: Build Project
+        run: npm run build    
+
+      # Step 5: Configure AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -22,7 +35,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # Step 3: Deploy to S3 (Example)
+      # Step 6: Deploy to S3 (Example)
       - name: Deploy to S3
         run: |
           aws s3 sync ./build s3://focalyt-portal  --delete
