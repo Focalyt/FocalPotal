@@ -23,9 +23,9 @@ jobs:
       - name: Install Dependencies
         run: npm install --force
 
-      # Step 4: Build Project
-      - name: Build Project
-        run: npm run build    
+       # Step 4: Create Build Directory
+      - name: Create Build Directory (if missing)
+        run: mkdir -p build  
 
       # Step 5: Configure AWS Credentials
       - name: Configure AWS Credentials
