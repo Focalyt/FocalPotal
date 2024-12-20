@@ -10,7 +10,9 @@
     "start": "nodemon mmt.js",
     "restart": "pm2 reload mmt",
     "seed": "node seed",
-    "lint": "eslint '**/*.js'"
+    "lint": "eslint '**/*.js'",
+  "build": "echo 'No build step required for backend'"
+
   },
   "jest": {
     "testEnvironment": "node"
