@@ -11,8 +11,7 @@
     "restart": "pm2 reload mmt",
     "seed": "node seed",
     "lint": "eslint '**/*.js'",
-  "build": "echo 'No build step required for backend'"
-
+    "build": "echo 'No build step required for backend'"
   },
   "jest": {
     "testEnvironment": "node"
@@ -71,7 +70,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-watch": "^4.0.2",
     "husky": "^1.2.0",
-    "nodemon": "^1.18.7",
+    "nodemon": "^1.19.4",
     "npm-run-all": "^4.1.5"
   },
   "eslintConfig": {
