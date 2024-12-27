@@ -16774,3 +16774,60 @@ Common: Spacing Gutters
     padding-bottom: 120px;
   }
 }
+/* login btn css */
+/* Hide the dropdown by default */
+#loginDropdown {
+  display: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;  /* Light background color */
+  border-radius: 5px;
+  position: absolute;
+  top: 80%;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Show the dropdown when hovering over the container */
+.dropdown-container:hover #loginDropdown {
+  display: block;
+}
+
+/* Style the dropdown items */
+#loginDropdown .dropdown-item {
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+#loginDropdown .dropdown-item:hover {
+  background-color: #FC2B5A;
+  border-radius: 5px;
+  color: white;
+}
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  /* Ensure dropdown appears as block for mobile */
+  #loginDropdown {
+    position: static;
+    display: none; /* Hidden by default */
+    margin-top: 10px;
+  }
+
+  #loginDropdown .dropdown-item {
+    display: block; /* Make each dropdown item full width */
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #loginDropdown .dropdown-item:hover {
+    border-radius: 0;
+  }
+
+  /* When dropdown is active (JavaScript adds 'active' class) */
+  #loginDropdown.active {
+    display: block;
+  }
+}

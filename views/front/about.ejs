@@ -102,8 +102,24 @@
                   <li class="nav-item d-xl-none d-lg-none d-md-none d-sm-block d-block">
                     <a class='nav-link-item drop-trigger' href='/contact'>Contact Us</a>
                   </li>
-                  <li class="nav-item active d-xl-flex d-lg-flex d-md-flex d-sm-none d-none">
-                    <a class='nav-link-item drop-trigger active_menu' href='/contact'>Contact Us</a>
+                  <!-- active -->
+                  <li class="nav-item  d-xl-flex d-lg-flex d-md-flex d-sm-none d-none">
+                    <!-- active_menu -->
+                    <a class='nav-link-item drop-trigger ' href='/contact'>Contact Us</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <!-- Container for hoverable area -->
+                    <div class="dropdown-container">
+                      <!-- Login Text as a Span -->
+                      <span class="nav-link-item drop-trigger active_menu" id="loginLink">LogIn</span>
+                      
+                      <!-- Dropdown Menu -->
+                      <ul class="dropdown-menu" id="loginDropdown">
+                        <li><a href="#" class="dropdown-item">Login as Corporate</a></li>
+                        <li><a href="#" class="dropdown-item">Login as Student</a></li>
+                      </ul>
+                    </div>
                   </li>
                 </ul>
               </div>
