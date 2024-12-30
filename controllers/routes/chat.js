@@ -1,6 +1,8 @@
 const express = require("express");
 const moment = require("moment");
 const ObjectId = require("mongodb").ObjectId;
+require('dotenv').config()
+const { extraEdgeAuthToken, extraEdgeUrl, env } = require("../../config");
 
 const {
 	Vacancy, Courses, Candidate, Company, AppliedJobs, AppliedCourses, User, CandidateCashBack
