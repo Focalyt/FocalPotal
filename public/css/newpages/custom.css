@@ -80,7 +80,7 @@ a.nav-link-item.drop-trigger.active_menu {
 }
 
 .nav-item .dropdown-container > span.active_menu {
-    color: #FC2B5A;
+    color: #FC2B5A!important;
     background: #fff;
     border-radius: 10px;
     /* padding: 0px 10px!important;
