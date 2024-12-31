@@ -85,6 +85,28 @@ const cashBackLogic = require("../../models/cashBackLogic");
 const { sendNotification } = require('../services/notification');
 const kycDocument = require("../../models/kycDocument");
 const { CandidateValidators } = require('../../../helpers/validators')
+
+async function sendFbEvent(eventName, userData, customData = {}) {
+  const serverEvent = new ServerEvent()
+      .setEventName(eventName)
+      .setEventTime(Math.floor(new Date() / 1000))
+      .setUserData(userData)
+      .setCustomData(customData)
+      .setEventSourceUrl('https://focalyt.com')
+      .setActionSource('website');
+
+  const eventsData = [serverEvent];
+  const eventRequest = new EventRequest(fbConversionAccessToken, fbConversionPixelId)
+      .setEvents(eventsData);
+
+  try {
+      const response = await eventRequest.execute();
+      console.log('Facebook Pixel Event Sent:', response);
+  } catch (error) {
+      console.error('Error sending Facebook Pixel Event:', error.message);
+  }
+}
+
 router.route('/')
   .get(async (req, res) => {
     let user = req.session.user
