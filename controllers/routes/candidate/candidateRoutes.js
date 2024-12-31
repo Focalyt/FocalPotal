@@ -86,18 +86,26 @@ const { sendNotification } = require('../services/notification');
 const kycDocument = require("../../models/kycDocument");
 const { CandidateValidators } = require('../../../helpers/validators')
 
-async function sendFbEvent(eventName, userData, customData = {}) {
-  const serverEvent = new ServerEvent()
-      .setEventName(eventName)
-      .setEventTime(Math.floor(new Date() / 1000))
-      .setUserData(userData)
-      .setCustomData(customData)
-      .setEventSourceUrl('https://focalyt.com')
-      .setActionSource('website');
+// Helper Functions
+function hashEmail(email) {
+  return crypto.createHash('sha256').update(email).digest('hex');
+}
 
-  const eventsData = [serverEvent];
+function hashPhone(phone) {
+  return crypto.createHash('sha256').update(phone).digest('hex');
+}
+
+async function sendFbEvent(eventPayload) {
+  const serverEvent = new ServerEvent()
+      .setEventName(eventPayload.event_name)
+      .setEventTime(eventPayload.event_time)
+      .setUserData(eventPayload.user_data)
+      .setCustomData(eventPayload.custom_data)
+      .setEventSourceUrl(baseUrl)
+      .setActionSource(eventPayload.action_source);
+
   const eventRequest = new EventRequest(fbConversionAccessToken, fbConversionPixelId)
-      .setEvents(eventsData);
+      .setEvents([serverEvent]);
 
   try {
       const response = await eventRequest.execute();
@@ -106,6 +114,10 @@ async function sendFbEvent(eventName, userData, customData = {}) {
       console.error('Error sending Facebook Pixel Event:', error.message);
   }
 }
+
+
+
+
 
 router.route('/')
   .get(async (req, res) => {
@@ -907,7 +919,40 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       req.flash("error", "Already failed");
       return res.status(400).send({ status: false, msg: "Applied Failed!" });
     }
+   
   }
+  // Send Facebook Event
+  const eventPayload = {
+    event_name: "ApplyCourse",
+    event_time: Math.floor(Date.now() / 1000),
+    action_source: "website",
+    user_data: {
+        em: [hashEmail(candidate.email)],
+        ph: [hashPhone(candidate.mobile)],
+        client_ip_address: req.ip,
+        client_user_agent: req.headers['user-agent']
+    },
+    custom_data: {
+        currency: "INR",
+        value: course.registrationCharges || 0,
+        content_name: course.name,
+        content_type: "Course",
+        content_ids: [course._id],
+        content_category: course.courseLevel || "General",
+        custom_properties: {
+            certifyingAgency: course.certifyingAgency,
+            trainingMode: course.trainingMode,
+            state: candidate.state?.name,
+            city: candidate.city?.name,
+            dob: candidate.dob,
+            age: candidate.age || "N/A",
+            experience: candidate.experience || "N/A"
+        }
+    }
+};
+
+await sendFbEvent(eventPayload);
+
 
   res.status(200).send({ status: true, msg: "Success" });
 });
@@ -1972,6 +2017,37 @@ router.post("/coursepayment", [isCandidate, authenti], async (req, res) => {
       console.log('Error>>>>>>>>>>>>>>>>', err)
       return res.send({ message: err.description })
     }
+    // Send Facebook Event for InitiatePayment
+    const eventPayload = {
+      event_name: "CoursePayment",
+      event_time: Math.floor(Date.now() / 1000),
+      action_source: "website",
+      user_data: {
+          em: [hashEmail(candidate.email)],
+          ph: [hashPhone(candidate.mobile)],
+          client_ip_address: req.ip,
+          client_user_agent: req.headers['user-agent']
+      },
+      custom_data: {
+          currency: "INR",
+          value: course.registrationCharges || 0,
+          content_name: course.name,
+          content_type: "Course",
+          content_ids: [course._id],
+          content_category: course.courseLevel || "General",
+          custom_properties: {
+              certifyingAgency: course.certifyingAgency,
+              trainingMode: course.trainingMode,
+              state: candidate.state?.name,
+              city: candidate.city?.name,
+              dob: candidate.dob,
+              age: candidate.age || "N/A",
+              experience: candidate.experience || "N/A"
+          }
+      }
+  };
+
+  await sendFbEvent(eventPayload);
     console.log(order, '<<<<<<<<<<<<<<<< order details')
     res.send({ order: order, candidate: candidate });
   });
