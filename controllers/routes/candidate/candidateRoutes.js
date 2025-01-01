@@ -85,6 +85,56 @@ const cashBackLogic = require("../../models/cashBackLogic");
 const { sendNotification } = require('../services/notification');
 const kycDocument = require("../../models/kycDocument");
 const { CandidateValidators } = require('../../../helpers/validators');
+
+
+// Facebook API Configuration
+const FB_API_VERSION = 'v21.0';
+const FB_GRAPH_API = `https://graph.facebook.com/${FB_API_VERSION}/${fbConversionPixelId}/events`;
+
+// Function to hash a value using SHA-256
+const hashValue = (value) => {
+    if (!value || typeof value !== 'string') return null; // Validate input
+    return crypto.createHash('sha256').update(value.trim().toLowerCase()).digest('hex');
+};
+
+// Function to hash multiple fields in an object
+const hashFields = (data, fieldsToHash) => {
+    const hashedData = {};
+    fieldsToHash.forEach((field) => {
+        if (data[field]) {
+            hashedData[field] = hashValue(data[field]);
+        }
+    });
+    return hashedData;
+};
+
+// Function to send data to Facebook Conversion API
+const sendEventToFacebook = async (event_name, user_data, custom_data) => {
+    const event_id = crypto.createHash('sha256').update(`${user_data.em}-${event_name}-${Date.now()}`).digest('hex'); // Deduplication ID
+
+    const payload = {
+        data: [
+            {
+                event_name,
+                event_time: Math.floor(Date.now() / 1000),
+                action_source: "website",
+                event_id, // Deduplication
+                user_data,
+                custom_data
+            }
+        ]
+    };
+
+    try {
+        const response = await axios.post(`${FB_GRAPH_API}?access_token=${fbConversionAccessToken}`, payload, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        console.log("Facebook Event Sent Successfully:", response.data);
+    } catch (error) {
+        console.error("Error sending event to Facebook:", error.response ? error.response.data : error.message);
+    }
+};
+
 router.route('/')
   .get(async (req, res) => {
     let user = req.session.user
@@ -879,13 +929,54 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     
     let sheetData = [candidate?.name, candidate?.mobile,candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY'): '', candidate?.state?.name, candidate.city?.name, 'Course', `${process.env.BASE_URL}/coursedetails/${courseId}`, course?.registrationCharges, appliedData?.registrationFee, moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
 
-      await updateSpreadSheetValues(sheetData)
+      await updateSpreadSheetValues(sheetData);
+      // Extract UTM Parameters from query
+      let utm_params = {
+        utm_source: req.query.utm_source || 'unknown',
+        utm_medium: req.query.utm_medium || 'unknown',
+        utm_campaign: req.query.utm_campaign || 'unknown',
+        utm_term: req.query.utm_term || '',
+        utm_content: req.query.utm_content || '',
+    };
+
+    // Prepare user data with hashing
+    let user_data = {
+        em: [hashValue(candidate.email)],
+        ph: [hashValue(candidate.mobile)],
+        fn: hashValue(candidate.name?.split(" ")[0]),
+        ln: hashValue(candidate.name?.split(" ")[1] || ""),
+        ct: hashValue(candidate.city),
+        st: hashValue(candidate.state),
+        zp: hashValue(candidate.zip || ""),
+        country: hashValue("US"),
+        client_ip_address: req.ip || '',
+        client_user_agent: req.headers['user-agent'] || ''
+    };
+
+    // Prepare custom data, including UTM parameters
+    let custom_data = {
+        currency: "INR",
+        value: course.registrationCharges || 0,
+        content_ids: [courseId],
+        content_type: "course",
+        num_items: 1,
+        order_id: appliedData._id.toString(),
+        fbp: req.cookies?._fbp || '',
+        fbc: req.cookies?._fbc || '',
+        ...utm_params // Add UTM parameters to custom_data
+    };
+
+    // Send event to Facebook
+    await sendEventToFacebook("Course Apply", user_data, custom_data);
+
+
 
     if (!apply) {
       req.flash("error", "Already failed");
       return res.status(400).send({ status: false, msg: "Applied Failed!" });
     }
   }
+  
 
   res.status(200).send({ status: true, msg: "Success" });
 });
