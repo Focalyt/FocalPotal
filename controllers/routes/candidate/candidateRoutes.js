@@ -873,98 +873,45 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
   }
 })
 /* course apply */
-// router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res) => {
-//   let courseId = req.params.courseId;
-//   let validation = { mobile: req.session.user.mobile }
-//   let { value, error } = await CandidateValidators.userMobile(validation)
-//   if (error) {
-//     return res.send({ status: "failure", error: "Something went wrong!", error });
-//   }
-//   let candidateMobile = value.mobile;
-//   let course = await Courses.findById(courseId);
-//   if (!course) {
-//     return res.send({ status: false, msg: "Course not Found!" });
-//   }
-//   let candidate = await Candidate.findOne({ mobile: candidateMobile }).populate([{
-//     path: 'state',
-//     select: "name"
-//   }, {
-//     path: 'city',
-//     select: "name"
-//   }]).lean();
-//   if (!candidate) {
-//     return res.send({ status: false, msg: "Candidate not found!" });
-//   }
-
-//   if (candidate.appliedCourses && candidate.appliedCourses.includes(courseId)) {
-//     req.flash("error", "Already Applied");
-//     return res.send({ status: false, msg: "Already Applied" });
-//   } else {
-
-
-
-//     let apply = await Candidate.findOneAndUpdate({ mobile: candidateMobile },
-//       { $addToSet: { appliedCourses: courseId } },
-//       { new: true, upsert: true });
-//    const appliedData = await AppliedCourses({
-//       _candidate: candidate._id,
-//       _course: courseId
-//     }).save();
-    
-//     let sheetData = [candidate?.name, candidate?.mobile,candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY'): '', candidate?.state?.name, candidate.city?.name, 'Course', `${process.env.BASE_URL}/coursedetails/${courseId}`, course?.registrationCharges, appliedData?.registrationFee, moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
-
-//       await updateSpreadSheetValues(sheetData)
-
-//     if (!apply) {
-//       req.flash("error", "Already failed");
-//       return res.status(400).send({ status: false, msg: "Applied Failed!" });
-//     }
-
-//   }
-
-//   res.status(200).send({ status: true, msg: "Success" });
-// });
-
 router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res) => {
-  try {
-      const { courseId } = req.params;
+  let courseId = req.params.courseId;
+  let validation = { mobile: req.session.user.mobile }
+  let { value, error } = await CandidateValidators.userMobile(validation)
+  if (error) {
+    return res.send({ status: "failure", error: "Something went wrong!", error });
+  }
+  let candidateMobile = value.mobile;
+  let course = await Courses.findById(courseId);
+  if (!course) {
+    return res.send({ status: false, msg: "Course not Found!" });
+  }
+  let candidate = await Candidate.findOne({ mobile: candidateMobile }).populate([{
+    path: 'state',
+    select: "name"
+  }, {
+    path: 'city',
+    select: "name"
+  }]).lean();
+  if (!candidate) {
+    return res.send({ status: false, msg: "Candidate not found!" });
+  }
 
-      // Validate courseId
-      if (!mongoose.Types.ObjectId.isValid(courseId)) {
-          return res.status(400).send({ status: false, msg: "Invalid Course ID" });
-      }
+  if (candidate.appliedCourses && candidate.appliedCourses.includes(courseId)) {
+    req.flash("error", "Already Applied");
+    return res.send({ status: false, msg: "Already Applied" });
+  } else {
 
-      const candidateMobile = req.session.user?.mobile;
-      if (!candidateMobile) {
-          return res.status(401).send({ status: false, msg: "Unauthorized: Mobile number is missing" });
-      }
 
-      // Fetch candidate and course
-      const candidate = await Candidate.findOne({ mobile: candidateMobile }).lean();
-      const course = await Courses.findById(courseId);
 
-      if (!candidate || !course) {
-          return res.status(404).send({ status: false, msg: "Candidate or Course not found!" });
-      }
+    let apply = await Candidate.findOneAndUpdate({ mobile: candidateMobile },
+      { $addToSet: { appliedCourses: courseId } },
+      { new: true, upsert: true });
+   const appliedData = await AppliedCourses({
+      _candidate: candidate._id,
+      _course: courseId
+    }).save();
 
-      // Check if already applied
-      if (candidate.appliedCourses?.includes(courseId)) {
-          return res.status(400).send({ status: false, msg: "Already Applied" });
-      }
-
-      // Apply for course and update AppliedCourses
-      await Candidate.findOneAndUpdate(
-          { mobile: candidateMobile },
-          { $addToSet: { appliedCourses: courseId } },
-          { new: true }
-      );
-
-      const appliedData = await new AppliedCourses({
-          _candidate: candidate._id,
-          _course: courseId,
-      }).save();
-
-      // Extract UTM Parameters from query
+    // Extract UTM Parameters from query
       const utm_params = {
           utm_source: req.query.utm_source || 'unknown',
           utm_medium: req.query.utm_medium || 'unknown',
@@ -1000,17 +947,68 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
           ...utm_params // Add UTM parameters to custom_data
       };
 
+      
+    
+    let sheetData = [candidate?.name, candidate?.mobile,candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY'): '', candidate?.state?.name, candidate.city?.name, 'Course', `${process.env.BASE_URL}/coursedetails/${courseId}`, course?.registrationCharges, appliedData?.registrationFee, moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
+
+      await updateSpreadSheetValues(sheetData)
       // Send event to Facebook
       await sendEventToFacebook("Apply Course", user_data, custom_data);
 
-      return res.status(200).send({ status: true, msg: "Application Successful!" });
-  } catch (err) {
-      console.error("Error:", err);
-      return res.status(500).send({ status: false, msg: "Internal Server Error", error: err.message });
+    if (!apply) {
+      req.flash("error", "Already failed");
+      return res.status(400).send({ status: false, msg: "Applied Failed!" });
+    }
+
   }
+
+  res.status(200).send({ status: true, msg: "Success" });
 });
 
+// router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res) => {
+//   try {
+//       const { courseId } = req.params;
 
+     
+//       if (!mongoose.Types.ObjectId.isValid(courseId)) {
+//           return res.status(400).send({ status: false, msg: "Invalid Course ID" });
+//       }
+
+//       const candidateMobile = req.session.user?.mobile;
+//       if (!candidateMobile) {
+//           return res.status(401).send({ status: false, msg: "Unauthorized: Mobile number is missing" });
+//       }
+
+//       const candidate = await Candidate.findOne({ mobile: candidateMobile }).lean();
+//       const course = await Courses.findById(courseId);
+
+//       if (!candidate || !course) {
+//           return res.status(404).send({ status: false, msg: "Candidate or Course not found!" });
+//       }
+
+//       if (candidate.appliedCourses?.includes(courseId)) {
+//           return res.status(400).send({ status: false, msg: "Already Applied" });
+//       }
+
+//       await Candidate.findOneAndUpdate(
+//           { mobile: candidateMobile },
+//           { $addToSet: { appliedCourses: courseId } },
+//           { new: true }
+//       );
+
+//       const appliedData = await new AppliedCourses({
+//           _candidate: candidate._id,
+//           _course: courseId,
+//       }).save();
+
+      
+
+//       return res.status(200).send({ status: true, msg: "Application Successful!" });
+//   } catch (err) {
+//       console.error("Error:", err);
+//       return res.status(500).send({ status: false, msg: "Internal Server Error", error: err.message });
+//   }
+// });
 
 
 /* List of applied course */
