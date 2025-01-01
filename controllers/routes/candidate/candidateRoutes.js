@@ -97,16 +97,7 @@ const hashValue = (value) => {
     return crypto.createHash('sha256').update(value.trim().toLowerCase()).digest('hex');
 };
 
-// Function to hash multiple fields in an object
-const hashFields = (data, fieldsToHash) => {
-    const hashedData = {};
-    fieldsToHash.forEach((field) => {
-        if (data[field]) {
-            hashedData[field] = hashValue(data[field]);
-        }
-    });
-    return hashedData;
-};
+
 
 // Function to send data to Facebook Conversion API
 const sendEventToFacebook = async (event_name, user_data, custom_data) => {
@@ -965,6 +956,7 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
         fbc: req.cookies?._fbc || '',
         ...utm_params // Add UTM parameters to custom_data
     };
+    console.log(user_data, custom_data)
 
     // Send event to Facebook
     await sendEventToFacebook("Course Apply", user_data, custom_data);
