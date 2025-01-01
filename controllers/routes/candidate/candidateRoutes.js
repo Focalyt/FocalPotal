@@ -922,47 +922,47 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
 
       await updateSpreadSheetValues(sheetData);
       // Extract UTM Parameters from query
-      const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
+      // const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
       // Extract UTM Parameters from query
-      let utm_params = {
-        utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
-        utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
-        utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
-        utm_term: sanitizeInput(req.query.utm_term || ''),
-        utm_content: sanitizeInput(req.query.utm_content || ''),
-    };
+    //   let utm_params = {
+    //     utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
+    //     utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
+    //     utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
+    //     utm_term: sanitizeInput(req.query.utm_term || ''),
+    //     utm_content: sanitizeInput(req.query.utm_content || ''),
+    // };
     // Extract fbp and fbc values
-    let fbp = req.cookies?._fbp || '';
-    let fbc = req.cookies?._fbc || '';
-    if (!fbc && req.query.fbclid) {
-        fbc = `fb.${Date.now()}.${req.query.fbclid}`; // Construct fbc from fbclid query parameter
-    }
+    // let fbp = req.cookies?._fbp || '';
+    // let fbc = req.cookies?._fbc || '';
+    // if (!fbc && req.query.fbclid) {
+    //     fbc = `fb.${Date.now()}.${req.query.fbclid}`; // Construct fbc from fbclid query parameter
+    // }
 
     // Prepare user data with hashing
-    const user_data = {
-      em: [hashValue(candidate.email || "")],
-      ph: [hashValue(candidate.mobile)],
-      fn: hashValue(candidate.name?.split(" ")[0]),
-      ln: hashValue(candidate.name?.split(" ")[1] || ""),
-      country: hashValue("India"),
-      client_ip_address: req.ip || '',
-      fbp,
-      fbc
-  };
+  //   const user_data = {
+  //     em: [hashValue(candidate.email || "")],
+  //     ph: [hashValue(candidate.mobile)],
+  //     fn: hashValue(candidate.name?.split(" ")[0]),
+  //     ln: hashValue(candidate.name?.split(" ")[1] || ""),
+  //     country: hashValue("India"),
+  //     client_ip_address: req.ip || '',
+  //     fbp,
+  //     fbc
+  // };
     // Prepare custom data, including UTM parameters
-    const custom_data = {
-      currency: "INR",
-      value: course.registrationCharges || 0,
-      content_ids: [courseId],
-      content_type: "course",
-      num_items: 1,
-      order_id: appliedData._id.toString(),
-      ...utm_params // Add UTM parameters to custom_data
-  };
-    console.log(user_data, custom_data)
+    // const custom_data = {
+    //   currency: "INR",
+    //   value: course.registrationCharges || 0,
+    //   content_ids: [courseId],
+    //   content_type: "course",
+    //   num_items: 1,
+    //   order_id: appliedData._id.toString(),
+    //   ...utm_params // Add UTM parameters to custom_data
+  // };
+  //   console.log(user_data, custom_data)
 
-    // Send event to Facebook
-    await sendEventToFacebook("Course Apply", user_data, custom_data);
+    // // Send event to Facebook
+    // await sendEventToFacebook("Course Apply", user_data, custom_data);
 
 
 
