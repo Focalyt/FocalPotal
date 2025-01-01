@@ -85,40 +85,6 @@ const cashBackLogic = require("../../models/cashBackLogic");
 const { sendNotification } = require('../services/notification');
 const kycDocument = require("../../models/kycDocument");
 const { CandidateValidators } = require('../../../helpers/validators');
-const API_VERSION = 'v21.0'; // Use the current API version
-const FACEBOOK_GRAPH_API = `https://graph.facebook.com/${API_VERSION}/${fbConversionPixelId}/events`;
-
-
-// Helper function to hash values using SHA-256
-const hashValue = (value) => {
-  if (!value) return null;
-  return crypto.createHash('sha256').update(value.trim().toLowerCase()).digest('hex');
-};
-
-// Function to send data to Facebook Conversion API
-const sendEventToFacebook = async (event_name, user_data, custom_data) => {
-  const payload = {
-      data: [
-          {
-              event_name,
-              event_time: Math.floor(Date.now() / 1000),
-              action_source: "website",
-              user_data,
-              custom_data: custom_data || {}
-          }
-      ]
-  };
-
-  try {
-      const response = await axios.post(`${FACEBOOK_GRAPH_API}?access_token=${fbConversionAccessToken}`, payload, {
-          headers: { 'Content-Type': 'application/json' }
-      });
-      console.log("Facebook Event Sent Successfully:", response.data);
-  } catch (error) {
-      console.error("Error sending event to Facebook:", error.response ? error.response.data : error.message);
-  }
-};
-
 router.route('/')
   .get(async (req, res) => {
     let user = req.session.user
@@ -910,107 +876,19 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       _candidate: candidate._id,
       _course: courseId
     }).save();
-
-    // Extract UTM Parameters from query
-      const utm_params = {
-          utm_source: req.query.utm_source || 'unknown',
-          utm_medium: req.query.utm_medium || 'unknown',
-          utm_campaign: req.query.utm_campaign || 'unknown',
-          utm_term: req.query.utm_term || '',
-          utm_content: req.query.utm_content || '',
-      };
-
-      // Prepare user data
-      const user_data = {
-          em: [hashValue(candidate.email)],
-          ph: [hashValue(candidate.mobile)],
-          fn: hashValue(candidate.name?.split(" ")[0]),
-          ln: hashValue(candidate.name?.split(" ")[1] || ""),
-          ct: hashValue(candidate.city?.name),
-          st: hashValue(candidate.state?.name),
-          zp: hashValue(candidate.zip || ""),
-          country: hashValue("US"),
-          client_ip_address: req.ip || '',
-          client_user_agent: req.headers['user-agent'] || ''
-      };
-
-      // Prepare custom data, including UTM parameters
-      const custom_data = {
-          currency: "INR",
-          value: course.registrationCharges || 0,
-          content_ids: [courseId],
-          content_type: "course",
-          num_items: 1,
-          order_id: appliedData._id.toString(),
-          fbp: req.cookies?._fbp || '',
-          fbc: req.cookies?._fbc || '',
-          ...utm_params // Add UTM parameters to custom_data
-      };
-
-      
     
     let sheetData = [candidate?.name, candidate?.mobile,candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY'): '', candidate?.state?.name, candidate.city?.name, 'Course', `${process.env.BASE_URL}/coursedetails/${courseId}`, course?.registrationCharges, appliedData?.registrationFee, moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
 
       await updateSpreadSheetValues(sheetData)
-      // Send event to Facebook
-      await sendEventToFacebook("Apply Course", user_data, custom_data);
 
     if (!apply) {
       req.flash("error", "Already failed");
       return res.status(400).send({ status: false, msg: "Applied Failed!" });
     }
-
   }
 
   res.status(200).send({ status: true, msg: "Success" });
 });
-
-// router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res) => {
-//   try {
-//       const { courseId } = req.params;
-
-     
-//       if (!mongoose.Types.ObjectId.isValid(courseId)) {
-//           return res.status(400).send({ status: false, msg: "Invalid Course ID" });
-//       }
-
-//       const candidateMobile = req.session.user?.mobile;
-//       if (!candidateMobile) {
-//           return res.status(401).send({ status: false, msg: "Unauthorized: Mobile number is missing" });
-//       }
-
-//       const candidate = await Candidate.findOne({ mobile: candidateMobile }).lean();
-//       const course = await Courses.findById(courseId);
-
-//       if (!candidate || !course) {
-//           return res.status(404).send({ status: false, msg: "Candidate or Course not found!" });
-//       }
-
-//       if (candidate.appliedCourses?.includes(courseId)) {
-//           return res.status(400).send({ status: false, msg: "Already Applied" });
-//       }
-
-//       await Candidate.findOneAndUpdate(
-//           { mobile: candidateMobile },
-//           { $addToSet: { appliedCourses: courseId } },
-//           { new: true }
-//       );
-
-//       const appliedData = await new AppliedCourses({
-//           _candidate: candidate._id,
-//           _course: courseId,
-//       }).save();
-
-      
-
-//       return res.status(200).send({ status: true, msg: "Application Successful!" });
-//   } catch (err) {
-//       console.error("Error:", err);
-//       return res.status(500).send({ status: false, msg: "Internal Server Error", error: err.message });
-//   }
-// });
-
-
 /* List of applied course */
 router.get("/appliedCourses", [isCandidate], async (req, res) => {
   const p = parseInt(req.query.page);
