@@ -922,40 +922,43 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
 
       await updateSpreadSheetValues(sheetData);
       // Extract UTM Parameters from query
+      const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
+      // Extract UTM Parameters from query
       let utm_params = {
-        utm_source: req.query.utm_source || 'unknown',
-        utm_medium: req.query.utm_medium || 'unknown',
-        utm_campaign: req.query.utm_campaign || 'unknown',
-        utm_term: req.query.utm_term || '',
-        utm_content: req.query.utm_content || '',
+        utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
+        utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
+        utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
+        utm_term: sanitizeInput(req.query.utm_term || ''),
+        utm_content: sanitizeInput(req.query.utm_content || ''),
     };
+    // Extract fbp and fbc values
+    let fbp = req.cookies?._fbp || '';
+    let fbc = req.cookies?._fbc || '';
+    if (!fbc && req.query.fbclid) {
+        fbc = `fb.${Date.now()}.${req.query.fbclid}`; // Construct fbc from fbclid query parameter
+    }
 
     // Prepare user data with hashing
-    let user_data = {
-        em: [hashValue(candidate.email)],
-        ph: [hashValue(candidate.mobile)],
-        fn: hashValue(candidate.name?.split(" ")[0]),
-        ln: hashValue(candidate.name?.split(" ")[1] || ""),
-        ct: hashValue(candidate.city),
-        st: hashValue(candidate.state),
-        zp: hashValue(candidate.zip || ""),
-        country: hashValue("US"),
-        client_ip_address: req.ip || '',
-        client_user_agent: req.headers['user-agent'] || ''
-    };
-
+    const user_data = {
+      em: [hashValue(candidate.email || "")],
+      ph: [hashValue(candidate.mobile)],
+      fn: hashValue(candidate.name?.split(" ")[0]),
+      ln: hashValue(candidate.name?.split(" ")[1] || ""),
+      country: hashValue("India"),
+      client_ip_address: req.ip || '',
+      fbp,
+      fbc
+  };
     // Prepare custom data, including UTM parameters
-    let custom_data = {
-        currency: "INR",
-        value: course.registrationCharges || 0,
-        content_ids: [courseId],
-        content_type: "course",
-        num_items: 1,
-        order_id: appliedData._id.toString(),
-        fbp: req.cookies?._fbp || '',
-        fbc: req.cookies?._fbc || '',
-        ...utm_params // Add UTM parameters to custom_data
-    };
+    const custom_data = {
+      currency: "INR",
+      value: course.registrationCharges || 0,
+      content_ids: [courseId],
+      content_type: "course",
+      num_items: 1,
+      order_id: appliedData._id.toString(),
+      ...utm_params // Add UTM parameters to custom_data
+  };
     console.log(user_data, custom_data)
 
     // Send event to Facebook
