@@ -529,7 +529,7 @@ commonRoutes.post("/coursepayment", async (req, res) => {
 	return res.status(400).send({ status: false, msg: 'Incorrect Data.' })
   }
 
-  let validation = { mobile: req.session.user.mobile }
+  let validation = { mobile: req.body.mobile }
   let { value, error } = CandidateValidators.userMobile(validation)
   if (error) {
 	console.log(error)
@@ -571,7 +571,7 @@ commonRoutes.post("/paymentStatus", async (req, res) => {
   let offerDetails = await coinsOffers.findOne({ _id: _offer });
   console.log(offerDetails, '<<<<<<<<<<<<<<<<< offerDetails')
 
-  let validation = { mobile: req.session.user.mobile }
+  let validation = { mobile: req.body.mobile }
   let { value, error } = await CandidateValidators.userMobile(validation)
   if (error) {
 	console.log(error)

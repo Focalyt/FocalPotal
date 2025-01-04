@@ -339,6 +339,7 @@ module.exports.logout = async (req, res) => {
 
 module.exports.otpCandidateLogin = async (req, res) => {
   try {
+    console.log(req.body)
     const { mobile } = req.body;
     const user = await User.findOne({ mobile, role: '3' });
     const token = await user.generateAuthToken();
@@ -360,6 +361,7 @@ module.exports.otpCandidateLogin = async (req, res) => {
     }
     res.status(200).send({ status: true, name: user.name, email: user.email, token })
   } catch (err) {
+    console.log(err)
     return req.errFunc(err);
   }
 }
