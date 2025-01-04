@@ -41,6 +41,7 @@ mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);
 mongoose.set("useUnifiedTopology", true);
 mongoose.connect(mongodbUri, (err) => {
+	console.log(mongodbUri)
 	if (err) ykError(err);
 	server.listen(port, () => {
 		console.log(`connected ${port}`);

@@ -2,8 +2,9 @@ const { google } = require('googleapis')
 const {sheetId} = require('../../../config')
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
-const serviceAccountKeyFile = "./focalyt-1720520815248-f2cba8605a03.json";
+const serviceAccountKeyFile = "./focalyt-new-key.json";
 const tabName = 'candidates'
+
 
 module.exports = {
   updateSpreadSheetValues
