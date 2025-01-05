@@ -192,15 +192,22 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
 
       // Prepare user data for Facebook Event
       const user_data = {
-          em: [hashValue(candidate.email)],
-          ph: [hashValue(candidate.mobile)],
-          fn: hashValue(candidate.name?.split(" ")[0]),
-          ln: hashValue(candidate.name?.split(" ")[1] || ""),
-          country: hashValue("India"),
-          client_ip_address: req.ip || '',
-          fbp,
-          fbc
-      };
+        em: [hashValue(candidate.email)],                          // Hashed email
+        ph: [hashValue(candidate.mobile)],                        // Hashed phone number
+        fn: hashValue(candidate.name?.split(" ")[0]),             // Hashed first name
+        ln: hashValue(candidate.name?.split(" ")[1] || ""),       // Hashed last name
+        zp: hashValue(candidate.zip || ""),                       // Hashed postcode
+        db: hashValue(candidate.dob ? moment(candidate.dob).format('YYYY-MM-DD') : ""), // Hashed date of birth
+        ct: hashValue(candidate.city?.name),                      // Hashed city
+        st: hashValue(candidate.state?.name),                     // Hashed state/region
+        country: hashValue("India"),                              // Hashed country
+        ge: hashValue(candidate.sex === 'Male' ? 'm' : candidate.sex === 'Female' ? 'f' : ''), // Hashed gender
+        client_ip_address: req.ip || '',                          // IP address (no hash required)
+        client_user_agent: req.headers['user-agent'] || '',       // User agent (no hash required)
+        fbp: req.cookies?._fbp || '',                             // Browser ID
+        fbc: req.cookies?._fbc || (req.query.fbclid ? `fb.${Date.now()}.${req.query.fbclid}` : ''), // Click ID
+        external_id: hashValue(candidate._id.toString())          // Hashed External ID (user database ID)
+    };
 
       // Prepare custom data for Facebook Event
       const custom_data = {
