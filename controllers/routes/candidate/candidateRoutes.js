@@ -9,9 +9,9 @@ const puppeteer = require("puppeteer");
 const { ykError, headerAuthKey, extraEdgeAuthToken, extraEdgeUrl, env, fbConversionPixelId,
   fbConversionAccessToken,
   baseUrl } = require("../../../config");
- const {updateSpreadSheetValues} = require("../services/googleservice")
+const { updateSpreadSheetValues } = require("../services/googleservice")
 
-  const CandidateDoc = require('../../models/candidatedoc');
+const CandidateDoc = require('../../models/candidatedoc');
 const bizSdk = require('facebook-nodejs-business-sdk');
 const Content = bizSdk.Content;
 const CustomData = bizSdk.CustomData;
@@ -94,16 +94,16 @@ const FB_GRAPH_API = `https://graph.facebook.com/${FB_API_VERSION}/${fbConversio
 // Function to hash a value using SHA-256
 const hashValue = (value) => {
   if (value === undefined || value === null) {
-      console.error("Invalid value passed to hashValue:", value);
-      return null;
+    console.error("Invalid value passed to hashValue:", value);
+    return null;
   }
 
   try {
-      const stringValue = value.toString().trim().toLowerCase(); // Ensure it's a string
-      return crypto.createHash('sha256').update(stringValue).digest('hex');
+    const stringValue = value.toString().trim().toLowerCase(); // Ensure it's a string
+    return crypto.createHash('sha256').update(stringValue).digest('hex');
   } catch (error) {
-      console.error("Error hashing value:", error.message);
-      return null;
+    console.error("Error hashing value:", error.message);
+    return null;
   }
 };
 
@@ -118,7 +118,7 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     // Validate courseId and candidate's mobile number
     const { value, error } = await CandidateValidators.userMobile(validation);
     if (error) {
-        return res.status(400).json({ status: false, msg: "Invalid mobile number.", error });
+      return res.status(400).json({ status: false, msg: "Invalid mobile number.", error });
     }
 
     const candidateMobile = value.mobile;
@@ -126,21 +126,21 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     // Fetch course and candidate
     const course = await Courses.findById(courseId);
     if (!course) {
-        return res.status(404).json({ status: false, msg: "Course not found." });
+      return res.status(404).json({ status: false, msg: "Course not found." });
     }
 
     const candidate = await Candidate.findOne({ mobile: candidateMobile }).populate([
-        { path: 'state', select: "name" },
-        { path: 'city', select: "name" }
+      { path: 'state', select: "name" },
+      { path: 'city', select: "name" }
     ]).lean();
 
     if (!candidate) {
-        return res.status(404).json({ status: false, msg: "Candidate not found." });
+      return res.status(404).json({ status: false, msg: "Candidate not found." });
     }
 
     // Check if already applied
     if (candidate.appliedCourses && candidate.appliedCourses.includes(courseId)) {
-        return res.status(400).json({ status: false, msg: "Already applied." });
+      return res.status(400).json({ status: false, msg: "Already applied." });
     }
 
     // If event sent successfully, apply for course
@@ -148,86 +148,97 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       { mobile: candidateMobile },
       { $addToSet: { appliedCourses: courseId } },
       { new: true, upsert: true }
-  );
+    );
 
-  const appliedData = await new AppliedCourses({
+    const appliedData = await new AppliedCourses({
       _candidate: candidate._id,
       _course: courseId
-  }).save();
+    }).save();
 
-  // Update Spreadsheet
-  const sheetData = [
+
+    // Capitalize every word's first letter
+    function capitalizeWords(str) {
+      if (!str) return '';
+      return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+    }
+
+    // Update Spreadsheet
+    const sheetData = [
+      moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
+      moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
+      capitalizeWords(course?.name), // Apply the capitalizeWords function
       candidate?.name,
       candidate?.mobile,
       candidate?.email,
-      candidate?.sex,
+      candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
       candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
       candidate?.state?.name,
       candidate?.city?.name,
       'Course',
       `${process.env.BASE_URL}/coursedetails/${courseId}`,
       course?.registrationCharges,
-      appliedData?.registrationFee,
-      moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')
-  ];
-  await updateSpreadSheetValues(sheetData);
+      appliedData?.registrationFee
 
 
-      // Extract UTM Parameters
-      const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
-      const utm_params = {
-          utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
-          utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
-          utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
-          utm_term: sanitizeInput(req.query.utm_term || ''),
-          utm_content: sanitizeInput(req.query.utm_content || '')
-      };
+    ];
+    await updateSpreadSheetValues(sheetData);
 
-      // Extract fbp and fbc values
-      let fbp = req.cookies?._fbp || '';
-      let fbc = req.cookies?._fbc || '';
-      if (!fbc && req.query.fbclid) {
-          fbc = `fb.${Date.now()}.${req.query.fbclid}`;
-      }
 
-      // Prepare user data for Facebook Event
-      const user_data = {
-        em: [hashValue(candidate.email)],                          // Hashed email
-        ph: [hashValue(candidate.mobile)],                        // Hashed phone number
-        fn: hashValue(candidate.name?.split(" ")[0]),             // Hashed first name
-        ln: hashValue(candidate.name?.split(" ")[1] || ""),       // Hashed last name
-        zp: hashValue(candidate.zip || ""),                       // Hashed postcode
-        db: hashValue(candidate.dob ? moment(candidate.dob).format('YYYY-MM-DD') : ""), // Hashed date of birth
-        ct: hashValue(candidate.city?.name),                      // Hashed city
-        st: hashValue(candidate.state?.name),                     // Hashed state/region
-        country: hashValue("India"),                              // Hashed country
-        ge: hashValue(candidate.sex === 'Male' ? 'm' : candidate.sex === 'Female' ? 'f' : ''), // Hashed gender
-        client_ip_address: req.ip || '',                          // IP address (no hash required)
-        client_user_agent: req.headers['user-agent'] || '',       // User agent (no hash required)
-        fbp: req.cookies?._fbp || '',                             // Browser ID
-        fbc: req.cookies?._fbc || (req.query.fbclid ? `fb.${Date.now()}.${req.query.fbclid}` : ''), // Click ID
-        external_id: hashValue(candidate._id.toString())          // Hashed External ID (user database ID)
+    // Extract UTM Parameters
+    const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
+    const utm_params = {
+      utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
+      utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
+      utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
+      utm_term: sanitizeInput(req.query.utm_term || ''),
+      utm_content: sanitizeInput(req.query.utm_content || '')
     };
 
-      // Prepare custom data for Facebook Event
-      const custom_data = {
-          currency: "INR",
-          value: course.registrationCharges || 0,
-          content_ids: [courseId],
-          content_type: "course",
-          num_items: 1,
-          ...utm_params
-      };
+    // Extract fbp and fbc values
+    let fbp = req.cookies?._fbp || '';
+    let fbc = req.cookies?._fbc || '';
+    if (!fbc && req.query.fbclid) {
+      fbc = `fb.${Date.now()}.${req.query.fbclid}`;
+    }
 
-      // Send Event to Facebook
-      console.log("Sending Facebook Event...");
-      const fbEventSent = await sendEventToFacebook("Course Apply", user_data, custom_data);
+    // Prepare user data for Facebook Event
+    const user_data = {
+      em: [hashValue(candidate.email)],                          // Hashed email
+      ph: [hashValue(candidate.mobile)],                        // Hashed phone number
+      fn: hashValue(candidate.name?.split(" ")[0]),             // Hashed first name
+      ln: hashValue(candidate.name?.split(" ")[1] || ""),       // Hashed last name
+      zp: hashValue(candidate.zip || ""),                       // Hashed postcode
+      db: hashValue(candidate.dob ? moment(candidate.dob).format('YYYY-MM-DD') : ""), // Hashed date of birth
+      ct: hashValue(candidate.city?.name),                      // Hashed city
+      st: hashValue(candidate.state?.name),                     // Hashed state/region
+      country: hashValue("India"),                              // Hashed country
+      ge: hashValue(candidate.sex === 'Male' ? 'm' : candidate.sex === 'Female' ? 'f' : ''), // Hashed gender
+      client_ip_address: req.ip || '',                          // IP address (no hash required)
+      client_user_agent: req.headers['user-agent'] || '',       // User agent (no hash required)
+      fbp: req.cookies?._fbp || '',                             // Browser ID
+      fbc: req.cookies?._fbc || (req.query.fbclid ? `fb.${Date.now()}.${req.query.fbclid}` : ''), // Click ID
+      external_id: hashValue(candidate._id.toString())          // Hashed External ID (user database ID)
+    };
 
-      
-      return res.status(200).json({ status: true, msg: "Course applied successfully." });
+    // Prepare custom data for Facebook Event
+    const custom_data = {
+      currency: "INR",
+      value: course.registrationCharges || 0,
+      content_ids: [courseId],
+      content_type: "course",
+      num_items: 1,
+      ...utm_params
+    };
+
+    // Send Event to Facebook
+    console.log("Sending Facebook Event...");
+    const fbEventSent = await sendEventToFacebook("Course Apply", user_data, custom_data);
+
+
+    return res.status(200).json({ status: true, msg: "Course applied successfully." });
   } catch (error) {
-      console.error("Error applying for course:", error.message);
-      return res.status(500).json({ status: false, msg: "Internal server error.", error: error.message });
+    console.error("Error applying for course:", error.message);
+    return res.status(500).json({ status: false, msg: "Internal server error.", error: error.message });
   }
 });
 
@@ -235,27 +246,27 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
 const sendEventToFacebook = async (event_name, user_data, custom_data) => {
   const event_id = crypto.createHash('sha256').update(`${user_data.em}-${event_name}-${Date.now()}`).digest('hex');
   const payload = {
-      data: [
-          {
-              event_name,
-              event_time: Math.floor(Date.now() / 1000),
-              action_source: "website",
-              event_id,
-              user_data,
-              custom_data
-          }
-      ]
+    data: [
+      {
+        event_name,
+        event_time: Math.floor(Date.now() / 1000),
+        action_source: "website",
+        event_id,
+        user_data,
+        custom_data
+      }
+    ]
   };
 
   try {
-      const response = await axios.post(`${FB_GRAPH_API}?access_token=${fbConversionAccessToken}`, payload, {
-          headers: { 'Content-Type': 'application/json' }
-      });
-      console.log("Facebook Event Sent Successfully:", response.data);
-      return true; // Event sent successfully
+    const response = await axios.post(`${FB_GRAPH_API}?access_token=${fbConversionAccessToken}`, payload, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    console.log("Facebook Event Sent Successfully:", response.data);
+    return true; // Event sent successfully
   } catch (error) {
-      console.error("Error sending event to Facebook:", error.response ? error.response.data : error.message);
-      return false; // Event failed
+    console.error("Error sending event to Facebook:", error.response ? error.response.data : error.message);
+    return false; // Event failed
   }
 };
 
@@ -389,34 +400,34 @@ router
       };
 
       const data = sendSms(body);
-      if (env.toLowerCase() === 'production') {
-        let dataFormat = {
-          Source: "mipie",
-          FirstName: name,
-          MobileNumber: mobile,
-          LeadSource: "Website",
-          LeadType: "Online",
-          LeadName: "app",
-          Course: "Mipie general",
-          Center: "Padget",
-          Location: "Technician",
-          Country: "India",
-          LeadStatus: "Signed Up",
-          ReasonCode: "27",
-          City: city[0],
-          State: city[1],
-          AuthToken: extraEdgeAuthToken
-        }
-        let edgeBody = JSON.stringify(dataFormat)
-        let header = { "Content-Type": "multipart/form-data" }
-        let extraEdge = await axios.post(extraEdgeUrl, edgeBody, header).then(res => {
-          console.log(res.data)
-          req.flash("success", "Candidate added successfully!");
-        }).catch(err => {
-          console.log(err)
-          return err
-        })
-      }
+      // if (env.toLowerCase() === 'production') {
+      //   let dataFormat = {
+      //     Source: "mipie",
+      //     FirstName: name,
+      //     MobileNumber: mobile,
+      //     LeadSource: "Website",
+      //     LeadType: "Online",
+      //     LeadName: "app",
+      //     Course: "Mipie general",
+      //     Center: "Padget",
+      //     Location: "Technician",
+      //     Country: "India",
+      //     LeadStatus: "Signed Up",
+      //     ReasonCode: "27",
+      //     City: city[0],
+      //     State: city[1],
+      //     AuthToken: extraEdgeAuthToken
+      //   }
+      //   let edgeBody = JSON.stringify(dataFormat)
+      //   let header = { "Content-Type": "multipart/form-data" }
+      //   let extraEdge = await axios.post(extraEdgeUrl, edgeBody, header).then(res => {
+      //     console.log(res.data)
+      //     req.flash("success", "Candidate added successfully!");
+      //   }).catch(err => {
+      //     console.log(err)
+      //     return err
+      //   })
+      // }
       let notificationData = {
         title: 'Signup',
         message: `Complete your profile to get your dream job.__नौकरी पाने के लिए अपना प्रोफ़ाइल पूरा करें।`,
@@ -747,150 +758,150 @@ router.get("/job/:jobId", [isCandidate], async (req, res) => {
 });
 
 /* Document route */
-  router.get("/document", [isCandidate], async (req, res) => {
-    try {
-      let validation = { mobile: req.session.user.mobile };
-      let { value, error } = await CandidateValidators.userMobile(validation);
+router.get("/document", [isCandidate], async (req, res) => {
+  try {
+    let validation = { mobile: req.session.user.mobile };
+    let { value, error } = await CandidateValidators.userMobile(validation);
 
-      if (error) {
-        return res.send({ status: "failure", error: "Something went wrong!", error });
-      }
-
-      const candidate = await Candidate.findOne({ mobile: value.mobile }).lean();
-      if (!candidate) {
-        return res.send({ status: false, msg: "Candidate not found!" });
-      }
-
-  const documents=await CandidateDoc.findOne({_candidate:candidate._id}).lean();
-
-  
-
-      res.render(`${req.vPath}/app/candidate/document`, {
-        menu: 'document',
-        candidate,
-        documents: documents || {},  
-            });
-    } catch (err) {
-      req.flash("error", err.message || "Something went wrong!");
-      return res.redirect("back");
+    if (error) {
+      return res.send({ status: "failure", error: "Something went wrong!", error });
     }
-  });
 
-
-  router.post("/document", [isCandidate], async (req, res) => {
-    try {
-        const documentsData = req.body;
-        const userMobile = req.session.user.mobile;
-        console.log(documentsData, "this is document data");
-        
-        const candidate = await Candidate.findOne({ mobile: userMobile }).lean();
-        if (!candidate) {
-            return res.status(404).json({ success: false, message: "Candidate not found" });
-        }
-
-        const existingDocument = await CandidateDoc.findOne({ _candidate: candidate._id });
-console.log(existingDocument,"data find successfully??>><<>")
-        if (existingDocument) {
-            existingDocument.Photograph = documentsData.Photograph || existingDocument.Photograph;
-            existingDocument.AadharCardFront = documentsData.AadharCardFront || existingDocument.AadharCardFront;
-            existingDocument.AadharCardBack = documentsData.AadharCardBack || existingDocument.AadharCardBack;
-            existingDocument.ResidenceCertificate = documentsData.ResidenceCertificate || existingDocument.ResidenceCertificate;
-            existingDocument.CasteCertificate = documentsData.CasteCertificate || existingDocument.CasteCertificate;
-            existingDocument.RationCard = documentsData.RationCard || existingDocument.RationCard;
-            existingDocument['10thMarksheet'] = documentsData['10thMarksheet'] || existingDocument['10thMarksheet'];
-            existingDocument['12thMarksheet'] = documentsData['12thMarksheet'] || existingDocument['12thMarksheet'];
-            existingDocument.DiplomaMarksheet = documentsData.DiplomaMarksheet || existingDocument.DiplomaMarksheet;
-            existingDocument.BachelorDegreeMarkSheets = documentsData.BachelorDegreeMarkSheets || existingDocument.BachelorDegreeMarkSheets;
-            existingDocument.DegreePassingCertificate = documentsData.DegreePassingCertificate || existingDocument.DegreePassingCertificate;
-            existingDocument.PassportNationalityCertificate = documentsData.PassportNationalityCertificate || existingDocument.PassportNationalityCertificate;
-            existingDocument.MigrationCertificateTransferCertificate = documentsData.MigrationCertificateTransferCertificate || existingDocument.MigrationCertificateTransferCertificate;
-            existingDocument.GapCertificate = documentsData.GapCertificate || existingDocument.GapCertificate;
-            existingDocument.ProfessionalExperienceCertificate = documentsData.ProfessionalExperienceCertificate || existingDocument.ProfessionalExperienceCertificate;
-            existingDocument.AdditionalDocuments = documentsData.AdditionalDocuments || existingDocument.AdditionalDocuments;
-            existingDocument.Signature=documentsData.Signature||existingDocument.Signature
-
-            await existingDocument.save();
-            console.log("Document updated:", existingDocument);
-        } else {
-            const newDocument = new CandidateDoc({
-                _candidate: candidate._id,
-                Photograph: documentsData.Photograph,
-                AadharCardFront: documentsData.AadharCardFront,
-                AadharCardBack: documentsData.AadharCardBack,
-                ResidenceCertificate: documentsData.ResidenceCertificate,
-                CasteCertificate: documentsData.CasteCertificate,
-                RationCard: documentsData.RationCard,
-                '10thMarksheet': documentsData['10thMarksheet'],
-                '12thMarksheet': documentsData['12thMarksheet'],
-                DiplomaMarksheet: documentsData.DiplomaMarksheet,
-                BachelorDegreeMarkSheets: documentsData.BachelorDegreeMarkSheets,
-                DegreePassingCertificate: documentsData.DegreePassingCertificate,
-                PassportNationalityCertificate: documentsData.PassportNationalityCertificate,
-                MigrationCertificateTransferCertificate: documentsData.MigrationCertificateTransferCertificate,
-                GapCertificate: documentsData.GapCertificate,
-                ProfessionalExperienceCertificate: documentsData.ProfessionalExperienceCertificate,
-                AdditionalDocuments: documentsData.AdditionalDocuments,
-                Signature:documentsData.Signature
-            });
-
-            await newDocument.save();
-            console.log("New document created:", newDocument);
-        }
-
-        // Fetch the updated documents for rendering
-        const documents = await CandidateDoc.findOne({ _candidate: candidate._id }).lean();
-        console.log(documents, "this is data");
-        res.render(`${req.vPath}/app/candidate/document`, {
-            menu: 'document',
-            candidate,
-            documents: documents || {},
-            message: "Success"
-        });
-        
-    } catch (error) {
-        console.error("Error saving documents:", error);
-        req.flash("error", error.message || "Something went wrong!");
-        return res.redirect("back");
+    const candidate = await Candidate.findOne({ mobile: value.mobile }).lean();
+    if (!candidate) {
+      return res.send({ status: false, msg: "Candidate not found!" });
     }
+
+    const documents = await CandidateDoc.findOne({ _candidate: candidate._id }).lean();
+
+
+
+    res.render(`${req.vPath}/app/candidate/document`, {
+      menu: 'document',
+      candidate,
+      documents: documents || {},
+    });
+  } catch (err) {
+    req.flash("error", err.message || "Something went wrong!");
+    return res.redirect("back");
+  }
+});
+
+
+router.post("/document", [isCandidate], async (req, res) => {
+  try {
+    const documentsData = req.body;
+    const userMobile = req.session.user.mobile;
+    console.log(documentsData, "this is document data");
+
+    const candidate = await Candidate.findOne({ mobile: userMobile }).lean();
+    if (!candidate) {
+      return res.status(404).json({ success: false, message: "Candidate not found" });
+    }
+
+    const existingDocument = await CandidateDoc.findOne({ _candidate: candidate._id });
+    console.log(existingDocument, "data find successfully??>><<>")
+    if (existingDocument) {
+      existingDocument.Photograph = documentsData.Photograph || existingDocument.Photograph;
+      existingDocument.AadharCardFront = documentsData.AadharCardFront || existingDocument.AadharCardFront;
+      existingDocument.AadharCardBack = documentsData.AadharCardBack || existingDocument.AadharCardBack;
+      existingDocument.ResidenceCertificate = documentsData.ResidenceCertificate || existingDocument.ResidenceCertificate;
+      existingDocument.CasteCertificate = documentsData.CasteCertificate || existingDocument.CasteCertificate;
+      existingDocument.RationCard = documentsData.RationCard || existingDocument.RationCard;
+      existingDocument['10thMarksheet'] = documentsData['10thMarksheet'] || existingDocument['10thMarksheet'];
+      existingDocument['12thMarksheet'] = documentsData['12thMarksheet'] || existingDocument['12thMarksheet'];
+      existingDocument.DiplomaMarksheet = documentsData.DiplomaMarksheet || existingDocument.DiplomaMarksheet;
+      existingDocument.BachelorDegreeMarkSheets = documentsData.BachelorDegreeMarkSheets || existingDocument.BachelorDegreeMarkSheets;
+      existingDocument.DegreePassingCertificate = documentsData.DegreePassingCertificate || existingDocument.DegreePassingCertificate;
+      existingDocument.PassportNationalityCertificate = documentsData.PassportNationalityCertificate || existingDocument.PassportNationalityCertificate;
+      existingDocument.MigrationCertificateTransferCertificate = documentsData.MigrationCertificateTransferCertificate || existingDocument.MigrationCertificateTransferCertificate;
+      existingDocument.GapCertificate = documentsData.GapCertificate || existingDocument.GapCertificate;
+      existingDocument.ProfessionalExperienceCertificate = documentsData.ProfessionalExperienceCertificate || existingDocument.ProfessionalExperienceCertificate;
+      existingDocument.AdditionalDocuments = documentsData.AdditionalDocuments || existingDocument.AdditionalDocuments;
+      existingDocument.Signature = documentsData.Signature || existingDocument.Signature
+
+      await existingDocument.save();
+      console.log("Document updated:", existingDocument);
+    } else {
+      const newDocument = new CandidateDoc({
+        _candidate: candidate._id,
+        Photograph: documentsData.Photograph,
+        AadharCardFront: documentsData.AadharCardFront,
+        AadharCardBack: documentsData.AadharCardBack,
+        ResidenceCertificate: documentsData.ResidenceCertificate,
+        CasteCertificate: documentsData.CasteCertificate,
+        RationCard: documentsData.RationCard,
+        '10thMarksheet': documentsData['10thMarksheet'],
+        '12thMarksheet': documentsData['12thMarksheet'],
+        DiplomaMarksheet: documentsData.DiplomaMarksheet,
+        BachelorDegreeMarkSheets: documentsData.BachelorDegreeMarkSheets,
+        DegreePassingCertificate: documentsData.DegreePassingCertificate,
+        PassportNationalityCertificate: documentsData.PassportNationalityCertificate,
+        MigrationCertificateTransferCertificate: documentsData.MigrationCertificateTransferCertificate,
+        GapCertificate: documentsData.GapCertificate,
+        ProfessionalExperienceCertificate: documentsData.ProfessionalExperienceCertificate,
+        AdditionalDocuments: documentsData.AdditionalDocuments,
+        Signature: documentsData.Signature
+      });
+
+      await newDocument.save();
+      console.log("New document created:", newDocument);
+    }
+
+    // Fetch the updated documents for rendering
+    const documents = await CandidateDoc.findOne({ _candidate: candidate._id }).lean();
+    console.log(documents, "this is data");
+    res.render(`${req.vPath}/app/candidate/document`, {
+      menu: 'document',
+      candidate,
+      documents: documents || {},
+      message: "Success"
+    });
+
+  } catch (error) {
+    console.error("Error saving documents:", error);
+    req.flash("error", error.message || "Something went wrong!");
+    return res.redirect("back");
+  }
 });
 
 
 router.delete('/document', [isCandidate], async (req, res) => {
   try {
-      const documentName = req.query.documentName; 
-      const id=req.query.id 
-      console.log(documentName, "this is document name");
-      
-      const userMobile = req.session.user.mobile;
-      const candidate = await Candidate.findOne({ mobile: userMobile }).lean();
+    const documentName = req.query.documentName;
+    const id = req.query.id
+    console.log(documentName, "this is document name");
 
-      if (!candidate) {
-          return res.status(404).send({ success: false, message: "Candidate not found!" });
-      }
+    const userMobile = req.session.user.mobile;
+    const candidate = await Candidate.findOne({ mobile: userMobile }).lean();
 
-      const updateResult = await CandidateDoc.updateOne(
-        { _id: id, [documentName]: { $exists: true } },
-        { $set: { [documentName]: "" } }
+    if (!candidate) {
+      return res.status(404).send({ success: false, message: "Candidate not found!" });
+    }
+
+    const updateResult = await CandidateDoc.updateOne(
+      { _id: id, [documentName]: { $exists: true } },
+      { $set: { [documentName]: "" } }
     );
 
-		const updateadditionaldoc = await CandidateDoc.updateOne(
-			{ _id: id },
-			{ $pull: { AdditionalDocuments: documentName } }  
-		  );
-      const documents = await CandidateDoc.findOne({ _candidate: candidate._id }).lean();
-      console.log(documents, "documents after delete");
+    const updateadditionaldoc = await CandidateDoc.updateOne(
+      { _id: id },
+      { $pull: { AdditionalDocuments: documentName } }
+    );
+    const documents = await CandidateDoc.findOne({ _candidate: candidate._id }).lean();
+    console.log(documents, "documents after delete");
 
-      res.render(`${req.vPath}/app/candidate/document`, {
-          menu: 'document',
-          candidate,
-          success:true,
-          documents: documents || {},  
-          message: "Document deleted successfully"
-      });   
+    res.render(`${req.vPath}/app/candidate/document`, {
+      menu: 'document',
+      candidate,
+      success: true,
+      documents: documents || {},
+      message: "Document deleted successfully"
+    });
   } catch (error) {
-      console.error("Error deleting document", error);
-      req.flash("error", error.message || "Something Went Wrong!");
-      return res.status(500).send({ success: false, message: error.message || "Something went wrong!" });
+    console.error("Error deleting document", error);
+    req.flash("error", error.message || "Something Went Wrong!");
+    return res.status(500).send({ success: false, message: error.message || "Something went wrong!" });
   }
 });
 
@@ -962,8 +973,8 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
       return res.send({ status: "failure", error: "Something went wrong!", error });
     }
 
- 
-  
+
+
     let course = await Courses.findById(courseId).populate('sectors').lean();
     if (!course || course?.status == false /* || course.courseType !== 0 */) {
       return res.redirect("/candidate/searchcourses");
@@ -987,9 +998,9 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
           _candidate: candidate._id,
           _course: ObjectId(courseId)
         }).lean();
-        
+
         course.registrationCharges = course.registrationCharges.replace(/,/g, '');
-        console.log('============> assignedCourseData ', assignedCourseData, course.registrationCharges )
+        console.log('============> assignedCourseData ', assignedCourseData, course.registrationCharges)
         if (assignedCourseData) {
           course.remarks = assignedCourseData.remarks;
           course.assignDate = assignedCourseData.assignDate ? moment(assignedCourseData.assignDate).format('DD MMM YYYY') : "";
@@ -1005,8 +1016,8 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
     }
     let mobileNumber = course.phoneNumberof ? course.phoneNumberof : contact[0]?.mobile
     // console.log('course: ', JSON.stringify(course));
-    
-    
+
+
     return res.render(`${req.vPath}/app/candidate/view-course`, {
       course,
       menu: 'Cources',
@@ -1057,7 +1068,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
 //       _candidate: candidate._id,
 //       _course: courseId
 //     }).save();
-    
+
 //     let sheetData = [candidate?.name, candidate?.mobile,candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY'): '', candidate?.state?.name, candidate.city?.name, 'Course', `${process.env.BASE_URL}/coursedetails/${courseId}`, course?.registrationCharges, appliedData?.registrationFee, moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
 
 //       await updateSpreadSheetValues(sheetData);
@@ -1111,7 +1122,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
 //       return res.status(400).send({ status: false, msg: "Applied Failed!" });
 //     }
 //   }
-  
+
 
 //   res.status(200).send({ status: true, msg: "Success" });
 // });
@@ -1135,7 +1146,7 @@ router.get("/appliedCourses", [isCandidate], async (req, res) => {
   if (candidate?.appliedCourses?.length > 0) {
     courses = await AppliedCourses.find({
       _candidate: candidate._id
-    }).populate({path:'_course', populate: {path:'sectors'}});
+    }).populate({ path: '_course', populate: { path: 'sectors' } });
 
     console.log('=================>  ', courses)
     count = await Courses.countDocuments({
@@ -1649,7 +1660,7 @@ router.post("/job/:jobId/apply", [isCandidate, authenti], async (req, res) => {
     // data["coinsDeducted"] = coinsDeducted
     const appliedData = await AppliedJobs.create(data);
 
-    let sheetData = [candidate?.name, candidate?.mobile,candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY'): '', candidate?.state?.name, candidate.city?.name, 'Job', `${process.env.BASE_URL}/jobdetailsmore/${jobId}`, "", "", moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
+    let sheetData = [candidate?.name, candidate?.mobile, candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY') : '', candidate?.state?.name, candidate.city?.name, 'Job', `${process.env.BASE_URL}/jobdetailsmore/${jobId}`, "", "", moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
 
     await updateSpreadSheetValues(sheetData)
 
@@ -2257,8 +2268,8 @@ router.post("/paymentStatus", [isCandidate, authenti], async (req, res) => {
 
 router.post("/coursepaymentStatus", [isCandidate, authenti], async (req, res) => {
   let { paymentId, orderId, amount, courseId, _candidate } = req.body;
-  console.log(courseId,_candidate, '<<<<<<<< courseId in the payment status')
-  let courseDetails = await AppliedCourses.findOne({ _candidate, _course: courseId});
+  console.log(courseId, _candidate, '<<<<<<<< courseId in the payment status')
+  let courseDetails = await AppliedCourses.findOne({ _candidate, _course: courseId });
   console.log(courseDetails, '<<<<<<<<<<<<<<<<< courseDetails')
   let course = await Courses.findById(courseId).lean();
   let validation = { mobile: req.session.user.mobile }
@@ -2306,10 +2317,10 @@ router.post("/coursepaymentStatus", [isCandidate, authenti], async (req, res) =>
         await AppliedCourses.findOneAndUpdate(
           { _id: courseDetails._id },
           {
-            registrationFee: 'Paid'         
+            registrationFee: 'Paid'
           }
         );
-       
+
         res.send({ status: true, msg: "Success" });
       } else {
         res.send({ status: false, msg: "Failed" });
