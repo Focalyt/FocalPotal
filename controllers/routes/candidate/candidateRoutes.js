@@ -56,7 +56,7 @@ const {
 } = require("../../models");
 const users = require("../../models/users");
 const AWS = require("aws-sdk");
-const { crypto, randomBytes } = require("crypto");
+const crypto = require("crypto");
 const {
   getTotalExperience,
   getTechSkills,
@@ -93,38 +93,171 @@ const FB_GRAPH_API = `https://graph.facebook.com/${FB_API_VERSION}/${fbConversio
 
 // Function to hash a value using SHA-256
 const hashValue = (value) => {
-    if (!value || typeof value !== 'string') return null; // Validate input
-    return crypto.createHash('sha256').update(value.trim().toLowerCase()).digest('hex');
+  if (value === undefined || value === null) {
+      console.error("Invalid value passed to hashValue:", value);
+      return null;
+  }
+
+  try {
+      const stringValue = value.toString().trim().toLowerCase(); // Ensure it's a string
+      return crypto.createHash('sha256').update(stringValue).digest('hex');
+  } catch (error) {
+      console.error("Error hashing value:", error.message);
+      return null;
+  }
 };
 
 
 
-// Function to send data to Facebook Conversion API
-const sendEventToFacebook = async (event_name, user_data, custom_data) => {
-    const event_id = crypto.createHash('sha256').update(`${user_data.em}-${event_name}-${Date.now()}`).digest('hex'); // Deduplication ID
 
-    const payload = {
-        data: [
-            {
-                event_name,
-                event_time: Math.floor(Date.now() / 1000),
-                action_source: "website",
-                event_id, // Deduplication
-                user_data,
-                custom_data
-            }
-        ]
-    };
+router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const validation = { mobile: req.session.user.mobile };
 
-    try {
-        const response = await axios.post(`${FB_GRAPH_API}?access_token=${fbConversionAccessToken}`, payload, {
-            headers: { 'Content-Type': 'application/json' }
-        });
-        console.log("Facebook Event Sent Successfully:", response.data);
-    } catch (error) {
-        console.error("Error sending event to Facebook:", error.response ? error.response.data : error.message);
+    // Validate courseId and candidate's mobile number
+    const { value, error } = await CandidateValidators.userMobile(validation);
+    if (error) {
+        return res.status(400).json({ status: false, msg: "Invalid mobile number.", error });
     }
+
+    const candidateMobile = value.mobile;
+
+    // Fetch course and candidate
+    const course = await Courses.findById(courseId);
+    if (!course) {
+        return res.status(404).json({ status: false, msg: "Course not found." });
+    }
+
+    const candidate = await Candidate.findOne({ mobile: candidateMobile }).populate([
+        { path: 'state', select: "name" },
+        { path: 'city', select: "name" }
+    ]).lean();
+
+    if (!candidate) {
+        return res.status(404).json({ status: false, msg: "Candidate not found." });
+    }
+
+    // Check if already applied
+    if (candidate.appliedCourses && candidate.appliedCourses.includes(courseId)) {
+        return res.status(400).json({ status: false, msg: "Already applied." });
+    }
+
+    // If event sent successfully, apply for course
+    const apply = await Candidate.findOneAndUpdate(
+      { mobile: candidateMobile },
+      { $addToSet: { appliedCourses: courseId } },
+      { new: true, upsert: true }
+  );
+
+  const appliedData = await new AppliedCourses({
+      _candidate: candidate._id,
+      _course: courseId
+  }).save();
+
+  // Update Spreadsheet
+  const sheetData = [
+      candidate?.name,
+      candidate?.mobile,
+      candidate?.email,
+      candidate?.sex,
+      candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+      candidate?.state?.name,
+      candidate?.city?.name,
+      'Course',
+      `${process.env.BASE_URL}/coursedetails/${courseId}`,
+      course?.registrationCharges,
+      appliedData?.registrationFee,
+      moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')
+  ];
+  await updateSpreadSheetValues(sheetData);
+
+
+      // Extract UTM Parameters
+      const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
+      const utm_params = {
+          utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
+          utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
+          utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
+          utm_term: sanitizeInput(req.query.utm_term || ''),
+          utm_content: sanitizeInput(req.query.utm_content || '')
+      };
+
+      // Extract fbp and fbc values
+      let fbp = req.cookies?._fbp || '';
+      let fbc = req.cookies?._fbc || '';
+      if (!fbc && req.query.fbclid) {
+          fbc = `fb.${Date.now()}.${req.query.fbclid}`;
+      }
+
+      // Prepare user data for Facebook Event
+      const user_data = {
+          em: [hashValue(candidate.email)],
+          ph: [hashValue(candidate.mobile)],
+          fn: hashValue(candidate.name?.split(" ")[0]),
+          ln: hashValue(candidate.name?.split(" ")[1] || ""),
+          country: hashValue("India"),
+          client_ip_address: req.ip || '',
+          fbp,
+          fbc
+      };
+
+      // Prepare custom data for Facebook Event
+      const custom_data = {
+          currency: "INR",
+          value: course.registrationCharges || 0,
+          content_ids: [courseId],
+          content_type: "course",
+          num_items: 1,
+          ...utm_params
+      };
+
+      // Send Event to Facebook
+      console.log("Sending Facebook Event...");
+      const fbEventSent = await sendEventToFacebook("Course Apply", user_data, custom_data);
+
+      
+      return res.status(200).json({ status: true, msg: "Course applied successfully." });
+  } catch (error) {
+      console.error("Error applying for course:", error.message);
+      return res.status(500).json({ status: false, msg: "Internal server error.", error: error.message });
+  }
+});
+
+// Modified sendEventToFacebook function
+const sendEventToFacebook = async (event_name, user_data, custom_data) => {
+  const event_id = crypto.createHash('sha256').update(`${user_data.em}-${event_name}-${Date.now()}`).digest('hex');
+  const payload = {
+      data: [
+          {
+              event_name,
+              event_time: Math.floor(Date.now() / 1000),
+              action_source: "website",
+              event_id,
+              user_data,
+              custom_data
+          }
+      ]
+  };
+
+  try {
+      const response = await axios.post(`${FB_GRAPH_API}?access_token=${fbConversionAccessToken}`, payload, {
+          headers: { 'Content-Type': 'application/json' }
+      });
+      console.log("Facebook Event Sent Successfully:", response.data);
+      return true; // Event sent successfully
+  } catch (error) {
+      console.error("Error sending event to Facebook:", error.response ? error.response.data : error.message);
+      return false; // Event failed
+  }
 };
+
+
+
+
+
+
+
 
 router.route('/')
   .get(async (req, res) => {
@@ -880,101 +1013,101 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
   }
 })
 /* course apply */
-router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res) => {
-  let courseId = req.params.courseId;
-  let validation = { mobile: req.session.user.mobile }
-  let { value, error } = await CandidateValidators.userMobile(validation)
-  if (error) {
-    return res.send({ status: "failure", error: "Something went wrong!", error });
-  }
-  let candidateMobile = value.mobile;
-  let course = await Courses.findById(courseId);
-  if (!course) {
-    return res.send({ status: false, msg: "Course not Found!" });
-  }
-  let candidate = await Candidate.findOne({ mobile: candidateMobile }).populate([{
-    path: 'state',
-    select: "name"
-  }, {
-    path: 'city',
-    select: "name"
-  }]).lean();
-  if (!candidate) {
-    return res.send({ status: false, msg: "Candidate not found!" });
-  }
+// router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res) => {
+//   let courseId = req.params.courseId;
+//   let validation = { mobile: req.session.user.mobile }
+//   let { value, error } = await CandidateValidators.userMobile(validation)
+//   if (error) {
+//     return res.send({ status: "failure", error: "Something went wrong!", error });
+//   }
+//   let candidateMobile = value.mobile;
+//   let course = await Courses.findById(courseId);
+//   if (!course) {
+//     return res.send({ status: false, msg: "Course not Found!" });
+//   }
+//   let candidate = await Candidate.findOne({ mobile: candidateMobile }).populate([{
+//     path: 'state',
+//     select: "name"
+//   }, {
+//     path: 'city',
+//     select: "name"
+//   }]).lean();
+//   if (!candidate) {
+//     return res.send({ status: false, msg: "Candidate not found!" });
+//   }
 
-  if (candidate.appliedCourses && candidate.appliedCourses.includes(courseId)) {
-    req.flash("error", "Already Applied");
-    return res.send({ status: false, msg: "Already Applied" });
-  } else {
+//   if (candidate.appliedCourses && candidate.appliedCourses.includes(courseId)) {
+//     req.flash("error", "Already Applied");
+//     return res.send({ status: false, msg: "Already Applied" });
+//   } else {
 
 
 
-    let apply = await Candidate.findOneAndUpdate({ mobile: candidateMobile },
-      { $addToSet: { appliedCourses: courseId } },
-      { new: true, upsert: true });
-   const appliedData = await AppliedCourses({
-      _candidate: candidate._id,
-      _course: courseId
-    }).save();
+//     let apply = await Candidate.findOneAndUpdate({ mobile: candidateMobile },
+//       { $addToSet: { appliedCourses: courseId } },
+//       { new: true, upsert: true });
+//    const appliedData = await AppliedCourses({
+//       _candidate: candidate._id,
+//       _course: courseId
+//     }).save();
     
-    let sheetData = [candidate?.name, candidate?.mobile,candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY'): '', candidate?.state?.name, candidate.city?.name, 'Course', `${process.env.BASE_URL}/coursedetails/${courseId}`, course?.registrationCharges, appliedData?.registrationFee, moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
+//     let sheetData = [candidate?.name, candidate?.mobile,candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY'): '', candidate?.state?.name, candidate.city?.name, 'Course', `${process.env.BASE_URL}/coursedetails/${courseId}`, course?.registrationCharges, appliedData?.registrationFee, moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
 
-      await updateSpreadSheetValues(sheetData);
-      // Extract UTM Parameters from query
-      // const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
-      // Extract UTM Parameters from query
-    //   let utm_params = {
-    //     utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
-    //     utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
-    //     utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
-    //     utm_term: sanitizeInput(req.query.utm_term || ''),
-    //     utm_content: sanitizeInput(req.query.utm_content || ''),
-    // };
-    // Extract fbp and fbc values
-    // let fbp = req.cookies?._fbp || '';
-    // let fbc = req.cookies?._fbc || '';
-    // if (!fbc && req.query.fbclid) {
-    //     fbc = `fb.${Date.now()}.${req.query.fbclid}`; // Construct fbc from fbclid query parameter
-    // }
+//       await updateSpreadSheetValues(sheetData);
+//       //Extract UTM Parameters from query
+//       const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
+//       //Extract UTM Parameters from query
+//       let utm_params = {
+//         utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
+//         utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
+//         utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
+//         utm_term: sanitizeInput(req.query.utm_term || ''),
+//         utm_content: sanitizeInput(req.query.utm_content || ''),
+//     };
+//     //Extract fbp and fbc values
+//     let fbp = req.cookies?._fbp || '';
+//     let fbc = req.cookies?._fbc || '';
+//     if (!fbc && req.query.fbclid) {
+//         fbc = `fb.${Date.now()}.${req.query.fbclid}`; // Construct fbc from fbclid query parameter
+//     }
 
-    // Prepare user data with hashing
-  //   const user_data = {
-  //     em: [hashValue(candidate.email || "")],
-  //     ph: [hashValue(candidate.mobile)],
-  //     fn: hashValue(candidate.name?.split(" ")[0]),
-  //     ln: hashValue(candidate.name?.split(" ")[1] || ""),
-  //     country: hashValue("India"),
-  //     client_ip_address: req.ip || '',
-  //     fbp,
-  //     fbc
-  // };
-    // Prepare custom data, including UTM parameters
-    // const custom_data = {
-    //   currency: "INR",
-    //   value: course.registrationCharges || 0,
-    //   content_ids: [courseId],
-    //   content_type: "course",
-    //   num_items: 1,
-    //   order_id: appliedData._id.toString(),
-    //   ...utm_params // Add UTM parameters to custom_data
-  // };
-  //   console.log(user_data, custom_data)
+//     //Prepare user data with hashing
+//     const user_data = {
+//       em: [hashValue(candidate.email)],
+//       ph: [hashValue(candidate.mobile)],
+//       fn: hashValue(candidate.name?.split(" ")[0]),
+//       ln: hashValue(candidate.name?.split(" ")[1] || ""),
+//       country: hashValue("India"),
+//       client_ip_address: req.ip || '',
+//       fbp,
+//       fbc
+//   };
+//     //Prepare custom data, including UTM parameters
+//     const custom_data = {
+//       currency: "INR",
+//       value: course.registrationCharges || 0,
+//       content_ids: [courseId],
+//       content_type: "course",
+//       num_items: 1,
+//       order_id: appliedData._id.toString(),
+//       ...utm_params // Add UTM parameters to custom_data
+//   };
+//     console.log(user_data, custom_data)
 
-    // // Send event to Facebook
-    // await sendEventToFacebook("Course Apply", user_data, custom_data);
+//     // Send event to Facebook
+//     await sendEventToFacebook("Course Apply", user_data, custom_data);
 
 
 
-    if (!apply) {
-      req.flash("error", "Already failed");
-      return res.status(400).send({ status: false, msg: "Applied Failed!" });
-    }
-  }
+//     if (!apply) {
+//       req.flash("error", "Already failed");
+//       return res.status(400).send({ status: false, msg: "Applied Failed!" });
+//     }
+//   }
   
 
-  res.status(200).send({ status: true, msg: "Success" });
-});
+//   res.status(200).send({ status: true, msg: "Success" });
+// });
 /* List of applied course */
 router.get("/appliedCourses", [isCandidate], async (req, res) => {
   const p = parseInt(req.query.page);
