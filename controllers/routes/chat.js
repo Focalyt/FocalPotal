@@ -515,19 +515,17 @@ commonRoutes.post("/payment",  async (req, res) => {
   console.log(options.notes, 'notes to be saved in the razorpay details')
   console.log(options, 'options to be saved in the razorpay details')
 
-  instance.orders.create(options, async function (err, order) {
-	if (err) {
-	  console.log('Error>>>>>>>>>>>>>>>>', err)
-	  return res.send({ message: err.description })
-	}
-	console.log(order, '<<<<<<<<<<<<<<<< order details')
-	res.send({ order: order, candidate: candidate });
+  const paymentLink = await instance.paymentLink.create(options, async function (err, paymentLink) {
+	
+	console.log(paymentLink.short_url, '<<<<<<<<<<<<<<<< order details')
+	res.status(200).send({status: true,
+		paymentLink: paymentLink.short_url });
   });
 });
 
 commonRoutes.post("/coursepayment", async (req, res) => {
   let courseId = req.body.courseId;
-console.log(courseId)
+
   if (!courseId) {
 	return res.status(400).send({ status: false, msg: 'Incorrect Data.' })
   }
@@ -558,13 +556,13 @@ console.log(courseId)
   console.log(options.notes, 'notes to be saved in the razorpay details')
   console.log(options, 'options to be saved in the razorpay details')
 
-  instance.orders.create(options, async function (err, order) {
+  instance.paymentLink.create(options, async function (err, paymentLink) {
 	if (err) {
 	  console.log('Error>>>>>>>>>>>>>>>>', err)
 	  return res.send({ message: err.description })
 	}
-	console.log(order, '<<<<<<<<<<<<<<<< order details')
-	res.send({ order: order, candidate: candidate });
+	console.log(paymentLink.short_url, '<<<<<<<<<<<<<<<< order details')
+	res.send({ paymentLink: paymentLink.short_url, candidate: candidate });
   });
 });
 
