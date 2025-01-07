@@ -567,6 +567,10 @@ commonRoutes.post("/coursepayment", async (req, res) => {
 	console.log(paymentLink.short_url, '<<<<<<<<<<<<<<<< order details')
 	res.send({ paymentLink: paymentLink.short_url, candidate: candidate });
   });
+  
+
+
+
 });
 
 commonRoutes.post("/paymentStatus", async (req, res) => {

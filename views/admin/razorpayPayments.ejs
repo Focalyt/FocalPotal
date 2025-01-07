@@ -34,17 +34,20 @@
                 <div class="col-xl-12 col-lg-12">
                   <form method="GET">
                     <div class="row px-1">
-                        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12  mt-1">
-                            <label>Date</label>
-                            <input type="date" class="form-control" id="date" name="date" value="<%= date %>">
-                        </div>
-                            <div  class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mt-1 py-1">
-                                <button 
-                                  class="btn btn-success  waves-effect waves-light  text-white d-inline px-lg-3 px-md-3 px-sm-2"
-                                  id="submit-btn">Go</button>
-                            </div>
+                      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mt-1">
+                        <label>From Date</label>
+                        <input type="date" class="form-control" name="fromDate" value="<%= fromDate %>">
+                      </div>
+                      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mt-1">
+                        <label>To Date</label>
+                        <input type="date" class="form-control" name="endDate" value="<%= endDate %>">
+                      </div>
+                      <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mt-1 py-1">
+                        <button class="btn btn-success waves-effect waves-light text-white">Go</button>
+                      </div>
                     </div>
                   </form>
+                  
                 </div>
             </div>
 
