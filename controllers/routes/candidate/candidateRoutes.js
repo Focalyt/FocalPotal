@@ -1732,7 +1732,7 @@ router.post("/job/:jobId/apply", [isCandidate, authenti], async (req, res) => {
       currency: "INR",
       value: course.registrationCharges || 0,
       content_ids: [courseId],
-      content_type: "course",
+      content_type: "job",
       num_items: 1,
       ...utm_params
     };
