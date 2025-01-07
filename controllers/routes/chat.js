@@ -525,6 +525,7 @@ commonRoutes.post("/payment",  async (req, res) => {
 
 commonRoutes.post("/coursepayment", async (req, res) => {
   let courseId = req.body.courseId;
+  let userId = req.body.userId;
 
   if (!courseId) {
 	return res.status(400).send({ status: false, msg: 'Incorrect Data.' })
@@ -552,6 +553,8 @@ commonRoutes.post("/coursepayment", async (req, res) => {
 	amount: Number(course.registrationCharges) * 100,
 	currency: "INR",
 	notes: { candidate: `${candidate._id}`, course: `${courseId}`, name: `${candidate.name}`, mobile: `${value.mobile}` },
+	callback_url: `https://connect.helloyubo.com/payments/focalyt_bot/${userId}`, // Replace with your actual callback URL
+	
   };
   console.log(options.notes, 'notes to be saved in the razorpay details')
   console.log(options, 'options to be saved in the razorpay details')
