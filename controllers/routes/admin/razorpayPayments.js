@@ -18,35 +18,50 @@ router.use(isAdmin);
 
 router.route("/").get(async (req, res) => {
   try {
-    let { date } = req.query;
-    if (!date) {
-      date = moment().format("YYYY-MM-DD");
+    // Get 'fromDate' and 'endDate' from query parameters
+    let { fromDate, endDate } = req.query;
+
+    // Default dates if not provided
+    if (!fromDate) {
+      fromDate = moment().utcOffset("+05:30").startOf("day").format("YYYY-MM-DD");
     }
-    let fromDate = moment(date).utcOffset("+05:30").startOf("day");
-    let toDate = moment(date).utcOffset("+05:30").endOf("day");
-    let fromTimestamp = fromDate.unix();
-    let toTimestamp = toDate.unix();
+    if (!endDate) {
+      endDate = moment().utcOffset("+05:30").endOf("day").format("YYYY-MM-DD");
+    }
+
+    // Convert dates to timestamps
+    let fromTimestamp = moment(fromDate).utcOffset("+05:30").startOf("day").unix();
+    let toTimestamp = moment(endDate).utcOffset("+05:30").endOf("day").unix();
+
+    // Initialize Razorpay instance
     let instance = new Razorpay({
       key_id: apiKey,
       key_secret: razorSecretKey,
     });
+
+    // Fetch payments within the date range
     let paymentsData = await instance.payments.all({
       from: fromTimestamp,
       to: toTimestamp,
-      count: 100,
+      count: 100, // Maximum results to fetch
     });
 
-    let filteredPayments = paymentsData.items.filter((ele) => ele.status == 'captured')
-return res.render(`${req.vPath}/admin/razorpayPayments`, {
+    // Filter payments with 'captured' status
+    let filteredPayments = paymentsData.items.filter((ele) => ele.status == "captured");
+
+    // Render the page with filtered payments
+    return res.render(`${req.vPath}/admin/razorpayPayments`, {
       menu: "razorpayPayments",
       paymentsData: filteredPayments,
-      date,
+      fromDate, // Pass 'fromDate' to the template for display
+      endDate,  // Pass 'endDate' to the template for display
     });
   } catch (err) {
     console.log(err);
     return res.status(500).send({ status: false, message: err });
   }
 });
+
 
 router.get("/checkCoinsAllocation/:paymentId", async (req, res) => {
   try {
