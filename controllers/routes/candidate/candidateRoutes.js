@@ -1660,9 +1660,86 @@ router.post("/job/:jobId/apply", [isCandidate, authenti], async (req, res) => {
     // data["coinsDeducted"] = coinsDeducted
     const appliedData = await AppliedJobs.create(data);
 
-    let sheetData = [candidate?.name, candidate?.mobile, candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY') : '', candidate?.state?.name, candidate.city?.name, 'Job', `${process.env.BASE_URL}/jobdetailsmore/${jobId}`, "", "", moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
+    // let sheetData = [candidate?.name, candidate?.mobile, candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY') : '', candidate?.state?.name, candidate.city?.name, 'Job', `${process.env.BASE_URL}/jobdetailsmore/${jobId}`, "", "", moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
 
-    await updateSpreadSheetValues(sheetData)
+    
+    // Capitalize every word's first letter
+    function capitalizeWords(str) {
+      if (!str) return '';
+      return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+    }
+
+    // Update Spreadsheet
+    const sheetData = [
+      moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
+      moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
+      capitalizeWords(course?.name), // Apply the capitalizeWords function
+      candidate?.name,
+      candidate?.mobile,
+      candidate?.email,
+      candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+      candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+      candidate?.state?.name,
+      candidate?.city?.name,
+      'Job',
+      `${process.env.BASE_URL}/jobdetailsmore/${jobId}`,
+      "",
+      ""
+
+
+    ];
+    await updateSpreadSheetValues(sheetData);
+
+
+    // Extract UTM Parameters
+    const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
+    const utm_params = {
+      utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
+      utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
+      utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
+      utm_term: sanitizeInput(req.query.utm_term || ''),
+      utm_content: sanitizeInput(req.query.utm_content || '')
+    };
+
+    // Extract fbp and fbc values
+    let fbp = req.cookies?._fbp || '';
+    let fbc = req.cookies?._fbc || '';
+    if (!fbc && req.query.fbclid) {
+      fbc = `fb.${Date.now()}.${req.query.fbclid}`;
+    }
+
+    // Prepare user data for Facebook Event
+    const user_data = {
+      em: [hashValue(candidate.email)],                          // Hashed email
+      ph: [hashValue(candidate.mobile)],                        // Hashed phone number
+      fn: hashValue(candidate.name?.split(" ")[0]),             // Hashed first name
+      ln: hashValue(candidate.name?.split(" ")[1] || ""),       // Hashed last name
+      zp: hashValue(candidate.zip || ""),                       // Hashed postcode
+      db: hashValue(candidate.dob ? moment(candidate.dob).format('YYYY-MM-DD') : ""), // Hashed date of birth
+      ct: hashValue(candidate.city?.name),                      // Hashed city
+      st: hashValue(candidate.state?.name),                     // Hashed state/region
+      country: hashValue("India"),                              // Hashed country
+      ge: hashValue(candidate.sex === 'Male' ? 'm' : candidate.sex === 'Female' ? 'f' : ''), // Hashed gender
+      client_ip_address: req.ip || '',                          // IP address (no hash required)
+      client_user_agent: req.headers['user-agent'] || '',       // User agent (no hash required)
+      fbp: req.cookies?._fbp || '',                             // Browser ID
+      fbc: req.cookies?._fbc || (req.query.fbclid ? `fb.${Date.now()}.${req.query.fbclid}` : ''), // Click ID
+      external_id: hashValue(candidate._id.toString())          // Hashed External ID (user database ID)
+    };
+
+    // Prepare custom data for Facebook Event
+    const custom_data = {
+      currency: "INR",
+      value: course.registrationCharges || 0,
+      content_ids: [courseId],
+      content_type: "course",
+      num_items: 1,
+      ...utm_params
+    };
+
+    // Send Event to Facebook
+    console.log("Sending Facebook Event...");
+    const fbEventSent = await sendEventToFacebook("Job Apply", user_data, custom_data);
 
     if (!apply) {
       req.flash("error", "Already failed");
