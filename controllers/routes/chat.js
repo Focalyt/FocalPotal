@@ -3,6 +3,9 @@ const moment = require("moment");
 const ObjectId = require("mongodb").ObjectId;
 require('dotenv').config()
 const { extraEdgeAuthToken, extraEdgeUrl, env } = require("../../config");
+const Razorpay = require("razorpay");
+const apiKey = process.env.MIPIE_RAZORPAY_KEY;
+const razorSecretKey = process.env.MIPIE_RAZORPAY_SECRET;
 
 const {
 	Vacancy, Courses, Candidate, Company, AppliedJobs, AppliedCourses, User, CandidateCashBack
@@ -523,8 +526,8 @@ commonRoutes.post("/payment",  async (req, res) => {
 });
 
 commonRoutes.post("/coursepayment", async (req, res) => {
-  let { courseId } = req.body;
-
+  let courseId = req.body.courseId;
+console.log(courseId)
   if (!courseId) {
 	return res.status(400).send({ status: false, msg: 'Incorrect Data.' })
   }
@@ -645,7 +648,7 @@ commonRoutes.post("/coursepaymentStatus",  async (req, res) => {
   let courseDetails = await AppliedCourses.findOne({ _candidate, _course: courseId});
   console.log(courseDetails, '<<<<<<<<<<<<<<<<< courseDetails')
   let course = await Courses.findById(courseId).lean();
-  let validation = { mobile: req.session.user.mobile }
+  let validation = { mobile: req.body.mobile }
   let { value, error } = CandidateValidators.userMobile(validation)
   if (error) {
 	console.log(error)
