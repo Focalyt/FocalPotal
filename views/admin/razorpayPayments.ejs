@@ -84,7 +84,7 @@
                     <td><%= payment.notes.candidate ? 'Candidate' : 'Company' %></td>
                     <td><%= payment.amount/100 %> <%= payment.notes.course? '(For Course)' : '' %></td>
                     <td><%= payment.status %></td>
-                    <td><%= moment.unix(payment.created_at).utcOffset("+05:30").format("hh:mm a") %></td>
+                    <td><%= moment.unix(payment.created_at).utcOffset("+05:30").format("DD/MM/YYYY hh:mm a") %></td>
                     <td id="coinsStatus<%= i %>">
                       <a
                         id="searchStatus<%= i %>"
