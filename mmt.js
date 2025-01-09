@@ -17,6 +17,7 @@ const fileupload = require("express-fileupload");
 const tunnel=require('tunnel-ssh');
 const {v4:uuidv4}=require('uuid');
 const axios = require("axios");
+const AWS = require('aws-sdk');
 //upload('
 NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const {
@@ -74,6 +75,40 @@ const blockIPMiddleware = (req, res, next) => {
   // IP address is not blocked, proceed to the next middleware or route handler
   next();
 };
+
+
+// Configure AWS SDK
+// const s3 = new AWS.S3({
+//   accessKeyId: process.env.AWS_ACCESS_ID,
+//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//   region: 'ap-south-1',
+// });
+
+// // Function to check connection
+// const checkS3Connection = async () => {
+//   try {
+//     // List the buckets in your AWS account
+//     const buckets = await s3.listBuckets().promise();
+//     console.log("S3 Buckets:", buckets.Buckets);
+
+//     // Optional: List objects in your specific bucket
+//     const params = {
+//       Bucket: process.env.AWS_BUCKET_NAME,
+//     };
+//     const objects = await s3.listObjectsV2(params).promise();
+//     console.log("Objects in Bucket:", objects.Contents);
+
+//     console.log("S3 Connection Successful!");
+//   } catch (error) {
+//     console.error("Error connecting to S3:", error.message);
+//   }
+// };
+
+// // Run the function
+// checkS3Connection();
+
+
+
 
 app.set("view engine", "ejs");
 app.use(blockIPMiddleware);

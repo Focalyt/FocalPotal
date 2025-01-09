@@ -8,7 +8,7 @@ const paymentDetailsSchema = new Schema(
     orderId: { type: String },
     amount: { type: Number },
     coins: { type: Number },
-    _candidate: { type: ObjectId, ref: "Candidate" },
+    _candidate: { type: ObjectId, ref: "Candidate", required: true },
     _company: { type: ObjectId, ref: "Company" },
     _offer: { type: ObjectId, ref: "coinsOffers" },
     _course: { type: ObjectId, ref: "Courses" },

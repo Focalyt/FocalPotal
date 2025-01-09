@@ -18,7 +18,6 @@ router.use(isAdmin);
 
 router.route("/").get(async (req, res) => {
   try {
-    // Get 'fromDate' and 'endDate' from query parameters
     let { fromDate, endDate } = req.query;
 
     // Default dates if not provided
@@ -28,40 +27,31 @@ router.route("/").get(async (req, res) => {
     if (!endDate) {
       endDate = moment().utcOffset("+05:30").endOf("day").format("YYYY-MM-DD");
     }
-
-    // Convert dates to timestamps
-    let fromTimestamp = moment(fromDate).utcOffset("+05:30").startOf("day").unix();
-    let toTimestamp = moment(endDate).utcOffset("+05:30").endOf("day").unix();
-
-    // Initialize Razorpay instance
+    let fromTimestamp = moment(fromDate).utcOffset("+05:30").startOf("day").unix();;
+    let toTimestamp = moment(endDate).utcOffset("+05:30").endOf("day").unix();;
+    
     let instance = new Razorpay({
       key_id: apiKey,
       key_secret: razorSecretKey,
     });
-
-    // Fetch payments within the date range
     let paymentsData = await instance.payments.all({
       from: fromTimestamp,
       to: toTimestamp,
-      count: 100, // Maximum results to fetch
+      count: 100,
     });
 
-    // Filter payments with 'captured' status
-    let filteredPayments = paymentsData.items.filter((ele) => ele.status == "captured");
-
-    // Render the page with filtered payments
-    return res.render(`${req.vPath}/admin/razorpayPayments`, {
+    let filteredPayments = paymentsData.items.filter((ele) => ele.status == 'captured')
+return res.render(`${req.vPath}/admin/razorpayPayments`, {
       menu: "razorpayPayments",
       paymentsData: filteredPayments,
       fromDate, // Pass 'fromDate' to the template for display
-      endDate,  // Pass 'endDate' to the template for display
+      endDate,
     });
   } catch (err) {
     console.log(err);
     return res.status(500).send({ status: false, message: err });
   }
 });
-
 
 router.get("/checkCoinsAllocation/:paymentId", async (req, res) => {
   try {

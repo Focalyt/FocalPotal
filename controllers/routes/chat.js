@@ -3,12 +3,14 @@ const moment = require("moment");
 const ObjectId = require("mongodb").ObjectId;
 require('dotenv').config()
 const { extraEdgeAuthToken, extraEdgeUrl, env } = require("../../config");
+
+const router = express.Router();
 const Razorpay = require("razorpay");
 const apiKey = process.env.MIPIE_RAZORPAY_KEY;
 const razorSecretKey = process.env.MIPIE_RAZORPAY_SECRET;
 
 const {
-	Vacancy, Courses, Candidate, Company, AppliedJobs, AppliedCourses, User, CandidateCashBack
+	coinsOffers,PaymentDetails,Vacancy, Courses, Candidate, Company, AppliedJobs, AppliedCourses, User, CandidateCashBack
 } = require("../models");
 
 const { sendNotification } = require('./services/notification');
@@ -550,6 +552,7 @@ commonRoutes.post("/coursepayment", async (req, res) => {
 	key_secret: razorSecretKey,
   });
   let options = {
+	
 	amount: Number(course.registrationCharges) * 100,
 	currency: "INR",
 	notes: { candidate: `${candidate._id}`, course: `${courseId}`, name: `${candidate.name}`, mobile: `${value.mobile}` },
@@ -647,67 +650,180 @@ commonRoutes.post("/paymentStatus", async (req, res) => {
 	});
 });
 
-commonRoutes.post("/coursepaymentStatus",  async (req, res) => {
-  let { paymentId, orderId, amount, courseId, _candidate } = req.body;
-  console.log(courseId,_candidate, '<<<<<<<< courseId in the payment status')
-  let courseDetails = await AppliedCourses.findOne({ _candidate, _course: courseId});
-  console.log(courseDetails, '<<<<<<<<<<<<<<<<< courseDetails')
-  let course = await Courses.findById(courseId).lean();
-  let validation = { mobile: req.body.mobile }
-  let { value, error } = CandidateValidators.userMobile(validation)
-  if (error) {
-	console.log(error)
-	return res.send({ status: "failure", error: "Something went wrong!", error });
-  }
-
-  let candidate = await Candidate.findOne({
-	mobile: value.mobile,
-	status: true,
-	isDeleted: false,
-  }).select("_id")
-  let addPayment = {
-	paymentId,
-	orderId,
-	amount: course.registrationCharges,
-	coins: 0,
-	_candidate,
-	_course: courseId
-  };
-
-  let alreadyAllocated = await PaymentDetails.findOne({ $and: [{ $or: [{ paymentId }, { orderId }] }, { _candidate }] })
-  if (alreadyAllocated) {
-	console.log('=========== In alreadyAllocated ', alreadyAllocated)
-	return res.status(400).send({ status: false, msg: 'Already Allocated!' })
-  }
-  // console.log('coins allocation start', addPayment)
-
-  // let voucherId = await Vouchers.findOne({ code: voucher, status: true, isDeleted: false, activeTill: { $gte: moment().utcOffset('+05:30') }, activationDate: { $lte: moment().utcOffset('+05:30') } }).select("_id")
-
-  let instance = new Razorpay({
-	key_id: apiKey,
-	key_secret: razorSecretKey,
-  });
-  instance.payments
-	.fetch(paymentId, { "expand[]": "offers" })
-	.then(async (data) => {
-	  await PaymentDetails.create({
-		...addPayment,
-		paymentStatus: data.status,
-	  });
-	  if (data.status == "captured") {
-		await AppliedCourses.findOneAndUpdate(
-		  { _id: courseDetails._id },
-		  {
-			registrationFee: 'Paid'         
-		  }
-		);
-	   
-		res.send({ status: true, msg: "Success" });
-	  } else {
-		res.send({ status: false, msg: "Failed" });
+commonRoutes.post("/coursepaymentStatus", async (req, res) => {
+	try {
+	  let { paymentId, orderId, amount, courseId, _candidate } = req.body;
+	  console.log(courseId, _candidate, '<<<<<< Debug courseId and _candidate');
+	  
+	  let courseDetails = await AppliedCourses.findOne({ _candidate, _course: courseId });
+	  if (!courseDetails) {
+		console.error('No course details found for the given candidate and course!');
+		return res.status(400).send({ status: false, msg: 'Course details not found!' });
 	  }
-	});
-});
+  
+	  console.log(courseDetails, '<<<<<<<<<<<<<<<<< courseDetails');
+	  let course = await Courses.findById(courseId).lean();
+	  if (!course) {
+		return res.status(400).send({ status: false, msg: 'Course not found!' });
+	  }
+  
+	  let validation = { mobile: req.body.mobile };
+	  let { value, error } = CandidateValidators.userMobile(validation);
+	  if (error) {
+		console.log(error);
+		return res.send({ status: "failure", error: "Something went wrong!", error });
+	  }
+  
+	  let candidate = await Candidate.findOne({
+		mobile: value.mobile,
+		status: true,
+		isDeleted: false,
+	  }).select("_id");
+	  if (!candidate) {
+		return res.status(400).send({ status: false, msg: 'Candidate not found!' });
+	  }
+  
+	  let addPayment = {
+		paymentId,
+		orderId,
+		amount: course.registrationCharges,
+		coins: 0,
+		_candidate,
+		_course: courseId,
+	  };
+  
+	  let alreadyAllocated = await PaymentDetails.findOne({
+		$and: [{ $or: [{ paymentId }, { orderId }] }, { _candidate }],
+	  });
+	  if (alreadyAllocated) {
+		console.log('=========== In alreadyAllocated ', alreadyAllocated);
+		return res.status(400).send({ status: false, msg: 'Already Allocated!' });
+	  }
+  
+	  let instance = new Razorpay({
+		key_id: apiKey,
+		key_secret: razorSecretKey,
+	  });
+	  instance.payments
+		.fetch(paymentId, { "expand[]": "offers" })
+		.then(async (data) => {
+		  await PaymentDetails.create({
+			...addPayment,
+			paymentStatus: data.status,
+		  });
+		  if (data.status == "captured") {
+			await AppliedCourses.findOneAndUpdate(
+			  { _id: courseDetails._id },
+			  { registrationFee: 'Paid' }
+			);
+			res.send({ status: true, msg: "Success" });
+		  } else {
+			res.send({ status: false, msg: "Failed" });
+		  }
+		})
+		.catch((err) => {
+		  console.error('Error in Razorpay fetch:', err);
+		  res.status(500).send({ status: false, msg: 'Payment verification failed!' });
+		});
+	} catch (error) {
+	  console.error('Unhandled Error:', error);
+	  res.status(500).send({ status: false, msg: 'Internal Server Error', error });
+	}
+  });
+
+  commonRoutes.post("/updatecoursepaymentStatus", async (req, res) => {
+	try {
+	  const {paymentId } = req.body;
+	  let instance = new Razorpay({
+		key_id: apiKey,
+		key_secret: razorSecretKey,
+	  });
+  
+	  // Validate Input
+	  if ( !paymentId) {
+		return res.status(400).send({
+		  status: "failure",
+		  msg: "Either Order ID or Payment ID is required",
+		});
+	  }
+  
+	  // Fetch Payment Details using Payment ID
+	  if (paymentId) {
+		const existingPayment = await PaymentDetails.findOne({ paymentId });
+
+		if (existingPayment) {
+
+
+			const appliedCourse = await AppliedCourses.findOne({
+				_candidate: existingPayment._candidate,
+				_course: existingPayment._course,
+			  });
+		
+			  if (appliedCourse) {
+				if (appliedCourse.registrationFee === "Unpaid") {
+				  // Update registrationFee to Paid
+				  appliedCourse.registrationFee = "Paid";
+				  await appliedCourse.save();
+				  return res.status(200).send({
+					status: "exists",
+					msg: "Payment details already exist and Applied Course updated to Paid",
+					paymentDetails: existingPayment,
+					appliedCourse,
+				  });
+				}
+				// If registrationFee is already Paid
+				return res.status(200).send({
+					status: "exists",
+					msg: "Payment details already exist, and registrationFee is already Paid",
+					paymentDetails: existingPayment,
+					appliedCourse,
+				  });
+				}
+
+
+
+
+		  return res.status(404).send({
+			status: "failure",
+			msg: "Payment exists but no matching AppliedCourses record found",
+			paymentDetails: existingPayment,
+		  });
+		}
+		const paymentDetails = await instance.payments.fetch(paymentId);
+		console.log(paymentDetails)
+		// Step 1: Check if Payment ID already exists in PaymentDetails
+		
+		if (paymentDetails.status === "captured") {
+			// Create a new record in the PaymentDetails collection
+			const newPayment = await PaymentDetails.create({
+			  paymentId: paymentDetails.id,
+			  orderId: paymentDetails.order_id,
+			  amount: paymentDetails.amount / 100, // Convert from paise to rupees
+			  coins: 0, // Assuming this field is needed
+			  _course: paymentDetails.notes.course,
+			  paymentStatus: paymentDetails.status,
+			  _candidate: paymentDetails.notes.candidate,
+			  updatedAt: new Date(),
+			});
+	  
+			return res.status(201).send({
+			  status: "success",
+			  msg: "Payment details created successfully",
+			  newPayment,
+			});
+		  }
+	  }
+  
+	} catch (error) {
+	  console.error("Error fetching Razorpay details:", error);
+	  res.status(500).send({
+		status: "failure",
+		msg: "Error fetching Razorpay details",
+		error: error.message,
+	  });
+	}
+  });
+  
 
 commonRoutes.get("/Coins",  async (req, res) => {
   let validation = { mobile: req.body.mobile }
