@@ -13,7 +13,9 @@ const {
   Candidate,
   HiringStatus,
   Vacancy,
-  AppliedJobs
+  AppliedJobs,
+  AppliedCourses
+
 } = require('../../models');
 const moment = require('moment')
 
@@ -356,6 +358,29 @@ router.get('/', async (req, res) => {
          $lte : moment().subtract(2,'day').utcOffset('+05:30').endOf('day').toDate()}
       }).countDocuments()
 
+      //applied Courses
+      const totalAppliedCourses = await AppliedCourses.find({}).countDocuments()
+      const monthAppliedCourses = await AppliedCourses.find({
+        createdAt: {$gte : moment().utcOffset('+05:30').startOf('month').toDate(),
+         $lte : moment().utcOffset('+05:30').endOf('month').toDate()}
+      }).countDocuments()
+      const weekAppliedCourses = await AppliedCourses.find({
+        createdAt: {$gte : moment().utcOffset('+05:30').startOf('week').toDate(),
+         $lte : moment().utcOffset('+05:30').endOf('week').toDate()}
+      }).countDocuments()
+      const dayAppliedCourses = await AppliedCourses.find({
+        createdAt: {$gte : moment().utcOffset('+05:30').startOf('day').toDate(),
+         $lte : moment().utcOffset('+05:30').endOf('day').toDate()}
+      }).countDocuments()
+      const yesterdayAppliedCourses=await AppliedCourses.find({
+        createdAt: {$gte : moment().subtract(1,'day').utcOffset('+05:30').startOf('day').toDate(),
+         $lte : moment().subtract(1,'day').utcOffset('+05:30').endOf('day').toDate()}
+      }).countDocuments()
+      const dayBeforeYesterdayAppliedCourses=await AppliedCourses.find({
+        createdAt: {$gte : moment().subtract(2,'day').utcOffset('+05:30').startOf('day').toDate(),
+         $lte : moment().subtract(2,'day').utcOffset('+05:30').endOf('day').toDate()}
+      }).countDocuments()
+
     return res.render(`${req.vPath}/admin`,{
       totalRevenue: totalRevenue[0]?.totalRevenue,
       monthRevenue: monthRevenue[0]?.monthRevenue,
@@ -371,7 +396,7 @@ router.get('/', async (req, res) => {
       monthShortlisted: monthShortlisted.length,totalShortlisted: totalShortlisted.length,
       totalCandidates, dayCandidates, totalCompanies, dayCompanies, dayColleges, totalColleges,menu:'dashboard',
       dayJobs,weekJobs,monthJobs,jobs,dayHired,weekHired,monthHired,totalHired,
-      totalAppliedJobs, monthAppliedJobs, weekAppliedJobs, dayAppliedJobs,dayBeforeYesterdayCandidates,yesterdayCandidates
+      totalAppliedJobs, monthAppliedJobs, weekAppliedJobs, dayAppliedJobs,dayBeforeYesterdayCandidates,yesterdayCandidates,totalAppliedCourses,monthAppliedCourses,weekAppliedCourses,dayAppliedCourses,yesterdayAppliedCourses,dayBeforeYesterdayAppliedCourses
     });
   } catch (err) {
     req.session.formData = req.body;
