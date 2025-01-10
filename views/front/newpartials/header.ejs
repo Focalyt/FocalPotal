@@ -1,12 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+  
+    <!-- Meta Pixel Code -->
+    <script>
+      (async function(f, b, e, v, n, t, s) {
+        if (f.fbq) return; // अगर fbq पहले से मौजूद है तो आगे नहीं बढ़ेगा
+        n = f.fbq = function() {
+          n.callMethod ?
+            n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+    
+        // Script asynchronously लोड करें
+        t = b.createElement(e);
+        t.async = true;
+        t.src = v;
+    
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+    
+        // Initialize and track events
+        await new Promise((resolve) => {
+          t.onload = resolve; // जब स्क्रिप्ट लोड हो जाए तो इसे resolve करें
+        });
+    
+        fbq('init', '3800389873545664'); // Facebook Pixel ID
+        fbq('track', 'PageView'); // PageView Event
+    
+      })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=3800389873545664&ev=PageView&noscript=1"
+    /></noscript>
+    
+  <!-- End Meta Pixel Code -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="color-scheme" content="dark light">
   <title>FOCALYT</title>
-  <link rel="shortcut icon" href="/public_assets/images/newpage/favicon.png" type="public_assets/images/newpage/x-icon">
+  <link rel="shortcut icon" href="public_assets/images/newpage/favicon.png" type="public_assets/images/newpage/x-icon">
   <link href="/js/newpage/plugin/newunpug/aos.css" rel="stylesheet">
   <!-- Plugin'stylesheets  -->
   <link rel="stylesheet" type="text/css" href="/css/newpages/fonts/typography/fonts.css">
@@ -39,98 +77,116 @@
   <link rel="stylesheet" type="text/css" href="/js/newpage/plugin/slick/slick.min.css">
   <link rel="stylesheet" type="text/css" href="/js/newpage/plugin/slick/slick-theme.css">
   <!-- Vendor stylesheets  -->
-  <link rel="stylesheet" href="/css/newpages/joblisting.css">
-  <link rel="stylesheet" href="/css/newpages/jobsearch.css">
-       <!-- Microsoft Clarity -->
-       <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "n4i9ljyxr0");
-    </script>
-       <!-- Microsoft Clarity -->
-        <!-- Meta Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '3800389873545664');
-  fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=3800389873545664&ev=PageView&noscript=1"
-  /></noscript>
-  <!-- End Meta Pixel Code -->
+   <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "n4i9ljyxr0");
+</script>
+   <!-- Microsoft Clarity -->
+
+   <!-- Google Tag Manager -->
+   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W39K27R');</script>
+    <!-- End Google Tag Manager -->
+
+    <link rel="stylesheet" href="/css/newpages/joblisting.css">
+    <link rel="stylesheet" href="/css/newpages/jobsearch.css">
+
   
-  </head>
+</head>
 <body>
-  <section class="header">
-    <div class="border-bottom">
+  <div class="page-wrapper overflow-hidden">
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~
+     Header Area
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <header class="site-header site-header--transparent site-header--sticky">
       <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <nav class="navbar navbar-expand-lg navbar-light brand-logo site-navbar mt-2">
-              <a class="navbar-brand" href="/">
-                <img src="/public_assets/images/newpage/logo-ha.svg" alt="">
-              </a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <!-- <span class="navbar-toggler-icon"></span> -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 7L4 7" stroke="#FC2B5A" stroke-width="1.5" stroke-linecap="round" />
-                  <path d="M20 12L4 12" stroke="#FC2B5A" stroke-width="1.5" stroke-linecap="round" />
-                  <path d="M20 17L4 17" stroke="#FC2B5A" stroke-width="1.5" stroke-linecap="round" />
-                </svg>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="links ms-auto">
-                  <ul class="site-menu-main">
-                    <li class="nav-item nav-item-has-children">
-                      <a href="https://about.focalyt.com/" target="_blank" class="nav-link-item drop-trigger">About Us
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class='nav-link-item drop-trigger' target="_blank" href="/joblisting">Jobs</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class='nav-link-item drop-trigger' href='/courses'>Courses</a>
-                    </li>
-                    <li class="nav-item d-xl-none d-lg-none d-md-none d-sm-block d-block">
-                      <a class='nav-link-item drop-trigger' href='/contact'>Contact Us</a>
-                    </li>
-                    <!-- active -->
-                    <li class="nav-item  d-xl-flex d-lg-flex d-md-flex d-sm-none d-none">
-                      <a class='nav-link-item drop-trigger ' href='/contact'>Contact Us</a>
-                      <!-- active_menu -->
-                    </li>
-                    <li class="nav-item">
-                      <!-- Container for hoverable area -->
-                      <div class="dropdown-container">
-                        <!-- Login Text as a Span -->
-                        <span class="nav-link-item drop-trigger active_menu" id="loginLink">LogIn</span>
-                        
-                        <!-- Dropdown Menu -->
-                        <ul class="dropdown-menu" id="loginDropdown">
-                          <li><a href="/company/login" target="_blank" class="dropdown-item">Login as Corporate</a></li>
-                          <li><a href="/candidate/login" target="_blank" class="dropdown-item">Login as Student</a></li>
-                        </ul>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+        <nav class="navbar site-navbar">
+          <!--~~~~~~~~~~~~~~~~~~~~~~~~
+            Brand Logo
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+          <div class="brand-logo">
+            <a href="#">
+              <!-- light version logo (logo must be black)-->
+              <img class="logo-light" src="public_assets/images/newpage/logo-ha.svg" alt="brand logo">
+              <!-- Dark version logo (logo must be White)-->
+              <img class="logo-dark" src="public_assets/images/newpage/logo-ha.svg" alt="brand logo">
+            </a>
+          </div>
+          <div class="menu-block-wrapper ">
+            <div class="menu-overlay"></div>
+            <nav class="menu-block" id="append-menu-header">
+              <div class="mobile-menu-head">
+                <a href='index.html'>
+                  <img src="public_assets/images/newpage/logo-ha.svg" alt="brand logo">
+                </a>
+                <div class="current-menu-title"></div>
+                <div class="mobile-menu-close">&times;</div>
               </div>
+              <ul class="site-menu-main">
+                <li class="nav-item">
+                  <a class='nav-link-item drop-trigger'  href="/">Home</a>
+                </li>
+                <li    class="nav-item nav-item-has-children">
+                  <a href="https://about.focalyt.com/" target="_blank" class="nav-link-item drop-trigger">About Us
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class='nav-link-item drop-trigger'  href="/joblisting">Jobs</a>
+                </li>
+                <li class="nav-item">
+                  <a class='nav-link-item drop-trigger' href='/courses'>Courses</a>
+                </li>
+                <li class="nav-item d-xl-none d-lg-none d-md-none d-sm-block d-block">
+                  <a class='nav-link-item drop-trigger' href='/contact'>Contact Us</a>
+                </li>
+                <!-- active -->
+                <li class="nav-item  d-xl-flex d-lg-flex d-md-flex d-sm-none d-none">
+                  <!-- active_menu -->
+                  <a class='nav-link-item drop-trigger ' href='/contact'>Contact Us</a>
+                </li>
+                <li class="nav-item small">
+                  <!-- Container for hoverable area -->
+                  <div class="dropdown-container">
+                    <!-- Login Text as a Span -->
+                    <span class="nav-link-item drop-trigger active_menu homeMenu" id="loginLink">LogIn</span>
+                    
+                    <!-- Dropdown Menu -->
+                    <ul class="dropdown-menu" id="loginDropdown">
+                      <li><a href="/company/login" target="_blank" class="dropdown-item">Login as Corporate</a></li>
+                      <li><a href="/candidate/login" target="_blank" class="dropdown-item">Login as Student</a></li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
             </nav>
           </div>
-            
-        </div>
+          <!--~~~~~~~~~~~~~~~~~~~~~~~~
+          mobile menu trigger
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+          <div class="mobile-menu-trigger">
+            <span></span>
+          </div>
+          <!--~~~~~~~~~~~~~~~~~~~~~~~~
+            Mobile Menu Hamburger Ends
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+          <!-- <div class="header-cta-btn-wrapper">
+            <a href="#" class="btn-masco btn-masco--header btn-masco--header-secondary">
+              <span>Login</span>
+            </a>
+            <a href="#" class="btn-masco btn-masco--header   btn-secondary-l02 btn-fill--up">
+              <span>Sign up free</span></a>
+          </div> -->
+        </nav>
       </div>
-    </div>
+    </header>
+  
+   
 
-  </section>
+  </div>

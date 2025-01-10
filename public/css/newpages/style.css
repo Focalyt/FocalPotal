@@ -5999,7 +5999,9 @@ li.nav-item-has-children.child-item:hover .fa-angle-right {
 .mobile-menu-trigger {
   display: none;
 }
-
+.site-header{
+  background-color: #121212!important;
+}
 /*responsive*/
 @media (max-width: 991px) {
   .site-header .mobile-menu-trigger {
@@ -6139,7 +6141,7 @@ li.nav-item-has-children.child-item:hover .fa-angle-right {
     opacity: 1;
     box-shadow: none;
     margin: 0;
-    padding: 0 10px 10px 10px;`
+    padding: 0 10px 10px 10px;
     top: 0;
     left: 0;
     width: 100%;
@@ -16809,6 +16811,9 @@ Common: Spacing Gutters
 }
 /* Mobile-specific styles */
 @media (max-width: 768px) {
+  .small{
+    display: none!important;
+  }
   /* Ensure dropdown appears as block for mobile */
   #loginDropdown {
     position: static;

@@ -87,11 +87,16 @@ a.nav-link-item.drop-trigger.active_menu {
     line-height: 0px!important; */
     font-weight: 600;
     padding-inline: 10px!important;
-    padding-block: 20px!important;
+    padding-block: 10px!important;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.nav-item .dropdown-container > span.homeMenu{
+/* .nav-item .dropdown-container > span.homeMenu{
     padding-block: 10px!important   ;
-}
+} */
 /* Custom Scroll bar Style */
 ::-webkit-scrollbar {
     width: 6px
