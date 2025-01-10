@@ -521,10 +521,10 @@ hr {
     border: 0;
     border-top: 1px solid rgba(34, 41, 47, .1)
 }
-.img-fluid{
+/* .img-fluid{
     position: relative;
     right: -60px;
-}
+} */
 .img-fluid,
 .img-thumbnail {
     max-width: 100%;
