@@ -863,6 +863,10 @@ select.city_form {
     background: #fbce1e;
 
 }
+/* .btn.btn-bg-color{
+    background: #fbce1e!important;
+    color: #fff!important;
+} */
 .btn.cta-callnow {
     background: #fff;
     color: #FC2B5A;
