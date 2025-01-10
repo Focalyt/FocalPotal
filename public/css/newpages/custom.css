@@ -860,10 +860,10 @@ select.city_form {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
-.btn.btn-bg-color{
+/* .btn.btn-bg-color{
     background: #fbce1e!important;
     color: #fff!important;
-}
+} */
 .btn.cta-callnow {
     background: #fff;
     color: #FC2B5A;
