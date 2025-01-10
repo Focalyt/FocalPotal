@@ -291,8 +291,7 @@ div#features_cta img {
     width: 100px;
     height: auto;
     text-align: center;
-    margin: 0 auto;
-    transition: ;
+    margin: 0 auto
 }
 div#features_cta h4 {
     font-size: 14px;
@@ -859,6 +858,10 @@ select.city_form {
     background: #FC2B5A;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+.btn.btn-bg-color{
+    background: #fbce1e;
+
 }
 .btn.cta-callnow {
     background: #fff;
