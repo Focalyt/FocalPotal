@@ -43,7 +43,7 @@
                                 <div class="col-xl-12 col-lg-12 col-sm-12 col-12 col-12 p-0">
                                     <div class="card mb-0">
                                         <div class="card-title text-center mb-0">
-                                            <h4>सीखें और नौकरी पाएं</h4>
+                                            <h4>Build Future Ready Minds</h4>
                                         </div>
 
                                           <!--Carousel Gallery-->
@@ -573,7 +573,7 @@
                                                 let header = { headers: { 'x-auth': localStorage.getItem('token') } }
                                                 axios.post('/candidate/verification',body,header).then((res)=>{
                                                 if(res.data.status == true)
-                                                window.location.href = "/candidate/searchjob";
+                                                window.location.href = "/candidate/searchcourses";
                                              }).catch((err) => {
                                                 console.log("Err response in verification ====>", err)
                                                 return res.status(500).send({
