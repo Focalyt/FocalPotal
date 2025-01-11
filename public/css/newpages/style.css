@@ -5778,16 +5778,16 @@ h1, h2, h3, h4, h5, h6 {
   .site-menu-main .nav-link-item {
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    padding-left: 25px !important;
-    padding-right: 25px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 }
 @media (min-width:1016px){
   .site-menu-main .nav-link-item {
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    padding-left: 25px !important;
-    padding-right: 25px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 }
 .site-menu-main .sub-menu {
@@ -16838,21 +16838,79 @@ Common: Spacing Gutters
 }
 
 /* Demo table  */
+#newYear{
+  height: 100%;
+}
+.Heading__text{
+  font-size: 40px;
+  padding-bottom: 20px;
+}
+.Heading__text .first{
+  font-weight: 300;
+}
+.Heading__text .secound{
+  font-weight: 700;
+}
+.reso_para{
+  font-size: 18px;
+  font-weight: 300;
+  padding-bottom: 20px;
+}
+.tagline{
+  font-size: 30px;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+.main_images{
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.main_images img{
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  object-fit: contain;
+  z-index: 9;
+  height: 420px;
+  bottom: -50px;
+}
+.program-logo{
+  text-align: center;
+  margin-bottom: 15px;
+}
+.program-description{
+  font-size: 17px;
+  line-height: normal;
+  font-weight: 300;
+}
+.whychoosefocal{
+  margin-bottom: 40px;
+}
 .demoQuate{
   line-height: 50px;
   font-size: 16px;
-  padding-block: 10px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+.demo_experience{
+  padding-inline: 20px;
 }
 .book_demo_today{
   font-size: 40px;
   font-weight: 600;
-  font-family: inherit;
+  font-family: 'Inter', sans-serif;
 }
 .request_demo{
   font-weight: 600;
   font-size: 30px;
   text-align: center;
   word-spacing: 5px;
+  font-family: 'Inter', sans-serif;
+}
+#bookDemo{
+  /* background-color: rgba(var(--l2-primary-rgb), 0.03); */
+  padding-block: 40px;
 }
 .demo_form{
   display: flex;
@@ -16860,6 +16918,8 @@ Common: Spacing Gutters
       gap: 20px;
       padding: 10px 20px;
       border-radius: 21px;
+      /* border: 1px solid #FC2B5A; */
+      box-shadow: 0px 0px 36px 8px rgba(0, 0, 0, 0.37);
   }
 
 .form_name{
@@ -16873,10 +16933,11 @@ Common: Spacing Gutters
     width: 100%;
 }
 .label {
-  color: #fff;
+  color: #000;
 }
 .form_input{
   height: 40px;
+  padding: 20px 10px;
 }
 .first_name, .email{
   width: 100%;
@@ -16890,6 +16951,7 @@ Common: Spacing Gutters
   font-size: 30px;
   font-weight: 400;
   line-height: normal;
+  font-family: 'Inter', sans-serif;
 }
 .robo_area{
   display: flex;
@@ -16897,13 +16959,177 @@ Common: Spacing Gutters
   gap: 20px;
 }
 .robo_area p{
-  color: #fff;
+  color: #000;
   line-height: normal;
   font-size: 16px;
   font-weight: 300;
+  font-family: 'Inter', sans-serif;
+  padding: 5px;
 }
 .underline{
   border: 2px solid yellow;
     width: 25%;
     margin-block: 20px;
+}
+#Ar{
+  background-image: url(../../public_assets/images/newpage/index/bg-stipes.jpg);
+    background-color: #FFFFFF;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.reach_header{
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 25px;
+  font-family: 'Inter', sans-serif;
+}
+.inner--socialicon ul{
+  display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.insta{
+  width: 35px!important;
+}
+.text--heading{
+  font-size: 45px;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+.primary-gradient1{
+  background:linear-gradient(to right, rgba(255,42,86,1) 44%, rgba(255,42,86,1) 0%, rgba(255,255,255,1) 47%, rgba(255,255,255,1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.inner--socialicon img{
+  width: 75px;
+}
+.submit_btn{
+  display: inline;
+    padding-block: 10px;
+    border-radius: 20px;
+    border: none;
+    width: 50%;
+    text-align: center;
+    align-content: center;
+    margin: auto;
+    background-color: #FC2B5A;
+    color: #fff;
+    transition: 0.5s ease;
+}
+.submit_btn:hover{
+  border: 2px solid #FC2B5A;
+  background-color: transparent;
+  color: #000;
+  transition: 0.5s ease-out;
+}
+.images{
+  display: flex;
+}
+.images img{
+  padding-left: 10px;
+  width: 150px;
+  /* height: ; */
+}
+.homeMenu:hover{
+  cursor: pointer;
+}
+.new_link{
+  width: 15%;
+  margin: auto;
+  background: #FC2B5A;
+  border-radius: 10px;
+  padding: 10px 20px;
+  /* color: #fff; */
+}
+
+.new_link a{
+  color: #fff;
+  font-weight: 500;
+  font-family: 'Inter", sans-serif';
+  transition: .8s ease;
+
+}
+.new_link:hover {
+  border: 1px solid #fc2b5a;
+  color: #000;
+  transition: 0.5s ease;
+  background: transparent;
+}
+.new_link a:hover {
+  color: #000;
+  transition: 0.5s ease;
+}
+#Ar .feature-widget-7 {
+  transition: .4s ease;
+}
+#Ar .active .feature-widget-7 {
+  z-index: 1;
+  background-color: #fff;
+  box-shadow: 0 12px 40px rgba(105,131,160,.2);
+  border-radius: 20px;
+  width: 100%;
+  padding: 10px 20px;
+  transition: .3s ease;
+}
+#Ar .feature-widget-7:hover {
+  z-index: 1;
+  background-color: #fff;
+  box-shadow: 0 12px 40px rgba(105,131,160,.2);
+  border-radius: 20px;
+  width: 100%;
+  padding: 10px 20px;
+  transition: .3s ease;
+}
+
+@media(max-width:767px){
+  .Heading__text{
+    font-size: 25px;
+  }
+  .reso_para{
+    font-size: 15px;
+  }
+  .tagline{
+    font-size: 25px;
+  }
+  .images{
+
+  }
+  .main_images img{
+    position: relative;
+    width: 100%;
+    object-fit: contain;
+  }
+  .form_name{
+    flex-direction: column;
+  }
+  .book_demo_today{
+    font-size: 24px;
+  }
+  .demoQuate{
+    line-height: 25px;
+  }
+  .request_demo{
+    font-size: 20px;
+  }
+  .demo_form{
+    margin-bottom: 25px;
+  }
+  .Robotics{
+    font-weight: 20px;
+  }
+  .demo_experience{
+    padding-inline: 5px;
+  }
+  .text--heading{
+    font-size: 25px;
+  }
+  .reach_header{
+    font-size: 16px;
+  }
 }
