@@ -16836,3 +16836,74 @@ Common: Spacing Gutters
     display: block;
   }
 }
+
+/* Demo table  */
+.demoQuate{
+  line-height: 50px;
+  font-size: 16px;
+  padding-block: 10px;
+}
+.book_demo_today{
+  font-size: 40px;
+  font-weight: 600;
+  font-family: inherit;
+}
+.request_demo{
+  font-weight: 600;
+  font-size: 30px;
+  text-align: center;
+  word-spacing: 5px;
+}
+.demo_form{
+  display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 10px 20px;
+      border-radius: 21px;
+  }
+
+.form_name{
+  display: flex;
+      width: 100%;
+      gap: 30px;
+}
+.phone , .designation , .Organisation , .country ,.state{
+  display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.label {
+  color: #fff;
+}
+.form_input{
+  height: 40px;
+}
+.first_name, .email{
+  width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.demo_table .form .form_name > lable{
+  color:#fff;
+}
+.Robotics{
+  font-size: 30px;
+  font-weight: 400;
+  line-height: normal;
+}
+.robo_area{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.robo_area p{
+  color: #fff;
+  line-height: normal;
+  font-size: 16px;
+  font-weight: 300;
+}
+.underline{
+  border: 2px solid yellow;
+    width: 25%;
+    margin-block: 20px;
+}
