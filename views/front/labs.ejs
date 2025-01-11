@@ -56,13 +56,13 @@
                 </div>
                 <div class="state">
                   <label class="label">State <span class="imp">*</span></label>
-                  <select class="form_input" id="state">
+                  <select class="form_input" id="state" >
                     <option value="" disabled selected>Select your State</option>
                   </select>
                 </div>
                 <button type="submit" class="submit_btn">Book Demo</button>
               </div>
-            </form>
+            </form>
             
           </div>
 
@@ -96,6 +96,43 @@
   </section>
 
 <%include ./newpartials/footer%>
+<script>
+  document.getElementById('demoForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    let isValid = true; // Assume all fields are valid initially
+
+    // Select all required inputs and selects
+    const fields = [
+      { id: 'fullName', label: 'Full Name' },
+      { id: 'email', label: 'Email' },
+      { id: 'phone', label: 'Phone' },
+      { id: 'designation', label: 'Designation' },
+      { id: 'organisation', label: 'School/Organisation' },
+      { id: 'state', label: 'State' }
+    ];
+
+    fields.forEach(field => {
+      const input = document.getElementById(field.id);
+      const span = input.parentElement.querySelector('.imp');
+
+      if (!input.value) {
+        isValid = false; // If field is empty, form is invalid
+        input.classList.add('error');
+        if (span) span.classList.add('error');
+      } else {
+        input.classList.remove('error');
+        if (span) span.classList.remove('error');
+      }
+    });
+
+    if (isValid) {
+      // Submit the form (can replace this with actual submission logic)
+      // alert('Form submitted successfully!');
+    } else {
+      // alert('Please fill all required fields!');
+    }
+  });
+</script>
 <script>
     const videoModal = document.getElementById('videoModal')
     if (videoModal) {
