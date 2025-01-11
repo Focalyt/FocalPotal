@@ -405,6 +405,7 @@ figure.down_shape img {
     width: 25%;
     position: relative;
     right: -60px;
+    top: -60px;
 }
 #how {
     background-image: url(../../public_assets/images/newpage/index/bg-stipes.jpg);
