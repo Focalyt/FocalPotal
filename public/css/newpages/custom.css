@@ -620,7 +620,8 @@ section#hero_sm .border_cta {
     grid-template-columns: 40px 1fr;
     grid-auto-columns: 1fr;
     align-items: center;
-    padding: 15px 20px;
+    padding: 10px 20px;
+    /* padding: 15px 20px; */
     display: grid;
 }
 #how_sliderdual .feature-widget-7__icon-wrapper h5 {
