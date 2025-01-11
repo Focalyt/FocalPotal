@@ -1,0 +1,117 @@
+<%include ./newpartials/header%>
+
+<section id="bookDemo" class="bg-white section-padding-120">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-header">
+            <h2 class="book_demo_today text-black text-center">
+              Book your FREE Demo Today!
+            </h2>
+            <p class="header_underline"></p>
+
+            <p class="demoQuate text-black text-center">
+              Are you ready to experience the power of AI and Robotics? Request a free demo of our AI and Robotics
+              ecosystem today!
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="demo_table">
+            <form action="">
+              <div class="demo_form">
+                <h3 class="request_demo text-white">
+                  Request your Demo Today
+                </h3>
+                <div class="form_name">
+                  <div class="first_name">
+                    <lable class="label">Full Name <span  class="imp">*</span></lable>
+                    <input type="text" class="form_input" placeholder="Your Full Name">
+                  </div>
+                  <div class="email">
+                    <lable class="label">Email <span class="imp">*</span></lable>
+                    <input type="text" class="form_input" placeholder="Email">
+                  </div>
+                </div>
+                <div class="phone">
+                  <label class="label">Phone <span class="imp">*</span></label>
+                  <input class="form_input" type="number">
+                </div>
+                <div class="designation">
+                  <label class="label" class="label" for="Designation"> Designation <span class="imp">*</span></label>
+                  <select class="form_input" name="" id="">
+                    <option value="" disabled selected>Select your designation</option>
+                    <option value="manager">Manager</option>
+                    <option value="developer">Developer</option>
+                    <option value="designer">Designer</option>
+                    <option value="tester">Tester</option>
+                  </select>
+                </div>
+                <div class="Organisation">
+                  <label class="label">School/Organisation <span>*</span></label>
+                  <input class="form_input" type="text">
+                </div>
+
+                <div class="state">
+                  <label class="label">State <span class="imp">*</span></label>
+                  <select class="form_input" name="country" id="country" required>
+                    <option value="" disabled selected>Select your State</option>
+                  </select>
+                </div>
+                <button type="submit" class="submit_btn">Book Demo </button>
+
+              </div>
+            </form>
+
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="demo_experience">
+            <h3 class="Robotics text-black">
+              Experience the power of AI and Robotics with us!
+            </h3>
+            <div class="underline"></div>
+            <div class="robo_area">
+              <p>
+                Discover the power of the STEMpedia ecosystem – a revolutionary Coding, AI, and Robotics solution for
+                schools! Our educational specialists are here to show you how to harness the potential of this
+                cutting–edge technology.
+              </p>
+              <p>
+                In as little as one hour, we can assign the right resources to your specific educational requirements
+                and help unlock the countless possibilities STEMpedia provides.
+              </p>
+              <p>
+                Contact us for a free demonstration tailored to fit your school‘s schedule. Act now and let STEMpedia
+                revolutionize the way you learn.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<%include ./newpartials/footer%>
+<script>
+    const videoModal = document.getElementById('videoModal')
+    if (videoModal) {
+      videoModal.addEventListener('show.bs.modal', event => {    
+      // Button that triggered the modal
+      const button = event.relatedTarget
+          // Extract info from data-bs-* attributes
+          const link = button.getAttribute('data-bs-link')
+  
+          // Update the modal's content.
+          const modalBody = videoModal.querySelector('.modal-body #vodeoElement')
+  
+          modalBody.src = link
+          document.getElementById('courseVid').load()
+        })
+        videoModal.addEventListener('hide.bs.modal', event => {  
+          document.getElementById('courseVid').pause()
+        })
+    }
+    </script>

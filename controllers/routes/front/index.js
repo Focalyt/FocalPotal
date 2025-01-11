@@ -249,6 +249,11 @@ router.get("/about_us", (req, res) => {
 	rePath = res.render(`${req.vPath}/front/about_us`, {
 	});
 });
+router.get("/futureTechnologyLabs", (req, res) => {
+    
+	rePath = res.render(`${req.vPath}/front/labs.ejs`, {
+	});
+});
 router.get("/jobsearch", (req, res) => {
     
 	rePath = res.render(`${req.vPath}/front/jobsearch`, {
