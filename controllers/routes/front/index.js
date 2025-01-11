@@ -244,6 +244,11 @@ router.get("/joblisting", async (req, res) => {
 	});
 });
 
+router.get("/about_us", (req, res) => {
+    
+	rePath = res.render(`${req.vPath}/front/about_us`, {
+	});
+});
 router.get("/jobsearch", (req, res) => {
     
 	rePath = res.render(`${req.vPath}/front/jobsearch`, {
