@@ -83,8 +83,8 @@ a.nav-link-item.drop-trigger.active_menu {
     color: #FC2B5A!important;
     background: #fff;
     border-radius: 10px;
-    /* padding: 0px 10px!important;
-    line-height: 0px!important; */
+    /* padding: 0px 10px!important;*/
+    line-height: 0px!important; 
     font-weight: 600;
     padding-inline: 10px!important;
     padding-block: 10px!important;
