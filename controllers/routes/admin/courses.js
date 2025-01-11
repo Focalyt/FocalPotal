@@ -43,7 +43,7 @@ router.route("/").get(async (req, res) => {
 		}
 		fields["status"] = status;
 		let courses = await Courses.find(fields).populate("sectors")
-		console.log(courses,"this is courses")
+		console.log(courses, "this is courses")
 		return res.render(`${req.vPath}/admin/course`, {
 			menu: 'course',
 			view,
@@ -73,14 +73,14 @@ router
 	})
 	.post(async (req, res) => {
 		try {
-			console.log(req.body,"this is body of post data>>>>><><><><><")
-			let photos =  req.body.photos?.split(',')
+			console.log(req.body, "this is body of post data>>>>><><><><><")
+			let photos = req.body.photos?.split(',')
 			let testimonialvideos = req.body.testimonialvideos?.split(',')
 			let videos = req.body.videos?.split(',')
 			let body = req.body;
-				body.photos = photos
-				body.testimonialvideos = testimonialvideos
-				body.videos = videos
+			body.photos = photos
+			body.testimonialvideos = testimonialvideos
+			body.videos = videos
 
 			const addRecord = await Courses.create(body);
 			console.log(JSON.stringify(addRecord), "create coursessssssss")
@@ -128,14 +128,14 @@ router
 				}
 			})
 			course = await Courses.findById(id).populate('sectors');
-			console.log(course,"this is course>?<<<<edited course")
+			console.log(course, "this is course>?<<<<edited course")
 			return res.render(`${req.vPath}/admin/course/edit`, {
 				course,
 				sectors,
 				id,
 				menu: 'course'
 			});
-			
+
 		} catch (err) {
 			req.flash("error", err.message || "Something went wrong!");
 			return res.redirect("back");
@@ -149,7 +149,7 @@ router
 			body.videos = req.body.videos?.split(',')
 			body.testimonialvideos = req.body.testimonialvideos?.split(',')
 			const updateCourse = await Courses.findByIdAndUpdate(id, { $set: body }, { new: true });
-			console.log(updateCourse,"updateCourse updateCourse data")
+			console.log(updateCourse, "updateCourse updateCourse data")
 			if (updateCourse) {
 				req.flash("success", "Course updated successfully!");
 				return res.json({ status: true, message: "Record added!" })
@@ -216,7 +216,7 @@ router.route("/registrations")
 					{ "whatsapp": Number(data['whatsapp']) }
 				];
 			}
-			
+
 			const count = await AppliedCourses.countDocuments(filter)
 			let { value, order } = req.query
 			let sorting = {}
@@ -226,7 +226,7 @@ router.route("/registrations")
 				sorting = { createdAt: -1 }
 			}
 			let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter)
-			let candidates = await AppliedCourses.aggregate(agg);			
+			let candidates = await AppliedCourses.aggregate(agg);
 			const totalPages = Math.ceil(count / perPage);
 			console.log("candidates: ", count, totalPages)
 			return res.render(`${req.vPath}/admin/course/registration`, {
@@ -256,7 +256,7 @@ router.route("/assignCourses/:id")
 			const { url, remarks, assignDate } = req.body;
 
 			const updateFields = {
-				courseStatus : 1
+				courseStatus: 1
 			};
 			if (url) updateFields.url = url;
 			if (remarks) updateFields.remarks = remarks;
@@ -273,76 +273,76 @@ router.route("/assignCourses/:id")
 		}
 	});
 
-	router.post("/removetestimonial", isAdmin, async (req, res) => {
-		const { courseId, key } = req.body;
-			let course = await Courses.findById(courseId);
-		if (!course) throw req.ykError("Company doesn't exist!");
-	  
-		let gallery = course.testimonialvideos.filter((i) => i !== key);
-		const courseUpdate = await Courses.findOneAndUpdate(
-		  { _id: courseId },
-		  { testimonialvideos: gallery }
-		);
-		if (!courseUpdate) throw req.ykError("Course not updated!");
-		req.flash("success", "Course updated successfully!");
-		res.send({ status: 200, message: "Course Updated Successfully" });
-	  });
+router.post("/removetestimonial", isAdmin, async (req, res) => {
+	const { courseId, key } = req.body;
+	let course = await Courses.findById(courseId);
+	if (!course) throw req.ykError("Company doesn't exist!");
+
+	let gallery = course.testimonialvideos.filter((i) => i !== key);
+	const courseUpdate = await Courses.findOneAndUpdate(
+		{ _id: courseId },
+		{ testimonialvideos: gallery }
+	);
+	if (!courseUpdate) throw req.ykError("Course not updated!");
+	req.flash("success", "Course updated successfully!");
+	res.send({ status: 200, message: "Course Updated Successfully" });
+});
 router.post("/removevideo", isAdmin, async (req, res) => {
-		const { courseId, key } = req.body;
-			let course = await Courses.findById(courseId);
-		if (!course) throw req.ykError("Company doesn't exist!");
-	  
-		let gallery = course.videos.filter((i) => i !== key);
-		const courseUpdate = await Courses.findOneAndUpdate(
-		  { _id: courseId },
-		  { videos: gallery }
-		);
-		if (!courseUpdate) throw req.ykError("Course not updated!");
-		req.flash("success", "Course updated successfully!");
-		res.send({ status: 200, message: "Course Updated Successfully" });
-	  });
+	const { courseId, key } = req.body;
+	let course = await Courses.findById(courseId);
+	if (!course) throw req.ykError("Company doesn't exist!");
 
-	  router.post("/removebrochure", isAdmin, async (req, res) => {
-		const { courseId, key } = req.body;
-			let course = await Courses.findById(courseId);
-		if (!course) throw req.ykError("Company doesn't exist!");
-	  
-		const courseUpdate = await Courses.findOneAndUpdate(
-		  { _id: courseId },
-		  { brochure: '' }
-		);
-		if (!courseUpdate) throw req.ykError("Course not updated!");
-		req.flash("success", "Course updated successfully!");
-		res.send({ status: 200, message: "Course Updated Successfully" });
-	  });
+	let gallery = course.videos.filter((i) => i !== key);
+	const courseUpdate = await Courses.findOneAndUpdate(
+		{ _id: courseId },
+		{ videos: gallery }
+	);
+	if (!courseUpdate) throw req.ykError("Course not updated!");
+	req.flash("success", "Course updated successfully!");
+	res.send({ status: 200, message: "Course Updated Successfully" });
+});
 
-	  router.post("/removethumbnail", isAdmin, async (req, res) => {
-		const { courseId, key } = req.body;
-			let course = await Courses.findById(courseId);
-		if (!course) throw req.ykError("course doesn't exist!");
-	  
-		const courseUpdate = await Courses.findOneAndUpdate(
-		  { _id: courseId },
-		  { thumbnail: '' }
-		);
-		if (!courseUpdate) throw req.ykError("Course not updated!");
-		req.flash("success", "Course updated successfully!");
-		res.send({ status: 200, message: "Course Updated Successfully" });
-	  });
+router.post("/removebrochure", isAdmin, async (req, res) => {
+	const { courseId, key } = req.body;
+	let course = await Courses.findById(courseId);
+	if (!course) throw req.ykError("Company doesn't exist!");
 
-	  router.post("/removephoto", isAdmin, async (req, res) => {
-		const { courseId, key } = req.body;
-			let course = await Courses.findById(courseId);
-		if (!course) throw req.ykError("Course doesn't exist!");
-	  
-		let gallery = course.photos.filter((i) => i !== key);
-		const courseUpdate = await Courses.findOneAndUpdate(
-		  { _id: courseId },
-		  { photos: gallery }
-		);
-		if (!courseUpdate) throw req.ykError("Course not updated!");
-		req.flash("success", "Course updated successfully!");
-		res.send({ status: 200, message: "Course Updated Successfully" });
-	  });
+	const courseUpdate = await Courses.findOneAndUpdate(
+		{ _id: courseId },
+		{ brochure: '' }
+	);
+	if (!courseUpdate) throw req.ykError("Course not updated!");
+	req.flash("success", "Course updated successfully!");
+	res.send({ status: 200, message: "Course Updated Successfully" });
+});
+
+router.post("/removethumbnail", isAdmin, async (req, res) => {
+	const { courseId, key } = req.body;
+	let course = await Courses.findById(courseId);
+	if (!course) throw req.ykError("course doesn't exist!");
+
+	const courseUpdate = await Courses.findOneAndUpdate(
+		{ _id: courseId },
+		{ thumbnail: '' }
+	);
+	if (!courseUpdate) throw req.ykError("Course not updated!");
+	req.flash("success", "Course updated successfully!");
+	res.send({ status: 200, message: "Course Updated Successfully" });
+});
+
+router.post("/removephoto", isAdmin, async (req, res) => {
+	const { courseId, key } = req.body;
+	let course = await Courses.findById(courseId);
+	if (!course) throw req.ykError("Course doesn't exist!");
+
+	let gallery = course.photos.filter((i) => i !== key);
+	const courseUpdate = await Courses.findOneAndUpdate(
+		{ _id: courseId },
+		{ photos: gallery }
+	);
+	if (!courseUpdate) throw req.ykError("Course not updated!");
+	req.flash("success", "Course updated successfully!");
+	res.send({ status: 200, message: "Course Updated Successfully" });
+});
 
 module.exports = router;

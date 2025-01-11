@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Button</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <style>
+    .media-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      background-color: #f8f9fa;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      color: #555;
+    }
+    .media-btn img {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
+    .media-btn:hover {
+      background-color: #e9ecef;
+    }
+    .input-group {
+      align-items: flex-start;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="card p-3">
+      <form action="/posts" method="POST" enctype="multipart/form-data">
+        <!-- Input Group for Post -->
+        <div class="input-group">
+          <!-- Text Input -->
+          <textarea name="content" class="form-control" rows="3" placeholder="What's on your mind?" required></textarea>
+          <!-- Media Button -->
+          <div class="ml-3">
+            <label for="file-upload" class="media-btn">
+              <img src="https://static.xx.fbcdn.net/rsrc.php/v4/y7/r/Ivw7nhRtXyo.png" alt="Media Icon"> <!-- Facebook Media Icon -->
+              Media
+            </label>
+            <input type="file" id="file-upload" name="file" class="d-none" multiple accept="image/*,video/*">
+          </div>
+        </div>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mt-3">Post</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
