@@ -1,5 +1,5 @@
 <%include ./newpartials/header%>
-
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <section id="bookDemo" style="margin-top: 100px;" class="bg-white section-padding-120">
     <div class="container">
       <div class="row">
@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-6">
           <div class="demo_table">
-            <form action="">
+            <form method="post" id="contactform">
               <div class="demo_form">
                 <h3 class="request_demo text-white">
                   Request your Demo Today
@@ -26,20 +26,20 @@
                 <div class="form_name">
                   <div class="first_name">
                     <lable class="label">Full Name <span  class="imp">*</span></lable>
-                    <input type="text" class="form_input" placeholder="Your Full Name">
+                    <input name="name" type="text" class="form_input" placeholder="Your Full Name">
                   </div>
                   <div class="email">
                     <lable class="label">Email <span class="imp">*</span></lable>
-                    <input type="text" class="form_input" placeholder="Email">
+                    <input name="email" type="text" class="form_input" placeholder="Email">
                   </div>
                 </div>
                 <div class="phone">
-                  <label class="label">Phone <span class="imp">*</span></label>
-                  <input class="form_input" type="number">
+                  <label  class="label">Phone <span class="imp">*</span></label>
+                  <input name="mobile" class="form_input" type="number">
                 </div>
                 <div class="designation">
                   <label class="label" class="label" for="Designation"> Designation <span class="imp">*</span></label>
-                  <select class="form_input" name="" id="">
+                  <select style="color: black;" name="designation" class="form_input" name="" id="">
                     <option value="" disabled selected>Select your designation</option>
                     <option value="manager">Manager</option>
                     <option value="developer">Developer</option>
@@ -49,21 +49,35 @@
                 </div>
                 <div class="Organisation">
                   <label class="label">School/Organisation <span>*</span></label>
-                  <input class="form_input" type="text">
+                  <input name="organisation" class="form_input" type="text">
                 </div>
 
                 <div class="state">
                   <label class="label">State <span class="imp">*</span></label>
-                  <select class="form_input" name="country" id="country" required>
+                  <select class="form_input" name="state" id="state" >
                     <option value="" disabled selected>Select your State</option>
                   </select>
                 </div>
-                <button type="submit" class="submit_btn">Book Demo </button>
+                <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
+                    placeholder="Message us" rows="5" ></textarea>
+                
+                <div class="submit-button text-end justify-content-center">
+                  <button type="submit" class="g-recaptcha btn distance-btn my-4 text-end px-5 font-weight-bold text-white" 
+                  data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v" 
+                  data-callback='onSubmit'>Book Demo</button>
+                </div>
 
               </div>
+              <% if(success && success.length> 0) { %>
+                <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
+                    <%- success %>
+                </div>
+                <% } %>
+                
             </form>
 
           </div>
+          
 
         </div>
         <div class="col-md-6">
@@ -114,4 +128,10 @@
           document.getElementById('courseVid').pause()
         })
     }
+
+    </script>
+    <script>
+      function onSubmit(token) {
+        document.getElementById("contactform").submit();
+      }
     </script>

@@ -169,16 +169,16 @@
                                                 </select>
                                             </div>
                                             <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
-                                            id="cityblock">
-                                            <label>City</label>
-                                            <input class="form-control" type="text" name="city" id="city">
-                                        </div>
-                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
-                                        id="stateblock">
-                                        <label>State</label>
-                                        <input class="form-control" type="text" name="state" id="state">
-                                    </div>
-                                            
+                                                id="cityblock">
+                                                <label>City</label>
+                                                <input class="form-control" type="text" name="city" id="city">
+                                            </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="stateblock">
+                                                <label>State</label>
+                                                <input class="form-control" type="text" name="state" id="state">
+                                            </div>
+
                                             <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
                                                 id="applinkblock" style="display: none;">
                                                 <label>App link</label>
@@ -273,8 +273,8 @@
 
                                             <div class="col-xl-3 mb-1">
                                                 <label>Youtube URL</label>
-												<input type="text" class="form-control" required placeholder="enter youtube url"
-													id="youtubeURL"/>
+                                                <input type="text" class="form-control" required
+                                                    placeholder="enter youtube url" id="youtubeURL" />
                                             </div>
 
 
@@ -317,10 +317,10 @@
                                                 <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
                                                     id="brochures">
                                                     <label for="brochure">
-                                                        
+
                                                         Add Brochure
                                                     </label>
-                                                    <input id="brochure" type="file"/>
+                                                    <input id="brochure" type="file" />
                                                     <input type="hidden" class="form-control hiddenmediagroup"
                                                         name="brochure" id="hidden-brochure" value="" />
                                                 </div>
@@ -328,23 +328,23 @@
                                                 <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
                                                     id="thumbnails">
                                                     <label for="thumbnail">
-                                                        
+
                                                         Add Thumbnail
                                                     </label>
-                                                    <input id="thumbnail" type="file"/>
+                                                    <input id="thumbnail" type="file" />
                                                     <input type="hidden" class="form-control hiddenmediagroup"
                                                         name="thumbnail" id="hidden-thumbnail" value="" />
                                                 </div>
 
                                                 <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
-                                                id="uploadgallery">
-                                                <label for="photos">
-                                                    Add Photos
-                                                </label>
-                                                <input id="photos" type="file" multiple />
-                                                <input type="hidden" class="form-control hiddenmediagroup"
-                                                    name="photos" id="hidden-photos" value="" />
-                                            </div>
+                                                    id="uploadgallery">
+                                                    <label for="photos">
+                                                        Add Photos
+                                                    </label>
+                                                    <input id="photos" type="file" multiple />
+                                                    <input type="hidden" class="form-control hiddenmediagroup"
+                                                        name="photos" id="hidden-photos" value="" />
+                                                </div>
                                                 <!-- <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
                                                     <label for="audios">
                                                         <img src="/images/add_receipt.png" width="20%" height="auto"
@@ -422,69 +422,81 @@
                         </div>
 
 
-                        
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 px-3">
-                  <div class="card">
-                    <div class="card-content">
-                      <div class="card-content">
-                        <div class="card-body">
-                          <div class="row">
-                            <label for="contact-directly" class="px-1 h1 col-6">Do you want to Add the
-                              Dedicated
-                              Counsler Number?</label>
-                         
-                            <div class="col-xl-12 col-lg-12 col-12">
-                              <div class="form-check-inline">
-                                <input type="radio" id="contact-directly-yes" name="isContact" value="true"
-                                  onclick="showContactInfo()"/>
-                                  <label for="contact-directly-yes">Yes</label>
-                              </div>
-                              <div class="form-check-inline">
-                                <input type="radio" id="contact-directly-no" name="isContact" value="false"
-                                  onclick="hideContactInfo()"/>
-                                  <label for="contact-directly-no">No</label>
-                              </div>
+
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 px-3">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <label for="contact-directly" class="px-1 h1 col-6">Do you want to
+                                                        Add the
+                                                        Dedicated
+                                                        Counsler Number?</label>
+
+                                                    <div class="col-xl-12 col-lg-12 col-12">
+                                                        <div class="form-check-inline">
+                                                            <input type="radio" id="contact-directly-yes"
+                                                                name="isContact" value="true"
+                                                                onclick="showContactInfo()" />
+                                                            <label for="contact-directly-yes">Yes</label>
+                                                        </div>
+                                                        <div class="form-check-inline">
+                                                            <input type="radio" id="contact-directly-no"
+                                                                name="isContact" value="false"
+                                                                onclick="hideContactInfo()" />
+                                                            <label for="contact-directly-no">No</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12" id="contact-info" style="display: none;">
+                                                        <div class="row">
+                                                            <div class="col-xl-3 mb-1" id="counsler-name">
+                                                                <label>Name</label><span class="mandatory"> </label>
+                                                                    <input type="text" class="form-control"
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 32 || event.charCode == 8;"
+                                                                        name="nameof" id="counslername"
+                                                                        placeholder="Name" value="">
+                                                            </div>
+                                                            <div class="col-xl-3 mb-1" id="counsler-phoneNumber">
+                                                                <label>PhoneNumber</label><span class="mandatory">
+                                                                    *</span></label>
+                                                                <input type="tel" class="form-control"
+                                                                    id="counslerphonenumber"
+                                                                    pattern="[+]?[0-9]{1,3}\s?\d{9,12}" value=""
+                                                                    placeholder="Phone no" name="phoneNumberof"
+                                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                                    maxlength="10">
+                                                            </div>
+                                                            <div class="col-xl-3 mb-1 " id="counsler-whatsappNumber">
+                                                                <label>Whatsapp Number</label><span
+                                                                    class="mandatory"></label>
+                                                                    <input type="tel" class="form-control"
+                                                                        id="counslerwhatsappnumber"
+                                                                        pattern="[+]?[0-9]{1,3}\s?\d{9,12}" value=""
+                                                                        placeholder="Whatsapp Number"
+                                                                        name="whatsappNumberof"
+                                                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                                        maxlength="10">
+                                                            </div>
+                                                            <div class="col-xl-3 mb-1" id="counsler-email">
+                                                                <label>Email</label><span class="mandatory"></label>
+                                                                    <input class="form-control" type="email"
+                                                                        name="emailof" placeholder="Enter your email"
+                                                                        id="counsleremail" value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-12" id="contact-info" style="display: none;">
-                              <div class="row">
-                                <div class="col-xl-3 mb-1" id="counsler-name">
-                                  <label>Name</label><span class="mandatory"> </label>
-                                    <input type="text" class="form-control"
-                                      onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 32 || event.charCode == 8;"
-                                      name="nameof" id="counslername" placeholder="Name" value="">
-                                </div>
-                                <div class="col-xl-3 mb-1" id="counsler-phoneNumber">
-                                  <label>PhoneNumber</label><span class="mandatory"> *</span></label>
-                                  <input type="tel" class="form-control" id="counslerphonenumber"
-                                    pattern="[+]?[0-9]{1,3}\s?\d{9,12}" value=""
-                                    placeholder="Phone no" name="phoneNumberof"
-                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10">
-                                </div>
-                                <div class="col-xl-3 mb-1 " id="counsler-whatsappNumber">
-                                  <label>Whatsapp Number</label><span class="mandatory"></label>
-                                    <input type="tel" class="form-control" id="counslerwhatsappnumber"
-                                      pattern="[+]?[0-9]{1,3}\s?\d{9,12}" value=""
-                                      placeholder="Whatsapp Number" name="whatsappNumberof"
-                                      onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10">
-                                </div>
-                                <div class="col-xl-3 mb-1" id="counsler-email">
-                                  <label>Email</label><span class="mandatory"></label>
-                                    <input class="form-control" type="email" name="emailof"
-                                      placeholder="Enter your email" id="counsleremail" value="">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
                         <!-- Existing HTML for Dynamic Question and Answer Fields -->
                         <section id="questionanswerTemplate">
-                            <template >
+                            <template>
                                 <div class="row questionanswerrow">
                                     <div class="col-xl-6 mb-1">
                                         <label>Question</label>
@@ -501,68 +513,67 @@
                         </section>
 
                         <div class="col-xl-12 col-lg-12">
-                                <div class="card mt-1">
-                                    <div class="card-content">
-                                        <div class="mt-2 px-2">
-                                            <!-- Existing question-answer pairs will be added here -->
-                                            <div id="questionanswerlist">
-                                                <div class="row questionanswerrow actuallist">
-                                                    <div class="col-xl-6 mb-1">
-                                                        <label>Question</label>
-                                                        <textarea name="question" class="form-control question"
-                                                            cols="50"
-                                                            rows="1">Do you offer a safe working environment?</textarea>
-                                                    </div>
-                                                    <div class="col-xl-6 mb-1">
-                                                        <label>Answer</label>
-                                                        <textarea name="answer" class="form-control answer" cols="50"
-                                                            rows="1">Do you offer a safe working environment?</textarea>
-                                                    </div>
+                            <div class="card mt-1">
+                                <div class="card-content">
+                                    <div class="mt-2 px-2">
+                                        <!-- Existing question-answer pairs will be added here -->
+                                        <div id="questionanswerlist">
+                                            <div class="row questionanswerrow actuallist">
+                                                <div class="col-xl-6 mb-1">
+                                                    <label>Question</label>
+                                                    <textarea name="question" class="form-control question" cols="50"
+                                                        rows="1">Do you offer a safe working environment?</textarea>
+                                                </div>
+                                                <div class="col-xl-6 mb-1">
+                                                    <label>Answer</label>
+                                                    <textarea name="answer" class="form-control answer" cols="50"
+                                                        rows="1">Do you offer a safe working environment?</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-12 mb-1 px-0 text-right">
-                                                <a class="btn btn-success text-white add-button">+ Add Another</a>
-                                            </div>
                                         </div>
-
-                                        <script
-                                            src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script>
-                                        <script>
-                                            // Function to initialize CKEditor for existing and new question-answer pairs
-                                            function initializeCKEditor(selector, check) {
-                                                let ele = document.querySelector(selector)
-                                                if(check){
-                                                    ele.value = ''
-                                                }
-                                                // 
-                                                ClassicEditor
-                                                    .create(ele)
-                                                    .then(editor => {
-                                                        editor.model.document.on('change:data', () => {
-                                                            ele.value = editor.getData();
-                                                        });
-                                                        })
-                                                    .catch(error => {
-                                                        console.error(error);
-                                                    });
-                                            }
-
-                                            // Event listener to add a new question-answer pair when the button is clicked
-                                            document.querySelector('.add-button').addEventListener('click', function () {
-                                                let html = $('#questionanswerTemplate template').html();
-                                                $('#questionanswerlist').append(html);
-                                                initializeCKEditor('.questionanswerrow:last-of-type .question', true);
-                                                initializeCKEditor('.questionanswerrow:last-of-type .answer', true);
-                                            });
-
-                                            // // Initialize CKEditor for the existing fields
-                                            initializeCKEditor('.question', false);
-                                            initializeCKEditor('.answer', false);
-                                        </script>
+                                        <div class="col-xl-12 mb-1 px-0 text-right">
+                                            <a class="btn btn-success text-white add-button">+ Add Another</a>
+                                        </div>
                                     </div>
+
+                                    <script
+                                        src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script>
+                                    <script>
+                                        // Function to initialize CKEditor for existing and new question-answer pairs
+                                        function initializeCKEditor(selector, check) {
+                                            let ele = document.querySelector(selector)
+                                            if (check) {
+                                                ele.value = ''
+                                            }
+                                            // 
+                                            ClassicEditor
+                                                .create(ele)
+                                                .then(editor => {
+                                                    editor.model.document.on('change:data', () => {
+                                                        ele.value = editor.getData();
+                                                    });
+                                                })
+                                                .catch(error => {
+                                                    console.error(error);
+                                                });
+                                        }
+
+                                        // Event listener to add a new question-answer pair when the button is clicked
+                                        document.querySelector('.add-button').addEventListener('click', function () {
+                                            let html = $('#questionanswerTemplate template').html();
+                                            $('#questionanswerlist').append(html);
+                                            initializeCKEditor('.questionanswerrow:last-of-type .question', true);
+                                            initializeCKEditor('.questionanswerrow:last-of-type .answer', true);
+                                        });
+
+                                        // // Initialize CKEditor for the existing fields
+                                        initializeCKEditor('.question', false);
+                                        initializeCKEditor('.answer', false);
+                                    </script>
                                 </div>
                             </div>
-                        
+                        </div>
+
 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2 text-right">
                             <button onclick="reset()" class="btn btn-danger waves-effect waves-light">Reset</button>
@@ -586,43 +597,43 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script> -->
     <script>
-      
-     
-      function showContactInfo() {
-              document.getElementById("contact-info").style.display = "block";
-              var coinLabel = document.querySelector('label[for="25 coin"]');
-              coinLabel.style.display = "block";
-            }
-            function hideContactInfo() {
-              document.getElementById("contact-info").style.display = "none";
-              var coinLabel = document.querySelector('label[for="25 coin"]');
-              coinLabel.style.display = "none";
-            }
-            $(document).ready(function () {
-              if ($('#contact-directly-yes').prop('checked')) {
+
+
+        function showContactInfo() {
+            document.getElementById("contact-info").style.display = "block";
+            var coinLabel = document.querySelector('label[for="25 coin"]');
+            coinLabel.style.display = "block";
+        }
+        function hideContactInfo() {
+            document.getElementById("contact-info").style.display = "none";
+            var coinLabel = document.querySelector('label[for="25 coin"]');
+            coinLabel.style.display = "none";
+        }
+        $(document).ready(function () {
+            if ($('#contact-directly-yes').prop('checked')) {
                 showContactInfo();
-              }
-            });
+            }
+        });
 
 
-            let isContactvalue = "";
-            $('input[name="isContact"]').click(function () {
-              isContactvalue = $('input[name="isContact"]:checked').val() === 'true';
-            });
-            const selectQualification = document.getElementById('jd-qua')
-            $('#jd-qua').change((event) => {
-              const value = selectQualification.options[selectQualification.selectedIndex].text;
-              if (value == '12th' || value == '10th' || value == 'Upto 5th') {
+        let isContactvalue = "";
+        $('input[name="isContact"]').click(function () {
+            isContactvalue = $('input[name="isContact"]:checked').val() === 'true';
+        });
+        const selectQualification = document.getElementById('jd-qua')
+        $('#jd-qua').change((event) => {
+            const value = selectQualification.options[selectQualification.selectedIndex].text;
+            if (value == '12th' || value == '10th' || value == 'Upto 5th') {
                 document.getElementById('isedited').value = true
                 document.getElementById('sub-qua-field').style.display = "block"
                 $('#jd-subqua-field').hide();
-              } else {
+            } else {
                 document.getElementById('sub-qua-field').style.display = "none"
                 document.getElementById('isedited').value = false
                 $('#jd-subqua-field').show();
-              }
-            })
-   
+            }
+        })
+
         $('#media-group').change(function (e) {
             const formData = new FormData();
             let productimages = [];
@@ -633,7 +644,7 @@
                 for (let i = 0; i < e.target.files.length; i++) {
                     let type = e.target.files[i].type;
                     let size = e.target.files[i].size;
-                    if (!checkImageSize(size) || !checkImageValidation(type)){
+                    if (!checkImageSize(size) || !checkImageValidation(type)) {
                         formData.append("files", e.target.files[i]);
                     } else {
                         $('#media-group').val('');
@@ -667,15 +678,15 @@
         const checkImageSize = (size) => {
             let finalSize = ((size / 1024) / 1024);
             if (finalSize > 2) {
-              return false
+                return false
             }
             return true;
-          }
+        }
 
-          const checkImageValidation = (file) => {
+        const checkImageValidation = (file) => {
             let regex = /(\/jpg|\/jpeg|\/png)$/i
             return regex.test(file)
-          }
+        }
 
         $('#image').change(function (e) {
             let file = e.target.files[0]
@@ -705,202 +716,202 @@
         });
 
         document.getElementById("testimonialvideos").addEventListener("change", function (e) {
-            
+
             const formData = new FormData();
             let productvideos = [];
-              if (e.target.files.length > 5) {
+            if (e.target.files.length > 5) {
                 alert("You cannot upload more than 5 files");
                 $('#videos').val('');
-              } else {
+            } else {
                 for (let i = 0; i < e.target.files.length; i++) {
-                  let type = e.target.files[i].type;
-                  let size = e.target.files[i].size;
-                //   if (checkImageSize(size) && checkImageValidation(type)) {
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    //   if (checkImageSize(size) && checkImageValidation(type)) {
                     formData.append("files", e.target.files[i]);
-                //   } else {
-                //     $('#videos').val('');
-                //     alert("This format not accepted and each image should be 2MB")
-                //     break;
-                //   }
+                    //   } else {
+                    //     $('#videos').val('');
+                    //     alert("This format not accepted and each image should be 2MB")
+                    //     break;
+                    //   }
 
                 }
 
                 header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
                 axios.post('/api/uploadMultiFiles', formData, header)
-                  .then(result => {
-                    if (result.data.status) {
-                      let combinedKeys = ''
-                      combinedKeys = result.data.Data.map(img => {
-                        return img.Key
-                      });
-                      $('#hidden-testimonialvideos').val(combinedKeys)
-                    //   result.data.Data.forEach(element => {
-                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
-                    //     $(html.innerHTML).insertBefore('#uploadgallery');
-                    //   });
-                    }
-                  })
-                  .catch(err => {
-                    console.log('==> caught error ', err)
-                  })
-                }
+                    .then(result => {
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('#hidden-testimonialvideos').val(combinedKeys)
+                            //   result.data.Data.forEach(element => {
+                            //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                            //     $(html.innerHTML).insertBefore('#uploadgallery');
+                            //   });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
         });
 
         document.getElementById("videos").addEventListener("change", function (e) {
-           
+
             const formData = new FormData();
             let productvideos = [];
-              if (e.target.files.length > 5) {
+            if (e.target.files.length > 5) {
                 alert("You cannot upload more than 5 files");
                 $('#videos').val('');
-              } else {
+            } else {
                 for (let i = 0; i < e.target.files.length; i++) {
-                  let type = e.target.files[i].type;
-                  let size = e.target.files[i].size;
-                //   if (checkImageSize(size) && checkImageValidation(type)) {
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    //   if (checkImageSize(size) && checkImageValidation(type)) {
                     formData.append("files", e.target.files[i]);
-                //   } else {
-                //     $('#videos').val('');
-                //     alert("This format not accepted and each image should be 2MB")
-                //     break;
-                //   }
+                    //   } else {
+                    //     $('#videos').val('');
+                    //     alert("This format not accepted and each image should be 2MB")
+                    //     break;
+                    //   }
 
                 }
 
                 header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
                 axios.post('/api/uploadMultiFiles', formData, header)
-                  .then(result => {
-                    if (result.data.status) {
-                      let combinedKeys = ''
-                      combinedKeys = result.data.Data.map(img => {
-                        return img.Key
-                      });
-                      $('#hidden-videos').val(combinedKeys)
-                    //   result.data.Data.forEach(element => {
-                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
-                    //     $(html.innerHTML).insertBefore('#uploadgallery');
-                    //   });
-                    }
-                  })
-                  .catch(err => {
-                    console.log('==> caught error ', err)
-                  })
-                }
+                    .then(result => {
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('#hidden-videos').val(combinedKeys)
+                            //   result.data.Data.forEach(element => {
+                            //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                            //     $(html.innerHTML).insertBefore('#uploadgallery');
+                            //   });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
         });
 
         document.getElementById("photos").addEventListener("change", function (e) {
             const formData = new FormData();
             let productimages = [];
-              if (e.target.files.length > 5) {
+            if (e.target.files.length > 5) {
                 alert("You cannot upload more than 5 images");
                 $('#media-group').val('');
-              } else {
+            } else {
                 for (let i = 0; i < e.target.files.length; i++) {
-                  let type = e.target.files[i].type;
-                  let size = e.target.files[i].size;
-                  if (checkImageSize(size) && checkImageValidation(type)) {
-                    formData.append("files", e.target.files[i]);
-                  } else {
-                    $('#media-group').val('');
-                    alert("This format not accepted and each image should be 2MB")
-                    break;
-                  }
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    if (checkImageSize(size) && checkImageValidation(type)) {
+                        formData.append("files", e.target.files[i]);
+                    } else {
+                        $('#media-group').val('');
+                        alert("This format not accepted and each image should be 2MB")
+                        break;
+                    }
 
                 }
 
                 header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
                 axios.post('/api/uploadMultiFiles', formData, header)
-                  .then(result => {
-                    if (result.data.status) {
-                      let combinedKeys = ''
-                      combinedKeys = result.data.Data.map(img => {
-                        return img.Key
-                      });
-                      $('#hidden-photos').val(combinedKeys)
-                    //   result.data.Data.forEach(element => {
-                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
-                    //     $(html.innerHTML).insertBefore('#uploadgallery');
-                    //   });
-                    }
-                  })
-                  .catch(err => {
-                    console.log('==> caught error ', err)
-                  })
-                }
+                    .then(result => {
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('#hidden-photos').val(combinedKeys)
+                            //   result.data.Data.forEach(element => {
+                            //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                            //     $(html.innerHTML).insertBefore('#uploadgallery');
+                            //   });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
         });
 
         $('#brochure').change(function (e) {
-                let file = e.target.files[0]
-                let body = {
-                  file: file
-                }
-                let type = file.name;
-                let size = file.size
-                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
-                if (checkCvValidation(type) === false && checkCVSize(size) === false) {
-                  alert("upload the brochure in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
-                  e.target.value = ''
-                } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
-                  alert("uploaded brochure size should less than 5MB");
-                  e.target.value = ''
-                } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
-                  alert("upload the brochure in .docx, .doc,.jpg, .jpeg, .png or pdf format");
-                  e.target.value = ''
-                } else {
-                  axios.post('/api/uploadAdminFile', body, header)
+            let file = e.target.files[0]
+            let body = {
+                file: file
+            }
+            let type = file.name;
+            let size = file.size
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                alert("upload the brochure in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                alert("uploaded brochure size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                alert("upload the brochure in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                e.target.value = ''
+            } else {
+                axios.post('/api/uploadAdminFile', body, header)
                     .then(result => {
                         console.log('=============> here ', result)
-                      if (result.data.status) {
-                        $('#hidden-brochure').val(result.data.data.Key)
-                      }
+                        if (result.data.status) {
+                            $('#hidden-brochure').val(result.data.data.Key)
+                        }
                     })
-                }
-              });
+            }
+        });
 
         $('#thumbnail').change(function (e) {
-                let file = e.target.files[0]
-                let body = {
-                  file: file
-                }
-                let type = file.name;
-                let size = file.size
-                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
-                if (checkCvValidation(type) === false && checkCVSize(size) === false) {
-                  alert("upload the thumbnail in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
-                  e.target.value = ''
-                } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
-                  alert("uploaded thumbnail size should less than 5MB");
-                  e.target.value = ''
-                } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
-                  alert("upload the thumbnail in .docx, .doc,.jpg, .jpeg, .png or pdf format");
-                  e.target.value = ''
-                } else {
-                  axios.post('/api/uploadAdminFile', body, header)
+            let file = e.target.files[0]
+            let body = {
+                file: file
+            }
+            let type = file.name;
+            let size = file.size
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                alert("upload the thumbnail in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                alert("uploaded thumbnail size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                alert("upload the thumbnail in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                e.target.value = ''
+            } else {
+                axios.post('/api/uploadAdminFile', body, header)
                     .then(result => {
                         console.log('=============> here ', result)
-                      if (result.data.status) {
-                        $('#hidden-thumbnail').val(result.data.data.Key)
-                      }
+                        if (result.data.status) {
+                            $('#hidden-thumbnail').val(result.data.data.Key)
+                        }
                     })
-                }
-              });
+            }
+        });
 
-              const checkCvValidation = (file) => {
-                let regex = /(\.docx|\.doc|\.pdf|\.jpg|\.jpeg|\.png)$/i
-                if (!regex.exec(file)) {
-                  return false;
-                } else {
-                  return true;
-                }
-              }
-
-              function checkCVSize(size) {
-                let finalSize = ((size / 1024) / 1024);
-                if (finalSize > 5) {
-                  return false;
-                }
+        const checkCvValidation = (file) => {
+            let regex = /(\.docx|\.doc|\.pdf|\.jpg|\.jpeg|\.png)$/i
+            if (!regex.exec(file)) {
+                return false;
+            } else {
                 return true;
-              }
+            }
+        }
+
+        function checkCVSize(size) {
+            let finalSize = ((size / 1024) / 1024);
+            if (finalSize > 5) {
+                return false;
+            }
+            return true;
+        }
 
 
         document.getElementById('sub-btn').addEventListener('click', (event) => {
@@ -925,7 +936,7 @@
                 age: $('#age').val(),
                 brochure: $('#hidden-brochure').val(),
                 thumbnail: $('#hidden-thumbnail').val(),
-                youtubeURL:$('#youtubeURL').val(),
+                youtubeURL: $('#youtubeURL').val(),
                 courseType: $('#courseType').val(),
                 experience: document.getElementById('experience').value,
                 trainingMode: $('#trainingMode').val(),
@@ -953,10 +964,10 @@
                 photos: document.getElementById("hidden-photos").value,
                 audios: document.getElementById("hidden-audios")?.value || '',
                 videos: document.getElementById("hidden-videos").value,
-                counslername:$('#counslername').val(),
-                counslerphonenumber:$('#counslerphonenumber').val(),
-                counslerwhatsappnumber:$('#counslerwhatsappnumber').val(),
-                counsleremail:$('#counsleremail').val(),
+                counslername: $('#counslername').val(),
+                counslerphonenumber: $('#counslerphonenumber').val(),
+                counslerwhatsappnumber: $('#counslerwhatsappnumber').val(),
+                counsleremail: $('#counsleremail').val(),
                 questionAnswers: Array.from(document.querySelectorAll(".questionanswerrow")).map(row => {
                     let question = row.querySelector(".question").value;
                     let answer = row.querySelector(".answer").value;
