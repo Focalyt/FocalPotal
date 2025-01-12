@@ -14403,7 +14403,8 @@ div#loading img {
   .faq-filter-list {
     justify-content: initial;
     flex-direction: column;
-    row-gap: 18px;
+    row-gap: 5px;
+    /* row-gap: 18px; */
   }
 }
 .faq-filter-list .faq-title {
@@ -17021,9 +17022,10 @@ Common: Spacing Gutters
     background-color: #FC2B5A;
     color: #fff;
     transition: 0.5s ease;
+  border: 1px solid #FC2B5A;
 }
 .submit_btn:hover{
-  border: 2px solid #FC2B5A;
+  border: 1px solid #FC2B5A;
   background-color: transparent;
   color: #000;
   transition: 0.5s ease-out;
@@ -17045,6 +17047,7 @@ Common: Spacing Gutters
   background: #FC2B5A;
   border-radius: 10px;
   padding: 10px 20px;
+  border: 1px solid #fc2b5a;
   /* color: #fff; */
 }
 
@@ -17061,7 +17064,7 @@ Common: Spacing Gutters
   transition: 0.5s ease;
   background: transparent;
 }
-.new_link a:hover {
+.new_link:hover a {
   color: #000;
   transition: 0.5s ease;
 }
@@ -17085,6 +17088,13 @@ Common: Spacing Gutters
   width: 100%;
   padding: 10px 20px;
   transition: .3s ease;
+}
+
+.form_input.error {
+  border: 1px solid red;
+}
+.label .imp.error, .label.error {
+  color: red;
 }
 
 @media(max-width:767px){

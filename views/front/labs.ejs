@@ -18,28 +18,31 @@
         </div>
         <div class="col-md-6">
           <div class="demo_table">
-            <form method="post" id="contactform">
+            <form id="demoForm" action="">
               <div class="demo_form">
                 <h3 class="request_demo text-white">
                   Request your Demo Today
                 </h3>
                 <div class="form_name">
                   <div class="first_name">
-                    <lable class="label">Full Name <span  class="imp">*</span></lable>
-                    <input name="name" type="text" class="form_input" placeholder="Your Full Name">
+                    <label class="label">Full Name <span class="imp">*</span></label>
+                    <input type="text" class="form_input" placeholder="Your Full Name" id="fullName">
                   </div>
                   <div class="email">
-                    <lable class="label">Email <span class="imp">*</span></lable>
-                    <input name="email" type="text" class="form_input" placeholder="Email">
+                    <label class="label">Email <span class="imp">*</span></label>
+                    <input type="text" class="form_input" placeholder="Email" id="email">
                   </div>
                 </div>
                 <div class="phone">
-                  <label  class="label">Phone <span class="imp">*</span></label>
-                  <input name="mobile" class="form_input" type="number">
+                  <label class="label">Phone <span class="imp">*</span></label>
+                  <input class="form_input" type="text" id="phone"
+                    maxlength="10" 
+                    pattern="^\d{10}$" 
+                    oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
                 </div>
                 <div class="designation">
-                  <label class="label" class="label" for="Designation"> Designation <span class="imp">*</span></label>
-                  <select style="color: black;" name="designation" class="form_input" name="" id="">
+                  <label class="label" for="Designation"> Designation <span class="imp">*</span></label>
+                  <select class="form_input" id="designation">
                     <option value="" disabled selected>Select your designation</option>
                     <option value="manager">Manager</option>
                     <option value="developer">Developer</option>
@@ -49,24 +52,15 @@
                 </div>
                 <div class="Organisation">
                   <label class="label">School/Organisation <span>*</span></label>
-                  <input name="organisation" class="form_input" type="text">
+                  <input class="form_input" type="text" id="organisation">
                 </div>
-
                 <div class="state">
                   <label class="label">State <span class="imp">*</span></label>
-                  <select class="form_input" name="state" id="state" >
+                  <select class="form_input" id="state" >
                     <option value="" disabled selected>Select your State</option>
                   </select>
                 </div>
-                <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
-                    placeholder="Message us" rows="5" ></textarea>
-                
-                <div class="submit-button text-end justify-content-center">
-                  <button type="submit" class="g-recaptcha btn distance-btn my-4 text-end px-5 font-weight-bold text-white" 
-                  data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v" 
-                  data-callback='onSubmit'>Book Demo</button>
-                </div>
-
+                <button type="submit" class="submit_btn">Book Demo</button>
               </div>
               <% if(success && success.length> 0) { %>
                 <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
@@ -75,7 +69,7 @@
                 <% } %>
                 
             </form>
-
+            
           </div>
           
 
@@ -109,6 +103,43 @@
   </section>
 
 <%include ./newpartials/footer%>
+<script>
+  document.getElementById('demoForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    let isValid = true; // Assume all fields are valid initially
+
+    // Select all required inputs and selects
+    const fields = [
+      { id: 'fullName', label: 'Full Name' },
+      { id: 'email', label: 'Email' },
+      { id: 'phone', label: 'Phone' },
+      { id: 'designation', label: 'Designation' },
+      { id: 'organisation', label: 'School/Organisation' },
+      { id: 'state', label: 'State' }
+    ];
+
+    fields.forEach(field => {
+      const input = document.getElementById(field.id);
+      const span = input.parentElement.querySelector('.imp');
+
+      if (!input.value) {
+        isValid = false; // If field is empty, form is invalid
+        input.classList.add('error');
+        if (span) span.classList.add('error');
+      } else {
+        input.classList.remove('error');
+        if (span) span.classList.remove('error');
+      }
+    });
+
+    if (isValid) {
+      // Submit the form (can replace this with actual submission logic)
+      // alert('Form submitted successfully!');
+    } else {
+      // alert('Please fill all required fields!');
+    }
+  });
+</script>
 <script>
     const videoModal = document.getElementById('videoModal')
     if (videoModal) {
