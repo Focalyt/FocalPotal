@@ -16940,6 +16940,23 @@ Common: Spacing Gutters
   height: 40px;
   padding: 20px 10px;
 }
+.form_designation_input{
+  height: 40px;
+  /* padding: 20px 10px; */
+}
+#demoForm input[type="text"], 
+#demoForm input[type="password"], 
+#demoForm input[type="email"], 
+#demoForm textarea {
+    background: transparent;
+    border: 1px solid black;
+    padding: 18px 8px;
+    border-radius: 10px;
+}
+#demoForm .designation select {
+  /* padding: 18px 8px; */
+  border-radius: 10px;
+}
 .first_name, .email{
   width: 100%;
     display: flex;
