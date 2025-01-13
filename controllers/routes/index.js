@@ -13,6 +13,8 @@ const { baseUrl } = require("../../config");
 const router = express.Router();
 const fetch = require("cross-fetch");
 const { authChat } = require("../../helpers");
+const { updateSpreadSheetLabLeadsValues } = require("./services/googleservice");
+const moment = require("moment");
 
 router.use('/', frontRoutes);
 router.use('/candidate',candidateRoutes);
@@ -122,7 +124,9 @@ router.post('/contact',async (req, res) => {
           </html>
           
                 `;
+                
             sendMail(subject, msg, 'info@focalyt.com');
+            
         
             req.flash("success", "Message sent successfully!");
             return res.redirect("/contact");
@@ -146,9 +150,29 @@ router.post('/contact',async (req, res) => {
 router.post('/futureTechnologyLabs',async (req, res) => {
   try {
    
-    const { name, mobile, email } = req.body;
+    const { name, designation,organisation,state, mobile, email, message } = req.body;
     console.log("Form Data:", req.body);
-    if(!name || !mobile|| !email){
+    // Capitalize every word's first letter
+    function capitalizeWords(str) {
+      if (!str) return '';
+      return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+    };
+    const sheetData = [
+      moment(new Date()).utcOffset('+05:30').format('DD/MM/YYYY'),
+      moment(new Date()).utcOffset('+05:30').format('hh:mm A'),
+      
+      capitalizeWords(organisation), // Apply the capitalizeWords function
+      capitalizeWords(name),
+      capitalizeWords(designation),
+      mobile,
+      email,
+      state,
+      message
+
+
+    ];
+    await updateSpreadSheetLabLeadsValues(sheetData);
+    if(!name || !designation || !organisation|| !state || !mobile|| !email || !message){
         req.flash("success", "Please fill all fields");
             return res.redirect("/futureTechnologyLabs");
     }
@@ -202,15 +226,30 @@ router.post('/futureTechnologyLabs',async (req, res) => {
                                                                       style="text-align:left;line-height:32px;font-size:18px!important;font-family:'Manrope',sans-serif!important;margin:10px 50px 21px">
                                                                       You have received a new message with the following details:- </p>
                                                                   <ul style="list-style-type:none;padding-left:0px;margin:20px 50px">
-                                                                      <li style="padding-top:0px;margin-left:0px !important"><span
+                                                                  <li style="padding-top:0px;margin-left:0px !important"><span
+                                                                              style="line-height:32px;color:#4d4d4d;font-size:18px!important;font-family:'Manrope',sans-serif!important">Organisation
+                                                                              : ${organisation}</span>
+                                                                      </li>    
+                                                                  <li style="padding-top:0px;margin-left:0px !important"><span
                                                                               style="line-height:32px;font-size:18px!important;font-family:'Manrope',sans-serif!important">
                                                                               User Name:- ${name} (${mobile}) </span></li>
                                                                       <br/>
                                                                       <li style="padding-top:0px;margin-left:0px !important"><span
+                                                                              style="line-height:32px;color:#4d4d4d;font-size:18px!important;font-family:'Manrope',sans-serif!important">Designation
+                                                                              : ${designation}</span>
+                                                                      </li>
+                                                                      <li style="padding-top:0px;margin-left:0px !important"><span
                                                                               style="line-height:32px;color:#4d4d4d;font-size:18px!important;font-family:'Manrope',sans-serif!important">Email
                                                                               : ${email}</span>
                                                                       </li>
-                                                                      
+                                                                      <li style="padding-top:0px;margin-left:0px !important"><span
+                                                                              style="line-height:32px;color:#4d4d4d;font-size:18px!important;font-family:'Manrope',sans-serif!important">State
+                                                                              : ${state}</span>
+                                                                      </li>
+                                                                      <li style="padding-top:0px;margin-left:0px !important"><span
+                                                                              style="line-height:32px;color:#4d4d4d;font-size:18px!important;font-family:'Manrope',sans-serif!important">Message : ${message}
+                                                                          </span></li>
+                                                                      <br/>
                                                                       
                                                                   </ul>
                                                               </td>
@@ -234,7 +273,13 @@ router.post('/futureTechnologyLabs',async (req, res) => {
             sendMail(subject, msg, 'info@focalyt.com');
         
             req.flash("success", "Message sent successfully!");
-            return res.redirect("/futureTechnologyLabs");
+            // return res.redirect("/futureTechnologyLabs");
+            res.send(`
+              <script>
+                alert('Message sent successfully!');
+                window.location.href = '/futureTechnologyLabs';
+              </script>
+            `);
           } else {
             req.flash("success", "Captcha  failed");
             return res.redirect("/futureTechnologyLabs");
