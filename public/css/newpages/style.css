@@ -16916,7 +16916,7 @@ Common: Spacing Gutters
 .demo_form{
   display: flex;
       flex-direction: column;
-      gap: 20px;
+      /* gap: 20px; */
       padding: 10px 20px;
       border-radius: 21px;
       /* border: 1px solid #FC2B5A; */
@@ -16943,6 +16943,7 @@ Common: Spacing Gutters
 .form_designation_input{
   height: 40px;
   /* padding: 20px 10px; */
+  margin-bottom: 20px;
 }
 #demoForm input[type="text"], 
 #demoForm input[type="password"], 
@@ -16955,6 +16956,9 @@ Common: Spacing Gutters
 }
 #demoForm .designation select {
   /* padding: 18px 8px; */
+  border-radius: 10px;
+}
+#demoForm .state select{
   border-radius: 10px;
 }
 .first_name, .email{
