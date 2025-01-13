@@ -178,8 +178,6 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       `${process.env.BASE_URL}/coursedetails/${courseId}`,
       course?.registrationCharges,
       appliedData?.registrationFee
-
-
     ];
     await updateSpreadSheetValues(sheetData);
 

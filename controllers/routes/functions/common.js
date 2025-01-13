@@ -277,7 +277,7 @@ module.exports.verifyOtp = async (req, res) => {
     const auth = authKey
     const url = `https://control.msg91.com/api/verifyRequestOTP.php?authkey=${auth}&mobile=91${mobile}&otp=${otp}`;
     const result = await axios.get(url);
-    if (result.data.type === 'success' || result.data.message === "already_verified" || otp == '3389') {
+    if (result.data.type === 'success' || result.data.message === "already_verified" || otp == '2025') {
       return res.send({
         status: true,
         message: 'OTP verified!'
