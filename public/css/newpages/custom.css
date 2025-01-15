@@ -319,6 +319,12 @@ div#features_cta figure {
     background-clip: text;
     color: transparent; /* Make text transparent */
 }
+.tech_area_img{
+    width: 100%;
+}
+.tech_area_img img{
+    width: 50%;
+}
 .partner_col {
     background: #ffffff;
     margin: 10px;
@@ -366,8 +372,14 @@ div#features_cta figure {
     border-radius: 20px;
     text-align: center;
     margin: 0 auto;
-    padding: 20px 0px 0px 0px;
+    /* padding: 20px 0px 0px 0px; */
+    padding: 20px 0px 20px 0px;
+    height: 100%;
 }
+/* .role:hover :not(:hover) {
+    opacity: 0.5;
+    pointer-events: none;
+} */
 
 #student.role {
     background: #E1F0EE;

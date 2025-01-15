@@ -320,7 +320,27 @@ a {
     position: absolute;
     width: 100%;
     clip-path: polygon(100% 0%, 100% 100%, 50% 35%, 0 100%, 0 0);
-    top: 59px;
+    top: 20px;
+    /* top: 59px; */
+    background: #ffca28;
+    height: 22px;
+}
+#base {
+    background: #ffca28;
+    display: inline-block;
+    height: auto;
+    position: absolute;
+    width: 90px;
+    top: 0;
+    left: 9px;
+}
+.courseCard #base:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    clip-path: polygon(100% 0%, 100% 100%, 50% 35%, 0 100%, 0 0);
+    top: 40px;
+    /* top: 59px; */
     background: #ffca28;
     height: 22px;
 }

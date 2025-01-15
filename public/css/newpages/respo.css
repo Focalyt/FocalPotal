@@ -32,9 +32,11 @@
     }
     figure.down_shape img {
         width: 15%;
+        /* top: -80px; */
     }
     .role p {
-        font-size: 12px;
+        /* font-size: 12px; */
+        font-size: 11px;
     }
     .role h4 {
         font-size: 14px;

@@ -5786,8 +5786,8 @@ h1, h2, h3, h4, h5, h6 {
   .site-menu-main .nav-link-item {
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 }
 .site-menu-main .sub-menu {
@@ -16861,6 +16861,7 @@ Common: Spacing Gutters
   font-size: 30px;
   font-weight: 700;
   padding-bottom: 20px;
+  color: #fff;
 }
 .main_images{
   position: relative;
@@ -16932,6 +16933,7 @@ Common: Spacing Gutters
   display: flex;
     flex-direction: column;
     width: 100%;
+    position: relative;
 }
 .label {
   color: #000;
@@ -16953,10 +16955,19 @@ Common: Spacing Gutters
     border: 1px solid black;
     padding: 18px 8px;
     border-radius: 10px;
+    outline: none;
+    width: 100%;
+  position: relative;
 }
 #demoForm .designation select {
   /* padding: 18px 8px; */
   border-radius: 10px;
+  border: 1px solid black;
+  /* padding: 10px; */
+  background: transparent;
+  outline: none;
+  position: relative;
+  appearance: none;
 }
 #demoForm .state select{
   border-radius: 10px;
@@ -16965,10 +16976,91 @@ Common: Spacing Gutters
   width: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
-.demo_table .form .form_name > lable{
+.demo_form label {
+  /* Make the label position absolute relative to its input container */
+  position: absolute;
+  left: 15px; /* Adjusted position for better alignment */
+  top:9px; /* Initial position */
+  background-color: transparent; 
+  padding: 0px 5px;
+  font-size: 14px;
+  transition: transform 0.3s ease, color 0.3s ease, font-size 0.3s ease; /* Smooth transition */
+color: #000;
+}
+#demoForm input:focus + label,
+#demoForm input:not(:placeholder-shown) + label,
+#demoForm select:focus + label,
+#demoForm select:not([value=""]) + label {
+  transform: translateY(-20px); /* Float label above the input */
+  font-size: 12px; /* Smaller font size for floated label */
+  color: #0051ff; /* Highlighted label color */
+}
+.demo_table .form .form_name > label {
   color:#fff;
 }
+#demoForm input:focus,
+#demoForm select:focus {
+  border-color: #0051ff; /* Highlighted border color */
+}
+
+.select-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Floating label styling */
+.select-container label {
+  position: absolute;
+  left: 15px;
+  top: 18px; /* Initial position of the label */
+  font-size: 14px;
+  color: #000;
+  background-color: white; /* Optional for better readability */
+  padding: 0 5px;
+  transition: transform 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+  pointer-events: none; /* Prevent label from blocking interaction */
+}
+
+/* Float label when the select has focus or a value */
+.select-container select:focus + label,
+.select-container select:not([value=""]) + label {
+  transform: translateY(-20px); /* Move label above */
+  font-size: 12px; /* Reduce font size */
+  color: #0051ff; /* Change color on focus */
+}
+
+/* Select field styling */
+.select-container select {
+  border: 1px solid black;
+  border-radius: 10px;
+  /* padding: 10px; */
+  appearance: none; /* Remove default dropdown arrow */
+  background: transparent;
+  position: relative;
+  outline: none;
+  width: 100%;
+  z-index: 1; /* Ensure it's above the label */
+}
+
+.select-container select:focus {
+  border-color: #0051ff; /* Highlighted border on focus */
+}
+
+/* Add a custom dropdown arrow if needed */
+.select-container::after {
+  content: "▼";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #000;
+}
+
 .Robotics{
   font-size: 30px;
   font-weight: 400;
@@ -17056,7 +17148,8 @@ Common: Spacing Gutters
 }
 .images img{
   padding-left: 10px;
-  width: 150px;
+  width: 70px;
+  height: 70px;
   /* height: ; */
 }
 .homeMenu:hover{
@@ -17118,6 +17211,27 @@ Common: Spacing Gutters
   color: red;
 }
 
+@media screen and (max-width: 768px) {
+  .slider_images {
+    /* Adjust width for small devices */
+    width: 90%;  /* You can customize this percentage based on your need */
+    margin: 0 auto;  /* Center align the container */
+  }
+
+  .slider_images img {
+    /* Adjust the image width if needed */
+    width: 100%;  /* Ensure the image takes up full width of the container */
+  }
+  .partner_col.tech_area_img {
+    height: 114px;
+    padding-block: 14px;
+  }
+  .tech_area_img img{
+    width: 25%;
+  }
+}
+
+
 @media(max-width:767px){
   .Heading__text{
     font-size: 25px;
@@ -17127,6 +17241,7 @@ Common: Spacing Gutters
   }
   .tagline{
     font-size: 25px;
+    padding-block: 20px;
   }
   .images{
 
@@ -17162,5 +17277,10 @@ Common: Spacing Gutters
   }
   .reach_header{
     font-size: 16px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .slider_images {
+    width: 100%;  /* Full width for very small screens */
   }
 }
