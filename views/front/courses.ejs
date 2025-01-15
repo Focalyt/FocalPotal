@@ -212,7 +212,7 @@
     </div>
   </section>
 
-<section class="section-padding-120 mt-5">
+<!-- <section class="section-padding-120 mt-5">
   <div class="container">
     <div class="row">
       <div class="col-md-8 mx-auto">
@@ -266,7 +266,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- start -->
 <section class="jobs">
@@ -282,11 +282,11 @@
                     <a href="#"  data-bs-target="#videoModal" data-bs-toggle="modal" data-bs-link="<%= process.env.MIPIE_BUCKET_URL +'/' + course.videos[0] %>"
                                                                     class="pointer img-fluid"><img src="<%= course.thumbnail ? process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail : 'public_assets/images/newjoblisting/course_img.svg' %>" class="digi" alt="">
                     <img src="public_assets/images/newjoblisting/play.svg" alt="" class="group1"></a>
-                    <div id="base">
+                    <!-- <div id="base">
                       <p class="text-center p-0 match_card fw-bolder">Now At</p>
-                      <!-- <p class="text-center p-0 match_del fw-bold"><del class="text"><%=course.courseFee%></del></p> -->
+                      <p class="text-center p-0 match_del fw-bold"><del class="text"><%=course.courseFee%></del></p>
                       <p class="text-center p-0 match_final fw-bold"><%=course.cutPrice%></p>
-                    </div>
+                    </div> -->
                     <div class="flag">
                     </div>
                     <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
@@ -294,7 +294,7 @@
                   </div>
                   <div class="card-body px-0 pb-0">
                     <h4 class="text-center text-white fw-bolder mb-2 mx-auto text-capitalize ellipsis" title="<%=course.name%>"><%=course.name%></h4>
-                    <h5 class="fw-light mx-auto"><%=course.certifyingAgency%></h5>
+                    <!-- <h5 class="fw-light mx-auto"><%=course.certifyingAgency%></h5> -->
                     <h3 class="text-center digi-price mb-0">
                       <!-- <span class="c_rupee"></span>  -->
                       <!-- <span class="c_price"><del class="course">&#8377;<%=course.courseFee%></del></span> -->
@@ -346,7 +346,8 @@
                                       </div>
                                       <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
                                           <p class="mb-0 text-white">Location</p>
-                                          <p class="mb-0 text-white"><small class="sub_head"><% if(course.city) { %>(<%=course.city +', ' + course.state%>)<% } else { %> NA  <% } %>  </small></p>
+                                          <p class="mb-0 text-white para_ellipsis"><small class="sub_head"><% if(course.city) { %>(<%=course.city +', ' + course.state%>)<% } else { %> NA  <% } %>  </small></p>
+                                  
                                       </div>
                                   </div>
                               </div>
