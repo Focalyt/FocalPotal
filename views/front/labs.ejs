@@ -33,34 +33,40 @@
                     <label class="label">Email <span class="imp">*</span></label>
                   </div>
                 </div>
-                <div class="phone">
-                  <input name="mobile" class="form_input" type="text" placeholder="Phone" id="phone"
-                    maxlength="10" 
-                    pattern="^\d{10}$" 
-                    oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
-                  <label class="label">Phone <span class="imp">*</span></label>
+                <div class="form_name">
+                  <div class="phone">
+                    <input name="mobile" class="form_input" type="text" placeholder="" id="phone"
+                      maxlength="10" 
+                      pattern="^\d{10}$" 
+                      oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
+                    <label class="label">Phone <span class="imp">*</span></label>
+                  </div>
+                  <div class="Organisation">
+                    <input name="organisation" class="form_input" placeholder="" type="text" id="organisation">
+                    <label class="label">Name of Institute <span>*</span></label>
+                  </div>
                 </div>
-                <div class="designation select-container">
-                  <select class="form_designation_input" id="designation">
-                    <option value="" disabled selected>Select your designation</option>
-                    <option value="manager">Manager</option>
-                    <option value="developer">Developer</option>
-                    <option value="designer">Designer</option>
-                    <option value="tester">Tester</option>
-                  </select>
-                  <label class="label" for="Designation"> Designation <span class="imp">*</span></label>
-                </div>
-                <div class="Organisation">
-                  <input name="organisation" class="form_input" placeholder="" type="text" id="organisation">
-                  <label class="label">Name of Institute <span>*</span></label>
-                </div>
-                <div class="state">
-                  <select name="state" class="form_designation_input" id="state" >
-                    <option value="" disabled selected>Select your State</option>
-                    <option value="test"  selected>Test</option>
-                  </select>
-                  <label class="label">State <span class="imp">*</span></label>
-                </div>
+                <div class="form_name">
+                  <div class="designation select-container">
+                    <select class="form_designation_input" id="designation">
+                      <option value="" disabled selected>Select your designation</option>
+                      <option value="manager">Manager</option>
+                      <option value="developer">Developer</option>
+                      <option value="designer">Designer</option>
+                      <option value="tester">Tester</option>
+                    </select>
+                    <label class="label" for="Designation"> Designation <span class="imp">*</span></label>
+                  </div>
+                  <div class="state">
+                    <select name="state" class="form_designation_input" id="state" >
+                      <option value="" disabled selected>Select your State</option>
+                      <option value="test"  selected>Test</option>
+                    </select>
+                    <label class="label">State <span class="imp">*</span></label>
+                  </div>
+                </div>            
+               
+                
                 <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
                     placeholder="Message us" rows="5" ></textarea>
                 <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v" >Book Demo</button>
