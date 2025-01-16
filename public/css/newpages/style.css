@@ -16881,6 +16881,13 @@ Common: Spacing Gutters
   text-align: center;
   margin-bottom: 15px;
 }
+.program-logo img{
+  width: 100%;
+}
+.robo_img figure img{
+  border-radius:20px;
+  box-shadow:10px -10px 10px rgba(128, 128, 128, 0.5);
+}
 .program-description{
   font-size: 17px;
   line-height: normal;
@@ -16944,8 +16951,9 @@ Common: Spacing Gutters
 }
 .form_designation_input{
   height: 40px;
-  /* padding: 20px 10px; */
+  padding-left: 15px;
   margin-bottom: 20px;
+  font-size: 13px;
 }
 #demoForm input[type="text"], 
 #demoForm input[type="password"], 
@@ -16969,6 +16977,7 @@ Common: Spacing Gutters
   outline: none;
   position: relative;
   appearance: none;
+  font-size: 12px;
 }
 #demoForm .state select{
   border-radius: 10px;
@@ -16980,24 +16989,58 @@ Common: Spacing Gutters
     position: relative;
 }
 .demo_form label {
-  /* Make the label position absolute relative to its input container */
+ 
   position: absolute;
-  left: 15px; /* Adjusted position for better alignment */
-  top:9px; /* Initial position */
+  left: 15px; 
+  top:9px;
   background-color: transparent; 
   padding: 0px 5px;
   font-size: 14px;
   transition: transform 0.3s ease, color 0.3s ease, font-size 0.3s ease; /* Smooth transition */
 color: #000;
+font-size: 13px;
+pointer-events: none; 
+  z-index: 1;
 }
 #demoForm input:focus + label,
 #demoForm input:not(:placeholder-shown) + label,
 #demoForm select:focus + label,
+#demoForm select:not([value=""]) + label{
+  transform: translateY(-16px);
+  font-size: 12px;
+  color: #FC2B5A;
+  background-color: white; 
+  z-index: 2; 
+}
+/* #demoForm select:not([value=""]) + label{
+  transform: translateY(-16px);
+  font-size: 12px;
+  color: #000;
+  background-color: white; 
+  z-index: 2;
+} */
+
+#demoForm select + label {
+  transform: translateY(0); 
+  font-size: 14px; 
+  color: #000; 
+  background-color: transparent; 
+  z-index: 2;
+  transition: transform 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+  pointer-events: none;
+}
+
 #demoForm select:not([value=""]) + label {
-  transform: translateY(-16px); /* Float label above the input */
-  font-size: 12px; /* Smaller font size for floated label */
-  color: #FC2B5A; /* Highlighted label color */
-  background-color: #fff;
+  transform: translateY(-16px); 
+  font-size: 12px;
+  color: #000;
+  background-color: white; 
+  z-index: 2;
+}
+
+
+#demoForm select:focus + label {
+  color: #FC2B5A; 
 }
 .demo_table .form .form_name > label {
   color:#fff;
@@ -17021,7 +17064,7 @@ color: #000;
   top: 18px; /* Initial position of the label */
   font-size: 14px;
   color: #000;
-  background-color: white; /* Optional for better readability */
+  background-color: transparent; /* Optional for better readability */
   padding: 0 5px;
   transition: transform 0.3s ease, font-size 0.3s ease, color 0.3s ease;
   pointer-events: none; /* Prevent label from blocking interaction */
@@ -17034,6 +17077,7 @@ color: #000;
   font-size: 12px; /* Reduce font size */
   color: #FC2B5A; /* Change color on focus */
   z-index: 1;
+  background-color: #fff;
 }
 
 /* Select field styling */
@@ -17052,7 +17096,7 @@ color: #000;
 transform: translateY(6px);
 }
 .select-container select:focus {
-  border-color: #FC2B5A; /* Highlighted border on focus */
+  border-color: #FC2B5A;
 }
 
 /* Add a custom dropdown arrow if needed */
@@ -17065,6 +17109,62 @@ transform: translateY(6px);
   pointer-events: none;
   color: #000;
 } */
+
+/* textArea  */
+
+/* Floating label for textarea styling */
+.textarea-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea-container textarea {
+  background: transparent;
+  border: 1px solid black;
+  padding: 18px 8px;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  resize: none; /* Prevent resize if needed */
+}
+
+.textarea-container label {
+  position: absolute;
+  left: 15px;
+  top: 18px; /* Initial position of the label */
+  font-size: 14px;
+  color: #000;
+  background-color: white; /* Optional for better readability */
+  padding: 0 5px;
+  transition: transform 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+  pointer-events: none; /* Prevent label from blocking interaction */
+}
+
+/* Float label when the textarea has focus or a value */
+.textarea-container textarea:focus + label,
+.textarea-container textarea:not(:placeholder-shown) + label {
+  transform: translateY(-26px); /* Move label above */
+  font-size: 12px; /* Reduce font size */
+  color: #FC2B5A; /* Change color on focus */
+  z-index: 2;
+  background-color: #fff;
+}
+
+/* Highlight textarea border on focus */
+.textarea-container textarea:focus {
+  border-color: #FC2B5A;
+}
+
+.select-container select,
+.textarea-container textarea,
+#demoForm input[type="text"],
+#demoForm select {
+  position: relative; /* Ensure inputs are above labels */
+  z-index: 2; /* Place the input/select above the label */
+}
+
 
 .Robotics{
   font-size: 30px;
@@ -17216,16 +17316,20 @@ transform: translateY(6px);
   color: red;
 }
 
+/* #happy_candidate .slider_images .carousel-control-prev-icon,#happy_candidate .slider_images .carousel-control-next-icon{
+display: none;
+}
+#happy_candiadate .slick-prev:before, .slick-next:before{
+  display: none;
+} */
 @media screen and (max-width: 768px) {
   .slider_images {
-    /* Adjust width for small devices */
-    width: 90%;  /* You can customize this percentage based on your need */
-    margin: 0 auto;  /* Center align the container */
+    width: 90%; 
+    margin: 0 auto;  
   }
 
   .slider_images img {
-    /* Adjust the image width if needed */
-    width: 100%;  /* Ensure the image takes up full width of the container */
+    width: 100%;  
   }
   .partner_col.tech_area_img {
     height: 100%;
