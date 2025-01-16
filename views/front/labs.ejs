@@ -67,9 +67,14 @@
                 </div>            
                
                 
-                <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
-                    placeholder="Message us" rows="5" ></textarea>
-                <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v" >Book Demo</button>
+                <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
+                    placeholder="Message us" rows="2" ></textarea> -->
+                    <div class="textarea-container">
+                      <textarea id="exampleTextarea" placeholder=" " rows="2"></textarea>
+                      <label for="exampleTextarea">Your Message</label>
+                    </div>
+                
+                    <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v" >Book Demo</button>
               </div>
               <% if(success && success.length> 0) { %>
                 <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">

@@ -144,6 +144,7 @@ body {
 }
 .faqs_accordian .accordion-body {
  text-align: left;
+ background: #fff;
 }
 .faqs_accordian  .accordion-item {
     background: transparent;
@@ -152,7 +153,8 @@ body {
     background: #FC2B5A;
 }
 .faqs_accordian .accordion-body p {
-    color: #fff;
+    color: #FC2B5A!important;
+    /* color: #fff; */
 }
 .faqs_accordian .accordion-body a {
     color: #fff;
@@ -911,20 +913,28 @@ select.city_form {
 del.ps-2 {
     text-decoration-color: #FF0000;
 }
+/* .ellipsis-wrapper {
+    position: relative;
+    transition: height 0.6s ease;
+}
+.para_ellipsis:hover ~ .ellipsis-wrapper {
+    height: 40px; 
+} */
 
-.para_ellipsis{
-    max-width: 420px;
+.para_ellipsis {
+    max-width: 420px; /* Ensure this remains to limit the maximum width */
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    transition: max-width 0.3s ease, white-space 0.3s ease, overflow 0.3s ease;
-    width: 70px;
-   }
+    max-height: 1.2em; /* Set the height to match a single line */
+    transition: max-height 0.8s ease, white-space 0.8s ease;
+    cursor: pointer; /* Optional: Add a pointer cursor */
+}
+
 .para_ellipsis:hover {
-    max-width: 1000px; /* Expand the width to reveal the full text */
-    white-space: normal; /* Allow the text to wrap and reveal the content */
-    /* overflow: visible; */
-    overflow-x: scroll;
+    max-height: 10em; 
+    white-space: normal; 
+    transition: max-height 0.6s ease, white-space 0.8s ease;
 }
 .input-group button.btn.btn-outline-secondary {
 border-color: transparent!important;

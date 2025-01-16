@@ -350,3 +350,61 @@ $(".apply_cta").slick({
   ]
 });
 </script>
+<script>
+  $(document).ready(function () {
+    // Initialize Slick Slider for #happy_candidate
+    $("#happy_candidate .slider_images").slick({
+        dots: false,               
+        infinite: true,           
+        slidesToShow: 1,           
+        slidesToScroll: 1,       
+        arrows: false,              
+        autoplay: true,           
+        autoplaySpeed: 2000,      
+         responsive: [
+            {
+                breakpoint: 1366,
+                settings: {
+                    slidesToShow: 1, // Show 2 slides for medium screens
+                },
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1, // Show 1 slide for small screens
+                },
+            },
+        ],
+    });
+});
+
+</script>
+<script>
+  $(document).ready(function () {
+    // Initialize Slick Slider for #happy_candidate
+    $("#happy_candidate_images .happy_candidate_images").slick({
+        dots: false,               
+        infinite: true,           
+        slidesToShow: 1,           
+        slidesToScroll: 1,       
+        arrows: false,              
+        autoplay: true,           
+        autoplaySpeed: 2000,      
+         responsive: [
+            {
+                breakpoint: 1366,
+                settings: {
+                    slidesToShow: 1, // Show 2 slides for medium screens
+                },
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1, // Show 1 slide for small screens
+                },
+            },
+        ],
+    });
+});
+
+</script>
