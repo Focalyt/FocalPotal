@@ -344,7 +344,7 @@ div#features_cta figure {
     padding: 10px 0px;
     color: black;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 600;
     word-wrap: break-word;
 }
 .partner_col a {
@@ -395,9 +395,17 @@ div#features_cta figure {
     background: #BFCEFF;
     transition: .3s;
 }
+#institute.role{
+    background: #dddddd;
+    transition: .3s;
+}
 #educator.role {
     background: #F1DDDD;
     transition: .3s;
+}
+#institute.role:hover {
+    box-shadow: 5px 5px rgb(221 221 221);
+    border-radius: 10px;
 }
 #student.role:hover {
     box-shadow: 5px 5px rgb(165 214 208);
