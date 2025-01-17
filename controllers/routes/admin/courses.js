@@ -43,7 +43,7 @@ router.route("/").get(async (req, res) => {
 		}
 		fields["status"] = status;
 		let courses = await Courses.find(fields).populate("sectors")
-		console.log(courses, "this is courses")
+		// console.log(courses, "this is courses")
 		return res.render(`${req.vPath}/admin/course`, {
 			menu: 'course',
 			view,
@@ -145,6 +145,7 @@ router
 		try {
 			let { id } = req.params
 			let body = req.body;
+			console.log(body)
 			body.photos = req.body.photos?.split(',')
 			body.videos = req.body.videos?.split(',')
 			body.testimonialvideos = req.body.testimonialvideos?.split(',')
