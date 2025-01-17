@@ -21,6 +21,35 @@ const { candidateProfileCashBack, candidateVideoCashBack, candidateApplyCashBack
 const chatRoutes = express.Router();
 const commonRoutes = express.Router();
 
+
+
+commonRoutes.get("/userverification", async (req, res) => {
+	try {
+		let { mobile } = req.body; // Request se mobile number le rahe hain
+
+		// Validate mobile number
+		let candidateMobile = { mobile };
+		let { value, error } = await CandidateValidators.userMobile(candidateMobile);
+		if (error) {
+			console.log(error);
+			return res.send({ status: "failure", error: "Something went wrong!", details: error });
+		}
+
+		// Database se candidate ki puri details fetch karna
+		let candidateDetails = await Candidate.findOne({ mobile: mobile });
+
+		if (!candidateDetails) {
+			return res.send({ status: "failure", message: "Candidate not found" });
+		}
+
+		// Candidate details bhejna
+		res.send({ status: true, CandidateDetails: candidateDetails });
+	} catch (err) {
+		console.log(err);
+		return res.send({ status: false, error: err.message });
+	}
+});
+
 commonRoutes.get("/joblist", async (req, res) => {
 	try {
 		let recentJobs = await Vacancy.find({ status: true, _company: { $ne: null }, validity: { $gte: moment().utcOffset('+05:30') }, verified: true }).populate([
@@ -268,9 +297,30 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 				_course: courseId
 			}).save();
 
-			let sheetData = [candidate?.name, candidate?.mobile, candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY') : '', candidate?.state?.name, candidate.city?.name, 'Course', `${process.env.BASE_URL}/coursedetails/${courseId}`, course?.registrationCharges, appliedData?.registrationFee, moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
-
-			await updateSpreadSheetValues(sheetData)
+			// Capitalize every word's first letter
+				function capitalizeWords(str) {
+				  if (!str) return '';
+				  return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+				}
+			
+				// Update Spreadsheet
+				const sheetData = [
+				  moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
+				  moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
+				  capitalizeWords(course?.name), // Apply the capitalizeWords function
+				  candidate?.name,
+				  candidate?.mobile,
+				  candidate?.email,
+				  candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+				  candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+				  candidate?.state?.name,
+				  candidate?.city?.name,
+				  'Course',
+				  `${process.env.BASE_URL}/coursedetails/${courseId}`,
+				  course?.registrationCharges,
+				  appliedData?.registrationFee
+				];
+				await updateSpreadSheetValues(sheetData);
 
 			if (!apply) {
 				req.flash("error", "Already failed");
