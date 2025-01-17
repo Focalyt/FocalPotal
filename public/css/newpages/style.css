@@ -16862,6 +16862,13 @@ Common: Spacing Gutters
   font-weight: 700;
   padding-bottom: 20px;
   color: #fff;
+  background: -webkit-linear-gradient(99deg, rgba(255, 42, 86, 1) 0%, rgba(255, 42, 86, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
+    background: -o-linear-gradient(99deg, rgba(255, 42, 86, 1) 0%, rgba(255, 42, 86, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
+    background: -moz-linear-gradient(99deg, rgba(255, 42, 86, 1) 0%, rgba(255, 42, 86, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(99deg, rgba(255, 42, 86, 1) 0%, rgba(255, 42, 86, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: .4s ease-in;
 }
 .main_images{
   position: relative;
