@@ -1063,7 +1063,7 @@ div#apply_modal .feature-widget-7__body p::-webkit-scrollbar {
     white-space: nowrap;
     text-overflow: ellipsis;
     text-transform: capitalize; */
-    width: 320px;
+    /* width: 320px; */
     white-space: nowrap;
     overflow-x: auto;
 }
