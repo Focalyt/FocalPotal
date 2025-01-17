@@ -16889,7 +16889,7 @@ Common: Spacing Gutters
   margin-bottom: 15px;
 }
 .program-logo img{
-  width: 100%;
+  width: 50%;
 }
 .robo_img figure img{
   border-radius:20px;
@@ -17197,7 +17197,7 @@ transform: translateY(6px);
     width: 25%;
     margin-block: 20px;
 }
-#Ar{
+#Ar, #reach{
   background-image: url(../../public_assets/images/newpage/index/bg-stipes.jpg);
     background-color: #FFFFFF;
     background-size: cover;
@@ -17205,12 +17205,18 @@ transform: translateY(6px);
     background-position: center center;
 }
 .reach_header{
-  color: white;
+  color: #000000;
   font-size: 18px;
   font-weight: 500;
   text-align: center;
   line-height: 25px;
   font-family: 'Inter', sans-serif;
+}
+.inner_reach_section1{ 
+  background-image:url(../../public_assets/images/globe.avif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 .inner--socialicon ul{
   display: flex;
@@ -17227,10 +17233,11 @@ transform: translateY(6px);
   padding-bottom: 20px;
 }
 .primary-gradient1{
-  background:linear-gradient(to right, rgba(255,42,86,1) 44%, rgba(255,42,86,1) 0%, rgba(255,255,255,1) 47%, rgba(255,255,255,1) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+ background-image: url(../../public_assets/images/newpage/index/bg-stipes.jpg);
+    background-color: #FFFFFF;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 .inner--socialicon img{
   width: 75px;
@@ -17268,7 +17275,7 @@ transform: translateY(6px);
   cursor: pointer;
 }
 .new_link{
-  width: 15%;
+  width: 50%;
   margin: auto;
   background: #FC2B5A;
   border-radius: 10px;
