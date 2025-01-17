@@ -23,7 +23,7 @@ const commonRoutes = express.Router();
 
 
 
-commonRoutes.get("/userverification", async (req, res) => {
+commonRoutes.post("/userverification", async (req, res) => {
 	try {
 		let { mobile } = req.body; // Request se mobile number le rahe hain
 
