@@ -62,11 +62,11 @@
               <div class="footer-brand">
                 <img src="/public_assets/images/newpage/logo-ft.svg" alt="image alt">
               </div>
-              <p>
+              <!-- <p>
                 Focal Skill Development Pvt. Ltd.
                 SCF 3,4, 2nd floor, Shiva Complex, Patiala Zirakpur Road, opposite Hyundai Showroom, Zirakpur, Punjab
                 140603
-              </p>
+              </p> -->
             </div>
             <ul class="list-social list-social--hvr-black">
               <li>
@@ -170,13 +170,13 @@
 <script src="/js/newpage/js/custom.js"></script>
 <script src="/js/newpage/js/comparison.js"></script>
 </body>
-<script>
+<!-- <script>
 $(".center").slick({
   dots: false,
   slidesToShow: 3.5,
   slidesToScroll: 1,
   arrows: false,
-  autoplay: true,
+  autoplay: tre,
   infinite: true,
   autoplaySpeed: 2000,
   responsive: [
@@ -228,7 +228,7 @@ $(".center").slick({
     }
   ]
 });
-</script>
+</script> -->
 <script>
 $(".how_sliderdual").slick({
   dots: false,
@@ -349,4 +349,62 @@ $(".apply_cta").slick({
     }
   ]
 });
+</script>
+<script>
+  $(document).ready(function () {
+    // Initialize Slick Slider for #happy_candidate
+    $("#happy_candidate .slider_images").slick({
+        dots: false,               
+        infinite: true,           
+        slidesToShow: 1,           
+        slidesToScroll: 1,       
+        arrows: false,              
+        autoplay: true,           
+        autoplaySpeed: 2000,      
+         responsive: [
+            {
+                breakpoint: 1366,
+                settings: {
+                    slidesToShow: 1, // Show 2 slides for medium screens
+                },
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1, // Show 1 slide for small screens
+                },
+            },
+        ],
+    });
+});
+
+</script>
+<script>
+  $(document).ready(function () {
+    // Initialize Slick Slider for #happy_candidate
+    $("#happy_candidate_images .happy_candidate_images").slick({
+        dots: false,               
+        infinite: true,           
+        slidesToShow: 1,           
+        slidesToScroll: 1,       
+        arrows: false,              
+        autoplay: true,           
+        autoplaySpeed: 2000,      
+         responsive: [
+            {
+                breakpoint: 1366,
+                settings: {
+                    slidesToShow: 1, // Show 2 slides for medium screens
+                },
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1, // Show 1 slide for small screens
+                },
+            },
+        ],
+    });
+});
+
 </script>

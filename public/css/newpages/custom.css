@@ -144,6 +144,7 @@ body {
 }
 .faqs_accordian .accordion-body {
  text-align: left;
+ background: #fff;
 }
 .faqs_accordian  .accordion-item {
     background: transparent;
@@ -152,7 +153,8 @@ body {
     background: #FC2B5A;
 }
 .faqs_accordian .accordion-body p {
-    color: #fff;
+    color: #FC2B5A!important;
+    /* color: #fff; */
 }
 .faqs_accordian .accordion-body a {
     color: #fff;
@@ -319,6 +321,12 @@ div#features_cta figure {
     background-clip: text;
     color: transparent; /* Make text transparent */
 }
+.tech_area_img{
+    width: 100%;
+}
+.tech_area_img img{
+    width: 50%;
+}
 .partner_col {
     background: #ffffff;
     margin: 10px;
@@ -366,8 +374,14 @@ div#features_cta figure {
     border-radius: 20px;
     text-align: center;
     margin: 0 auto;
-    padding: 20px 0px 0px 0px;
+    /* padding: 20px 0px 0px 0px; */
+    padding: 20px 0px 20px 0px;
+    height: 100%;
 }
+/* .role:hover :not(:hover) {
+    opacity: 0.5;
+    pointer-events: none;
+} */
 
 #student.role {
     background: #E1F0EE;
@@ -899,7 +913,29 @@ select.city_form {
 del.ps-2 {
     text-decoration-color: #FF0000;
 }
+/* .ellipsis-wrapper {
+    position: relative;
+    transition: height 0.6s ease;
+}
+.para_ellipsis:hover ~ .ellipsis-wrapper {
+    height: 40px; 
+} */
 
+.para_ellipsis {
+    max-width: 420px; /* Ensure this remains to limit the maximum width */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-height: 1.2em; /* Set the height to match a single line */
+    transition: max-height 0.8s ease, white-space 0.8s ease;
+    cursor: pointer; /* Optional: Add a pointer cursor */
+}
+
+.para_ellipsis:hover {
+    max-height: 10em; 
+    white-space: normal; 
+    transition: max-height 0.6s ease, white-space 0.8s ease;
+}
 .input-group button.btn.btn-outline-secondary {
 border-color: transparent!important;
 }
