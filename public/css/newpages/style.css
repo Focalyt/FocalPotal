@@ -5786,8 +5786,8 @@ h1, h2, h3, h4, h5, h6 {
   .site-menu-main .nav-link-item {
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 }
 .site-menu-main .sub-menu {
@@ -16858,9 +16858,10 @@ Common: Spacing Gutters
   padding-bottom: 20px;
 }
 .tagline{
-  font-size: 30px;
+  font-size: 60px;
   font-weight: 700;
   padding-bottom: 20px;
+  color: #fff;
 }
 .main_images{
   position: relative;
@@ -16879,6 +16880,13 @@ Common: Spacing Gutters
 .program-logo{
   text-align: center;
   margin-bottom: 15px;
+}
+.program-logo img{
+  width: 100%;
+}
+.robo_img figure img{
+  border-radius:20px;
+  box-shadow:10px -10px 10px rgba(128, 128, 128, 0.5);
 }
 .program-description{
   font-size: 17px;
@@ -16932,6 +16940,7 @@ Common: Spacing Gutters
   display: flex;
     flex-direction: column;
     width: 100%;
+    position: relative;
 }
 .label {
   color: #000;
@@ -16942,8 +16951,9 @@ Common: Spacing Gutters
 }
 .form_designation_input{
   height: 40px;
-  /* padding: 20px 10px; */
+  padding-left: 15px;
   margin-bottom: 20px;
+  font-size: 13px;
 }
 #demoForm input[type="text"], 
 #demoForm input[type="password"], 
@@ -16953,10 +16963,21 @@ Common: Spacing Gutters
     border: 1px solid black;
     padding: 18px 8px;
     border-radius: 10px;
+    outline: none;
+    width: 100%;
+  position: relative;
 }
 #demoForm .designation select {
   /* padding: 18px 8px; */
+  padding-left: 15px;
   border-radius: 10px;
+  border: 1px solid black;
+  /* padding: 10px; */
+  background: transparent;
+  outline: none;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
 }
 #demoForm .state select{
   border-radius: 10px;
@@ -16965,10 +16986,186 @@ Common: Spacing Gutters
   width: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
-.demo_table .form .form_name > lable{
+.demo_form label {
+ 
+  position: absolute;
+  left: 15px; 
+  top:9px;
+  background-color: transparent; 
+  padding: 0px 5px;
+  font-size: 14px;
+  transition: transform 0.3s ease, color 0.3s ease, font-size 0.3s ease; /* Smooth transition */
+color: #000;
+font-size: 13px;
+pointer-events: none; 
+  z-index: 1;
+}
+#demoForm input:focus + label,
+#demoForm input:not(:placeholder-shown) + label,
+#demoForm select:focus + label,
+#demoForm select:not([value=""]) + label{
+  transform: translateY(-16px);
+  font-size: 12px;
+  color: #FC2B5A;
+  background-color: white; 
+  z-index: 2; 
+}
+/* #demoForm select:not([value=""]) + label{
+  transform: translateY(-16px);
+  font-size: 12px;
+  color: #000;
+  background-color: white; 
+  z-index: 2;
+} */
+
+#demoForm select + label {
+  transform: translateY(0); 
+  font-size: 14px; 
+  color: #000; 
+  background-color: transparent; 
+  z-index: 2;
+  transition: transform 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+  pointer-events: none;
+}
+
+#demoForm select:not([value=""]) + label {
+  transform: translateY(-16px); 
+  font-size: 12px;
+  color: #000;
+  background-color: white; 
+  z-index: 2;
+}
+
+
+#demoForm select:focus + label {
+  color: #FC2B5A; 
+}
+.demo_table .form .form_name > label {
   color:#fff;
 }
+#demoForm input:focus,
+#demoForm select:focus {
+  border-color: #FC2B5A; /* Highlighted border color */
+}
+
+.select-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Floating label styling */
+.select-container label {
+  position: absolute;
+  left: 15px;
+  top: 18px; /* Initial position of the label */
+  font-size: 14px;
+  color: #000;
+  background-color: transparent; /* Optional for better readability */
+  padding: 0 5px;
+  transition: transform 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+  pointer-events: none; /* Prevent label from blocking interaction */
+}
+
+/* Float label when the select has focus or a value */
+.select-container select:focus + label,
+.select-container select:not([value=""]) + label {
+  transform: translateY(-26px)!important; /* Move label above */
+  font-size: 12px; /* Reduce font size */
+  color: #FC2B5A; /* Change color on focus */
+  z-index: 1;
+  background-color: #fff;
+}
+
+/* Select field styling */
+.select-container select {
+  border: 1px solid black;
+  border-radius: 10px;
+  /* padding: 10px; */
+  /* appearance: none; Remove default dropdown arrow */
+  background: transparent;
+  position: relative;
+  outline: none;
+  width: 100%;
+  z-index: 1; /* Ensure it's above the label */
+}
+.select-container select label{
+transform: translateY(6px);
+}
+.select-container select:focus {
+  border-color: #FC2B5A;
+}
+
+/* Add a custom dropdown arrow if needed */
+/* .select-container::after {
+  content: "";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #000;
+} */
+
+/* textArea  */
+
+/* Floating label for textarea styling */
+.textarea-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea-container textarea {
+  background: transparent;
+  border: 1px solid black;
+  padding: 18px 8px;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  resize: none; /* Prevent resize if needed */
+}
+
+.textarea-container label {
+  position: absolute;
+  left: 15px;
+  top: 18px; /* Initial position of the label */
+  font-size: 14px;
+  color: #000;
+  background-color: white; /* Optional for better readability */
+  padding: 0 5px;
+  transition: transform 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+  pointer-events: none; /* Prevent label from blocking interaction */
+}
+
+/* Float label when the textarea has focus or a value */
+.textarea-container textarea:focus + label,
+.textarea-container textarea:not(:placeholder-shown) + label {
+  transform: translateY(-26px); /* Move label above */
+  font-size: 12px; /* Reduce font size */
+  color: #FC2B5A; /* Change color on focus */
+  z-index: 2;
+  background-color: #fff;
+}
+
+/* Highlight textarea border on focus */
+.textarea-container textarea:focus {
+  border-color: #FC2B5A;
+}
+
+.select-container select,
+.textarea-container textarea,
+#demoForm input[type="text"],
+#demoForm select {
+  position: relative; /* Ensure inputs are above labels */
+  z-index: 2; /* Place the input/select above the label */
+}
+
+
 .Robotics{
   font-size: 30px;
   font-weight: 400;
@@ -17056,7 +17253,8 @@ Common: Spacing Gutters
 }
 .images img{
   padding-left: 10px;
-  width: 150px;
+  width: 70px;
+  height: 70px;
   /* height: ; */
 }
 .homeMenu:hover{
@@ -17118,6 +17316,31 @@ Common: Spacing Gutters
   color: red;
 }
 
+/* #happy_candidate .slider_images .carousel-control-prev-icon,#happy_candidate .slider_images .carousel-control-next-icon{
+display: none;
+}
+#happy_candiadate .slick-prev:before, .slick-next:before{
+  display: none;
+} */
+@media screen and (max-width: 768px) {
+  .slider_images {
+    width: 90%; 
+    margin: 0 auto;  
+  }
+
+  .slider_images img {
+    width: 100%;  
+  }
+  .partner_col.tech_area_img {
+    height: 100%;
+    padding-block: 14px;
+  }
+  .tech_area_img img{
+    width: 25%;
+  }
+}
+
+
 @media(max-width:767px){
   .Heading__text{
     font-size: 25px;
@@ -17127,6 +17350,7 @@ Common: Spacing Gutters
   }
   .tagline{
     font-size: 25px;
+    padding-block: 20px;
   }
   .images{
 
@@ -17162,5 +17386,10 @@ Common: Spacing Gutters
   }
   .reach_header{
     font-size: 16px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .slider_images {
+    width: 100%;  /* Full width for very small screens */
   }
 }
