@@ -6,7 +6,7 @@
 
 @media screen and (max-width:1440px) {
     .role p {
-        font-size: 15px;
+        font-size: 13px;
     }
     .border_cta p {
         font-size: 13px;
@@ -16,7 +16,7 @@
 
 @media screen and (max-width:1366px) {
     .role p {
-        font-size: 15px;
+        font-size: 13px;
     }
 }
 

@@ -96,28 +96,32 @@
                                       <div class="col-md-6">
                                       <div class="course_spec">
                                         <div class="spe_icon">
-                                          <!-- <i class="la la-money"></i> -->
                                           <figure class="text-end">
                                             <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
                                         </figure>
+                                          <!-- <i class="la la-money"></i> -->
                                         </div>
                                         <div class="spe_detail">
                                           <p class="mb-0 text-black">Eligibility</p>
-                                          <p class="mb-0 text-black"><small class="sub_head">(<%=courses.qualification%>)</small></p> 
+                                          <p class="mb-0 text-black"></p>                                          </p>
+                                        <!-- <h3 class="jobDetails-wrap"> <%=recentJob.cutPrice ? recentJob.cutPrice.toLowerCase()==='free'? recentJob.cutPrice : '₹ ' + recentJob.cutPrice : 'N/A' %></h3>
+                                        <span class="text-capitalize jobDetails-wrap">Course Fee</span> -->
                                         </div>
                                       </div>
                                       </div>
                                       <div class="col-md-6">
                                         <div class="course_spec">
                                           <div class="spe_icon">
-                                            <!-- <i class="la la-shield"></i> -->
                                             <figure class="text-end">
                                               <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
                                           </figure>
+                                            <!-- <i class="la la-shield"></i> -->
                                           </div>
                                           <div class="spe_detail">
                                             <p class="mb-0 text-black">Duration</p>
-                                            <p class="mb-0 text-black"><small class="sub_head">(<%=courses.duration%>)</small></p>
+                                            <p class="mb-0 text-black"> </p>
+                                          <!-- <h3 class="jobDetails-wrap"><%=recentJob.courseLevel ? recentJob.courseLevel : 'N/A' %></h3>
+                                          <span class="text-capitalize jobDetails-wrap">Course Level</span> -->
                                           </div>
                                         </div>
                                         </div>
@@ -126,24 +130,20 @@
                                         <div class="col-md-6">
                                           <div class="course_spec">
                                             <div class="spe_icon">
+                                              <!-- <i class="la la-graduation-cap"></i> -->
                                               <figure class="text-end">
                                                 <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
                                             </figure>
-                                              <!-- <i class="la la-graduation-cap"></i> -->
                                             </div>
                                             <div class="spe_detail">
-                                              <p class="mb-0 text-black">Location</p>
-                                              <div class="ellipsis-wrapper">
-                                                <p class="mb-0 text-black para_ellipsis" title="<%= courses.city ? courses.city + ', ' + courses.state : 'NA' %>">
-                                                    <small class="sub_head">
-                                                        <% if (courses.city) { %>
-                                                            (<%= courses.city + ', ' + courses.state %>)
-                                                        <% } else { %>
-                                                            NA
-                                                        <% } %>
-                                                    </small>
-                                                </p>
-                                            </div>
+                                          <p class="mb-0 text-black">Location</p>
+                                          <div class="ellipsis-wrapper">
+                                            <p class="mb-0 text-black para_ellipsis">
+                                                
+                                            </p>
+                                        </div>
+                                            <!-- <h3 class="jobDetails-wrap"><%=recentJob?.certifyingAgency ? recentJob.certifyingAgency : 'N/A' %></h3>
+                                            <span class="text-capitalize jobDetails-wrap">Course Agency</span> -->
                                             </div>
                                           </div>
                                           </div>
@@ -156,10 +156,13 @@
                                                   <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
                                               </figure>
                                               </div>
-                                              
                                               <div class="spe_detail">
                                                 <p class="mb-0 text-black">Mode</p>
-                                                <p class="mb-0 text-black"><small class="sub_head">(<%=courses.trainingMode%>)</small></p>
+                                                <p class="mb-0 text-black"></p>
+                                              </div>
+                                              <!-- <h3 class="jobDetails-wrap">Last Date</h3>
+                                              <span class="text-capitalize jobDetails-wrap"><%=moment(recentJob.lastDateForApply ||
+                                                recentJob.createdAt).utcOffset('+05:30').format('DD MMM YYYY') %></span> -->
                                               </div>
                                             </div>
                                             </div>
