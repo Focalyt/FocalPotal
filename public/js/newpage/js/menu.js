@@ -82,11 +82,8 @@ function scrollFunction() {
     document.documentElement.scrollTop > 50
   ) {
     $(".site-header--sticky").addClass("scrolling");
-    $(".site-header--sticky").css("background-color", "red");
   } else {
     $(".site-header--sticky").removeClass("scrolling");
-    $(".site-header--sticky").css("background-color", "transparent");
-
   }
   if (
     document.body.scrollTop > 700 ||
