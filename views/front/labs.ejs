@@ -18,24 +18,24 @@
         </div>
         <div class="col-md-6">
           <div class="demo_table">
-            <form method="post" id="demoForm">
+            <form method="post" id="demoForm" action="">
               <div class="demo_form">
                 <h3 class="request_demo text-white">
                   Request your Demo Today
                 </h3>
                 <div class="form_name">
                   <div class="first_name">
-                    <input name="name" type="text" class="form_input" placeholder="" id="fullName" required>
+                    <input name="name" type="text" class="form_input" placeholder="" id="fullName">
                     <label class="label">Full Name <span class="imp">*</span></label>
                   </div>
                   <div class="email">
-                    <input name="email" type="text" class="form_input" placeholder="" id="email" required>
+                    <input name="email" type="text" class="form_input" placeholder="" id="email">
                     <label class="label">Email <span class="imp">*</span></label>
                   </div>
                 </div>
                 <div class="form_name">
                   <div class="phone">
-                    <input name="mobile" class="form_input" type="text" placeholder="" id="phone" required
+                    <input name="mobile" class="form_input" type="text" placeholder="" id="phone"
                       maxlength="10" 
                       pattern="^\d{10}$" 
                       oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="form_name">
                   <div class="designation select-container">
-                    <select class="form_designation_input" id="designation" required>
+                    <select class="form_designation_input" id="designation">
                       <option value="" disabled selected>Select your designation</option>
                       <option value="manager">Manager</option>
                       <option value="developer">Developer</option>
@@ -58,7 +58,7 @@
                     <label class="label" for="Designation"> Designation <span class="imp">*</span></label>
                   </div>
                   <div class="state">
-                    <select name="state" class="form_designation_input" id="state" required>
+                    <select name="state" class="form_designation_input" id="state" >
                       <option value="" disabled selected>Select your State</option>
                       <option value="test"  selected>Test</option>
                     </select>

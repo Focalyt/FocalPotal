@@ -971,7 +971,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
       return res.send({ status: "failure", error: "Something went wrong!", error });
     }
 
- 
+
 
     let course = await Courses.findById(courseId).populate('sectors').lean();
     if (!course || course?.status == false /* || course.courseType !== 0 */) {
