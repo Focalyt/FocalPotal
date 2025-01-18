@@ -18,37 +18,37 @@
         </div>
         <div class="col-md-6">
           <div class="demo_table">
-            <form method="post" id="demoForm" action="">
+            <form method="post" id="demoForm">
               <div class="demo_form">
                 <h3 class="request_demo text-white">
                   Request your Demo Today
                 </h3>
                 <div class="form_name">
                   <div class="first_name">
-                    <input name="name" type="text" class="form_input" placeholder="" id="fullName">
+                    <input name="name" type="text" class="form_input" placeholder="" id="fullName" required>
                     <label class="label">Full Name <span class="imp">*</span></label>
                   </div>
                   <div class="email">
-                    <input name="email" type="text" class="form_input" placeholder="" id="email">
+                    <input name="email" type="text" class="form_input" placeholder="" id="email" required>
                     <label class="label">Email <span class="imp">*</span></label>
                   </div>
                 </div>
                 <div class="form_name">
                   <div class="phone">
-                    <input name="mobile" class="form_input" type="text" placeholder="" id="phone"
+                    <input name="mobile" class="form_input" type="text" placeholder="" id="phone" required
                       maxlength="10" 
                       pattern="^\d{10}$" 
                       oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
                     <label class="label">Phone <span class="imp">*</span></label>
                   </div>
                   <div class="Organisation">
-                    <input name="organisation" class="form_input" placeholder="" type="text" id="organisation">
+                    <input name="organisation"  class="form_input" required placeholder="" type="text" id="organisation">
                     <label class="label">Name of Institute <span>*</span></label>
                   </div>
                 </div>
                 <div class="form_name">
                   <div class="designation select-container">
-                    <select class="form_designation_input" id="designation">
+                    <select class="form_designation_input" id="designation" required>
                       <option value="" disabled selected>Select your designation</option>
                       <option value="manager">Manager</option>
                       <option value="developer">Developer</option>
@@ -58,7 +58,7 @@
                     <label class="label" for="Designation"> Designation <span class="imp">*</span></label>
                   </div>
                   <div class="state">
-                    <select name="state" class="form_designation_input" id="state" >
+                    <select name="state" class="form_designation_input" id="state" required>
                       <option value="" disabled selected>Select your State</option>
                       <option value="test"  selected>Test</option>
                     </select>
@@ -70,7 +70,11 @@
                 <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
                     placeholder="Message us" rows="2" ></textarea> -->
                     <div class="textarea-container">
+<<<<<<< HEAD
                       <textarea id="exampleTextarea" placeholder=" " rows="2"></textarea>
+=======
+                      <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
+>>>>>>> b5103a5bc217d7d51255de470202f6e308a08068
                       <label for="exampleTextarea">Your Message</label>
                     </div>
                 
@@ -128,8 +132,9 @@
       { id: 'email', label: 'Email' },
       { id: 'phone', label: 'Phone' },
       { id: 'designation', label: 'Designation' },
-      { id: 'organisation', label: 'School/Organisation' },
-      { id: 'state', label: 'State' }
+      { id: 'organisation', label: 'Name of Institute' },
+      { id: 'state', label: 'State' },
+      { id: 'message', label: 'Your Message' },
     ];
 
     fields.forEach(field => {
