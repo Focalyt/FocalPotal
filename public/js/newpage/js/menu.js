@@ -82,8 +82,17 @@ function scrollFunction() {
     document.documentElement.scrollTop > 50
   ) {
     $(".site-header--sticky").addClass("scrolling");
+    $(".site-header--sticky").css("background-color", "#ffffff");
+    $(".nav-link-item").css("color", "#000");
+    $(".loginbtnn").css("background-color", "#FC2B5A");
+    $(".nav-item .dropdown-container > span.active_menu").css("color" , "#fff");
   } else {
     $(".site-header--sticky").removeClass("scrolling");
+    $(".site-header--sticky").css("background-color", "#121212");
+    $(".nav-link-item").css("color", "#fff");
+    $(".loginbtnn").css("background-color", "#fff", "color" , "#FC2B5A");
+    $(".nav-item .dropdown-container > span.active_menu").css("color" , "#FC2B5A" , "background-color" , "#fff");
+
   }
   if (
     document.body.scrollTop > 700 ||
