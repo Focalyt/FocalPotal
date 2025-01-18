@@ -42,7 +42,7 @@
                     <label class="label">Phone <span class="imp">*</span></label>
                   </div>
                   <div class="Organisation">
-                    <input name="organisation"  class="form_input" required placeholder="" type="text" id="organisation">
+                    <input name="organisation" class="form_input" required placeholder="" type="text" id="organisation">
                     <label class="label">Name of Institute <span>*</span></label>
                   </div>
                 </div>
@@ -70,7 +70,7 @@
                 <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
                     placeholder="Message us" rows="2" ></textarea> -->
                     <div class="textarea-container">
-                      <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
+                      <textarea id="exampleTextarea" name="message" placeholder=" " rows="2" required></textarea>
                       <label for="exampleTextarea">Your Message</label>
                     </div>
                 
@@ -128,9 +128,8 @@
       { id: 'email', label: 'Email' },
       { id: 'phone', label: 'Phone' },
       { id: 'designation', label: 'Designation' },
-      { id: 'organisation', label: 'Name of Institute' },
-      { id: 'state', label: 'State' },
-      { id: 'message', label: 'Your Message' },
+      { id: 'organisation', label: 'School/Organisation' },
+      { id: 'state', label: 'State' }
     ];
 
     fields.forEach(field => {
