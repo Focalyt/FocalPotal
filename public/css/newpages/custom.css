@@ -373,7 +373,7 @@ div#features_cta figure {
     background-color: #9747ff;
     transition: .4s ease;
 }
-#skills , #whychoose{
+#skills , #why{
     background-image: url(../../public_assets/images/newpage/index/bg_texture.png);
     background-color: #F4FAFA;
     background-size: cover;
@@ -474,13 +474,8 @@ div#pink-bg {
     padding:20px;
     min-height: 205px;
     transition: .5s;
-    /* height: 200px; */
 }
 .why_choose_sec p.text-white {
-    font-size: 16px;
-    font-weight: 300;
-}
-#whychoose .why_choose_sec p.text-white{
     font-size: 20px;
     font-weight: 300;
 }
@@ -488,49 +483,6 @@ div#pink-bg {
     box-shadow: 5px 5px rgb(188, 197, 196);
     transition: .3s ease;
 }
-#whychoose .col-md-4:nth-child(1) .why_choose_sec {
-    background-color: #E1F0EE;
-}
-#whychoose .col-md-4:nth-child(2) .why_choose_sec {
-    background-color: #BFCEFE;
-}
-#whychoose .col-md-4:nth-child(3) .why_choose_sec {
-    background-color: #ded9ff;
-}
-#whychoose .col-md-4:nth-child(4) .why_choose_sec {
-    background-color: #F0EAEA;
-}
-#whychoose .col-md-4:nth-child(5) .why_choose_sec {
-    background-color: #DDDDDD;
-}
-#whychoose .col-md-4:nth-child(6) .why_choose_sec {
-    background-color: #F1DDDD;
-}
-#whychoose .col-md-4:nth-child(1) .why_choose_sec:hover {
-    box-shadow: 0px 5px 15px #E1F0EE;
-    transition: all 0.3s ease;
-}
-#whychoose .col-md-4:nth-child(2) .why_choose_sec:hover {
-    box-shadow: 0px 5px 15px #BFCEFE;
-    transition: all 0.3s ease;
-}
-#whychoose .col-md-4:nth-child(3) .why_choose_sec:hover {
-    box-shadow: 0px 5px 15px #ded9ff;
-    transition: all 0.3s ease;
-}
-#whychoose .col-md-4:nth-child(4) .why_choose_sec:hover {
-    box-shadow: 0px 5px 15px #F0EAEA;
-    transition: all 0.3s ease;
-}
-#whychoose .col-md-4:nth-child(5) .why_choose_sec:hover {
-    box-shadow: 0px 5px 15px #DDDDDD;
-    transition: all 0.3s ease;
-}
-#whychoose .col-md-4:nth-child(6) .why_choose_sec:hover {
-    box-shadow: 0px 5px 15px #F1DDDD;
-    transition: all 0.3s ease;
-}
-
 /* #why {
     background-image: url(../../public_assets/images/newpage/index/pink-bg.png);
     background-size: 100%;
