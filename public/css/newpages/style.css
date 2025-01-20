@@ -16892,19 +16892,20 @@ Common: Spacing Gutters
   margin-bottom: 15px;
 }
 .program-logo img{
-  width: 50%;
+  width: 40%;
 }
 .robo_img figure img{
   border-radius:20px;
   box-shadow:10px -10px 10px rgba(128, 128, 128, 0.5);
 }
 .program-description{
-  font-size: 17px;
+  font-size: 16px;
   line-height: normal;
   font-weight: 300;
 }
 .whychoosefocal{
   margin-bottom: 40px;
+  font-weight: 700;
 }
 .demoQuate{
   line-height: 50px;
@@ -17213,13 +17214,72 @@ transform: translateY(6px);
   font-weight: 500;
   text-align: center;
   line-height: 25px;
-  font-family: 'Inter', sans-serif;
+  /* font-family: 'Inter', sans-serif; */
 }
-.inner_reach_section1{ 
-  background-image:url(../../public_assets/images/globe.avif);
-  background-size: cover;
+.globe-background {
+  background-image: url(../../public_assets/images/globe.avif);
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 150%;
+  z-index: 10;
+  opacity: 0.2; /* Adjust opacity for subtle effect */
+}
+.inner_reach_section1{ 
+  position: relative;
+  z-index: 1;
+}
+.inner_reach_section {
+  padding: 20px;
+  /* background-color: #F9F9F9; */
+  border-radius: 10px;
+  position: relative;
+  z-index: 11;
+  transition: all 0.3s ease;
+}
+.review-box {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 100%; /* Position below the icon */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px; /* Adjust width as needed */
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+  z-index: 10;
+  opacity: 0; /* Start as invisible */
+  visibility: hidden; /* Prevent interaction when hidden */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show the review box on hover */
+.inner_reach_section:hover .review-box {
+  display: block;
+  animation: fadeIn 0.3s ease; /* Optional fade-in effect */
+  opacity: 1; /* Fully visible */
+  visibility: visible;
+}
+
+/* Optional: Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 .inner--socialicon ul{
   display: flex;
@@ -17290,7 +17350,7 @@ transform: translateY(6px);
 .new_link a{
   color: #fff;
   font-weight: 500;
-  font-family: 'Inter", sans-serif';
+  /* font-family: 'Inter", sans-serif'; */
   transition: .8s ease;
 
 }
