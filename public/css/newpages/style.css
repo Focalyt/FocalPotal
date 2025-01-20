@@ -17117,7 +17117,8 @@ transform: translateY(6px);
 }
 
 #demoForm select:not([value=""]) {
-  color: #000; /* Ensure selected text is black */
+  color: #000;
+  width: 100%;
 }
 
 /* Add a custom dropdown arrow if needed */
