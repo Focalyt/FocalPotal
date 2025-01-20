@@ -35,16 +35,6 @@ div#about_ctas .role {
 #about_ctas .role p {
     min-height: 155px;
 }
-.role{
-    position: relative;
-}
-.role h5{
-    font-size: 16px;
-}
-.role p{
-    height: 50px;
-    /* font-size: 16px; */
-}
 a.pointer.img-fluid {
     position: relative;
 }
@@ -88,12 +78,9 @@ li.nav-item.active a {
 a.nav-link-item.drop-trigger.active_menu {
     color: #FC2B5A!important;
 }
-.loginbtnn{
-    background: #ffffff;
-    color: #fff;
-}
-.nav-item .dropdown-container > span.active_menu  {
-    color: #FC2B5A;
+
+.nav-item .dropdown-container > span.active_menu {
+    color: #FC2B5A!important;
     background: #fff;
     border-radius: 10px;
     /* padding: 0px 10px!important;*/
@@ -353,7 +340,7 @@ div#features_cta figure {
     margin: 0 auto;
 }
 .partner_col h5 {
-    font-size: 15px!important;
+    font-size: 12px!important;
     padding: 10px 0px;
     color: black;
     font-size: 20px;
@@ -376,7 +363,7 @@ div#features_cta figure {
     background-color: #9747ff;
     transition: .4s ease;
 }
-#skills , #whychoose{
+#skills {
     background-image: url(../../public_assets/images/newpage/index/bg_texture.png);
     background-color: #F4FAFA;
     background-size: cover;
@@ -472,76 +459,21 @@ div#pink-bg {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .why_choose_sec {
-    /* box-shadow: 0px 0px 36px 8px rgba(0, 0, 0, 0.37); */
+    box-shadow: 0px 0px 36px 8px rgba(0, 0, 0, 0.37);
     border-radius: 22px;
     padding:20px;
     min-height: 205px;
     transition: .5s;
-    /* height: 200px; */
 }
 .why_choose_sec p.text-white {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 300;
-}
-#whychoose .why_choose_sec p.text-white{
-    font-size: 20px;
-    font-weight: 300;
-}
-#whychoose .program-description{
-    color: #fc2b5a;
 }
 .why_choose_sec:hover {
     box-shadow: 5px 5px rgb(188, 197, 196);
     transition: .3s ease;
 }
-#whychoose .col-md-4:nth-child(1) .why_choose_sec {
-    background-color: #E1F0EE;
-}
-#whychoose .col-md-4:nth-child(2) .why_choose_sec {
-    background-color: #BFCEFE;
-}
-#whychoose .col-md-4:nth-child(3) .why_choose_sec {
-    background-color: #ded9ff;
-}
-#whychoose .col-md-4:nth-child(4) .why_choose_sec {
-    background-color: #F0EAEA;
-}
-#whychoose .col-md-4:nth-child(5) .why_choose_sec {
-    background-color: #DDDDDD;
-}
-#whychoose .col-md-4:nth-child(6) .why_choose_sec {
-    background-color: #F1DDDD;
-}
-#whychoose .col-md-4:nth-child(1) .why_choose_sec:hover {
-    box-shadow: 0px 5px 15px #E1F0EE;
-    transition: all 0.3s ease;
-}
-#whychoose .col-md-4:nth-child(2) .why_choose_sec:hover {
-    box-shadow: 0px 5px 15px #BFCEFE;
-    transition: all 0.3s ease;
-}
-#whychoose .col-md-4:nth-child(3) .why_choose_sec:hover {
-    /* box-shadow: 0px 5px 15px #ded9ff; */
-    box-shadow: 0px 0px 36px 8px rgba(0,0,0,0,0.3);
-    transition: all 0.3s ease;
-}
-#whychoose .col-md-4:nth-child(4) .why_choose_sec:hover {
-    /* box-shadow: 0px 5px 15px #F0EAEA; */
-    box-shadow: 0px 0px 36px 8px rgba(0,0,0,0,0.3);
-    transition: all 0.3s ease;
-}
-#whychoose .col-md-4:nth-child(5) .why_choose_sec:hover {
-    box-shadow: 0px 0px 36px 8px rgba(0,0,0,0,0.3);
-    /* box-shadow: 0px 5px 15px #DDDDDD; */
-    transition: all 0.3s ease;
-}
-#whychoose .col-md-4:nth-child(6) .why_choose_sec:hover {
-    box-shadow: 0px 0px 36px 8px rgba(0,0,0,0,0.3);
-    /* box-shadow: 0px 5px 15px #F1DDDD; */
-    transition: all 0.3s ease;
-}
-
-/* #why {
+#why {
     background-image: url(../../public_assets/images/newpage/index/pink-bg.png);
     background-size: 100%;
     background-repeat: no-repeat;
@@ -551,7 +483,7 @@ div#pink-bg {
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: left 80px;
-} */
+}
 div#apply_modal .feature-widget-7.border-bottom {
     padding: 7px 0px;
 }
@@ -1007,33 +939,11 @@ del.ps-2 {
     cursor: pointer; /* Optional: Add a pointer cursor */
 }
 
-/* .para_ellipsis:hover {
+.para_ellipsis:hover {
     max-height: 10em; 
     white-space: normal; 
     transition: max-height 0.6s ease, white-space 0.8s ease;
-} */
-/* .para_ellipsis::after {
-    content: attr(data-tooltip); 
-    position: absolute;
-    bottom: 100%; 
-    left: 50%;
-    transform: translateX(-50%); 
-    background-color: rgba(0, 0, 0, 0.75); 
-    color: #fff; 
-    padding: 5px 10px;
-    border-radius: 4px;
-    white-space: nowrap; 
-    opacity: 0; 
-    visibility: hidden; 
-    transition: opacity 0.3s, visibility 0.3s; 
-    z-index: 10; 
-} */
-
-/* Tooltip appears on hover */
-/* .para_ellipsis:hover::after {
-    opacity: 1; 
-    visibility: visible; 
-} */
+}
 .input-group button.btn.btn-outline-secondary {
 border-color: transparent!important;
 }
