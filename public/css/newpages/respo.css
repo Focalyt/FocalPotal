@@ -112,7 +112,9 @@ h5.feature-widget-7__title.mb-0.color-pink {
 }
 
 @media screen and (max-width:768px) {
-
+    .partner_col h5{
+        font-size: 13px!important;
+    }
 }
 
 @media screen and (max-width:767px) {
@@ -137,7 +139,8 @@ h5.feature-widget-7__title.mb-0.color-pink {
         margin-top: 30px;
     }
     .why_choose_sec {
-        min-height: auto;
+        min-height: 220px;
+        /* min-height: auto;  */
     }
     .last_cta {
         text-align: center!important;
