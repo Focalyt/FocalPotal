@@ -1,0 +1,142 @@
+
+.decoration-none{
+    text-decoration: none;
+  }
+
+@media only screen and (min-width: 1920px) {
+
+    /* .carousel-gallery {
+        margin: 2% 0 ;
+      } */
+      .uplay {
+        position: relative;
+        top: -9px;
+        left: 4px;
+    } 
+}
+@media only screen and (max-width: 1400px) {
+    
+
+    
+      .bit-video{
+       width: 34%;
+    }
+    }
+    
+    
+    @media only screen and (max-width: 984px) {
+    
+    /* .carousel-gallery {
+        margin: 8% 0 ;
+      
+      } */
+    
+      .swiper-wrapper {
+        height: 100%;
+    }
+    }
+    
+    @media only screen and (max-width: 741px) {
+    
+    .pulse {
+        width: 62px!important;
+        height: 62px!important;}
+        .uplay{
+            width: 70%!important;
+            height: auto!important;
+            left: 2px!important;
+            top: -21px!important;
+        }
+        /* .carousel-gallery {
+            margin: 8% 0 ;
+          
+          } */
+    
+    }
+    
+    @media only screen and (max-width: 576px) {
+    .pulse {
+        width: 56px!important;
+        height: 56px!important;}
+        
+        .uplay{
+            width: 70%!important;
+            height: auto!important;
+            left: 2px!important;
+        }
+    
+        .bit-video{
+            width: 67%!important;
+            height: auto;
+        }
+    
+        .video-icon-pic{
+            top: 54% !important;
+            left: 60% !important;
+          }
+        .pluscenter {
+       
+            left: 50%!important;
+        
+        }
+
+        /* .carousel-gallery {
+            margin: 10% 0 ;
+          
+          } */
+    
+    }
+    
+    @media only screen and (max-width: 450px) {
+    .pulse {
+        width: 47px!important;
+        height: 47px!important;}
+        
+        .uplay{
+            width: 50%!important;
+            height: auto!important;
+            left: 2px!important;
+            top: -26px!important;
+        }
+        .pulse-center{
+            top: 66%!important;
+        }
+        /* .carousel-gallery {
+            margin: 13% 0 ;
+          
+          } */
+    
+    }
+    
+    @media only screen and (max-width: 402px) {
+    .pulse {
+        width: 47px!important;
+        height: 47px!important;}
+        
+        .uplay{
+            width: 50%!important;
+            height: auto!important;
+            left: 2px!important;
+            top: -27px!important;
+        }
+        .pulsecenter{
+            top: 67%!important;
+        }
+    }
+    
+    @media only screen and (max-width: 374px) {
+    
+    .bit-video{
+        width: 56%!important;
+        height: auto;
+    }
+    .pluscenter {
+       
+       left: 50%!important;
+    
+    }
+    .video-icon-pic{
+        left: 27%!important;
+    }
+    }
+    

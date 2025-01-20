@@ -1,0 +1,171 @@
+
+
+@media only screen and (min-width: 1920px)  {
+    .first-set{
+        height: 178px!important;
+    }
+    .second-set{
+        height: 178px!important;
+    }
+    
+}
+
+@media only screen and (max-width: 1440px)  {
+.first-set{
+    height: 260px!important;
+}
+
+.second-set{
+    height: 260px!important;
+}
+.font-stick{
+    font-weight: 500!important;
+}
+}
+
+@media only screen and (max-width: 1200px)  {
+    .full-btn{
+        width: 92!important;
+    }
+    .first-set{
+        height: 260px!important;
+    }
+    .second-set{
+        height: 260px!important;
+    }
+    .font-stick{
+        font-weight: 500!important;
+    }
+    }
+    @media only screen and (max-width: 992px)  {
+        .first-set{
+            height: 260px!important;
+        }
+        .second-set{
+            height: 260px!important;
+        }
+        .font-stick{
+            font-weight: 500!important;
+        }
+        }
+
+        @media only screen and (max-width: 786px)  {
+            .first-set{
+                height: 334px!important;
+            }
+            .second-set{
+                height: 334px!important;
+            }
+            .font-stick{
+                font-weight: 500!important;
+            }
+            }
+
+            @media only screen and (max-width: 766px)  {
+                .search-page{
+                    max-width: 100%;
+                }
+                }
+           
+
+
+            @media only screen and (max-width: 600px)  {
+                .first-set{
+                    height: 219px!important;
+                }
+                .font-stick{
+                    font-weight: 500!important;
+                }
+                }
+
+            @media only screen and (max-width: 576px)  {
+                .first-set{
+                    height: 224px!important;
+                }.font-stick{
+                    font-weight: 500!important;
+                }
+                .applied_card img {
+                    width: 14%!important;
+                    height: auto;
+                }
+                img.mx-xl-1.mx-lg-1.mx-md-1.mx-sm-1.mx-0.source-kp {
+                    width: 14%!important;
+                }
+                
+                }
+
+                @media only screen and (max-width: 522px)  {
+                    .first-set{
+                        height: 230px!important;
+                    }
+                    .font-stick{
+                        font-weight: 500;
+                    }
+                    }
+
+                @media only screen and (max-width: 440px)  {
+                    .first-set{
+                        height: 320px!important;
+                    }
+                    .icon-fearure-four {
+                       
+                        font-size: 15px!important;
+                       
+                    }
+                    .font-stick{
+                        font-weight: 500;
+                    }
+                    }
+
+                    @media only screen and (max-width: 375px)  {
+
+                        .first-set{
+                            height: 340px!important;
+                        }
+                        .font-stick{
+                            font-weight: 500;
+                        }
+                    }
+
+                    @media only screen and (max-width: 350px)  {
+
+                        .first-set{
+                            height: 354px!important;
+                        }
+                        .font-stick{
+                            font-weight: 500;
+                        }
+                        .bell{
+                            font-size: 10px!important;
+                        }
+                        .mipie-cand-name{
+                            font-size: 13px;
+                            white-space: nowrap!important;
+                            width: 97%!important;
+                            overflow: hidden!important;
+                            text-overflow: ellipsis!important;
+                            padding: 2px!important;
+                        }
+                    }
+
+                    @media only screen and (max-width: 320px)  {
+
+                        .first-set{
+                            height: 400px!important;
+                        }
+                        .bell{
+                            font-size: 10px!important;
+                        }
+                        .mipie-cand-name{
+                            font-size: 13px;
+                            white-space: nowrap!important;
+                            width: 97%!important;
+                            overflow: hidden!important;
+                            text-overflow: ellipsis!important;
+                            padding: 2px!important;
+                        }
+                    }
+               
+           
+       
+        
