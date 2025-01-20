@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&display=swap');
+/* Gilroy Font */
+@font-face {
+    font-family: 'gilroy-black';
+    src: url('../fonts/gilroy/Gilroy-Black.ttf') format('ttf');
+  }
+  @font-face {
+    font-family: 'gilroy-bold';
+    src: url('../fonts/gilroy/Gilroy-Bold.ttf') format('ttf');
+  }
+  @font-face {
+    font-family: 'gilroy-light';
+    src: url('../fonts/gilroy/Gilroy-Light.ttf') format('ttf');
+  }
+  @font-face {
+    font-family: 'gilroy-regular';
+    src: url('../fonts/gilroy/Gilroy-Regular.ttf') format('ttf');
+  }
+  @font-face {
+    font-family: 'gilroy-semibold';
+    src: url('../fonts/gilroy/Gilroy-SemiBold.ttf') format('ttf');
+  }
+  @font-face {
+    font-family: 'gilroy-ultralight';
+    src: url('../fonts/gilroy/Gilroy-UltraLight.ttf') format('ttf');
+  }
+  @font-face {
+    font-family: 'gilroy-medium';
+    src: url('../fonts/gilroy/Gilroy-Medium.ttf') format('ttf');
+  }
+  @font-face {
+    font-family: 'gilroy-thin';
+    src: url('../fonts/gilroy/Gilroy-Thin.ttf') format('ttf');
+  }
+  @font-face {
+    font-family: 'gilroy-ultrathin';
+    src: url('../fonts/gilroy/Gilroy-UltraLight.ttf') format('ttf');
+  }
+  /* END */
+
+/* Gobold Font */
+  @font-face {
+    font-family: 'gobold-bold';
+    src: url('../fonts/gobold/gobold-bold.otf') format('otf');
+  }
+  @font-face {
+    font-family: 'gobold-extra';
+    src: url('../fonts/gobold/gobold-extra.otf') format('otf');
+  }
+  @font-face {
+    font-family: 'gobold-extraa';
+    src: url('../fonts/gobold/gobold-extraa.otf') format('otf');
+  }
+  @font-face {
+    font-family: 'gobold-lowplus';
+    src: url('../fonts/gobold/gobold-lowplus.otf') format('otf');
+  }
+  @font-face {
+    font-family: 'gobold-regular';
+    src:url('../fonts/gobold/gobold-regular.otf') format('otf');
+  }
+  @font-face {
+    font-family: 'gobold-thin';
+    src: url('../fonts/gobold/gobold-thin.otf') format('otf');
+  }
+/* END */
+
+/* @font-face {
+    font-family: 'VinaSans';
+    src: url('../fonts/ex/VinaSans-Regular.ttf') format('ttf');
+  } */
+
+/* Font Style */
+/* .home-2_hero-content-text h4 {
+    font-family: 'Vina Sans', sans-serif;
+} */
+/* END */

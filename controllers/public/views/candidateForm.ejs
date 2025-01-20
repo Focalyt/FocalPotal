@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+<head>
+
+  <title>Focalyt</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+
+  <link rel="stylesheet" type="text/css"
+    href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="/css/resume.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="/css/core/menu/menu-types/vertical-menu.css"> -->
+  
+     <!-- Microsoft Clarity -->
+     <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "n4i9ljyxr0");
+  </script>
+     <!-- Microsoft Clarity -->
+</head>
+
+<body>
+
+  <div id="doc2" class="yui-t7">
+    <div id="inner">
+
+      <div id="hd">
+        <div class="yui-gc">
+          <div class="yui-u first">
+            <h1><%- (candidateData && candidateData.name) || 'NA' %></h1>
+            <h2><%- qualification.find(i=>i._id == candidateData.highestQualification)?.name %> , <%- candidateData.isExperienced? "Experienced" :"Fresher" %></h2>
+            <h3><%- candidateData.mobile==0?"XXXXXXXX":(candidateData && candidateData.mobile) || 'NA'%></h3>
+            <h3><a href="<%-  (candidateData && candidateData.email) || 'NA' %>"><%- (candidateData &&
+                  candidateData.email) || 'NA' %></a></h3>
+          </div>
+
+          <div class="yui-u">
+            <div class="contact-info">
+              <% if (candidateData.image) { %>
+                <img src="<%= process.env.MIPIE_BUCKET_URL +'/' + candidateData.image %>" width="170" height="170" alt="User avatar">
+                <% } else { %>
+                  <img src="/images/elements/1.png" alt="User avatar">
+                  <% } %>
+            </div><!--// .contact-info -->
+          </div>
+        </div><!--// .yui-gc -->
+      </div><!--// hd -->
+
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b">
+
+            <div class="yui-gf">
+              <div class="yui-u first">
+                <h2>Profile</h2>
+              </div>
+              <div class="yui-u">
+                <p class="enlarge">
+                  To secure a job in a company where I can use my skills and abilities to make a contribution to the organization.
+                </p>
+              </div>
+            </div><!--// .yui-gf -->
+
+            <div class="yui-gf">
+              <div class="yui-u first">
+                <h2>Technical Skills</h2>
+              </div>
+              <div class="yui-u">
+                <% candidateData.techSkills.forEach((s)=> { %>
+
+                  <ul class="talent">
+                    <li><h4><%- (s.id && s.id.name.toUpperCase()) || 'NA' %></h4> <a href="<%= process.env.MIPIE_BUCKET_URL +'/' + s.URL %>" target="_blank">View</a></li>
+                    <!-- <li>CSS</li>
+								<li class="last">Javascript</li> -->
+                  </ul>
+
+                  <!-- <ul class="talent">
+								<li>Jquery</li>
+								<li>PHP</li>
+								<li class="last">CVS / Subversion</li>
+							</ul>
+
+							<ul class="talent">
+								<li>OS X</li>
+								<li>Windows XP/Vista</li>
+								<li class="last">Linux</li>
+							</ul> -->
+                  <% }) %>
+              </div>
+            </div><!--// .yui-gf-->
+
+
+            <div class="yui-gf">
+              <div class="yui-u first">
+                <h2>Non-Tech Skills</h2>
+              </div>
+              <div class="yui-u">
+                <% candidateData.nonTechSkills.forEach((s)=> { %>
+
+                  <div class="talent">
+                    <h3><%- (s.id && s.id.name.toUpperCase()) || 'NA' %></h3>
+                     <a href="<%= process.env.MIPIE_BUCKET_URL +'/' + s.URL %>" target="_blank">View</a>
+                     </div>
+
+                  <!-- <div class="talent">
+									<h2>Interface Design</h2>
+									<p>Credibly streamline mission-critical value with multifunctional functionalities.	 </p>
+								</div>
+
+								<div class="talent">
+									<h2>Project Direction</h2>
+									<p>Proven ability to lead and manage a wide variety of design and development projects in team and independent situations.</p>
+								</div> -->
+                  <% }) %>
+              </div>
+            </div><!--// .yui-gf -->
+
+
+            <div class="yui-gf">
+
+              <div class="yui-u first">
+                <h2>Experience</h2>
+              </div><!--// .yui-u -->
+
+              <div class="yui-u">
+                <% candidateData.experiences.forEach((s,i,arr)=> { %>
+                  <% if(i===arr.length-1) { %>
+                    <div class="job-last">
+                      <h2><%- (s && s.Company_Name) || 'NA' %></h2>
+                      <!-- <h3><%- (s && s.designation) || 'NA' %></h3> -->
+                      <h4><%-  moment(s.FromDate).format('MMM YYYY') || 'NA' %> to <%- moment(s.ToDate).format('MMM YYYY') || 'NA' %></h4>
+                      <p class="enlarge">Worked in <%- (s.Industry_Name && s.Industry_Name.name) || 'NA' %> field in Sub-Industry <%- (s.SubIndustry_Name && s.SubIndustry_Name.name) || 'NA' %>. He worked in <%- s.Company_City?.name %> city branch of state <%- s.Company_State?.name %>.<% if(s.Comments){ %>Candidate remarks were <%- (s && s.Comments) || 'NA' %><% } %>
+                      </p>
+                    </div>    
+                    <% } 
+                    else{ %>
+                      <div class="job">
+                        <h2><%- (s && s.Company_Name) || 'NA' %></h2>
+                        <!-- <h3><%- (s && s.designation) || 'NA' %></h3> -->
+                        <h4><%-  moment(s.FromDate).format('MMM YYYY') || 'NA' %> to <%- moment(s.ToDate).format('MMM YYYY') || 'NA' %></h4>
+                        <p class="enlarge">Worked in <%- (s.Industry_Name && s.Industry_Name.name) || 'NA' %> field in Sub-Industry <%- (s.SubIndustry_Name && s.SubIndustry_Name.name) || 'NA' %>. He worked in <%- s.Company_City?.name %> city branch of state <%- s.Company_State?.name %>.<% if(s.Comments){ %>Candidate remarks were <%- (s && s.Comments) || 'NA' %><% } %>
+                        </p>
+                      </div>
+                      <% } %>
+                    
+
+                    <!-- <div class="job">
+								<h2>Apple Inc.</h2>
+								<h3>Senior Interface Designer</h3>
+								<h4>2005-2007</h4>
+								<p>Progressively reconceptualize multifunctional "outside the box" thinking through inexpensive methods of empowerment. Compellingly morph extensive niche markets with mission-critical ideas. Phosfluorescently deliver bricks-and-clicks strategic theme areas rather than scalable benefits. </p>
+							</div>
+
+							<div class="job">
+								<h2>Microsoft</h2>
+								<h3>Principal and Creative Lead</h3>
+								<h4>2004-2005</h4>
+								<p>Intrinsicly transform flexible manufactured products without excellent intellectual capital. Energistically evisculate orthogonal architectures through covalent action items. Assertively incentivize sticky platforms without synergistic materials. </p>
+							</div>
+
+
+							<div class="job last">
+								<h2>International Business Machines (IBM)</h2>
+								<h3>Lead Web Designer</h3>
+								<h4>2001-2004</h4>
+								<p>Globally re-engineer cross-media schemas through viral methods of empowerment. Proactively grow long-term high-impact human capital and highly efficient innovation. Intrinsicly iterate excellent e-tailers with timely e-markets.</p>
+							</div> -->
+                    <% }) %>
+
+              </div><!--// .yui-u -->
+            </div><!--// .yui-gf -->
+
+
+            <div class="yui-gf last">
+              <div class="yui-u first">
+                <h2>Education</h2>
+              </div>
+              <div class="yui-u">
+                <% candidateData.qualifications.forEach((s)=> { %>
+                  <h2><%- (s.Qualification && s.Qualification.name.toUpperCase()) || 'NA' %> - <%- s.College || 'NA' %></h2>
+                  <h3><%- (s && s.subQualification?.name.toUpperCase()) || 'NA' %> &mdash; <strong><%- (s && s.Result) || 'NA'
+                          %> <% if(s.AssessmentType==='Percentage'){ %> %<% }
+                                else if(s.AssessmentType==='CGPA'){ %> GPA <% }
+                                else{ %> Grade <% } %></strong> </h3>
+                  <% }) %>
+              </div>
+            </div><!--// .yui-gf -->
+
+
+          </div><!--// .yui-b -->
+        </div><!--// yui-main -->
+      </div><!--// bd -->
+
+       <footer id="ft" >
+        <!-- <img src="/images/elements/mipie-footer.png" width="35%" height="auto" class="mb-0 pb-0 "> -->
+      
+      </footer>  
+
+    </div><!-- // inner -->
+
+
+  </div><!--// doc -->
+
+
+</body>
+
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html>
+<title>CV</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<style>
+ div {
+  font-family: 'Roboto', sans-serif;
+}
+</style>
+<body style="width:700px; margin:20px auto;padding:30px;font-family: arial;font-size: 14px;">
+    <div>
+      <h2 style="margin:0px;padding:2px 0px;text-align:center;"><b><%- (candidateData && candidateData.name) || 'NA' %></b></h2>
+       <% if (candidateData && candidateData.address) { %>
+        <p style="margin:0px;padding:2px 0px;text-align:center;"><%- (candidateData && candidateData.address) || 'NA' %></p>
+       <% } %>
+        <p style="margin:0px;padding:2px 0px;text-align:center;"><%- (candidateData && candidateData.email) || 'NA' %>| <%- (candidateData && candidateData.mobile) || 'NA' %></p>
+        <p style="padding:2px 0px;"><%- (candidateData && candidateData.careerObjective) || 'NA' %></p>
+    </div>
+  <% if (candidateCareer && candidateCareer.length > 0) { %>
+    <div class="">
+      <h4 style="border-top: 1px solid #000;font-weight:bold;padding-top:5px;">PROFESSIONAL EXPERIENCE
+      </h4>
+      <% candidateCareer.forEach((s) => { %>
+        <div class="">
+          <div style="width:100%;display:flex;">
+           <div style="width:50%;">
+            <p style="font-weight: bold;margin:3px 0px;"><%- (s && s.companyName) || 'NA' %></p>
+            <p style="font-weight: bold;margin:3px 0px;"><%- (s && s.designation) || 'NA' %></p>
+          </div>
+          <div style="width:50%;text-align:right;">
+            <p style="font-weight: bold;margin:3px 0px;"><%- (s && s.startDate) || 'NA' %>- <%- (s && s.currentlyEmployed) ? 'Present' : (s && s.endDate) ? s.endDate : 'NA' %></p>
+          </div>
+          </div>
+          <ul style="padding-left:20px;">
+            <li><%- (s && s.description) || 'NA' %></li>
+          </ul>
+        </div>
+      <% }) %>
+    </div>
+    <br />
+  <% } %>
+
+  <% if (candidateQual && candidateQual.length > 0) { %>
+  <div class="">
+    <h4 style="border-top: 1px solid #000;font-weight:bold;padding-top:5px;">EDUCATION
+    </h4>
+    <% candidateQual.forEach((q) => { %>
+    <div class="">
+      <div style="width:100%;display:flex;">
+       <div style="width:50%;">
+        <p style="font-weight: bold;margin:3px 0px;"><%- (q && q.schoolOrCollege) || 'NA' %> </p>
+        <p style="font-weight: bold;margin:3px 0px;"><%- (q && q.name) || 'NA' %> - <%- (q && q.assesmentValue) || 'NA' %> <%- (q && q.assesmentType && q.assesmentType === '0') ? 'CGPA': '%'; %></p>
+      </div>
+      <div style="width:50%;text-align:right;">
+        <p style="font-weight: bold;margin:3px 0px;"><%- (q && q.startYear) || 'NA' %>-<%- (q && q.currentlyStudying) ? 'Present' : (q && q.endYear) ? q.endYear : 'NA' %></p>
+      </div>
+      </div>
+      <% if (q.details && q.details.length > 0) { %>
+      <ul style="padding-left:20px;">
+        <% q.details.forEach((d) => { %>
+          <li><%- (d && d !== '') || 'NA' %></li>
+        <% }) %>
+      </ul>
+      <% } %>
+    </div>
+    <% }) %>
+  </div>
+  <br />
+  <% } %>
+
+  <% if (candidateData && candidateData._skill && candidateData._skill.length > 0) { %>
+    <div class="">
+      <h4 style="border-top: 1px solid #000;font-weight:bold;padding-top:5px;">KEY SKILLS
+      </h4>
+      <ul style="padding-left:20px;">
+        <% candidateData._skill.forEach((s) => { %>
+          <li><%- (s && s.name && s.name !== '') || 'NA' %></li>
+        <% }) %>
+      </ul>
+    </div>
+    <br />
+  <% } %>
+  <% if (candidateProject && candidateProject.length > 0) { %>
+  <div>
+    <h4 style="border-top: 1px solid #000;font-weight:bold;padding-top:20px;">PROJECTS
+    </h4>
+    <% candidateProject.forEach((p) => { %>
+      <div class="">
+        <div style="width:100%;display:flex;">
+         <div style="width:50%;">
+          <p style="font-weight: bold;margin:3px 0px;"><%- (p && p.name) || 'NA' %></p>
+        </div>
+        <div style="width:50%;text-align:right;">
+          <p style="font-weight: bold;margin:3px 0px;"><%- (p && p.startDate) || 'NA' %> - <%- (p && p.currentlyUndergoing) ? 'Present' : (p && p.endDate) ? p.endDate : 'NA' %></p>
+        </div>
+        </div>
+        <ul style="padding-left:20px;">
+          <%- (p && p.description) || 'NA' %>
+        </ul>
+      </div>
+    <% }) %>
+  </div>
+  <br />
+  <% } %>
+
+  <% if (candidateData && candidateData.interests.length > 0) { %>
+  <div class="">
+    <h4 style="border-top: 1px solid #000;font-weight:bold;padding-top:5px;">INTERESTS
+    </h4>
+    <ul style="padding-left:20px;">
+      <% candidateData.interests.forEach((i) => { %>
+        <li><%- (i && i !== '') || 'NA' %></li>
+      <% }) %>
+    </ul>
+  </div>
+  <br />
+  <% } %>
+  <% if (candidateReference && candidateReference.length > 0) { %>
+  <div class="">
+    <h4 style="border-top: 1px solid #000;font-weight:bold;padding-top:5px;">REFERENCES
+    </h4>
+    <% candidateReference.forEach((r) => { %>
+      <div style="width:50%;">
+        <p style="margin:0px;"><%- (r && r.name) || 'NA' %> - <%- (r && r.designation) || 'NA' %>,<%- (r && r.organization) || 'NA' %></p>
+        <p style="margin:0px;"><%- (r && r.mobile) || 'NA' %> | <%- (r && r.email) || 'NA' %></p>
+      </div>
+      <br/>
+    <% }) %>
+  </div>
+  <% } %>
+  <div class="">
+    <p style="text-align:right;">I hereby certify that the above mention are true and correct.</p>
+    <br />
+  </div>
+</body>
+
+</html> -->
