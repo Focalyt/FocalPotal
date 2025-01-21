@@ -70,7 +70,7 @@ const appBannerSchema = new Schema(
   }
 );
 
-// Attach descriptions for `timestamps`
+// Attach descriptions for `timestamps`  
 appBannerSchema.paths.createdAt.options.description = 'Timestamp when the document was created';
 appBannerSchema.paths.updatedAt.options.description = 'Timestamp when the document was last updated';
 
