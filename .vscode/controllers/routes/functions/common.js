@@ -257,6 +257,27 @@ module.exports.uploadVideoFile = async (req, res) => {
     return req.errFunc(err);
   }
 }
+
+module.exports.uploadPostVideoFile = async (req, res) => {
+  try {
+    const { name, mimetype: ContentType } = req.files.file;
+    const ext = name.split(".").pop();
+    const key = `Posts/${req.user._id}/${uuid()}.${ext}`;
+    const data = req.files.file.data;
+    const params = {
+      Bucket: bucketName,
+      Body: data,
+      Key: key,
+      ContentType
+    };
+    s3.upload(params, function (err, data) {
+      return res.send({ status: true, data });
+    })
+  } catch (err) {
+    return req.errFunc(err);
+  }
+}
+
 module.exports.generateNewToken= async (_id)=> {
   let id=toHexString(_id)
   const data = { id };

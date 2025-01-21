@@ -593,6 +593,14 @@ commonRoutes.post("/coursepayment", async (req, res) => {
 	}
 
 	let course = await Courses.findById(courseId).lean();
+	if(!course){
+		res.send({ status: false, message: "Course not available" })
+		return
+	}
+	if(course.status===false){
+		res.send({ status: false, message: "Course expired" })
+		return
+	}
 
 	let candidate = await Candidate.findOne({
 		mobile: value.mobile,
