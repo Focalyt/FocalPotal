@@ -229,7 +229,7 @@ router.route("/registrations")
 			let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter)
 			let candidates = await AppliedCourses.aggregate(agg);
 			const totalPages = Math.ceil(count / perPage);
-			console.log("candidates: ", count, totalPages)
+
 			return res.render(`${req.vPath}/admin/course/registration`, {
 				candidates,
 				perPage,
