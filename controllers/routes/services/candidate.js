@@ -260,100 +260,208 @@ module.exports = {
     );
     return agg;
   },
+
+  
+  // candidateCourseList: (sort, perPage, page, filter) => {
+  //   let sorting = [
+  //     { $sort: sort },
+  //     { $skip: perPage * page - perPage },
+  //     { $limit: perPage },
+  //   ];
+  //   const agg = [{
+  //     $lookup: {
+  //       from: "candidates",
+  //       let: { id: "$_candidate" },
+  //       pipeline: [{
+  //         $match: {
+  //           $expr: {
+  //             $and: [
+  //               { $eq: ["$_id", "$$id"] },
+  //               filter
+  //             ],
+  //           },
+  //         },
+  //       }],
+  //       as: "_candidate",
+  //     },
+  //   }, {
+  //     $unwind: "$_candidate"
+  //   }, {
+  //     $lookup: {
+  //       from: "courses",
+  //       let: { id: "$_course" },
+  //       pipeline: [
+  //         {
+  //           $match: {
+  //             $expr:
+  //               { $eq: ["$_id", "$$id"] }
+  //           },
+  //         },
+  //         {
+  //           $lookup: {
+  //             from: "coursesectors",
+  //             "let": {
+  //               "sectorId": "$sectors"
+  //             },
+  //             "pipeline": [
+  //               {
+  //                 "$match": {
+  //                   "$expr": {
+  //                     "$in": [
+  //                       "$_id",
+  //                       "$$sectorId",
+  //                     ]
+  //                   }
+  //                 }
+  //               },
+  //             ],
+  //             as: "sectors",
+  //           }
+  //         },
+  //         {
+  //           $unwind: "$sectors"
+  //         }
+  //       ],
+  //       as: "_course",
+  //     },
+  //   },
+  //   {
+  //     $unwind: "$_course"
+  //   },
+  //   ...sorting,
+  //   {
+  //     "$addFields": {
+  //       "name": { "$cond": { "if": { "$ne": ["$_candidate", null] }, "then": "$_candidate.name", "else": "" } },
+  //       "mobile": { "$cond": { "if": { "$ne": ["$_candidate", null] }, "then": "$_candidate.mobile", "else": "" } },
+  //       "courseName": { "$cond": { "if": { "$ne": ["$_course", null] }, "then": "$_course.name", "else": "" } },
+  //       "registrationCharges": { "$cond": { "if": { "$ne": ["$_course", null] }, "then": "$_course.registrationCharges", "else": 0 } },
+  //       "registrationFee":{ "$ifNull": ["$registrationFee", 'Unpaid'] },
+  //       "sector": { "$cond": { "if": { "$ne": ["$_course", null] }, "then": "$_course.sectors.name", "else": "" } },
+  //     }
+  //   },
+  //   {
+  //     "$project": {
+  //       "createdAt": 1,
+  //       "_id": 1,
+  //       "name": 1,
+  //       "mobile": 1,
+  //       "courseName": 1,
+  //       "registrationCharges": 1,
+  //       "registrationFee": 1,
+  //       "sector": 1,
+  //       "courseStatus": 1,
+  //       "remarks": 1,
+  //       "assignDate": 1,
+  //       "url" : 1
+  //     }
+  //   }
+  //   ];
+  //   return agg;
+  // },
+
+
   candidateCourseList: (sort, perPage, page, filter) => {
-    let sorting = [
-      { $sort: sort },
-      { $skip: perPage * page - perPage },
-      { $limit: perPage },
-    ];
-    const agg = [{
-      $lookup: {
-        from: "candidates",
-        let: { id: "$_candidate" },
-        pipeline: [{
-          $match: {
-            $expr: {
-              $and: [
-                { $eq: ["$_id", "$$id"] },
-                filter
-              ],
-            },
-          },
-        }],
-        as: "_candidate",
-      },
-    }, {
-      $unwind: "$_candidate"
-    }, {
-      $lookup: {
-        from: "courses",
-        let: { id: "$_course" },
-        pipeline: [
-          {
-            $match: {
-              $expr:
-                { $eq: ["$_id", "$$id"] }
-            },
-          },
-          {
-            $lookup: {
-              from: "coursesectors",
-              "let": {
-                "sectorId": "$sectors"
+    const offset = (page - 1) * perPage;
+
+    const agg = [
+      {
+        $lookup: {
+          from: "candidates",
+          let: { id: "$_candidate" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$_id", "$$id"] },
+                ...filter // Apply filter directly in the lookup
               },
-              "pipeline": [
-                {
-                  "$match": {
-                    "$expr": {
-                      "$in": [
-                        "$_id",
-                        "$$sectorId",
-                      ]
-                    }
-                  }
-                },
-              ],
-              as: "sectors",
+            },
+            {
+              $project: { name: 1, mobile: 1 } // Fetch only necessary fields
             }
-          },
-          {
-            $unwind: "$sectors"
-          }
-        ],
-        as: "_course",
+          ],
+          as: "_candidate",
+        },
       },
-    },
-    {
-      $unwind: "$_course"
-    },
-    ...sorting,
-    {
-      "$addFields": {
-        "name": { "$cond": { "if": { "$ne": ["$_candidate", null] }, "then": "$_candidate.name", "else": "" } },
-        "mobile": { "$cond": { "if": { "$ne": ["$_candidate", null] }, "then": "$_candidate.mobile", "else": "" } },
-        "courseName": { "$cond": { "if": { "$ne": ["$_course", null] }, "then": "$_course.name", "else": "" } },
-        "registrationCharges": { "$cond": { "if": { "$ne": ["$_course", null] }, "then": "$_course.registrationCharges", "else": 0 } },
-        "registrationFee":{ "$ifNull": ["$registrationFee", 'Unpaid'] },
-        "sector": { "$cond": { "if": { "$ne": ["$_course", null] }, "then": "$_course.sectors.name", "else": "" } },
-      }
-    },
-    {
-      "$project": {
-        "createdAt": 1,
-        "_id": 1,
-        "name": 1,
-        "mobile": 1,
-        "courseName": 1,
-        "registrationCharges": 1,
-        "registrationFee": 1,
-        "sector": 1,
-        "courseStatus": 1,
-        "remarks": 1,
-        "assignDate": 1,
-        "url" : 1
-      }
-    }
+      {
+        $unwind: {
+          path: "$_candidate",
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: "courses",
+          let: { id: "$_course" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$_id", "$$id"] }
+              },
+            },
+            {
+              $lookup: {
+                from: "coursesectors",
+                let: { sectorId: "$sectors" },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: { $in: ["$_id", "$$sectorId"] },
+                    },
+                  },
+                  {
+                    $project: { name: 1 } // Fetch only sector name
+                  },
+                ],
+                as: "sectors",
+              },
+            },
+          ],
+          as: "_course",
+        },
+      },
+      {
+        $unwind: {
+          path: "$_course",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $sort: sort, // Sorting should use indexed fields
+      },
+      {
+        $skip: offset,
+      },
+      {
+        $limit: perPage,
+      },
+      {
+        $addFields: {
+          name: { $ifNull: ["$_candidate.name", ""] },
+          mobile: { $ifNull: ["$_candidate.mobile", ""] },
+          courseName: { $ifNull: ["$_course.name", ""] },
+          registrationCharges: { $ifNull: ["$_course.registrationCharges", 0] },
+          registrationFee: { $ifNull: ["$registrationFee", "Unpaid"] },
+          sector: { $ifNull: ["$_course.sectors.name", ""] },
+        },
+      },
+      {
+        $project: {
+          createdAt: 1,
+          _id: 1,
+          name: 1,
+          mobile: 1,
+          courseName: 1,
+          registrationCharges: 1,
+          registrationFee: 1,
+          sector: 1,
+          courseStatus: 1,
+          remarks: 1,
+          assignDate: 1,
+          url: 1,
+        },
+      },
     ];
+
     return agg;
   },
 };
