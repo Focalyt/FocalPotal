@@ -6335,7 +6335,8 @@ div#loading img {
 .site-header {
   padding-top: 15px;
   padding-bottom: 15px;
-  background-color: transparent;
+  background-color: #121212;
+  /* background-color: transparent; */
 }
 .site-header--absolute {
   position: absolute;
@@ -17108,6 +17109,16 @@ transform: translateY(6px);
 }
 .select-container select:focus {
   border-color: #FC2B5A;
+}
+#demoForm input + label,
+#demoForm select + label,
+.textarea-container textarea + label {
+  color: #000; /* Default black for unfilled fields */
+}
+
+#demoForm select:not([value=""]) {
+  color: #000;
+  width: 100%;
 }
 
 /* Add a custom dropdown arrow if needed */

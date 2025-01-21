@@ -1,0 +1,235 @@
+/* 
+@media only screen and (min-width: 1920px)  {
+    .height-structure {
+        height: 261px;
+        width: auto;
+    }
+}
+@media only screen and (max-width: 1863px)  {
+    .height-structure {
+        height: 256px!important;
+        width: auto;
+    }
+}
+@media only screen and (max-width: 1835px)  {
+    .height-structure {
+        height: 238px!important;
+        width: auto;
+    }
+}
+@media only screen and (max-width: 1725px)  {
+    .height-structure {
+        height: 221px!important;
+        width: auto;
+    }
+}
+@media only screen and (max-width: 1624px)  {
+    .height-structure {
+        height: 203px!important;
+        width: auto;
+    }
+}
+@media only screen and (max-width: 1514px)  {
+    .height-structure {
+        height: 187px!important;
+        width: auto;
+    }
+    .bannerCan{
+        background-position: top!important;
+    }
+} */
+@media (max-width:1371px) and (min-width:1284px) {
+    .height-structure {
+        height: 165px!important;
+    width: auto;
+    } 
+}
+@media (max-width:1283px) and (min-width:1207px) {
+    .height-structure {
+        height: 152px!important;
+    width: auto;
+    } 
+}
+@media (max-width:1206px) and (min-width:1138px) {
+    .height-structure {
+        height: 142px!important;
+    width: auto;
+    } 
+}
+@media (max-width:1138px) and (min-width:99px) {
+    .height-structure {
+        height: 164px!important;
+    width: auto;
+    } 
+    .money-rain {
+        background-position: top!important;
+    }
+}
+@media (max-width:1061px) and (min-width:992px) {
+    .height-structure {
+        height: 153px!important;
+    width: auto;
+    } 
+    .money-rain {
+        background-position: top!important;
+    }
+}
+@media only screen and (max-width: 972px)  {
+    .mipie-earn {
+        width: 38%!important;}
+        
+        }   
+        @media only screen and (max-width: 900px)  {
+            .money-rain {
+                background-image: url(/images/mobilebg.jpg)!important;
+                background-repeat: no-repeat!important;
+                background-size: cover!important;
+                background-position: bottom!important;
+            }
+            .font-stick{
+                font-weight: 550!important;
+            line-height: 1.9;}
+        }
+        @media only screen and (max-width: 847px)  {
+            .mipie-earn {
+                width: 45%!important;}
+                
+                } 
+                @media only screen and (max-width: 768px)  {
+                  
+                    .bannerCan{
+                        background-image: url(../images/mobile-banner-candidate.jpg)!important;
+                        background-repeat: no-repeat!important;;
+                        background-size: cover!important;;
+                        background-position: top!important;;
+                    
+                    }
+                    .height-structure {
+                        height: 620px!important;
+                    width: auto;
+                    }   
+                        }
+@media only screen and (max-width: 576px)  {
+    .bannerCan{
+        background-image: url(../images/mobile-banner-candidate.jpg)!important;
+        background-repeat: no-repeat!important;;
+        background-size: cover!important;;
+        background-position: top!important;;
+    
+    }
+    .height-structure {
+        height: 448px!important;
+    width: auto;
+    }
+    .money-rain {
+        background-image: url(/images/mobilebg.jpg)!important;
+        background-repeat: no-repeat!important;;
+        background-size: cover!important;;
+        background-position: bottom!important;;
+    }
+    .mipie-earn {
+        width: 72%!important;}
+        .font-stick{
+            font-size: 14px!important;
+            font-weight: 600!important;
+        }
+        .font-stick {
+            font-weight: 500!important;
+        line-height: 1.9;}
+        form #debt-amount-slider label::before{
+            font-size: 11px!important;
+        }
+        form #debt-amount-slider label::after{
+            width: 14px!important;
+            height: 14px!important;
+        }
+        form #debt-amount-slider input:checked + label::after {
+            width: 25px!important;;
+            height: 25px!important;;}
+    }
+@media only screen and (max-width: 451px)  {
+    .bannerCan{
+        background-image: url(../images/mobile-banner-candidate.jpg)!important;
+    
+        background-repeat: no-repeat!important;;
+        background-size: cover!important;;
+        background-position: top!important;;
+    }
+    .height-structure {
+        height: 175px;
+        width: auto;
+      }
+    .mipie-earn {
+        width: 90%!important;}
+        .font-stick{
+            font-weight: 500!important;
+            line-height: 1.9;
+        }
+        form #debt-amount-slider label::before{
+            font-size: 11px!important;
+        }
+        form #debt-amount-slider label::after{
+            width: 14px!important;
+            height: 14px!important;
+        }
+        form #debt-amount-slider input:checked + label::after {
+            width: 25px!important;;
+            height: 25px!important;;}
+        form:valid #debt-amount-slider input:checked + label::before{
+            font-size: 10px!important;
+        }
+}
+@media only screen and (max-width: 368px)  {
+    .bannerCan{
+        background-image: url(../images/mobile-banner-candidate.jpg)!important;
+    
+        background-repeat: no-repeat!important;;
+        background-size: cover!important;;
+        background-position: top!important;;
+    }
+    .height-structure {
+        height: 175px;
+        width: auto;
+      }
+    .mipie-earn {
+        width: 100%!important;}
+        .font-stick{
+            font-weight: 500!important;
+            line-height: 1.9;
+        }
+    .mipie-cand-name{
+        font-size: 13px;
+        white-space: nowrap!important;
+        width: 97%!important;
+        overflow: hidden!important;
+        text-overflow: ellipsis!important;
+        padding: 2px!important;
+    }
+    .mipie-cand-name:hover{
+        overflow: visible;
+     }
+     form #debt-amount-slider label::before{
+        font-size: 9px!important;
+    }
+    form #debt-amount-slider label::after{
+        width: 14px!important;
+        height: 14px!important;
+    }
+    form #debt-amount-slider input:checked + label::after {
+        width: 25px!important;
+        height: 25  px!important;
+    }
+}
+@media only screen and (max-width: 322px)  {
+    .mipie-cand-name{
+        font-size: 11px;
+        white-space: nowrap!important;
+        width: 97%!important;
+        overflow: hidden!important;
+        text-overflow: ellipsis!important;
+        padding: 2px!important;
+    }
+    .mipie-cand-name:hover{
+        overflow: visible;
+     }
+}

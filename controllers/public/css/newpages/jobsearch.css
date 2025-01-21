@@ -1,0 +1,298 @@
+html,
+body {
+    font-family: "Inter", sans-serif !important;
+}
+
+ul {
+    list-style: none;
+    padding-left: inherit;
+}
+
+.newpattern {
+    background-position: center;
+    background-image: url(../../public_assets/images/newjoblisting/pattern.png) !important;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: relative !important;
+    box-shadow: inset 0 0 0 1000px rgba(8, 8, 8, 0.86);
+}
+
+.btn-apply {
+    background: #FC2B5A;
+    color: #fff !important;
+}
+.custom-dropdown {
+    box-shadow: 3px 4px 14px 8px rgba(0, 0, 0, 0.65);
+    padding: 10px 20px;
+    border-width: 3px!important;
+    border-style: solid!important;
+    background-color: black;
+    background: linear-gradient(rgba(0, 0, 0, 1),rgba(0, 0, 0, 1)) padding-box,linear-gradient(to right,rgba(151, 71, 255, 1), rgba(252, 43, 90, 1)) border-box;
+    border-radius: 15px!important;
+    border: 2px solid transparent!important;
+}
+
+.custom-drop {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.custom-drop-right {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+h2,h3 {
+    font-family: "Inter", sans-serif;
+}
+.c_price .course{
+    text-decoration-color: #FF0000;
+    /* text-decoration-thickness: 2px; */
+    /* text-decoration: line-through; */
+    text-decoration-color: red;
+    text-decoration-thickness: 2px;
+}
+.wordspace{
+    letter-spacing: 0.5px;
+    word-spacing: 0.5px;
+}
+.job-description {
+    padding: 20px 0px 20px 20px;
+}
+
+.job-title {
+    font-size: 25px;
+    line-height: 1.6rem;
+}
+
+.job-description h3 {
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    line-height: normal;
+    padding-bottom: 10px;
+}
+
+.job-details {
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.job-main li {
+    font-size: 13px;
+}
+
+.apply-button {
+    color: white;
+    border-radius: 23.5px;
+    border: 2px solid #FC2B5A;
+    background: linear-gradient(0deg, rgba(252, 43, 90, 0.00) 0%, rgba(252, 43, 90, 0.00) 100%);
+}
+
+.apply-button:hover {
+    background-color: #FC2B5A;
+    transition: .3s ease;
+}
+
+.job-description img {
+    width: 16px;
+}
+.r-prices {
+    color: #FFF;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    font-size: 12px;
+}
+.image-container img {
+    width: 45%;
+    height: auto;
+    position: absolute;
+    right: 20px;
+    bottom: 0px;
+}
+.apply-button {
+    padding: 4px 15px;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+.apply-button:hover {
+    color: #fff;
+}
+
+
+
+@media (max-width:1920px){
+    .image-container img {
+        width: 42%;
+        height: auto;
+        position: absolute;
+        right: 10px;
+        bottom: 0;
+    }
+}
+@media (max-width:1399px){
+    .image-container img {
+        width: 40%;
+        height: auto;
+        position: absolute;
+        right: 10px;
+        bottom: 0;
+    }
+}
+@media (max-width:1199px) {
+    .image-container img {
+        width: 45%;
+        height: auto;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+}
+/* @media (max-width:990px) {
+    .image-container img {
+        width: 48%;
+        height: auto;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+} */
+
+@media (max-width:768px) {
+    .image-container img {
+        width: 43%;
+        height: auto;
+        position: absolute;
+        right: 10px;
+        bottom: 0;
+    }
+    .jobs-heading {
+        font-size: 30px!important;
+    }
+    #main-dropdown h2 {
+        font-size: 16px;
+    }
+
+    #main-dropdown h4 {
+        font-size: 16px;
+    }
+    .r-prices {
+        line-height: 20px!important;
+    }
+}
+@media(max-width:720px) {
+    /* .image-container img {
+        width: 42%;
+        height: auto;
+        position: absolute;
+        right: 10px;
+        bottom:0px;
+    } */
+    .job-title {
+        font-size: 16px;
+        font-weight: 600;
+        font-family: "Inter";
+    }
+}
+@media (max-width:578px) {
+    .jobs-heading{
+        font-size: 27px!important;
+    }
+    .image-container img {
+        width: 34%;
+        height: auto;
+        position: absolute;
+        right: 10px;
+        bottom:0px;
+    }
+    #main-dropdown h2 {
+        font-size: 15px;
+    }
+
+    #main-dropdown h4 {
+        font-size: 15px;
+    }
+
+    .job-title {
+        font-size: 15px;
+        font-weight: 600;
+        font-family: "Inter";
+    }
+
+    .job-details {
+        font-size: 15px;
+    }
+
+    .job-description img {
+        width: 15px;
+    }
+}
+@media (max-width:432px){
+    .jobs-heading{
+        font-size: 25px!important;
+    }
+}
+@media (max-width:402px){
+    .job-title{
+        font-size: 14px;
+        font-weight: 600;
+        font-family: "Inter";
+        line-height: normal;
+    }
+    .job-details{
+        font-size: 11px;
+    }
+    .job-description img{
+        width: 15px;
+    }
+    .image-container img {
+        width: 45%;
+        height: auto;
+        position: absolute;
+        right: 0px;
+        bottom: 0;
+      }
+      .job-main li{
+        font-size: 11px;
+      }
+}
+@media (max-width:320px) {
+    .job-title {
+        font-weight: 600;
+        font-family: "Inter";
+        line-height: normal;
+    }
+
+    .job-details {
+        font-size: 8px;
+    }
+
+    .job-description img {
+        width: 15px;
+    }
+
+    .image-container img {
+        width: 40%;
+        height: auto;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    .job-main li {
+        font-size: 10px;
+    }
+
+    .apply-button {
+        font-size: 8px;
+    }
+    .image-container img {
+        width: 43%;
+        height: auto;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+}

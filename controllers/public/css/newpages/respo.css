@@ -1,0 +1,267 @@
+@media screen and (max-width:1920px) {
+    .last_cta {
+        text-align: left!important;
+    }
+}
+
+@media screen and (max-width:1440px) {
+    .role p {
+        font-size: 13px;
+    }
+    .border_cta p {
+        font-size: 13px;
+    }
+}
+
+
+@media screen and (max-width:1366px) {
+    .role p {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .border_cta p {
+        font-size: 11px;
+    }
+    .border_cta {
+        padding: 10px 20px;
+        width: -moz-fit-content;
+        width: -webkit-fit-content;
+        width: fit-content;
+    }
+    figure.down_shape img {
+        width: 15%;
+        /* top: -80px; */
+    }
+    .role p {
+        /* font-size: 12px; */
+        font-size: 11px;
+    }
+    .role h4 {
+        font-size: 14px;
+    }
+    .role h6 {
+        font-size: 13px;
+    }
+    div#pink-bg {
+        background-position: center;
+    }
+    .content {
+        align-items: initial;
+        row-gap: 10px;
+    }
+    .home-2_content-image-1 img {
+        width: 40%;
+        margin: 0 auto!important;
+        text-align: center;
+        display: block;
+    }
+    .feature-widget-7__body p {
+    font-size: 14px;
+}
+h5.feature-widget-7__title.mb-0.color-pink {
+       font-size: 16px; 
+}
+.faq-filter-list {
+    justify-content: initial;
+    flex-direction: column;
+    row-gap: 10px;
+}
+}
+
+@media screen and (max-width: 992px) {
+
+}
+
+@media screen and (max-width:991px) {
+    .border_cta p {
+        font-size: 10px;
+        text-align: center;
+    }
+    .border_cta {
+        margin: 0 auto;
+        text-align: center;
+    }
+    div#features_cta h4 {
+        font-size: 11px;
+    }
+    figure.down_shape img {
+        width: 15%;
+        left: 30%;
+        position: relative;
+    }
+    .pricing__table .pt__title .pt__title__wrap .pt__row {
+        font-size: 13px;
+    }
+    .why_choose_sec {
+        min-height: 275px;
+    }
+    /* .feature-widget-7 {
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: baseline;
+        text-align: left;
+        column-gap: 20px;
+        row-gap: 17px;
+    } */
+    .partner_col {
+    margin: 10px!important;
+}
+}
+
+@media screen and (max-width:768px) {
+    .partner_col h5{
+        font-size: 13px!important;
+    }
+}
+
+@media screen and (max-width:767px) {
+    .text-truncate {
+        width: 180px;
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+    .feature-widget-7__body.required_skills p {
+        width: 160px;
+    }
+    .c_bg_color {
+        z-index: 1;
+        background-color: #fff;
+        /* box-shadow: 0 12px 40px rgba(105,131,160,.2); */
+        border-radius: 20px;
+        width: 100%;
+        padding: 10px 20px;
+        transition: .3s ease;
+    }
+    div#hero {
+        margin-top: 30px;
+    }
+    .why_choose_sec {
+        min-height: 220px;
+        /* min-height: auto;  */
+    }
+    .last_cta {
+        text-align: center!important;
+    }
+    div#testimonial .section-heading {
+        margin-bottom: 0px;
+    }
+    .border_cta p {
+        font-size: 8px;
+        text-align: center;
+    }
+    .border_cta {
+        padding: 10px 10px;
+    }
+    a.btn.btn_cta_apply {
+        color: #FC2B5A;
+        background: #fff;
+        border-radius: 20px;
+        font-weight: 600;
+        padding: 5px 20px;
+        width: 100%;
+        margin: 0 auto;
+        display: inline-block;
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+    .footer-list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 8px;
+        margin-bottom: 0;
+        font-size: 16px;
+        line-height: 1.4;
+        font-weight: 600;
+        font-weight: 400;
+    }
+    img.whatweoffer {
+        width: 59px!important;
+    }
+    .how_focal {
+        font-size: 20px;
+        line-height: normal;
+        margin-bottom: 0px;
+    }
+    .primary-gradient {
+        font-size: 20px;
+        line-height: normal;
+    }
+    section#why h3 {
+        font-size: 16px;
+        line-height: normal;
+    }
+    section#skills h2 {
+        font-size: 18px;
+    }
+    section#skills h3 {
+        font-size: 20px;
+    }
+    .footer-store-buttons img {
+        width: 110px;
+        border-radius: 5px;
+    }
+}
+@media screen and (max-width:600px) {
+    div#hero {
+        padding-top: 120px;
+    }
+}
+
+@media screen and (max-width:576px) {
+    div#apply_modal .feature-widget-7__body p {
+        font-size: 14px;
+    }
+    .active .feature-widget-7__icon-wrapper h5 {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width:550px) {
+
+}
+
+@media screen and (max-width:500px) {
+
+}
+
+@media screen and (max-width: 480px) {
+
+}
+
+@media screen and (max-width:400px) {
+
+}
+
+@media screen and (max-width:375px) {
+
+
+}
+
+
+@media screen and (max-width:576px) {
+
+}
+
+@media screen and (max-width:550px) {
+
+}
+
+@media screen and (max-width:500px) {
+
+}
+
+@media screen and (max-width: 480px) {
+
+}
+
+@media screen and (max-width:400px) {
+
+}
+
+@media screen and (max-width:375px) {
+
+
+}
