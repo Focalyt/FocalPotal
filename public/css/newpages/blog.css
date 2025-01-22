@@ -386,6 +386,34 @@ border: 1px solid red;
 }
 
 
+.interaction-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f9f9f9; /* Background for the container */
+  border-top: 1px solid #ddd; /* Optional border to separate */
+}
+
+.interaction-buttons div {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between the icon and text */
+  font-size: 16px;
+  color: #555; /* Default text and icon color */
+  cursor: pointer; /* Pointer cursor for buttons */
+  transition: color 0.3s ease;
+}
+
+.interaction-buttons div i {
+  font-size: 20px; /* Icon size */
+}
+
+.interaction-buttons div:hover {
+  color: #FC2B5A; /* Highlight color on hover */
+}
+
+
 
 @media(max-width:768px){
   .leftSidebar{
