@@ -46,6 +46,7 @@ const miPieCoinsRoutes = require('./miPieCoins')
 const paymentRoutes = require('./payments')
 const smsRoutes = require('./smsUsage')
 const courseRoutes=require('./courses')
+const postRoutes=require('./post')
 const rolesRoutes = require('./adminRoles')
 const coinsRoutes = require('./coinsAlgo')
 const reportRoutes = require('./report')
@@ -61,6 +62,7 @@ const courseSectorsRoutes = require('./courseSectors');
 
 const router = express.Router();
 router.use('/appBanner', appBannerRoutes);
+router.use('/post', postRoutes);
 router.use('/appUpdate', appUpdateRoutes);
 router.use('/careerObjective', careerObjectiveRoutes);
 router.use('/candidate', candidateRoutes);

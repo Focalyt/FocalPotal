@@ -94,7 +94,11 @@ router
 			return res.redirect("back");
 
 		}
-	});
+});
+
+
+	
+
 router.route("/changeStatus").patch(async (req, res) => {
 	try {
 		const updata = { $set: { status: req.body.status } };

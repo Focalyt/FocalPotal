@@ -378,10 +378,8 @@ router.get("/contact", (req, res) => {
 	rePath = res.render(`${req.vPath}/front/contact`, {
 	});
 });
-router.get("/post", (req, res) => {
-	rePath = res.render(`${req.vPath}/front/posts`, {
-	});
-});
+
+
 router.get("/jobdetails/:jobId", async (req, res) => {
 	try {
 		let jobId = req.params.jobId //63d8cb2e421777708eaed0d8
@@ -1021,6 +1019,7 @@ router.route('/termsandconditions')
 		rePath = res.render(`${req.vPath}/front/termsAndConditions`, {
 		});
 	})
+	
 
 router.route('/privacy-policy')
 	.get(async (req, res) => {

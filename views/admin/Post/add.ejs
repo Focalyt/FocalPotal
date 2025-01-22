@@ -1,0 +1,558 @@
+<% include ../partials/header %>
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Add Post</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                            <li class="breadcrumb-item active">Add Post</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ../partials/flash %>
+        <form  method="POST" enctype="multipart/form-data">
+            <!-- Input Group for Post -->
+            <div class="input-group">
+              <!-- Text Input -->
+              <textarea name="content" id= "post-content" class="form-control" rows="3" placeholder="What's on your mind?" required></textarea>
+              <!-- Media Button -->
+              <div class="ml-3">
+                <label for="file-upload" class="media-btn">
+                  <img src="https://static.xx.fbcdn.net/rsrc.php/v4/y7/r/Ivw7nhRtXyo.png" alt="Media Icon"> <!-- Facebook Media Icon -->
+                  Photo/Video
+                </label>
+                <input type="file" id="file-upload" name="file" class="d-none" multiple accept="image/*,video/*">
+              </div>
+              
+            </div>
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary mt-3">Post</button>
+          </form>
+
+
+    </div>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script> -->
+    <script>
+
+
+        function showContactInfo() {
+            document.getElementById("contact-info").style.display = "block";
+            var coinLabel = document.querySelector('label[for="25 coin"]');
+            coinLabel.style.display = "block";
+        }
+        function hideContactInfo() {
+            document.getElementById("contact-info").style.display = "none";
+            var coinLabel = document.querySelector('label[for="25 coin"]');
+            coinLabel.style.display = "none";
+        }
+        $(document).ready(function () {
+            if ($('#contact-directly-yes').prop('checked')) {
+                showContactInfo();
+            }
+        });
+
+
+        let isContactvalue = "";
+        $('input[name="isContact"]').click(function () {
+            isContactvalue = $('input[name="isContact"]:checked').val() === 'true';
+        });
+        const selectQualification = document.getElementById('jd-qua')
+        $('#jd-qua').change((event) => {
+            const value = selectQualification.options[selectQualification.selectedIndex].text;
+            if (value == '12th' || value == '10th' || value == 'Upto 5th') {
+                document.getElementById('isedited').value = true
+                document.getElementById('sub-qua-field').style.display = "block"
+                $('#jd-subqua-field').hide();
+            } else {
+                document.getElementById('sub-qua-field').style.display = "none"
+                document.getElementById('isedited').value = false
+                $('#jd-subqua-field').show();
+            }
+        })
+
+        $('#media-group').change(function (e) {
+            const formData = new FormData();
+            let productimages = [];
+            if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 images");
+                $('#media-group').val('');
+            } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    if (!checkImageSize(size) || !checkImageValidation(type)) {
+                        formData.append("files", e.target.files[i]);
+                    } else {
+                        $('#media-group').val('');
+                        alert("This format not accepted and each image should be 2MB")
+                        break;
+                    }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultipleFiles', formData, header)
+                    .then(result => {
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('.hiddenmediagroup').val(combinedKeys)
+                            result.data.Data.forEach(element => {
+                                let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                                $(html.innerHTML).insertBefore('#uploadgallery');
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
+        });
+
+        const checkImageSize = (size) => {
+            let finalSize = ((size / 1024) / 1024);
+            if (finalSize > 2) {
+                return false
+            }
+            return true;
+        }
+
+        const checkImageValidation = (file) => {
+            let regex = /(\/jpg|\/jpeg|\/png)$/i
+            return regex.test(file)
+        }
+
+        $('#image').change(function (e) {
+            let file = e.target.files[0]
+            let body = {
+                file: file
+            }
+            let type = file.name;
+            let size = file.size;
+            let candidateFile = document.getElementById('image');
+            if (checkImageValidation(type) === false && checkImageSize(size) === false) {
+                alert("upload the image in jpg,jpeg or png format and size should be less than 2MB");
+                candidateFile.value = ''
+            } else if (checkImageValidation(type) === false && checkImageSize(size) === true) {
+                alert("upload the image in jpg,jpeg or png format ");
+                candidateFile.value = ''
+            } else if (checkImageValidation(type) === false && checkImageSize(size) === false) {
+                alert("uploaded image size should be less than 2MB");
+                candidateFile.value = ''
+            }
+
+        })
+
+        // Extra Features Functionality
+        document.querySelector("#extraFeatures").addEventListener("change", function (event) {
+            let courseFeatures = document.querySelector(".courseFeature").value;
+            let importantTerms = document.querySelector(".importantTerms").value;
+        });
+
+        document.getElementById("testimonialvideos").addEventListener("change", function (e) {
+
+            const formData = new FormData();
+            let productvideos = [];
+            if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 files");
+                $('#videos').val('');
+            } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    //   if (checkImageSize(size) && checkImageValidation(type)) {
+                    formData.append("files", e.target.files[i]);
+                    //   } else {
+                    //     $('#videos').val('');
+                    //     alert("This format not accepted and each image should be 2MB")
+                    //     break;
+                    //   }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultiFiles', formData, header)
+                    .then(result => {
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('#hidden-testimonialvideos').val(combinedKeys)
+                            //   result.data.Data.forEach(element => {
+                            //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                            //     $(html.innerHTML).insertBefore('#uploadgallery');
+                            //   });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
+        });
+
+        document.getElementById("videos").addEventListener("change", function (e) {
+
+            const formData = new FormData();
+            let productvideos = [];
+            if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 files");
+                $('#videos').val('');
+            } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    //   if (checkImageSize(size) && checkImageValidation(type)) {
+                    formData.append("files", e.target.files[i]);
+                    //   } else {
+                    //     $('#videos').val('');
+                    //     alert("This format not accepted and each image should be 2MB")
+                    //     break;
+                    //   }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultiFiles', formData, header)
+                    .then(result => {
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('#hidden-videos').val(combinedKeys)
+                            //   result.data.Data.forEach(element => {
+                            //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                            //     $(html.innerHTML).insertBefore('#uploadgallery');
+                            //   });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
+        });
+
+        document.getElementById("photos").addEventListener("change", function (e) {
+            const formData = new FormData();
+            let productimages = [];
+            if (e.target.files.length > 5) {
+                alert("You cannot upload more than 5 images");
+                $('#media-group').val('');
+            } else {
+                for (let i = 0; i < e.target.files.length; i++) {
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    if (checkImageSize(size) && checkImageValidation(type)) {
+                        formData.append("files", e.target.files[i]);
+                    } else {
+                        $('#media-group').val('');
+                        alert("This format not accepted and each image should be 2MB")
+                        break;
+                    }
+
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadMultiFiles', formData, header)
+                    .then(result => {
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('#hidden-photos').val(combinedKeys)
+                            //   result.data.Data.forEach(element => {
+                            //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                            //     $(html.innerHTML).insertBefore('#uploadgallery');
+                            //   });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
+        });
+
+        $('#brochure').change(function (e) {
+            let file = e.target.files[0]
+            let body = {
+                file: file
+            }
+            let type = file.name;
+            let size = file.size
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                alert("upload the brochure in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                alert("uploaded brochure size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                alert("upload the brochure in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                e.target.value = ''
+            } else {
+                axios.post('/api/uploadAdminFile', body, header)
+                    .then(result => {
+                        console.log('=============> here ', result)
+                        if (result.data.status) {
+                            $('#hidden-brochure').val(result.data.data.Key)
+                        }
+                    })
+            }
+        });
+
+        $('#thumbnail').change(function (e) {
+            let file = e.target.files[0]
+            let body = {
+                file: file
+            }
+            let type = file.name;
+            let size = file.size
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                alert("upload the thumbnail in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                alert("uploaded thumbnail size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                alert("upload the thumbnail in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                e.target.value = ''
+            } else {
+                axios.post('/api/uploadAdminFile', body, header)
+                    .then(result => {
+                        console.log('=============> here ', result)
+                        if (result.data.status) {
+                            $('#hidden-thumbnail').val(result.data.data.Key)
+                        }
+                    })
+            }
+        });
+
+        const checkCvValidation = (file) => {
+            let regex = /(\.docx|\.doc|\.pdf|\.jpg|\.jpeg|\.png)$/i
+            if (!regex.exec(file)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function checkCVSize(size) {
+            let finalSize = ((size / 1024) / 1024);
+            if (finalSize > 5) {
+                return false;
+            }
+            return true;
+        }
+
+
+        document.getElementById('sub-btn').addEventListener('click', (event) => {
+            event.preventDefault();
+            const haserrors = validations();
+            if (haserrors == "false" || haserrors == false) {
+                return false;
+            }
+            const selectedSector = document.getElementById("sector").value;
+            //current
+            const selectedSectors = Array.from(document.getElementById("sector").selectedOptions).map(option => option.value);
+
+            let body = {
+                sectors: selectedSectors,
+                courseLevel: document.getElementById("courseLevel").value,
+                name: document.getElementById("name").value,
+                duration: document.getElementById("duration").value,
+                certifyingAgency: $('#certifyingAgency').val(),
+                // certifyingAgencyWebsite: $('#certifyingAgencyWebsite').val(),
+                certifyingAgencyWebsite: document.getElementById('certifyingAgencyWebsite').value,
+                qualification: document.getElementById("qualification").value,
+                age: $('#age').val(),
+                brochure: $('#hidden-brochure').val(),
+                thumbnail: $('#hidden-thumbnail').val(),
+                youtubeURL: $('#youtubeURL').val(),
+                courseType: $('#courseType').val(),
+                experience: document.getElementById('experience').value,
+                trainingMode: $('#trainingMode').val(),
+                onlineTrainingTiming: document.getElementById("onlineTrainingTiming").value,
+                offlineTrainingTiming: document.getElementById("offlineTrainingTiming").value,
+                address: document.getElementById("address").value,
+                city: document.getElementById("city").value,
+                state: document.getElementById("state").value,
+                appLink: document.getElementById("appLink").value,
+                ojt: document.getElementById("ojt").value,
+                registrationCharges: $('#registrationCharges').val(),
+                courseFee: $('#courseFee').val(),
+                cutPrice: $('#cutPrice').val(),
+                examFee: $('#examFee').val(),
+                otherFee: $('#otherFee').val(),
+                emiOptionAvailable: $('#emiOptionAvailable').val(),
+                maxEMITenure: $('#maxEMITenure').val(),
+                stipendDuringTraining: $('#stipendDuringTraining').val(),
+                lastDateForApply: $('#lastDateForApply').val(),
+                requiredDocuments: $('#requiredDocuments').val(),
+                courseFeatures: $('.courseFeature').val(), // Get value of Course Features textarea
+                importantTerms: $('.importantTerms').val(),
+                faq: $('#faq').val(),
+                testimonialvideos: document.getElementById("hidden-testimonialvideos").value,
+                photos: document.getElementById("hidden-photos").value,
+                audios: document.getElementById("hidden-audios")?.value || '',
+                videos: document.getElementById("hidden-videos").value,
+                counslername: $('#counslername').val(),
+                counslerphonenumber: $('#counslerphonenumber').val(),
+                counslerwhatsappnumber: $('#counslerwhatsappnumber').val(),
+                counsleremail: $('#counsleremail').val(),
+                questionAnswers: Array.from(document.querySelectorAll(".questionanswerrow")).map(row => {
+                    let question = row.querySelector(".question").value;
+                    let answer = row.querySelector(".answer").value;
+                    return { Question: question, Answer: answer };
+                })
+
+            }
+
+
+            console.log('==============> Body ', body)
+            axios.post("/admin/courses/add", body).then((res) => {
+                if (res && res.status) {
+                    window.location.href = "/admin/courses"
+                }
+            }).catch(error => {
+                console.error('Error adding courses:', error);
+            });
+        })
+
+        // Function to add more Question and Answer fields
+        // function addQuestionAnswer() {
+        //     // Check if the template exists in the DOM
+        //     let template = document.querySelector('#questionanswerTemplate');
+        //     if (!template) {
+        //         console.error("Template not found!");
+        //         return;
+        //     }
+        //     let clonedTemplate = template.content.cloneNode(true);
+        //     document.querySelector('.container').appendChild(clonedTemplate);
+        //     // Initialize CKEditor for the new question and answer fields
+        //     ClassicEditor.create(clonedTemplate.querySelector('.question'));
+        //     ClassicEditor.create(clonedTemplate.querySelector('.answer'));
+        // }
+        // document.querySelector(".add-button").addEventListener("click", function () {
+        //     addQuestionAnswer();
+        // });
+
+        // // Initialize CKEditor for existing fields
+        // ClassicEditor.create(document.querySelector('.question'));
+        // ClassicEditor.create(document.querySelector('.answer'));
+
+        function validations() {
+            $('#sectorblock').removeClass('error')
+            $('#courseblock').removeClass('error')
+            $('#nameblock').removeClass('error')
+            $('#durationblock').removeClass('error')
+            $('#qualificationblock').removeClass('error')
+            $('#trainingblock').removeClass('error')
+
+            $('#ojtblock').removeClass('error')
+            $('#emioptionblock').removeClass('error')
+            $('addressblock').removeClass('error')
+            /*  $('cutPriceBlock').removeClass('error') */
+            var sectors = document.getElementById("sector").value;
+            var courseLevel = document.getElementById("courseLevel").value;
+            var name = document.getElementById("name").value;
+            var duration = document.getElementById("duration").value;
+            var certifyingAgency = $('#certifyingAgency').val();
+            // var certifyingAgencyWebsite = $('#certifyingAgencyWebsite').val();
+            var certifyingAgencyWebsite = document.getElementById('certifyingAgencyWebsite').value;
+            var qualification = document.getElementById("qualification").value;
+            var age = $('#age').val();
+            var experience = $('#experience').val();
+            var trainingMode = $('#trainingMode').val();
+            var onlineTrainingTiming = document.getElementById("onlineTrainingTiming").value;
+            var offlineTrainingTiming = document.getElementById("offlineTrainingTiming").value;
+            var address = document.getElementById("address").value;
+            var appLink = document.getElementById("appLink").value;
+            var ojt = document.getElementById("ojt").value;
+            var registrationCharges = $('#registrationCharges').val()
+            var courseFee = $('#courseFee').val();
+            var cutPrice = $('#cutPrice').val();
+            var examFee = $('#examFee').val();
+            var otherFee = $('#otherFee').val();
+            var emiOptionAvailable = $('#emiOptionAvailable').val();
+            var maxEMITenure = $('#maxEMITenure').val();
+            var stipendDuringTraining = $('#stipendDuringTraining').val();
+            var lastDateForApply = $('#lastDateForApply').val();
+            var requiredDocuments = $('#requiredDocuments').val();
+            var courseFeatures = $('#courseFeatures').val();
+            var importantTerms = $('#importantTerms').val();
+            var photos = $('#photos').val();
+            var audios = $('#audios').val();
+            var videos = $('#videos').val();
+            let faq = $('#faq').val();
+            let firstError = ''
+            let flag = true
+            if (emiOptionAvailable.trim() == "") {
+                $('#emioptionblock').addClass('error')
+                firstError = firstError ? firstError : $('#emiOptionAvailable')
+                flag = false
+            }
+            if (sectors.trim() === '') {
+                $('#sectorblock').addClass('error')
+                firstError = firstError ? firstError : $('#sector')
+                flag = false
+            } if (courseLevel.trim() === "") {
+                $('#courseblock').addClass('error')
+                firstError = firstError ? firstError : $('#courseLevel')
+                flag = false;
+            } if (qualification.trim() === '') {
+                $('#qualificationblock').addClass('error')
+                firstError = firstError ? firstError : $('#qualification')
+                flag = false
+            } if (ojt.trim() === "") {
+                $('#ojtblock').addClass('error')
+                firstError = firstError ? firstError : $('#ojt')
+                flag = false
+            }
+            if (name.trim() === "") {
+                $('#nameblock').addClass('error')
+                firstError = firstError ? firstError : $('#name')
+                flag = false
+            }
+            if (duration.trim() === "") {
+                $('#durationblock').addClass('error')
+                firstError = firstError ? firstError : $('#duration')
+                flag = false
+            }
+            if (trainingMode.trim() === "") {
+                $('#trainingblock').addClass('error')
+                firstError = firstError ? firstError : $('#trainingMode')
+                flag = false
+            }
+            if (address.trim() === '') {
+                $('#addressblock').addClass('error')
+                firstError = firstError ? firstError : $('#address')
+                flag = false
+            }
+            if (firstError) {
+                firstError.focus();
+            }
+            return flag;
+
+        }
+
+
+    </script>
+    <% include ../partials/footer %>
+        </div>
