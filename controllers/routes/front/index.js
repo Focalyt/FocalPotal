@@ -153,6 +153,10 @@ router.get("/corporate-pricing-plan", (req, res) => {
 	rePath = res.render(`${req.vPath}/front/corporatePricingPlan`, {
 	});
 });
+router.get("/community", (req, res) => {
+	rePath = res.render(`${req.vPath}/front/blog`, {
+	});
+});
 
 router.get("/employersTermsofService", (req, res) => {
 	rePath = res.render(`${req.vPath}/front/employersTermsofService`, {

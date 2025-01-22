@@ -409,6 +409,34 @@ $(".apply_cta").slick({
 
 </script>
 <script>
+// see more 
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleMore = document.querySelector(".toggle-more");
+  const hiddenText = document.querySelector(".hidden-text");
+
+  // Function to check if text is truncated
+  function isTextTruncated(element) {
+    return element.scrollHeight > element.offsetHeight;
+  }
+
+  // Check if text is truncated and toggle "See more" button visibility
+  if (isTextTruncated(hiddenText)) {
+    toggleMore.style.display = "block"; // Show the button if text is truncated
+  } else {
+    toggleMore.style.display = "none"; // Hide the button if text is fully visible
+  }
+
+  // Toggle text visibility on button click
+  toggleMore.addEventListener("click", function () {
+    if (hiddenText.classList.contains("show")) {
+      hiddenText.classList.remove("show"); // Collapse text
+      toggleMore.textContent = "See more..."; // Update button text
+    } else {
+      hiddenText.classList.add("show"); // Expand text
+      toggleMore.textContent = "See less..."; // Update button text
+    }
+  });
+});
  $(document).ready(function () {
   const candidateImages = $("#blog--images .happy_candidate_images");
   const imageCount = candidateImages.children().length;
