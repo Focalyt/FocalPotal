@@ -419,12 +419,20 @@ document.addEventListener("DOMContentLoaded", function () {
     return element.scrollHeight > element.offsetHeight;
   }
 
-  // Check if text is truncated and toggle "See more" button visibility
-  if (isTextTruncated(hiddenText)) {
-    toggleMore.style.display = "block"; // Show the button if text is truncated
-  } else {
-    toggleMore.style.display = "none"; // Hide the button if text is fully visible
+  // Function to handle visibility of the "See more" button
+  function handleToggleMoreVisibility() {
+    if (isTextTruncated(hiddenText)) {
+      toggleMore.style.display = "block"; // Show the button if text is truncated
+    } else {
+      toggleMore.style.display = "none"; // Hide the button if text is fully visible
+    }
   }
+
+  // Check on page load
+  handleToggleMoreVisibility();
+
+  // Check on screen resize
+  window.addEventListener("resize", handleToggleMoreVisibility);
 
   // Toggle text visibility on button click
   toggleMore.addEventListener("click", function () {
@@ -437,6 +445,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+
  $(document).ready(function () {
   const candidateImages = $("#blog--images .happy_candidate_images");
   const imageCount = candidateImages.children().length;
