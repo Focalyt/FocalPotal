@@ -347,6 +347,46 @@ border: 1px solid red;
     margin-top: 5px; 
     display: block; 
   }
+  .hidden-text.truncated {
+    max-height: 4.8em; /* Matches 4 lines (line-height * 4) */
+    overflow: hidden;
+  }
+
+
+#blog--images .slick-dots {
+  position: absolute;
+  bottom: 10px; /* Adjust position */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between dots */
+  list-style: none;
+  z-index: 10; /* Ensure dots are above content */
+}
+
+#blog--images .slick-dots li button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #aaa; /* Default dot color */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#blog--images  .slick-dots li button:before{
+  color: transparent;
+}
+#blog--images .slick-dots li.slick-active button {
+  background-color: #FC2B5A; /* Highlight active dot */
+}
+
+#blog--images .slick-dots li button:hover {
+  background-color: #333; /* Change dot color on hover */
+}
+
+
+
 @media(max-width:768px){
   .leftSidebar{
     display: none;
@@ -394,6 +434,10 @@ border: 1px solid red;
   .toggle-more {
     font-size: 12px;
   }
+  #blog--images .slick-dots {
+    bottom: -25px; 
+  }
+  
 }
 
   /* .leftSidebar,

@@ -416,33 +416,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to check if text is truncated
   function isTextTruncated(element) {
-    return element.scrollHeight > element.offsetHeight;
+    return element.scrollHeight > element.offsetHeight; // Check overflow
   }
 
-  // Function to handle visibility of the "See more" button
+  // Function to handle "See more" visibility
   function handleToggleMoreVisibility() {
     if (isTextTruncated(hiddenText)) {
-      toggleMore.style.display = "block"; // Show the button if text is truncated
+      toggleMore.style.display = "block"; // Show button if text is truncated
     } else {
-      toggleMore.style.display = "none"; // Hide the button if text is fully visible
+      toggleMore.style.display = "none"; // Hide button if text fits
     }
   }
 
-  // Check on page load
+  // Check visibility on page load
   handleToggleMoreVisibility();
 
-  // Check on screen resize
+  // Recheck visibility on resize
   window.addEventListener("resize", handleToggleMoreVisibility);
 
-  // Toggle text visibility on button click
+  // Toggle text visibility on click
   toggleMore.addEventListener("click", function () {
-    if (hiddenText.classList.contains("show")) {
-      hiddenText.classList.remove("show"); // Collapse text
-      toggleMore.textContent = "See more..."; // Update button text
-    } else {
-      hiddenText.classList.add("show"); // Expand text
-      toggleMore.textContent = "See less..."; // Update button text
-    }
+    hiddenText.classList.toggle("show"); // Toggle the "show" class
+    toggleMore.textContent = hiddenText.classList.contains("show")
+      ? "See less..."
+      : "See more...";
   });
 });
 
@@ -454,7 +451,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (imageCount > 1) {
     // Initialize Slick Slider for multiple images
     candidateImages.slick({
-      dots: false,
+      dots: true,
       infinite: true,
       slidesToShow: 1,
       slidesToScroll: 1,
