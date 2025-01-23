@@ -70,7 +70,9 @@ padding-top:30px;
     transform: translateY(-10px); /* Move up on hover */
     box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.5); /* Darker shadow */
   }
-  
+  .section-padding-30{
+    padding-block: 30px;
+  }
   /* Icon Box */
   .icon-box {
     display: flex;
@@ -83,8 +85,8 @@ padding-top:30px;
     margin: 0 auto 20px auto; /* Center and add space below */
   }
   
-  .icon-box .svg {
-    font-size: 36px; /* Adjust icon size */
+  .icon-box figure img {
+    width: 100%;
     color: #FF3366; /* Match icon color with box */
   }
   
@@ -172,9 +174,9 @@ padding-top:30px;
   
   .section-title {
     font-size: 28px;
-    color: #fff; 
+    color: #FF3366; 
     font-weight: bold;
-    margin-bottom: 40px;
+   padding-block: 40px;
   }
   
   /* Centre Card Styling */
@@ -209,8 +211,9 @@ padding-top:30px;
     text-transform: uppercase;
   }
 
-  #mobilization .slider_images img{
-    border-radius: 10px;
+  #mobilization .slider_images img, #hostel .slider_images img, #trainings .slider_images img {
+    border-radius: 25px;
+    padding: 10px;
   }
  
 #trainings .slider_images > div {
@@ -228,6 +231,43 @@ padding-top:30px;
 #trainings .slider_images {
   display: flex;
   gap: 10px; 
+}
+
+
+#trainings .slick-dots, #hostel .slick-dots {
+  position: absolute;
+  bottom: 10px;
+  /* Adjust position */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  list-style: none;
+  z-index: 10;
+}
+
+#trainings .slick-dots li button, #hostel .slick-dots li button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #aaa;
+  /* Default dot color */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#trainings .slick-dots li button:before , #hostel .slick-dots li button:before{
+  color: transparent;
+}
+
+#trainings .slick-dots li.slick-active button , #hostel .slick-dots li.slick-active button {
+  background-color: #FC2B5A;
+}
+
+#trainings .slick-dots li button:hover , #hostel .slick-dots li button:hover,#hostel .slick-dots li button:hover{
+  background-color: #333;
 }
 
   /* Responsive Design */
