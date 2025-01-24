@@ -1,3 +1,7 @@
+.section-padding-60{
+    padding-block: 60px;
+}
+
 .skillTech{
     font-size: 38px;
     font-weight: 750;
@@ -14,9 +18,9 @@
 .focalytLogo img{
     width: 100%;
 }
-.skill-Tech-Brand, .workingArea, .Partners{
+/* .skill-Tech-Brand, .workingArea, .Partners{
 padding-top:30px;
-}
+} */
 .globalLearning{
     font-size: 16px;
     font-weight: 500;
@@ -26,19 +30,252 @@ padding-top:30px;
     padding-top: 10px;
     padding-bottom: 20px
 }
-.mainArea{
-    /* margin: 0px 0px 0px 0px;
-    padding: 20px 0px 0px 0px; */
-    background-color: transparent;
-    background-image: linear-gradient(161deg, #FF3C64 0%, #FF3C64 100%);
-    border-radius: 35px 25px 35px 25px;
-    text-align: center;
-    height: 100%;
+.Partners{
+    padding: 15px;
 }
-
 .affiliated_partner{
     color: rgb(255, 60, 100);
     text-align: center;
     font-size: 30px;
     font-weight: 700;
+    padding: 10px 0 20px 0;
 }
+/* General Styles */
+.workingArea {
+    background-color: #000; /* Black background */
+    padding: 40px 20px;
+  }
+  
+  .key_area {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff; /* White text */
+  }
+  
+  /* Main Area */
+  .mainArea {
+    background-image: linear-gradient(161deg, #FF3C64 0%, #FF3C64 100%);
+    background-color: transparent;
+    border-radius: 15px; /* Rounded corners */
+    text-align: center; /* Center-align content */
+    padding: 30px 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 35px 25px 35px 25px;
+    text-align: center;
+    height: 100%;
+  }
+  /* Hover Effect for Boxes */
+  .mainArea:hover {
+    transform: translateY(-10px); /* Move up on hover */
+    box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.5); /* Darker shadow */
+  }
+  .section-padding-30{
+    padding-block: 30px;
+  }
+  /* Icon Box */
+  .icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background-color: #fff; /* White background for icons */
+    border-radius: 50%; /* Circle shape */
+    margin: 0 auto 20px auto; /* Center and add space below */
+  }
+  
+  .icon-box figure img {
+    width: 100%;
+    color: #FF3366; /* Match icon color with box */
+  }
+  
+  /* Box Content */
+  .icon-box-content h4 {
+    font-size: 18px;
+    color: #fff; /* White text */
+    text-transform: uppercase; /* Make text uppercase */
+    font-weight: bold;
+    margin: 0;
+    line-height: 1.4;
+  }
+  
+.affilated_partner_image{
+    width: 100%;
+    padding: 5px 0 25px 0;
+}
+.affilated_partner_image figure img{
+    width: 100%;
+}
+.vision{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.v_header{
+    color: #fff;
+    text-align: center;
+    font-size: 35px;
+    font-weight: 700;
+}
+.v_para{
+    color: #fff;
+    line-height: normal;
+    text-align: center;
+}
+.main_partners{
+    padding: 15px;
+}
+.FSD{
+    padding:30px 10px;
+}
+.elementor-widget-container{
+    margin: 0;
+    padding: 8px 15px 8px 15px;
+    border-radius:15px 25px 15px 25px;
+    box-shadow: 0px 0px 25px 0px #CCCACA;
+    height: 100%;
+}
+.elementor-widget-containers{
+    margin: 0;
+    padding: 8px 15px 8px 15px ;
+    border-radius:15px 25px 15px 25px;
+    box-shadow: 0px 0px 25px 0px #CCCACA;
+    height: 100%;
+}
+.elementor-image-box-img{
+    text-align: center;
+    padding-bottom: 10px;
+}
+.elementor-image-box-img img{
+    width: 30%;
+    clip-path: circle(50%);
+    padding: 0;
+}
+.elementor-image-box-title{
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+.founder{
+    font-size: 10px;
+    text-align: center;
+}
+.elementor-image-box-description{
+    line-height: normal;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* training section  */
+
+/* General Section Styling */
+.training-centres {
+    background-color: #000; 
+    padding: 40px 20px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+    color: #FF3366; 
+    font-weight: bold;
+   padding-block: 40px;
+  }
+  
+  /* Centre Card Styling */
+  .centre-card {
+    text-align: center;
+    background-color: #111; 
+    border-radius: 15px; 
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5); 
+    padding: 15px 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Hover Effect */
+  .centre-card:hover {
+    transform: translateY(-10px); 
+    /* box-shadow: 0px 12px 20px rgba(255, 51, 102, 0.8);  */
+  }
+  
+  /* Image Styling */
+  .centre-card figure img {
+    width: 100%;
+    border-radius: 10px; 
+    /* border: 5px solid #ff3366;  */
+  }
+  
+ 
+  .centre-name {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff3366; 
+    text-transform: uppercase;
+  }
+
+  #mobilization .slider_images img, #hostel .slider_images img, #trainings .slider_images img {
+    border-radius: 25px;
+    padding: 10px;
+  }
+ 
+#trainings .slider_images > div {
+  padding: 10px;
+}
+
+
+#trainings .slider_images img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); 
+}
+
+
+#trainings .slider_images {
+  display: flex;
+  gap: 10px; 
+}
+
+
+#trainings .slick-dots, #hostel .slick-dots {
+  position: absolute;
+  bottom: -25px;
+  /* Adjust position */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  list-style: none;
+  z-index: 10;
+}
+
+#trainings .slick-dots li button, #hostel .slick-dots li button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #aaa;
+  /* Default dot color */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#trainings .slick-dots li button:before , #hostel .slick-dots li button:before{
+  color: transparent;
+}
+
+#trainings .slick-dots li.slick-active button , #hostel .slick-dots li.slick-active button {
+  background-color: #FC2B5A;
+}
+
+#trainings .slick-dots li button:hover , #hostel .slick-dots li button:hover,#hostel .slick-dots li button:hover{
+  background-color: #333;
+}
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .mainArea {
+      margin-bottom: 20px; /
+    }
+  }
+  
