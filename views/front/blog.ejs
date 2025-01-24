@@ -52,6 +52,8 @@
 
         </div>
         <div class="mainBody">
+          <% if (posts && posts.length > 0) { %>
+            <% posts.forEach((post) => { %>
           <div class="blog--card">
             <!-- Header Section -->
             <div class="card-header">
@@ -76,9 +78,7 @@
               <!-- <h5 class="blog__title text-black">Secure Your Future with Cybersecurity! <span>more...</span></h5> -->
               <h5 class="blog__title text-black">
                 <span class="hidden-text">
-                  Secure Your Future with Cybersecurity! Cybersecurity is a
-                  growing field offering job security, competitive salaries, and
-                  the chance to make an impact.
+                  <%= post.content || "No content available" %>
                 </span>
                 <span class="toggle-more">See more...</span>
 
@@ -119,7 +119,10 @@
               </div>
                       
 
-          </div>
+          </div><% }); %>
+          <% } else { %>
+            <p>No posts available.</p>
+          <% } %>
 
           <div class="rightSidebar d-none"></div>
         </div>
