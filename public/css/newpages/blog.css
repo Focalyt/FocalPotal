@@ -436,11 +436,21 @@
 .comment_box {
   display: none; /* Initially hidden */
   margin-top: 10px;
+  opacity: 0;
+  max-height: 0;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.comment_box.visible {
+  display: block;
+  opacity: 1;
+  max-height: 60px;
 }
 
 .comment_box textarea {
-  width: 100%;
-  padding: 10px;
+  flex: 1; /* Allow textarea to take up remaining space */
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
@@ -453,6 +463,28 @@
   border-color: #FC2B5A;
 }
 
+/* .btn-sm {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  line-height: 1;
+}
+#latest-comment {
+  font-size: 14px;
+  color: #333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#extra-comments {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #555;
+  background: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+} */
 @media(max-width:768px) {
   .leftSidebar {
     display: none;

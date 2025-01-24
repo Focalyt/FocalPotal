@@ -600,14 +600,46 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 <script>
   // comment 
-  document.querySelector('.comment').addEventListener('click', () => {
-    const commentBox = document.querySelector('.comment_box');
-    if (commentBox.style.display === 'block') {
-      commentBox.style.display = 'none';
-    } else {
-      commentBox.style.display = 'block';
+document.querySelector('.comment').addEventListener('click', () => {
+  const commentBox = document.querySelector('.comment_box');
+  commentBox.classList.toggle('visible');
+});
+
+const submitComment = document.querySelector('#submit-comment');
+const latestComment = document.querySelector('#latest-comment');
+const moreComments = document.querySelector('#more-comments');
+const extraComments = document.querySelector('#extra-comments');
+
+let commentList = []; // Store all comments
+
+submitComment.addEventListener('click', () => {
+  const commentInput = document.querySelector('#comment-input');
+  const newComment = commentInput.value.trim();
+
+  if (newComment) {
+    commentList.unshift(newComment); // Add new comment to the top of the list
+    commentInput.value = ''; // Clear input field
+
+    // Update latest comment
+    latestComment.textContent = commentList[0];
+    latestComment.style.display = 'block';
+
+    // Update "More Comments" section
+    if (commentList.length > 1) {
+      moreComments.style.display = 'block';
+      const remainingComments = commentList.slice(1).map(c => `<div>${c}</div>`).join('');
+      extraComments.innerHTML = remainingComments;
     }
-  });
+  }
+});
+
+// Toggle visibility of "More Comments"
+document.querySelector('#view-more-comments').addEventListener('click', (e) => {
+  e.preventDefault();
+  const extraCommentsDiv = document.querySelector('#extra-comments');
+  extraCommentsDiv.style.display = extraCommentsDiv.style.display === 'none' ? 'block' : 'none';
+});
+
   document.querySelector('.share').addEventListener('click', () => {
     if (navigator.share) {
       navigator
