@@ -17430,6 +17430,16 @@ display: none;
 
 
 @media(max-width:767px){
+  .select-container select, .textarea-container textarea, #demoForm input[type="text"], #demoForm select{
+    margin: 0;
+  }
+  .form_name{
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  .textarea-container{
+    margin-bottom: 20px;
+  }
   .Heading__text{
     font-size: 25px;
   }

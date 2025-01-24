@@ -598,3 +598,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+<script>
+  // comment 
+  document.querySelector('.comment').addEventListener('click', () => {
+    const commentBox = document.querySelector('.comment_box');
+    if (commentBox.style.display === 'block') {
+      commentBox.style.display = 'none';
+    } else {
+      commentBox.style.display = 'block';
+    }
+  });
+</script>

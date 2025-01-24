@@ -433,7 +433,25 @@
   /* Highlight color on hover */
 }
 
+.comment_box {
+  display: none; /* Initially hidden */
+  margin-top: 10px;
+}
 
+.comment_box textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.comment_box textarea:focus {
+  outline: none;
+  border-color: #FC2B5A;
+}
 
 @media(max-width:768px) {
   .leftSidebar {

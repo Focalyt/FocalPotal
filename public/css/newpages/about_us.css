@@ -131,14 +131,14 @@ padding-top:30px;
 }
 .elementor-widget-container{
     margin: 0;
-    padding: 8px 25px 50px 25px;
+    padding: 8px 15px 8px 15px;
     border-radius:15px 25px 15px 25px;
     box-shadow: 0px 0px 25px 0px #CCCACA;
     height: 100%;
 }
 .elementor-widget-containers{
     margin: 0;
-    padding: 8px ;
+    padding: 8px 15px 8px 15px ;
     border-radius:15px 25px 15px 25px;
     box-shadow: 0px 0px 25px 0px #CCCACA;
     height: 100%;
@@ -162,6 +162,8 @@ padding-top:30px;
 }
 .elementor-image-box-description{
     line-height: normal;
+    font-size: 12px;
+    text-align: center;
 }
 
 /* training section  */
@@ -236,7 +238,7 @@ padding-top:30px;
 
 #trainings .slick-dots, #hostel .slick-dots {
   position: absolute;
-  bottom: 10px;
+  bottom: -25px;
   /* Adjust position */
   left: 50%;
   transform: translateX(-50%);
