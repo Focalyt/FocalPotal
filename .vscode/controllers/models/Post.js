@@ -3,6 +3,7 @@ const { sign } = require("jsonwebtoken");
 
 const { ObjectId } = Schema.Types;
 const { jwtSecret } = require("../../config");
+const { boolean } = require("joi");
 
 const PostSchema = new Schema({
   content: {
@@ -27,23 +28,26 @@ const PostSchema = new Schema({
   },
   userType: {
     type: String, // Specifies which type of user created the post
-    enum: ['candidate', 'college', 'company', 'admin'], // Allowed user types
+    enum: ['candidate', 'institute', 'company', 'admin'], // Allowed user types
     required: true,
   },
   likes: [
     {
       userId: { ObjectId }, // Reference to the user who liked
-      userType: { type: String, enum: ['candidate', 'college', 'company', 'admin'] },
+      userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] },
     },
   ],
   comments: [
     {
       userId: { type: ObjectId },
-      userType: { type: String, enum: ['candidate', 'college', 'company', 'admin'] },
+      userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] },
       text: { type: String, required: true },
+      status:{type:boolean, default:true},
       createdAt: { type: Date, default: Date.now },
     },
   ],
+  status: {type:boolean, default:true},
+
   createdAt: {
     type: Date, // Timestamp for the post creation
     default: Date.now,
