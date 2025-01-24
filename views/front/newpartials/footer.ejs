@@ -608,4 +608,18 @@ document.addEventListener("DOMContentLoaded", function () {
       commentBox.style.display = 'block';
     }
   });
+  document.querySelector('.share').addEventListener('click', () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'Check this out!',
+          text: 'This is an awesome post. Check it out!',
+          url: window.location.href, // Current page URL
+        })
+        .then(() => console.log('Shared successfully!'))
+        .catch((error) => console.error('Error sharing:', error));
+    } else {
+      alert('Web Share API is not supported in your browser.');
+    }
+  });
 </script>
