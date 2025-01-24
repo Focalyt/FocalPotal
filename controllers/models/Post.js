@@ -11,7 +11,7 @@ const PostSchema = new Schema({
   },
   files: [
     {
-      fileName: {
+      fileURL: {
         type: String, // Name of the uploaded file
         required: true,
       },
@@ -22,7 +22,7 @@ const PostSchema = new Schema({
     },
   ],
   createdBy: {
-    type: mongoose.Schema.Types.ObjectId, // Links the post to the user who created it
+    type: ObjectId, // Links the post to the user who created it
     required: true,
   },
   userType: {
@@ -32,13 +32,13 @@ const PostSchema = new Schema({
   },
   likes: [
     {
-      userId: { type: mongoose.Schema.Types.ObjectId, refPath: 'likes.userType' }, // Reference to the user who liked
+      userId: { type: ObjectId }, // Reference to the user who liked
       userType: { type: String, enum: ['candidate', 'college', 'company', 'admin'] },
     },
   ],
   comments: [
     {
-      userId: { type: mongoose.Schema.Types.ObjectId, refPath: 'comments.userType' },
+      userId: { type: ObjectId },
       userType: { type: String, enum: ['candidate', 'college', 'company', 'admin'] },
       text: { type: String, required: true },
       createdAt: { type: Date, default: Date.now },
