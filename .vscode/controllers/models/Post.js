@@ -3,7 +3,7 @@ const { sign } = require("jsonwebtoken");
 
 const { ObjectId } = Schema.Types;
 const { jwtSecret } = require("../../config");
-const { boolean } = require("joi");
+const { boolean, string } = require("joi");
 
 const PostSchema = new Schema({
   content: {
@@ -36,6 +36,13 @@ const PostSchema = new Schema({
       userId: { ObjectId }, // Reference to the user who liked
       userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] },
     },
+  ],
+  tags: [
+    // {
+    //   userId: { ObjectId }, 
+    //   userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] },
+    // },
+   { name : {type:string}}
   ],
   comments: [
     {

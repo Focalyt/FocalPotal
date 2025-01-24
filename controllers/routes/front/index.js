@@ -161,19 +161,9 @@ router.get("/community", async (req, res) => {
 		// const page = p || 1;
 		// const totalPages = Math.ceil(countPosts / perPage);
 		let posts = await Post.find(filter).sort({  createdAt: -1 });
-		// Separate images and videos
-		let images = [];
-		let videos = [];
-	
-		posts.forEach((post) => {
-		  post.files.forEach((file) => {
-			if (file.fileType === "image") {
-			  images.push(file);
-			} else if (file.fileType === "video") {
-			  videos.push(file);
-			}
-		  });
-		});
+		
+		
+		
 		
 		rePath =res.render(`${req.vPath}/front/blog`, {
 		posts
