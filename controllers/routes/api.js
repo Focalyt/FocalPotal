@@ -16,6 +16,7 @@ const {
 	careerFunc,
 	projectFunc,
 	referenceFunc,
+	postFunc
 } = require("./functions");
 
 const apiRoutes = express.Router();
@@ -34,6 +35,8 @@ const referenceRoutes = express.Router();
 const smsTemplateRoutes = express.Router();
 
 commonRoutes.post("/sendCandidateOtp", commonFunc.sendCandidateOtp);
+commonRoutes.post("/postfiles", postFunc.uploadPostFiles);
+commonRoutes.post("/uploadPostVideoFile", postFunc.uploadPostVideoFile);
 commonRoutes.post("/sendCompanyOtp",commonFunc.sendCompanyOtp);
 commonRoutes.post("/sendOtp",commonFunc.sendOtp);
 commonRoutes.post("/sendOtptoRegisterCandidate", commonFunc.sendOtptoRegisterCandidate);
