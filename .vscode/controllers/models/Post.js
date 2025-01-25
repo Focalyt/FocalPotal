@@ -38,11 +38,12 @@ const PostSchema = new Schema({
     },
   ],
   tags: [
-    // {
-    //   userId: { ObjectId }, 
-    //   userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] },
-    // },
-   { name : {type:string}}
+    {
+      userId: { ObjectId },
+      name : {type:string},
+      userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] },
+    },
+   
   ],
   comments: [
     {
