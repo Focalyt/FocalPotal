@@ -522,6 +522,97 @@
   border-radius: 5px;
   border: 1px solid #ddd;
 } */
+
+/* new labs  */
+.elementor-widget-left-side{
+  display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+.lobs_logo{
+  margin-bottom: 40px;
+}
+.labs_logo figure img{
+  width: 50%;
+}
+.elementor-widget-header h2{
+  font-weight: 700;
+    font-size: 50px;
+    margin-bottom: 25px;
+}
+.elementor-widget-header h3{
+  font-weight: 500;
+    font-size: 22px;
+    margin-bottom: 25px;
+}
+.book_a_demo a{
+  font-weight: 400;
+    font-size: 20px;
+    background: #FC2B5A;
+    border-radius: 30px;
+    padding: 15px;
+    color: #fff;
+}
+.elementor_widget_image figure img{
+  width: 100%;
+}
+#products{
+  background: rgb(239, 239, 239);
+}
+.products{
+  font-size: 45px;
+  font-weight: 700;
+  line-height: 50px;
+}
+.pro_labs{
+font-size: 20px;
+font-weight: 500;
+}
+.ar_labs{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  background: rgb(255, 255, 255);
+  border-radius: 40px;
+  padding: 20px 20px;
+  height: 100%;
+}
+.ar_labs h4{
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+}
+.ar_labs figure img{
+  width: 100%;
+}
+.labs-desc{
+  display: flex;
+  width: 100%;
+  padding-block: 40px;
+}
+.desc_img{
+  width: 80%;
+  padding: 20px;
+}
+.desc_img_content{
+  width: 100%;
+  padding: 20px;
+}
+.desc_header{
+  font-size: 35px;
+    font-weight: 800;
+    color: #FC2B5A;
+}
+.desc_sub_header{
+  font-size: 25px;
+  font-weight: 400;
+  color: #FC2B5A;
+}
+.desc_img figure img{
+  width: 100%;
+}
 @media(max-width:768px) {
   .leftSidebar {
     display: none;
