@@ -87,7 +87,7 @@ router.get("/", async (req, res) => {
 		if (industry) {
 			filter._industry = industry
 		}
-		if (jobType) { 
+		if (jobType) {  	
 			filter.jobType = jobType
 		}
 		if (experience) {
