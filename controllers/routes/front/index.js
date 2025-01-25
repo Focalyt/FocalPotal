@@ -161,10 +161,6 @@ router.get("/community", async (req, res) => {
 		// const page = p || 1;
 		// const totalPages = Math.ceil(countPosts / perPage);
 		let posts = await Post.find(filter).sort({  createdAt: -1 });
-		
-		
-		
-		
 		rePath =res.render(`${req.vPath}/front/blog`, {
 		posts
 		
