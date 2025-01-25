@@ -358,7 +358,8 @@ router
         location: {
           type: "Point",
           coordinates: [latitude, longitude]
-        }
+        },
+        status: true
       }
       if (formData?.refCode && formData?.refCode !== '') {
         candidateBody["referredBy"] = formData?.refCode
@@ -398,34 +399,34 @@ router
       };
 
       const data = sendSms(body);
-      // if (env.toLowerCase() === 'production') {
-      //   let dataFormat = {
-      //     Source: "mipie",
-      //     FirstName: name,
-      //     MobileNumber: mobile,
-      //     LeadSource: "Website",
-      //     LeadType: "Online",
-      //     LeadName: "app",
-      //     Course: "Mipie general",
-      //     Center: "Padget",
-      //     Location: "Technician",
-      //     Country: "India",
-      //     LeadStatus: "Signed Up",
-      //     ReasonCode: "27",
-      //     City: city[0],
-      //     State: city[1],
-      //     AuthToken: extraEdgeAuthToken
-      //   }
-      //   let edgeBody = JSON.stringify(dataFormat)
-      //   let header = { "Content-Type": "multipart/form-data" }
-      //   let extraEdge = await axios.post(extraEdgeUrl, edgeBody, header).then(res => {
-      //     console.log(res.data)
-      //     req.flash("success", "Candidate added successfully!");
-      //   }).catch(err => {
-      //     console.log(err)
-      //     return err
-      //   })
-      // }
+      if (env.toLowerCase() === 'production') {
+        let dataFormat = {
+          Source: "mipie",
+          FirstName: name,
+          MobileNumber: mobile,
+          LeadSource: "Website",
+          LeadType: "Online",
+          LeadName: "app",
+          Course: "Mipie general",
+          Center: "Padget",
+          Location: "Technician",
+          Country: "India",
+          LeadStatus: "Signed Up",
+          ReasonCode: "27",
+          City: city[0],
+          State: city[1],
+          AuthToken: extraEdgeAuthToken
+        }
+        let edgeBody = JSON.stringify(dataFormat)
+        let header = { "Content-Type": "multipart/form-data" }
+        let extraEdge = await axios.post(extraEdgeUrl, edgeBody, header).then(res => {
+          console.log(res.data)
+          req.flash("success", "Candidate added successfully!");
+        }).catch(err => {
+          console.log(err)
+          return err
+        })
+      }
       let notificationData = {
         title: 'Signup',
         message: `Complete your profile to get your dream job.__नौकरी पाने के लिए अपना प्रोफ़ाइल पूरा करें।`,

@@ -37,21 +37,28 @@ const sess = {
 	keys: [cookieSecret]
 };
 const viewsPath = path.resolve(__dirname, "views");
-mongoose.set("useNewUrlParser", true);
-mongoose.set("useFindAndModify", false);
-mongoose.set("useCreateIndex", true);
-mongoose.set("useUnifiedTopology", true);
-mongoose.connect(mongodbUri, (err) => {
-	console.log(mongodbUri)
-	if (err) ykError(err);
-	server.listen(port, () => {
-		console.log(`connected ${port}`);
-		process.send = process.send || ((f) => f);
-		process.send("ready");
-	});
-},
-{socketTimeoutMS : 300000}
-);
+// mongoose.set("useNewUrlParser", true);
+// mongoose.set("useFindAndModify", false);
+// mongoose.set("useCreateIndex", true);
+// mongoose.set("useUnifiedTopology", true);
+async function connectDB() {
+	try {
+		await mongoose.connect(mongodbUri, {
+			socketTimeoutMS: 300000, // Set timeout if required
+		});
+		console.log("Connected to MongoDB");
+		server.listen(port, () => {
+			console.log(`Server running on port ${port}`);
+			process.send = process.send || ((f) => f);
+			process.send("ready");
+		});
+	} catch (err) {
+		console.error("Error connecting to MongoDB:", err.message);
+		process.exit(1); // Exit on connection error
+	}
+}
+
+connectDB();
 
 mongoose.Promise = global.Promise;
 
@@ -75,6 +82,7 @@ const blockIPMiddleware = (req, res, next) => {
   // IP address is not blocked, proceed to the next middleware or route handler
   next();
 };
+
 
 
 // Configure AWS SDK

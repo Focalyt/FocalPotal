@@ -1,3 +1,4 @@
+const { boolean } = require("joi");
 const { Schema, model } = require("mongoose");
 
 const { ObjectId } = Schema.Types;
@@ -35,8 +36,10 @@ const corporateRegisterSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
-		isProfileCompleted:false
-	},
+		isProfileCompleted:{
+			type: Boolean,
+			default: false,
+		}	},
 	{ timestamps: true }
 );
 
