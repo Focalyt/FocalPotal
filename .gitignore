@@ -51,10 +51,4 @@ Thumbs.db
 /public/documents/candidates.csv
 /focalyt-1720520815248-f2cba8605a03.json
 /focalyt-new-key.json
-<<<<<<< HEAD
-=======
-focalyt-new-key.json
-focalyt-new-key.json
-focalyt-new-key.json
-focalyt-new-key.json
->>>>>>> fbd22f3a5d14f12f030f9452bcd2dcaaa4ff7413
+/views/front/lab.ejs

@@ -153,6 +153,10 @@ router.get("/corporate-pricing-plan", (req, res) => {
 	rePath = res.render(`${req.vPath}/front/corporatePricingPlan`, {
 	});
 });
+router.get("/labs", (req, res) => {
+	rePath = res.render(`${req.vPath}/front/lab`, {
+	});
+});
 router.get("/community", async (req, res) => {
 	let filter = { status: true}
      	// const countPosts = await Post.find(filter).countDocuments()
