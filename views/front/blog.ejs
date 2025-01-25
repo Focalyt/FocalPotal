@@ -86,10 +86,14 @@
 
               <!-- <h5 class="blog__title text-black">Secure Your Future with Cybersecurity! <span>more...</span></h5> -->
               <h5 class="blog__title text-black">
-                <span class="hidden-text">
+                <span class="hidden-text ">
                   <%= post.content || "No content available" %>
                 </span>
-                <span class="toggle-more">See more...</span>
+                <span style="color: #FC2B5A;  cursor: pointer;
+                font-size: 14px;
+                text-decoration: underline;
+                margin-top: 5px;
+                display: block;" id="toggle-more" class="">See more...</span>
 
               </h5>
 
@@ -149,65 +153,7 @@
                 </div>
                 <div class="comment">
                   <i class="fas fa-comment-alt"></i> Comment
-                  <script>
-                    // comment 
-                    document.querySelector('.comment').addEventListener('click', () => {
-                    const commentBox = document.querySelector('.comment_box');
-                    commentBox.classList.toggle('visible');
-                  });
                   
-                  const submitComment = document.querySelector('#submit-comment');
-                  const latestComment = document.querySelector('#latest-comment');
-                  const moreComments = document.querySelector('#more-comments');
-                  const extraComments = document.querySelector('#extra-comments');
-                  
-                  let commentList = []; // Store all comments
-                  
-                  submitComment.addEventListener('click', () => {
-                    const commentInput = document.querySelector('#comment-input');
-                    const newComment = commentInput.value.trim();
-                  
-                    if (newComment) {
-                      commentList.unshift(newComment); // Add new comment to the top of the list
-                      commentInput.value = ''; // Clear input field
-                  
-                      // Update latest comment
-                      latestComment.textContent = commentList[0];
-                      latestComment.style.display = 'block';
-                  
-                      // Update "More Comments" section
-                      if (commentList.length > 1) {
-                        moreComments.style.display = 'block';
-                        const remainingComments = commentList.slice(1).map(c => `<div>${c}</div>`).join('');
-                        extraComments.innerHTML = remainingComments;
-                      }
-                    }
-                  });
-                  
-                  // Toggle visibility of "More Comments"
-                  document.querySelector('#view-more-comments').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const extraCommentsDiv = document.querySelector('#extra-comments');
-                    extraCommentsDiv.style.display = extraCommentsDiv.style.display === 'none' ? 'block' : 'none';
-                  });
-                  
-                                      // share 
-                                      document.querySelector('.share_link').addEventListener('click', () => {
-                        if (navigator.share) {
-                          navigator
-                            .share({
-                              title: 'Check this out!',
-                              text: 'This is an awesome post. Check it out!',
-                              url: window.location.href, // Current page URL
-                            })
-                            .then(() => console.log('Shared successfully!'))
-                            .catch((error) => console.error('Error sharing:', error));
-                        } else {
-                          alert('Web Share API is not supported in your browser. Please use the share options below.');
-                        }
-                      });
-                  
-                                    </script>
                 </div>
                 <div class="share_link">
                   <i class="fas fa-share"></i> Share
@@ -221,45 +167,7 @@
                 </a>
               </div>
             </div>
-            <script>
-              // see more 
-              document.addEventListener("DOMContentLoaded", function () {
-                const toggleMore = document.querySelector(".toggle-more");
-                const hiddenText = document.querySelector(".hidden-text");
-              
-                // Function to check if text is truncated
-                function isTextTruncated(element) {
-                  return element.scrollHeight > element.offsetHeight; // Check overflow
-                }
-              
-                // Function to handle "See more" visibility
-                function handleToggleMoreVisibility() {
-                  if (isTextTruncated(hiddenText)) {
-                    toggleMore.style.display = "block"; // Show button if text is truncated
-                  } else {
-                    toggleMore.style.display = "none"; // Hide button if text fits
-                  }
-                }
-              
-                // Check visibility on page load
-                handleToggleMoreVisibility();
-              
-                // Recheck visibility on resize
-                window.addEventListener("resize", handleToggleMoreVisibility);
-              
-                // Toggle text visibility on click
-                toggleMore.addEventListener("click", function () {
-                  hiddenText.classList.toggle("show"); // Toggle the "show" class
-                  toggleMore.textContent = hiddenText.classList.contains("show")
-                    ? "See less..."
-                    : "See more...";
-                });
-              });
-              
-              
-              
-              
-              </script>
+            
           </div><% }); %>
           <% } else { %>
             <p>No posts available.</p>
@@ -270,5 +178,126 @@
       </div>
     </div>
   </section>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+  const hiddenText = document.querySelector(".hidden-text"); // Target the hidden text
+  const toggleMore = document.getElementById("toggle-more"); // Target the toggle-more span
 
+  if (hiddenText && toggleMore) {
+    // Function to check if text is truncated
+    function isTextTruncated(element) {
+      const computedStyle = window.getComputedStyle(element);
+      const lineHeight = parseFloat(computedStyle.lineHeight); // Get line height
+      const maxLines = 4; // Limit to 4 lines
+      const actualLines = Math.ceil(element.scrollHeight / lineHeight); // Calculate actual lines
+
+      return actualLines > maxLines; // True if text exceeds 4 lines
+    }
+
+    // Function to handle toggle-more visibility and text
+    function handleToggleVisibility() {
+      if (isTextTruncated(hiddenText)) {
+        toggleMore.classList.remove("see-more-hidden");
+        toggleMore.classList.add("see-more-visible");
+      } else {
+        toggleMore.classList.remove("see-more-visible");
+        toggleMore.classList.add("see-more-hidden");
+      }
+    }
+
+    // Initial visibility check
+    handleToggleVisibility();
+
+    // Event listener for toggleMore click
+    toggleMore.addEventListener("click", function () {
+      if (hiddenText.classList.contains("hidden-text")) {
+        hiddenText.classList.remove("hidden-text");
+        hiddenText.classList.add("show-text"); // Add show-text class to remove line limit
+        toggleMore.textContent = "See less..."; // Update toggleMore text
+      } else {
+        hiddenText.classList.remove("show-text");
+        hiddenText.classList.add("hidden-text"); // Reapply hidden-text class
+        toggleMore.textContent = "See more..."; // Update toggleMore text
+      }
+    });
+  }
+});
+
+</script>  
+  <!-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const blogCards = document.querySelectorAll(".blog--card");
+  
+    blogCards.forEach((card) => {
+      // SEE MORE FUNCTIONALITY
+      const toggleMore = card.querySelector(".toggle-more");
+      const hiddenText = card.querySelector(".hidden-text");
+  
+      if (toggleMore && hiddenText) {
+        // Function to check if text is truncated
+        function isTextTruncated(element) {
+          return element.scrollHeight > element.offsetHeight; // Check overflow
+        }
+  
+        // Function to handle "See More" visibility
+        function handleToggleMoreVisibility() {
+          if (isTextTruncated(hiddenText)) {
+            toggleMore.style.display = "block"; // Show button if text is truncated
+          } else {
+            toggleMore.style.display = "none"; // Hide button if text fits
+          }
+        }
+  
+        // Check visibility on page load
+        handleToggleMoreVisibility();
+  
+        // Recheck visibility on resize
+        window.addEventListener("resize", handleToggleMoreVisibility);
+  
+        // Toggle text visibility on click
+        toggleMore.addEventListener("click", function () {
+          hiddenText.classList.toggle("show"); // Toggle the "show" class
+          toggleMore.textContent = hiddenText.classList.contains("show")
+            ? "See less..."
+            : "See more...";
+        });
+      }
+  
+      // COMMENT FUNCTIONALITY
+      const commentButton = card.querySelector(".comment");
+      const commentBox = card.querySelector(".comment_box");
+  
+      if (commentButton && commentBox) {
+        commentButton.addEventListener("click", () => {
+          commentBox.classList.toggle("visible");
+        });
+      }
+  
+      // SHARE FUNCTIONALITY
+      const shareLink = card.querySelector(".share_link");
+      if (shareLink) {
+        shareLink.addEventListener("click", () => {
+          if (navigator.share) {
+            navigator
+              .share({
+                title: "Check this out!",
+                text: "This is an awesome post. Check it out!",
+                url: window.location.href, // Current page URL
+              })
+              .then(() => console.log("Shared successfully!"))
+              .catch((error) => console.error("Error sharing:", error));
+          } else {
+            alert(
+              "Web Share API is not supported in your browser. Please use the share options below."
+            );
+          }
+        });
+      }
+    });
+   
+  
+  });
+  
+  
+   </script> -->
   <%include ./newpartials/footer%>
