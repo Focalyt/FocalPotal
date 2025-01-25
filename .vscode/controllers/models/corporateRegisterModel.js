@@ -26,7 +26,7 @@ const corporateRegisterSchema = new Schema(
 		description: String,
 		zipcode: String,
 		whatsappNumber:String,
-        companyExecutives:[{name:String,Designation:String,Image:String,Linkedlin:String}],
+        companyExecutives:[{name:String,designation:String,Image:String,Linkedlin:String}],
 		status: {
 			type: Boolean,
 			default: true,
@@ -35,7 +35,7 @@ const corporateRegisterSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
-		isProfileCompleted:false
+		
 	},
 	{ timestamps: true }
 );

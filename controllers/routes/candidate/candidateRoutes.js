@@ -299,7 +299,7 @@ router
         return res.send({ status: "failure", error: "Something went wrong!" });
       }
       let formData = value;
-      const { name, mobile, sex, place, latitude, longitude } = formData;
+      const { name, mobile,status, sex, place, latitude, longitude } = formData;
 
       if (formData?.refCode && formData?.refCode !== '') {
         let referredBy = await Candidate.findOne({ _id: formData.refCode, status: true, isDeleted: false })
@@ -355,11 +355,13 @@ router
         place,
         latitude,
         longitude,
+        status,
         location: {
           type: "Point",
           coordinates: [latitude, longitude]
         }
       }
+      console.log("Candidate Data",candidateBody)
       if (formData?.refCode && formData?.refCode !== '') {
         candidateBody["referredBy"] = formData?.refCode
       }
@@ -3206,7 +3208,7 @@ router.route('/verification')
   .post(isCandidate, authenti, async (req, res) => {
     try {
       const { mobile, verified } = req.body;
-      let candidate = await Candidate.findOne({ mobile })
+      let candidate = await Candidate.findOne({ mobile });
       if (!candidate) {
         return res.send({ status: false, message: "No such user found" })
       }

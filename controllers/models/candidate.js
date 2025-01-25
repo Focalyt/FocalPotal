@@ -534,6 +534,12 @@ const candidateSchema = new Schema(
       default: true,
       description: "Indicates whether the candidate’s profile is visible to others"
     },
+    // Profile visibility status
+    status: {
+      type: Boolean,
+      default: true,
+      description: "Indicates whether the candidate’s profile is visible to others"
+    },
 
     // Location data in GeoJSON format
     location: {

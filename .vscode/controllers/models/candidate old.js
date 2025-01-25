@@ -65,6 +65,14 @@ const candidateSchema = new Schema(
     ],
     techSkills: [{ id: { type: ObjectId, ref: "Skill" }, URL: String }],
     nonTechSkills: [{ id: { type: ObjectId, ref: "Skill" }, URL: String }],
+    status: {
+      type: Boolean,
+      default: true
+    },
+    statusNew: {
+      type: Boolean,
+      default: true
+    },
     name: { type: String, trim: true },
     mobile: {
       type: Number,
@@ -112,7 +120,12 @@ const candidateSchema = new Schema(
     otherUrls: [{}],
     highestQualification: String,
     yearOfPassing: String,
+
     isProfileCompleted: {
+      type: Boolean,
+      default: false,
+    },
+    isProfileCompletedNew: {
       type: Boolean,
       default: false,
     },
@@ -124,10 +137,7 @@ const candidateSchema = new Schema(
     totalExperience: Number,
     careerObjective: String,
     enrollmentFormPdfLink: String,
-    status: {
-      type: Boolean,
-      default: true,
-    },
+    
     interests: [String],
     accessToken: [String],
     isDeleted: {
@@ -166,6 +176,14 @@ const candidateSchema = new Schema(
   { timestamps: true }
 );
 
+candidateSchema.pre("save", function (next) {
+  if (this.status === undefined) {
+    this.status = true; // Set only if undefined
+  }
+  next();
+});
+
+
 candidateSchema.methods = {
   async generateAuthToken() {
     const data = { id: this._id.toHexString() };
@@ -179,5 +197,6 @@ candidateSchema.methods = {
     return token;
   },
 };
+
 
 module.exports = model("Candidate", candidateSchema);
