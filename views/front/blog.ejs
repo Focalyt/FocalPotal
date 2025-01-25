@@ -122,6 +122,24 @@
                   </div>
                 </div>
               </div>
+              <div class="count_section">
+                <div class="count_item">
+                    <i class="fas fa-thumbs-up"></i>
+                    <span>50K</span>
+                </div>
+
+                <div class="inner_count_section">
+                  <div class="count_item">
+                    <i class="fas fa-comments"></i>
+                    <span>474</span>
+                </div>
+                <div class="count_item">
+                    <i class="fas fa-share"></i>
+                    <span>379</span>
+                </div>
+                </div>
+               
+            </div>
               <!-- Like, Comment, and Share Buttons -->
               <div
                 class="interaction-buttons d-flex align-items-center justify-content-between">
@@ -133,15 +151,113 @@
                   <i class="fas fa-comment-alt"></i> Comment
                  
                 </div>
-                <div class="share">
+                <div class="share_link">
                   <i class="fas fa-share"></i> Share
+                  <script>
+                    document.querySelector('.share_link').addEventListener('click', () => {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: 'Check this out!',
+            text: 'This is an awesome post. Check it out!',
+            url: window.location.href, // Current page URL
+          })
+          .then(() => console.log('Shared successfully!'))
+          .catch((error) => console.error('Error sharing:', error));
+      } else {
+        alert('Web Share API is not supported in your browser. Please use the share options below.');
+      }
+    });
+
+                  </script>
                 </div>
               </div>
               <div class="comment_box">
-                <textarea rows="3" placeholder="Write a comment..."></textarea>
+                <textarea rows="1" placeholder="Write a comment..."></textarea>
+                <a href="#" class="shareBtn"> 
+                 <img src="/public_assets/images/icons/share.png" alt="">
+                </a>
               </div>
             </div>
-
+            <script>
+              // see more 
+              document.addEventListener("DOMContentLoaded", function () {
+                const toggleMore = document.querySelector(".toggle-more");
+                const hiddenText = document.querySelector(".hidden-text");
+              
+                // Function to check if text is truncated
+                function isTextTruncated(element) {
+                  return element.scrollHeight > element.offsetHeight; // Check overflow
+                }
+              
+                // Function to handle "See more" visibility
+                function handleToggleMoreVisibility() {
+                  if (isTextTruncated(hiddenText)) {
+                    toggleMore.style.display = "block"; // Show button if text is truncated
+                  } else {
+                    toggleMore.style.display = "none"; // Hide button if text fits
+                  }
+                }
+              
+                // Check visibility on page load
+                handleToggleMoreVisibility();
+              
+                // Recheck visibility on resize
+                window.addEventListener("resize", handleToggleMoreVisibility);
+              
+                // Toggle text visibility on click
+                toggleMore.addEventListener("click", function () {
+                  hiddenText.classList.toggle("show"); // Toggle the "show" class
+                  toggleMore.textContent = hiddenText.classList.contains("show")
+                    ? "See less..."
+                    : "See more...";
+                });
+              });
+              
+              
+               $(document).ready(function () {
+                const candidateImages = $("#blog--images .happy_candidate_images");
+                const imageCount = candidateImages.children().length;
+              
+                if (imageCount > 1) {
+                  // Initialize Slick Slider for multiple images
+                  candidateImages.slick({
+                    dots: true,
+                    infinite: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: true, // Add arrows for navigation
+                    autoplay: false,
+                    autoplaySpeed: 2000,
+                    responsive: [
+                      {
+                        breakpoint: 1366,
+                        settings: {
+                          slidesToShow: 1,
+                        },
+                      },
+                      {
+                        breakpoint: 768,
+                        settings: {
+                          slidesToShow: 1,
+                        },
+                      },
+                    ],
+                  });
+                } else if (imageCount === 1) {
+                  // For a single image, ensure it displays properly
+                  candidateImages.children().css({
+                    width: "100%",
+                    display: "block",
+                  });
+                  candidateImages.css({
+                    display: "flex",
+                    justifyContent: "center",
+                  });
+                }
+              });
+              
+              </script>
           </div><% }); %>
           <% } else { %>
             <p>No posts available.</p>
