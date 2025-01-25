@@ -43,7 +43,10 @@ const PostSchema = new Schema({
       text: { type: String, required: true },
       createdAt: { type: Date, default: Date.now },
     },
-  ],
+  ],status: {
+    type: Boolean,
+    default: true,
+  },
   createdAt: {
     type: Date, // Timestamp for the post creation
     default: Date.now,
