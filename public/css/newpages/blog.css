@@ -346,16 +346,14 @@
   font-size: 18px;
   line-height: 1.2em;
 }
+
 .show-text {
-  display: -webkit-box;
-  
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  transition: 0.5s ease;
-  
+  -webkit-line-clamp: unset;
   font-size: 18px;
-  line-height: 1.2em;
+  overflow: visible;
+  max-height: 500px; /* Optional, agar limit rakhni ho to */
 }
+
 .see-more-visible {
   color: #FC2B5A;
   cursor: pointer;
@@ -370,11 +368,8 @@
 }
 
 
-.hidden-text.show {
-  -webkit-line-clamp: unset;
-  overflow: visible;
-  max-height: 500px;
-}
+
+
 
 .toggle-more {
   

@@ -47,6 +47,14 @@ const PostSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  tags: [
+      {
+        userId: { ObjectId },
+        name : {type:String},
+        userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] },
+      },
+     
+    ],
   createdAt: {
     type: Date, // Timestamp for the post creation
     default: Date.now,

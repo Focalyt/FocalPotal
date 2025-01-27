@@ -1,11 +1,10 @@
-
 <%include ./newpartials/header%>
 
-<section class="section-padding-120 mt-5">
-  <div class="container">
-    <div class="mainContentLayout">
-      <!-- Header -->
-      <!-- <div class="blog_header">
+  <section class="section-padding-120 mt-5">
+    <div class="container">
+      <div class="mainContentLayout">
+        <!-- Header -->
+        <!-- <div class="blog_header">
           Left Section: Logo and Search
           <div class="blog_logo">
             <div class="blogFocalLogo">
@@ -44,186 +43,251 @@
           </div>
         </div> -->
 
-      <!-- Main Content -->
-      <div class="mainContainer">
-        <div class="leftSidebar">
-          <div class="sidebar-container">
-          </div>
-
-        </div>
-        <div class="mainBody">
-          <% if (posts && posts.length > 0) { %>
-            <% posts.forEach((post) => { %>
-          <div class="blog--card">
-            <!-- Header Section -->
-            <div class="card-header">
-              <div class="inner__card">
-                <div class="user_image text-black">
-                  <figure>
-                    <img src="public_assets/images/newpage/favicon.png" alt>
-                  </figure>
-
-                </div>
-                <h3 class="user__name text-black">
-                  <span class="start__name"><b>Focalyt</b></span>
-                  <% if (post.tags && post.tags.length > 0) { %>
-                    <% post.tags.forEach((tag, index) => { %>
-                      <span class="tag__user">
-                        <% if (index === 0) { %> is with <% } %>
-                        <span class="strong"><b><%= tag.name %></b></span>
-                      </span>
-                    <% }); %>
-                    <% if (post.tags.length > 1) { %>
-                      <span class="more__user strong"> & <b><%= post.tags.length - 1 %></b></span>
-                      <span class="other"><b> Others</b></span>
-                    <% } %>
-                  <% } %>
-                </h3>
-                
-                
-
-              </div>
-
-              <!-- <h5 class="blog__title text-black">Secure Your Future with Cybersecurity! <span>more...</span></h5> -->
-              <h5 class="blog__title text-black">
-                <span class="hidden-text ">
-                  <%= post.content || "No content available" %>
-                </span>
-                <span style="color: #FC2B5A;  cursor: pointer;
-                font-size: 14px;
-                text-decoration: underline;
-                margin-top: 5px;
-                display: block;" id="toggle-more" class="">See more...</span>
-
-              </h5>
-
+        <!-- Main Content -->
+        <div class="mainContainer">
+          <div class="leftSidebar">
+            <div class="sidebar-container">
             </div>
 
-            <!-- Main Content -->
-            <div class="card-content">
-              <div class="card-image">
-                <div class="happy_candidates" id="blog--images">
-                  <div class="happy_candidate_images">
-                    <% if (post.files && post.files.length > 0) { %>
-                      <% post.files.forEach((file) => { %>
-                        <% if (file.fileType === "image") { %>
-                          <div>
-                            <img src="<%= file.fileURL %>" class="d-block w-100" alt="image">
-                          </div>
-                        <% } else if (file.fileType === "video") { %>
-                          <div>
-                            <video class="d-block w-100 video_height" controls autoplay muted>
-                              <source src="<%= file.fileURL %>" type="video/mp4">
-                              Your browser does not support the video tag.
-                            </video>
-                          </div>
-                        <% } %>
-                      <% }); %>
-                    <% } %>
-                    
-                    
+          </div>
+          <div class="mainBody">
+            <% if (posts && posts.length> 0) { %>
+              <% posts.forEach((post)=> { %>
+                <div class="blog--card">
+                  <!-- Header Section -->
+                  <div class="card-header">
+                    <div class="inner__card">
+                      <div class="user_image text-black">
+                        <figure>
+                          <img src="public_assets/images/newpage/favicon.png" alt>
+                        </figure>
+
+                      </div>
+                      <h3 class="user__name text-black">
+                        <span class="start__name"><b>Focalyt</b></span>
+                        <% if (post.tags && post.tags.length> 0) { %>
+                          <% post.tags.forEach((tag, index)=> { %>
+                            <span class="tag__user">
+                              <% if (index===0) { %> is with <% } %>
+                                  <span class="strong"><b>
+                                      <%= tag.name %>
+                                    </b></span>
+                            </span>
+                            <% }); %>
+                              <% if (post.tags.length> 1) { %>
+                                <span class="more__user strong"> & <b>
+                                    <%= post.tags.length - 1 %>
+                                  </b></span>
+                                <span class="other"><b> Others</b></span>
+                                <% } %>
+                                  <% } %>
+                      </h3>
+
+
+
+                    </div>
+
+                    <!-- <h5 class="blog__title text-black">Secure Your Future with Cybersecurity! <span>more...</span></h5> -->
+                    <h5 class="blog__title text-black">
+                      <span class="hidden-text">
+                        <%= post.content || "No content available" %>
+                      </span>
+                      <span class="toggle-more see-more-hidden">See more...</span> <!-- Changed ID to class -->
+                    </h5>
+
 
                   </div>
-                </div>
-              </div>
-              <div class="count_section">
-                <div class="count_item">
-                    <i class="fas fa-thumbs-up"></i>
-                    <span>50K</span>
-                </div>
 
-                <div class="inner_count_section">
-                  <div class="count_item">
-                    <i class="fas fa-comments"></i>
-                    <span>474</span>
-                </div>
-                <div class="count_item">
-                    <i class="fas fa-share"></i>
-                    <span>379</span>
-                </div>
-                </div>
-               
-            </div>
-              <!-- Like, Comment, and Share Buttons -->
-              <div
-                class="interaction-buttons d-flex align-items-center justify-content-between">
-                <div class="like">
-                  <i class="fas fa-thumbs-up"></i> Like
-                 
-                </div>
-                <div class="comment">
-                  <i class="fas fa-comment-alt"></i> Comment
-                  
-                </div>
-                <div class="share_link">
-                  <i class="fas fa-share"></i> Share
-            
-                </div>
-              </div>
-              <div class="comment_box">
-                <textarea rows="1" placeholder="Write a comment..."></textarea>
-                <a href="#" class="shareBtn"> 
-                 <img src="/public_assets/images/icons/share.png" alt="">
-                </a>
-              </div>
-            </div>
-            
-          </div><% }); %>
-          <% } else { %>
-            <p>No posts available.</p>
-          <% } %>
+                  <!-- Main Content -->
+                  <div class="card-content">
+                    <div class="card-image">
+                      <div class="happy_candidates" id="blog--images">
+                        <div class="happy_candidate_images">
+                          <% if (post.files && post.files.length> 0) { %>
+                            <% post.files.forEach((file)=> { %>
+                              <% if (file.fileType==="image" ) { %>
+                                <div>
+                                  <img src="<%= file.fileURL %>" class="d-block w-100" alt="image">
+                                </div>
+                                <% } else if (file.fileType==="video" ) { %>
+                                  <div>
+                                    <video class="d-block w-100 video_height lazy-video" muted controls autoplay
+                                      playsinline>
+                                      <source src="<%= file.fileURL %>" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                    </video>
+                                  </div>
+                                  <% } %>
+                                    <% }); %>
+                                      <% } %>
 
-          <div class="rightSidebar d-none"></div>
+
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="count_section">
+                      <div class="count_item">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span>50K</span>
+                      </div>
+
+                      <div class="inner_count_section">
+                        <div class="count_item">
+                          <i class="fas fa-comments"></i>
+                          <span>474</span>
+                        </div>
+                        <div class="count_item">
+                          <i class="fas fa-share"></i>
+                          <span>379</span>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- Like, Comment, and Share Buttons -->
+                    <div class="interaction-buttons d-flex align-items-center justify-content-between">
+                      <div class="like">
+                        <i class="fas fa-thumbs-up"></i> Like
+
+                      </div>
+                      <div class="comment">
+                        <i class="fas fa-comment-alt"></i> Comment
+
+                      </div>
+                      <div class="share_link">
+                        <i class="fas fa-share"></i> Share
+
+                      </div>
+                    </div>
+                    <div class="comment_box">
+                      <textarea rows="1" placeholder="Write a comment..."></textarea>
+                      <a href="#" class="shareBtn">
+                        <img src="/public_assets/images/icons/share.png" alt="">
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+                <% }); %>
+                  <% } else { %>
+                    <p>No posts available.</p>
+                    <% } %>
+
+                      <div class="rightSidebar d-none"></div>
+          </div>
         </div>
       </div>
-    </div>
   </section>
   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-  const hiddenText = document.querySelector(".hidden-text"); // Target the hidden text
-  const toggleMore = document.getElementById("toggle-more"); // Target the toggle-more span
+    document.addEventListener("DOMContentLoaded", function () {
+      const blogCards = document.querySelectorAll(".blog--card"); // Sabhi blog cards ko target karein
+      blogCards.forEach((card) => {
+        const hiddenText = card.querySelector(".hidden-text"); // Card ke text ko target karein
+        const toggleMore = card.querySelector(".toggle-more"); // Card ke toggle button ko target karein
 
-  if (hiddenText && toggleMore) {
-    // Function to check if text is truncated
-    function isTextTruncated(element) {
-      const computedStyle = window.getComputedStyle(element);
-      const lineHeight = parseFloat(computedStyle.lineHeight); // Get line height
-      const maxLines = 4; // Limit to 4 lines
-      const actualLines = Math.ceil(element.scrollHeight / lineHeight); // Calculate actual lines
+        if (hiddenText && toggleMore) {
+          // Function to check if text is truncated
+          function isTextTruncated(element) {
+            const computedStyle = window.getComputedStyle(element);
+            const lineHeight = parseFloat(computedStyle.lineHeight); // Line height calculate karein
+            const maxLines = 4; // Max 4 lines ki limit
+            const actualLines = Math.ceil(element.scrollHeight / lineHeight); // Total lines calculate karein
 
-      return actualLines > maxLines; // True if text exceeds 4 lines
-    }
+            return actualLines > maxLines; // True agar 4 lines se zyada hai
+          }
 
-    // Function to handle toggle-more visibility and text
-    function handleToggleVisibility() {
-      if (isTextTruncated(hiddenText)) {
-        toggleMore.classList.remove("see-more-hidden");
-        toggleMore.classList.add("see-more-visible");
-      } else {
-        toggleMore.classList.remove("see-more-visible");
-        toggleMore.classList.add("see-more-hidden");
-      }
-    }
+          // Function to handle toggle-more visibility
+          function handleToggleVisibility() {
+            if (isTextTruncated(hiddenText)) {
+              toggleMore.classList.remove("see-more-hidden"); // Button visible karein
+              toggleMore.classList.add("see-more-visible"); // Visible class add karein
+            } else {
+              toggleMore.classList.remove("see-more-visible"); // Button hidden karein
+              toggleMore.classList.add("see-more-hidden"); // Hidden class add karein
+            }
+          }
 
-    // Initial visibility check
-    handleToggleVisibility();
+          // Initial visibility check
+          handleToggleVisibility();
 
-    // Event listener for toggleMore click
-    toggleMore.addEventListener("click", function () {
-      if (hiddenText.classList.contains("hidden-text")) {
-        hiddenText.classList.remove("hidden-text");
-        hiddenText.classList.add("show-text"); // Add show-text class to remove line limit
-        toggleMore.textContent = "See less..."; // Update toggleMore text
-      } else {
-        hiddenText.classList.remove("show-text");
-        hiddenText.classList.add("hidden-text"); // Reapply hidden-text class
-        toggleMore.textContent = "See more..."; // Update toggleMore text
-      }
+
+
+          // Toggle visibility on button click
+          toggleMore.addEventListener("click", function () {
+            if (hiddenText.classList.contains("hidden-text")) {
+              hiddenText.classList.remove("hidden-text");
+              hiddenText.classList.add("show-text"); // Text pura dikhane ke liye class change karein
+              toggleMore.textContent = "See less..."; // Button text update karein
+            } else {
+              hiddenText.classList.remove("show-text");
+              hiddenText.classList.add("hidden-text"); // Text phir se chhupane ke liye class change karein
+              toggleMore.textContent = "See more..."; // Button text update karein
+            }
+          });
+
+          // COMMENT FUNCTIONALITY
+          const commentButton = card.querySelector(".comment");
+          const commentBox = card.querySelector(".comment_box");
+
+          if (commentButton && commentBox) {
+            commentButton.addEventListener("click", () => {
+              commentBox.classList.toggle("visible");
+            });
+          }
+
+        }
+      });
     });
-  }
-});
 
-</script>  
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const videos = document.querySelectorAll(".lazy-video"); // Select all videos with class 'lazy-video'
+
+      // Ensure all videos are paused initially
+      videos.forEach((video) => {
+        video.pause(); // Start with paused state
+      });
+
+      // Create Intersection Observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const video = entry.target;
+
+
+            if (entry.isIntersecting) {
+              
+              // Define an async function to handle the play and unmute logic
+              const playVideo = async (video) => {
+                try {
+                  // Start playing the video in muted mode
+                  
+                  await video.play(); // Wait for the video to start playing
+                 
+                } catch (error) {
+                  console.error("Error while trying to play the video:", error); // Handle autoplay errors
+                }
+              };
+
+              // Call the async function
+              playVideo(video);
+            } else {
+              // Pause the video when it exits the viewport
+              video.pause();
+            }
+          });
+        },
+        { threshold: 0.5 } // At least 50% of the video should be visible
+      );
+
+      // Observe each video
+      videos.forEach((video) => {
+        observer.observe(video);
+      });
+    });
+
+
+  </script>
   <!-- <script>
     document.addEventListener("DOMContentLoaded", function () {
     const blogCards = document.querySelectorAll(".blog--card");
