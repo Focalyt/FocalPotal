@@ -14,11 +14,28 @@ router
 	.route("/add")
 	.get(async (req, res) => {
 		try {
+			const perPage = 10; // प्रति पेज रिकॉर्ड्स की संख्या
+			const page = parseInt(req.query.page) || 1; // वर्तमान पेज
+			const filter = {
+				isDeleted: false,
+				status: true,
+			  };
+		
+			let candidates = await Candidate.find(filter)
+			  .sort({ createdAt: -1 })
+			  .skip((page - 1) * perPage)
+			  .limit(perPage);
+		
+			const totalCandidates = await Candidate.countDocuments();
+			const totalPages = Math.ceil(totalCandidates / perPage);
+		
 			return res.render(`${req.vPath}/admin/post/add`, {
-				menu: 'addPost',
-				
+			  menu: 'addPost',
+			  candidates,
+			  currentPage: page,
+			  totalPages,
 			});
-		} catch (err) {
+		  }  catch (err) {
 			req.flash("error", err.message || "Something went wrong!");
 			return res.redirect("back");
 		}

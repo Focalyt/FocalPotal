@@ -197,7 +197,10 @@
                                       <th>Mobile</th>
                                     </tr>
                                 </thead>
+                                
+                                
                                 <tbody>
+                                  <% candidates.forEach((candidate)=> { %>
                                         <tr>
                                           <td>
                                             <input type="checkbox">
@@ -205,13 +208,13 @@
                                             <td class="employee-info">
                                                 <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
                                                 <div class='employee-basic-info'>
-                                                    <span class="employee-name tooltipp" title="Akash">Akash</span>
+                                                    <span class="employee-name tooltipp" title="Akash"><%= candidate.name %></span>
                                                 
                                                 </div>
                                             </td>
-                                            <td>12345678900</td>
+                                            <td><%= candidate.mobile %></td>
                                                 
-                                        </tr>
+                                        </tr><% }); %>
                                 </tbody>
                             </table>
                             </div>
