@@ -3,7 +3,26 @@ const { ObjectId } = require("mongodb");
 const bcrypt = require("bcryptjs");
 const { auth1, isAdmin } = require("../../../helpers");
 const moment = require("moment");
-const { Courses, CourseSectors, Candidate, AppliedCourses } = require("../../models");
+const { Courses, CourseSectors, Import,
+	Candidate,
+	Qualification,
+	Skill,
+	Country,
+	User,
+	State,
+	City,
+	College,
+	SubQualification,
+	University,
+	coinsOffers,
+	CoinsAlgo,
+	SmsHistory,
+	CashBackRequest,
+	CandidateCashBack,
+	KycDocument,
+	Notification,
+	Referral,
+	CandidateDoc } = require("../../models");
 const candidateServices = require('../services/candidate')
 const { candidateCashbackEventName } = require('../../db/constant');
 const router = express.Router();
@@ -16,7 +35,7 @@ router
 		try {
 			let view = false
 						if (req.session.user.role === 10) {
-							view = true
+							view = true 
 						}
 						const data = req.query
 						if (req.query.status == undefined) {
