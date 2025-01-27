@@ -366,10 +366,28 @@
 .see-more-hidden {
   display: none; /* Hide the button */
 }
-
-
-
-
+.lab_demo{
+  font-size: 25px;
+  font-weight: 500;   
+}
+.labQuate{
+  line-height: normal;
+  font-size: 15px;
+}
+.model_btn{
+  display: inline;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    /* width: 50%; */
+    text-align: center;
+    align-content: center;
+    margin: auto;
+    background-color: #FC2B5A;
+    color: #fff;
+    transition: 0.5s ease;
+    border: 1px solid #FC2B5A;
+}
 
 .toggle-more {
   

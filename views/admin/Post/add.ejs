@@ -14,7 +14,8 @@
             </div>
         </div>
     </div>
-    <div class="content-body">
+    <div id="add-model">
+      <div class="content-body">
         <% include ../partials/flash %>
             <form id="post-form" enctype="multipart/form-data">
                 <!-- Input Group for Post -->
@@ -40,11 +41,11 @@
                                 </button>
                             </div>
                             <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="overflow: hidden;">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Tag People</h5>
+          <h5 class="modal-title text-white" id="staticBackdropLabel">Tag People</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background:transparent; border:none">
             <i class="fa-solid fa-x" style="color: #ffffff;"></i>
           </button>
@@ -52,7 +53,15 @@
         <div class="modal-body">
           <div class="tag_people">
             <div class="search">
-                <input type="search" placeholder="Search"> <span class="done">Done</span>
+              <div class="tagging-container">
+                <div class="tag-input-container">
+                    <div class="tags">
+                        <!-- Tags will dynamically appear here -->
+                    </div>
+                    <input type="text" class="tag-input" placeholder="Taged">
+                </div>
+                <span class="done">Done</span>
+            </div>         
                 <div class="nav--pills">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -73,29 +82,146 @@
                       <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="admin-tab">
                           <!-- Admin content goes here -->
-                          Content for Admin
+                          <div class="inner_search">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="search" placeholder="Search">
+                          </div>
+                          <div class='employee-attendance-table'>
+                            <table class="employee-table">
+                                <thead>
+                                    <tr class='header-tr'>
+                                      <th>Checkbox</th>
+                                      <th>Name</th>
+                                      <th>Mobile</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                          <td>
+                                            <input type="checkbox">
+                                          </td>
+                                            <td class="employee-info">
+                                                <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+                                                <div class='employee-basic-info'>
+                                                    <span class="employee-name tooltipp" title="Akash">Akash</span>
+                                                
+                                                </div>
+                                            </td>
+                                            <td>12345678900</td>
+                                                
+                                        </tr>
+                                </tbody>
+                            </table>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
                           <!-- Company content goes here -->
-                          Content for Company
+                          <div class="inner_search">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="search" placeholder="Search">
+                          </div>
+                          <div class='employee-attendance-table'>
+                            <table class="employee-table">
+                                <thead>
+                                    <tr class='header-tr'>
+                                      <th>Checkbox</th>
+                                      <th>Company Name</th>
+                                      <th>Mobile</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                          <td>
+                                            <input type="checkbox">
+                                          </td>
+                                            <td class="employee-info">
+                                                <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+                                                <div class='employee-basic-info'>
+                                                    <span class="employee-name tooltipp" title="Focal Skill Development Pvt Ltd">Focal Skill Development Pvt Ltd</span>
+                                                
+                                                </div>
+                                            </td>
+                                            <td>12345678900</td>
+                                                
+                                        </tr>
+                                </tbody>
+                            </table>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="institute" role="tabpanel" aria-labelledby="institute-tab">
                           <!-- Institute content goes here -->
-                          Content for Institute
+                          <div class="inner_search">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="search" placeholder="Search">
+                          </div>
+                          <div class='employee-attendance-table'>
+                            <table class="employee-table">
+                                <thead>
+                                    <tr class='header-tr'>
+                                      <th>Checkbox</th>
+                                      <th>Institute Name</th>
+                                      <th>Mobile</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                          <td>
+                                            <input type="checkbox">
+                                          </td>
+                                            <td class="employee-info">
+                                                <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+                                                <div class='employee-basic-info'>
+                                                    <span class="employee-name tooltipp" title="Akash">Akash</span>
+                                                
+                                                </div>
+                                            </td>
+                                            <td>12345678900</td>
+                                                
+                                        </tr>
+                                </tbody>
+                            </table>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
                           <!-- Student content goes here -->
-                          Content for Student
+                          <div class="inner_search">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="search" placeholder="Search">
+                          </div>
+                          <div class='employee-attendance-table'>
+                            <table class="employee-table">
+                                <thead>
+                                    <tr class='header-tr'>
+                                      <th>Checkbox</th>
+                                      <th>Student Name</th>
+                                      <th>Mobile</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                          <td>
+                                            <input type="checkbox">
+                                          </td>
+                                            <td class="employee-info">
+                                                <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+                                                <div class='employee-basic-info'>
+                                                    <span class="employee-name tooltipp" title="Akash">Akash</span>
+                                                
+                                                </div>
+                                            </td>
+                                            <td>12345678900</td>
+                                                
+                                        </tr>
+                                </tbody>
+                            </table>
+                            </div>
                         </div>
                       </div>
                 </div>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
-        </div>
+        
       </div>
     </div>
   </div>
@@ -110,9 +236,19 @@
 
 
     </div>
+    </div>
+    
 
     <style>
-        .search input{
+    #add-model .hideScroll .model-open .model{
+        overflow: hidden;
+      }
+       .inner_search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.search input{
             border: 1px solid #ccc;
     border-radius: 15px;
     font-size: 16px;
@@ -120,10 +256,73 @@
     width: 60%;
 
         }
-        .done{
-            color: #FC2B5A;
-            padding-left: 10px;
-        }
+
+.search-icon {
+    color: #FC2B5A;
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    display: inline-block;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.inner_search input {
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    font-size: 16px;
+    padding: 3px 10px;
+    width: 60%;
+}
+.tagging-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    margin: 0 auto;
+}
+
+.tag-input-container {
+   margin-right: 10px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+.tag .remove-tag {
+    margin-left: 5px;
+    cursor: pointer;
+    color: #FC2B5A;
+    font-weight: bold;
+}
+
+.tag-input-container input {
+    /* border: ; */
+    outline: none;
+    font-size: 14px;
+    padding: 5px 10px;
+    min-width: 100%;
+}
+
+.done {
+    color: #FC2B5A;
+    cursor: pointer;
+    font-size: 14px;
+}
         .nav--pills{
             display: flex;
     gap: 5px;
@@ -133,7 +332,8 @@
     flex-direction: column;
         }
         .nav--pills > div{
-            background: #FC2B5A;
+            /* background: #FC2B5A; */
+            width: 100%;
         }
         .nav--pills .nav.nav-tabs .nav-item .nav-link {
             position: relative;
@@ -144,6 +344,7 @@
     transition: all 0.3s ease;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    font-size: 20px;
 }
 
 .nav--pills .nav.nav-tabs .nav-item .nav-link.active {
@@ -157,6 +358,7 @@
   transition: all 0.3s ease;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  font-size: 20px;
 }
 
 .nav--pills .nav.nav-tabs .nav-item .nav-link.active:after {
@@ -176,6 +378,185 @@
   opacity: 1;
   transform: scale(1); /* Reset zoom to normal for the active tab */
 }
+
+/* table css  */
+.employee-list-container {
+  padding: 0px;
+  width: 80%px;
+  background-color: var(--textWhite);
+  /* #ffffff;*/
+  border-radius: 8px;
+  color: #FF1567;
+}
+
+.employee-basic-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.employee-list-title {
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: center;
+  padding: 10px;
+}
+
+
+.employee-attendance-table {
+  width: 100%;
+  /* overflow-x: auto; */
+  margin-top: 25px;
+  max-height: 50vh;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.employee-table th{
+  text-align: center;
+}
+.employee-table th,
+.employee-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+
+}
+.employee-table tr{
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.employee-table thead{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.employee-table td {
+  color: black;
+  font-size: 15px;
+  text-align: left;
+
+}
+.employee-table tbody {
+  display: block;
+  max-height: 50vh;
+  overflow: auto;
+}
+/* .employee-table tbody tr{
+  min-height: 25px;
+}
+.employee-table tbody td {
+  width: auto;
+  max-width: 100px;
+  min-width: 20px;
+} */
+.employee-info {
+  display: flex;
+  align-items: center;
+}
+
+.employee-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.employee-name {
+  font-weight: 500;
+  color: #333;
+}
+.tooltipp{
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+    max-height: 1.2em;
+    transition: max-height 0.8s ease, white-space 0.8s ease;
+    cursor: pointer;
+}
+
+.employee
+.cateForm {
+  display: flex;
+  align-items: center;
+  
+  justify-content: space-around;
+  text-align: center;
+  width: 98%;
+  font-size: 13px;
+}
+.cateForm1
+{
+  display: block;
+  text-align: left;
+  width: 100%;
+}
+.cateForm label {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 5px 10px;
+  /* width: 50%; */
+  flex-direction: column;
+}
+.Description{
+  height: 150px;
+}
+
+.cateForm input {
+  width: 97%;
+  height: 30px;
+}
+.cateForm textarea {
+  width: 98%;
+}
+.cateBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  padding-block: 20px;
+  
+}
+
+.cateBtn button {
+  padding: 7px 20px;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.employee-table thead tr th{
+  font-size: 12px;
+  font-weight: 400;
+  padding: 7px 5px;
+}
+.employee-attendance-table > .employee-table > tbody {
+max-height: 50vh;
+}
+.employee-attendance-table::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.employee-attendance-table::-webkit-scrollbar-track {
+  background: #f0f0f0; 
+  border-radius: 10px; 
+}
+
+.employee-attendance-table::-webkit-scrollbar-thumb {
+  background-color: #FC2B5A;
+  border-radius: 10px; 
+  border: 2px solid #f0f0f0; 
+}
+
+.employee-attendance-table::-webkit-scrollbar-thumb:hover {
+  background-color: #d61a4d;
+}
     </style>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
@@ -186,6 +567,39 @@
     <!-- <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // tag users 
+      // Select input and tags container
+const inputField = document.querySelector('.tag-input');
+const tagsContainer = document.querySelector('.tags');
+
+// Function to create a tag
+function createTag(tagName) {
+    // Create the tag element
+    const tag = document.createElement('div');
+    tag.classList.add('tag');
+    tag.innerHTML = `${tagName} <span class="remove-tag">&times;</span>`;
+    
+    // Add a click event to the remove button
+    tag.querySelector('.remove-tag').addEventListener('click', () => {
+        tag.remove(); // Remove the tag
+    });
+
+    // Append the tag to the tags container
+    tagsContainer.appendChild(tag);
+}
+
+// Handle input field keypress
+inputField.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && inputField.value.trim() !== '') {
+        e.preventDefault(); // Prevent form submission
+        createTag(inputField.value.trim()); // Add the tag
+        inputField.value = ''; // Clear the input field
+    }
+});
+
+    </script>
     <script>
         $(document).ready(function () {
             // Handle form submission
