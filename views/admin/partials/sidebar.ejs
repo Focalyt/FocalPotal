@@ -124,12 +124,26 @@
     <li class="nav-item <% if(menu==='admin-roles') {%>active<%}%>"><a href="/admin/roles"><i class="fa-solid fa-lock"></i><span class="menu-title" data-i18n="Todo">Admin Roles</span></a>
     </li>
     <% } %>
-    <li class="nav-item <% if(menu==='loanEnquiry') {%>active<%}%>"><a href="/admin/loanEnquiry"><i class="fa-solid fa fa-university"></i><span class="menu-title" data-i18n="Todo">Loan Enquiry</span></a>
-    </li>
-    <li class="nav-item <% if(menu==='report') {%>active<%}%>"><a href="/admin/report"><i class="fa-solid fa-file-lines"></i><span class="menu-title" data-i18n="Todo">Report</span></a>
-    </li>
-    <li class="nav-item <% if(menu==='youtubeGallery') {%>active<%}%>"><a href="/admin/uploadedVideos/list"><i class="fa fa-youtube-play"></i><span class="menu-title" data-i18n="Todo">YouTube Gallery</span></a>
-    </li>
+    
+    <li class="nav-item">
+      <a href="/admin/team"><i class="fa-solid fa-building"></i><span class="menu-title" data-i18n="Todo">Add Team</span></a>
+      <ul class="menu-content">
+        <% if(currentUser.role == 0) { %>
+          <li class="<% if(menu==='addCompany') {%>active<%}%>">
+            <a href="/admin/team/senior">
+              <i class="feather icon-plus-circle"></i>
+              <span class="menu-item" data-i18n="Analytics">Senior Manager</span>
+            </a>
+          </li>
+        <% } %>
+        <li class="<% if(menu==='company') {%>active<%}%>">
+          <a href="/admin/team/junior">
+            <i class="feather icon-list"></i>
+            <span class="menu-item" data-i18n="Analytics">Junior Manager</span>
+          </a>
+        </li>
+      </ul>
+    </li>     
       <!--
 
           <li class="nav-item"><a href="#"><i class="feather icon-plus"></i><span class="menu-title" data-i18n="Todo">Vacancy</span></a>

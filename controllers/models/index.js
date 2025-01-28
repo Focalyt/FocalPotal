@@ -61,4 +61,5 @@ module.exports.Review = require('./reviews');
 module.exports.Courses=require('./courses');
 module.exports.Post=require('./post');
 module.exports.CourseSectors=require('./courseSectors');
-module.exports.AppliedCourses = require("./appliedCourses")
+module.exports.AppliedCourses = require("./appliedCourses");
+// module.exports.Manager = required("");

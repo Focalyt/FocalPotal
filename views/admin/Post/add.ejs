@@ -62,7 +62,165 @@
                 </div>
                 <span class="done">Done</span>
             </div>         
-               
+            <div class="nav--pills">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="true">Admin</a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="company-tab" data-bs-toggle="tab" href="#company" role="tab" aria-controls="company" aria-selected="false">Company</a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="institute-tab" data-bs-toggle="tab" href="#institute" role="tab" aria-controls="institute" aria-selected="false">Institute</a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="student-tab" data-bs-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="false">Student</a>
+                  </li>
+                </ul>
+                
+                <!-- Tab Content -->
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="admin-tab">
+                    <!-- Admin content goes here -->
+                    <div class="inner_search">
+                      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                      <input type="search" placeholder="Search">
+                    </div>
+                    <div class='employee-attendance-table'>
+                      <table class="employee-table">
+                          <thead>
+                              <tr class='header-tr'>
+                                <th>Status</th>
+                                <th>Name</th>
+                                <th>Mobile</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                                  <tr>
+                                    <td>
+                                      <input type="checkbox">
+                                    </td>
+                                      <td class="employee-info">
+                                          <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+                                          <div class='employee-basic-info'>
+                                              <span class="employee-name tooltipp" title="Akash">Akash</span>
+                                          
+                                          </div>
+                                      </td>
+                                      <td>12345678900</td>
+                                          
+                                  </tr>
+                          </tbody>
+                      </table>
+                      </div>
+                  </div>
+                  <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
+                    <!-- Company content goes here -->
+                    <div class="inner_search">
+                      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                      <input type="search" placeholder="Search">
+                    </div>
+                    <div class='employee-attendance-table'>
+                      <table class="employee-table">
+                          <thead>
+                              <tr class='header-tr'>
+                                <th>Checkbox</th>
+                                <th>Company Name</th>
+                                <th>Mobile</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                                  <tr>
+                                    <td>
+                                      <input type="checkbox">
+                                    </td>
+                                      <td class="employee-info">
+                                          <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+                                          <div class='employee-basic-info'>
+                                              <span class="employee-name tooltipp" title="Focal Skill Development Pvt Ltd">Focal Skill Development Pvt Ltd</span>
+                                          
+                                          </div>
+                                      </td>
+                                      <td>12345678900</td>
+                                          
+                                  </tr>
+                          </tbody>
+                      </table>
+                      </div>
+                  </div>
+                  <div class="tab-pane fade" id="institute" role="tabpanel" aria-labelledby="institute-tab">
+                    <!-- Institute content goes here -->
+                    <div class="inner_search">
+                      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                      <input type="search" placeholder="Search">
+                    </div>
+                    <div class='employee-attendance-table'>
+                      <table class="employee-table">
+                          <thead>
+                              <tr class='header-tr'>
+                                <th>Checkbox</th>
+                                <th>Institute Name</th>
+                                <th>Mobile</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                                  <tr>
+                                    <td>
+                                      <input type="checkbox">
+                                    </td>
+                                      <td class="employee-info">
+                                          <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+                                          <div class='employee-basic-info'>
+                                              <span class="employee-name tooltipp" title="Akash">Akash</span>
+                                          
+                                          </div>
+                                      </td>
+                                      <td>12345678900</td>
+                                          
+                                  </tr>
+                          </tbody>
+                      </table>
+                      </div>
+                  </div>
+                  <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
+                    <!-- Student content goes here -->
+                    <div class="inner_search">
+                      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                      <input type="search" placeholder="Search">
+                    </div>
+                    <div class='employee-attendance-table'>
+                      <table class="employee-table">
+                          <thead>
+                              <tr class='header-tr'>
+                                <th>Checkbox</th>
+                                <th>Student Name</th>
+                                <th>Mobile</th>
+                              </tr>
+                          </thead>
+                          
+                          
+                          <tbody>
+                            <% candidates.forEach((candidate)=> { %>
+                                  <tr>
+                                    <td>
+                                      <input type="checkbox">
+                                    </td>
+                                      <td class="employee-info">
+                                          <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+                                          <div class='employee-basic-info'>
+                                              <span class="employee-name tooltipp" title="Akash"><%= candidate.name %></span>
+                                          
+                                          </div>
+                                      </td>
+                                      <td><%= candidate.mobile %></td>
+                                          
+                                  </tr><% }); %>
+                          </tbody>
+                      </table>
+                      </div>
+                  </div>
+                </div>
+          </div>
             </div>
           </div>
         </div>
@@ -81,167 +239,17 @@
 
 
     </div>
-
-    <div class="nav--pills">
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="true">Admin</a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="company-tab" data-bs-toggle="tab" href="#company" role="tab" aria-controls="company" aria-selected="false">Company</a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="institute-tab" data-bs-toggle="tab" href="#institute" role="tab" aria-controls="institute" aria-selected="false">Institute</a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="student-tab" data-bs-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="false">Student</a>
-          </li>
-        </ul>
-        
-        <!-- Tab Content -->
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="admin-tab">
-            <!-- Admin content goes here -->
-            <div class="inner_search">
-              <i class="fa-solid fa-magnifying-glass search-icon"></i>
-              <input type="search" placeholder="Search">
-            </div>
-            <div class='employee-attendance-table'>
-              <table class="employee-table">
-                  <thead>
-                      <tr class='header-tr'>
-                        <th>Status</th>
-                        <th>Name</th>
-                        <th>Mobile</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                          <tr>
-                            <td>
-                              <input type="checkbox">
-                            </td>
-                              <td class="employee-info">
-                                  <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                                  <div class='employee-basic-info'>
-                                      <span class="employee-name tooltipp" title="Akash">Akash</span>
-                                  
-                                  </div>
-                              </td>
-                              <td>12345678900</td>
-                                  
-                          </tr>
-                  </tbody>
-              </table>
-              </div>
+    <!-- <div class="tagging-container">
+      <div class="tag-input-container">
+          <div class="tags">
           </div>
-          <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
-            <!-- Company content goes here -->
-            <div class="inner_search">
-              <i class="fa-solid fa-magnifying-glass search-icon"></i>
-              <input type="search" placeholder="Search">
-            </div>
-            <div class='employee-attendance-table'>
-              <table class="employee-table">
-                  <thead>
-                      <tr class='header-tr'>
-                        <th>Checkbox</th>
-                        <th>Company Name</th>
-                        <th>Mobile</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                          <tr>
-                            <td>
-                              <input type="checkbox">
-                            </td>
-                              <td class="employee-info">
-                                  <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                                  <div class='employee-basic-info'>
-                                      <span class="employee-name tooltipp" title="Focal Skill Development Pvt Ltd">Focal Skill Development Pvt Ltd</span>
-                                  
-                                  </div>
-                              </td>
-                              <td>12345678900</td>
-                                  
-                          </tr>
-                  </tbody>
-              </table>
-              </div>
-          </div>
-          <div class="tab-pane fade" id="institute" role="tabpanel" aria-labelledby="institute-tab">
-            <!-- Institute content goes here -->
-            <div class="inner_search">
-              <i class="fa-solid fa-magnifying-glass search-icon"></i>
-              <input type="search" placeholder="Search">
-            </div>
-            <div class='employee-attendance-table'>
-              <table class="employee-table">
-                  <thead>
-                      <tr class='header-tr'>
-                        <th>Checkbox</th>
-                        <th>Institute Name</th>
-                        <th>Mobile</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                          <tr>
-                            <td>
-                              <input type="checkbox">
-                            </td>
-                              <td class="employee-info">
-                                  <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                                  <div class='employee-basic-info'>
-                                      <span class="employee-name tooltipp" title="Akash">Akash</span>
-                                  
-                                  </div>
-                              </td>
-                              <td>12345678900</td>
-                                  
-                          </tr>
-                  </tbody>
-              </table>
-              </div>
-          </div>
-          <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
-            <!-- Student content goes here -->
-            <div class="inner_search">
-              <i class="fa-solid fa-magnifying-glass search-icon"></i>
-              <input type="search" placeholder="Search">
-            </div>
-            <div class='employee-attendance-table'>
-              <table class="employee-table">
-                  <thead>
-                      <tr class='header-tr'>
-                        <th>Checkbox</th>
-                        <th>Student Name</th>
-                        <th>Mobile</th>
-                      </tr>
-                  </thead>
-                  
-                  
-                  <tbody>
-                    <% candidates.forEach((candidate)=> { %>
-                          <tr>
-                            <td>
-                              <input type="checkbox">
-                            </td>
-                              <td class="employee-info">
-                                  <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                                  <div class='employee-basic-info'>
-                                      <span class="employee-name tooltipp" title="Akash"><%= candidate.name %></span>
-                                  
-                                  </div>
-                              </td>
-                              <td><%= candidate.mobile %></td>
-                                  
-                          </tr><% }); %>
-                  </tbody>
-              </table>
-              </div>
-          </div>
-        </div>
-  </div>
-    <div class="content-body mt-4">
+          <input type="text" class="tag-input" placeholder="Tag People">
+      </div>
+      <span class="done">Done</span>
+  </div> -->
+  
+   
+    <!-- <div class="content-body mt-4">
 		
       <% include ../partials/flash %>
       
@@ -443,7 +451,7 @@
               </div>
             </div>
           </div>
-      <!--Notification modal start-->
+      Notification modal start
       <div class="modal fade" id="notificationmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -476,7 +484,7 @@
         </div>
       </div>
       </div>
-      <!--Notification modal end-->
+      Notification modal end
           <script>
             function exportCandidates(){
               // $.ajax({
@@ -846,7 +854,7 @@
             }
             
           </script>
-    </div>
+    </div> -->
     </div>
     
 
