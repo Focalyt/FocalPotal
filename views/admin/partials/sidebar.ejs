@@ -69,13 +69,13 @@
           <li class="<% if(menu=='addPost') {%>active<%}%>"><a href="/admin/post/add"><i class="feather icon-plus-circle"></i><span class="menu-item"
                 data-i18n="Analytics">Add Post</span></a></li>
           <% } %>
-        <li class="<% if(menu==='candidateCoins') {%>active<%}%>"><a href="/admin/Coins/candidate"><i class="feather icon-user"></i><span class="menu-title"
+        <li class="<% if(menu==='candidatePost') {%>active<%}%>"><a href="/admin/Coins/candidate"><i class="feather icon-user"></i><span class="menu-title"
           data-i18n="Analytics">Candidates Post</span></a>
         </li>
-        <li class="<% if(menu==='companyCoins') {%>active<%}%>"><a href="/admin/Coins/company"><i class="feather icon-triangle"></i><span class="menu-title"
+        <li class="<% if(menu==='companyPost') {%>active<%}%>"><a href="/admin/Coins/company"><i class="feather icon-triangle"></i><span class="menu-title"
           data-i18n="Analytics">Institutes Post</span></a>
         </li>  
-        <li class="<% if(menu==='companyCoins') {%>active<%}%>"><a href="/admin/Coins/company"><i class="feather icon-triangle"></i><span class="menu-title"
+        <li class="<% if(menu==='companyPost') {%>active<%}%>"><a href="/admin/Coins/company"><i class="feather icon-triangle"></i><span class="menu-title"
           data-i18n="Analytics">Companies Post</span></a>
         </li>
           
@@ -125,25 +125,18 @@
     </li>
     <% } %>
     
-    <li class="nav-item">
-      <a href="/admin/team"><i class="fa-solid fa-building"></i><span class="menu-title" data-i18n="Todo">Add Team</span></a>
+    <li class=" nav-item"><a href="#"><i class="fa-solid fa-coins"></i><span class="menu-title"
+      data-i18n="Todo">Team</span></a>
       <ul class="menu-content">
         <% if(currentUser.role == 0) { %>
-          <li class="<% if(menu==='addCompany') {%>active<%}%>">
-            <a href="/admin/team/senior">
-              <i class="feather icon-plus-circle"></i>
-              <span class="menu-item" data-i18n="Analytics">Senior Manager</span>
-            </a>
-          </li>
-        <% } %>
-        <li class="<% if(menu==='company') {%>active<%}%>">
-          <a href="/admin/team/junior">
-            <i class="feather icon-list"></i>
-            <span class="menu-item" data-i18n="Analytics">Junior Manager</span>
-          </a>
-        </li>
+          <li class="<% if(menu=='addTeam') {%>active<%}%>"><a href="/admin/team/add"><i class="feather icon-plus-circle"></i><span class="menu-item"
+                data-i18n="Analytics">Add</span></a></li>
+          <% } %>
+        
+        
+          
       </ul>
-    </li>     
+    </li>  
       <!--
 
           <li class="nav-item"><a href="#"><i class="feather icon-plus"></i><span class="menu-title" data-i18n="Todo">Vacancy</span></a>

@@ -376,7 +376,7 @@ div#features_cta figure {
     background-color: #9747ff;
     transition: .4s ease;
 }
-#skills , #whychoose{
+#skills , #whychoose , .earning-option , #team{
     background-image: url(../../public_assets/images/newpage/index/bg_texture.png);
     background-color: #F4FAFA;
     background-size: cover;
@@ -442,7 +442,7 @@ figure.down_shape img {
     right: -60px;
     top: -60px;
 }
-#how {
+#how , #earning-option {
     background-image: url(../../public_assets/images/newpage/index/bg-stipes.jpg);
     background-color: #FFFFFF;
     background-size: cover;

@@ -1,2 +1,119 @@
 <% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-center">
+            <form action="" class="add-team">
+                <div class="contain">
+                    <label for="image">Add Image</label>
+                    <input type="file" id="image" accept="image/png, image/jpeg" required>
+                    <span id="error-message" style="color: red; display: none;">Only JPG and PNG images are allowed!</span>
+                </div>
+                
+                <div class="contain">
+                    <label for="">Position</label>
+                    <select name="" id="level" required>
+                        <option value="">Senior Management</option>
+                        <option value="">Management</option>
+                        <option value="">Staff</option>
+                    </select>
+                </div>
+                <div class="contain">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="contain">
+                    <label for="designation">Designation</label>
+                    <input type="text" id="designation" required>
+                </div>
+                
+                <div class="contain">
+                    <label for="description">Description</label>
+                    <!-- <input type="text" id="description"> -->
+                    <textarea name="" id="" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+     .add-team {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .add-team label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .add-team input,
+    .add-team select,
+    .add-team textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 15px;
+        background: #f9f9f9;
+        transition: 0.3s ease-in-out;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .add-team input:focus,
+    .add-team select:focus,
+    .add-team textarea:focus {
+        border-color: #fc2b5a;
+        outline: none;
+        background: #ffffff;
+        box-shadow: 0px 0px 5px rgba(252, 43, 90, 0.2);
+    }
+
+        .add-team input[type="file"] {
+            padding: 5px;
+            background: transparent;
+        }
+        .add-team textarea {
+        resize: none;
+    }
+    .add-team select {
+        cursor: pointer;
+    }
+        .submit-btn {
+        background: #fc2b5a;
+        color: white;
+        font-size: 16px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out, transform 0.2s;
+    }
+
+    .submit-btn:hover {
+        background: #fc2b5a;
+        transform: scale(1.02);
+    }
+</style>
+<script>
+     document.getElementById("image").addEventListener("change", function() {
+        var file = this.files[0];
+        if (file) {
+            var fileType = file.type;
+            if (fileType !== "image/png" && fileType !== "image/jpeg") {
+                document.getElementById("error-message").style.display = "block";
+                this.value = ""; 
+            } else {
+                document.getElementById("error-message").style.display = "none";
+            }
+        }
+    });
+</script>
+
 <% include ../partials/footer %>

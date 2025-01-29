@@ -56,6 +56,7 @@ const vouchers=require('./vouchers')
 const videosData=require('./videos')
 const contactRoutes=require('./contacts')
 const loanRoutes = require('./loanEnquiry');
+const teamRoutes = require('./team');
 const courseSectorsRoutes = require('./courseSectors');
 
 

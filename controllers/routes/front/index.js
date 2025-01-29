@@ -176,6 +176,10 @@ router.get("/employersTermsofService", (req, res) => {
 	});
 });
 
+router.get("/team", (req, res) => {
+	rePath = res.render(`${req.vPath}/front/team`, {
+	});
+});
 router.get("/userAgreement", (req, res) => {
 	rePath = res.render(`${req.vPath}/front/userAgreement`, {
 	});
