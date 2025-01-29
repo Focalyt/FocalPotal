@@ -9,6 +9,7 @@ const PostSchema = new Schema({
     type: String, // The main text content of the post
     required: true,
   },
+  
   files: [
     {
       fileURL: {
@@ -53,7 +54,6 @@ const PostSchema = new Schema({
         name : {type:String},
         userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] },
       },
-     
     ],
   createdAt: {
     type: Date, // Timestamp for the post creation

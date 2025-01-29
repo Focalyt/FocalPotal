@@ -281,6 +281,7 @@
               </div>
             </div>
           </div>
+          <% teams.forEach((team)=> { %>
           <div class="col-md-4">
             <div class="elementor-widget-containers">
               <div class="elementor-image-box-wrapper">
@@ -289,13 +290,13 @@
                 </figure>
                 <div class="elementor-image-box-content">
                   <h3 class="elementor-image-box-title text-white text-center">
-                    RAHUL SHARMA<br />
-                    <span class="founder"> MANAGER IT & DIGITAL MARKETING </span>
+                    <%= team.name %><br />
+                    <span class="founder"> <%= team.designation %> </span>
                   </h3>
                 </div>
               </div>
             </div>
-          </div>
+          </div><% }); %>
           <div class="col-md-4">
             <div class="elementor-widget-containers">
               <div class="elementor-image-box-wrapper">

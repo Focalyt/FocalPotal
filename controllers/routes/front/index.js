@@ -26,6 +26,7 @@ const {
 	CourseSectors,
 	Contact, Post
 } = require("../../models");
+const Team = require('../../models/team'); // PostSchema import करें
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const {
@@ -261,10 +262,40 @@ router.get("/joblisting", async (req, res) => {
 	});
 });
 
-router.get("/about_us", (req, res) => {
-    
-	rePath = res.render(`${req.vPath}/front/about_us`, {
-	});
+router.get("/about_us", async (req, res) => {
+	try {
+		// **फिल्टर सिर्फ `status: true` टीम्स के लिए**
+		const filter = { status: true };
+
+		// **MongoDB से टीम मेंबर्स लाएं**
+		const teams = await Team.find(filter);
+
+		// **अगर कोई डेटा न मिले तो हैंडल करें**
+		if (!teams || teams.length === 0) {
+			console.warn("⚠ No team members found!");
+		}
+
+		// **req.vPath undefined है या नहीं इसकी जाँच करें**
+		if (!req.vPath) {
+			console.error("⚠ Error: `req.vPath` is not defined!");
+			return res.status(500).send({
+				status: false,
+				message: "Internal Server Error - `vPath` is missing.",
+			});
+		}
+
+		// **Render `about_us` पेज**
+		return res.render(`${req.vPath}/front/about_us`, {
+			teams
+		});
+
+	} catch (err) {
+		console.error("❌ Error fetching team members:", err);
+		return res.status(500).send({
+			status: false,
+			message: "Internal Server Error",
+		});
+	}
 });
 router.get("/futureTechnologyLabs", (req, res) => {
     
