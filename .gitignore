@@ -53,3 +53,4 @@ Thumbs.db
 /focalyt-new-key.json
 /views/front/lab.ejs
 /controllers/routes/admin/teams.js
+/views/app/candidate/search-cources.ejs

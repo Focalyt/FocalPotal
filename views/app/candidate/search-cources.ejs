@@ -32,7 +32,35 @@
                   </div>
                 </div>
               </div>
-
+<section id="searchCourses" class="d-xxl-none d-xl-none d-lg-none d-md-none d-sm-block d-block mb-2">
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="row justify-content-center">
+        <div class="col-sm-3">
+          <div class="course--apply">
+            <a href="#">
+              Search Courses
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="course--apply">
+            <a href="#">Pending for Fee</a>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="course--apply">
+            <a href="candidate/appliedCourses">
+              Appliyied Course
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
               <section id="personal-info">
                 <div class="row">
                   <div class="col-xl-12 col-lg-12">
@@ -93,7 +121,7 @@
                                     <h5><%=recentJob.name ? recentJob.name : 'N/A' %></h5>
                                     <span class="job_cate"><%= recentJob.sectors?recentJob.sectors[0]?.name : 'N/A' %></span>
                                     <div class="row">
-                                      <div class="col-md-6">
+                                      <div class="col-md-6 col-sm-6 col-6">
                                       <div class="course_spec">
                                         <div class="spe_icon">
                                           <!-- <i class="la la-money"></i> -->
@@ -107,7 +135,7 @@
                                         </div>
                                       </div>
                                       </div>
-                                      <div class="col-md-6">
+                                      <div class="col-md-6 col-sm-6 col-6">
                                         <div class="course_spec">
                                           <div class="spe_icon">
                                             <!-- <i class="la la-shield"></i> -->
@@ -123,7 +151,7 @@
                                         </div>
 
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-sm-6 col-6">
                                           <div class="course_spec">
                                             <div class="spe_icon">
                                               <figure class="text-end">
@@ -148,7 +176,7 @@
                                           </div>
                                           </div>
 
-                                          <div class="col-md-6">
+                                          <div class="col-md-6 col-sm-6 col-6">
                                             <div class="course_spec">
                                               <div class="spe_icon">
                                                 <!-- <i class="la la-map"></i> -->
@@ -364,6 +392,19 @@
   </div>
 </div>
 
+<style>
+  .course--apply{
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.1);
+    transition: all .3s ease-in-out;
+    text-align: center;
+    padding: 8px 5px;
+  }
+  .course--apply a{
+    color: #000;
+  }
+</style>
           <script
             src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE %>&libraries=&v=weekly"
             ></script>
