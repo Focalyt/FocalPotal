@@ -255,14 +255,14 @@
 
 
             if (entry.isIntersecting) {
-              
+
               // Define an async function to handle the play and unmute logic
               const playVideo = async (video) => {
                 try {
                   // Start playing the video in muted mode
-                  
+
                   await video.play(); // Wait for the video to start playing
-                 
+
                 } catch (error) {
                   console.error("Error while trying to play the video:", error); // Handle autoplay errors
                 }

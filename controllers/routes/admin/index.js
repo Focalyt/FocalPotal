@@ -58,6 +58,7 @@ const videosData=require('./videos')
 const contactRoutes=require('./contacts')
 const loanRoutes = require('./loanEnquiry');
 const courseSectorsRoutes = require('./courseSectors');
+const teamRoutes=require('./team')
 
 
 const router = express.Router();
@@ -99,6 +100,7 @@ router.use('/uploadedVideos',videosData)
 router.use("/contact",contactRoutes)
 router.use("/loanEnquiry",loanRoutes);
 router.use('/courseSectors', courseSectorsRoutes);
+router.use('/team', teamRoutes);
 router.use(isAdmin);
 router.post ('/courses',async(req,res)=>{
   
