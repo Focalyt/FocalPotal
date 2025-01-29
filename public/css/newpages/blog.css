@@ -411,6 +411,7 @@
   list-style: none;
   z-index: 10;
   visibility: hidden;
+  display: block !important;
 }
 #blog--images .slick-dots.visible {
   visibility: visible; /* Make visible when conditions are met */
@@ -433,8 +434,29 @@
 
 #blog--images .slick-dots li.slick-active button {
   background-color: #FC2B5A;
+  font-size: 12px;
 }
-
+#blog--images .slick-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  /* background-color: rgb(252 43 90);  */
+  color: #fff;
+  border-radius: 50%;
+  padding: 5px;
+}
+#blog--images .slick-prev {
+  left: -15px; /* Adjust to move left arrow */
+}
+#blog--images .slick-prev:before, #blog--images .slick-next:before{
+  color: #FC2B5A!important;
+}
+/* .slick-prev:before, .slick-next:before */
+#blog--images .slick-next {
+  right: -5px; /* Adjust to move right arrow */
+  color: #FC2B5A;
+}
 #blog--images .slick-dots li button:hover {
   background-color: #333;
 }
