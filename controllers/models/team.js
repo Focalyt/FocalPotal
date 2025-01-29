@@ -19,9 +19,9 @@ const TeamSchema = new Schema({
     required: true,
   },
   name:
-    { type: String },
+    { type: String, required: true, },
   designation:
-    { type: String },
+    { type: String, required: true, },
   description:
     { type: String },
 
