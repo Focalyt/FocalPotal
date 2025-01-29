@@ -126,12 +126,12 @@
                                         <div class="spe_icon">
                                           <!-- <i class="la la-money"></i> -->
                                           <figure class="text-end">
-                                            <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
+                                            <img src="/public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
                                         </figure>
                                         </div>
                                         <div class="spe_detail">
                                           <p class="mb-0 text-black">Eligibility</p>
-                                          <p class="mb-0 text-black"><small class="sub_head">(<%=courses.qualification%>)</small></p> 
+                                          <p class="mb-0 text-black"><small class="sub_head">(<%=recentJob.qualification%>)</small></p> 
                                         </div>
                                       </div>
                                       </div>
@@ -140,12 +140,12 @@
                                           <div class="spe_icon">
                                             <!-- <i class="la la-shield"></i> -->
                                             <figure class="text-end">
-                                              <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
+                                              <img src="/public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
                                           </figure>
                                           </div>
                                           <div class="spe_detail">
                                             <p class="mb-0 text-black">Duration</p>
-                                            <p class="mb-0 text-black"><small class="sub_head">(<%=courses.duration%>)</small></p>
+                                            <p class="mb-0 text-black"><small class="sub_head">(<%=recentJob.duration%>)</small></p>
                                           </div>
                                         </div>
                                         </div>
@@ -155,7 +155,7 @@
                                           <div class="course_spec">
                                             <div class="spe_icon">
                                               <figure class="text-end">
-                                                <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
+                                                <img src="/public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
                                             </figure>
                                               <!-- <i class="la la-graduation-cap"></i> -->
                                             </div>
@@ -164,8 +164,8 @@
                                               <div class="ellipsis-wrapper">
                                                 <p class="mb-0 text-black para_ellipsis" title="<%= courses.city ? courses.city + ', ' + courses.state : 'NA' %>">
                                                     <small class="sub_head">
-                                                        <% if (courses.city) { %>
-                                                            (<%= courses.city + ', ' + courses.state %>)
+                                                        <% if (recentJob.city) { %>
+                                                            (<%= recentJob.city + ', ' + recentJob.state %>)
                                                         <% } else { %>
                                                             NA
                                                         <% } %>
@@ -181,13 +181,13 @@
                                               <div class="spe_icon">
                                                 <!-- <i class="la la-map"></i> -->
                                                 <figure class="text-end">
-                                                  <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
+                                                  <img src="/public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
                                               </figure>
                                               </div>
                                               
                                               <div class="spe_detail">
                                                 <p class="mb-0 text-black">Mode</p>
-                                                <p class="mb-0 text-black"><small class="sub_head">(<%=courses.trainingMode%>)</small></p>
+                                                <p class="mb-0 text-black"><small class="sub_head">(<%=recentJob.trainingMode%>)</small></p>
                                               </div>
                                             </div>
                                             </div>
