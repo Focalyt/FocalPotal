@@ -1,0 +1,298 @@
+<%include ./newpartials/header%>
+
+<section id="team" class="section-padding-120 mt-5">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="elementory-left-team-section">
+                    <h4 class="elementory-left-inner-heading">
+                        Are You a
+                    </h4>
+                    <h3 class="elementory-left-inner-sub-heading">
+                        Future <br>
+                        <span class="inner_span">
+                            Technology Expert
+                        </span>
+                    </h3>
+                    <h4 class="gradient-left-section">
+                        Passionate about training?                        
+                    </h4>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="elementory-right-team-section">
+                <figure>
+                    <img src="public_assets/images/team/team.png" alt="">
+                </figure>
+            
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5">
+    <div class="container">
+        <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="team_header pb-4">
+                            Join Focalyt Team for Creating future Ready Minds with
+                        </h2>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="demo_table">
+                          <form method="post" id="demoForm">
+                            <div class="demo_form">
+                              <h3 class="request_demo text-black pb-3">
+                                Request your Demo Today
+                              </h3>
+                              <div class="form_name">
+                                <div class="first_name">
+                                  <input name="name" type="text" class="form_input" placeholder="" id="fullName" required>
+                                  <label class="label">Full Name <span class="imp">*</span></label>
+                                </div>
+                                <div class="email">
+                                  <input name="email" type="text" class="form_input" placeholder="" id="email" required>
+                                  <label class="label">Email <span class="imp">*</span></label>
+                                </div>
+                              </div>
+                              <div class="form_name">
+                                <div class="phone">
+                                  <input name="mobile" class="form_input" type="text" placeholder="" id="phone" required
+                                    maxlength="10" 
+                                    pattern="^\d{10}$" 
+                                    oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
+                                  <label class="label">Phone <span class="imp">*</span></label>
+                                </div>
+                                <div class="Organisation">
+                                  <input name="organisation"  class="form_input" required placeholder="" type="text" id="organisation">
+                                  <label class="label">Name of Institute <span>*</span></label>
+                                </div>
+                              </div>
+                              <div class="form_name">
+                                <div  class="designation select-container">
+                                  <select name="designation" class="form_designation_input" id="designation" required>
+                                    <option value="" disabled selected>Select your designation</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="developer">Developer</option>
+                                    <option value="designer">Designer</option>
+                                    <option value="tester">Tester</option>
+                                  </select>
+                                  <label class="label" for="Designation"> Designation <span class="imp">*</span></label>
+                                </div>
+                                <div class="state">
+                                  <select name="state" class="form_designation_input" id="state" required>
+                                    <option value="" disabled selected>Select your State</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Meghalaya">Meghalaya</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Sikkim">Sikkim</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Uttarakhand">Uttarakhand</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                    <option value="Chandigarh">Chandigarh</option>
+                                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Lakshadweep">Lakshadweep</option>
+                                    <option value="Puducherry">Puducherry</option>
+                                    <option value="Ladakh">Ladakh</option>
+                                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                  </select>
+                                  <label class="label">State <span class="imp">*</span></label>
+                                </div>                  
+                              </div>            
+                             
+                              
+                              <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
+                                  placeholder="Message us" rows="2" ></textarea> -->
+                                  <div class="textarea-container">
+                                    <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
+                                    <label for="exampleTextarea">Your Message</label>
+                                  </div>
+                              
+                                  <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v" >Book Demo</button>
+                            </div>
+                            <% if(success && success.length> 0) { %>
+                              <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
+                                  <%- success %>
+                              </div>
+                              <% } %>
+                              
+                          </form>
+                          
+                        </div>
+                        
+              
+                      </div>
+                      <div class="col-md-6">
+                        <div class="demo_experience">
+                          <div class="robo_area">
+                            <p>
+                                Do you have expertise in AI, IoT,
+                                Robotics, VR/AR, or Drone
+                                Technology and love to train
+                                others?
+                            </p>
+                            <p>
+                                Focalyt is offering you a great
+                                opportunity to share your
+                                knowledge and earn!
+                            </p>
+                            
+                          </div>
+              
+                        </div>
+                      </div>
+            
+        </div>
+    </div>
+</section>
+<section class="earning-option py-5">
+
+   <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="flex-img">
+          <figure>
+            <img src="public_assets/images/team/team.png" alt="">
+          </figure>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="flex-img-content">
+          <div>
+            <h2 class="felx-header">
+Flexible Earning Options
+            </h2>
+          </div>
+          <div class="inner-flex">
+<h5 class="inner-flex-header">
+  I worked at
+</h5>
+<p class="inner-flex-sub-para">
+  HOLLIS & REED UNLIMITED (2 YEARS)
+TAWLLEY AND MAURO (3 YEARS)
+</p>
+          </div>
+          <div class="inner-flex">
+            <h5 class="inner-flex-header">
+             My Roles were
+            </h5>
+            <p class="inner-flex-sub-para">
+              MARKETING ASSISTANT,
+              GRAPHIC DESIGNER
+            </p>
+                 
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>
+  </section>
+  <section id="earning-option" class="py-5">
+
+    <div class="container">
+     <div class="row">
+       <div class="col-md-6">
+         <div class="flex-img-content">
+           <div>
+             <h2 class="felx-header">
+ Flexible Earning Options
+             </h2>
+           </div>
+           <div class="inner-flex">
+ <h5 class="inner-flex-header">
+   I worked at
+ </h5>
+ <p class="inner-flex-sub-para">
+   HOLLIS & REED UNLIMITED (2 YEARS)
+ TAWLLEY AND MAURO (3 YEARS)
+ </p>
+           </div>
+           <div class="inner-flex">
+             <h5 class="inner-flex-header">
+              My Roles were
+             </h5>
+             <p class="inner-flex-sub-para">
+               MARKETING ASSISTANT,
+               GRAPHIC DESIGNER
+             </p>
+                  
+           </div>
+         </div>
+       </div>
+       <div class="col-md-6">
+        <div class="flex-img">
+          <figure>
+            <img src="public_assets/images/team/team.png" alt="">
+          </figure>
+        </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="earning-option py-5">
+
+    <div class="container">
+     <div class="row">
+       <div class="col-md-6">
+         <div class="flex-img">
+           <figure>
+             <img src="public_assets/images/team/team.png" alt="">
+           </figure>
+         </div>
+       </div>
+       <div class="col-md-6">
+         <div class="flex-img-content">
+           <div>
+             <h2 class="felx-header">
+ Flexible Earning Options
+             </h2>
+           </div>
+           <div class="inner-flex">
+ <h5 class="inner-flex-header">
+   I worked at
+ </h5>
+ <p class="inner-flex-sub-para">
+   HOLLIS & REED UNLIMITED (2 YEARS)
+ TAWLLEY AND MAURO (3 YEARS)
+ </p>
+           </div>
+           <div class="inner-flex">
+             <h5 class="inner-flex-header">
+              My Roles were
+             </h5>
+             <p class="inner-flex-sub-para">
+               MARKETING ASSISTANT,
+               GRAPHIC DESIGNER
+             </p>
+                  
+           </div>
+         </div>
+       </div>
+     </div>
+    </div>
+   </section>
+<%include ./newpartials/footer%>

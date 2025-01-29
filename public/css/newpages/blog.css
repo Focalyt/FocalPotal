@@ -684,6 +684,142 @@ font-weight: 500;
   gap: 16px;
   margin-bottom: 20px;
 }
+
+.elementory-left-inner-heading{
+  font-size: 35px;
+  font-weight: 400;
+}
+.elementory-left-inner-sub-heading{
+  font-size: 70px;
+  font-weight: 400;
+}
+.gradient-left-section{
+  font-size: 30px;
+  font-weight: 400;
+}
+
+
+.flex-img figure {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-img img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Text Content Styling */
+.flex-img-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.felx-header {
+  font-size: 32px;
+  font-weight: bold;
+  color: #121212;
+  margin-bottom: 20px;
+}
+
+/* Inner Flex Blocks */
+.inner-flex {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+/* Titles */
+.inner-flex-header {
+  font-size: 18px;
+  font-weight: bold;
+  color: #FC2B5A;
+  margin-bottom: 5px;
+}
+
+/* Paragraph Text */
+.inner-flex-sub-para {
+  font-size: 16px;
+  font-weight: bold;
+  color: #121212;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #earning-option .container {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  .flex-img img {
+      max-width: 80%;
+  }
+
+  .flex-img-content {
+      padding: 10px;
+  }
+}
+
+.elementory-left-team-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Gradient Text */
+.gradient-left-section {
+  color: #FC2B5A;
+    transition: .4s ease-in;
+}
+
+/* Right Image Section */
+.elementory-right-team-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.elementory-right-team-section figure {
+  margin: 0;
+}
+
+.elementory-right-team-section img {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section-padding-120 .container {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  .elementory-left-team-section {
+      padding: 10px;
+  }
+
+  .elementory-left-inner-sub-heading {
+      /* font-size: 32px; */
+      font-size:50px;
+      padding-bottom: 20px;
+  }
+
+  .elementory-right-team-section img {
+      max-width: 80%;
+  }
+}
 @media(max-width:768px) {
   .leftSidebar {
     display: none;

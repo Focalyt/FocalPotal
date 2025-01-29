@@ -123,20 +123,19 @@ router
 			const totalPages = Math.ceil(count / perPage);
 			const smsHistory = await SmsHistory.findOne().sort({ createdAt: -1 }).select("createdAt count")
 			return res.render(`${req.vPath}/admin/post/add`, {
-				menu: 'addPost',
-				candidates: candidates,
-				perPage,
-				totalPages,
-				page,
-				count,
-				data,
-				menu: 'candidate',
-				isChecked,
-				smsCount,
-				view,
-				smsHistory,
-				sortingValue: Object.keys(sorting),
-				sortingOrder: Object.values(sorting)
+			  menu: 'addPost',
+			  candidates: candidates,
+			  perPage,
+			  totalPages,
+			  page,
+			  count,
+			  data,
+			  isChecked,
+			  smsCount,
+			  view,
+			  smsHistory,
+			  sortingValue: Object.keys(sorting),
+			  sortingOrder: Object.values(sorting)
 			});
 		} catch (err) {
 			req.flash("error", err.message || "Something went wrong!");
