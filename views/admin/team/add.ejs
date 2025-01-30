@@ -30,7 +30,7 @@
                 <div class="contain" id="description-container">
                     <label for="description">Description</label>
                     <!-- <input type="text" id="description"> -->
-                    <textarea name="" id="" rows="3" required></textarea>
+                    <textarea name="" id="" rows="3" ></textarea>
                 </div>
                 <button type="submit" class="submit-btn">Submit</button>
             </form>
@@ -139,7 +139,14 @@
     formData.append("name", $("#name").val());
     formData.append("position", $("#level").val());
     formData.append("designation", $("#designation").val());
-    formData.append("description", $("textarea").val());
+    const position =document.getElementById("level").value;
+    
+    
+        
+        if (position != "Staff") {
+            formData.append("description", $("textarea").val());
+        } 
+   
 
     // Submit बटन को disable करें और लोडिंग दिखाएँ
     $("button[type=submit]").text("Posting...").attr("disabled", true);
