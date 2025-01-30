@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 d-flex justify-content-center">
-            <form id="team-form" class="add-team">
+            <form id="team-form" class="add-team" enctype="multipart/form-data">
                 <div class="contain">
                     <label for="image">Add Image</label>
                     <input type="file" id="image" accept="image/png, image/jpeg" required>
@@ -11,8 +11,8 @@
                 </div>
                 
                 <div class="contain">
-                    <label for="">Position</label>
-                    <select name="" id="level" required>
+                    <label for="position">Position</label>
+                    <select name="position" id="level" required>
                         <option value="Senior Management">Senior Management</option>
                         <option value="Management">Management</option>
                         <option value="Staff">Staff</option>
@@ -125,6 +125,49 @@
             }
         }
     });
+
+    
+
+    $(document).ready(function () {
+  $("#team-form").on("submit", function (e) {
+    e.preventDefault(); // डिफ़ॉल्ट फॉर्म सबमिशन रोकें
+
+    const formData = new FormData();
+    
+    // FormData में फाइल और अन्य डेटा जोड़ें
+    formData.append("file", $("#image")[0].files[0]); // ✅ "file" के नाम से जोड़ें, क्योंकि backend इसे `req.files.file` से एक्सेस कर रहा है
+    formData.append("name", $("#name").val());
+    formData.append("position", $("#level").val());
+    formData.append("designation", $("#designation").val());
+    formData.append("description", $("textarea").val());
+
+    // Submit बटन को disable करें और लोडिंग दिखाएँ
+    $("button[type=submit]").text("Posting...").attr("disabled", true);
+
+    $.ajax({
+      url: "/admin/team/add", // ✅ Backend API का सही endpoint
+      type: "POST",
+      data: formData,
+      processData: false,  // ⚠️ इसे `false` रखें ताकि jQuery डेटा को ऑटोमैटिक प्रोसेस न करे
+      contentType: false,  // ⚠️ इसे `false` रखें ताकि सही `Content-Type` सेट हो
+      success: function (response) {
+        console.log("Response:", response);
+        alert("Team Member created successfully!");
+        
+        // फ़ॉर्म रीसेट करें
+        $("#team-form")[0].reset();
+        $("button[type=submit]").text("Submit").attr("disabled", false);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error:", error);
+        alert("Failed to create post. Please try again.");
+        $("button[type=submit]").text("Submit").attr("disabled", false);
+      },
+    });
+  });
+});
+
+
 </script>
 
 
