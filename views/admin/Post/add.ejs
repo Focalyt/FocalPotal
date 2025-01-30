@@ -58,28 +58,34 @@
                         <div class="search">
                           <div class="tagging-container">
                             <div class="tag-input-container">
-                              <div class="tags">
+                              <div class="tags" id="tagsbuttons">
                                 <!-- Tags will dynamically appear here -->
+                               
                               </div>
-                              <input type="text" class="tag-input" placeholder="Taged">
+                              <!-- <input type="text" class="tag-input" placeholder="Taged"> -->
+                              <!-- <textarea name="content" id="post-content" class="form-control" rows="1" placeholder="What's on your mind?"
+                              required>
+                              <span>test</span>
+                             </textarea> -->
+                             
                             </div>
                             <span class="done">Done</span>
                           </div>
                           <div class="nav--pills">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                              <li class="nav-item" role="presentation">
+                              <li class="nav-item" role="presentation" onclick="selctedTagFor('admin')">
                                 <a class="nav-link active" id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab"
                                   aria-controls="admin" aria-selected="true">Admin</a>
                               </li>
-                              <li class="nav-item" role="presentation">
+                              <li class="nav-item" role="presentation" onclick="selctedTagFor('company')">
                                 <a class="nav-link" id="company-tab" data-bs-toggle="tab" href="#company" role="tab"
                                   aria-controls="company" aria-selected="false">Company</a>
                               </li>
-                              <li class="nav-item" role="presentation">
+                              <li class="nav-item" role="presentation" onclick="selctedTagFor('college')">
                                 <a class="nav-link" id="institute-tab" data-bs-toggle="tab" href="#institute" role="tab"
                                   aria-controls="institute" aria-selected="false">Institute</a>
                               </li>
-                              <li class="nav-item" role="presentation">
+                              <li class="nav-item" role="presentation" onclick="selctedTagFor('candidate')">
                                 <a class="nav-link" id="student-tab" data-bs-toggle="tab" href="#student" role="tab"
                                   aria-controls="student" aria-selected="false">Student</a>
                               </li>
@@ -91,8 +97,8 @@
                                 aria-labelledby="admin-tab">
                                 <!-- Admin content goes here -->
                                 <div class="inner_search">
-                                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                                  <input type="text" placeholder="Search">
+                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
+                                  <input type="text" placeholder="Search" id="searchbyAdmin" name="searchbyAdmin">
                                 </div>
                                 <div class='employee-attendance-table'>
                                   <table class="employee-table">
@@ -126,8 +132,8 @@
                               <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
                                 <!-- Company content goes here -->
                                 <div class="inner_search">
-                                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                                  <input type="search" placeholder="Search">
+                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
+                                  <input type="text" placeholder="Search" id="searchbyCompany" name="searchbyCompany">
                                 </div>
                                 <div class='employee-attendance-table'>
                                   <table class="employee-table">
@@ -163,8 +169,8 @@
                               <div class="tab-pane fade" id="institute" role="tabpanel" aria-labelledby="institute-tab">
                                 <!-- Institute content goes here -->
                                 <div class="inner_search">
-                                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                                  <input type="search" placeholder="Search">
+                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
+                                  <input type="text" placeholder="Search" id="searchbyInstitute" name="searchbyInstitute">
                                 </div>
                                 <div class='employee-attendance-table'>
                                   <table class="employee-table">
@@ -198,8 +204,8 @@
                               <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
                                 <!-- Student content goes here -->
                                 <div class="inner_search">
-                                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                                  <input type="search" placeholder="Search">
+                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
+                                  <input type="text" placeholder="Search" id="searchbyCanditate" name="searchbyCanditate">
                                 </div>
                                 <div class='employee-attendance-table'>
                                   <table class="employee-table">
@@ -855,63 +861,6 @@
           </script>
     </div> -->
   </div>
-  <script>
-    var candidates = <%- JSON.stringify(candidates) %>;
-    var page = <%- page %>;
-    function loadData() {
-      var tableBody = document.getElementById("candidatesTableBody");
-      tableBody.innerHTML = "";  // Clear the table before re-rendering.
-  
-      candidates.forEach((candidate, index) => {
-        var isLastCandidate = index === candidates.length - 1;
-        var row = `
-          <tr>
-            <td><input type="checkbox"></td>
-            <td class="employee-info">
-              <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-              <div class='employee-basic-info'>
-                <span class="employee-name tooltipp" title="${candidate.name}">
-                  ${candidate.name}
-                </span>
-              </div>
-            </td>
-            <td>${candidate.mobile}</td>
-          </tr>
-        `;
-  
-        if (isLastCandidate) {
-          row += `<tr><td colspan="3"><button onclick="loadMore()">view more</button></td></tr>`;
-        }
-  
-        tableBody.innerHTML += row;
-      });
-    }
-  
-    function loadMore() {
-      var newData = [];
-
-      $.ajax({
-          url: "/admin/post/getCanditates", // API endpoint
-          type: "POST",
-          data: {page: page + 1},
-          success: function (response) {
-            newData = response.candidates;
-            candidates = [...candidates, ...newData];
-            loadData();
-          },
-          error: function (xhr, status, error) {
-            console.error("Error:", error);
-          },
-        });
-
-      candidates = [...candidates, ...newData];
-  
-      loadData();
-    }
-  
-    // Initial data load
-    loadData();
-  </script>
   
 
   <style>
@@ -955,7 +904,7 @@
     }
 
     .tagging-container {
-      display: flex;
+      /*display: flex;*/
       align-items: center;
       justify-content: center;
       margin: 0 auto;
@@ -1312,17 +1261,150 @@
 
   </script>
   <script>
+
+    var selectedTag = "admin";
+    var searchby = "";
+    var candidates = <%- JSON.stringify(candidates) %>;
+    var page = <%- page %>;
+    function loadData() {
+      var tableBody = document.getElementById("candidatesTableBody");
+      tableBody.innerHTML = "";  // Clear the table before re-rendering.
+  
+      candidates.forEach((candidate, index) => {
+        var isLastCandidate = index === candidates.length - 1;
+        var row = `
+          <tr>
+            <td><input type="checkbox" ${candidate.isChecked ? "checked" : ""} onchange="handleOnSelectTag(event, ${index})"></td>
+            <td class="employee-info">
+              <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+              <div class='employee-basic-info'>
+                <span class="employee-name tooltipp" title="${candidate.name}">
+                  ${candidate.name}
+                </span>
+              </div>
+            </td>
+            <td>${candidate.mobile}</td>
+          </tr>
+        `;
+  
+        if (isLastCandidate) {
+          row += `<tr><td colspan="3"><button onclick="loadMore()">view more</button></td></tr>`;
+        }
+  
+        tableBody.innerHTML += row;
+      });
+    }
+  
+    function loadMore() {
+      var newData = [];
+      $.ajax({
+          url: "/admin/post/getTagsList", // API endpoint
+          type: "POST",
+          data: {page: page + 1, search: searchby, searchfor: selectedTag },
+          success: function (response) {
+            newData = response.candidates;
+            if(candidates.length > 0){
+              candidates = [...candidates, ...newData];
+            }else{
+              candidates = newData;
+            }
+            loadData();
+          },
+          error: function (xhr, status, error) {
+            console.error("Error:", error);
+          },
+        });
+
+      // candidates = [...candidates, ...newData];
+  
+      // loadData();
+    }
+  
+    // Initial data load
+    loadData();
+
+
+    var selectedTags = [];
+
+    function handleOnSelectTag(e, i){
+      candidates[i].isChecked = e.target.checked;
+
+      if(e.target.checked){
+        candidates[i].index = i;
+        candidates[i].userType = selectedTag;
+        selectedTags.push(candidates[i])
+      } else {
+        selectedTags = selectedTags.filter((el) => { return el.index !== i; });
+      }
+      setTabPills();
+    }
+
+    function setTabPills(){
+      var tableBody = document.getElementById("tagsbuttons");
+        
+        tableBody.innerHTML = "";  // Clear the table before re-rendering.
+    
+        selectedTags.forEach((tag, index) => {
+          var showtags = `
+            <div type="text" class="btn btn-primary" style="padding: 0.3rem 1rem;">
+            ${tag.name} <span class="badge bg-secondary" onclick="handleRemoveSelectedTag(${index})"><i class="fa-solid fa-x" style="color: #000000;" aria-hidden="true"></i></span>
+            </div>
+          `;
+    
+          tableBody.innerHTML += showtags;
+        });
+    }
+
+    function handleRemoveSelectedTag(i){
+      candidates[selectedTags[i].index].isChecked = false;
+      delete selectedTags[i];
+      setTabPills();
+      loadData();
+    }
+
+    function searchbynameorphone(){
+     switch (selectedTag) {
+      case 'admin':
+        searchby = document.getElementById("searchbyAdmin").value;
+        break;
+
+      case 'company':
+        searchby = document.getElementById("searchbyCompany").value;
+        break;
+
+      case 'college':
+        searchby = document.getElementById("searchbyInstitute").value;
+        break;
+
+      case 'candidate':
+        searchby = document.getElementById("searchbyCanditate").value;
+        break;
+
+      default:
+        searchby = '';
+        break;
+     }
+     page = 0;
+     candidates = [];
+     loadMore();
+    }
+
+    function selctedTagFor(selectedFor){
+      selectedTag = selectedFor;
+    }
+
+    
     $(document).ready(function () {
       // Handle form submission
       $("#post-form").on("submit", function (e) {
         e.preventDefault(); // Prevent the default form submission
-
 
         const formData = new FormData();
         formData.append("content", $("#post-content").val());
         const files = $("#file-upload")[0].files;
         console.log("Content:", $("#post-content").val());
         console.log("Files:", files);
+        formData.append("data", JSON.stringify(selectedTags));
         for (let i = 0; i < files.length; i++) {
           formData.append("files", files[i]);
           console.log(`File ${i + 1}:`, files[i].name);
