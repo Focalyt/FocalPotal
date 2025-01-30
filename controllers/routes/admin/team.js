@@ -10,7 +10,7 @@ const uuid = require('uuid/v1');
 const path = require('path');
 
 // Middleware to ensure the user is an admin
-router.use(isAdmin);
+// router.use(isAdmin);
 
 
 
