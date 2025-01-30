@@ -13,9 +13,9 @@
                 <div class="contain">
                     <label for="">Position</label>
                     <select name="" id="level" required>
-                        <option value="">Senior Management</option>
-                        <option value="">Management</option>
-                        <option value="">Staff</option>
+                        <option value="Senior Management">Senior Management</option>
+                        <option value="Management">Management</option>
+                        <option value="Staff">Staff</option>
                     </select>
                 </div>
                 <div class="contain">
@@ -27,7 +27,7 @@
                     <input type="text" id="designation" required>
                 </div>
                 
-                <div class="contain">
+                <div class="contain" id="description-container">
                     <label for="description">Description</label>
                     <!-- <input type="text" id="description"> -->
                     <textarea name="" id="" rows="3" required></textarea>
@@ -101,6 +101,17 @@
         transform: scale(1.02);
     }
 </style>
+<script>
+    document.getElementById("level").addEventListener("change", function() {
+        var descriptionContainer = document.getElementById("description-container");
+        
+        if (this.value === "Staff") {
+            descriptionContainer.style.display = "none"; 
+        } else {
+            descriptionContainer.style.display = "block"; 
+        }
+    });
+</script>
 <script>
      document.getElementById("image").addEventListener("change", function() {
         var file = this.files[0];
