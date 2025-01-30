@@ -1516,6 +1516,7 @@ fieldset#user-otp input {
 .course_spec {
   display: flex;
   margin-top:20px;
+  color: #000;
 }
 
 .course_spec .spe_icon {
