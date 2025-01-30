@@ -1,4 +1,5 @@
 const ObjectId = require("mongodb").ObjectId;
+const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const express = require("express");
 require('dotenv').config()
@@ -1233,8 +1234,12 @@ router.get("/dashboard", isCandidate, async (req, res) => {
     const shortlistedCount = await HiringStatus.countDocuments({ candidate: candidate._id, isDeleted: false, status: { '$ne': 'rejected' } })
     const jobsCount = await Vacancy.countDocuments({ status: false })
 
+    const candidateId = mongoose.Types.ObjectId.isValid(candidate._id)
+  ? new mongoose.Types.ObjectId(candidate._id)
+  : candidate._id;
+
     let totalCashback = await CandidateCashBack.aggregate([
-      { $match: { candidateId: ObjectId(candidate._id) } },
+      { $match: { candidateId } },
       { $group: { _id: "", totalAmount: { $sum: "$amount" } } },
     ]);
     let cityArray = []

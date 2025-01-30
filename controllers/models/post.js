@@ -52,7 +52,7 @@ const PostSchema = new Schema({
       {
         userId: { ObjectId },
         name : {type:String},
-        userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] },
+        userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] }, // student <=> candidate
       },
     ],
   createdAt: {
