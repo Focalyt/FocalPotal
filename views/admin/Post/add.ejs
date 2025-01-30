@@ -1,454 +1,1096 @@
 <% include ../partials/header %>
-    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
-        <div class="content-header-left col-md-9 col-12 mb-2">
-            <div class="row breadcrumbs-top">
-                <div class="col-12">
-                    <h3 class="content-header-title float-left mb-0">Add Post</h3>
-                    <div class="breadcrumb-wrapper col-12">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-                            <li class="breadcrumb-item active">Add Post</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="add-model">
-      <div class="content-body">
-        <% include ../partials/flash %>
-            <form id="post-form" enctype="multipart/form-data">
-                <!-- Input Group for Post -->
-                <div class="input-group">
-                    <!-- Text Input -->
-                    <textarea name="content" id="post-content" class="form-control" rows="3"
-                        placeholder="What's on your mind?" required></textarea>
-                    <!-- Media Button -->
-                    <div class="ml-3">
-                        <div>
-                        <label for="file-upload" class="media-btn">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v4/y7/r/Ivw7nhRtXyo.png" alt="Media Icon">
-                            <!-- Facebook Media Icon -->
-                            Photo/Video
-                        </label>
-                        <input type="file" id="file-upload" name="file" class="d-none" multiple
-                            accept="image/*,video/*"></div>
-                            <div>
-                                <button class="border-none" style="border:none; background:transparent" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                    <img src="	https://static.xx.fbcdn.net/rsrc.php/v4/yq/r/b37mHA1PjfK.png" alt="Media Icon">
-                                    <!-- Facebook Media Icon -->
-                                    Tag
-                                </button>
-                            </div>
-                            <!-- Modal -->
-<div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="overflow: hidden;">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-white" id="staticBackdropLabel">Tag People</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background:transparent; border:none">
-            <i class="fa-solid fa-x" style="color: #ffffff;"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="tag_people">
-            <div class="search">
-              <div class="tagging-container">
-                <div class="tag-input-container">
-                    <div class="tags">
-                        <!-- Tags will dynamically appear here -->
-                    </div>
-                    <input type="text" class="tag-input" placeholder="Taged">
-                </div>
-                <span class="done">Done</span>
-            </div>         
-                <div class="nav--pills">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                          <a class="nav-link active" id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="true">Admin</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                          <a class="nav-link" id="company-tab" data-bs-toggle="tab" href="#company" role="tab" aria-controls="company" aria-selected="false">Company</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                          <a class="nav-link" id="institute-tab" data-bs-toggle="tab" href="#institute" role="tab" aria-controls="institute" aria-selected="false">Institute</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                          <a class="nav-link" id="student-tab" data-bs-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="false">Student</a>
-                        </li>
-                      </ul>
-                      
-                      <!-- Tab Content -->
-                      <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="admin-tab">
-                          <!-- Admin content goes here -->
-                          <div class="inner_search">
-                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                            <input type="search" placeholder="Search">
-                          </div>
-                          <div class='employee-attendance-table'>
-                            <table class="employee-table">
-                                <thead>
-                                    <tr class='header-tr'>
-                                      <th>Checkbox</th>
-                                      <th>Name</th>
-                                      <th>Mobile</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                          <td>
-                                            <input type="checkbox">
-                                          </td>
-                                            <td class="employee-info">
-                                                <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                                                <div class='employee-basic-info'>
-                                                    <span class="employee-name tooltipp" title="Akash">Akash</span>
-                                                
-                                                </div>
-                                            </td>
-                                            <td>12345678900</td>
-                                                
-                                        </tr>
-                                </tbody>
-                            </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
-                          <!-- Company content goes here -->
-                          <div class="inner_search">
-                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                            <input type="search" placeholder="Search">
-                          </div>
-                          <div class='employee-attendance-table'>
-                            <table class="employee-table">
-                                <thead>
-                                    <tr class='header-tr'>
-                                      <th>Checkbox</th>
-                                      <th>Company Name</th>
-                                      <th>Mobile</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                          <td>
-                                            <input type="checkbox">
-                                          </td>
-                                            <td class="employee-info">
-                                                <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                                                <div class='employee-basic-info'>
-                                                    <span class="employee-name tooltipp" title="Focal Skill Development Pvt Ltd">Focal Skill Development Pvt Ltd</span>
-                                                
-                                                </div>
-                                            </td>
-                                            <td>12345678900</td>
-                                                
-                                        </tr>
-                                </tbody>
-                            </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="institute" role="tabpanel" aria-labelledby="institute-tab">
-                          <!-- Institute content goes here -->
-                          <div class="inner_search">
-                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                            <input type="search" placeholder="Search">
-                          </div>
-                          <div class='employee-attendance-table'>
-                            <table class="employee-table">
-                                <thead>
-                                    <tr class='header-tr'>
-                                      <th>Checkbox</th>
-                                      <th>Institute Name</th>
-                                      <th>Mobile</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                          <td>
-                                            <input type="checkbox">
-                                          </td>
-                                            <td class="employee-info">
-                                                <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                                                <div class='employee-basic-info'>
-                                                    <span class="employee-name tooltipp" title="Akash">Akash</span>
-                                                
-                                                </div>
-                                            </td>
-                                            <td>12345678900</td>
-                                                
-                                        </tr>
-                                </tbody>
-                            </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
-                          <!-- Student content goes here -->
-                          <div class="inner_search">
-                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                            <input type="search" placeholder="Search">
-                          </div>
-                          <div class='employee-attendance-table'>
-                            <table class="employee-table">
-                                <thead>
-                                    <tr class='header-tr'>
-                                      <th>Checkbox</th>
-                                      <th>Student Name</th>
-                                      <th>Mobile</th>
-                                    </tr>
-                                </thead>
-                                
-                                
-                                <tbody>
-                                  <% candidates.forEach((candidate)=> { %>
-                                        <tr>
-                                          <td>
-                                            <input type="checkbox">
-                                          </td>
-                                            <td class="employee-info">
-                                                <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                                                <div class='employee-basic-info'>
-                                                    <span class="employee-name tooltipp" title="Akash"><%= candidate.name %></span>
-                                                
-                                                </div>
-                                            </td>
-                                            <td><%= candidate.name %></td>
-                                                
-                                        </tr><% }); %>
-                                </tbody>
-                            </table>
-                            </div>
-                        </div>
-                      </div>
-                </div>
-            </div>
+  <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+      <div class="row breadcrumbs-top">
+        <div class="col-12">
+          <h3 class="content-header-title float-left mb-0">Add Post</h3>
+          <div class="breadcrumb-wrapper col-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+              <li class="breadcrumb-item active">Add Post</li>
+            </ol>
           </div>
         </div>
-        
       </div>
     </div>
   </div>
-
-                           
+  <div id="add-model">
+    <div class="content-body">
+      <% include ../partials/flash %>
+        <form id="post-form" enctype="multipart/form-data">
+          <!-- Input Group for Post -->
+          <div class="input-group">
+            <!-- Text Input -->
+            <textarea name="content" id="post-content" class="form-control" rows="3" placeholder="What's on your mind?"
+              required></textarea>
+            <!-- Media Button -->
+            <div class="ml-3">
+              <div>
+                <label for="file-upload" class="media-btn">
+                  <img src="https://static.xx.fbcdn.net/rsrc.php/v4/y7/r/Ivw7nhRtXyo.png" alt="Media Icon">
+                  <!-- Facebook Media Icon -->
+                  Photo/Video
+                </label>
+                <input type="file" id="file-upload" name="file" class="d-none" multiple accept="image/*,video/*">
+              </div>
+              <div>
+                <button class="border-none" style="border:none; background:transparent" type="button"
+                  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  <img src="	https://static.xx.fbcdn.net/rsrc.php/v4/yq/r/b37mHA1PjfK.png" alt="Media Icon">
+                  <!-- Facebook Media Icon -->
+                  Tag
+                </button>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="overflow: hidden;">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title text-white" id="staticBackdropLabel">Tag People</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        style="background:transparent; border:none">
+                        <i class="fa-solid fa-x" style="color: #ffffff;"></i>
+                      </button>
                     </div>
-                    
+                    <div class="modal-body">
+                      <div class="tag_people">
+                        <div class="search">
+                          <div class="tagging-container">
+                            <div class="tag-input-container">
+                              <div class="tags" id="tagsbuttons">
+                                <!-- Tags will dynamically appear here -->
+                               
+                              </div>
+                              <!-- <input type="text" class="tag-input" placeholder="Taged"> -->
+                              <!-- <textarea name="content" id="post-content" class="form-control" rows="1" placeholder="What's on your mind?"
+                              required>
+                              <span>test</span>
+                             </textarea> -->
+                             
+                            </div>
+                            <span class="done">Done</span>
+                          </div>
+                          <div class="nav--pills">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                              <li class="nav-item" role="presentation" onclick="selctedTagFor('admin')">
+                                <a class="nav-link active" id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab"
+                                  aria-controls="admin" aria-selected="true">Admin</a>
+                              </li>
+                              <li class="nav-item" role="presentation" onclick="selctedTagFor('company')">
+                                <a class="nav-link" id="company-tab" data-bs-toggle="tab" href="#company" role="tab"
+                                  aria-controls="company" aria-selected="false">Company</a>
+                              </li>
+                              <li class="nav-item" role="presentation" onclick="selctedTagFor('college')">
+                                <a class="nav-link" id="institute-tab" data-bs-toggle="tab" href="#institute" role="tab"
+                                  aria-controls="institute" aria-selected="false">Institute</a>
+                              </li>
+                              <li class="nav-item" role="presentation" onclick="selctedTagFor('candidate')">
+                                <a class="nav-link" id="student-tab" data-bs-toggle="tab" href="#student" role="tab"
+                                  aria-controls="student" aria-selected="false">Student</a>
+                              </li>
+                            </ul>
+
+                            <!-- Tab Content -->
+                            <div class="tab-content" id="myTabContent">
+                              <div class="tab-pane fade show active" id="admin" role="tabpanel"
+                                aria-labelledby="admin-tab">
+                                <!-- Admin content goes here -->
+                                <div class="inner_search">
+                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
+                                  <input type="text" placeholder="Search" id="searchbyAdmin" name="searchbyAdmin">
+                                </div>
+                                <div class='employee-attendance-table'>
+                                  <table class="employee-table">
+                                    <thead>
+                                      <tr class='header-tr'>
+                                        <th>Status</th>
+                                        <th>Name</th>
+                                        <th>Mobile</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <input type="checkbox">
+                                        </td>
+                                        <td class="employee-info">
+                                          <img src="/public_assets/images/newpage/logo-ha.svg" alt=""
+                                            class="employee-avatar" />
+                                          <div class='employee-basic-info'>
+                                            <span class="employee-name tooltipp" title="Akash">Akash</span>
+
+                                          </div>
+                                        </td>
+                                        <td>12345678900</td>
+
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
+                                <!-- Company content goes here -->
+                                <div class="inner_search">
+                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
+                                  <input type="text" placeholder="Search" id="searchbyCompany" name="searchbyCompany">
+                                </div>
+                                <div class='employee-attendance-table'>
+                                  <table class="employee-table">
+                                    <thead>
+                                      <tr class='header-tr'>
+                                        <th>Checkbox</th>
+                                        <th>Company Name</th>
+                                        <th>Mobile</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <input type="checkbox">
+                                        </td>
+                                        <td class="employee-info">
+                                          <img src="/public_assets/images/newpage/logo-ha.svg" alt=""
+                                            class="employee-avatar" />
+                                          <div class='employee-basic-info'>
+                                            <span class="employee-name tooltipp"
+                                              title="Focal Skill Development Pvt Ltd">Focal Skill Development Pvt
+                                              Ltd</span>
+
+                                          </div>
+                                        </td>
+                                        <td>12345678900</td>
+
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <div class="tab-pane fade" id="institute" role="tabpanel" aria-labelledby="institute-tab">
+                                <!-- Institute content goes here -->
+                                <div class="inner_search">
+                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
+                                  <input type="text" placeholder="Search" id="searchbyInstitute" name="searchbyInstitute">
+                                </div>
+                                <div class='employee-attendance-table'>
+                                  <table class="employee-table">
+                                    <thead>
+                                      <tr class='header-tr'>
+                                        <th>Checkbox</th>
+                                        <th>Institute Name</th>
+                                        <th>Mobile</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <input type="checkbox">
+                                        </td>
+                                        <td class="employee-info">
+                                          <img src="/public_assets/images/newpage/logo-ha.svg" alt=""
+                                            class="employee-avatar" />
+                                          <div class='employee-basic-info'>
+                                            <span class="employee-name tooltipp" title="Akash">Akash</span>
+
+                                          </div>
+                                        </td>
+                                        <td>12345678900</td>
+
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
+                                <!-- Student content goes here -->
+                                <div class="inner_search">
+                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
+                                  <input type="text" placeholder="Search" id="searchbyCanditate" name="searchbyCanditate">
+                                </div>
+                                <div class='employee-attendance-table'>
+                                  <table class="employee-table">
+                                    <thead>
+                                      <tr class='header-tr'>
+                                        <th>Checkbox</th>
+                                        <th>Student Name</th>
+                                        <th>Mobile</th>
+                                      </tr>
+                                    </thead>
+
+
+                                    <tbody id="candidatesTableBody">
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary mt-3">Post</button>
-            </form>
+              </div>
+
+
+            </div>
+
+          </div>
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary mt-3">Post</button>
+        </form>
 
 
     </div>
-    </div>
-    
-
-    <style>
-    #add-model .hideScroll .model-open .model{
-        overflow: hidden;
-      }
-       .inner_search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.search input{
-            border: 1px solid #ccc;
-    border-radius: 15px;
-    font-size: 16px;
-    padding: 3px 10px;
-    width: 60%;
-
-        }
-
-.search-icon {
-    color: #FC2B5A;
-    border: 1px solid #ccc;
-    padding: 6px 10px;
-    display: inline-block;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-}
-
-.inner_search input {
-    border: 1px solid #ccc;
-    border-left: none;
-    border-radius: 0px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    font-size: 16px;
-    padding: 3px 10px;
-    width: 60%;
-}
-.tagging-container {
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-    margin: 0 auto;
-}
-
-.tag-input-container {
-   margin-right: 10px;
-}
-
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-}
-
-.tag {
-    display: inline-flex;
-    align-items: center;
-    background-color: #f0f0f0;
-    color: #333;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 14px;
-}
-
-.tag .remove-tag {
-    margin-left: 5px;
-    cursor: pointer;
-    color: #FC2B5A;
-    font-weight: bold;
-}
-
-.tag-input-container input {
-    /* border: ; */
-    outline: none;
-    font-size: 14px;
-    padding: 5px 10px;
-    min-width: 100%;
-}
-
-.done {
-    color: #FC2B5A;
-    cursor: pointer;
-    font-size: 14px;
-}
-        .nav--pills{
-            display: flex;
-    gap: 5px;
-    align-items: center;
-    justify-content: space-evenly;
-    padding-block: 15px;
-    flex-direction: column;
-        }
-        .nav--pills > div{
-            /* background: #FC2B5A; */
-            width: 100%;
-        }
-        .nav--pills .nav.nav-tabs .nav-item .nav-link {
-            position: relative;
-    border-top: 1px solid transparent; 
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-    border-bottom: none; 
-    transition: all 0.3s ease;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    font-size: 20px;
-}
-
-.nav--pills .nav.nav-tabs .nav-item .nav-link.active {
-    position: relative;
-  border-top: 1px solid transparent; 
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-  border-image: linear-gradient(30deg, #FC2B5A, rgba(115, 103, 240, 0.5)) 1 !important;
-  border-bottom: none;
-  background: none; 
-  transition: all 0.3s ease;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  font-size: 20px;
-}
-
-.nav--pills .nav.nav-tabs .nav-item .nav-link.active:after {
-  content: ""; /* Remove bottom gradient */
-  display: none;
-}
-.tab-pane {
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.tab-pane:not(.active) {
-  opacity: 0;
-  transform: scale(0.95); /* Slight zoom-out effect when hidden */
-}
-
-.tab-pane.active {
-  opacity: 1;
-  transform: scale(1); /* Reset zoom to normal for the active tab */
-}
-
-/* table css  */
-.employee-list-container {
-  padding: 0px;
-  width: 80%px;
-  background-color: var(--textWhite);
-  /* #ffffff;*/
-  border-radius: 8px;
-  color: #FF1567;
-}
-
-.employee-basic-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.employee-list-title {
-  font-size: 25px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  text-align: center;
-  padding: 10px;
-}
+    <!-- <div class="tagging-container">
+      <div class="tag-input-container">
+          <div class="tags">
+          </div>
+          <input type="text" class="tag-input" placeholder="Tag People">
+      </div>
+      <span class="done">Done</span>
+  </div> -->
 
 
-.employee-attendance-table {
-  width: 100%;
-  /* overflow-x: auto; */
-  margin-top: 25px;
-  max-height: 50vh;
-}
+    <!-- <div class="content-body mt-4">
+		
+      <% include ../partials/flash %>
+      
+        <section class="list-view">
+          
+          <div class="row">
+            
+            <div class="col-12 rounded equal-height-2 coloumn-2">
+              
+              <div class="card">
+                
+                <div class="row">
+  
+                  <div class=" col-xl-5 col-lg-6 col-md-4 col-sm-12 col-12  my-auto ">
+                    <div class="archieve text-left px-1">
+                      <input style="margin-bottom: 4px;" type="checkbox" onclick="archived()"<%-
+                      isChecked=="true" ? "checked" : '' %>
+                      id="checkbox1">
+                      &nbsp;
+                      <p>Show Archived</p>
+                      
+                    </div>
+  
+                  </div>
+   
+  
+                <div class="card-content col-12">
+                  <div class="row mb-2">
+                    <div class="col-xl-12 col-lg-12 px-3">
+                      <form method="GET" id="filterForm">
+                      
+                      <div class="row">
+                        <div class="col-xl-2 mt-1">
+                          <label>Name/ Mobile/ Whatsapp</label>
+                          <input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>"
+                           maxlength="25">
+                        </div>
+                        <div class="col-xl-2 mt-1">
+                          <label>Profile</label>
+                          <select class="form-control text-capitalize" name="Profile" id="profile">
+                            <option value="">Select</option>
+                            <option class="text-capitalize" value= "All" 
+                            <% if (data.Profile=='All' ) { %> selected <% }%> >All</option>
+                            <option class="text-capitalize" value= "true" 
+                            <% if (data.Profile=='true' ) { %> selected <% }%> >Completed</option>
+                            <option class="text-capitalize" value= "false" 
+                            <% if (data.Profile=='false' ) { %> selected <% }%> >Due</option>
+                          </select>
+                        </div>
+                        <div class="col-xl-2 mt-1">
+                          <label>Verfied</label>
+                          <select class="form-control text-capitalize" name="verified">
+                            <option value="">Select</option>
+                            <option class="text-capitalize" value= true
+                            <% if (data.verified == 'true') { %> selected <% }%> >Verified</option>
+                            <option class="text-capitalize" value= false
+                            <% if (data.verified == 'false') { %> selected <% }%> >Not Verified</option>
+                          </select>
+                        </div>
+                        
+                          <input type="hidden" class="form-control" name="status" value="<%- isChecked=='true' ? false : true%>">
+                        
+                        <div style="margin-top: 2.5rem !important;" class="col-xl-2 text-center mt-3">
+                          <button 
+                            class="btn btn-success  waves-effect waves-light  text-white d-inline "
+                            id="submit-btn">Go</button>
+                            <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
+                            href="/admin/post/add">RESET</a>
+                        </div>
+                      </div>
+                      </form>
+                    </div>
+                  </div> 
+                  <div class="table-responsive">
+                    <% if (candidates && candidates.length> 0) { %>
+                      <table id="tblexportData" class="table table-hover-animation mb-0 table-hover" width="100%">
+                        <thead>
+                          <tr>
+                            <th class="three column wide" width="18%"  style="cursor: pointer;">Select </th>
+                            <th class="three column wide candidate-wrap" width="19%">CANDIDATE NAME</th>
+                            <th class="one column wide" width="15%">MOBILE NO.</th>
 
-.employee-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-.employee-table th{
-  text-align: center;
-}
-.employee-table th,
-.employee-table td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% let count=0 %>
+                            <% candidates.forEach((l, i)=> { %>
+                              <tr>
+                                <td class="text-capitalize">
+                                 <input type="checkbox">
+                                </td>
+                                <td class="text-capitalize candid-wrap d-flex align-items-center" style="width:300px">
+                                  <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+                                  <div class='employee-basic-info'>
+                                    <a  href="/admin/candidate/details/<%=l._id%>">	<%= l.name ? l.name : "NA" %></a>
+                                    <% if(l.verified == true){ %>
+                                      <i class="fa-solid fa-circle-check" style="color: #28c76f ;"></i>
+                                    <% } %>
+                                  
+                                  </div>
+                                  
+                                </td>
+                                <td class="text-capitalize">
+                                  <%= l.mobile ? l.mobile : "NA" %>
+                                </td>
+                                
+                              </tr>
+                              <% }) %>
+                        </tbody>
+                      </table>
+                      <% } else { %>
+                        <p class="text-center mt-3">No result found</p>
+                        <% } %>
+  
+                          <% if (totalPages> 1) { %>
+                            <ul class="pagination justify-content-end ml-2 mb-2">
+                              <% let first=1 %>
+                                <% let last=totalPages> 4 ? 4 :
+                                  totalPages %> <% if (totalPages> 4 && page >= 2) { %> <%
+                                      first=page - 1 %>
+                                      <% last=page + 1 %>
+                                        <% if (last>
+                                          totalPages) last = totalPages %> <% } %>
+                                            <% if (first>
+                                              1) { %>
+                                              <li class="page-item">
+                                                <a class="pageAnchor page-link"
+                                                  href="<%= 1 %>">First</a>
+                                              </li>
+                                              <% } %>
+                                                <% for (let i=first; i
+                                                  <=last; i +=1) { %>
+                                                  <% if (i===page) { %>
+                                                    <li
+                                                      class="active page-item">
+                                                      <a href="javascript:void()"
+                                                        class="page-link">
+                                                        <%= i %>
+                                                      </a>
+                                                    </li>
+                                                    <% } else { %>
+                                                      <li
+                                                        class="page-item">
+                                                        <a class="page-link pageAnchor"
+                                                          href="<%= i %>">
+                                                          <%= i %>
+                                                        </a>
+                                                      </li>
+                                                      <% } %>
+                                                        <% } %>
+                                                          <% if
+                                                            (totalPages>
+                                                            last)
+                                                            { %>
+                                                            <li
+                                                              class="page-item">
+                                                              <a class="pageAnchor page-link"
+                                                                href="<%= last + 1 %>">...</a>
+                                                            </li>
+                                                            <li
+                                                              class="page-item">
+                                                              <a class="pageAnchor page-link"
+                                                                href="<%= totalPages %>">Last</a>
+                                                            </li>
+                                                            <% }
+                                                              %>
+                            </ul>
+                            <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <input type="hidden" id="candidate-id" value="">
+        <div class="modal fade" id="sendSMS" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Profile Completion SMS</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pt-1" id="popup-body">
+                  <p>Are you sure you want to send Bulk SMS </p>
+          <p class="text-right font-weight-bold text-danger mr-2"><i>Total Messages : <%= smsCount %></i></p>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary"
+          onclick="sendSMS('<%= data?.name%>','<%= data?.FromDate %>','<%= data?.ToDate %>','<%= smsCount %>')"
+                    id="sendBtn" data-dismiss="modal">Send</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                      class="feather icon-x d-block d-lg-none"></i>
+                    <span class="d-none d-lg-block">Cancel</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+      Notification modal start
+      <div class="modal fade" id="notificationmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Send Notifications</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body pt-1">
+          <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-1 text-left">
+            <label>Status<span class="required text-danger"> *</span></label>
+            <select class="form-control text-capitalize" id="notificationevent" value="">
+            <option value="">Select Option</option>
+            </select>
+          </div>
+          <div class="col-xl-12 mb-1 text-left">
+            <label>Message<span class="required text-danger"> *</span></label>
+            <textarea class="form-control" cols="5" id="notificationmessage" value="" rows="3"></textarea>
+          </div>
+          </div>
+          <p class="text-success font-weight-bolder" id = 'successMsg' style="display: none;"></p>
+          <p class="text-danger font-weight-bolder" id = 'errorMsg' style="display: none;"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="sendBtn" onclick="sendNotifications()">Send</button>
+        </div>
+        </div>
+      </div>
+      </div>
+      Notification modal end
+          <script>
+            function exportCandidates(){
+              // $.ajax({
+              // 	type: "POST",
+              // 	url: "/admin/candidate/downloadCSV",
+              // 	success: (res) => {
+              // 		console.log(res)
+              // 		window.open(res.path, '_blank')
+              // 		// setTimeout(removeFile,20000)
+              // 	}
+              // });
+              const body={FromDate:$('#from-date').val(),ToDate:$('#to-date').val(), username:$('#username').val(), isProfileCompleted:$('#profile').val() }
+              axios.post(`/admin/candidate/downloadCSV`,body , { responseType: 'blob' }).then(res => {
+                    const href = URL.createObjectURL(res.data);
+                                  window.open(href, '_blank')
+                  }).catch((err) => {
+                  console.log(err.message)
+                  })
+            }
+            function updateProfileVisible(mobile,visibility){
+                          let field;
+              if(visibility=='true'){
+                field=false
+              }else{
+                field=true
+              }
+              $.ajax({
+                type: "POST",
+                url: "/admin/candidate/changeprofilestatus",
+                data: {
+                  mobile,
+                  status: field,
+                },
+                success: () => location.reload(),
+              });
+            }
+            function sendNotifications(){
+              const event=$('#notificationevent').val();
+              const message=$('#notificationmessage').val();
+                          const candidateId=$('#candidate-id').val();
+              const body={
+                title:event,
+                message:message,
+                candidateId
+              }
+              if(message&&event){
+                axios.post("/admin/candidate/sendNotification",body).then((res)=>{
+                  if(res.data.status){
+                  $('#errorMsg').hide();
+                  $('#errorMsg').text('');
+                  $('#successMsg').show();
+                  $('#successMsg').text(res.data.message)
+                  window.location.reload();
+                  }else{
+                  $('#successMsg').hide();
+                  $('#successMsg').text('');
+                  $('#errorMsg').show();
+                  $('#errorMsg').text(res.data.message)
+                  }
+                })
+              }else{
+                $('#successMsg').hide();
+                  $('#successMsg').text('');
+                  $('#errorMsg').show();
+                  $('#errorMsg').text("Please fill the required fields!")
+              }
+            }
+            function onNotificationsHandler(candidateId){
+              $('select option.notificationoption').remove();
+              document.getElementById('candidate-id').value=candidateId
+              let optionsName=['Signup','Profile Completion','Applied Jobs','Interview Scheduling','Shortlisting','Focalyt Earnings','Focalyt Alerts']
+              for(let i=0;i<optionsName.length;i++){
+                  let option=document.createElement('option');
+                  option.text=optionsName[i];
+                  option.value=optionsName[i]
+                  option.classList.add('notificationoption')
+                  document.getElementById('notificationevent').append(option)
+                }
+            }
+            function removeFile() {
+              $.ajax({
+                type: "DELETE",
+                url: "/admin/candidate/deleteCSV",
+                success: (res) => {
+                  if(res.status){
+                    console.log('File Deleted')
+                  } else {
+                    console.log('File not Deleted')
+                  }
+                }
+              });
+            }
+  
+            function myOnOffFunc(id, status, model) {
+              // eslint-disable-line
+              let myStatus = true;
+              if (status === true || status === "true") {
+                myStatus = false;
+              }
+              $.ajax({
+                type: "POST",
+                url: "/admin/changestatus",
+                data: {
+                  id,
+                  status: myStatus,
+                  model,
+                },
+                success: () => location.reload(),
+              });
+            }
+            function deleteRecord(id, status, model) {
+              // eslint-disable-line
+              let myStatus = true;
+              if (status === true || status === "true") {
+                myStatus = false;
+              }
+              var x = confirm("Are you sure you want to delete?");
+              if (x) {
+                $.ajax({
+                  type: "POST",
+                  url: "/admin/deleteRecord",
+                  data: {
+                    id,
+                    status: myStatus,
+                    model,
+                  },
+                  success: () => window.location.href = "/admin/candidate"
+                });
+              }
+            }
+          </script>
+          <script>
+            !(function () {
+              "use strict";
+              Array.isArray ||
+                (Array.isArray = function (r) {
+                  return "[object Array]" === Object.prototype.toString.call(r);
+                });
+              var r = {
+                get: function () {
+                  var r = window.location.search,
+                    t = {};
+                  return "" === r
+                    ? t
+                    : ((r = r.slice(1)),
+                      (r = r.split("&")),
+                      r.map(function (r) {
+                        var i, o;
+                        (r = r.split("=")),
+                          (i = r[0]),
+                          (o = r[1]),
+                          t[i]
+                            ? (Array.isArray(t[i]) || (t[i] = [t[i]]),
+                              t[i].push(o))
+                            : (t[i] = o);
+                      }),
+                      t);
+                },
+              };
+              if (window) {
+                if (window.qs)
+                  throw new Error(
+                    "Error bootstrapping qs: window.qs already set."
+                  );
+                window.qs = r;
+              }
+            })();
+          </script>
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              let order = '<%= sortingOrder%>'
+              let value = '<%= sortingValue%>'
+              let iconClass
+              if(order == -1){
+                iconClass = "fa-solid fa-arrow-down success"
+              }else{
+                iconClass = "fa-solid fa-arrow-up success"
+              }
+              $(`#${value}`).removeAttr('class')
+              $(`#${value}`).attr('class', iconClass)
+              $(`#${value}`).attr('value', `${order*-1}`)
+  
+              const pageAnchors = document.querySelectorAll("a.pageAnchor");
+              const { origin, pathname, search } = window.location;
+              const obj = window.qs.get(search);
+              const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+              let url = `${origin}${pathname}?`;
+              keyArr.forEach((x) => {
+                if (x !== "page") {
+                  url += `${x}=${obj[x]}&`;
+                }
+              });
+              pageAnchors.forEach((el) => {
+                const n = el.getAttribute("href");
+                el.setAttribute("href", `${url}page=${n}`);
+              });
+            });
+            // show deleted data
+            function archived() {
+              let checkbox = document.getElementById('checkbox1');
+              window.location.href = `/admin/post/add?status=${!checkbox.checked}`
+            }
+  
+            // show selected colleges
+            function selectedCollege() {
+              var e = document.getElementById("college");
+              var selectedItem = e.options[e.selectedIndex].value;
+              // alert(selectedItem);
+              var clgId = selectedItem;
+              // alert("isDeleted = " + isDeleted)
+              $.ajax({
+                type: "GET",
+                url: "/admin/candidate?clgId=" + `${clgId}`,
+                success: () => window.location.href = "/admin/candidate?clgId=" + `${clgId}`
+              });
+            }
+  
+            // delete archieve data permanently
+            function deleteArchieve(id, isDeleted, model) {
+              // alert(isDeleted)
+              let myStatus = true;
+              if (isDeleted === true || isDeleted === "true") {
+                myStatus = true;
+              }
+  
+              var x = confirm("Are you sure you want to delete?");
+              if (x) {
+                $.ajax({
+                  type: "POST",
+                  url: "/admin/deleteArchieve",
+                  data: {
+                    id,
+                    isDeleted: myStatus,
+                    model,
+                  },
+                  success: () => window.location.href = "/admin/candidate?isDeleted=true"
+                });
+              }
+            }
+          </script>
+  
+          <script type="text/javascript">
+            
+            $('#submit-btn').click(()=>{
+              if(validate()){
+                return false
+              }
+            })
+            function validate(){
+              $('.error').removeClass('error')
+              let fromDate = $('#from-date').val();
+              let toDate = $('#to-date').val()
+              let hasError = false
+              let firstError
+              
+              if(fromDate && !toDate){
+                $('#to-date').parent().addClass('error')
+                              firstError = firstError ? firstError :$('#to-date')
+                              hasError = true
+              }
+              if(!fromDate && toDate){
+                $('#from-date').parent().addClass('error')
+                              firstError = firstError ? firstError :$('#from-date')
+                              hasError = true
+              }
+              $(firstError).focus()
+                          return hasError
+            }
+            function exportToExcel(tableID, filename = '') {
+  
+              /* Get the HTML data using Element by Id */
+              var table = document.getElementById("tblexportData");
+  
+              /* Declaring array variable */
+              var rows = [];
+  
+              //iterate through rows of table
+              for (var i = 0, row; row = table.rows[i]; i++) {
+                //rows would be accessed using the "row" variable assigned in the for loop
+                //Get each cell value/column from the row
+                column1 = row.cells[0].innerText;
+                column2 = row.cells[1].innerText;
+                column3 = row.cells[2].innerText;
+                column4 = row.cells[3].innerText;
+                column5 = row.cells[4].innerText;
+  
+                /* add a new records in the array */
+                rows.push(
+                  [
+                    column1,
+                    column2,
+                    column3,
+                    column4,
+                    column5
+                  ]
+                );
+  
+              }
+              console.log("rows",rows,rows.length)
+              csvContent = "data:text/csv;charset=utf-8,";
+              /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
+              rows.forEach(function (rowArray) {
+                row = rowArray.join(",");
+                csvContent += row + "\r\n";
+              });
+  
+              /* create a hidden <a> DOM node and set its download attribute */
+              var encodedUri = encodeURI(csvContent);
+              var link = document.createElement("a");
+              link.setAttribute("href", encodedUri);
+              link.setAttribute("download", "candidates list");
+              document.body.appendChild(link);
+              /* download the data file named "Stock_Price_Report.csv" */
+              link.click();
+            }
+  
+            function sendSMS(name,fromDate,toDate,count){
+              const params = window.location.search
+                          $('#sendBtn').addClass('disabled')
+              $.ajax({
+                  type: "POST",
+                  url: "/admin/candidate/bulkSMS",
+                  data: {
+                    isProfileCompleted : false,
+                    name,
+                    fromDate,
+                    toDate,
+                    count
+                  },
+                  success: () => {
+                    let smsHistory = document.getElementById('smsHistory')
+                    smsHistory.textContent="Last Sent : Just Now (<%= smsCount %>)" 
+                    $('#sendBtn').removeClass('disabled')
+                  },
+                  error: () =>{
+                    window.location.href = `/admin/candidate${params}`
+                  }
+                });
+            }
+  
+            function sorting(value){
+              let order = $(`#${value}`).attr('value')
+              let str = `?`
+              let form = document.getElementById('filterForm');
+                          let data = new FormData(form);
+              let obj = {}
+                          for (let [key, value] of data) {
+                obj[key] = value
+                str += `${key}=${value}&`
+                             }
+              window.location.href = `/admin/candidate${str}value=${value}&order=${order}`
+            }
+  
+            function loginAs(mobile){
+              $.ajax({
+                  type: "POST",
+                  data: {mobile, module: 'candidate'},
+                  url: "/api/loginAsCandidate",
+                  success: (data) => {
+                    if(data.role===3) {
+                      localStorage.setItem("candidate", data.name);
+                                          localStorage.setItem("token", data.token);
+                                          window.location.href = "/candidate/dashboard";
+                    }									
+                  }
+                });
+            }
+            
+          </script>
+    </div> -->
+  </div>
+  
 
-}
-.employee-table tr{
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
-.employee-table thead{
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-.employee-table td {
-  color: black;
-  font-size: 15px;
-  text-align: left;
+  <style>
+    #add-model .hideScroll .model-open .model {
+      overflow: hidden;
+    }
 
-}
-.employee-table tbody {
-  display: block;
-  max-height: 50vh;
-  overflow: auto;
-}
-/* .employee-table tbody tr{
+    .inner_search {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search input {
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      font-size: 16px;
+      padding: 3px 10px;
+      width: 60%;
+
+    }
+
+    .search-icon {
+      color: #FC2B5A;
+      border: 1px solid #ccc;
+      padding: 6px 10px;
+      display: inline-block;
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+    }
+
+    .inner_search input {
+      border: 1px solid #ccc;
+      border-left: none;
+      border-radius: 0px;
+      border-top-right-radius: 15px;
+      border-bottom-right-radius: 15px;
+      font-size: 16px;
+      padding: 3px 10px;
+      width: 30%;
+    }
+
+    .tagging-container {
+      /*display: flex;*/
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .tag-input-container {
+      margin-right: 10px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      background-color: #f0f0f0;
+      color: #333;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 14px;
+    }
+
+    .tag .remove-tag {
+      margin-left: 5px;
+      cursor: pointer;
+      color: #FC2B5A;
+      font-weight: bold;
+    }
+
+    .tag-input-container input {
+      /* border: ; */
+      outline: none;
+      font-size: 14px;
+      padding: 5px 10px;
+      min-width: 100%;
+    }
+
+    .done {
+      color: #FC2B5A;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .nav--pills {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      justify-content: space-evenly;
+      padding-block: 15px;
+      flex-direction: column;
+      margin-block: 20px;
+      background: #fff;
+    }
+
+    .nav--pills>div {
+      /* background: #FC2B5A; */
+      width: 100%;
+    }
+
+    .nav--pills .nav.nav-tabs .nav-item .nav-link {
+      position: relative;
+      border-top: 1px solid transparent;
+      border-left: 1px solid transparent;
+      border-right: 1px solid transparent;
+      border-bottom: none;
+      transition: all 0.3s ease;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      font-size: 20px;
+    }
+
+    .nav--pills .nav.nav-tabs .nav-item .nav-link.active {
+      position: relative;
+      border-top: 1px solid transparent;
+      border-left: 1px solid transparent;
+      border-right: 1px solid transparent;
+      border-image: linear-gradient(30deg, #FC2B5A, rgba(115, 103, 240, 0.5)) 1 !important;
+      border-bottom: none;
+      background: none;
+      transition: all 0.3s ease;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      font-size: 20px;
+    }
+
+    .nav--pills .nav.nav-tabs .nav-item .nav-link.active:after {
+      content: "";
+      /* Remove bottom gradient */
+      display: none;
+    }
+
+    .tab-pane {
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .tab-pane:not(.active) {
+      opacity: 0;
+      transform: scale(0.95);
+      /* Slight zoom-out effect when hidden */
+    }
+
+    .tab-pane.active {
+      opacity: 1;
+      transform: scale(1);
+      /* Reset zoom to normal for the active tab */
+    }
+
+    /* table css  */
+    .employee-list-container {
+      padding: 0px;
+      width: 80%px;
+      background-color: var(--textWhite);
+      /* #ffffff;*/
+      border-radius: 8px;
+      color: #FF1567;
+    }
+
+    .employee-basic-info {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      /* flex-direction: column; */
+    }
+
+    .employee-list-title {
+      font-size: 25px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+      padding: 10px;
+    }
+
+
+    .employee-attendance-table {
+      width: 100%;
+      /* overflow-x: auto; */
+      margin-top: 25px;
+      max-height: 50vh;
+    }
+
+    .employee-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .employee-table th {
+      text-align: center;
+    }
+
+    .employee-table th,
+    .employee-table td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+
+    }
+
+    .employee-table tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    .employee-table thead {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .employee-table td {
+      color: black;
+      font-size: 15px;
+      text-align: left;
+
+    }
+
+    .employee-table tbody {
+      display: block;
+      max-height: 50vh;
+      overflow: auto;
+    }
+
+    /* .employee-table tbody tr{
   min-height: 25px;
 }
 .employee-table tbody td {
@@ -456,199 +1098,347 @@
   max-width: 100px;
   min-width: 20px;
 } */
-.employee-info {
-  display: flex;
-  align-items: center;
-}
+    .employee-info {
+      display: flex;
+      align-items: center;
+    }
 
-.employee-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
+    .employee-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
 
-.employee-name {
-  font-weight: 500;
-  color: #333;
-}
-.tooltipp{
-  max-width: 200px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-    max-height: 1.2em;
-    transition: max-height 0.8s ease, white-space 0.8s ease;
-    cursor: pointer;
-}
+    .employee-name {
+      font-weight: 500;
+      color: #333;
+    }
 
-.employee
-.cateForm {
-  display: flex;
-  align-items: center;
-  
-  justify-content: space-around;
-  text-align: center;
-  width: 98%;
-  font-size: 13px;
-}
-.cateForm1
-{
-  display: block;
-  text-align: left;
-  width: 100%;
-}
-.cateForm label {
-  display: flex;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 5px 10px;
-  /* width: 50%; */
-  flex-direction: column;
-}
-.Description{
-  height: 150px;
-}
+    .tooltipp {
+      max-width: 200px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-height: 1.2em;
+      transition: max-height 0.8s ease, white-space 0.8s ease;
+      cursor: pointer;
+    }
 
-.cateForm input {
-  width: 97%;
-  height: 30px;
-}
-.cateForm textarea {
-  width: 98%;
-}
-.cateBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  gap: 20px;
-  padding-block: 20px;
-  
-}
+    .employee .cateForm {
+      display: flex;
+      align-items: center;
 
-.cateBtn button {
-  padding: 7px 20px;
-  border-radius: 15px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.employee-table thead tr th{
-  font-size: 12px;
-  font-weight: 400;
-  padding: 7px 5px;
-}
-.employee-attendance-table > .employee-table > tbody {
-max-height: 50vh;
-}
-.employee-attendance-table::-webkit-scrollbar {
-  width: 8px; 
-}
+      justify-content: space-around;
+      text-align: center;
+      width: 98%;
+      font-size: 13px;
+    }
 
-.employee-attendance-table::-webkit-scrollbar-track {
-  background: #f0f0f0; 
-  border-radius: 10px; 
-}
+    .cateForm1 {
+      display: block;
+      text-align: left;
+      width: 100%;
+    }
 
-.employee-attendance-table::-webkit-scrollbar-thumb {
-  background-color: #FC2B5A;
-  border-radius: 10px; 
-  border: 2px solid #f0f0f0; 
-}
+    .cateForm label {
+      display: flex;
+      align-items: flex-start;
+      gap: 2px;
+      padding: 5px 10px;
+      /* width: 50%; */
+      flex-direction: column;
+    }
 
-.employee-attendance-table::-webkit-scrollbar-thumb:hover {
-  background-color: #d61a4d;
-}
-    </style>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    .Description {
+      height: 150px;
+    }
+
+    .cateForm input {
+      width: 97%;
+      height: 30px;
+    }
+
+    .cateForm textarea {
+      width: 98%;
+    }
+
+    .cateBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+      padding-block: 20px;
+
+    }
+
+    .cateBtn button {
+      padding: 7px 20px;
+      border-radius: 15px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .employee-table thead tr th {
+      font-size: 12px;
+      font-weight: 400;
+      padding: 7px 5px;
+    }
+
+    .employee-attendance-table>.employee-table>tbody {
+      max-height: 50vh;
+    }
+
+    .employee-attendance-table::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .employee-attendance-table::-webkit-scrollbar-track {
+      background: #f0f0f0;
+      border-radius: 10px;
+    }
+
+    .employee-attendance-table::-webkit-scrollbar-thumb {
+      background-color: #FC2B5A;
+      border-radius: 10px;
+      border: 2px solid #f0f0f0;
+    }
+
+    .employee-attendance-table::-webkit-scrollbar-thumb:hover {
+      background-color: #d61a4d;
+    }
+
+    #candidatesTableBody {
+      /* border: 1px solid black; */
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      /* Allows scrolling */
+    }
+  </style>
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
 
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <!-- <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script> -->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-      // tag users 
-      // Select input and tags container
-const inputField = document.querySelector('.tag-input');
-const tagsContainer = document.querySelector('.tags');
+  <script>
+    // tag users 
+    // Select input and tags container
+    const inputField = document.querySelector('.tag-input');
+    const tagsContainer = document.querySelector('.tags');
 
-// Function to create a tag
-function createTag(tagName) {
-    // Create the tag element
-    const tag = document.createElement('div');
-    tag.classList.add('tag');
-    tag.innerHTML = `${tagName} <span class="remove-tag">&times;</span>`;
-    
-    // Add a click event to the remove button
-    tag.querySelector('.remove-tag').addEventListener('click', () => {
+    // Function to create a tag
+    function createTag(tagName) {
+      // Create the tag element
+      const tag = document.createElement('div');
+      tag.classList.add('tag');
+      tag.innerHTML = `${tagName} <span class="remove-tag">&times;</span>`;
+
+      // Add a click event to the remove button
+      tag.querySelector('.remove-tag').addEventListener('click', () => {
         tag.remove(); // Remove the tag
-    });
+      });
 
-    // Append the tag to the tags container
-    tagsContainer.appendChild(tag);
-}
+      // Append the tag to the tags container
+      tagsContainer.appendChild(tag);
+    }
 
-// Handle input field keypress
-inputField.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && inputField.value.trim() !== '') {
+    // Handle input field keypress
+    inputField.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && inputField.value.trim() !== '') {
         e.preventDefault(); // Prevent form submission
         createTag(inputField.value.trim()); // Add the tag
         inputField.value = ''; // Clear the input field
+      }
+    });
+
+  </script>
+  <script>
+
+    var selectedTag = "admin";
+    var searchby = "";
+    var candidates = <%- JSON.stringify(candidates) %>;
+    var page = <%- page %>;
+    function loadData() {
+      var tableBody = document.getElementById("candidatesTableBody");
+      tableBody.innerHTML = "";  // Clear the table before re-rendering.
+  
+      candidates.forEach((candidate, index) => {
+        var isLastCandidate = index === candidates.length - 1;
+        var row = `
+          <tr>
+            <td><input type="checkbox" ${candidate.isChecked ? "checked" : ""} onchange="handleOnSelectTag(event, ${index})"></td>
+            <td class="employee-info">
+              <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+              <div class='employee-basic-info'>
+                <span class="employee-name tooltipp" title="${candidate.name}">
+                  ${candidate.name}
+                </span>
+              </div>
+            </td>
+            <td>${candidate.mobile}</td>
+          </tr>
+        `;
+  
+        if (isLastCandidate) {
+          row += `<tr><td colspan="3"><button onclick="loadMore()">view more</button></td></tr>`;
+        }
+  
+        tableBody.innerHTML += row;
+      });
     }
-});
-
-    </script>
-    <script>
-        $(document).ready(function () {
-            // Handle form submission
-            $("#post-form").on("submit", function (e) {
-                e.preventDefault(); // Prevent the default form submission
-
-
-                const formData = new FormData();
-                formData.append("content", $("#post-content").val());
-                const files = $("#file-upload")[0].files;
-                console.log("Content:", $("#post-content").val());
-                console.log("Files:", files);
-                for (let i = 0; i < files.length; i++) {
-                    formData.append("files", files[i]);
-                    console.log(`File ${i + 1}:`, files[i].name);
-                }
-
-                // Show a loading spinner or disable the submit button (optional)
-                $("button[type=submit]").text("Posting...").attr("disabled", true);
-
-                // Send data to the API
-                $.ajax({
-                    url: "/api/postfiles", // API endpoint
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        // Handle successful response
-                        console.log("Response:", response);
-                        alert("Post created successfully!");
-                        // Optionally clear the form
-                        $("#post-form")[0].reset();
-                        $("button[type=submit]").text("Post").attr("disabled", false);
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle error response
-                        console.error("Error:", error);
-                        alert("Failed to create post. Please try again.");
-                        $("button[type=submit]").text("Post").attr("disabled", false);
-                    },
-                });
-            });
+  
+    function loadMore() {
+      var newData = [];
+      $.ajax({
+          url: "/admin/post/getTagsList", // API endpoint
+          type: "POST",
+          data: {page: page + 1, search: searchby, searchfor: selectedTag },
+          success: function (response) {
+            newData = response.candidates;
+            if(candidates.length > 0){
+              candidates = [...candidates, ...newData];
+            }else{
+              candidates = newData;
+            }
+            loadData();
+          },
+          error: function (xhr, status, error) {
+            console.error("Error:", error);
+          },
         });
-    </script>
+
+      // candidates = [...candidates, ...newData];
+  
+      // loadData();
+    }
+  
+    // Initial data load
+    loadData();
 
 
-    <% include ../partials/footer %>
-        </div>
+    var selectedTags = [];
+
+    function handleOnSelectTag(e, i){
+      candidates[i].isChecked = e.target.checked;
+
+      if(e.target.checked){
+        candidates[i].index = i;
+        candidates[i].userType = selectedTag;
+        selectedTags.push(candidates[i])
+      } else {
+        selectedTags = selectedTags.filter((el) => { return el.index !== i; });
+      }
+      setTabPills();
+    }
+
+    function setTabPills(){
+      var tableBody = document.getElementById("tagsbuttons");
+        
+        tableBody.innerHTML = "";  // Clear the table before re-rendering.
+    
+        selectedTags.forEach((tag, index) => {
+          var showtags = `
+            <div type="text" class="btn btn-primary" style="padding: 0.3rem 1rem;">
+            ${tag.name} <span class="badge bg-secondary" onclick="handleRemoveSelectedTag(${index})"><i class="fa-solid fa-x" style="color: #000000;" aria-hidden="true"></i></span>
+            </div>
+          `;
+    
+          tableBody.innerHTML += showtags;
+        });
+    }
+
+    function handleRemoveSelectedTag(i){
+      candidates[selectedTags[i].index].isChecked = false;
+      delete selectedTags[i];
+      setTabPills();
+      loadData();
+    }
+
+    function searchbynameorphone(){
+     switch (selectedTag) {
+      case 'admin':
+        searchby = document.getElementById("searchbyAdmin").value;
+        break;
+
+      case 'company':
+        searchby = document.getElementById("searchbyCompany").value;
+        break;
+
+      case 'college':
+        searchby = document.getElementById("searchbyInstitute").value;
+        break;
+
+      case 'candidate':
+        searchby = document.getElementById("searchbyCanditate").value;
+        break;
+
+      default:
+        searchby = '';
+        break;
+     }
+     page = 0;
+     candidates = [];
+     loadMore();
+    }
+
+    function selctedTagFor(selectedFor){
+      selectedTag = selectedFor;
+    }
+
+    
+    $(document).ready(function () {
+      // Handle form submission
+      $("#post-form").on("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData();
+        formData.append("content", $("#post-content").val());
+        const files = $("#file-upload")[0].files;
+        console.log("Content:", $("#post-content").val());
+        console.log("Files:", files);
+        formData.append("data", JSON.stringify(selectedTags));
+        for (let i = 0; i < files.length; i++) {
+          formData.append("files", files[i]);
+          console.log(`File ${i + 1}:`, files[i].name);
+        }
+
+        // Show a loading spinner or disable the submit button (optional)
+        $("button[type=submit]").text("Posting...").attr("disabled", true);
+
+        // Send data to the API
+        $.ajax({
+          url: "/api/postfiles", // API endpoint
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (response) {
+            // Handle successful response
+            console.log("Response:", response);
+            alert("Post created successfully!");
+            // Optionally clear the form
+            $("#post-form")[0].reset();
+            $("button[type=submit]").text("Post").attr("disabled", false);
+          },
+          error: function (xhr, status, error) {
+            // Handle error response
+            console.error("Error:", error);
+            alert("Failed to create post. Please try again.");
+            $("button[type=submit]").text("Post").attr("disabled", false);
+          },
+        });
+      });
+    });
+  </script>
+
+
+  <% include ../partials/footer %>
+    </div>

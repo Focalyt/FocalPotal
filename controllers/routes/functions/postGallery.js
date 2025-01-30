@@ -52,6 +52,12 @@ module.exports.uploadPostFiles = async (req, res) => {
     // Validate user authentication
     const userId = req.user?._id || req.session?.user?._id;
     const userType = req.user?.userType || req.session?.user?.userType || req.body?.userType || "admin";
+    let postdata = JSON.parse(req.body.data);
+    const tags = postdata.map(item => ({
+      userId: item._id,
+      name: item.name,
+      userType: item.userType
+    }));
 
     if (!userId || !userType) {
       return res.status(401).send({
@@ -129,6 +135,7 @@ module.exports.uploadPostFiles = async (req, res) => {
       files: uploadedFiles,
       createdBy: userId,
       userType,
+      tags
     });
 
     const savedPost = await newPost.save();
@@ -167,7 +174,7 @@ module.exports.uploadSingleImage = async (req, res) => {
   try {
     const { name, mimetype: ContentType } = req.files.file;
     const ext = name.split('.').pop();
-    let userId =  req.user?._id || req.session.user?._id
+    let userId = req.user?._id || req.session.user?._id
     const key = `post/${userId}/${uuid()}.${ext}`;
     if (!mimetypes.includes(ext.toLowerCase())) throw new InvalidParameterError('File type not supported!');
 
@@ -177,7 +184,7 @@ module.exports.uploadSingleImage = async (req, res) => {
     };
 
     s3.upload(params, function (err, data) {
-      if(err){
+      if (err) {
         return res.send({ status: false, err });
       }
       return res.send({ status: true, data });
@@ -194,9 +201,9 @@ module.exports.deleteSingleFile = async (req, res) => {
     };
 
     s3.deleteObject(params, function (err, data) {
-      if(err) {
+      if (err) {
         console.log(err, '<<<<<<<<<<<<<error')
-        return res.send({status: false, error: err})
+        return res.send({ status: false, error: err })
       }
       console.log('============> ', data)
       return res.send({ status: true, data });
@@ -281,7 +288,7 @@ module.exports.uploadPostMultipleFiles = async (req, res) => {
 
 module.exports.uploadAdminMultipleFiles = async (req, res) => {
   try {
-    let userId =  req.user?._id || req.session.user?._id
+    let userId = req.user?._id || req.session.user?._id
     const files = req.files.files
     let ResponseData = []
     let filesArray = []
@@ -295,7 +302,7 @@ module.exports.uploadAdminMultipleFiles = async (req, res) => {
       const { name, mimetype: ContentType } = item;
       const ext = name?.split('.').pop();
       const key = `post/${userId}/${uuid()}.${ext}`;
-      
+
       var params = {
         Bucket: bucketName,
         Key: key,
