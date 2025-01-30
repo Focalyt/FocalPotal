@@ -32,7 +32,7 @@
                   </div>
                 </div>
               </div>
-<section id="searchCourses" class="d-xxl-none d-xl-none d-lg-none d-md-none d-sm-block d-block mb-2">
+<!-- <section id="searchCourses" class="d-xxl-none d-xl-none d-lg-none d-md-none d-sm-block d-block mb-2">
 <div class="container">
   <div class="row">
     <div class="col-xl-9">
@@ -60,8 +60,61 @@
     </div>
   </div>
 </div>
+</section> -->
+              
+<section id="searchCourses" class="mb-2">
+  <div class="container">
+    <!-- <ul class="nav nav-tabs justify-content-center" id="courseTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" type="button" role="tab" aria-controls="search" aria-selected="true">
+          Search Courses
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="false">
+          Pending for Fee
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="applied-tab" data-bs-toggle="tab" data-bs-target="#applied" type="button" role="tab" aria-controls="applied" aria-selected="false">
+          Applied Courses
+        </button>
+      </li>
+    </ul> -->
+    <ul class="nav nav-tabs justify-content-center" id="courseTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="search-tab" href="search-courses.html" role="tab" aria-controls="search" aria-selected="true">
+          Search Courses
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="pending-tab" href="pending-fee.html" role="tab" aria-controls="pending" aria-selected="false">
+          Pending for Fee
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="applied-tab" href="/candidate/appliedCourses" role="tab" aria-controls="applied" aria-selected="false">
+          Applied Courses
+        </a>
+      </li>
+    </ul>
+    <!-- <div class="tab-content mt-3" id="courseTabsContent">
+      <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab">
+        <form action="" class="serach-course-form">
+         
+          <input type="search" placeholder="Search for a Course">
+        </form>
+      </div>
+      <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+        
+      </div>
+      <div class="tab-pane fade" id="applied" role="tabpanel" aria-labelledby="applied-tab">
+        
+      </div>
+    </div> -->
+  </div>
 </section>
-              <section id="personal-info">
+<section id="personal-info">
                 <div class="row">
                   <div class="col-xl-12 col-lg-12">
                     <div id="accordion">
@@ -126,7 +179,7 @@
                                         <div class="spe_icon">
                                           <!-- <i class="la la-money"></i> -->
                                           <figure class="text-end">
-                                            <img src="/public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
+                                            <img src="/public_assets/images/newicons/eligibility.png" class="img-fluid p-0 width" draggable="false">
                                         </figure>
                                         </div>
                                         <div class="spe_detail">
@@ -140,7 +193,7 @@
                                           <div class="spe_icon">
                                             <!-- <i class="la la-shield"></i> -->
                                             <figure class="text-end">
-                                              <img src="/public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
+                                              <img src="/public_assets/images/newicons/duration.png" class="img-fluid p-0 width" draggable="false">
                                           </figure>
                                           </div>
                                           <div class="spe_detail">
@@ -155,7 +208,7 @@
                                           <div class="course_spec">
                                             <div class="spe_icon">
                                               <figure class="text-end">
-                                                <img src="/public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
+                                                <img src="/public_assets/images/newicons/location.png" class="img-fluid p-0 width" draggable="false">
                                             </figure>
                                               <!-- <i class="la la-graduation-cap"></i> -->
                                             </div>
@@ -181,7 +234,7 @@
                                               <div class="spe_icon">
                                                 <!-- <i class="la la-map"></i> -->
                                                 <figure class="text-end">
-                                                  <img src="/public_assets/images/icons/eligibility.png" class="img-fluid p-0" draggable="false">
+                                                  <img src="/public_assets/images/newicons/job-mode.png" class="img-fluid p-0 width" draggable="false">
                                               </figure>
                                               </div>
                                               
@@ -404,6 +457,25 @@
   .course--apply a{
     color: #000;
   }
+  #courseTabs{
+    gap: 25px;
+  }
+  .serach-course-form{
+    display: flex;
+    justify-content: center;
+    transition: 0.5 ease-in-out;
+  }
+  .serach-course-form input{
+    /* width: 50%; */
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 15px;
+    transition: 0.5s ease-in-out;
+  }
+  .width{
+    width: 30px;
+  }
 </style>
           <script
             src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE %>&libraries=&v=weekly"
@@ -572,4 +644,5 @@
                 document.getElementById('courseVid').pause()
               })
           </script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
