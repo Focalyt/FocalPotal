@@ -205,54 +205,28 @@
         </div>
         <div class="col-md-12">
           <div class="row justify-content-evenly ">
+          <% seniorManagement.forEach((member)=> { %>
+
             <div class="col-md-4">
               <div class="elementor-widget-containers">
                 <div class="elementor-image-box-wrapper">
                   <figure class="elementor-image-box-img">
-                    <img src="public_assets/images/user1.png" alt="" />
+                    <img src="    <%= member.image.fileURL %>" alt="" />
                   </figure>
                   <div class="elementor-image-box-content">
                     <h3 class="elementor-image-box-title text-white text-center">
-                      Praveen Bansal <br />
-                      <span class="founder"> Founder and CEO </span>
+                      <%= member.name %> <br />
+                      <span class="founder">  <%= member.designation %> </span>
                     </h3>
                     <p class="elementor-image-box-description text-white">
-                      An IIT Roorkee alumni with more than 18 years of experience in
-                      Skill Development, Education sector, IT consultancy and
-                      Project management. He is a first generation entrepreneur
-                      leading the strategy planning and execution from front. Under
-                      his leadership, Focal Skill is evolving every day to become
-                      one of the most preferred skill training provider by the
-                      candidates and the Industry.
+                      <%= member.description %> 
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="elementor-widget-container">
-                <div class="elementor-image-box-wrapper">
-                  <figure class="elementor-image-box-img">
-                    <img src="public_assets/images/user2.png" alt="" />
-                  </figure>
-                  <div class="elementor-image-box-content">
-                    <h3 class="elementor-image-box-title text-white text-center">
-                      BHAVNA MITTAL <br />
-                      <span class="founder">
-                        FOUNDER AND CHIEF ACADEMIC OFFICER
-                      </span>
-                    </h3>
-                    <p class="elementor-image-box-description text-white">
-                      A Gold Medalist in Master in Education Technology from Punjab
-                      University, She takes care of the academic component of our
-                      training programs. Under her leadership academic team, and
-                      content developers strive to develop Industry relevant
-                      training programs with high quality standards
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          
+            <% }); %>
           </div>
         </div>
         
@@ -260,26 +234,25 @@
        <div class="row g-3 align-items-center">
        
           <div class="col-md-4">
+          <% management.forEach((member)=> { %>
+
             <div class="elementor-widget-containers">
               <div class="elementor-image-box-wrapper">
                 <figure class="elementor-image-box-img">
-                  <img src="public_assets/images/user4.jpg" alt="" />
+                  <img src="    <%= member.image.fileURL %>" alt="" />
                 </figure>
                 <div class="elementor-image-box-content">
                   <h3 class="elementor-image-box-title text-white text-center">
-                    SACHIN MISHRA <br />
-                    <span class="founder"> BUSINESS HEAD </span>
+                    <%= member.name %> <br />
+                    <span class="founder">    <%= member.designation %> </span>
                   </h3>
                   <p class="elementor-image-box-description text-white">
-                    A result oriented Project Management professional with
-                    experience of more than 14 years in managing Skill Development
-                    and Education Sector projects. Successful at developing and
-                    executing targeted business initiatives, driving customer
-                    growth and achieving social Impact objectives.
+                    <%= member.description %>
                   </p>
                 </div>
               </div>
             </div>
+            <% }); %>
           </div>
           <% staff.forEach((staff)=> { %>
           <div class="col-md-4">
@@ -296,98 +269,7 @@
                 </div>
               </div>
             </div>
-          </div><% }); %>
-          <div class="col-md-4">
-            <div class="elementor-widget-containers">
-              <div class="elementor-image-box-wrapper">
-                <figure class="elementor-image-box-img">
-                  <img src="public_assets/images/user7.jpg" alt="" />
-                </figure>
-                <div class="elementor-image-box-content">
-                  <h3 class="elementor-image-box-title text-white text-center">
-                    GANESH BHATT<br />
-                    <span class="founder"> MANAGER HR </span>
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="elementor-widget-containers">
-              <div class="elementor-image-box-wrapper">
-                <figure class="elementor-image-box-img">
-                  <img src="public_assets/images/user8.png" alt="" />
-                </figure>
-                <div class="elementor-image-box-content">
-                  <h3 class="elementor-image-box-title text-white text-center">
-                    JASVEER KAUR<br />
-                    <span class="founder"> SENIOR ACADEMIC CO-ORDINATOR </span>
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="elementor-widget-containers">
-              <div class="elementor-image-box-wrapper">
-                <figure class="elementor-image-box-img">
-                  <img src="public_assets/images/user9.png" alt="" />
-                </figure>
-                <div class="elementor-image-box-content">
-                  <h3 class="elementor-image-box-title text-white text-center">
-                    SNEHA AGGARWAL<br />
-                    <span class="founder"> TEAM LEADER - HR </span>
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="elementor-widget-containers">
-              <div class="elementor-image-box-wrapper">
-                <figure class="elementor-image-box-img">
-                  <img src="public_assets/images/user10.png" alt="" />
-                </figure>
-                <div class="elementor-image-box-content">
-                  <h3 class="elementor-image-box-title text-white text-center">
-                    HASMUDDIN ALAM<br />
-                    <span class="founder"> TEAM LEADER • QUALITY CONTROL </span>
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="elementor-widget-containers">
-              <div class="elementor-image-box-wrapper">
-                <figure class="elementor-image-box-img">
-                  <img src="public_assets/images/user11.png" alt="" />
-                </figure>
-                <div class="elementor-image-box-content">
-                  <h3 class="elementor-image-box-title text-white text-center">
-                    DINESH NAGRA<br />
-                    <span class="founder"> TEAM LEADER • SALES </span>
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="elementor-widget-containers">
-              <div class="elementor-image-box-wrapper">
-                <figure class="elementor-image-box-img">
-                  <img src="public_assets/images/user12.png" alt="" />
-                </figure>
-                <div class="elementor-image-box-content">
-                  <h3 class="elementor-image-box-title text-white text-center">
-                    AKHILESH PRAJAPATI<br />
-                    <span class="founder"> TEAM LEADER </span>
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        
+          </div><% }); %>        
        </div>
         
       </div>
