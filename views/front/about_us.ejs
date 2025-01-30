@@ -281,17 +281,17 @@
               </div>
             </div>
           </div>
-          <% teams.forEach((team)=> { %>
+          <% staff.forEach((staff)=> { %>
           <div class="col-md-4">
             <div class="elementor-widget-containers">
               <div class="elementor-image-box-wrapper">
                 <figure class="elementor-image-box-img">
-                  <img src="public_assets/images/user5.png" alt="" />
+                  <img src="<%= staff.image.fileURL %>" alt="" />
                 </figure>
                 <div class="elementor-image-box-content">
                   <h3 class="elementor-image-box-title text-white text-center">
-                    <%= team.name %><br />
-                    <span class="founder"> <%= team.designation %> </span>
+                    <%= staff.name %><br />
+                    <span class="founder"> <%= staff.designation %> </span>
                   </h3>
                 </div>
               </div>
