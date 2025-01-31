@@ -133,7 +133,12 @@
                 data-i18n="Analytics">Add</span></a></li>
           <% } %>
         
-        
+          <li class="<% if(menu=='viewTeam') {%>active<%}%>">
+            <a href="/admin/team/view">
+              <i class="feather icon-eye"></i>
+              <span class="menu-item" data-i18n="View">View Team</span>
+            </a>
+          </li>
           
       </ul>
     </li>  

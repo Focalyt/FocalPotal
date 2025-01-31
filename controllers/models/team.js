@@ -24,7 +24,10 @@ const TeamSchema = new Schema({
     { type: String, required: true, },
   description:
     { type: String },
-
+    sequence: {
+      type: Number,
+      default: 50
+    },
   status: {
     type: Boolean,
     default: true,

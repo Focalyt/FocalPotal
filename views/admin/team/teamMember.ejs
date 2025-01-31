@@ -1,0 +1,88 @@
+<% include ../partials/header %>
+
+<div class="content-body">
+    <% include ../partials/flash %>
+    <section>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12">
+          <div id="accordion">
+            <div class="card">
+            
+                 
+          
+            <div class="table-responsive">
+              <table class="table table-hover-animation mb-0 table-hover">
+                <thead>
+                  <tr>
+                    <th class="jd-sequence">Sequence</th>
+                    <th class="zig-width">Name</th>
+                    <th class="zig-width" >Position</th>
+                    <th>Designation</th>
+                    <th>Description</th>
+                    <th>Active</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body">
+                  <%if (teamMembers?.length>0) { %>
+                    <% teamMembers.forEach((team)=> {%>
+                      <tr>
+                        <td>
+                            <input type="number" id="jd-seq" value="<%= team.sequence %>"
+                            onblur="updateSequence(event,'<%= team._id %>')" name="sequence" maxlength="4" onkeypress="if(this.value.length==4) return false"
+                            class="form-control w-50" data-id="<%= team._id %>">
+                           </td>
+                        <td>
+                         <%= team.name %></>
+                        </td>
+                        <td>
+                         <%= team.position %></>
+                        </td>
+                        <td>
+                         <%= team.designation %></>
+                        </td>
+                        <td>
+                         <%= team.description %></>
+                        </td>
+                        
+                        <td>
+                            <%= team.status === true ? "Active" : "Inactive" %>
+                        </td>
+                       
+                        
+                      </tr>
+                      <% });} else { %>
+                        <tr>
+                          <td class="text-center" colspan="7">
+                            No record found
+                          </td>
+                        </tr>
+                        <%}%>
+
+                </tbody>
+
+              </table>
+          </div>
+         
+
+          
+        </div>
+        <div  id="error" style="color: red;"></div>
+     
+      </div>
+      </div>
+      </div>
+    </section>
+  </div>
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+<script>
+     function updateSequence(e, id) {
+      const val = e.target.value;
+      axios.patch("/admin/team/teamsequence", { id, val }).then((res) => {
+        if (res.data.status === true) {
+          e.target.value = res.data.sequence
+        }
+      })
+    }
+</script>
+    <% include ../partials/footer %>
