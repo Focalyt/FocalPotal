@@ -148,73 +148,50 @@ router
 
 router.post('/getTagsList', async (req, res) => {
 	try {
-        let view = false;
-        if (req.session.user.role === 10) {
-            view = true;
-        }
+		const data = req.body;
+		const searchQuery = data.search ? data.search.trim() : "";
+		const page = parseInt(data.page, 10) || 1;
+		const perPage = 20;
+		const skip = (page - 1) * perPage;
 
-        const data = req.body;
-        const searchQuery = data.search ? data.search.trim() : "";
+		let filter = { isDeleted: false, status: true };
 
-        let filter = { isDeleted: false, status: true };
-        let smsFilter = { isDeleted: false, status: true, isProfileCompleted: false };
+		if (searchQuery) {
+			const isNumber = /^[0-9]+$/.test(searchQuery);
 
-        if (searchQuery) {
-            let isNumber = /^[0-9]+$/.test(searchQuery); 
+			if (isNumber) {
+				filter["$or"] = [
+					{ "$expr": { "$regexMatch": { "input": { "$toString": "$mobile" }, "regex": searchQuery, "options": "i" } } },
+					{ "$expr": { "$regexMatch": { "input": { "$toString": "$whatsapp" }, "regex": searchQuery, "options": "i" } } }
+				];
+			} else {
+				filter["name"] = { $regex: searchQuery, $options: "i" };
+			}
+		}
 
-            if (isNumber) {
-                let mobileRegex = new RegExp(searchQuery, "i");
+		const count = await Candidate.countDocuments(filter);
 
-                filter["$or"] = [
-                    { "$expr": { "$regexMatch": { "input": { "$toString": "$mobile" }, "regex": mobileRegex } } },
-                    { "$expr": { "$regexMatch": { "input": { "$toString": "$whatsapp" }, "regex": mobileRegex } } }
-                ];
+		const candidates = await Candidate.find(filter)
+			.select("name mobile") // Fetch only name and mobile
+			.sort({ createdAt: -1 }) // Sort by newest first
+			.skip(skip)
+			.limit(perPage)
+			.lean(); // Optimize performance by returning plain objects
 
-                smsFilter["$or"] = [
-                    { "$expr": { "$regexMatch": { "input": { "$toString": "$mobile" }, "regex": mobileRegex } } },
-                    { "$expr": { "$regexMatch": { "input": { "$toString": "$whatsapp" }, "regex": mobileRegex } } }
-                ];
-            } else {
-                filter["$or"] = [
-                    { "name": { "$regex": searchQuery, "$options": "i" } }
-                ];
-                smsFilter["$or"] = [
-                    { "name": { "$regex": searchQuery, "$options": "i" } }
-                ];
-            }
-        }
-
-        const perPage = 20;
-        const page = parseInt(data.page, 10) || 1;
-
-        const smsCount = await Candidate.countDocuments(smsFilter);
-        const count = await Candidate.countDocuments(filter);
-
-        let { value, order } = req.query;
-        let sorting = {};
-        if (value && order) {
-            sorting[value] = Number(order);
-        } else {
-            sorting = { createdAt: -1 };
-        }
-
-        let agg = candidateServices.adminCandidatesList(sorting, perPage, page, candidateCashbackEventName.cashbackrequestaccepted, { value, order }, filter);
-        let candidates = await Candidate.aggregate(agg);
-
-        const totalPages = Math.ceil(count / perPage);
-
-        return res.json({
-            candidates,
-            perPage,
-            totalPages,
-            page,
-            count
-        });
+		return res.json({
+			candidates,
+			perPage,
+			totalPages: Math.ceil(count / perPage),
+			page,
+			count
+		});
 
 	} catch (err) {
-		return res.status(400).json({error: true, message: "Something went wrong"});
+		console.error("Error:", err);
+		return res.status(400).json({ error: true, message: "Something went wrong" });
 	}
 });
+
 
 
 
