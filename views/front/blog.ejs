@@ -65,23 +65,19 @@
                       </div>
                       <h3 class="user__name text-black">
                         <span class="start__name"><b>Focalyt</b></span>
-                        <% if (post.tags && post.tags.length> 0) { %>
-                          <% post.tags.forEach((tag, index)=> { %>
-                            <span class="tag__user">
-                              <% if (index===0) { %> is with <% } %>
-                                  <span class="strong"><b>
-                                      <%= tag.name %>
-                                    </b></span>
-                            </span>
-                            <% }); %>
-                              <% if (post.tags.length> 1) { %>
-                                <span class="more__user strong"> & <b>
-                                    <%= post.tags.length - 1 %>
-                                  </b></span>
-                                <span class="other"><b> Others</b></span>
-                                <% } %>
-                                  <% } %>
+                        
+                        <% if (post.tags && post.tags.length > 0) { %>
+                          <span class="tag__user">
+                            is with <b><%= post.tags[0].name %></b>
+                          </span>
+                      
+                          <% if (post.tags.length > 1) { %>
+                            <span class="more__user strong"> & <b><%= post.tags.length - 1 %></b></span>
+                            <span class="other"><b> Others</b></span>
+                          <% } %>
+                        <% } %>
                       </h3>
+                      
 
 
 
@@ -172,7 +168,7 @@
                     <p>No posts available.</p>
                     <% } %>
 
-                      <div class="rightSidebar d-none"></div>
+            
           </div>
         </div>
       </div>

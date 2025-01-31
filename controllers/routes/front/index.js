@@ -268,16 +268,12 @@ router.get("/joblisting", async (req, res) => {
 
 router.get("/about_us", async (req, res) => {
 	try {
-		// **फिल्टर सिर्फ `status: true` टीम्स के लिए**
-		const filter = { status: true };
+		const seniorManagement = await Team.find({ status: true, position: "Senior Management" }).sort({ sequence: 1 });
+    const management = await Team.find({ status: true, position: "Management" }).sort({ sequence: 1 });
+    const staff = await Team.find({ status: true, position: "Staff" }).sort({ sequence: 1 });
 
-		// **MongoDB से टीम मेंबर्स लाएं**
-		const teams = await Team.find(filter);
+		
 
-		// **अगर कोई डेटा न मिले तो हैंडल करें**
-		if (!teams || teams.length === 0) {
-			console.warn("⚠ No team members found!");
-		}
 
 		// **req.vPath undefined है या नहीं इसकी जाँच करें**
 		if (!req.vPath) {
@@ -290,7 +286,9 @@ router.get("/about_us", async (req, res) => {
 
 		// **Render `about_us` पेज**
 		return res.render(`${req.vPath}/front/about_us`, {
-			teams
+			seniorManagement,
+			management,
+			staff
 		});
 
 	} catch (err) {
