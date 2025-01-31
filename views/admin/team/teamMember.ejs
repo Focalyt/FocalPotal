@@ -24,7 +24,7 @@
                 </thead>
                 <tbody id="table-body">
                   <%if (teamMembers?.length>0) { %>
-                    <% teamMembers.forEach((team)=> {%>
+                    <% teamMembers.forEach((team , i)=> {%>
                       <tr>
                         <td>
                             <input type="number" id="jd-seq" value="<%= team.sequence %>"
@@ -43,10 +43,26 @@
                         <td>
                          <%= team.description %></>
                         </td>
-                        
                         <td>
-                            <%= team.status === true ? "Active" : "Inactive" %>
+                          <div class="custom-control custom-switch custom-control-inline">
+                            <% if(team.status) { %>
+                              <input type="checkbox" onclick="myOnOffFunc('<%= team._id %>', '<%= team.status %>');"
+                                class="custom-control-input" id="customSwitch<%= i %>" checked />
+                              <label class="custom-control-label" for="customSwitch<%= i %>">
+                              </label>
+                              <% } else { %>
+                                <input type="checkbox"
+                                  onclick="myOnOffFunc('<%= team._id %>', '<%= team.status %>');"
+                                  class="custom-control-input" id="customSwitch<%= i %>" />
+                                <label class="custom-control-label" for="customSwitch<%= i %>">
+                                </label>
+                                <% } %>
+                          </div>
+                      
                         </td>
+                        <!-- <td>
+                            <%= team.status === true ? "Active" : "Inactive" %>
+                        </td> -->
                        
                         
                       </tr>
@@ -83,6 +99,21 @@
           e.target.value = res.data.sequence
         }
       })
+    }
+
+    function myOnOffFunc(id, status) {
+      let myStatus = true;
+      if (status === true || status === "true") {
+        myStatus = false;
+      }
+      let data = { id: id, status: myStatus }
+      let headers = { 'x-auth': localStorage.getItem('token') }
+      axios.patch(`/admin/team/changeStatus`, data, { headers: headers })
+        .then((res) => {
+          location.reload()
+        }).catch((err) => {
+          console.log(err)
+        })
     }
 </script>
     <% include ../partials/footer %>
