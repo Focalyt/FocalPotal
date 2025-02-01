@@ -325,7 +325,8 @@
 #blog--images .happy_candidate_images img {
   width: 100%;
   max-height: 335px;
-  object-fit: cover;
+  /* object-fit: cover; */
+  object-fit: contain;
 }
 
 /* Right Sidebar */
@@ -736,6 +737,7 @@ font-weight: 500;
   margin-bottom: 15px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   text-align: left;
+  width: 100%;
 }
 
 /* Titles */

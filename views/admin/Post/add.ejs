@@ -44,7 +44,7 @@
               <!-- Modal -->
               <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="overflow: hidden;">
-                <div class="modal-dialog">
+                <div class="modal-dialog new-model-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title text-white" id="staticBackdropLabel">Tag People</h5>
@@ -104,7 +104,7 @@
                                   <table class="employee-table">
                                     <thead>
                                       <tr class='header-tr'>
-                                        <th>Status</th>
+                                        <th>Select</th>
                                         <th>Name</th>
                                         <th>Mobile</th>
                                       </tr>
@@ -139,7 +139,7 @@
                                   <table class="employee-table">
                                     <thead>
                                       <tr class='header-tr'>
-                                        <th>Checkbox</th>
+                                        <th>Select</th>
                                         <th>Company Name</th>
                                         <th>Mobile</th>
                                       </tr>
@@ -176,7 +176,7 @@
                                   <table class="employee-table">
                                     <thead>
                                       <tr class='header-tr'>
-                                        <th>Checkbox</th>
+                                        <th>Select</th>
                                         <th>Institute Name</th>
                                         <th>Mobile</th>
                                       </tr>
@@ -211,7 +211,7 @@
                                   <table class="employee-table">
                                     <thead>
                                       <tr class='header-tr'>
-                                        <th>Checkbox</th>
+                                        <th>Select</th>
                                         <th>Student Name</th>
                                         <th>Mobile</th>
                                       </tr>
@@ -1051,7 +1051,9 @@
     .employee-table {
       width: 100%;
       border-collapse: collapse;
-      table-layout: fixed;
+      table-layout: auto;
+      /* table-layout: fixed; */
+      table-layout: auto;
     }
 
     .employee-table th {
@@ -1185,6 +1187,7 @@
       font-size: 12px;
       font-weight: 400;
       padding: 7px 5px;
+      text-align: start;
     }
 
     .employee-attendance-table>.employee-table>tbody {
@@ -1214,9 +1217,54 @@
       /* border: 1px solid black; */
       width: 100%;
       max-height: 300px;
-      overflow: auto;
+      /* overflow: auto; */
       /* Allows scrolling */
     }
+
+    .new-model-dialog{
+      max-width: 850px;
+    }
+    .header-tr tr:nth-child(1){
+      width: 135px;
+    }
+    tbody tr td:nth-child(1) input[type="checkbox"] {
+      /* width: 135px; */
+      width: 50px;
+  }
+
+  @media (max-width: 768px) {
+    .employee-table tr{
+      table-layout: auto;
+    }
+    .employee-attendance-table {
+        overflow-x: scroll;
+    }
+
+    .employee-table {
+        min-width: 100%;
+    }
+
+
+    .employee-info {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .employee-table td:first-child, .employee-table th:first-child {
+        min-width: 70px; 
+    }
+
+    .employee-table td input[type="checkbox"] {
+        width: 20px; 
+        height: 20px; 
+    }
+
+   
+    .employee-table td {
+        min-width: 120px; 
+    }
+}
   </style>
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 

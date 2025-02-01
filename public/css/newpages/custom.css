@@ -417,7 +417,7 @@ div#features_cta figure {
     transition: .3s;
 }
 #institute.role:hover {
-    box-shadow: 5px 5px rgb(221 221 221);
+    box-shadow: 5px 5px rgb(171 157 157);
     border-radius: 10px;
 }
 #student.role:hover {
