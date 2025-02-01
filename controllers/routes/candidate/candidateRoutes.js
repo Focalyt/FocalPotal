@@ -300,7 +300,7 @@ router
         return res.send({ status: "failure", error: "Something went wrong!" });
       }
       let formData = value;
-      const { name, mobile,status, sex, place, latitude, longitude } = formData;
+      const { name, mobile, sex, place, latitude, longitude } = formData;
 
       if (formData?.refCode && formData?.refCode !== '') {
         let referredBy = await Candidate.findOne({ _id: formData.refCode, status: true, isDeleted: false })
@@ -356,7 +356,7 @@ router
         place,
         latitude,
         longitude,
-        status,
+        
         location: {
           type: "Point",
           coordinates: [latitude, longitude]
