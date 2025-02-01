@@ -1,4 +1,4 @@
-const ObjectId = require("mongodb").ObjectId;
+// const ObjectId = require("mongodb").ObjectId;
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const express = require("express");
@@ -485,13 +485,13 @@ router.get("/searchjob", [isCandidate], async (req, res) => {
 
   let filter = { status: true, validity: { $gte: new Date() }, verified: true };
   if (qualification) {
-    filter['_qualification'] = ObjectId(`${qualification}`)
+    filter['_qualification'] = new mongoose.Types.ObjectId(`${qualification}`)
   }
   if (industry) {
-    filter._industry = ObjectId(`${industry}`);
+    filter._industry = new mongoose.Types.ObjectId(`${industry}`);
   }
   if (state) {
-    filter['state.0._id'] = ObjectId(`${state}`);
+    filter['state.0._id'] = new mongoose.Types.ObjectId(`${state}`);
   }
   if (jobType) {
     filter.jobType = jobType;
@@ -503,7 +503,7 @@ router.get("/searchjob", [isCandidate], async (req, res) => {
       : (filter["experience"] = { $lte: experience });
   }
   if (techSkills) {
-    filter._techSkills = ObjectId(`${techSkills}`);
+    filter._techSkills = new mongoose.Types.ObjectId(`${techSkills}`);
   }
   if (minSalary) {
     filter["$or"] = [
@@ -703,7 +703,7 @@ router.get("/job/:jobId", [isCandidate], async (req, res) => {
   let isRegisterInterview = false;
   const checkJobRegister = await AppliedJobs.findOne({
     _candidate: candidate._id,
-    _job: ObjectId(jobId)
+    _job: new mongoose.Types.ObjectId(jobId)
   });
   if (checkJobRegister && checkJobRegister?.isRegisterInterview) {
     isRegisterInterview = true;
@@ -721,7 +721,7 @@ router.get("/job/:jobId", [isCandidate], async (req, res) => {
   let reviewed = await Review.findOne({ _job: jobId, _user: candidate._id });
   let course = [];
   const recomCo = await Vacancy.distinct('_courses.courseLevel', {
-    "_id": ObjectId(jobId), "_courses.isRecommended": true
+    "_id": new mongoose.Types.ObjectId(jobId), "_courses.isRecommended": true
   });
   console.log(recomCo, "recomCorecomCorecomCorecomCo");
   if (recomCo.length > 0) {
@@ -997,7 +997,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
         isApplied = true;
         const assignedCourseData = await AppliedCourses.findOne({
           _candidate: candidate._id,
-          _course: ObjectId(courseId)
+          _course: new mongoose.Types.ObjectId(courseId)
         }).lean();
 
         course.registrationCharges = course.registrationCharges.replace(/,/g, '');
@@ -1234,12 +1234,8 @@ router.get("/dashboard", isCandidate, async (req, res) => {
     const shortlistedCount = await HiringStatus.countDocuments({ candidate: candidate._id, isDeleted: false, status: { '$ne': 'rejected' } })
     const jobsCount = await Vacancy.countDocuments({ status: false })
 
-    const candidateId = mongoose.Types.ObjectId.isValid(candidate._id)
-  ? new mongoose.Types.ObjectId(candidate._id)
-  : candidate._id;
-
     let totalCashback = await CandidateCashBack.aggregate([
-      { $match: { candidateId } },
+      { $match: { candidateId: new mongoose.Types.ObjectId(candidate._id) } },
       { $group: { _id: "", totalAmount: { $sum: "$amount" } } },
     ]);
     let cityArray = []
@@ -1318,7 +1314,7 @@ router
         status: { $ne: false },
       });
       let totalCashback = await CandidateCashBack.aggregate([
-        { $match: { candidateId: ObjectId(candidate._id) } },
+        { $match: { candidateId: new mongoose.Types.ObjectId(candidate._id) } },
         { $group: { _id: "", totalAmount: { $sum: "$amount" } } },
       ]);
       let city = [];
@@ -1491,7 +1487,7 @@ router
     await candidateProfileCashBack(candidateUpdate)
     await candidateVideoCashBack(candidateUpdate)
     let totalCashback = await CandidateCashBack.aggregate([
-      { $match: { candidateId: ObjectId(user._id) } },
+      { $match: { candidateId: new mongoose.Types.ObjectId(user._id) } },
       { $group: { _id: "", totalAmount: { $sum: "$amount" } } },
     ]);
     let isVideoCompleted = ''
@@ -2562,22 +2558,22 @@ router.get(
     } = req.query;
     let filter = { 'status': true, validity: { $gte: new Date() }, verified: true }
     if (qualification) {
-      filter['_qualification'] = ObjectId(qualification)
+      filter['_qualification'] = new mongoose.Types.ObjectId(qualification)
     }
     if (industry) {
-      filter['_industry'] = ObjectId(industry)
+      filter['_industry'] = new mongoose.Types.ObjectId(industry)
     }
     if (jobType) {
       filter['jobType'] = jobType
     }
     if (state) {
-      filter['state'] = ObjectId(state)
+      filter['state'] = new mongoose.Types.ObjectId(state)
     }
     if (experience) {
       filter['experience'] = { $lte: Number(experience) }
     }
     if (techSkills) {
-      filter['_techSkills'] = ObjectId(techSkills);
+      filter['_techSkills'] = new mongoose.Types.ObjectId(techSkills);
     }
     if (minSalary) {
       filter["$or"] = [
@@ -2713,7 +2709,7 @@ router.get("/myEarnings", [isCandidate], async (req, res) => {
     const totalPages = Math.ceil(count / perPage);
 
     let totalCashback = await CandidateCashBack.aggregate([
-      { $match: { candidateId: ObjectId(candidate._id) } },
+      { $match: { candidateId: new mongoose.Types.ObjectId(candidate._id) } },
       { $group: { _id: "", totalAmount: { $sum: "$amount" } } },
     ]);
     let thresholdCashback = await CashBackLogic.findOne({});
@@ -3027,8 +3023,8 @@ router.put('/applyVoucher', [isCandidate, authenti], async (req, res) => {
         }
       );
       await PaymentDetails.create({
-        paymentId: new ObjectId(),
-        orderId: new ObjectId(),
+        paymentId: new mongoose.Types.ObjectId(),
+        orderId: new mongoose.Types.ObjectId(),
         amount,
         coins: offerDetails.getCoins,
         _candidate: candidate._id,

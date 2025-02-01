@@ -1,6 +1,7 @@
 const express = require("express");
 const moment = require("moment");
-const ObjectId = require("mongodb").ObjectId;
+// const ObjectId = require("mongodb").ObjectId;
+const mongoose = require('mongoose');
 require('dotenv').config()
 const { extraEdgeAuthToken, extraEdgeUrl, env } = require("../../config");
 
@@ -457,7 +458,7 @@ commonRoutes.post("/updateprofile", async (req, res) => {
 		await candidateProfileCashBack(candidateUpdate)
 		await candidateVideoCashBack(candidateUpdate)
 		let totalCashback = await CandidateCashBack.aggregate([
-			{ $match: { candidateId: ObjectId(user._id) } },
+			{ $match: { candidateId: new mongoose.Types.ObjectId(user._id) } },
 			{ $group: { _id: "", totalAmount: { $sum: "$amount" } } },
 		]);
 		let isVideoCompleted = ''
