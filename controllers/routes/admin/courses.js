@@ -1,5 +1,6 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
+const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const { auth1, isAdmin } = require("../../../helpers");
 const moment = require("moment");
@@ -183,7 +184,7 @@ router.route("/getCourseDetailById").get(async (req, res) => {
 		const { courseId } = req.query;
 		const courses = await Courses.findOne({
 			_id: {
-				$in: [ObjectId(courseId)]
+				$in: [new mongoose.Types.ObjectId(courseId)]
 			},
 			isDeleted: false
 		});
