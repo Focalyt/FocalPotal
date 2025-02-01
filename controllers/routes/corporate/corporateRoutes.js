@@ -5,6 +5,7 @@ const Razorpay = require('razorpay');
 const { ykError, baseUrl } = require("../../../config");
 const fs = require('fs')
 const ObjectId = require("mongodb").ObjectId;
+const mongoose = require('mongoose');
 const { candidateCashbackEventName, cashbackRequestStatus, cashbackEventType } = require('../../db/constant')
 const { CompanyValidators } = require('../../../helpers/validators')
 const {
@@ -301,15 +302,15 @@ router.get("/list-candidates", isCompany, async (req, res) => {
   let shortlistedCandidates = [];
   let shortlisted = await HiringStatus.find({ company: company._id, isDeleted: false }).select('_id candidate')
   shortlisted.forEach((i) => {
-    shortlistedCandidates.push(ObjectId(i.candidate));
+    shortlistedCandidates.push(new mongoose.Types.ObjectId(i.candidate));
   });
   filterFields._id = { $nin: shortlistedCandidates };
 
   if (data.stateId) {
-    filterFields["locationPreferences"] = { $elemMatch: { state: ObjectId(data.stateId) } }
+    filterFields["locationPreferences"] = { $elemMatch: { state: new mongoose.Types.ObjectId(data.stateId) } }
   }
   if (data.cityId) {
-    filterFields["locationPreferences"] = { $elemMatch: { city: ObjectId(data.cityId) } }
+    filterFields["locationPreferences"] = { $elemMatch: { city: new mongoose.Types.ObjectId(data.cityId) } }
   }
   if (data.highestqualification) {
     filterFields["highestQualification"] = data.highestqualification;
@@ -323,16 +324,16 @@ router.get("/list-candidates", isCompany, async (req, res) => {
       : (filterFields["totalExperience"] = { $gte: Number(data.experience) });
   }
   if (data.subQualification) {
-    filterFields["qualifications"] = { $elemMatch: { subQualification: ObjectId(data.subQualification) } }
+    filterFields["qualifications"] = { $elemMatch: { subQualification: new mongoose.Types.ObjectId(data.subQualification) } }
   }
   if (data.gender) {
     filterFields["sex"] = data.gender;
   }
   if (data.techSkills) {
-    filterFields["techSkills"] = { $elemMatch: { id: ObjectId(data.techSkills) } }
+    filterFields["techSkills"] = { $elemMatch: { id: new mongoose.Types.ObjectId(data.techSkills) } }
   }
   if (data.nonTechSkills) {
-    filterFields["nonTechSkills"] = { $elemMatch: { id: ObjectId(data.nonTechSkills) } }
+    filterFields["nonTechSkills"] = { $elemMatch: { id: new mongoose.Types.ObjectId(data.nonTechSkills) } }
   }
   let sorting = []
   if (data.jdLocation) {
@@ -1845,10 +1846,10 @@ router.get(
       filter['highestQualification'] = highestQualification
     }
     if (state) {
-      filter["locationPreferences"] = { $elemMatch: { state: ObjectId(state) } }
+      filter["locationPreferences"] = { $elemMatch: { state: new mongoose.Types.ObjectId(state) } }
     }
     if (city) {
-      filter["locationPreferences"] = { $elemMatch: { city: ObjectId(city) } }
+      filter["locationPreferences"] = { $elemMatch: { city: new mongoose.Types.ObjectId(city) } }
     }
     if (experience) {
       filter['totalExperience'] = { $gte: Number(experience) }
@@ -1857,13 +1858,13 @@ router.get(
       filter['sex'] = gender
     }
     if (techSkills) {
-      filter["techSkills"] = { $elemMatch: { id: ObjectId(techSkills) } }
+      filter["techSkills"] = { $elemMatch: { id: new mongoose.Types.ObjectId(techSkills) } }
     }
     if (nonTechSkills) {
-      filter["nonTechSkills"] = { $elemMatch: { id: ObjectId(nonTechSkills) } }
+      filter["nonTechSkills"] = { $elemMatch: { id: new mongoose.Types.ObjectId(nonTechSkills) } }
     }
     if (subQualification) {
-      filter["qualifications"] = { $elemMatch: { subQualification: ObjectId(subQualification) } }
+      filter["qualifications"] = { $elemMatch: { subQualification: new mongoose.Types.ObjectId(subQualification) } }
     }
     if(jdLocation) {
       let loc = jdLocation.split(',')

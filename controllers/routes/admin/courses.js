@@ -168,7 +168,7 @@ router.route("/getCourseViaSector").get(async (req, res) => {
 		const { sectorId } = req.query;
 		const courses = await Courses.find({
 			sectors: {
-				$in: [ObjectId(sectorId)]
+				$in: [new mongoose.Types.ObjectId(sectorId)]
 			},
 			isDeleted: false
 		});

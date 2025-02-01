@@ -3,6 +3,7 @@ const moment = require('moment')
 const { Vacancy, Candidate, Qualification, Review, CoinsAlgo, Courses, CourseSectors } = require("../../models");
 const { isAdmin } = require("../../../helpers");
 const { ObjectId } = require("mongodb");
+const mongoose = require('mongoose');
 const router = express.Router();
 router.use(isAdmin);
 router.route("/").get(async (req, res) => {
@@ -139,7 +140,7 @@ router.route("/:id")
         }).select('name highestQualification qualifications sex isExperienced totalExperience _id').exec()
       let qualifications = await Qualification.find({ status: true }).select('_id name')
       let reviews = await Review.aggregate([
-        { $match: { '_job': ObjectId(req.params.id) } },
+        { $match: { '_job': new mongoose.Types.ObjectId(req.params.id) } },
         { $lookup: { from: 'candidates', localField: '_user', foreignField: '_id', as: 'candidate' } },
         { $unwind: '$candidate' },
         { $project: { candidate: { name: 1, _id: 1 }, rating: 1, comment: 1, createdAt: 1 } },
@@ -165,7 +166,7 @@ router.route("/:id")
       console.log('body: ', body);
       let updatedData = {}
       let filter = {
-        _id: ObjectId(id)
+        _id: new mongoose.Types.ObjectId(id)
       }
      /*  if (body.courseId && (body.isVerifie || body.isVerifie == false)) {
         filter["_courses._id"] = ObjectId(body.courseId);
@@ -174,7 +175,7 @@ router.route("/:id")
         delete body.isVerifie;
       } */
       if (body.courseId && (body.isRecommended || body.isRecommended == false)) {
-        filter["_courses._id"] = ObjectId(body.courseId);
+        filter["_courses._id"] = new mongoose.Types.ObjectId(body.courseId);
         updatedData["_courses.$.isRecommended"] = body.isRecommended;
         delete body.courseId;
         delete body.isRecommended;
@@ -229,7 +230,7 @@ router.route("/removeCourse/:id").put(async (req, res) => {
     const { courseId } = req.body
 
     const data = await Vacancy.findByIdAndUpdate(req.params.id, {
-      $pull: { _courses: { _id: ObjectId(courseId) } }
+      $pull: { _courses: { _id: new mongoose.Types.ObjectId(courseId) } }
     }, { new: true });
 
     if (!data) {

@@ -4,6 +4,7 @@ const CoinsOffers = require("../../models/coinsOffers");
 const { PaymentDetails } = require("../../models");
 const router = express.Router();
 const ObjectId = require("mongodb").ObjectId;
+const mongoose = require('mongoose');
 const moment = require("moment")
 
 router.route("/candidate").get(auth1, async (req, res) => {
@@ -227,7 +228,7 @@ router.route("/availedCandidates/:id").get(auth1 ,async(req,res)=>{
     const _offer = req.params.id;
     let data = req.query
     
-    let filter = { '_offer._id': ObjectId(_offer), isDeleted: false }
+    let filter = { '_offer._id': new mongoose.Types.ObjectId(_offer), isDeleted: false }
 
     let numberCheck = isNaN(data.name)
 			let name = ''
@@ -342,7 +343,7 @@ router.get('/availedCompanies/:id',auth1 , async(req,res)=>{
     const _offer = req.params.id;
     let data = req.query
     
-    let filter = { '_offer._id': ObjectId(_offer), isDeleted: false }
+    let filter = { '_offer._id': new mongoose.Types.ObjectId(_offer), isDeleted: false }
 
     let numberCheck = isNaN(data.name)
 			let name = ''

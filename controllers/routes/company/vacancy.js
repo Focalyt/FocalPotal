@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require('mongoose');
 const { ObjectId } = require("mongodb");
 const { auth1 } = require("../../../helpers");
 const {
@@ -51,7 +52,7 @@ router.route("/").get(auth1, async (req, res) => {
 		];
 		const vacancies = await Vacancy.find({
 			isDeleted: isDeleted,
-			_company: ObjectId(req.session.company._id),
+			_company: new mongoose.Types.ObjectId(req.session.company._id),
 		})
 			.populate(populate)
 			.select("name closingDate status")
