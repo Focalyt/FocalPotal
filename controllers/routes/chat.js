@@ -299,29 +299,29 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 			}).save();
 
 			// Capitalize every word's first letter
-				function capitalizeWords(str) {
-				  if (!str) return '';
-				  return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-				}
-			
-				// Update Spreadsheet
-				const sheetData = [
-				  moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
-				  moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
-				  capitalizeWords(course?.name), // Apply the capitalizeWords function
-				  candidate?.name,
-				  candidate?.mobile,
-				  candidate?.email,
-				  candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
-				  candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
-				  candidate?.state?.name,
-				  candidate?.city?.name,
-				  'Course',
-				  `${process.env.BASE_URL}/coursedetails/${courseId}`,
-				  course?.registrationCharges,
-				  appliedData?.registrationFee
-				];
-				await updateSpreadSheetValues(sheetData);
+			function capitalizeWords(str) {
+				if (!str) return '';
+				return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+			}
+
+			// Update Spreadsheet
+			const sheetData = [
+				moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
+				moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
+				capitalizeWords(course?.name), // Apply the capitalizeWords function
+				candidate?.name,
+				candidate?.mobile,
+				candidate?.email,
+				candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+				candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+				candidate?.state?.name,
+				candidate?.city?.name,
+				'Course',
+				`${process.env.BASE_URL}/coursedetails/${courseId}`,
+				course?.registrationCharges,
+				appliedData?.registrationFee
+			];
+			await updateSpreadSheetValues(sheetData);
 
 			if (!apply) {
 				req.flash("error", "Already failed");
@@ -428,31 +428,7 @@ commonRoutes.post("/updateprofile", async (req, res) => {
 			req.flash("error", "Candidate update failed!");
 			return res.send({ status: false, message: "Profile Update failed" });
 		}
-		if (user.isProfileCompleted == false && env.toLowerCase() === 'production') {
-			let dataFormat = {
-				Source: "mipie",
-				FirstName: user.name,
-				MobileNumber: user.mobile,
-				LeadSource: "Website",
-				LeadType: "Online",
-				LeadName: "app",
-				Course: "Mipie general",
-				Center: "Padget",
-				Location: "Technician",
-				Country: "India",
-				LeadStatus: "Profile Completed",
-				ReasonCode: "27",
-				AuthToken: extraEdgeAuthToken
-			}
-			let edgeBody = JSON.stringify(dataFormat)
-			let header = { "Content-Type": "multipart/form-data" }
-			let extraEdge = await axios.post(extraEdgeUrl, edgeBody, header).then(res => {
-				console.log(res.data)
-			}).catch(err => {
-				console.log(err)
-				return err
-			})
-		}
+		
 
 		await checkCandidateCashBack(candidateUpdate)
 		await candidateProfileCashBack(candidateUpdate)
@@ -594,11 +570,11 @@ commonRoutes.post("/coursepayment", async (req, res) => {
 	}
 
 	let course = await Courses.findById(courseId).lean();
-	if(!course){
+	if (!course) {
 		res.send({ status: false, message: "Course not available" })
 		return
 	}
-	if(course.status===false){
+	if (course.status === false) {
 		res.send({ status: false, message: "Course expired" })
 		return
 	}
@@ -887,123 +863,123 @@ commonRoutes.post("/updatecoursepaymentStatus", async (req, res) => {
 
 commonRoutes.get("/fetchPaymentByCourseAndCandidate", async (req, res) => {
 	try {
-	  const { courseId, candidateId } = req.body;
-  
-	  // Validate Input
-	  if (!courseId || !candidateId) {
-		return res.status(400).send({
-		  status: "failure",
-		  msg: "Both courseId and candidateId are required.",
-		});
-	  }
-  
-	  // Initialize Razorpay Instance
-	  const instance = new Razorpay({
-		key_id: apiKey,
-		key_secret: razorSecretKey,
-	  });
-  
-	  // Step 1: Fetch Payments from Razorpay
-	  const allPayments = await instance.payments.all({ count: 100 });
-  
-	  // Filter Payments by courseId and candidateId in Razorpay notes
-	  const matchingPayments = allPayments.items.filter((payment) => {
-		return (
-		  payment.notes &&
-		  payment.notes.course === courseId &&
-		  payment.notes.candidate === candidateId
-		);
-	  });
-  
-	  // If no matching payments found, return immediately
-	  if (matchingPayments.length === 0) {
-		return res.status(404).send({
-		  status: "failure",
-		  msg: "No payments found in Razorpay for the given courseId and candidateId.",
-		});
-	  }
-  
-	  const paymentDetails = matchingPayments[0]; // Use the first matching payment
-	  console.log("Fetched Payment Details from Razorpay:", paymentDetails);
-  
-	  // Step 2: Check if Payment Already Exists in Your Database
-	  const existingPayment = await PaymentDetails.findOne({
-		paymentId: paymentDetails.id,
-	  });
-  
-	  if (existingPayment) {
-		// Step 3: Check and Update AppliedCourses if Necessary
-		const appliedCourse = await AppliedCourses.findOne({
-		  _candidate: existingPayment._candidate,
-		  _course: existingPayment._course,
-		});
-  
-		if (appliedCourse) {
-		  if (appliedCourse.registrationFee === "Unpaid") {
-			// Update registrationFee to Paid
-			appliedCourse.registrationFee = "Paid";
-			await appliedCourse.save();
-			return res.status(200).send({
-			  status: "exists",
-			  msg: "Payment details already exist and Applied Course updated to Paid.",
-			  paymentDetails: existingPayment,
-			  appliedCourse,
+		const { courseId, candidateId } = req.body;
+
+		// Validate Input
+		if (!courseId || !candidateId) {
+			return res.status(400).send({
+				status: "failure",
+				msg: "Both courseId and candidateId are required.",
 			});
-		  }
-  
-		  // If registrationFee is already Paid
-		  return res.status(200).send({
-			status: "exists",
-			msg: "Payment details already exist, and registrationFee is already Paid.",
-			paymentDetails: existingPayment,
-			appliedCourse,
-		  });
 		}
-  
-		// If no AppliedCourses record found
-		return res.status(404).send({
-		  status: "failure",
-		  msg: "Payment exists but no matching AppliedCourses record found.",
-		  paymentDetails: existingPayment,
+
+		// Initialize Razorpay Instance
+		const instance = new Razorpay({
+			key_id: apiKey,
+			key_secret: razorSecretKey,
 		});
-	  }
-  
-	  // Step 4: Create a New Record in PaymentDetails
-	  if (paymentDetails.status === "captured") {
-		const newPayment = await PaymentDetails.create({
-		  paymentId: paymentDetails.id,
-		  orderId: paymentDetails.order_id,
-		  amount: paymentDetails.amount / 100, // Convert from paise to rupees
-		  coins: 0,
-		  _course: paymentDetails.notes.course,
-		  paymentStatus: paymentDetails.status,
-		  _candidate: paymentDetails.notes.candidate,
-		  updatedAt: new Date(),
+
+		// Step 1: Fetch Payments from Razorpay
+		const allPayments = await instance.payments.all({ count: 100 });
+
+		// Filter Payments by courseId and candidateId in Razorpay notes
+		const matchingPayments = allPayments.items.filter((payment) => {
+			return (
+				payment.notes &&
+				payment.notes.course === courseId &&
+				payment.notes.candidate === candidateId
+			);
 		});
-  
-		return res.status(201).send({
-		  status: "success",
-		  msg: "Payment details created successfully.",
-		  newPayment,
+
+		// If no matching payments found, return immediately
+		if (matchingPayments.length === 0) {
+			return res.status(404).send({
+				status: "failure",
+				msg: "No payments found in Razorpay for the given courseId and candidateId.",
+			});
+		}
+
+		const paymentDetails = matchingPayments[0]; // Use the first matching payment
+		console.log("Fetched Payment Details from Razorpay:", paymentDetails);
+
+		// Step 2: Check if Payment Already Exists in Your Database
+		const existingPayment = await PaymentDetails.findOne({
+			paymentId: paymentDetails.id,
 		});
-	  }
-  
-	  // If payment is not captured
-	  return res.status(400).send({
-		status: "failure",
-		msg: "Payment found in Razorpay but not captured.",
-		paymentDetails,
-	  });
+
+		if (existingPayment) {
+			// Step 3: Check and Update AppliedCourses if Necessary
+			const appliedCourse = await AppliedCourses.findOne({
+				_candidate: existingPayment._candidate,
+				_course: existingPayment._course,
+			});
+
+			if (appliedCourse) {
+				if (appliedCourse.registrationFee === "Unpaid") {
+					// Update registrationFee to Paid
+					appliedCourse.registrationFee = "Paid";
+					await appliedCourse.save();
+					return res.status(200).send({
+						status: "exists",
+						msg: "Payment details already exist and Applied Course updated to Paid.",
+						paymentDetails: existingPayment,
+						appliedCourse,
+					});
+				}
+
+				// If registrationFee is already Paid
+				return res.status(200).send({
+					status: "exists",
+					msg: "Payment details already exist, and registrationFee is already Paid.",
+					paymentDetails: existingPayment,
+					appliedCourse,
+				});
+			}
+
+			// If no AppliedCourses record found
+			return res.status(404).send({
+				status: "failure",
+				msg: "Payment exists but no matching AppliedCourses record found.",
+				paymentDetails: existingPayment,
+			});
+		}
+
+		// Step 4: Create a New Record in PaymentDetails
+		if (paymentDetails.status === "captured") {
+			const newPayment = await PaymentDetails.create({
+				paymentId: paymentDetails.id,
+				orderId: paymentDetails.order_id,
+				amount: paymentDetails.amount / 100, // Convert from paise to rupees
+				coins: 0,
+				_course: paymentDetails.notes.course,
+				paymentStatus: paymentDetails.status,
+				_candidate: paymentDetails.notes.candidate,
+				updatedAt: new Date(),
+			});
+
+			return res.status(201).send({
+				status: "success",
+				msg: "Payment details created successfully.",
+				newPayment,
+			});
+		}
+
+		// If payment is not captured
+		return res.status(400).send({
+			status: "failure",
+			msg: "Payment found in Razorpay but not captured.",
+			paymentDetails,
+		});
 	} catch (error) {
-	  console.error("Error fetching Razorpay payments:", error);
-	  res.status(500).send({
-		status: "failure",
-		msg: "Error fetching payments from Razorpay.",
-		error: error.message,
-	  });
+		console.error("Error fetching Razorpay payments:", error);
+		res.status(500).send({
+			status: "failure",
+			msg: "Error fetching payments from Razorpay.",
+			error: error.message,
+		});
 	}
-  });
-  
+});
+
 
 
 commonRoutes.get("/Coins", async (req, res) => {
