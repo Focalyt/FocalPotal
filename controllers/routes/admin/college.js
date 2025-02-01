@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { isAdmin } = require("../../../helpers");
 const { ObjectId } = require("mongodb");
+const mongoose = require('mongoose');
 const {
 	College,
 	Qualification,
@@ -449,7 +450,7 @@ router
 								email: req.body.repEmail[i],
 							};
 							//	console.log(objs);
-							var id = ObjectId(req.body._exeid[i]);
+							var id = new mongoose.Types.ObjectId(req.body._exeid[i]);
 							// var id = ObjectId.fromString(req.body._id[i]);
 							let exe = await CollegeRepresentative.findByIdAndUpdate(
 								{ _id: id },

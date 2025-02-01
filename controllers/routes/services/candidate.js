@@ -1,4 +1,5 @@
 const { ObjectId } = require("mongodb");
+const mongoose = require('mongoose');
 
 
 module.exports = {
@@ -198,7 +199,7 @@ module.exports = {
                   $expr: {
                     $and: [
                       { $eq: ["$_candidate", "$$id"] },
-                      { $eq: ["$_company", ObjectId(companyId)] },
+                      { $eq: ["$_company", mongoose.Types.ObjectId(companyId)] },
                     ],
                   },
                 },
@@ -225,7 +226,7 @@ module.exports = {
                   $expr: {
                     $and: [
                       { $eq: ["$_candidate", "$$id"] },
-                      { $eq: ["$_company", ObjectId(companyId)] },
+                      { $eq: ["$_company", mongoose.Types.ObjectId(companyId)] },
                     ],
                   },
                 },
