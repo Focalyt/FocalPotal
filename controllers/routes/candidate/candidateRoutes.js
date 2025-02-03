@@ -334,9 +334,9 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       `${process.env.BASE_URL}/coursedetails/${courseId}`,
       course?.registrationCharges,
       appliedData?.registrationFee,
-      metaParams.campaignId || '',  // Campaign ID
-      metaParams.adsetId || '',     // Ad Set ID
-      metaParams.adId || ''         // Ad ID
+      req.ip,
+      `${req.protocol}://${req.get('host')}${req.originalUrl}`,
+      
     ];
     await updateSpreadSheetValues(sheetData);
 
