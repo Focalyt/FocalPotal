@@ -126,14 +126,14 @@ class MetaConversionAPI {
     this.accessToken = accessToken;
     this.pixelId = pixelId;
     this.apiVersion = 'v21.0';
-    
+
     // Add validation to ensure baseUrl is properly constructed
     if (!this.pixelId || this.pixelId === 'undefined') {
       throw new Error('Invalid Meta Pixel ID');
     }
-    
+
     this.metaAPIUrl = `https://graph.facebook.com/${this.apiVersion}/${this.pixelId}/events`;
-    
+
     // Log configuration (without sensitive data)
     // console.log('Meta Conversion API Configuration:', {
     //   pixelIdExists: !!this.pixelId,
@@ -165,6 +165,8 @@ class MetaConversionAPI {
             ln: this._hashData(userData.lastName),
             ct: this._hashData(userData.city),
             st: this._hashData(userData.state),
+            db: this._hashData(userData.dob),
+            ge: this._hashData(userData.gender),
             country: this._hashData('in'),
             client_ip_address: userData.ipAddress,
             client_user_agent: userData.userAgent,
@@ -182,9 +184,9 @@ class MetaConversionAPI {
         }],
         access_token: this.accessToken
       };
-      
+
       const response = await axios.post(this.metaAPIUrl, eventData);
-      console.log('Course application event tracked successfully',response.data );
+      console.log('Course application event tracked successfully', response.data);
       return response.data;
     } catch (error) {
       console.error('Meta Conversion API Error:', error.response?.data || error.message);
@@ -198,10 +200,10 @@ class MetaConversionAPI {
 const getMetaParameters = (req) => {
   // Extract fbclid from URL
   const fbclid = req.query.fbclid;
-  
+
   // Get cookies
   const cookies = req.cookies || {};
-  
+
   // Construct fbc (Facebook Click ID) with proper format
   let fbc = cookies._fbc;
   if (fbclid) {
@@ -210,7 +212,7 @@ const getMetaParameters = (req) => {
     const timestamp = Date.now();
     fbc = `fb.1.${timestamp}.${fbclid}`;
   }
-  
+
   // Get fbp (Facebook Browser ID) from cookies
   // fbp format should be: fb.1.${timestamp}.${random}
   let fbp = cookies._fbp;
@@ -219,12 +221,12 @@ const getMetaParameters = (req) => {
     const random = Math.floor(Math.random() * 1000000000);
     fbp = `fb.1.${timestamp}.${random}`;
   }
-  
+
   // Get ad specific parameters
   const adId = req.query.ad_id || null;
   const campaignId = req.query.campaign_id || null;
   const adsetId = req.query.adset_id || null;
-  
+
   return {
     fbc,      // Only included if fbclid exists or _fbc cookie is present
     fbp,      // Always included, generated if not present
@@ -299,6 +301,8 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
         phone: candidate.mobile,
         firstName: candidate.name.split(' ')[0],
         lastName: candidate.name.split(' ').slice(1).join(' '),
+        gender: candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+        dob: candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
         city: candidate.city?.name,
         state: candidate.state?.name,
         ipAddress: req.ip,
@@ -510,13 +514,13 @@ router
         place,
         latitude,
         longitude,
-        
+
         location: {
           type: "Point",
           coordinates: [latitude, longitude]
         }
       }
-      console.log("Candidate Data",candidateBody)
+      console.log("Candidate Data", candidateBody)
       if (formData?.refCode && formData?.refCode !== '') {
         candidateBody["referredBy"] = formData?.refCode
       }
@@ -1128,7 +1132,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
       return res.send({ status: "failure", error: "Something went wrong!", error });
     }
 
- 
+
 
     let course = await Courses.findById(courseId).populate('sectors').lean();
     if (!course || course?.status == false /* || course.courseType !== 0 */) {
@@ -1828,7 +1832,7 @@ router.post("/job/:jobId/apply", [isCandidate, authenti], async (req, res) => {
 
     // let sheetData = [candidate?.name, candidate?.mobile, candidate?.email, candidate?.sex, candidate?.dob ? moment(candidate?.dob).format('DD MMM YYYY') : '', candidate?.state?.name, candidate.city?.name, 'Job', `${process.env.BASE_URL}/jobdetailsmore/${jobId}`, "", "", moment(appliedData?.createdAt).utcOffset('+05:30').format('DD MMM YYYY hh:mm')]
 
-    
+
     // Capitalize every word's first letter
     function capitalizeWords(str) {
       if (!str) return '';
