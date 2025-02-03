@@ -93,19 +93,145 @@ const FB_API_VERSION = 'v21.0';
 const FB_GRAPH_API = `https://graph.facebook.com/${FB_API_VERSION}/${fbConversionPixelId}/events`;
 
 // Function to hash a value using SHA-256
-const hashValue = (value) => {
-  if (value === undefined || value === null) {
-    console.error("Invalid value passed to hashValue:", value);
-    return null;
+// const hashValue = (value) => {
+//   if (value === undefined || value === null) {
+//     console.error("Invalid value passed to hashValue:", value);
+//     return null;
+//   }
+
+//   try {
+//     const stringValue = value.toString().trim().toLowerCase(); // Ensure it's a string
+//     return crypto.createHash('sha256').update(stringValue).digest('hex');
+//   } catch (error) {
+//     console.error("Error hashing value:", error.message);
+//     return null;
+//   }
+// };
+
+
+class MetaConversionAPI {
+  constructor() {
+    // Validate Meta Pixel ID
+    const pixelId = fbConversionPixelId;
+    if (!pixelId) {
+      throw new Error('META_PIXEL_ID environment variable is not set');
+    }
+
+    // Validate Access Token
+    const accessToken = fbConversionAccessToken;
+    if (!accessToken) {
+      throw new Error('META_ACCESS_TOKEN environment variable is not set');
+    }
+
+    this.accessToken = accessToken;
+    this.pixelId = pixelId;
+    this.apiVersion = 'v21.0';
+    
+    // Add validation to ensure baseUrl is properly constructed
+    if (!this.pixelId || this.pixelId === 'undefined') {
+      throw new Error('Invalid Meta Pixel ID');
+    }
+    
+    this.metaAPIUrl = `https://graph.facebook.com/${this.apiVersion}/${this.pixelId}/events`;
+    
+    // Log configuration (without sensitive data)
+    // console.log('Meta Conversion API Configuration:', {
+    //   pixelIdExists: !!this.pixelId,
+    //   accessTokenExists: !!this.accessToken,
+    //   apiVersion: this.apiVersion,
+    //   metaAPIUrl: this.metaAPIUrl
+    // });
   }
 
-  try {
-    const stringValue = value.toString().trim().toLowerCase(); // Ensure it's a string
-    return crypto.createHash('sha256').update(stringValue).digest('hex');
-  } catch (error) {
-    console.error("Error hashing value:", error.message);
-    return null;
+  _hashData(data) {
+    if (!data) return null;
+    // Convert to string and handle non-string inputs
+    const stringData = String(data);
+    return crypto.createHash('sha256').update(stringData.toLowerCase().trim()).digest('hex');
   }
+
+  async trackCourseApplication(courseData, userData, metaParams) {
+    try {
+      // console.log(courseData, userData, metaParams)
+      const eventData = {
+        data: [{
+          event_name: 'Course Apply',
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: 'website',
+          user_data: {
+            em: this._hashData(userData.email),
+            ph: this._hashData(userData.phone),
+            fn: this._hashData(userData.firstName),
+            ln: this._hashData(userData.lastName),
+            ct: this._hashData(userData.city),
+            st: this._hashData(userData.state),
+            country: this._hashData('in'),
+            client_ip_address: userData.ipAddress,
+            client_user_agent: userData.userAgent,
+            external_id: this._hashData(userData.phone),
+            fbc: metaParams.fbc, // Facebook Click ID
+            fbp: metaParams.fbp  // Facebook Browser ID
+          },
+          custom_data: {
+            content_name: courseData.courseName,
+            content_category: 'Course',
+            currency: 'INR',
+            value: courseData.courseValue
+          },
+          event_source_url: courseData.sourceUrl
+        }],
+        access_token: this.accessToken
+      };
+      
+      const response = await axios.post(this.metaAPIUrl, eventData);
+      console.log('Course application event tracked successfully',response.data );
+      return response.data;
+    } catch (error) {
+      console.error('Meta Conversion API Error:', error.response?.data || error.message);
+      return null;
+    }
+  }
+}
+
+
+// Helper function to extract Meta parameters from cookies and URL
+const getMetaParameters = (req) => {
+  // Extract fbclid from URL
+  const fbclid = req.query.fbclid;
+  
+  // Get cookies
+  const cookies = req.cookies || {};
+  
+  // Construct fbc (Facebook Click ID) with proper format
+  let fbc = cookies._fbc;
+  if (fbclid) {
+    // Format should be: fb.1.${timestamp}.${fbclid}
+    // The '1' represents the version number
+    const timestamp = Date.now();
+    fbc = `fb.1.${timestamp}.${fbclid}`;
+  }
+  
+  // Get fbp (Facebook Browser ID) from cookies
+  // fbp format should be: fb.1.${timestamp}.${random}
+  let fbp = cookies._fbp;
+  if (!fbp) {
+    const timestamp = Date.now();
+    const random = Math.floor(Math.random() * 1000000000);
+    fbp = `fb.1.${timestamp}.${random}`;
+  }
+  
+  // Get ad specific parameters
+  const adId = req.query.ad_id || null;
+  const campaignId = req.query.campaign_id || null;
+  const adsetId = req.query.adset_id || null;
+  
+  return {
+    fbc,      // Only included if fbclid exists or _fbc cookie is present
+    fbp,      // Always included, generated if not present
+    adId,     // Ad ID from URL parameters
+    campaignId, // Campaign ID from URL parameters
+    adsetId    // Ad Set ID from URL parameters
+  };
 };
 
 
@@ -115,6 +241,9 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
   try {
     const { courseId } = req.params;
     const validation = { mobile: req.session.user.mobile };
+
+    // Get Meta parameters
+    const metaParams = getMetaParameters(req);
 
     // Validate courseId and candidate's mobile number
     const { value, error } = await CandidateValidators.userMobile(validation);
@@ -156,6 +285,28 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       _course: courseId
     }).save();
 
+    // Track conversion event
+    const metaApi = new MetaConversionAPI();
+    await metaApi.trackCourseApplication(
+      {
+        courseName: course.name,
+        courseId: courseId,
+        courseValue: course.registrationCharges,
+        sourceUrl: `${process.env.BASE_URL}/coursedetails/${courseId}`
+      },
+      {
+        email: candidate.email,
+        phone: candidate.mobile,
+        firstName: candidate.name.split(' ')[0],
+        lastName: candidate.name.split(' ').slice(1).join(' '),
+        city: candidate.city?.name,
+        state: candidate.state?.name,
+        ipAddress: req.ip,
+        userAgent: req.headers['user-agent']
+      },
+      metaParams
+    );
+
 
     // Capitalize every word's first letter
     function capitalizeWords(str) {
@@ -178,60 +329,63 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       'Course',
       `${process.env.BASE_URL}/coursedetails/${courseId}`,
       course?.registrationCharges,
-      appliedData?.registrationFee
+      appliedData?.registrationFee,
+      metaParams.campaignId || '',  // Campaign ID
+      metaParams.adsetId || '',     // Ad Set ID
+      metaParams.adId || ''         // Ad ID
     ];
     await updateSpreadSheetValues(sheetData);
 
 
     // Extract UTM Parameters
-    const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
-    const utm_params = {
-      utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
-      utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
-      utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
-      utm_term: sanitizeInput(req.query.utm_term || ''),
-      utm_content: sanitizeInput(req.query.utm_content || '')
-    };
+    // const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
+    // const utm_params = {
+    //   utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
+    //   utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
+    //   utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
+    //   utm_term: sanitizeInput(req.query.utm_term || ''),
+    //   utm_content: sanitizeInput(req.query.utm_content || '')
+    // };
 
     // Extract fbp and fbc values
-    let fbp = req.cookies?._fbp || '';
-    let fbc = req.cookies?._fbc || '';
-    if (!fbc && req.query.fbclid) {
-      fbc = `fb.${Date.now()}.${req.query.fbclid}`;
-    }
+    // let fbp = req.cookies?._fbp || '';
+    // let fbc = req.cookies?._fbc || '';
+    // if (!fbc && req.query.fbclid) {
+    //   fbc = `fb.${Date.now()}.${req.query.fbclid}`;
+    // }
 
     // Prepare user data for Facebook Event
-    const user_data = {
-      em: [hashValue(candidate.email)],                          // Hashed email
-      ph: [hashValue(candidate.mobile)],                        // Hashed phone number
-      fn: hashValue(candidate.name?.split(" ")[0]),             // Hashed first name
-      ln: hashValue(candidate.name?.split(" ")[1] || ""),       // Hashed last name
-      zp: hashValue(candidate.zip || ""),                       // Hashed postcode
-      db: hashValue(candidate.dob ? moment(candidate.dob).format('YYYY-MM-DD') : ""), // Hashed date of birth
-      ct: hashValue(candidate.city?.name),                      // Hashed city
-      st: hashValue(candidate.state?.name),                     // Hashed state/region
-      country: hashValue("India"),                              // Hashed country
-      ge: hashValue(candidate.sex === 'Male' ? 'm' : candidate.sex === 'Female' ? 'f' : ''), // Hashed gender
-      client_ip_address: req.ip || '',                          // IP address (no hash required)
-      client_user_agent: req.headers['user-agent'] || '',       // User agent (no hash required)
-      fbp: req.cookies?._fbp || '',                             // Browser ID
-      fbc: req.cookies?._fbc || (req.query.fbclid ? `fb.${Date.now()}.${req.query.fbclid}` : ''), // Click ID
-      external_id: hashValue(candidate._id.toString())          // Hashed External ID (user database ID)
-    };
+    // const user_data = {
+    //   em: [hashValue(candidate.email)],                          // Hashed email
+    //   ph: [hashValue(candidate.mobile)],                        // Hashed phone number
+    //   fn: hashValue(candidate.name?.split(" ")[0]),             // Hashed first name
+    //   ln: hashValue(candidate.name?.split(" ")[1] || ""),       // Hashed last name
+    //   zp: hashValue(candidate.zip || ""),                       // Hashed postcode
+    //   db: hashValue(candidate.dob ? moment(candidate.dob).format('YYYY-MM-DD') : ""), // Hashed date of birth
+    //   ct: hashValue(candidate.city?.name),                      // Hashed city
+    //   st: hashValue(candidate.state?.name),                     // Hashed state/region
+    //   country: hashValue("India"),                              // Hashed country
+    //   ge: hashValue(candidate.sex === 'Male' ? 'm' : candidate.sex === 'Female' ? 'f' : ''), // Hashed gender
+    //   client_ip_address: req.ip || '',                          // IP address (no hash required)
+    //   client_user_agent: req.headers['user-agent'] || '',       // User agent (no hash required)
+    //   fbp: req.cookies?._fbp || '',                             // Browser ID
+    //   fbc: req.cookies?._fbc || (req.query.fbclid ? `fb.${Date.now()}.${req.query.fbclid}` : ''), // Click ID
+    //   external_id: hashValue(candidate._id.toString())          // Hashed External ID (user database ID)
+    // };
 
     // Prepare custom data for Facebook Event
-    const custom_data = {
-      currency: "INR",
-      value: course.registrationCharges || 0,
-      content_ids: [courseId],
-      content_type: "course",
-      num_items: 1,
-      ...utm_params
-    };
+    // const custom_data = {
+    //   currency: "INR",
+    //   value: course.registrationCharges || 0,
+    //   content_ids: [courseId],
+    //   content_type: "course",
+    //   num_items: 1,
+    //   ...utm_params
+    // };
 
-    // Send Event to Facebook
-    console.log("Sending Facebook Event...");
-    const fbEventSent = await sendEventToFacebook("Course Apply", user_data, custom_data);
+    // // Send Event to Facebook
+    // console.log("Sending Facebook Event...");
+    // const fbEventSent = await sendEventToFacebook("Course Apply", user_data, custom_data);
 
 
     return res.status(200).json({ status: true, msg: "Course applied successfully." });
@@ -242,32 +396,32 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
 });
 
 // Modified sendEventToFacebook function
-const sendEventToFacebook = async (event_name, user_data, custom_data) => {
-  const event_id = crypto.createHash('sha256').update(`${user_data.em}-${event_name}-${Date.now()}`).digest('hex');
-  const payload = {
-    data: [
-      {
-        event_name,
-        event_time: Math.floor(Date.now() / 1000),
-        action_source: "website",
-        event_id,
-        user_data,
-        custom_data
-      }
-    ]
-  };
+// const sendEventToFacebook = async (event_name, user_data, custom_data) => {
+//   const event_id = crypto.createHash('sha256').update(`${user_data.em}-${event_name}-${Date.now()}`).digest('hex');
+//   const payload = {
+//     data: [
+//       {
+//         event_name,
+//         event_time: Math.floor(Date.now() / 1000),
+//         action_source: "website",
+//         event_id,
+//         user_data,
+//         custom_data
+//       }
+//     ]
+//   };
 
-  try {
-    const response = await axios.post(`${FB_GRAPH_API}?access_token=${fbConversionAccessToken}`, payload, {
-      headers: { 'Content-Type': 'application/json' }
-    });
-    console.log("Facebook Event Sent Successfully:", response.data);
-    return true; // Event sent successfully
-  } catch (error) {
-    console.error("Error sending event to Facebook:", error.response ? error.response.data : error.message);
-    return false; // Event failed
-  }
-};
+//   try {
+//     const response = await axios.post(`${FB_GRAPH_API}?access_token=${fbConversionAccessToken}`, payload, {
+//       headers: { 'Content-Type': 'application/json' }
+//     });
+//     console.log("Facebook Event Sent Successfully:", response.data);
+//     return true; // Event sent successfully
+//   } catch (error) {
+//     console.error("Error sending event to Facebook:", error.response ? error.response.data : error.message);
+//     return false; // Event failed
+//   }
+// };
 
 
 
