@@ -1276,6 +1276,17 @@ router.get("/dashboard", isCandidate, async (req, res) => {
     console.log("caught error ", err);
   }
 });
+router.get("/pendingFee", isCandidate, async (req, res) => {
+  try {
+    const menu = "pendingFee";
+
+    res.render(`${req.vPath}/app/candidate/pendingFee`, {
+      menu,
+    });
+  } catch (err) {
+    console.log("caught error ", err);
+  }
+});
 router
   .route("/myprofile")
   .get(isCandidate, async (req, res) => {
