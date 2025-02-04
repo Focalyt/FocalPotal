@@ -386,6 +386,7 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 	try {
 		let { id } = req.params;
 		let courseId = id;
+		const metaParams = getMetaParameters(req);
 
 		let validation = { mobile: req.body.mobile }
 
