@@ -67,7 +67,7 @@ class MetaConversionAPI {
 
 	async trackCourseApplication(courseData, userData, metaParams) {
 		try {
-			// console.log(courseData, userData, metaParams)
+			console.log('Course Data Console', courseData,'User Data Console', userData,'Meta Params Console', metaParams)
 			const eventData = {
 				data: [{
 					event_name: 'Course Apply',
@@ -141,6 +141,8 @@ const getMetaParameters = (req) => {
 	const adId = req.query.ad_id || null;
 	const campaignId = req.query.campaign_id || null;
 	const adsetId = req.query.adset_id || null;
+
+	
 
 	return {
 		fbc,      // Only included if fbclid exists or _fbc cookie is present
