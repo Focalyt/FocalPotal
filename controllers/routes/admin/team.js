@@ -142,4 +142,24 @@ router.post("/add", async (req, res) => {
     res.send({ status: true, sequence: val })
     console.log(update, "updateSequence")
   })
+  router.patch("/changeStatus" , async (req, res) => {
+    try {
+      const updata = { $set: { status: req.body.status } };
+  
+      const data = await Team.findByIdAndUpdate(req.body.id, updata);
+  
+      if (!data) {
+        return res.status(500).send({
+          status: false,
+          message: "Can't update status of this job post",
+        });
+      }
+  
+      return res.status(200).send({ status: true, data: data });
+    } catch (err) {
+      console.log(err.message);
+      req.flash("error", err.message || "Something went wrong!");
+      return res.status(500).send({ status: false, message: err.message });
+    }
+  });
 module.exports = router;

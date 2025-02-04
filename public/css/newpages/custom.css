@@ -417,7 +417,7 @@ div#features_cta figure {
     transition: .3s;
 }
 #institute.role:hover {
-    box-shadow: 5px 5px rgb(221 221 221);
+    box-shadow: 5px 5px rgb(171 157 157);
     border-radius: 10px;
 }
 #student.role:hover {
@@ -488,7 +488,8 @@ div#pink-bg {
     font-weight: 300;
 }
 #whychoose .program-description{
-    color: #fc2b5a;
+    /* color: #fc2b5a; */
+    font-weight: 600;
 }
 .why_choose_sec:hover {
     box-shadow: 5px 5px rgb(188, 197, 196);

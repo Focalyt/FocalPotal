@@ -2,6 +2,7 @@ const express = require("express");
 const { Industry, Company } = require("../../models");
 const { isAdmin } = require("../../../helpers");
 const { ObjectId } = require("mongodb");
+const mongoose = require('mongoose');
 const router = express.Router();
 router.use(isAdmin);
 
@@ -28,7 +29,7 @@ router
 			var new_inds = [];
 			industry.forEach(async (obj) => {
 				const checkInsd = await Company.findOne(
-					{ _industry: ObjectId(obj._id) },
+					{ _industry: new mongoose.Types.ObjectId(obj._id) },
 					{}
 				);
 				if (checkInsd != null) {

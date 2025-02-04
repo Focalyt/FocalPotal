@@ -13,76 +13,133 @@
       <div class="shadow-bottom"></div>
       <div class="main-menu-content border border-left-0 border-right-0 border-bottom-0">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                  <li class=" nav-item <% if(menu==='dashboard') {%>active<%}%>"><a href="/candidate/dashboard"> <i class="fa-solid fa-chart-line"></i>  <span class="menu-title"
+                  <li class=" nav-item <% if(menu==='dashboard') {%>active<%}%>"><a href="/candidate/dashboard"> <i
+                                    class="fa-solid fa-chart-line"></i> <span class="menu-title"
                                     data-i18n="Dashboard">Dashboard</span></a>
                   </li>
                   </li>
-                  <li class="nav-item <% if(menu==='myprofile') {%>active<%}%>"><a href="/candidate/myProfile"><i class="fa-regular fa-user"></i><span class="menu-title" data-i18n="Todo">Your
-                                    Profile</span></a>
-                  </li>
-                  <li class="nav-item <% if(menu==='document') {%>active<%}%> "><a href="/candidate/document"><i class="fa-regular fa-file"></i><span class="menu-title" data-i18n="Todo">
-                        Documents</span></a>
-      </li>
+                  <li class="nav-item"><a href="/candidate"><i class="fa-solid fa-user"></i>
+                              <span class="menu-title" data-i18n="Todo">Profile</span></a>
+                        <ul class="menu-content">
+                              <li class="nav-item <% if(menu==='myprofile') {%>active<%}%>"><a
+                                          href="/candidate/myProfile"><i class="fa-regular fa-user"></i><span
+                                                class="menu-title" data-i18n="Todo">Your
+                                                Profile</span></a>
+                              </li>
+                              <li class="nav-item <% if(menu==='document') {%>active<%}%> "><a
+                                          href="/candidate/document"><i class="fa-regular fa-file"></i><span
+                                                class="menu-title" data-i18n="Todo">
+                                                Documents</span></a>
+                              </li>
 
-                        <li class="nav-item <% if(menu ==='Notifications') {%>active<%}%>">
-                            <a href="/candidate/notifications">
+                        </ul>
+                  </li>
+                  <li class="nav-item <% if(menu ==='Notifications') {%>active<%}%>">
+                        <a href="/candidate/notifications">
                               <i class="fa-regular fa-bell"></i>
-                                <span class="menu-title" data-i18n="Todo">Notifications</span>
-                            </a>
-                        </li>
-                  <li class="nav-item <% if(menu==='Jobs') {%>active<%}%>"><a href="/candidate/searchjob"><i
-                                    class="fa fa-search"></i><span class="menu-title" data-i18n="Todo">Search
-                                    Job</span></a>
+                              <span class="menu-title" data-i18n="Todo">Notifications</span>
+                        </a>
                   </li>
-                  <li class="nav-item <% if(menu==='Cources') {%>active<%}%>"><a href="/candidate/searchcourses"><i
-                        class="fa fa-search"></i><span class="menu-title" data-i18n="Todo">Search
-                        Courses</span></a>
-      </li>
-                  <li class="nav-item <% if(menu==='nearbyJobs') {%>active<%}%>"><a href="/candidate/nearbyJobs"><i class="fa-regular fa-map"></i><span class="menu-title" data-i18n="Todo">Jobs Near
-                                    Me</span></a>
+                  <li class="nav-item"><a href="/candidate"><i class="fa-solid fa-user"></i>
+                              <span class="menu-title" data-i18n="Todo">Courses</span></a>
+                        <ul class="menu-content">
+                              <li class="nav-item <% if(menu==='Cources') {%>active<%}%>"><a
+                                          href="/candidate/searchcourses"><i class="fa fa-search"></i><span
+                                                class="menu-title" data-i18n="Todo">Search
+                                                Courses</span></a>
+                              </li>
+                              <li class="nav-item <% if(menu==='appliedCourse') {%>active<%}%>"><a
+                                          href="/candidate/appliedCourses"><i
+                                                class="fa-regular fa-paper-plane"></i><span class="menu-title"
+                                                data-i18n="Todo">Applied
+                                                Course</span></a>
+                              </li>
+
+                        </ul>
                   </li>
-                  <li class="nav-item <% if(menu==='miPieCoins') {%>active<%}%>"><a href="/candidate/Coins"><i class="fa-solid fa-coins"></i><span class="menu-title" data-i18n="Todo">
+                  <li class="nav-item"><a href="/candidate"><i class="fa-solid fa-clipboard-list"></i>
+                              <span class="menu-title" data-i18n="Todo">Jobs</span></a>
+                        <ul class="menu-content">
+                              <li class="nav-item <% if(menu==='Jobs') {%>active<%}%>"><a href="/candidate/searchjob"><i
+                                                class="fa fa-search"></i><span class="menu-title"
+                                                data-i18n="Todo">Search
+                                                Job</span></a>
+                              </li>
+                              <li class="nav-item <% if(menu==='nearbyJobs') {%>active<%}%>"><a
+                                          href="/candidate/nearbyJobs"><i class="fa-regular fa-map"></i><span
+                                                class="menu-title" data-i18n="Todo">Jobs Near
+                                                Me</span></a>
+                              </li>
+                              <li class="nav-item <% if(menu==='appliedJobs') {%>active<%}%>"><a
+                                          href="/candidate/appliedJobs"><i class="fa-regular fa-paper-plane"></i><span
+                                                class="menu-title" data-i18n="Todo">Applied
+                                                Jobs</span></a>
+                              </li>
+                              <li class="nav-item <% if(menu==='registerInterviews') {%>active<%}%>"><a
+                                          href="/candidate/registerInterviewsList"><i
+                                                class="fa-regular fa-hand"></i><span class="menu-title"
+                                                data-i18n="Todo">Register For Interview</span></a>
+                              </li>
+                              <li class="nav-item
+                              <% if(menu ==='InterestedCompanies') {%>active<%}%>"><a
+                                          href="/candidate/InterestedCompanies"><i class="fa-regular fa-bookmark"></i>
+                                          <span class="menu-title" data-i18n="Todo">Shortlisting</span></a>
+                              </li>
+                        </ul>
+                  </li>
+                  <li class="nav-item"><a href="/candidate"><i class="fa-solid fa-wallet"></i>
+                              <span class="menu-title" data-i18n="Todo">Wallet</span></a>
+                        <ul class="menu-content">
+                              <li class="nav-item <% if(menu==='cashback') {%>active<%}%>"><a
+                                          href="/candidate/cashback"><i class="fa-solid fa-indian-rupee-sign"></i><span
+                                                class="menu-title" data-i18n="Todo">Cashback Offers</span></a>
+                              </li>
+                              <li class="nav-item <% if(menu==='myEarnings') {%>active<%}%>"><a
+                                          href="/candidate/myEarnings"><i class="fa-regular fa-money-bill-1"></i><span
+                                                class="menu-title" data-i18n="Todo">My
+                                                Earnings</span></a>
+                              </li>
+                              <li class="nav-item
+      <% if(menu ==='referral') {%>active<%}%>"><a href="/candidate/referral"><i class="fa-solid fa-forward"></i><span
+                                                class="menu-title" data-i18n="Todo">Refer &
+                                                Earn</span></a>
+                              </li>
+                              <li class="nav-item 
+<% if(menu==='requestLoan') {%>active<%}%>"><a href="/candidate/requestLoan"><i class="fa-regular fa-circle">
+                                          </i><span class="menu-title" data-i18n="Todo">Request Loan</span></a>
+                              </li>
+                              <li class="nav-item
+                              <% if(menu ==='InterestedCompanies') {%>active<%}%>"><a
+                                          href="/candidate/InterestedCompanies"><i class="fa-regular fa-bookmark"></i>
+                                          <span class="menu-title" data-i18n="Todo">Shortlisting</span></a>
+                              </li>
+                        </ul>
+                  </li>
+
+
+
+                  <li class="nav-item <% if(menu==='miPieCoins') {%>active<%}%>"><a href="/candidate/Coins"><i
+                                    class="fa-solid fa-coins"></i><span class="menu-title" data-i18n="Todo">
                                     Coins</span></a>
                   </li>
-                  <li class="nav-item <% if(menu==='appliedJobs') {%>active<%}%>"><a href="/candidate/appliedJobs"><i class="fa-regular fa-paper-plane"></i><span class="menu-title" data-i18n="Todo">Applied
-                                    Jobs</span></a>
-                  </li>
-                  <li class="nav-item <% if(menu==='appliedCourse') {%>active<%}%>"><a href="/candidate/appliedCourses"><i class="fa-regular fa-paper-plane"></i><span class="menu-title" data-i18n="Todo">Applied
-                        Course</span></a>
-      </li>
-                  <li class="nav-item <% if(menu==='registerInterviews') {%>active<%}%>"><a href="/candidate/registerInterviewsList"><i class="fa-regular fa-hand"></i><span class="menu-title" data-i18n="Todo">Register For Interview</span></a>
-      </li>
-                        <li class="nav-item <% if(menu==='cashback') {%>active<%}%>"><a
-                                    href="/candidate/cashback"><i class="fa-solid fa-indian-rupee-sign"></i><span
-                                          class="menu-title" data-i18n="Todo">Cashback Offers</span></a>
-                        </li>
-                        <li class="nav-item <% if(menu==='myEarnings') {%>active<%}%>"><a href="/candidate/myEarnings"><i class="fa-regular fa-money-bill-1"></i><span class="menu-title"
-                                          data-i18n="Todo">My Earnings</span></a>
-                        </li>
-                        <li class="nav-item <% if(menu==='videos') {%>active<%}%>"><a href="/candidate/watchVideos"><i class="fa-regular fa-circle-play"></i>      <span class="menu-title"
-                              data-i18n="Todo">Watch Videos</span></a>
-            </li>
 
-                        <li class="nav-item
-                              <% if(menu ==='referral') {%>active<%}%>"><a
-                                    href="/candidate/referral"><i class="fa-solid fa-forward"></i><span
-                                          class="menu-title" data-i18n="Todo">Refer & Earn</span></a>
-                        </li>
-                        <li class="nav-item
-                              <% if(menu ==='shareCV') {%>active<%}%>"><a
-                                    href="/candidate/shareCV"><i class="fa-regular fa-share-from-square"></i><span
-                                          class="menu-title" data-i18n="Todo">Share Profile</span></a>
-                        </li>
-                        <li class="nav-item
-                              <% if(menu ==='InterestedCompanies') {%>active<%}%>"><a
-                                    href="/candidate/InterestedCompanies"><i class="fa-regular fa-bookmark"></i>  <span
-                                          class="menu-title" data-i18n="Todo">Shortlisting</span></a>
-                        </li>
-                        <li class="nav-item 
-                        <% if(menu==='requestLoan') {%>active<%}%>"><a 
-                              href="/candidate/requestLoan"><i class="fa-regular fa-circle">
-                              </i><span class="menu-title" data-i18n="Todo">Request Loan</span></a>
-                        </li>
-                     
+
+
+
+
+                  <li class="nav-item <% if(menu==='videos') {%>active<%}%>"><a href="/candidate/watchVideos"><i
+                                    class="fa-regular fa-circle-play"></i> <span class="menu-title"
+                                    data-i18n="Todo">Watch Videos</span></a>
+                  </li>
+
+
+                  <li class="nav-item
+                              <% if(menu ==='shareCV') {%>active<%}%>"><a href="/candidate/shareCV"><i
+                                    class="fa-regular fa-share-from-square"></i><span class="menu-title"
+                                    data-i18n="Todo">Share Profile</span></a>
+                  </li>
+
+
+
       </div>
 </div>

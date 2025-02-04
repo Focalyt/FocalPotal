@@ -1,8 +1,11 @@
 const express = require("express");
 const moment = require("moment");
-const ObjectId = require("mongodb").ObjectId;
+const crypto = require("crypto");
+const axios = require("axios")
+// const ObjectId = require("mongodb").ObjectId;
+const mongoose = require('mongoose');
 require('dotenv').config()
-const { extraEdgeAuthToken, extraEdgeUrl, env } = require("../../config");
+const { extraEdgeAuthToken, extraEdgeUrl, env, fbConversionAccessToken, fbConversionPixelId } = require("../../config");
 
 const router = express.Router();
 const Razorpay = require("razorpay");
@@ -20,6 +23,135 @@ const { candidateProfileCashBack, candidateVideoCashBack, candidateApplyCashBack
 
 const chatRoutes = express.Router();
 const commonRoutes = express.Router();
+
+class MetaConversionAPI {
+	constructor() {
+		// Validate Meta Pixel ID
+		const pixelId = fbConversionPixelId;
+		if (!pixelId) {
+			throw new Error('META_PIXEL_ID environment variable is not set');
+		}
+
+		// Validate Access Token
+		const accessToken = fbConversionAccessToken;
+		if (!accessToken) {
+			throw new Error('META_ACCESS_TOKEN environment variable is not set');
+		}
+
+		this.accessToken = accessToken;
+		this.pixelId = pixelId;
+		this.apiVersion = 'v21.0';
+
+		// Add validation to ensure baseUrl is properly constructed
+		if (!this.pixelId || this.pixelId === 'undefined') {
+			throw new Error('Invalid Meta Pixel ID');
+		}
+
+		this.metaAPIUrl = `https://graph.facebook.com/${this.apiVersion}/${this.pixelId}/events`;
+
+		// Log configuration (without sensitive data)
+		// console.log('Meta Conversion API Configuration:', {
+		//   pixelIdExists: !!this.pixelId,
+		//   accessTokenExists: !!this.accessToken,
+		//   apiVersion: this.apiVersion,
+		//   metaAPIUrl: this.metaAPIUrl
+		// });
+	}
+
+	_hashData(data) {
+		if (!data) return null;
+		// Convert to string and handle non-string inputs
+		const stringData = String(data);
+		return crypto.createHash('sha256').update(stringData.toLowerCase().trim()).digest('hex');
+	}
+
+	async trackCourseApplication(courseData, userData, metaParams) {
+		try {
+			console.log('Course Data Console', courseData,'User Data Console', userData,'Meta Params Console', metaParams)
+			const eventData = {
+				data: [{
+					event_name: 'Course Apply',
+					event_time: Math.floor(Date.now() / 1000),
+					action_source: 'website',
+					user_data: {
+						em: this._hashData(userData.email),
+						ph: this._hashData(userData.phone),
+						fn: this._hashData(userData.firstName),
+						ln: this._hashData(userData.lastName),
+						ct: this._hashData(userData.city),
+						st: this._hashData(userData.state),
+						db: this._hashData(userData.dob),
+						ge: this._hashData(userData.gender),
+						country: this._hashData('in'),
+						client_ip_address: userData.ipAddress,
+						client_user_agent: userData.userAgent,
+						external_id: this._hashData(userData.phone),
+						fbc: metaParams.fbc, // Facebook Click ID
+						fbp: metaParams.fbp  // Facebook Browser ID
+					},
+					custom_data: {
+						content_name: courseData.courseName,
+						content_category: 'Course',
+						currency: 'INR',
+						value: courseData.courseValue
+					},
+					event_source_url: courseData.sourceUrl
+				}],
+				access_token: this.accessToken
+			};
+
+			const response = await axios.post(this.metaAPIUrl, eventData);
+			console.log('Course application event tracked successfully', response.data);
+			return response.data;
+		} catch (error) {
+			console.error('Meta Conversion API Error:', error.response?.data || error.message);
+			return null;
+		}
+	}
+}
+
+
+// Helper function to extract Meta parameters from cookies and URL
+const getMetaParameters = (req) => {
+	// Extract fbclid from URL
+	const fbclid = req.query.fbclid;
+
+	// Get cookies
+	const cookies = req.cookies || {};
+
+	// Construct fbc (Facebook Click ID) with proper format
+	let fbc = cookies._fbc;
+	if (fbclid) {
+		// Format should be: fb.1.${timestamp}.${fbclid}
+		// The '1' represents the version number
+		const timestamp = Date.now();
+		fbc = `fb.1.${timestamp}.${fbclid}`;
+	}
+
+	// Get fbp (Facebook Browser ID) from cookies
+	// fbp format should be: fb.1.${timestamp}.${random}
+	let fbp = cookies._fbp;
+	if (!fbp) {
+		const timestamp = Date.now();
+		const random = Math.floor(Math.random() * 1000000000);
+		fbp = `fb.1.${timestamp}.${random}`;
+	}
+
+	// Get ad specific parameters
+	const adId = req.query.ad_id || null;
+	const campaignId = req.query.campaign_id || null;
+	const adsetId = req.query.adset_id || null;
+
+	
+
+	return {
+		fbc,      // Only included if fbclid exists or _fbc cookie is present
+		fbp,      // Always included, generated if not present
+		adId,     // Ad ID from URL parameters
+		campaignId, // Campaign ID from URL parameters
+		adsetId    // Ad Set ID from URL parameters
+	};
+};
 
 
 
@@ -258,6 +390,7 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 	try {
 		let { id } = req.params;
 		let courseId = id;
+		const metaParams = getMetaParameters(req);
 
 		let validation = { mobile: req.body.mobile }
 
@@ -297,30 +430,57 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 				_course: courseId
 			}).save();
 
+			// Track conversion event
+				const metaApi = new MetaConversionAPI();
+				await metaApi.trackCourseApplication(
+				  {
+					courseName: course.name,
+					courseId: courseId,
+					courseValue: course.registrationCharges,
+					sourceUrl: `${process.env.BASE_URL}/coursedetails/${courseId}`
+				  },
+				  {
+					email: candidate.email,
+					phone: candidate.mobile,
+					firstName: candidate.name.split(' ')[0],
+					lastName: candidate.name.split(' ').slice(1).join(' '),
+					gender: candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+					dob: candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+					city: candidate.city?.name,
+					state: candidate.state?.name,
+					ipAddress: req.ip,
+					userAgent: req.headers['user-agent']
+				  },
+				  metaParams
+				);
+
 			// Capitalize every word's first letter
-				function capitalizeWords(str) {
-				  if (!str) return '';
-				  return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-				}
-			
-				// Update Spreadsheet
-				const sheetData = [
-				  moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
-				  moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
-				  capitalizeWords(course?.name), // Apply the capitalizeWords function
-				  candidate?.name,
-				  candidate?.mobile,
-				  candidate?.email,
-				  candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
-				  candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
-				  candidate?.state?.name,
-				  candidate?.city?.name,
-				  'Course',
-				  `${process.env.BASE_URL}/coursedetails/${courseId}`,
-				  course?.registrationCharges,
-				  appliedData?.registrationFee
-				];
-				await updateSpreadSheetValues(sheetData);
+			function capitalizeWords(str) {
+				if (!str) return '';
+				return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+			}
+
+			// Update Spreadsheet
+			const sheetData = [
+				moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
+				moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
+				capitalizeWords(course?.name), // Apply the capitalizeWords function
+				candidate?.name,
+				candidate?.mobile,
+				candidate?.email,
+				candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+				candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+				candidate?.state?.name,
+				candidate?.city?.name,
+				'Course',
+				`${process.env.BASE_URL}/coursedetails/${courseId}`,
+				course?.registrationCharges,
+				appliedData?.registrationFee,
+				req.ip,
+				`${req.protocol}://${req.get('host')}${req.originalUrl}`,
+				"Leads From ChatBot"
+			];
+			await updateSpreadSheetValues(sheetData);
 
 			if (!apply) {
 				req.flash("error", "Already failed");
@@ -427,37 +587,13 @@ commonRoutes.post("/updateprofile", async (req, res) => {
 			req.flash("error", "Candidate update failed!");
 			return res.send({ status: false, message: "Profile Update failed" });
 		}
-		if (user.isProfileCompleted == false && env.toLowerCase() === 'production') {
-			let dataFormat = {
-				Source: "mipie",
-				FirstName: user.name,
-				MobileNumber: user.mobile,
-				LeadSource: "Website",
-				LeadType: "Online",
-				LeadName: "app",
-				Course: "Mipie general",
-				Center: "Padget",
-				Location: "Technician",
-				Country: "India",
-				LeadStatus: "Profile Completed",
-				ReasonCode: "27",
-				AuthToken: extraEdgeAuthToken
-			}
-			let edgeBody = JSON.stringify(dataFormat)
-			let header = { "Content-Type": "multipart/form-data" }
-			let extraEdge = await axios.post(extraEdgeUrl, edgeBody, header).then(res => {
-				console.log(res.data)
-			}).catch(err => {
-				console.log(err)
-				return err
-			})
-		}
+
 
 		await checkCandidateCashBack(candidateUpdate)
 		await candidateProfileCashBack(candidateUpdate)
 		await candidateVideoCashBack(candidateUpdate)
 		let totalCashback = await CandidateCashBack.aggregate([
-			{ $match: { candidateId: ObjectId(user._id) } },
+			{ $match: { candidateId: new mongoose.Types.ObjectId(user._id) } },
 			{ $group: { _id: "", totalAmount: { $sum: "$amount" } } },
 		]);
 		let isVideoCompleted = ''
@@ -593,11 +729,11 @@ commonRoutes.post("/coursepayment", async (req, res) => {
 	}
 
 	let course = await Courses.findById(courseId).lean();
-	if(!course){
+	if (!course) {
 		res.send({ status: false, message: "Course not available" })
 		return
 	}
-	if(course.status===false){
+	if (course.status === false) {
 		res.send({ status: false, message: "Course expired" })
 		return
 	}
@@ -886,123 +1022,123 @@ commonRoutes.post("/updatecoursepaymentStatus", async (req, res) => {
 
 commonRoutes.get("/fetchPaymentByCourseAndCandidate", async (req, res) => {
 	try {
-	  const { courseId, candidateId } = req.body;
-  
-	  // Validate Input
-	  if (!courseId || !candidateId) {
-		return res.status(400).send({
-		  status: "failure",
-		  msg: "Both courseId and candidateId are required.",
-		});
-	  }
-  
-	  // Initialize Razorpay Instance
-	  const instance = new Razorpay({
-		key_id: apiKey,
-		key_secret: razorSecretKey,
-	  });
-  
-	  // Step 1: Fetch Payments from Razorpay
-	  const allPayments = await instance.payments.all({ count: 100 });
-  
-	  // Filter Payments by courseId and candidateId in Razorpay notes
-	  const matchingPayments = allPayments.items.filter((payment) => {
-		return (
-		  payment.notes &&
-		  payment.notes.course === courseId &&
-		  payment.notes.candidate === candidateId
-		);
-	  });
-  
-	  // If no matching payments found, return immediately
-	  if (matchingPayments.length === 0) {
-		return res.status(404).send({
-		  status: "failure",
-		  msg: "No payments found in Razorpay for the given courseId and candidateId.",
-		});
-	  }
-  
-	  const paymentDetails = matchingPayments[0]; // Use the first matching payment
-	  console.log("Fetched Payment Details from Razorpay:", paymentDetails);
-  
-	  // Step 2: Check if Payment Already Exists in Your Database
-	  const existingPayment = await PaymentDetails.findOne({
-		paymentId: paymentDetails.id,
-	  });
-  
-	  if (existingPayment) {
-		// Step 3: Check and Update AppliedCourses if Necessary
-		const appliedCourse = await AppliedCourses.findOne({
-		  _candidate: existingPayment._candidate,
-		  _course: existingPayment._course,
-		});
-  
-		if (appliedCourse) {
-		  if (appliedCourse.registrationFee === "Unpaid") {
-			// Update registrationFee to Paid
-			appliedCourse.registrationFee = "Paid";
-			await appliedCourse.save();
-			return res.status(200).send({
-			  status: "exists",
-			  msg: "Payment details already exist and Applied Course updated to Paid.",
-			  paymentDetails: existingPayment,
-			  appliedCourse,
+		const { courseId, candidateId } = req.body;
+
+		// Validate Input
+		if (!courseId || !candidateId) {
+			return res.status(400).send({
+				status: "failure",
+				msg: "Both courseId and candidateId are required.",
 			});
-		  }
-  
-		  // If registrationFee is already Paid
-		  return res.status(200).send({
-			status: "exists",
-			msg: "Payment details already exist, and registrationFee is already Paid.",
-			paymentDetails: existingPayment,
-			appliedCourse,
-		  });
 		}
-  
-		// If no AppliedCourses record found
-		return res.status(404).send({
-		  status: "failure",
-		  msg: "Payment exists but no matching AppliedCourses record found.",
-		  paymentDetails: existingPayment,
+
+		// Initialize Razorpay Instance
+		const instance = new Razorpay({
+			key_id: apiKey,
+			key_secret: razorSecretKey,
 		});
-	  }
-  
-	  // Step 4: Create a New Record in PaymentDetails
-	  if (paymentDetails.status === "captured") {
-		const newPayment = await PaymentDetails.create({
-		  paymentId: paymentDetails.id,
-		  orderId: paymentDetails.order_id,
-		  amount: paymentDetails.amount / 100, // Convert from paise to rupees
-		  coins: 0,
-		  _course: paymentDetails.notes.course,
-		  paymentStatus: paymentDetails.status,
-		  _candidate: paymentDetails.notes.candidate,
-		  updatedAt: new Date(),
+
+		// Step 1: Fetch Payments from Razorpay
+		const allPayments = await instance.payments.all({ count: 100 });
+
+		// Filter Payments by courseId and candidateId in Razorpay notes
+		const matchingPayments = allPayments.items.filter((payment) => {
+			return (
+				payment.notes &&
+				payment.notes.course === courseId &&
+				payment.notes.candidate === candidateId
+			);
 		});
-  
-		return res.status(201).send({
-		  status: "success",
-		  msg: "Payment details created successfully.",
-		  newPayment,
+
+		// If no matching payments found, return immediately
+		if (matchingPayments.length === 0) {
+			return res.status(404).send({
+				status: "failure",
+				msg: "No payments found in Razorpay for the given courseId and candidateId.",
+			});
+		}
+
+		const paymentDetails = matchingPayments[0]; // Use the first matching payment
+		console.log("Fetched Payment Details from Razorpay:", paymentDetails);
+
+		// Step 2: Check if Payment Already Exists in Your Database
+		const existingPayment = await PaymentDetails.findOne({
+			paymentId: paymentDetails.id,
 		});
-	  }
-  
-	  // If payment is not captured
-	  return res.status(400).send({
-		status: "failure",
-		msg: "Payment found in Razorpay but not captured.",
-		paymentDetails,
-	  });
+
+		if (existingPayment) {
+			// Step 3: Check and Update AppliedCourses if Necessary
+			const appliedCourse = await AppliedCourses.findOne({
+				_candidate: existingPayment._candidate,
+				_course: existingPayment._course,
+			});
+
+			if (appliedCourse) {
+				if (appliedCourse.registrationFee === "Unpaid") {
+					// Update registrationFee to Paid
+					appliedCourse.registrationFee = "Paid";
+					await appliedCourse.save();
+					return res.status(200).send({
+						status: "exists",
+						msg: "Payment details already exist and Applied Course updated to Paid.",
+						paymentDetails: existingPayment,
+						appliedCourse,
+					});
+				}
+
+				// If registrationFee is already Paid
+				return res.status(200).send({
+					status: "exists",
+					msg: "Payment details already exist, and registrationFee is already Paid.",
+					paymentDetails: existingPayment,
+					appliedCourse,
+				});
+			}
+
+			// If no AppliedCourses record found
+			return res.status(404).send({
+				status: "failure",
+				msg: "Payment exists but no matching AppliedCourses record found.",
+				paymentDetails: existingPayment,
+			});
+		}
+
+		// Step 4: Create a New Record in PaymentDetails
+		if (paymentDetails.status === "captured") {
+			const newPayment = await PaymentDetails.create({
+				paymentId: paymentDetails.id,
+				orderId: paymentDetails.order_id,
+				amount: paymentDetails.amount / 100, // Convert from paise to rupees
+				coins: 0,
+				_course: paymentDetails.notes.course,
+				paymentStatus: paymentDetails.status,
+				_candidate: paymentDetails.notes.candidate,
+				updatedAt: new Date(),
+			});
+
+			return res.status(201).send({
+				status: "success",
+				msg: "Payment details created successfully.",
+				newPayment,
+			});
+		}
+
+		// If payment is not captured
+		return res.status(400).send({
+			status: "failure",
+			msg: "Payment found in Razorpay but not captured.",
+			paymentDetails,
+		});
 	} catch (error) {
-	  console.error("Error fetching Razorpay payments:", error);
-	  res.status(500).send({
-		status: "failure",
-		msg: "Error fetching payments from Razorpay.",
-		error: error.message,
-	  });
+		console.error("Error fetching Razorpay payments:", error);
+		res.status(500).send({
+			status: "failure",
+			msg: "Error fetching payments from Razorpay.",
+			error: error.message,
+		});
 	}
-  });
-  
+});
+
 
 
 commonRoutes.get("/Coins", async (req, res) => {

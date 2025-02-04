@@ -1,5 +1,6 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
+const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const {
 	User,
@@ -495,7 +496,7 @@ router
 										: "",
 								linkedinUrl: req.body.exeLinkedin[i],
 							};
-							var id = ObjectId(req.body._exeid[i]);
+							var id = new mongoose.Types.ObjectId(req.body._exeid[i]);
 							// var id = ObjectId.fromString(req.body._id[i]);
 							let exe = await CompanyExecutive.findByIdAndUpdate(
 								{ _id: id },

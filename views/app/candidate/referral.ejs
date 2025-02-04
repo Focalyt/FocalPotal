@@ -206,11 +206,13 @@ pageAnchors.forEach((el) => {
 <script>
   function referNow(id){
   let text = `Hello 
-I am using Focalyt to find the latest job. You can also find your dream job here. Signup today 
+  I'm using Focalyt to explore Future Technology Courses and exciting job opportunities. You too can upgrade your skills in AI, Robotics, Cybersecurity, AR/VR, IoT, Cloud Computing, and more to become job-ready for the future!
+
+Sign up today and land your dream job in future tech!
 <%= process.env.BASE_URL %>/candidate/login?refCode=${id}
 
 नमस्ते
-मैं नवीनतम नौकरी खोजने के लिए Focalyt का उपयोग कर रहा हूं। यहां आप अपनी ड्रीम जॉब भी पा सकते हैं। आज साइन अप करें 
+मैं Focalyt का उपयोग कर रहा हूँ फ्यूचर टेक्नोलॉजी कोर्सेस और नई नौकरियों की खोज करने के लिए। आप भी आर्टिफिशियल इंटेलिजेंस, रोबोटिक्स, साइबर सिक्योरिटी, एआर/वीआर, आईओटी, क्लाउड कंप्यूटिंग जैसे कोर्स करके अपनी स्किल्स बढ़ाएं और जॉब के लिए तैयार बनें!
 <%= process.env.BASE_URL %>/candidate/login?refCode=${id}`
   let url = `https://wa.me/?text=` + encodeURIComponent(text)
   window.open(url)
