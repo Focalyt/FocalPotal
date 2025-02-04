@@ -476,6 +476,7 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 				appliedData?.registrationFee,
 				req.ip,
 				`${req.protocol}://${req.get('host')}${req.originalUrl}`,
+				"Leads From ChatBot"
 			];
 			await updateSpreadSheetValues(sheetData);
 
