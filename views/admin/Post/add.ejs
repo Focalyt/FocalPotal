@@ -1354,7 +1354,6 @@
       }
 
 
-      console.log(candidates)
       if(selectedTag != 'admin'){
         candidates.forEach((candidate, index) => {
           var isLastCandidate = index === candidates.length - 1;
@@ -1595,6 +1594,12 @@
 
         function searchFunction() {
             searchbynameorphone();
+            candidatePage = 0;
+            collegePage = 0;
+            companyPage = 0;
+            candidateTableBody = [];
+            collegeTableBody = [];
+            companyTableBody = [];
         }
 
         const debouncedSearch = debounce(searchFunction, 500);
