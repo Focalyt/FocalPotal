@@ -1152,8 +1152,21 @@ border-color: rgba(255, 255, 255, 0.4);
   font-size: 1.1rem;
 }
 
+.icon-container {
+  position: relative;
+  cursor: pointer;
+}
 
 @media (max-width: 768px) {
+  .new {
+  font-size: 25px;
+  }
+  .font-size{
+    font-size: 25px;
+  }
+  .hardware h1{
+    font-size: 1.2rem;
+  }
   #earning-option .container {
     flex-direction: column;
     text-align: center;
@@ -1178,10 +1191,22 @@ border-color: rgba(255, 255, 255, 0.4);
   }
 
   .main-title {
-    font-size: 2rem;
+    font-size: 1.2rem;
     margin-bottom: 2rem;
   }
-
+  .labs-desc{
+    flex-direction: column;
+    padding: 0px;
+  }
+  .desc_img{
+    width: 100%;
+  }
+  .desc_header{
+    font-size: 22px;
+  }
+  .benefits-wrapper{
+    gap: 0px;
+  }
   .icon-wrapper {
     margin: 0 auto;
   }
