@@ -23,7 +23,7 @@ const { Courses, CourseSectors, Import,
 	Notification,
 	Referral,
 	CandidateDoc,
-	Company } = require("../../models");
+	Company, Post } = require("../../models");
 const candidateServices = require('../services/candidate')
 const { candidateCashbackEventName } = require('../../db/constant');
 const router = express.Router();
@@ -56,12 +56,7 @@ router
 				isDeleted: false,
 				status
 			};
-			let smsFilter = {
-				isDeleted: false,
-				status: true,
-				isProfileCompleted: false
-			}
-
+			
 			let numberCheck = isNaN(data?.name)
 			let name = ''
 
@@ -85,11 +80,7 @@ router
 					{ "mobile": Number(name) },
 					{ "whatsapp": Number(name) }
 				]
-				smsFilter["$or"] = [
-					{ "name": { "$regex": name, "$options": "i" } },
-					{ "mobile": Number(name) },
-					{ "whatsapp": Number(name) }
-				]
+				
 			}
 
 			if (data.FromDate && data.ToDate) {
@@ -110,7 +101,7 @@ router
 			if (data.verified) {
 				filter["verified"] = data.verified == 'true' ? true : false
 			}
-			const smsCount = await Candidate.countDocuments(smsFilter);
+			
 			const count = await Candidate.countDocuments(filter)
 			let { value, order } = req.query
 			let sorting = {}
@@ -122,7 +113,6 @@ router
 			let agg = candidateServices.adminCandidatesList(sorting, perPage, page, candidateCashbackEventName.cashbackrequestaccepted, { value, order }, filter)
 			let candidates = await Candidate.aggregate(agg)
 			const totalPages = Math.ceil(count / perPage);
-			const smsHistory = await SmsHistory.findOne().sort({ createdAt: -1 }).select("createdAt count")
 
 			return res.render(`${req.vPath}/admin/post/add`, {
 				menu: 'addPost',
@@ -133,9 +123,9 @@ router
 				count,
 				data,
 				isChecked,
-				smsCount,
+				
 				view,
-				smsHistory,
+				
 				sortingValue: Object.keys(sorting),
 				sortingOrder: Object.values(sorting)
 			});
@@ -237,6 +227,26 @@ router.post('/getTagsList', async (req, res) => {
 			totalPages: Math.ceil(count / perPage),
 			page,
 			count
+		});
+
+	} catch (err) {
+		console.error("Error:", err);
+		return res.status(400).json({ error: true, message: "Something went wrong" });
+	}
+});
+
+router.get('/allposts', async (req, res) => {
+	try {
+
+
+		let filter = { status: true}
+				
+		let posts = await Post.find(filter).sort({  createdAt: -1 });
+
+
+		return res.render(`${req.vPath}/admin/post/allPosts`,{
+			menu : 'allposts',
+			posts
 		});
 
 	} catch (err) {

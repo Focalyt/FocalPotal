@@ -81,7 +81,7 @@
                                 <a class="nav-link" id="company-tab" data-bs-toggle="tab" href="#company" role="tab"
                                   aria-controls="company" aria-selected="false">Company</a>
                               </li>
-                              <li class="nav-item" role="presentation" onclick="selctedTagFor('college')">
+                              <li class="nav-item" role="presentation" onclick="selctedTagFor('institute')">
                                 <a class="nav-link" id="institute-tab" data-bs-toggle="tab" href="#institute" role="tab"
                                   aria-controls="institute" aria-selected="false">Institute</a>
                               </li>
@@ -181,7 +181,7 @@
                                         <!-- <th>Mobile</th> -->
                                       </tr>
                                     </thead>
-                                    <tbody id="collegeTableBody">
+                                    <tbody id="instituteTableBody">
                                       <!-- <tr>
                                         <td>
                                           <input type="checkbox">
@@ -443,11 +443,11 @@
                 </div>
                 <div class="modal-body pt-1" id="popup-body">
                   <p>Are you sure you want to send Bulk SMS </p>
-          <p class="text-right font-weight-bold text-danger mr-2"><i>Total Messages : <%= smsCount %></i></p>
+          <p class="text-right font-weight-bold text-danger mr-2"><i>Total Messages : </i></p>
                 </div>
                 <div class="modal-footer">
                   <button class="btn btn-primary"
-          onclick="sendSMS('<%= data?.name%>','<%= data?.FromDate %>','<%= data?.ToDate %>','<%= smsCount %>')"
+          onclick="sendSMS('<%= data?.name%>','<%= data?.FromDate %>','<%= data?.ToDate %>','')"
                     id="sendBtn" data-dismiss="modal">Send</button>
                   <button type="button" class="btn btn-danger" data-dismiss="modal"><i
                       class="feather icon-x d-block d-lg-none"></i>
@@ -693,9 +693,9 @@
               window.location.href = `/admin/post/add?status=${!checkbox.checked}`
             }
   
-            // show selected colleges
+            // show selected institutes
             function selectedCollege() {
-              var e = document.getElementById("college");
+              var e = document.getElementById("institute");
               var selectedItem = e.options[e.selectedIndex].value;
               // alert(selectedItem);
               var clgId = selectedItem;
@@ -821,7 +821,7 @@
                   },
                   success: () => {
                     let smsHistory = document.getElementById('smsHistory')
-                    smsHistory.textContent="Last Sent : Just Now (<%= smsCount %>)" 
+                    smsHistory.textContent="Last Sent : Just Now ()" 
                     $('#sendBtn').removeClass('disabled')
                   },
                   error: () =>{
@@ -1311,12 +1311,12 @@
 
     // adminTableBody
     // companyTableBody
-    // collegeTableBody
+    // instituteTableBody
     // candidateTableBody
 
     var adminTableBody = [];
     var companyTableBody = [];
-    var collegeTableBody = [];
+    var instituteTableBody = [];
     var candidateTableBody = <%- JSON.stringify(candidates) %>;
 
     var selectedTag = "candidate";
@@ -1327,7 +1327,7 @@
     var page = <%- page %>;
     adminPage = 0;
     companyPage = 0;
-    collegePage = 0;
+    institutePage = 0;
     candidatePage = page;
     var isSelectedFromtab = false;
   
@@ -1344,8 +1344,8 @@
           candidates = companyTableBody;
           break;
 
-        case "college":
-          candidates = collegeTableBody;
+        case "institute":
+          candidates = instituteTableBody;
           break;
 
         case "candidate":
@@ -1368,7 +1368,7 @@
                   </span>
                 </div>
               </td>
-              <td style='${((selectedTag === "college") || (selectedTag == "company")) ? "display: none;" : ""}'>${candidate.mobile}</td>
+              <td style='${((selectedTag === "institute") || (selectedTag == "company")) ? "display: none;" : ""}'>${candidate.mobile}</td>
             </tr>
           `;
       
@@ -1389,8 +1389,8 @@
           page = companyPage + 1;
           break;
 
-        case "college":
-          page = collegePage + 1;
+        case "institute":
+          page = institutePage + 1;
           break;
 
         case "candidate":
@@ -1416,8 +1416,8 @@
                   companyTableBody = isSelectedFromtab ? newData : [...companyTableBody, ...newData];
                   break;
 
-                case "college":
-                  collegeTableBody = isSelectedFromtab ? newData : [...collegeTableBody, ...newData];
+                case "institute":
+                  instituteTableBody = isSelectedFromtab ? newData : [...instituteTableBody, ...newData];
                   break;
 
                 case "candidate":
@@ -1491,7 +1491,7 @@
         searchby = document.getElementById("searchbyCompany").value;
         break;
 
-      case 'college':
+      case 'institute':
         searchby = document.getElementById("searchbyInstitute").value;
         break;
 
@@ -1513,10 +1513,10 @@
       // page = 0;
       // candidates = [];
       candidatePage = 0;
-      collegePage = 0;
+      institutePage = 0;
       companyPage = 0;
       candidateTableBody = [];
-      collegeTableBody = [];
+      instituteTableBody = [];
       companyTableBody = [];
       isSelectedFromtab = true;
       setTimeout(() => {
@@ -1572,7 +1572,7 @@
    
 
     function scrollDetected(){
-    // #candidateTableBody, #collegeTableBody, #companyTableBody, #adminTableBody
+    // #candidateTableBody, #instituteTableBody, #companyTableBody, #adminTableBody
       document.getElementById(selectedTag+"TableBody").addEventListener("scroll", function () {
         let tbody = this;
         if (tbody.scrollHeight - tbody.scrollTop <= tbody.clientHeight + 1) {
@@ -1595,10 +1595,10 @@
         function searchFunction() {
             searchbynameorphone();
             candidatePage = 0;
-            collegePage = 0;
+            institutePage = 0;
             companyPage = 0;
             candidateTableBody = [];
-            collegeTableBody = [];
+            instituteTableBody = [];
             companyTableBody = [];
         }
 
