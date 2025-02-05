@@ -132,7 +132,6 @@ router
 				page,
 				count,
 				data,
-				menu: 'candidate',
 				isChecked,
 				smsCount,
 				view,
