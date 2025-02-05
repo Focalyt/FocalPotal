@@ -472,6 +472,19 @@
   transform: translateY(0);
   padding: 15px 5px;
 }
+.dropdown-items{
+  width: 100%;
+  padding: 0.25rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #2a2e30;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  display: flex;
+  gap: 10px;
+}
 .user__name {
   font-size: 16px;
   color: #000;
