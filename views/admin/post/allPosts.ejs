@@ -1,3 +1,7 @@
+
+<link rel="stylesheet" href="/css/newpages/blog.css">
+
+
 <% include ../partials/header %>
   <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
     <div class="content-header-left col-md-9 col-12 mb-2">
@@ -17,37 +21,51 @@
   <div id="add-model">
     <div class="content-body">
       <% include ../partials/flash %>
-      <div class="mainBody">
+      <div class="">
         <% if (posts && posts.length> 0) { %>
           <% posts.forEach((post)=> { %>
             <div class="blog--card">
               <!-- Header Section -->
               <div class="card-header">
                 <div class="inner__card">
-                  <div class="user_image text-black">
-                    <figure>
-                      <img src="public_assets/images/newpage/favicon.png" alt>
-                    </figure>
-
-                  </div>
-                  <h3 class="user__name text-black">
-                    <span class="start__name"><b>Focalyt</b></span>
+                  <div class="user-info">
+                    <div class="user_image text-black">
+                      <figure>
+                        <img src="public_assets/images/newpage/favicon.png" alt>
+                      </figure>
+                    </div>
+                    <h3 class="user__name text-black">
+                      <span class="start__name"><b>Focalyt</b></span>
+                      
+                      <% if (post.tags && post.tags.length > 0) { %>
+                        <span class="tag__user">
+                          is with <b><%= post.tags[0].name %></b>
+                        </span>
                     
-                    <% if (post.tags && post.tags.length > 0) { %>
-                      <span class="tag__user">
-                        is with <b><%= post.tags[0].name %></b>
-                      </span>
-                  
-                      <% if (post.tags.length > 1) { %>
-                        <span class="more__user strong"> & <b><%= post.tags.length - 1 %></b></span>
-                        <span class="other"><b> Others</b></span>
+                        <% if (post.tags.length > 1) { %>
+                          <span class="more__user strong"> & <b><%= post.tags.length - 1 %></b></span>
+                          <span class="other"><b> Others</b></span>
+                        <% } %>
                       <% } %>
-                    <% } %>
-                  </h3>
-                  
-
-
-
+                    </h3>
+                  </div>
+                  <div class="dropdown-wrapper">
+                    <div class="dropdown-container">
+                      <div class="dropdown-trigger">
+                        <i class="fas fa-ellipsis-v" style="color: black; cursor: pointer;"></i>
+                      </div>
+                      <div class="dropdown-post">
+                        <div class="dropdown-item">
+                          <i class="fas fa-edit"></i>
+                          <span>Edit</span>
+                        </div>
+                        <div class="dropdown-item">
+                          <i class="fas fa-trash"></i>
+                          <span>Delete</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- <h5 class="blog__title text-black">Secure Your Future with Cybersecurity! <span>more...</span></h5> -->
@@ -251,6 +269,66 @@
   
 
   
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Select all dropdown containers in .newdropdown
+  const dropdownContainers = document.querySelectorAll('.newdropdown .dropdown-container');
+  
+  dropdownContainers.forEach(container => {
+    const dropdownTrigger = container.querySelector('.dropdown-trigger');
 
-  <% include ../partials/footer %>
+    // Toggle dropdown
+    dropdownTrigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      
+      // Close other open dropdowns
+      dropdownContainers.forEach(otherContainer => {
+        if (otherContainer !== container) {
+          otherContainer.classList.remove('active');
+        }
+      });
+      
+      // Toggle current dropdown
+      container.classList.toggle('active');
+    });
+
+    // Optional: Add click handlers for dropdown items
+    const dropdownItems = container.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const action = item.querySelector('span').textContent.toLowerCase();
+        
+        switch(action) {
+          case 'edit':
+            console.log('Edit clicked');
+            break;
+          case 'delete':
+            console.log('Delete clicked');
+            break;
+        }
+        
+        // Close dropdown after action
+        container.classList.remove('active');
+      });
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function() {
+    dropdownContainers.forEach(container => {
+      container.classList.remove('active');
+    });
+  });
+
+  // Prevent dropdown from closing when clicking inside
+  dropdownContainers.forEach(container => {
+    container.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  });
+});
+</script>
     </div>
+
+
+<% include ../partials/footer %>
