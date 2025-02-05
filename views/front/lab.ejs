@@ -15,11 +15,27 @@
               </h2>
             </div>
             <div class="images">
-              <img class="home_images" src="public_assets/images/icons/new_icon/drone.png" alt="drone" class="img1">
-              <img class="home_images" src="public_assets/images/icons/new_icon/ai.png" alt="ai" class="img1">
-              <img class="home_images" src="public_assets/images/icons/new_icon/robotic.png" alt="robotic" class="img1">
-              <img class="home_images" src="public_assets/images/icons/new_icon/iot.png" alt="iot" class="img1">
-              <img class="home_images" src="public_assets/images/icons/new_icon/ar_vr.png" alt="ar_vr" class="img1">
+              <div class="icon-container" data-target="drone-section">
+                <img class="home_images" src="public_assets/images/icons/new_icon/drone.png" alt="drone" class="img1">
+                <video class="home_images drone-video" autoplay loop muted playsinline style="display: none; width: 100px; height: auto;" src="public_assets/videos/drone.mp4" type="mp4"></video>
+                <div class="drone-path"></div>
+              </div>
+              <div class="icon-container" data-target="robotics-section">
+                <img class="home_images" src="public_assets/images/icons/new_icon/robotic.png" alt="robotic" class="img1">
+                <div class="drone-path"></div>
+              </div>
+              <div class="icon-container" data-target="ai-section">
+                <img class="home_images" src="public_assets/images/icons/new_icon/ai.png" alt="ai" class="img1">
+                <div class="drone-path"></div>
+              </div>
+              <div class="icon-container" data-target="iot-section">
+                <img class="home_images" src="public_assets/images/icons/new_icon/iot.png" alt="iot" class="img1">
+                <div class="drone-path"></div>
+              </div>
+              <div class="icon-container" data-target="arvr-section">
+                <img class="home_images" src="public_assets/images/icons/new_icon/ar_vr.png" alt="ar_vr" class="img1">
+                <div class="drone-path"></div>
+              </div>   
             </div>
             <div>
               <div class="book_a_demo">
@@ -535,7 +551,7 @@ useful in their future prospect.
       <p class="pro_labs text-center text-capitalize"> explore Our future Technology Labs</p>
 
       <div class="col-md-12">
-        <div class="row justify-content-evenly py-3">
+        <div class="row justify-content-evenly py-3 g-5">
           <div class="col-md-3">
             <div class="ar_labs">
               <figure>
@@ -565,7 +581,7 @@ useful in their future prospect.
           </div>
 
         </div>
-        <div class="row justify-content-evenly pt-3 pb-5">
+        <div class="row justify-content-evenly pt-3 pb-5 g-5">
           <div class="col-md-3">
             <div class="ar_labs">
               <figure>
@@ -808,7 +824,7 @@ useful in their future prospect.
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="labs-desc">
+        <div class="labs-desc" id="arvr-section">
           <div class="desc_img">
             <figure>
               <img src="public_assets/images/course/ar_vr.jpg" alt="">
@@ -1041,7 +1057,7 @@ useful in their future prospect.
         </div>
       </div>
       <div class="col-md-12">
-        <div class="labs-desc">
+        <div class="labs-desc" id="drone-section">
           <div class="desc_img_content">
             <h2 class="desc_header text-uppercase">Drone Labs</h2>
 
@@ -1274,7 +1290,7 @@ useful in their future prospect.
         </div>
       </div>
       <div class="col-md-12">
-        <div class="labs-desc">
+        <div class="labs-desc" id="robotics-section">
           <div class="desc_img">
             <figure>
               <img src="public_assets/images/course/robo.jpg" alt="">
@@ -1505,7 +1521,7 @@ useful in their future prospect.
         </div>
       </div>
       <div class="col-md-12">
-        <div class="labs-desc">
+        <div class="labs-desc" id="iot-section">
           <div class="desc_img_content">
             <h2 class="desc_header text-uppercase">Internet of things (IOT)</h2>
             <div>
@@ -1738,7 +1754,7 @@ useful in their future prospect.
         </div>
       </div>
       <div class="col-md-12">
-        <div class="labs-desc">
+        <div class="labs-desc" id="ai-section">
           <div class="desc_img">
             <figure>
               <img src="public_assets/images/course/ai.jpg" alt="">
@@ -1982,4 +1998,489 @@ useful in their future prospect.
   </div>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+ <!-- <script>
+  document.addEventListener('DOMContentLoaded', function () {
+  gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
+
+  const icons = document.querySelectorAll('.icon-container');
+
+  icons.forEach((icon) => {
+    icon.addEventListener('click', function (e) {
+      const targetSectionId = this.getAttribute('data-target');
+      const targetElement = document.getElementById(targetSectionId);
+      const iconImg = this.querySelector('img');
+
+      if (!targetElement || !iconImg) return;
+
+      // Clone the image for animation
+      const clone = iconImg.cloneNode(true);
+      clone.classList.add('clone-image');
+      document.body.appendChild(clone);
+
+      // Get original position
+      const rect = iconImg.getBoundingClientRect();
+
+      gsap.set(clone, {
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+        height: rect.height,
+        position: "absolute",
+        zIndex: 1000
+      });
+
+      // Hide original image
+      gsap.to(iconImg, { opacity: 0, duration: 0.3 });
+
+      // Get target position
+      const targetRect = targetElement.getBoundingClientRect();
+
+      // Animation
+      gsap.to(clone, {
+        duration: 1.5,
+        motionPath: {
+          path: [
+            { x: rect.left + 100, y: rect.top - 150 }, // Fly up first
+            { x: targetRect.left + 50, y: targetRect.top - 50 } // Move to target
+          ],
+          curviness: 1.5
+        },
+        rotate: 360,
+        ease: "power1.inOut",
+        onComplete: () => {
+          clone.remove();
+          gsap.to(iconImg, { opacity: 1, duration: 0.3 });
+          scrollToSection(targetSectionId);
+        }
+      });
+    });
+  });
+
+  function scrollToSection(sectionId) {
+    gsap.to(window, {
+      duration: 1,
+      scrollTo: { y: `#${sectionId}`, offsetY: 50 },
+      ease: "power2.inOut"
+    });
+  }
+});
+
+</script>  -->
+
+ <!-- <script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Register GSAP plugins
+  gsap.registerPlugin(MotionPathPlugin);
+  
+  const icons = document.querySelectorAll('.icon-container');
+  
+  icons.forEach(icon => {
+    icon.addEventListener('click', function(e) {
+      const targetSection = this.getAttribute('data-target');
+      const targetElement = document.getElementById(targetSection);
+      const iconImg = this.querySelector('img');
+      const iconType = iconImg.classList[1]; // Get specific class (drone, ai, etc.)
+      
+      // Create a clone of the clicked image for animation
+      const clone = iconImg.cloneNode(true);
+      clone.classList.add('clone-image');
+      document.body.appendChild(clone);
+      
+      // Set initial position of clone to match original
+      const rect = iconImg.getBoundingClientRect();
+      gsap.set(clone, {
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+        height: rect.height
+      });
+      
+      // Hide original
+      gsap.to(iconImg, { opacity: 0, duration: 0.3 });
+      
+      // Different animation for each icon type
+      switch(iconType) {
+        case 'drone':
+          // Drone flying animation
+          const tl = gsap.timeline({
+            onComplete: () => {
+              clone.remove();
+              gsap.to(iconImg, { opacity: 1, duration: 0.3 });
+              scrollToSection(targetSection);
+            }
+          });
+          
+          tl.to(clone, {
+            duration: 1.5,
+            motionPath: {
+              path: [
+                { x: rect.left + 100, y: rect.top - 100 },
+                { x: rect.left + 200, y: rect.top - 50 },
+                { x: window.innerWidth - 100, y: rect.top - 150 }
+              ],
+              curviness: 1.5
+            },
+            rotate: 360,
+            ease: "power1.inOut"
+          });
+          break;
+          
+        case 'ai':
+          // AI digital effect
+          gsap.to(clone, {
+            duration: 1,
+            scale: 1.5,
+            opacity: 0,
+            filter: "blur(10px)",
+            ease: "power2.in",
+            onComplete: () => {
+              clone.remove();
+              gsap.to(iconImg, { opacity: 1, duration: 0.3 });
+              scrollToSection(targetSection);
+            }
+          });
+          break;
+          
+        case 'robotics':
+          // Robotics mechanical movement
+          gsap.to(clone, {
+            duration: 1.2,
+            rotation: 720,
+            scale: 0,
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            ease: "steps(12)",
+            onComplete: () => {
+              clone.remove();
+              gsap.to(iconImg, { opacity: 1, duration: 0.3 });
+              scrollToSection(targetSection);
+            }
+          });
+          break;
+          
+        case 'iot':
+          // IoT network effect
+          const dots = 8;
+          const tl2 = gsap.timeline({
+            onComplete: () => {
+              clone.remove();
+              gsap.to(iconImg, { opacity: 1, duration: 0.3 });
+              scrollToSection(targetSection);
+            }
+          });
+          
+          tl2.to(clone, {
+            duration: 0.5,
+            scale: 0.5,
+            ease: "power1.out"
+          })
+          .to(clone, {
+            duration: 1,
+            opacity: 0,
+            rotation: 180,
+            scale: 2,
+            ease: "power1.inOut"
+          });
+          break;
+          
+        case 'arvr':
+          // AR/VR portal effect
+          gsap.to(clone, {
+            duration: 1.5,
+            scale: 20,
+            opacity: 0,
+            ease: "power2.inOut",
+            onComplete: () => {
+              clone.remove();
+              gsap.to(iconImg, { opacity: 1, duration: 0.3 });
+              scrollToSection(targetSection);
+            }
+          });
+          break;
+      }
+    });
+  });
+  
+  function scrollToSection(sectionId) {
+    gsap.to(window, {
+      duration: 1,
+      scrollTo: {
+        y: `#${sectionId}`,
+        offsetY: 50
+      },
+      ease: "power2.inOut"
+    });
+  }
+});
+</script>  -->
+
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', function() {
+  gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
+
+  const icons = document.querySelectorAll('.icon-container');
+
+  icons.forEach(icon => {
+    icon.addEventListener('click', function() {
+      const targetSection = this.getAttribute('data-target');
+      const targetElement = document.getElementById(targetSection);
+      const iconImg = this.querySelector('img.home_images'); // Select the correct image
+      const video = this.querySelector('video.drone-video'); // Select the drone video
+
+      if (!iconImg || !video) {
+        scrollToSection(targetSection);
+        return;
+      }
+
+      // Hide static image and show video for drone
+      if (targetSection === "drone-section") {
+        iconImg.style.display = "none";  // Hide static image
+        video.style.display = "block";   // Show video
+        video.play();                     // Start playing video
+
+        // Clone the video for animation effect
+        const clone = video.cloneNode(true);
+        document.body.appendChild(clone);
+        clone.style.position = "absolute";
+        clone.style.zIndex = "1000";
+
+        // Get the bounding box of the original video
+        const rect = video.getBoundingClientRect();
+
+        gsap.set(clone, {
+          x: rect.left,
+          y: rect.top,
+          width: rect.width,
+          height: rect.height
+        });
+
+        // Animate flying drone movement
+        gsap.to(clone, {
+          duration: 2.5,
+          motionPath: {
+            path: [
+              { x: rect.left + 100, y: rect.top - 100 },
+              { x: rect.left + 200, y: rect.top - 50 },
+              { x: window.innerWidth - 100, y: rect.top - 150 }
+            ],
+            curviness: 1.5
+          },
+          rotate: 360,
+          ease: "power1.inOut",
+          onComplete: () => {
+            clone.remove(); // Remove the cloned video after animation
+
+            // Hide the video and show the static image again
+            video.style.display = "none";
+            iconImg.style.display = "block";
+
+            // Scroll to the target section after animation
+            scrollToSection(targetSection);
+          }
+        });
+
+      } else {
+        // If it's not the drone section, just scroll to the target
+        scrollToSection(targetSection);
+      }
+    });
+  });
+
+  function scrollToSection(sectionId) {
+    gsap.to(window, {
+      duration: 1,
+      scrollTo: {
+        y: `#${sectionId}`,
+        offsetY: 50
+      },
+      ease: "power2.inOut"
+    });
+  }
+});
+
+</script> -->
+
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', function() {
+  gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
+
+  const icons = document.querySelectorAll('.icon-container');
+
+  icons.forEach(icon => {
+    icon.addEventListener('click', function() {
+      const targetSection = this.getAttribute('data-target');
+      const targetElement = document.getElementById(targetSection);
+      const iconImg = this.querySelector('img.home_images'); // Select static image
+      const video = this.querySelector('video.drone-video'); // Select drone video
+
+      if (!iconImg || !video || !targetElement) {
+        scrollToSection(targetSection);
+        return;
+      }
+
+      if (targetSection === "drone-section") {
+        // Get the starting position of the icon
+        const rect = iconImg.getBoundingClientRect();
+        const targetRect = targetElement.getBoundingClientRect();
+
+        // Hide the static image, show the video
+        iconImg.style.display = "none";
+        video.style.display = "block";
+        video.play(); // Play video
+
+        // Clone the video for animation
+        const clone = video.cloneNode(true);
+        document.body.appendChild(clone);
+        clone.style.position = "absolute";
+        clone.style.zIndex = "1000";
+
+        // Set initial position of the clone
+        gsap.set(clone, {
+          x: rect.left,
+          y: rect.top,
+          width: rect.width,
+          height: rect.height
+        });
+
+        // Animate drone flying to the target section
+        gsap.to(clone, {
+          duration: 2.5,
+          motionPath: {
+            path: [
+              { x: rect.left + 100, y: rect.top - 50 }, // Slight lift
+              { x: (rect.left + targetRect.left) / 2, y: targetRect.top - 100 }, // Mid air
+              { x: targetRect.left + 50, y: targetRect.top } // Land near section
+            ],
+            curviness: 1.5
+          },
+          scale: 1.2,
+          ease: "power1.inOut",
+          onComplete: () => {
+            clone.remove(); // Remove animated clone
+
+            // Hide video and show the static image again
+            video.style.display = "none";
+            iconImg.style.display = "block";
+
+            // Scroll smoothly to the section
+            scrollToSection(targetSection);
+          }
+        });
+      } else {
+        scrollToSection(targetSection);
+      }
+    });
+  });
+
+  function scrollToSection(sectionId) {
+    gsap.to(window, {
+      duration: 1,
+      scrollTo: {
+        y: `#${sectionId}`,
+        offsetY: 50
+      },
+      ease: "power2.inOut"
+    });
+  }
+});
+
+</script> -->
+
+ <!-- <script>
+document.addEventListener('DOMContentLoaded', function() {
+  gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
+
+  const droneIcons = document.querySelectorAll('.icon-container[data-target]');
+
+  droneIcons.forEach(droneIcon => {
+    droneIcon.addEventListener('click', function() {
+      // Immediately scroll to the target section
+      const targetSectionId = this.getAttribute('data-target');
+      const targetSection = document.getElementById(targetSectionId);
+      
+      if (!targetSection) {
+        console.error('Target section not found');
+        return;
+      }
+
+      // Scroll to section first
+      gsap.to(window, {
+        duration: 1.5,
+        scrollTo: { 
+          y: `#${targetSectionId}`, 
+          offsetY: 50 
+        },
+        ease: "power2.inOut",
+        onComplete: () => {
+          // After scrolling, initiate drone animation
+          initiatePostScrollDroneAnimation(this, targetSection);
+        }
+      });
+    });
+  });
+
+  function initiatePostScrollDroneAnimation(triggerElement, targetSection) {
+    // Create drone flight container
+    const droneContainer = createDroneFlightElement(triggerElement);
+    document.body.appendChild(droneContainer);
+
+    // Get precise positioning
+    const startRect = triggerElement.getBoundingClientRect();
+    const targetRect = targetSection.getBoundingClientRect();
+
+    // Drone animation within the section
+    const droneTimeline = gsap.timeline({
+      onComplete: () => {
+        gsap.to(droneContainer, {
+          duration: 0.5,
+          opacity: 0,
+          scale: 0.5,
+          onComplete: () => {
+            droneContainer.remove();
+          }
+        });
+      }
+    });
+
+    // Animate drone within the section
+    droneTimeline
+      .fromTo(droneContainer, 
+        { 
+          opacity: 0, 
+          scale: 0.5,
+          x: startRect.left,
+          y: startRect.top,
+          rotation: -45
+        },
+        {
+          duration: 0.8,
+          opacity: 1,
+          scale: 1,
+          x: targetRect.left + targetRect.width / 2,
+          y: targetRect.top + targetRect.height / 2,
+          rotation: 0,
+          ease: "power1.inOut"
+        }
+      );
+  }
+
+  function createDroneFlightElement(triggerElement) {
+    const originalDrone = triggerElement.querySelector('.home_images');
+    
+    const droneElement = originalDrone.cloneNode(true);
+    droneElement.style.position = 'fixed';
+    droneElement.style.zIndex = '9999';
+    droneElement.style.display = 'block';
+    droneElement.style.width = '100px';
+    droneElement.style.height = 'auto';
+    
+    return droneElement;
+  }
+});
+</script> -->
+
 <%include ./newpartials/footer%>

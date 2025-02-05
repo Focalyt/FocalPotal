@@ -333,6 +333,7 @@ div#features_cta figure {
     -webkit-background-clip: text; /* For older versions of Safari/Chrome */
     background-clip: text;
     color: transparent; /* Make text transparent */
+    /* font-size: 60px; */
 }
 .tech_area_img{
     width: 100%;

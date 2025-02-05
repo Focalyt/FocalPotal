@@ -301,8 +301,8 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
         phone: candidate.mobile,
         firstName: candidate.name.split(' ')[0],
         lastName: candidate.name.split(' ').slice(1).join(' '),
-        gender: candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
-        dob: candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+        gender: candidate?.sex === 'Male' ? 'm' : candidate?.sex === 'Female' ? 'f' : '',
+        dob: candidate?.dob ? moment(candidate.dob).format('YYYYMMDD') : '',
         city: candidate.city?.name,
         state: candidate.state?.name,
         ipAddress: req.ip,
@@ -334,8 +334,7 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       `${process.env.BASE_URL}/coursedetails/${courseId}`,
       course?.registrationCharges,
       appliedData?.registrationFee,
-      req.ip,
-      `${req.protocol}://${req.get('host')}${req.originalUrl}`,
+      'Lead From Portal'
       
     ];
     await updateSpreadSheetValues(sheetData);
@@ -1439,6 +1438,17 @@ router.get("/pendingFee", isCandidate, async (req, res) => {
     const menu = "pendingFee";
 
     res.render(`${req.vPath}/app/candidate/pendingFee`, {
+      menu,
+    });
+  } catch (err) {
+    console.log("caught error ", err);
+  }
+});
+router.get("/learn", isCandidate, async (req, res) => {
+  try {
+    const menu = "learn";
+
+    res.render(`${req.vPath}/app/candidate/learn`, {
       menu,
     });
   } catch (err) {
