@@ -334,8 +334,7 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       `${process.env.BASE_URL}/coursedetails/${courseId}`,
       course?.registrationCharges,
       appliedData?.registrationFee,
-      req.ip,
-      `${req.protocol}://${req.get('host')}${req.originalUrl}`,
+      'Lead From Portal'
       
     ];
     await updateSpreadSheetValues(sheetData);
