@@ -34,7 +34,7 @@
                 <input type="file" id="file-upload" name="file" class="d-none" multiple accept="image/*,video/*">
               </div>
               <div>
-                <button class="border-none" style="border:none; background:transparent" type="button"
+                <button onclick="setTabPills()" class="border-none" style="border:none; background:transparent" type="button"
                   data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                   <img src="	https://static.xx.fbcdn.net/rsrc.php/v4/yq/r/b37mHA1PjfK.png" alt="Media Icon">
                   <!-- Facebook Media Icon -->
@@ -48,7 +48,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title text-white" id="staticBackdropLabel">Tag People</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      <button onclick="closePopup()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         style="background:transparent; border:none">
                         <i class="fa-solid fa-x" style="color: #ffffff;"></i>
                       </button>
@@ -58,7 +58,7 @@
                         <div class="search">
                           <div class="tagging-container">
                             <div class="tag-input-container">
-                              <div class="tags" id="tagsbuttons">
+                              <div class="tags" id="tagscandidate">
                                 <!-- Tags will dynamically appear here -->
                                
                               </div>
@@ -69,12 +69,12 @@
                              </textarea> -->
                              
                             </div>
-                            <span class="done" data-bs-dismiss="modal">Done</span>
+                            <span class="done" data-bs-dismiss="modal" id="donebutton">Done</span>
                           </div>
                           <div class="nav--pills">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                               <li class="nav-item" role="presentation" onclick="selctedTagFor('admin')">
-                                <a class="nav-link active" id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab"
+                                <a class="nav-link" id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab"
                                   aria-controls="admin" aria-selected="true">Admin</a>
                               </li>
                               <li class="nav-item" role="presentation" onclick="selctedTagFor('company')">
@@ -86,14 +86,14 @@
                                   aria-controls="institute" aria-selected="false">Institute</a>
                               </li>
                               <li class="nav-item" role="presentation" onclick="selctedTagFor('candidate')">
-                                <a class="nav-link" id="student-tab" data-bs-toggle="tab" href="#student" role="tab"
+                                <a class="nav-link active" id="student-tab" data-bs-toggle="tab" href="#student" role="tab"
                                   aria-controls="student" aria-selected="false">Student</a>
                               </li>
                             </ul>
 
                             <!-- Tab Content -->
                             <div class="tab-content" id="myTabContent">
-                              <div class="tab-pane fade show active" id="admin" role="tabpanel"
+                              <div class="tab-pane fade" id="admin" role="tabpanel"
                                 aria-labelledby="admin-tab">
                                 <!-- Admin content goes here -->
                                 <div class="inner_search">
@@ -109,7 +109,7 @@
                                         <th>Mobile</th>
                                       </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="adminTableBody">
                                       <tr>
                                         <td>
                                           <input type="checkbox">
@@ -133,7 +133,7 @@
                                 <!-- Company content goes here -->
                                 <div class="inner_search">
                                   <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
-                                  <input type="text" placeholder="Search" id="searchbyCompany" name="searchbyCompany">
+                                  <input type="text" placeholder="Search" id="searchbyCompany" name="searchbyCompany" oninput="debouncedSearch()">
                                 </div>
                                 <div class='employee-attendance-table'>
                                   <table class="employee-table">
@@ -141,11 +141,11 @@
                                       <tr class='header-tr'>
                                         <th>Select</th>
                                         <th>Company Name</th>
-                                        <th>Mobile</th>
+                                        <!-- <th>Mobile</th> -->
                                       </tr>
                                     </thead>
-                                    <tbody>
-                                      <tr>
+                                    <tbody id="companyTableBody">
+                                      <!-- <tr>
                                         <td>
                                           <input type="checkbox">
                                         </td>
@@ -161,7 +161,7 @@
                                         </td>
                                         <td>12345678900</td>
 
-                                      </tr>
+                                      </tr> -->
                                     </tbody>
                                   </table>
                                 </div>
@@ -170,7 +170,7 @@
                                 <!-- Institute content goes here -->
                                 <div class="inner_search">
                                   <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
-                                  <input type="text" placeholder="Search" id="searchbyInstitute" name="searchbyInstitute">
+                                  <input type="text" placeholder="Search" id="searchbyInstitute" name="searchbyInstitute" oninput="debouncedSearch()">
                                 </div>
                                 <div class='employee-attendance-table'>
                                   <table class="employee-table">
@@ -178,11 +178,11 @@
                                       <tr class='header-tr'>
                                         <th>Select</th>
                                         <th>Institute Name</th>
-                                        <th>Mobile</th>
+                                        <!-- <th>Mobile</th> -->
                                       </tr>
                                     </thead>
-                                    <tbody>
-                                      <tr>
+                                    <tbody id="collegeTableBody">
+                                      <!-- <tr>
                                         <td>
                                           <input type="checkbox">
                                         </td>
@@ -196,15 +196,15 @@
                                         </td>
                                         <td>12345678900</td>
 
-                                      </tr>
+                                      </tr> -->
                                     </tbody>
                                   </table>
                                 </div>
                               </div>
-                              <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
+                              <div class="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab">
                                 <!-- Student content goes here -->
                                 <div class="inner_search">
-                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
+                                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
                                   <input type="text" placeholder="Search" id="searchbyCanditate" name="searchbyCanditate" oninput="debouncedSearch()">
                                 </div>
                                 <div class='employee-attendance-table'>
@@ -218,7 +218,7 @@
                                     </thead>
 
 
-                                    <tbody id="candidatesTableBody">
+                                    <tbody id="candidateTableBody">
 
                                     </tbody>
                                   </table>
@@ -1213,8 +1213,7 @@
       background-color: #d61a4d;
     }
 
-    #candidatesTableBody {
-      /* border: 1px solid black; */
+    #candidateTableBody {
       width: 100%;
       max-height: 300px;
       /* overflow: auto; */
@@ -1310,47 +1309,123 @@
   </script>
   <script>
 
-    var selectedTag = "admin";
+    // adminTableBody
+    // companyTableBody
+    // collegeTableBody
+    // candidateTableBody
+
+    var adminTableBody = [];
+    var companyTableBody = [];
+    var collegeTableBody = [];
+    var candidateTableBody = <%- JSON.stringify(candidates) %>;
+
+    var selectedTag = "candidate";
+    var selectedTags = [];
+
     var searchby = "";
     var candidates = <%- JSON.stringify(candidates) %>;
     var page = <%- page %>;
-    function loadData() {
-      var tableBody = document.getElementById("candidatesTableBody");
-      tableBody.innerHTML = "";  // Clear the table before re-rendering.
+    adminPage = 0;
+    companyPage = 0;
+    collegePage = 0;
+    candidatePage = page;
+    var isSelectedFromtab = false;
   
-      candidates.forEach((candidate, index) => {
-        var isLastCandidate = index === candidates.length - 1;
-        var row = `
-          <tr>
-            <td><input type="checkbox" ${candidate.isChecked ? "checked" : ""} onchange="handleOnSelectTag(event, ${index})"></td>
-            <td class="employee-info">
-              <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-              <div class='employee-basic-info'>
-                <span class="employee-name tooltipp" title="${candidate.name}">
-                  ${candidate.name}
-                </span>
-              </div>
-            </td>
-            <td>${candidate.mobile}</td>
-          </tr>
-        `;
-    
-        tableBody.innerHTML += row;
-      });
+    function loadData() {
+      var tableBody = document.getElementById(selectedTag+"TableBody");
+      tableBody.innerHTML = "";  // Clear the table before re-rendering.
+
+      switch (selectedTag) {
+        // case "admin":
+        //   candidates = adminTableBody;
+        //   break;
+
+        case "company":
+          candidates = companyTableBody;
+          break;
+
+        case "college":
+          candidates = collegeTableBody;
+          break;
+
+        case "candidate":
+          candidates = candidateTableBody;
+          break;
+      }
+
+
+      if(selectedTag != 'admin'){
+        candidates.forEach((candidate, index) => {
+          var isLastCandidate = index === candidates.length - 1;
+          var row = `
+            <tr>
+              <td><input type="checkbox" ${candidate.isChecked ? "checked" : ""} onchange="handleOnSelectTag(event, ${index})"></td>
+              <td class="employee-info">
+                <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
+                <div class='employee-basic-info'>
+                  <span class="employee-name tooltipp" title="${candidate.name}">
+                    ${candidate.name}
+                  </span>
+                </div>
+              </td>
+              <td style='${((selectedTag === "college") || (selectedTag == "company")) ? "display: none;" : ""}'>${candidate.mobile}</td>
+            </tr>
+          `;
+      
+          tableBody.innerHTML += row;
+        });
+      }
     }
   
     function loadMore() {
+      if(selectedTag != "admin"){
       var newData = [];
+      switch (selectedTag) {
+        // case "admin":
+        //   page = adminPage + 1;
+        //   break;
+
+        case "company":
+          page = companyPage + 1;
+          break;
+
+        case "college":
+          page = collegePage + 1;
+          break;
+
+        case "candidate":
+          page = candidatePage + 1;
+          break;
+      }
+
       $.ajax({
           url: "/admin/post/getTagsList", // API endpoint
           type: "POST",
-          data: {page: page + 1, search: searchby, searchfor: selectedTag },
+          data: {page: page, search: searchby, searchfor: selectedTag },
           success: function (response) {
             newData = response.candidates;
             if(candidates.length > 0){
-              candidates = [...candidates, ...newData];
-            }else{
-              candidates = newData;
+              // candidates = [...candidates, ...newData];
+              console.log("/admin/post/getTagsList  ==>  ", selectedTag)
+              switch (selectedTag) {  
+                // case "admin":
+                //   adminTableBody = [...adminTableBody, ...newData];
+                //   break;
+
+                case "company":
+                  companyTableBody = isSelectedFromtab ? newData : [...companyTableBody, ...newData];
+                  break;
+
+                case "college":
+                  collegeTableBody = isSelectedFromtab ? newData : [...collegeTableBody, ...newData];
+                  break;
+
+                case "candidate":
+                  candidateTableBody = isSelectedFromtab ? newData : [...candidateTableBody, ...newData];
+                  break;
+              } 
+            } else {
+              candidateTableBody = newData;
             }
             loadData();
           },
@@ -1358,17 +1433,13 @@
             console.error("Error:", error);
           },
         });
-
-      // candidates = [...candidates, ...newData];
-  
-      // loadData();
+      }
     }
   
     // Initial data load
     loadData();
 
 
-    var selectedTags = [];
 
     function handleOnSelectTag(e, i){
       candidates[i].isChecked = e.target.checked;
@@ -1381,10 +1452,11 @@
         selectedTags = selectedTags.filter((el) => { return el.index !== i; });
       }
       setTabPills();
+      hideOrShowDoneButton();
     }
 
-    function setTabPills(){
-      var tableBody = document.getElementById("tagsbuttons");
+    function setTabPills(){ //tagscandidate
+      var tableBody = document.getElementById("tagscandidate");
         
         tableBody.innerHTML = "";  // Clear the table before re-rendering.
     
@@ -1401,9 +1473,12 @@
 
     function handleRemoveSelectedTag(i){
       candidates[selectedTags[i].index].isChecked = false;
-      delete selectedTags[i];
+      // delete selectedTags[i];
+      selectedTags.splice(i, 1);
       setTabPills();
       loadData();
+      console.log(selectedTags)
+      hideOrShowDoneButton();
     }
 
     function searchbynameorphone(){
@@ -1428,13 +1503,25 @@
         searchby = '';
         break;
      }
-     page = 0;
-     candidates = [];
+     
      loadMore();
     }
 
     function selctedTagFor(selectedFor){
+      console.log(selectedTag)
       selectedTag = selectedFor;
+      // page = 0;
+      // candidates = [];
+      candidatePage = 0;
+      collegePage = 0;
+      companyPage = 0;
+      candidateTableBody = [];
+      collegeTableBody = [];
+      companyTableBody = [];
+      isSelectedFromtab = true;
+      setTimeout(() => {
+        loadMore();
+      }, 0);
     }
 
     
@@ -1482,13 +1569,20 @@
       });
     });
 
+   
 
-    document.getElementById("candidatesTableBody").addEventListener("scroll", function () {
-         let tbody = this;
-         if (tbody.scrollHeight - tbody.scrollTop <= tbody.clientHeight + 1) {
+    function scrollDetected(){
+    // #candidateTableBody, #collegeTableBody, #companyTableBody, #adminTableBody
+      document.getElementById(selectedTag+"TableBody").addEventListener("scroll", function () {
+        let tbody = this;
+        if (tbody.scrollHeight - tbody.scrollTop <= tbody.clientHeight + 1) {
+          isSelectedFromtab = false;
             loadMore();
-         }
+        }
       });
+    }
+
+    scrollDetected();
 
       function debounce(func, delay) {
             let timeout;
@@ -1500,9 +1594,38 @@
 
         function searchFunction() {
             searchbynameorphone();
+            candidatePage = 0;
+            collegePage = 0;
+            companyPage = 0;
+            candidateTableBody = [];
+            collegeTableBody = [];
+            companyTableBody = [];
         }
 
         const debouncedSearch = debounce(searchFunction, 500);
+
+        function hideOrShowDoneButton(){
+          const message = document.getElementById("donebutton");
+          if (selectedTags.length === 0) {
+              message.style.display = "none"; 
+          } else {
+              message.style.display = "block"; 
+          }
+        }
+        hideOrShowDoneButton();
+
+        function closePopup(){
+          selectedTags = [];
+          hideOrShowDoneButton();
+          candidates.forEach(item => {
+            if ("isChecked" in item) {
+                item.isChecked = false;
+            }
+          });
+          setTabPills();
+          loadData();
+        }
+        
   </script>
 
 
