@@ -238,6 +238,27 @@ router.get('/allposts', async (req, res) => {
 	}
 });
 
+router.patch("/changeStatus" , async (req, res) => {
+	try {
+	  const update = { $set: { status: req.body.status } };
+  
+	  const data = await Post.findByIdAndUpdate(req.body.id, update);
+  
+	  if (!data) {
+		return res.status(500).send({
+		  status: false,
+		  message: "Can't update status of this job post",
+		});
+	  }
+  
+	  return res.status(200).send({ status: true, data: data });
+	} catch (err) {
+	  console.log(err.message);
+	  req.flash("error", err.message || "Something went wrong!");
+	  return res.status(500).send({ status: false, message: err.message });
+	}
+  });
+
 
 
 
