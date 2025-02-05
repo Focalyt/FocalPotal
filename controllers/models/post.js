@@ -50,9 +50,9 @@ const PostSchema = new Schema({
   },
   tags: [
       {
-        userId: { ObjectId },
+        userId: { type: ObjectId },
         name : {type:String},
-        userType: { type: String, enum: ['candidate', 'institute', 'company', 'admin'] }, // student <=> candidate
+        userType: { type: String, enum: ['candidate', 'institute', 'college', 'company', 'admin'] }, // student <=> candidate
       },
     ],
   createdAt: {

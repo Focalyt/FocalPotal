@@ -150,7 +150,6 @@ router
 router.post('/getTagsList', async (req, res) => {
 	try {
 
-		console.log(req.body)
 		var selectedTag = req.body.searchfor;
 		const data = req.body;
 		const searchQuery = data.search ? data.search.trim() : "";
@@ -160,20 +159,6 @@ router.post('/getTagsList', async (req, res) => {
 
 		let filter = { isDeleted: false, status: true };
 
-		// if (searchQuery) {
-		// 	const isNumber = /^[0-9]+$/.test(searchQuery);
-
-		// 	if (isNumber) {
-		// 		filter["$or"] = [
-		// 			{ "$expr": { "$regexMatch": { "input": { "$toString": "$mobile" }, "regex": searchQuery, "options": "i" } } },
-		// 			{ "$expr": { "$regexMatch": { "input": { "$toString": "$whatsapp" }, "regex": searchQuery, "options": "i" } } }
-		// 		];
-		// 	} else {
-		// 		filter["name"] = { $regex: searchQuery, $options: "i" };
-		// 	}
-		// }
-
-		// const count = await Candidate.countDocuments(filter);
 		var isNumber;
 		var count;
 		var candidates;
@@ -229,8 +214,6 @@ router.post('/getTagsList', async (req, res) => {
 				break;
 
 		}
-
-
 
 		return res.json({
 			candidates,

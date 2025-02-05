@@ -96,21 +96,21 @@
                               <div class="tab-pane fade" id="admin" role="tabpanel"
                                 aria-labelledby="admin-tab">
                                 <!-- Admin content goes here -->
-                                <div class="inner_search">
+                                <!-- <div class="inner_search">
                                   <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
                                   <input type="text" placeholder="Search" id="searchbyAdmin" name="searchbyAdmin">
-                                </div>
+                                </div> -->
                                 <div class='employee-attendance-table'>
                                   <table class="employee-table">
                                     <thead>
                                       <tr class='header-tr'>
                                         <th>Select</th>
                                         <th>Name</th>
-                                        <th>Mobile</th>
+                                        <!-- <th>Mobile</th> -->
                                       </tr>
                                     </thead>
                                     <tbody id="adminTableBody">
-                                      <tr>
+                                      <!-- <tr>
                                         <td>
                                           <input type="checkbox">
                                         </td>
@@ -124,7 +124,7 @@
                                         </td>
                                         <td>12345678900</td>
 
-                                      </tr>
+                                      </tr> -->
                                     </tbody>
                                   </table>
                                 </div>
@@ -1213,12 +1213,6 @@
       background-color: #d61a4d;
     }
 
-    #candidateTableBody {
-      width: 100%;
-      max-height: 300px;
-      /* overflow: auto; */
-      /* Allows scrolling */
-    }
 
     .new-model-dialog{
       max-width: 850px;
@@ -1309,11 +1303,6 @@
   </script>
   <script>
 
-    // adminTableBody
-    // companyTableBody
-    // collegeTableBody
-    // candidateTableBody
-
     var adminTableBody = [];
     var companyTableBody = [];
     var collegeTableBody = [];
@@ -1323,6 +1312,11 @@
     var selectedTags = [];
 
     var searchby = "";
+    // var searchbyadmin = "";
+    var searchbycompany = "";
+    var searchbycollege = "";
+    var searchbycandidate = "";
+
     var candidates = <%- JSON.stringify(candidates) %>;
     var page = <%- page %>;
     adminPage = 0;
@@ -1336,9 +1330,9 @@
       tableBody.innerHTML = "";  // Clear the table before re-rendering.
 
       switch (selectedTag) {
-        // case "admin":
-        //   candidates = adminTableBody;
-        //   break;
+        case "admin":
+          candidates = adminTableBody;
+          break;
 
         case "company":
           candidates = companyTableBody;
@@ -1354,7 +1348,16 @@
       }
 
 
-      if(selectedTag != 'admin'){
+        const selectedTagsMap = new Map(selectedTags.map((tag, index) => [tag._id, { isChecked: true, index, userType: tag.userType }]));
+        candidates = candidates.map(candidate => {
+            if (selectedTagsMap.has(candidate._id)) {
+                return {
+                    ...candidate,
+                    ...selectedTagsMap.get(candidate._id)
+                };
+            }
+            return candidate;
+        });
         candidates.forEach((candidate, index) => {
           var isLastCandidate = index === candidates.length - 1;
           var row = `
@@ -1368,71 +1371,85 @@
                   </span>
                 </div>
               </td>
-              <td style='${((selectedTag === "college") || (selectedTag == "company")) ? "display: none;" : ""}'>${candidate.mobile}</td>
+              <td style='${((selectedTag === "college") || (selectedTag == "company") || (selectedTag == "admin")) ? "display: none;" : ""}'>${candidate.mobile}</td>
             </tr>
           `;
       
           tableBody.innerHTML += row;
         });
-      }
     }
   
     function loadMore() {
       if(selectedTag != "admin"){
-      var newData = [];
-      switch (selectedTag) {
-        // case "admin":
-        //   page = adminPage + 1;
-        //   break;
+        var newData = [];
+        switch (selectedTag) {
+          // case "admin":
+          //   page = adminPage + 1;
+          //   break;
 
-        case "company":
-          page = companyPage + 1;
-          break;
+          case "company":
+            page = companyPage + 1;
+            searchby = searchbycompany;
+            break;
 
-        case "college":
-          page = collegePage + 1;
-          break;
+          case "college":
+            page = collegePage + 1;
+            searchby = searchbycollege;
+            break;
 
-        case "candidate":
-          page = candidatePage + 1;
-          break;
-      }
+          case "candidate":
+            page = candidatePage + 1;
+            searchby = searchbycandidate;
+            break;
+          
+          default:
+            searchby = "";
+            break;
+        }
 
-      $.ajax({
-          url: "/admin/post/getTagsList", // API endpoint
-          type: "POST",
-          data: {page: page, search: searchby, searchfor: selectedTag },
-          success: function (response) {
-            newData = response.candidates;
-            if(candidates.length > 0){
-              // candidates = [...candidates, ...newData];
-              console.log("/admin/post/getTagsList  ==>  ", selectedTag)
-              switch (selectedTag) {  
-                // case "admin":
-                //   adminTableBody = [...adminTableBody, ...newData];
-                //   break;
+          $.ajax({
+            url: "/admin/post/getTagsList", // API endpoint
+            type: "POST",
+            data: {page: page, search: searchby, searchfor: selectedTag },
+            success: function (response) {
+              newData = response.candidates;
+              if(candidates.length > 0){
+                // candidates = [...candidates, ...newData];
+                console.log("/admin/post/getTagsList  ==>  ", selectedTag)
+                switch (selectedTag) {  
+                  // case "admin":
+                  //   adminTableBody = [...adminTableBody, ...newData];
+                  //   break;
 
-                case "company":
-                  companyTableBody = isSelectedFromtab ? newData : [...companyTableBody, ...newData];
-                  break;
+                  case "company":
+                    companyTableBody = isSelectedFromtab ? newData : [...companyTableBody, ...newData];
+                    break;
 
-                case "college":
-                  collegeTableBody = isSelectedFromtab ? newData : [...collegeTableBody, ...newData];
-                  break;
+                  case "college":
+                    collegeTableBody = isSelectedFromtab ? newData : [...collegeTableBody, ...newData];
+                    break;
 
-                case "candidate":
-                  candidateTableBody = isSelectedFromtab ? newData : [...candidateTableBody, ...newData];
-                  break;
-              } 
-            } else {
-              candidateTableBody = newData;
-            }
-            loadData();
-          },
-          error: function (xhr, status, error) {
-            console.error("Error:", error);
-          },
-        });
+                  case "candidate":
+                    candidateTableBody = isSelectedFromtab ? newData : [...candidateTableBody, ...newData];
+                    break;
+                } 
+              } else {
+                candidateTableBody = newData;
+              }
+              loadData();
+            },
+            error: function (xhr, status, error) {
+              console.error("Error:", error);
+            },
+          });             
+      } else {
+        adminTableBody = [
+          {
+            _id: "5df0af9147ec65328e37425d",
+            name: "Focalyt",
+          }
+        ]
+        loadData();
       }
     }
   
@@ -1477,26 +1494,25 @@
       selectedTags.splice(i, 1);
       setTabPills();
       loadData();
-      console.log(selectedTags)
       hideOrShowDoneButton();
     }
 
     function searchbynameorphone(){
      switch (selectedTag) {
       case 'admin':
-        searchby = document.getElementById("searchbyAdmin").value;
+        searchbyadmin = "";
         break;
 
       case 'company':
-        searchby = document.getElementById("searchbyCompany").value;
+        searchbycompany = document.getElementById("searchbyCompany").value;
         break;
 
       case 'college':
-        searchby = document.getElementById("searchbyInstitute").value;
+        searchbycollege = document.getElementById("searchbyInstitute").value;
         break;
 
       case 'candidate':
-        searchby = document.getElementById("searchbyCanditate").value;
+        searchbycandidate = document.getElementById("searchbyCanditate").value;
         break;
 
       default:
@@ -1507,22 +1523,53 @@
      loadMore();
     }
 
-    function selctedTagFor(selectedFor){
-      console.log(selectedTag)
-      selectedTag = selectedFor;
-      // page = 0;
-      // candidates = [];
-      candidatePage = 0;
-      collegePage = 0;
-      companyPage = 0;
-      candidateTableBody = [];
-      collegeTableBody = [];
-      companyTableBody = [];
-      isSelectedFromtab = true;
-      setTimeout(() => {
-        loadMore();
-      }, 0);
+    function scrollDetected() {
+      document.querySelectorAll(".employee-attendance-table tbody").forEach((tbody) => {
+          tbody.removeEventListener("scroll", handleScroll);
+      });
+
+      let tableBody = document.getElementById(selectedTag + "TableBody");
+      if (tableBody) {
+          tableBody.addEventListener("scroll", handleScroll);
+      }
     }
+
+    function scrollDetected() {
+      document.querySelectorAll(".employee-attendance-table tbody").forEach((tbody) => {
+          tbody.removeEventListener("scroll", handleScroll);
+      });
+
+      let tableBody = document.getElementById(selectedTag + "TableBody");
+      if (tableBody) {
+          tableBody.addEventListener("scroll", handleScroll);
+      }
+    }
+
+    function handleScroll(event) {
+        let tbody = event.target;
+        if (tbody.scrollHeight - tbody.scrollTop <= tbody.clientHeight + 1) {
+            isSelectedFromtab = false;
+            loadMore();
+        }
+    }
+
+    function selctedTagFor(selectedFor) {
+        selectedTag = selectedFor;
+        candidatePage = 0;
+        collegePage = 0;
+        companyPage = 0;
+        isSelectedFromtab = true;
+
+        setTimeout(() => {
+            loadMore();
+        }, 0);
+
+        setTimeout(scrollDetected, 500);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        scrollDetected();
+    });
 
     
     $(document).ready(function () {
@@ -1568,21 +1615,6 @@
         });
       });
     });
-
-   
-
-    function scrollDetected(){
-    // #candidateTableBody, #collegeTableBody, #companyTableBody, #adminTableBody
-      document.getElementById(selectedTag+"TableBody").addEventListener("scroll", function () {
-        let tbody = this;
-        if (tbody.scrollHeight - tbody.scrollTop <= tbody.clientHeight + 1) {
-          isSelectedFromtab = false;
-            loadMore();
-        }
-      });
-    }
-
-    scrollDetected();
 
       function debounce(func, delay) {
             let timeout;
