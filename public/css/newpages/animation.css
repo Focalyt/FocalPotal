@@ -1,0 +1,498 @@
+
+/* Slower animations for #new section */
+#new .tech_area_img {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 1.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* Slower transition */
+    will-change: transform, opacity; 
+}
+
+#new .tech_area_img.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#new .primary-gradient {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+    transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); /* Slower title animation */
+}
+
+/* #new .primary-gradient.animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+} */
+
+/* Longer stagger delays */
+#new .tech_area_img:nth-child(1).animate { transition-delay: 0.2s; }
+#new .tech_area_img:nth-child(2).animate { transition-delay: 0.4s; }
+#new .tech_area_img:nth-child(3).animate { transition-delay: 0.6s; }
+#new .tech_area_img:nth-child(4).animate { transition-delay: 0.8s; }
+#new .tech_area_img:nth-child(5).animate { transition-delay: 1.0s; }
+
+/* Slower title animation */
+/* #new .primary-gradient {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+    transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+} */
+
+#new .primary-gradient.animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Smooth hover effects */
+#new .tech_area_img {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#new .tech_area_img:hover {
+    transform: translateY(-15px);
+}
+
+#new .tech_area_img img {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#new .tech_area_img:hover img {
+    transform: scale(1.08) rotate(3deg);
+}
+
+/* next  */
+
+.main-screen {
+    overflow: hidden;
+}
+
+/* Image animation */
+.main-screen .tab-pane.active figure img {
+    animation: scaleIn 0.8s ease-out forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateX(0);
+    }
+}
+
+/* Title animation */
+.main-screen .how_focal {
+    opacity: 0;
+    transform: translateY(-30px);
+    animation: slideDown 0.8s ease-out forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* List items animation */
+.main-screen .nav-item {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.main-screen .nav-item:nth-child(1) {
+    animation: slideLeft 0.6s ease-out 0.2s forwards;
+}
+
+.main-screen .nav-item:nth-child(2) {
+    animation: slideLeft 0.6s ease-out 0.4s forwards;
+}
+
+.main-screen .nav-item:nth-child(3) {
+    animation: slideLeft 0.6s ease-out 0.6s forwards;
+}
+
+.main-screen .nav-item:nth-child(4) {
+    animation: slideLeft 0.6s ease-out 0.8s forwards;
+}
+
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Hover effects for list items */
+.main-screen .nav-link {
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.main-screen .nav-link:hover {
+    transform: translateX(10px);
+    background: rgba(255, 27, 81, 0.05);
+}
+
+/* Active item animation */
+.main-screen .nav-link.active {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 27, 81, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 27, 81, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 27, 81, 0);
+    }
+}
+
+/* Image transition when tabs change */
+.main-screen .tab-pane.fade {
+    transition: opacity 0.5s ease-out;
+}
+
+.main-screen .tab-pane.fade.show {
+    animation: fadeInScale 0.8s ease-out;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Number animation */
+.main-screen .color-pink.fw-bold {
+    animation: numberPop 0.5s ease-out backwards;
+}
+
+@keyframes numberPop {
+    0% {
+        transform: scale(0);
+    }
+    70% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Title reveal effect */
+.main-screen .feature-widget-7__title {
+    position: relative;
+    overflow: hidden;
+}
+
+.main-screen .feature-widget-7__title::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #FF1B51;
+    transform: scaleX(0);
+    transform-origin: right;
+    animation: titleReveal 0.8s ease-out forwards;
+}
+
+@keyframes titleReveal {
+    0% {
+        transform: scaleX(1);
+    }
+    100% {
+        transform: scaleX(0);
+    }
+}
+
+
+/* focalyt does  */
+
+/* Animation styles for 'What Focalyt Does' section */
+.small-screen .content-title {
+    opacity: 0;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    /* white-space: nowrap */
+}
+
+/* Letter animation effect */
+@keyframes revealText {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+/* After element for underline */
+.small-screen .content-title.animate::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: #FF1B51;
+    animation: lineReveal 0.8s ease-out forwards;
+    animation-delay: 1s;
+}
+
+.small-screen .content-title.animate {
+    animation: revealText 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+.small-screen .content-title span {
+    display: inline-block;
+    margin-right: 2px; /* Add slight spacing between characters */
+}
+
+
+.new-small-screen .content-title {
+    opacity: 0;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.new-small-screen .content-title span {
+    display: inline-block;
+    margin-right: 2px; /* Add slight spacing between characters */
+}
+
+/* Letter animation effect */
+@keyframes revealText {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+/* After element for underline */
+.new-small-screen .content-title.animate::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #FF1B51;
+    animation: lineReveal 0.8s ease-out forwards;
+    animation-delay: 1s;
+}
+
+.new-small-screen .content-title.animate {
+    animation: revealText 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+/* skills section  */
+
+/* Scroll Animation Styles */
+#skills .role {
+    position: relative;
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#skills .role:hover {
+    transform: scale(1.05);
+}
+#skills .role::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#skills .role:hover::before {
+    opacity: 1;
+}
+#skills .role:hover {
+    transform: 
+        scale(1.05) 
+        rotateX(5deg)
+        rotateY(5deg);
+}
+
+#skills .role.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger animation for different screen sizes */
+/* @media (min-width: 992px) {
+    #skills .role:nth-child(1) { transition-delay: 0.1s; }
+    #skills .role:nth-child(2) { transition-delay: 0.2s; }
+    #skills .role:nth-child(3) { transition-delay: 0.3s; }
+    #skills .role:nth-child(4) { transition-delay: 0.4s; }
+    #skills .role:nth-child(5) { transition-delay: 0.5s; }
+}
+
+@media (max-width: 991px) {
+    #skills .role:nth-child(1) { transition-delay: 0.1s; }
+    #skills .role:nth-child(2) { transition-delay: 0.2s; }
+    #skills .role:nth-child(3) { transition-delay: 0.3s; }
+    #skills .role:nth-child(4) { transition-delay: 0.4s; }
+    #skills .role:nth-child(5) { transition-delay: 0.5s; }
+} */
+
+/* why choose focalyt  */
+
+@keyframes zoomInOut {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#whychoose .whychoosefocal {
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#whychoose .whychoosefocal.animate {
+    opacity: 1;
+    transform: scale(1);
+    animation: zoomInOut 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+
+/* Animation styles for why choose section columns */
+#whychoose .why_choose_sec {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#whychoose .why_choose_sec.animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Stagger delays for different columns */
+#whychoose .row .col-md-4:nth-child(1) .why_choose_sec { transition-delay: 0.2s; }
+#whychoose .row .col-md-4:nth-child(2) .why_choose_sec { transition-delay: 0.4s; }
+#whychoose .row .col-md-4:nth-child(3) .why_choose_sec { transition-delay: 0.6s; }
+#whychoose .row .col-md-4:nth-child(4) .why_choose_sec { transition-delay: 0.8s; }
+#whychoose .row .col-md-4:nth-child(5) .why_choose_sec { transition-delay: 1s; }
+#whychoose .row .col-md-4:nth-child(6) .why_choose_sec { transition-delay: 1.2s; }
+@media (max-width: 991px) {
+    #skills .role {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #skills .role:nth-child(1) { transition-delay: 0.1s; }
+    #skills .role:nth-child(2) { transition-delay: 0.2s; }
+    #skills .role:nth-child(3) { transition-delay: 0.3s; }
+    #skills .role:nth-child(4) { transition-delay: 0.4s; }
+    #skills .role:nth-child(5) { transition-delay: 0.5s; }
+
+    #skills .role.animate {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* media query */
+
+@media (max-width: 768px) {
+    #mobile-new .tech_area_img {
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        cursor: pointer; /* Add cursor pointer for better UX */
+    }
+
+    #mobile-new .tech_area_img.animate {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Click animation */
+    #mobile-new .tech_area_img.clicked {
+        animation: pulseAndRotate 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    @keyframes pulseAndRotate {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1) rotate(5deg);
+        }
+        100% {
+            transform: scale(1) rotate(0deg);
+        }
+    }
+
+    /* Title animation */
+    #mobile-new .primary-gradient {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #mobile-new .primary-gradient.animate {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    #mobile-new .slider {
+        display: grid;
+        gap: 15px;
+        padding: 10px;
+    }
+}
