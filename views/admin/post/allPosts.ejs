@@ -23,7 +23,7 @@
       <% include ../partials/flash %>
       <div class="">
         <% if (posts && posts.length> 0) { %>
-          <% posts.forEach((post)=> { %>
+          <% posts.forEach((post, i)=> { %>
             <div class="blog--card">
               <!-- Header Section -->
               <div class="card-header">
@@ -31,7 +31,7 @@
                   <div class="user-info">
                     <div class="user_image text-black">
                       <figure>
-                        <img src="public_assets/images/newpage/favicon.png" alt>
+                        <img src="/public_assets/images/newpage/favicon.png" alt>
                       </figure>
                     </div>
                     <h3 class="user__name text-black">
@@ -55,13 +55,26 @@
                         <i class="fas fa-ellipsis-v" style="color: black; cursor: pointer;"></i>
                       </div>
                       <div class="dropdown-post">
-                        <div class="dropdown-item">
+                        <div class="dropdown-items">
                           <i class="fas fa-edit"></i>
                           <span>Edit</span>
                         </div>
-                        <div class="dropdown-item">
-                          <i class="fas fa-trash"></i>
-                          <span>Delete</span>
+                        <div class="dropdown-items">
+                          <div class="custom-control custom-switch custom-control-inline">
+                            <% if(post.status) { %>
+                              <input type="checkbox" onclick="myOnOffFunc('<%= post._id %>', '<%= post.status %>');"
+                                class="custom-control-input" id="customSwitch<%= i %>" checked />
+                              <label class="custom-control-label" for="customSwitch<%= i %>">
+                              </label>
+                              <% } else { %>
+                                <input type="checkbox"
+                                  onclick="myOnOffFunc('<%= post._id %>', '<%= post.status %>');"
+                                  class="custom-control-input" id="customSwitch<%= i %>" />
+                                <label class="custom-control-label" for="customSwitch<%= i %>">
+                                </label>
+                                <% } %>
+                          </div>
+                          <span>Status</span>
                         </div>
                       </div>
                     </div>
@@ -267,66 +280,43 @@
   </script>
    
   
-
-  
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-  // Select all dropdown containers in .newdropdown
-  const dropdownContainers = document.querySelectorAll('.newdropdown .dropdown-container');
-  
-  dropdownContainers.forEach(container => {
-    const dropdownTrigger = container.querySelector('.dropdown-trigger');
-
-    // Toggle dropdown
-    dropdownTrigger.addEventListener('click', function(e) {
-      e.stopPropagation();
-      
-      // Close other open dropdowns
-      dropdownContainers.forEach(otherContainer => {
-        if (otherContainer !== container) {
-          otherContainer.classList.remove('active');
-        }
-      });
-      
-      // Toggle current dropdown
-      container.classList.toggle('active');
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".dropdown-trigger").forEach((trigger) => {
+        trigger.addEventListener("click", function () {
+            const dropdown = this.closest(".dropdown-container").querySelector(".dropdown-post");
+            dropdown.classList.toggle("active"); // Toggle visibility
+        });
     });
 
-    // Optional: Add click handlers for dropdown items
-    const dropdownItems = container.querySelectorAll('.dropdown-item');
-    dropdownItems.forEach(item => {
-      item.addEventListener('click', function() {
-        const action = item.querySelector('span').textContent.toLowerCase();
-        
-        switch(action) {
-          case 'edit':
-            console.log('Edit clicked');
-            break;
-          case 'delete':
-            console.log('Delete clicked');
-            break;
-        }
-        
-        // Close dropdown after action
-        container.classList.remove('active');
-      });
+    // Hide dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        document.querySelectorAll(".dropdown-post").forEach((dropdown) => {
+            if (!dropdown.parentElement.contains(event.target)) {
+                dropdown.classList.remove("active");
+            }
+        });
     });
-  });
-
-  // Close dropdowns when clicking outside
-  document.addEventListener('click', function() {
-    dropdownContainers.forEach(container => {
-      container.classList.remove('active');
-    });
-  });
-
-  // Prevent dropdown from closing when clicking inside
-  dropdownContainers.forEach(container => {
-    container.addEventListener('click', function(e) {
-      e.stopPropagation();
-    });
-  });
 });
+
+</script>
+  
+
+<script>
+   function myOnOffFunc(id, status) {
+      let myStatus = true;
+      if (status === true || status === "true") {
+        myStatus = false;
+      }
+      let data = { id: id, status: myStatus }
+      let headers = { 'x-auth': localStorage.getItem('token') }
+      axios.patch(`/admin/post/changeStatus`, data, { headers: headers })
+        .then((res) => {
+          location.reload()
+        }).catch((err) => {
+          console.log(err)
+        })
+    }
 </script>
     </div>
 
