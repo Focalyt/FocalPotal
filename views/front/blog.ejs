@@ -161,7 +161,7 @@
                   </div>
 
                   <!-- Main Content -->
-                  <div class="card-content">
+                  <div class="card-content" id="post-<%= post._id || index %>">
                     <div class="card-image">
                       <div class="happy_candidates" id="blog--images">
                         <div class="happy_candidate_images">
@@ -355,7 +355,42 @@
 
 
   </script>
-  <!-- <script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  const shareLinks = document.querySelectorAll(".share_link");
+
+  shareLinks.forEach((shareLink) => {
+    shareLink.addEventListener("click", function () {
+      const postUrl = window.location.href; // Get the current page URL
+      const shareData = {
+        title: "Check this out!",
+        text: "This is an awesome post. Check it out!",
+        url: postUrl,
+      };
+
+      // Check if Web Share API is supported
+      if (navigator.share) {
+        navigator
+          .share(shareData)
+          .then(() => console.log("Shared successfully!"))
+          .catch((error) => console.error("Error sharing:", error));
+      } else {
+        // Fallback for unsupported browsers: Copy link to clipboard
+        const tempInput = document.createElement("input");
+        document.body.appendChild(tempInput);
+        tempInput.value = postUrl;
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        alert("Link copied to clipboard! Share it manually.");
+      }
+    });
+  });
+});
+
+</script>
+
+<!-- <script>
     document.addEventListener("DOMContentLoaded", function () {
     const blogCards = document.querySelectorAll(".blog--card");
   
@@ -431,4 +466,4 @@
   
   
    </script> -->
-  <%include ./newpartials/footer%>
+  <%include ./newpartials/footerblog%>
