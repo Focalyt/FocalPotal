@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="/css/newpages/blog.css">
 
 
@@ -21,126 +20,133 @@
   <div id="add-model">
     <div class="content-body">
       <% include ../partials/flash %>
-      <div class="">
-        <% if (posts && posts.length> 0) { %>
-          <% posts.forEach((post, i)=> { %>
-            <div class="blog--card">
-              <!-- Header Section -->
-              <div class="card-header">
-                <div class="inner__card">
-                  <div class="user-info">
-                    <div class="user_image text-black">
-                      <figure>
-                        <img src="/public_assets/images/newpage/favicon.png" alt>
-                      </figure>
-                    </div>
-                    <h3 class="user__name text-black">
-                      <span class="start__name"><b>Focalyt</b></span>
-                      
-                      <% if (post.tags && post.tags.length > 0) { %>
-                        <span class="tag__user">
-                          is with <b><%= post.tags[0].name %></b>
-                        </span>
-                    
-                        <% if (post.tags.length > 1) { %>
-                          <span class="more__user strong"> & <b><%= post.tags.length - 1 %></b></span>
-                          <span class="other"><b> Others</b></span>
-                        <% } %>
-                      <% } %>
-                    </h3>
-                  </div>
-                  <div class="dropdown-wrapper">
-                    <div class="dropdown-container">
-                      <div class="dropdown-trigger">
-                        <i class="fas fa-ellipsis-v" style="color: black; cursor: pointer;"></i>
+        <div class="">
+          <% if (posts && posts.length> 0) { %>
+            <% posts.forEach((post, i)=> { %>
+              <div class="blog--card">
+                <!-- Header Section -->
+                <div class="card-header">
+                  <div class="inner__card">
+                    <div class="user-info">
+                      <div class="user_image text-black">
+                        <figure>
+                          <img src="/public_assets/images/newpage/favicon.png" alt>
+                        </figure>
                       </div>
-                      <div class="dropdown-post">
-                        <div class="dropdown-items">
-                          <i class="fas fa-edit"></i>
-                          <span>Edit</span>
+                      <h3 class="user__name text-black">
+                        <span class="start__name"><b>Focalyt</b></span>
+
+                        <% if (post.tags && post.tags.length> 0) { %>
+                          <span class="tag__user">
+                            is with <b>
+                              <%= post.tags[0].name %>
+                            </b>
+                          </span>
+
+                          <% if (post.tags.length> 1) { %>
+                            <span class="more__user strong"> & <b>
+                                <%= post.tags.length - 1 %>
+                              </b></span>
+                            <span class="other"><b> Others</b></span>
+                            <% } %>
+                              <% } %>
+                      </h3>
+                    </div>
+                    <div class="dropdown-wrapper">
+                      <div class="dropdown-container-post">
+                        <div class="dropdown-trigger-post">
+                          <i class="fas fa-ellipsis-v" style="color: black; cursor: pointer;"></i>
                         </div>
-                        <div class="dropdown-items">
-                          <div class="custom-control custom-switch custom-control-inline">
-                            <% if(post.status) { %>
-                              <input type="checkbox" onclick="myOnOffFunc('<%= post._id %>', '<%= post.status %>');"
-                                class="custom-control-input" id="customSwitch<%= i %>" checked />
-                              <label class="custom-control-label" for="customSwitch<%= i %>">
-                              </label>
-                              <% } else { %>
-                                <input type="checkbox"
-                                  onclick="myOnOffFunc('<%= post._id %>', '<%= post.status %>');"
-                                  class="custom-control-input" id="customSwitch<%= i %>" />
+                        <div class="dropdown-post">
+                          <div class="dropdown-items">
+                            <i class="fas fa-edit"></i>
+                            <span>Edit</span>
+                          </div>
+                          <div class="dropdown-items">
+                            <div class="custom-control custom-switch custom-control-inline">
+                              <% if(post.status) { %>
+                                <input type="checkbox" onclick="myOnOffFunc('<%= post._id %>', '<%= post.status %>');"
+                                  class="custom-control-input" id="customSwitch<%= i %>" checked />
                                 <label class="custom-control-label" for="customSwitch<%= i %>">
                                 </label>
-                                <% } %>
+                                <% } else { %>
+                                  <input type="checkbox" onclick="myOnOffFunc('<%= post._id %>', '<%= post.status %>');"
+                                    class="custom-control-input" id="customSwitch<%= i %>" />
+                                  <label class="custom-control-label" for="customSwitch<%= i %>">
+                                  </label>
+                                  <% } %>
+                            </div>
+                            <span>Status</span>
                           </div>
-                          <span>Status</span>
                         </div>
                       </div>
                     </div>
                   </div>
+
+                  <!-- <h5 class="blog__title text-black">Secure Your Future with Cybersecurity! <span>more...</span></h5> -->
+                  <h5 class="blog__title text-black">
+                    <span class="hidden-text">
+                      <%= post.content || "No content available" %>
+                    </span>
+                    <span class="toggle-more see-more-hidden">See more...</span> <!-- Changed ID to class -->
+                  </h5>
+
+
                 </div>
 
-                <!-- <h5 class="blog__title text-black">Secure Your Future with Cybersecurity! <span>more...</span></h5> -->
-                <h5 class="blog__title text-black">
-                  <span class="hidden-text">
-                    <%= post.content || "No content available" %>
-                  </span>
-                  <span class="toggle-more see-more-hidden">See more...</span> <!-- Changed ID to class -->
-                </h5>
-
-
-              </div>
-
-              <!-- Main Content -->
-              <div class="card-content" id="post-<%= post._id || index %>">
-                <div class="card-image">
-                  <div class="happy_candidates" id="blog--images">
-                    <div class="happy_candidate_images">
-                      <% if (post.files && post.files.length> 0) { %>
-                        <% post.files.forEach((file)=> { %>
-                          <% if (file.fileType==="image" ) { %>
-                            <div>
-                              <img src="<%= file.fileURL %>" class="d-block w-100" alt="image">
-                            </div>
-                            <% } else if (file.fileType==="video" ) { %>
+                <!-- Main Content -->
+                <div class="card-content" id="post-<%= post._id || index %>">
+                  <div class="card-image">
+                    <div class="happy_candidates" id="blog--images">
+                      <div class="happy_candidate_images">
+                        <% if (post.files && post.files.length> 0) { %>
+                          <% post.files.forEach((file)=> { %>
+                            <% if (file.fileType==="image" ) { %>
                               <div>
-                                <video class="d-block w-100 video_height lazy-video" muted controls autoplay
-                                  playsinline>
-                                  <source src="<%= file.fileURL %>" type="video/mp4">
-                                  Your browser does not support the video tag.
-                                </video>
+                                <img src="<%= file.fileURL %>" class="d-block w-100" alt="image">
                               </div>
-                              <% } %>
-                                <% }); %>
-                                  <% } %>
+                              <% } else if (file.fileType==="video" ) { %>
+                                <div>
+                                  <video class="d-block w-100 video_height lazy-video" muted controls autoplay
+                                    playsinline>
+                                    <source src="<%= file.fileURL %>" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                  </video>
+                                </div>
+                                <% } %>
+                                  <% }); %>
+                                    <% } %>
 
 
 
+                      </div>
                     </div>
                   </div>
+
                 </div>
-                
+
               </div>
+              <% }); %>
+                <% } else { %>
+                  <p>No posts available.</p>
+                  <% } %>
 
-            </div>
-            <% }); %>
-              <% } else { %>
-                <p>No posts available.</p>
-                <% } %>
 
-        
-      </div>
+        </div>
 
 
     </div>
     <script>
+
+     
+
+
       document.addEventListener("DOMContentLoaded", function () {
         const blogCards = document.querySelectorAll(".blog--card"); // Sabhi blog cards ko target karein
         blogCards.forEach((card) => {
           const hiddenText = card.querySelector(".hidden-text"); // Card ke text ko target karein
           const toggleMore = card.querySelector(".toggle-more"); // Card ke toggle button ko target karein
-  
+
           if (hiddenText && toggleMore) {
             // Function to check if text is truncated
             function isTextTruncated(element) {
@@ -148,10 +154,10 @@
               const lineHeight = parseFloat(computedStyle.lineHeight); // Line height calculate karein
               const maxLines = 4; // Max 4 lines ki limit
               const actualLines = Math.ceil(element.scrollHeight / lineHeight); // Total lines calculate karein
-  
+
               return actualLines > maxLines; // True agar 4 lines se zyada hai
             }
-  
+
             // Function to handle toggle-more visibility
             function handleToggleVisibility() {
               if (isTextTruncated(hiddenText)) {
@@ -162,12 +168,12 @@
                 toggleMore.classList.add("see-more-hidden"); // Hidden class add karein
               }
             }
-  
+
             // Initial visibility check
             handleToggleVisibility();
-  
-  
-  
+
+
+
             // Toggle visibility on button click
             toggleMore.addEventListener("click", function () {
               if (hiddenText.classList.contains("hidden-text")) {
@@ -180,51 +186,51 @@
                 toggleMore.textContent = "See more..."; // Button text update karein
               }
             });
-  
+
             // COMMENT FUNCTIONALITY
             const commentButton = card.querySelector(".comment");
             const commentBox = card.querySelector(".comment_box");
-  
+
             if (commentButton && commentBox) {
               commentButton.addEventListener("click", () => {
                 commentBox.classList.toggle("visible");
               });
             }
-  
+
           }
         });
       });
-  
-  
+
+
       document.addEventListener("DOMContentLoaded", function () {
         const videos = document.querySelectorAll(".lazy-video"); // Select all videos with class 'lazy-video'
-  
+
         // Ensure all videos are paused initially
         videos.forEach((video) => {
           video.pause(); // Start with paused state
         });
-  
+
         // Create Intersection Observer
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
               const video = entry.target;
-  
-  
+
+
               if (entry.isIntersecting) {
-  
+
                 // Define an async function to handle the play and unmute logic
                 const playVideo = async (video) => {
                   try {
                     // Start playing the video in muted mode
-  
+
                     await video.play(); // Wait for the video to start playing
-  
+
                   } catch (error) {
                     console.error("Error while trying to play the video:", error); // Handle autoplay errors
                   }
                 };
-  
+
                 // Call the async function
                 playVideo(video);
               } else {
@@ -235,90 +241,113 @@
           },
           { threshold: 0.5 } // At least 50% of the video should be visible
         );
-  
+
         // Observe each video
         videos.forEach((video) => {
           observer.observe(video);
         });
       });
-  
-  
+
+
     </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const shareLinks = document.querySelectorAll(".share_link");
-  
-    shareLinks.forEach((shareLink) => {
-      shareLink.addEventListener("click", function () {
-        const postUrl = window.location.href; // Get the current page URL
-        const shareData = {
-          title: "Check this out!",
-          text: "This is an awesome post. Check it out!",
-          url: postUrl,
-        };
-  
-        // Check if Web Share API is supported
-        if (navigator.share) {
-          navigator
-            .share(shareData)
-            .then(() => console.log("Shared successfully!"))
-            .catch((error) => console.error("Error sharing:", error));
-        } else {
-          // Fallback for unsupported browsers: Copy link to clipboard
-          const tempInput = document.createElement("input");
-          document.body.appendChild(tempInput);
-          tempInput.value = postUrl;
-          tempInput.select();
-          document.execCommand("copy");
-          document.body.removeChild(tempInput);
-          alert("Link copied to clipboard! Share it manually.");
-        }
-      });
-    });
-  });
-  
-  </script>
-   
-  
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".dropdown-trigger").forEach((trigger) => {
-        trigger.addEventListener("click", function () {
-            const dropdown = this.closest(".dropdown-container").querySelector(".dropdown-post");
-            dropdown.classList.toggle("active"); // Toggle visibility
-        });
-    });
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const shareLinks = document.querySelectorAll(".share_link");
 
-    // Hide dropdown when clicking outside
-    document.addEventListener("click", function (event) {
-        document.querySelectorAll(".dropdown-post").forEach((dropdown) => {
-            if (!dropdown.parentElement.contains(event.target)) {
-                dropdown.classList.remove("active");
+        shareLinks.forEach((shareLink) => {
+          shareLink.addEventListener("click", function () {
+            const postUrl = window.location.href; // Get the current page URL
+            const shareData = {
+              title: "Check this out!",
+              text: "This is an awesome post. Check it out!",
+              url: postUrl,
+            };
+
+            // Check if Web Share API is supported
+            if (navigator.share) {
+              navigator
+                .share(shareData)
+                .then(() => console.log("Shared successfully!"))
+                .catch((error) => console.error("Error sharing:", error));
+            } else {
+              // Fallback for unsupported browsers: Copy link to clipboard
+              const tempInput = document.createElement("input");
+              document.body.appendChild(tempInput);
+              tempInput.value = postUrl;
+              tempInput.select();
+              document.execCommand("copy");
+              document.body.removeChild(tempInput);
+              alert("Link copied to clipboard! Share it manually.");
             }
+          });
         });
-    });
-});
+      });
 
-</script>
-  
+    </script>
 
-<script>
-   function myOnOffFunc(id, status) {
-      let myStatus = true;
-      if (status === true || status === "true") {
-        myStatus = false;
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Handle clicks on dropdown triggers
+        const dropdownTriggers = document.querySelectorAll('.dropdown-trigger-post');
+
+        dropdownTriggers.forEach(trigger => {
+          trigger.addEventListener('click', function (event) {
+            event.stopPropagation();
+
+            // Find the closest dropdown container and dropdown
+            const container = this.closest('.dropdown-container-post');
+            const dropdown = container.querySelector('.dropdown-post');
+
+            // Close all other dropdowns first
+            document.querySelectorAll('.dropdown-post').forEach(otherDropdown => {
+              if (otherDropdown !== dropdown) {
+                otherDropdown.classList.remove('active');
+              }
+            });
+
+            // Toggle current dropdown
+            dropdown.classList.toggle('active');
+          });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function (event) {
+          if (!event.target.closest('.dropdown-container-post')) {
+            document.querySelectorAll('.dropdown-post').forEach(dropdown => {
+              dropdown.classList.remove('active');
+            });
+          }
+        });
+      });
+
+
+
+
+    </script>
+
+    
+
+
+    <script>
+      function myOnOffFunc(id, status) {
+        let myStatus = true;
+        if (status === true || status === "true") {
+          myStatus = false;
+        }
+        let data = { id: id, status: myStatus }
+        let headers = { 'x-auth': localStorage.getItem('token') }
+        axios.patch(`/admin/post/changeStatus`, data, { headers: headers })
+          .then((res) => {
+            location.reload()
+          }).catch((err) => {
+            console.log(err)
+          })
       }
-      let data = { id: id, status: myStatus }
-      let headers = { 'x-auth': localStorage.getItem('token') }
-      axios.patch(`/admin/post/changeStatus`, data, { headers: headers })
-        .then((res) => {
-          location.reload()
-        }).catch((err) => {
-          console.log(err)
-        })
-    }
-</script>
-    </div>
+    </script>
+  </div>
+
+  <%include ../../front/newpartials/footerblog%>
 
 
-<% include ../partials/footer %>
+  <% include ../partials/footer %>
