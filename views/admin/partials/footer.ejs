@@ -48,6 +48,88 @@
     }, 5000);
 
 </script>
+<script>
+    $(document).ready(function () {
+      $("#blog--images").each(function(){
+        const candidateImages = $("#blog--images .happy_candidate_images");
+  
+  if (candidateImages.children().length > 1) {
+      candidateImages.slick({
+          dots: true,
+          infinite: true,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: true, // Navigation arrows
+          autoplay: false,
+          autoplaySpeed: 10000,
+          responsive: [
+              {
+                  breakpoint: 1366,
+                  settings: {
+                      slidesToShow: 1,
+                  },
+              },
+              {
+                  breakpoint: 768,
+                  settings: {
+                      slidesToShow: 1,
+                  },
+              },
+          ],
+      });
+  } else if (candidateImages.children().length === 1) {
+      candidateImages.children().css({
+          width: "100%",
+          display: "block",
+      });
+      candidateImages.css({
+          display: "flex",
+          justifyContent: "center",
+      });
+  }
+      })
+     
+  });
+  
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const dropdownTrigger = document.querySelector('.dropdown-trigger');
+    const dropdownContainer = dropdownTrigger.closest('.dropdown-container');
+  
+    // Toggle dropdown
+    dropdownTrigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dropdownContainer.classList.toggle('active');
+    });
+  
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function() {
+      dropdownContainer.classList.remove('active');
+    });
+  
+    // Prevent dropdown from closing when clicking inside
+    dropdownContainer.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  
+    // Optional: Add event listeners for edit and delete actions
+    const editItem = dropdownContainer.querySelector('.dropdown-item:first-child');
+    const deleteItem = dropdownContainer.querySelector('.dropdown-item:last-child');
+  
+    editItem.addEventListener('click', function() {
+      // Add your edit logic here
+      console.log('Edit clicked');
+      dropdownContainer.classList.remove('active');
+    });
+  
+    deleteItem.addEventListener('click', function() {
+      // Add your delete logic here
+      console.log('Delete clicked');
+      dropdownContainer.classList.remove('active');
+    });
+  });
+  </script>
 </body>
 
 </html>
