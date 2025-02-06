@@ -16873,6 +16873,11 @@ Common: Spacing Gutters
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     transition: .4s ease-in; */
+ 
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.8s ease-out forwards 0.3s;
+    
 }
 .main_images{
   position: relative;
@@ -16932,6 +16937,40 @@ Common: Spacing Gutters
 #bookDemo{
   /* background-color: rgba(var(--l2-primary-rgb), 0.03); */
   padding-block: 40px;
+}
+.animate-on-scroll {
+  opacity: 0;
+  transition: all 1s ease-out;
+}
+
+.fade-up {
+  transform: translateY(50px);
+}
+
+.fade-left {
+  transform: translateX(-50px);
+}
+
+.fade-right {
+  transform: translateX(50px);
+}
+.animate-active {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+.book_demo_today {
+  animation-delay: 0.2s;
+}
+
+.demoQuate {
+  animation-delay: 0.4s;
+}
+.demo_table {
+  animation-delay: 0.6s;
+}
+
+.demo_experience {
+  animation-delay: 0.8s;
 }
 .demo_form{
   display: flex;
@@ -17338,9 +17377,13 @@ transform: translateY(6px);
 }
 .images{
   display: flex;
+  gap: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.8s ease-out forwards 0.6s;
 }
 .images img{
-  padding-left: 10px;
+  /* padding-left: 10px; */
   width: 70px;
   height: 70px;
   /* height: ; */
