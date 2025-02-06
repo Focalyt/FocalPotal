@@ -136,7 +136,745 @@
 
 
     </div>
+    
+
+
     <script>
+      // Global variables
+let selectedTags = [];
+let existingFiles = [];
+
+// Carousel functionality
+const initCarousel = () => {
+  const happyCandidateImages = document.querySelectorAll('.happy_candidate_images');
+  
+  happyCandidateImages.forEach(container => {
+    const slides = Array.from(container.children);
+    if (slides.length <= 1) return;
+    
+    const wrapper = document.createElement('div');
+    wrapper.className = 'carousel-wrapper';
+    container.parentNode.insertBefore(wrapper, container);
+    wrapper.appendChild(container);
+    
+    wrapper.insertAdjacentHTML('beforeend', `
+      <button class="carousel-btn prev">❮</button>
+      <button class="carousel-btn next">❯</button>
+    `);
+    
+    let currentSlide = 0;
+    const prevBtn = wrapper.querySelector('.prev');
+    const nextBtn = wrapper.querySelector('.next');
+    
+    const updateSlides = () => {
+      slides.forEach((slide, index) => {
+        slide.style.display = index === currentSlide ? 'block' : 'none';
+      });
+      prevBtn.style.display = slides.length > 1 ? 'block' : 'none';
+      nextBtn.style.display = slides.length > 1 ? 'block' : 'none';
+    };
+    
+    prevBtn.addEventListener('click', () => {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      updateSlides();
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      updateSlides();
+    });
+    
+    updateSlides();
+  });
+};
+
+// Edit functionality initialization
+const initEdit = () => {
+  document.querySelectorAll('.dropdown-items').forEach(item => {
+    if (item.querySelector('i.fa-edit')) {
+      item.addEventListener('click', function() {
+        const postCard = this.closest('.blog--card');
+        const postId = postCard.querySelector('.card-content').id.split('-')[1];
+        const content = postCard.querySelector('.hidden-text').textContent.trim();
+        existingFiles = Array.from(postCard.querySelectorAll('.card-image img, .card-image video')).map(el => ({
+          fileType: el.tagName.toLowerCase() === 'img' ? 'image' : 'video',
+          fileURL: el.tagName.toLowerCase() === 'img' ? el.src : el.querySelector('source').src
+        }));
+        
+        openEditModal(postId, content, existingFiles);
+      });
+    }
+  });
+};
+
+// Modal handling
+function openEditModal(postId, content, files) {
+  const modal = document.createElement('div');
+  modal.className = 'edit-modal';
+  modal.innerHTML = `
+    <div class="edit-modal-content">
+      <div class="edit-modal-header">
+        <h3>Edit Post</h3>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="edit-modal-body">
+        <textarea id="edit-content" class="edit-textarea">${content}</textarea>
+        
+        <div class="post-actions">
+          <div class="media-upload">
+            <label for="new-files" class="media-btn">
+              <img src="https://static.xx.fbcdn.net/rsrc.php/v4/y7/r/Ivw7nhRtXyo.png" alt="Media Icon">
+              Photo/Video
+            </label>
+            <input type="file" id="new-files" multiple accept="image/*,video/*" class="d-none">
+          </div>
+          
+          <div class="tag-btn" onclick="openTagModal()">
+            <img src="https://static.xx.fbcdn.net/rsrc.php/v4/yq/r/b37mHA1PjfK.png" alt="Tag Icon">
+            Tag
+          </div>
+        </div>
+
+        <div id="edit-tags" class="tags-display"></div>
+
+        <div class="existing-files" id="existing-files">
+          ${files.map((file, index) => `
+            <div class="file-item">
+              ${file.fileType === 'image' 
+                ? `<img src="${file.fileURL}" class="preview-item" />`
+                : `<video src="${file.fileURL}" class="preview-item" controls></video>`
+              }
+              <button onclick="removeFile(${index})" class="remove-file">×</button>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="edit-modal-footer">
+        <button class="cancel-btn">Cancel</button>
+        <button class="save-btn" onclick="saveEdit('${postId}')">Save Changes</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  setupModalListeners(modal);
+  loadExistingTags(postId);
+};
+
+
+function setupModalListeners(modal) {
+  const closeBtn = modal.querySelector('.close-modal');
+  const cancelBtn = modal.querySelector('.cancel-btn');
+  
+  const closeModal = () => modal.remove();
+  closeBtn.onclick = closeModal;
+  cancelBtn.onclick = closeModal;
+  window.onclick = (event) => {
+    if (event.target === modal) closeModal();
+  };
+}
+
+// Tag functionality
+function openTagModal() {
+  const modal = `
+    <div class="modal fade" id="tagModal" data-bs-backdrop="static">
+      <div class="modal-dialog new-model-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Tag People</h5>
+            <button type="button" class="btn-close" onclick="closeTagModal()">
+              <i class="fa-solid fa-x" style="color: #ffffff;"></i>
+            </button>
+          </div>
+
+          <div class="modal-body p-0">
+            <div class="tag_people">
+              <div class="search">
+                <div class="tagging-container">
+                  <div class="tag-input-container">
+                    <div class="tags" id="tagscandidate">
+                      <!-- Selected tags appear here -->
+                    </div>
+                  </div>
+                  <span class="done" data-bs-dismiss="modal" id="donebutton">Done</span>
+                </div>
+
+                <div class="nav--pills">
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" onclick="selctedTagFor('admin')">
+                      <a class="nav-link" data-bs-toggle="tab" href="#admin">Admin</a>
+                    </li>
+                    <li class="nav-item" onclick="selctedTagFor('company')">
+                      <a class="nav-link" data-bs-toggle="tab" href="#company">Company</a>
+                    </li>
+                    <li class="nav-item" onclick="selctedTagFor('college')">
+                      <a class="nav-link" data-bs-toggle="tab" href="#institute">Institute</a>
+                    </li>
+                    <li class="nav-item" onclick="selctedTagFor('candidate')">
+                      <a class="nav-link active" data-bs-toggle="tab" href="#student">Student</a>
+                    </li>
+                  </ul>
+
+                  <div class="tab-content">
+                    <div class="tab-pane fade" id="admin">
+                      <div class='employee-attendance-table'>
+                        <table class="employee-table">
+                          <thead>
+                            <tr class='header-tr'>
+                              <th>Select</th>
+                              <th>Name</th>
+                            </tr>
+                          </thead>
+                          <tbody id="adminTableBody"></tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="company">
+                      <div class="inner_search">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" placeholder="Search" id="searchbyCompany" oninput="debouncedSearch()">
+                      </div>
+                      <div class='employee-attendance-table'>
+                        <table class="employee-table">
+                          <thead>
+                            <tr class='header-tr'>
+                              <th>Select</th>
+                              <th>Company Name</th>
+                            </tr>
+                          </thead>
+                          <tbody id="companyTableBody"></tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="institute">
+                      <div class="inner_search">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" placeholder="Search" id="searchbyInstitute" oninput="debouncedSearch()">
+                      </div>
+                      <div class='employee-attendance-table'>
+                        <table class="employee-table">
+                          <thead>
+                            <tr class='header-tr'>
+                              <th>Select</th>
+                              <th>Institute Name</th>
+                            </tr>
+                          </thead>
+                          <tbody id="collegeTableBody"></tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade show active" id="student">
+                      <div class="inner_search">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" placeholder="Search" id="searchbyCanditate" oninput="debouncedSearch()">
+                      </div>
+                      <div class='employee-attendance-table'>
+                        <table class="employee-table">
+                          <thead>
+                            <tr class='header-tr'>
+                              <th>Select</th>
+                              <th>Student Name</th>
+                              <th>Mobile</th>
+                            </tr>
+                          </thead>
+                          <tbody id="candidateTableBody"></tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Remove existing modal if any
+  const existingModal = document.getElementById('tagModal');
+  if (existingModal) {
+    existingModal.remove();
+  }
+
+  // Add modal to body
+  document.body.insertAdjacentHTML('beforeend', modal);
+
+  // Initialize Bootstrap modal
+  const tagModal = new bootstrap.Modal(document.getElementById('tagModal'));
+  tagModal.show();
+
+  // Load initial data
+  loadMore();
+}
+
+function closeTagModal() {
+  const tagModal = bootstrap.Modal.getInstance(document.getElementById('tagModal'));
+  if (tagModal) {
+    tagModal.hide();
+  }
+}
+
+async function loadExistingTags(postId) {
+  try {
+    const response = await fetch(`/admin/post/tags/${postId}`);
+    if (!response.ok) throw new Error('Failed to load tags');
+    const tags = await response.json();
+    selectedTags = tags.map(tag => ({
+      ...tag,
+      isChecked: true,
+      userType: tag.userType || tag.type
+    }));
+    updateEditTagsDisplay();
+  } catch (error) {
+    console.error('Error loading tags:', error);
+  }
+}
+
+function updateEditTagsDisplay() {
+  const tagsDisplay = document.getElementById('edit-tags');
+  if (!tagsDisplay) return;
+  
+  tagsDisplay.innerHTML = selectedTags.map((tag, index) => `
+    <div class="tag">
+      ${tag.name}
+      <span class="remove-tag" onclick="removeEditTag(${index})">&times;</span>
+    </div>
+  `).join('');
+}
+
+function removeEditTag(index) {
+  selectedTags.splice(index, 1);
+  updateEditTagsDisplay();
+}
+
+// File handling
+function removeFile(index) {
+  existingFiles = existingFiles.filter((_, i) => i !== index);
+  updateFilePreview();
+}
+
+function updateFilePreview() {
+  const fileContainer = document.getElementById('existing-files');
+  if (!fileContainer) return;
+
+  fileContainer.innerHTML = existingFiles.map((file, index) => `
+    <div class="file-item">
+      ${file.fileType === 'image' 
+        ? `<img src="${file.fileURL}" class="preview-item" />`
+        : `<video src="${file.fileURL}" class="preview-item" controls></video>`
+      }
+      <button onclick="removeFile(${index})" class="remove-file">×</button>
+    </div>
+  `).join('');
+}
+
+// Save functionality
+async function saveEdit(postId) {
+  try {
+    const content = document.getElementById('edit-content').value;
+    const fileInput = document.getElementById('new-files');
+    const formData = new FormData();
+    
+    formData.append('id', postId);
+    formData.append('content', content);
+    formData.append('tags', JSON.stringify(selectedTags));
+    formData.append('existingFiles', JSON.stringify(existingFiles));
+    
+    Array.from(fileInput.files).forEach(file => {
+      formData.append('files', file);
+    });
+
+    const response = await fetch('/api/editpost', {
+      method: 'POST',
+      headers: {
+        'x-auth': localStorage.getItem('token')
+      },
+      body: formData
+    });
+
+    if (!response.ok) throw new Error('Failed to update post');
+    location.reload();
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to update post');
+  }
+}
+
+// Initialize everything on load
+document.addEventListener('DOMContentLoaded', () => {
+  initCarousel();
+  initEdit();
+  
+  const doneButton = document.getElementById('donebutton');
+  if (doneButton) {
+    doneButton.addEventListener('click', updateEditTagsDisplay);
+  }
+});
+
+// Styles
+const styles = `
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 18px;
+  transition: background 0.3s;
+  display: none;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+.happy_candidate_images > div {
+  display: none;
+  width: 100%;
+}
+
+.happy_candidate_images > div:first-child {
+  display: block;
+}
+
+.edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.edit-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.edit-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-modal {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.edit-textarea {
+  width: 100%;
+  min-height: 150px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tag-section {
+  margin: 15px 0;
+}
+
+.tag-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.tag-header img {
+  width: 20px;
+  height: 20px;
+}
+
+.tag-btn {
+  background: #e4e6eb;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.tag-btn:hover {
+  background: #d8dadf;
+}
+
+.tags-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tag {
+  background: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.remove-tag {
+  cursor: pointer;
+  color: #FC2B5A;
+  font-weight: bold;
+}
+
+.file-section {
+  margin: 20px 0;
+}
+
+.existing-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.file-item {
+  position: relative;
+}
+
+.preview-item {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.remove-file {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.remove-file:hover {
+  background: #cc0000;
+}
+
+.file-input {
+  margin-top: 10px;
+}
+
+.edit-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-btn, .cancel-btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.save-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+}
+
+.save-btn:hover {
+  background: #0056b3;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+}
+
+.cancel-btn:hover {
+  background: #5a6268;
+}
+`;
+
+// Add to existing styles
+const additionalStyles = `
+.post-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.media-btn, .tag-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #666;
+}
+
+.media-btn:hover, .tag-btn:hover {
+  background: #f0f0f0;
+  border-radius: 6px;
+}
+
+.media-btn img, .tag-btn img {
+  width: 20px;
+  height: 20px;
+}`;
+
+// Update the existing style element
+
+// Modal styles
+const tagModalStyles = `
+.modal-content {
+  border: none;
+  border-radius: 8px;
+  max-height: 90vh;
+}
+
+.modal-header {
+  background: #FC2B5A;
+  border: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding: 15px 20px;
+}
+
+.modal-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.btn-close {
+  color: white;
+  opacity: 1;
+}
+
+#tagscandidate {
+  padding: 10px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 50px;
+  border-bottom: 1px solid #eee;
+}
+
+#tagscandidate .btn {
+  background: #FC2B5A;
+  border: none;
+  font-size: 14px;
+  padding: 5px 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#tagscandidate .badge {
+  background: rgba(255,255,255,0.2);
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.done {
+  color: #FC2B5A;
+  font-weight: 500;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  padding: 15px 0;
+}
+
+.nav-tabs {
+  padding: 0 20px;
+  border: none;
+  margin-top: 10px;
+}
+
+.nav-link {
+  color: #666;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.nav-link.active {
+  color: #FC2B5A !important;
+  font-weight: 500;
+  border-bottom: 2px solid #FC2B5A !important;
+}
+
+.inner_search {
+  padding: 15px 20px;
+}
+
+.employee-table {
+  margin-top: 0;
+}
+
+.employee-table th {
+  background: #f8f9fa;
+  font-weight: 500;
+}
+
+.modal-dialog.new-model-dialog {
+  margin-top: 50px;
+}`;
+
+// Add styles to document
+const styleSheet = document.createElement("style");
+styleSheet.innerText = tagModalStyles;
+document.head.appendChild(styleSheet);
+
+const styleElement = document.createElement('style');
+styleElement.textContent = styles;
+styleElement.textContent += additionalStyles;
+document.head.appendChild(styleElement);
+    </script>
+
+
+    <script>
+      
 
      
 
@@ -250,40 +988,7 @@
 
 
     </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const shareLinks = document.querySelectorAll(".share_link");
-
-        shareLinks.forEach((shareLink) => {
-          shareLink.addEventListener("click", function () {
-            const postUrl = window.location.href; // Get the current page URL
-            const shareData = {
-              title: "Check this out!",
-              text: "This is an awesome post. Check it out!",
-              url: postUrl,
-            };
-
-            // Check if Web Share API is supported
-            if (navigator.share) {
-              navigator
-                .share(shareData)
-                .then(() => console.log("Shared successfully!"))
-                .catch((error) => console.error("Error sharing:", error));
-            } else {
-              // Fallback for unsupported browsers: Copy link to clipboard
-              const tempInput = document.createElement("input");
-              document.body.appendChild(tempInput);
-              tempInput.value = postUrl;
-              tempInput.select();
-              document.execCommand("copy");
-              document.body.removeChild(tempInput);
-              alert("Link copied to clipboard! Share it manually.");
-            }
-          });
-        });
-      });
-
-    </script>
+    
 
 
     <script>
@@ -347,7 +1052,6 @@
     </script>
   </div>
 
-  <%include ../../front/newpartials/footerblog%>
 
 
   <% include ../partials/footer %>

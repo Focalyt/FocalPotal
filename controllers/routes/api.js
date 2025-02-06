@@ -37,6 +37,7 @@ const smsTemplateRoutes = express.Router();
 
 commonRoutes.post("/sendCandidateOtp", commonFunc.sendCandidateOtp);
 commonRoutes.post("/postfiles", postFunc.uploadPostFiles);
+commonRoutes.post("/editpost", postFunc.editPost);
 commonRoutes.post("/uploadPostVideoFile", postFunc.uploadPostVideoFile);
 commonRoutes.post("/sendCompanyOtp",commonFunc.sendCompanyOtp);
 commonRoutes.post("/sendOtp",commonFunc.sendOtp);
