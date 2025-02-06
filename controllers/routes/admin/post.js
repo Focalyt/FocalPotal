@@ -260,6 +260,56 @@ router.patch("/changeStatus" , async (req, res) => {
   });
 
 
+  router.get('/tags/:postId', async (req, res) => {
+	try {
+	  const post = await Post.findById(req.params.postId);
+	  if (!post) return res.status(404).json({ message: 'Post not found' });
+	  res.json(post.tags);
+	} catch (error) {
+	  res.status(500).json({ message: error.message });
+	}
+  });
+  
+  router.post('/edit', async (req, res) => {
+	try {
+	  const { id, content, tags } = req.body;
+	  const tagsData = JSON.parse(tags);
+  
+	  const tagsArray = tagsData.map((tag, index) => ({
+		userId: tag._id,
+		name: tag.name,
+		userType: tag.userType
+	  }));
+  
+	  const updateData = {
+		content,
+		tags: tagsArray
+	  };
+  
+	  if (req.files?.length) {
+		const fileData = await Promise.all(req.files.map(async file => {
+		  // Your existing file upload logic
+		  return {
+			fileType: file.mimetype.startsWith('image/') ? 'image' : 'video',
+			fileURL: uploadedFileUrl // From your upload logic
+		  };
+		}));
+		updateData.files = fileData;
+	  }
+  
+	  const updatedPost = await Post.findByIdAndUpdate(
+		id,
+		updateData,
+		{ new: true }
+	  );
+  
+	  res.json(updatedPost);
+	} catch (error) {
+	  res.status(500).json({ message: error.message });
+	}
+  });
+
+
 
 
 

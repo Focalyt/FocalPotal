@@ -152,7 +152,7 @@ class MetaConversionAPI {
 
   async trackCourseApplication(courseData, userData, metaParams) {
     try {
-      // console.log(courseData, userData, metaParams)
+       console.log(courseData, userData, metaParams)
       const eventData = {
         data: [{
           event_name: 'Course Apply',

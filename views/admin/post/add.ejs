@@ -443,11 +443,11 @@
                 </div>
                 <div class="modal-body pt-1" id="popup-body">
                   <p>Are you sure you want to send Bulk SMS </p>
-          <p class="text-right font-weight-bold text-danger mr-2"><i>Total Messages : <%= smsCount %></i></p>
+          <p class="text-right font-weight-bold text-danger mr-2"><i>Total Messages : </i></p>
                 </div>
                 <div class="modal-footer">
                   <button class="btn btn-primary"
-          onclick="sendSMS('<%= data?.name%>','<%= data?.FromDate %>','<%= data?.ToDate %>','<%= smsCount %>')"
+          onclick="sendSMS('<%= data?.name%>','<%= data?.FromDate %>','<%= data?.ToDate %>','')"
                     id="sendBtn" data-dismiss="modal">Send</button>
                   <button type="button" class="btn btn-danger" data-dismiss="modal"><i
                       class="feather icon-x d-block d-lg-none"></i>
@@ -821,7 +821,7 @@
                   },
                   success: () => {
                     let smsHistory = document.getElementById('smsHistory')
-                    smsHistory.textContent="Last Sent : Just Now (<%= smsCount %>)" 
+                    smsHistory.textContent="Last Sent : Just Now ()" 
                     $('#sendBtn').removeClass('disabled')
                   },
                   error: () =>{

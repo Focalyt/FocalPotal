@@ -154,6 +154,91 @@ module.exports.uploadPostFiles = async (req, res) => {
   }
 };
 
+module.exports.editPost = async (req, res) => {
+  try {
+    const userId = req.user?._id || req.session?.user?._id;
+    if (!userId) {
+      return res.status(401).send({ status: false, message: 'Unauthorized' });
+    }
+
+    const { id, content, tags } = req.body;
+    const existingFiles = JSON.parse(req.body.existingFiles || '[]');
+    const parsedTags = JSON.parse(tags || '[]');
+    
+    const updateData = {
+      content,
+      tags: parsedTags.map(tag => ({
+        userId: tag._id,
+        name: tag.name,
+        userType: tag.userType
+      }))
+    };
+
+    // Handle new file uploads
+    if (req.files?.files) {
+      const files = Array.isArray(req.files.files) ? req.files.files : [req.files.files];
+      const uploadedFiles = [];
+      const uploadPromises = [];
+
+      files.forEach((item) => {
+        const { name, mimetype } = item;
+        const ext = name?.split('.').pop().toLowerCase();
+
+        if (!allowedImageExtensions.includes(ext) && !allowedVideoExtensions.includes(ext)) {
+          throw new Error(`Unsupported file type: ${ext}`);
+        }
+
+        const fileType = allowedImageExtensions.includes(ext) ? 'image' : 'video';
+        const key = `post/${userId}/${fileType}s/${uuid()}.${ext}`;
+        
+        uploadPromises.push(
+          s3.upload({
+            Bucket: bucketName,
+            Key: key,
+            Body: item.data,
+            ContentType: mimetype,
+          }).promise().then((uploadResult) => {
+            uploadedFiles.push({
+              fileURL: uploadResult.Location,
+              fileType
+            });
+          })
+        );
+      });
+
+      await Promise.all(uploadPromises);
+      
+      // Combine existing and new files
+      updateData.files = [...existingFiles, ...uploadedFiles];
+    } else {
+      updateData.files = existingFiles;
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedPost) {
+      return res.status(404).send({ status: false, message: 'Post not found' });
+    }
+
+    res.send({
+      status: true,
+      message: 'Post updated successfully',
+      data: updatedPost
+    });
+
+  } catch (error) {
+    console.error('Error updating post:', error);
+    res.status(500).send({
+      status: false,
+      message: error.message || 'Internal Server Error'
+    });
+  }
+};
+
 module.exports.getUploadUrl = async (req, res) => {
   try {
     const {
