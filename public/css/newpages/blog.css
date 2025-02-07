@@ -1052,7 +1052,7 @@ font-weight: 500;
 .hardware h1 {
   text-align: center;
   font-size: 2.5rem;
-  margin-bottom: 3rem;
+  padding-block: 3rem;
 color: #FC2B5A;
 font-weight: 700;
 }
@@ -1112,7 +1112,7 @@ border-color: rgba(255, 255, 255, 0.4);
 }
 
 .solution {
-  color: #cbd5e1;
+  color: #101010;
   font-size: 0.875rem;
 }
 
@@ -1219,7 +1219,7 @@ border-color: rgba(255, 255, 255, 0.4);
   flex-shrink: 0;
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, #4299e1 0%, #2c5282 100%);
+ background: linear-gradient(135deg, #fc2b5a 0%, #feafc1 90%);
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -1250,6 +1250,18 @@ border-color: rgba(255, 255, 255, 0.4);
 }
 
 @media (max-width: 768px) {
+  .ar_labs figure{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+  .ar_labs figure img{
+    width: 55%;
+  }
+  a.mobile-tech-area.slick-slide{
+    margin: 10px;
+  }
   .new {
   font-size: 25px;
   }

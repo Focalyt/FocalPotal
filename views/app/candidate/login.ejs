@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="/public_assets/css/card-slider.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
 <!--- Final SLIDER END-->
-
+<link rel="stylesheet" type="text/css" href="../css/newpages/custom.css">
 <style>
     .carousel-gallery .swiper-pagination{
         margin-top: 0!important;
@@ -26,7 +26,7 @@
     <div class="app-content content  repeat-img">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper mt-xl-4 mt-lg-4 mt-md-4 mt-sm-1 mt-1">
+        <div class="content-wrapper mt-xl-4 mt-lg-4 mt-md-4 mt-sm-1 mt-1 mb-md-0 mb-sm-5 mb-5">
             <div class="content-header row">
             </div>
             <div class="content-body card_pos_top" id="login_card">
@@ -318,6 +318,71 @@
             </div>
         </div>
     </div>
+
+    <!-- mobile footer -->
+
+    <div id="mobile-footer-nav"
+    class="d-xxl-none d-xl-none d-lg-none d-md-none d-sm-block d-block mt-xxl-0 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-4">
+    <div class="container">
+      <div class="footer-nav position-relative">
+        <ul class="h-100 d-flex align-items-center justify-content-between mb-0">
+          <!---->
+          <li>
+            <a href="/">
+              <figure>
+                <img src="/public_assets/images/icons/home.png" draggable="false"
+                  class="img-fluid footer-skill-course m-0">
+              </figure>
+              <span class="text-white pt-1">Home</span>
+            </a>
+          </li>
+          <!---->
+          <!---->
+          <li>
+            <a href="/courses">
+              <figure>
+                <img src="/public_assets/images/icons/learn.png" draggable="false"
+                  class="footer-skill-course img-fluid m-0">
+              </figure>
+              <span class="text-white pt-1">Courses</span>
+            </a>
+          </li>
+          <!---->
+          <li class="login_col">
+            <a href="/candidate/login">
+              <span class="text-white login_ty bg-transparent" style="background-color: transparent;">Login</span>
+            </a>
+          </li>
+          <li>
+            <a href="/joblisting">
+              <figure>
+                <img src="/public_assets/images/icons/jobs.png" draggable="false"
+                  class="footer-skill-course img-fluid m-0"></figure>
+              <span class="text-white pt-1">Jobs</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://api.whatsapp.com/send?text=Check%20out%20Focalyt's%20courses%20and%20job%20opportunities%20at%20https://focalyt.com.%20Enhance%20your%20skills%20and%20secure%20a%20great%20job%20now">
+              <figure>
+                <img src="/public_assets/images/icons/share.png" draggable="false"
+                  class="footer-skill-course img-fluid m-0"></figure>
+              <span class="text-white pt-1">Share</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<style>
+    li{
+        list-style: none;
+    }
+    @media (max-width:768px) {
+        .content-wrapper{
+            margin-bottom: 75px!important;
+        }
+    }
+</style>
     <!-- END: Content-->
     <!-- BEGIN: Vendor JS-->
     <script src="/js/vendors/js/vendors.min.js"></script>
