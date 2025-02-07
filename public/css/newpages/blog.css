@@ -1520,6 +1520,9 @@ border-color: rgba(255, 255, 255, 0.4);
   transform: translate(0) scale(1);
 }
 @media (max-width: 768px) {
+  .mobile-tech-area{
+    margin: 10px;
+  }
   .main-home-images{
     width: 70px!important;
     height: 70px!important;
