@@ -462,14 +462,14 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 
 			// Update Spreadsheet
 			const sheetData = [
-				moment(appliedData.createdAt).utcOffset('+05:30').format('DD/MM/YYYY'),
+				moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
 				moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
 				capitalizeWords(course?.name), // Apply the capitalizeWords function
 				candidate?.name,
 				candidate?.mobile,
 				candidate?.email,
 				candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
-				candidate?.dob ? moment(candidate.dob).format('DD/MM/YYYY') : '',
+				candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
 				candidate?.state?.name,
 				candidate?.city?.name,
 				'Course',

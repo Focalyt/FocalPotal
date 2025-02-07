@@ -47,6 +47,7 @@ const paymentRoutes = require('./payments')
 const smsRoutes = require('./smsUsage')
 const courseRoutes=require('./courses')
 const postRoutes=require('./post')
+const freelancerRoutes=require('./freelancer')
 const rolesRoutes = require('./adminRoles')
 const coinsRoutes = require('./coinsAlgo')
 const reportRoutes = require('./report')
@@ -64,6 +65,7 @@ const teamRoutes=require('./team')
 const router = express.Router();
 router.use('/appBanner', appBannerRoutes);
 router.use('/post', postRoutes);
+router.use('/freelancer', freelancerRoutes);
 router.use('/appUpdate', appUpdateRoutes);
 router.use('/careerObjective', careerObjectiveRoutes);
 router.use('/candidate', candidateRoutes);
