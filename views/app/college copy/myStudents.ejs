@@ -1,0 +1,165 @@
+<% include ../../partials/header %>
+<% include ../../partials/flash %>
+<body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static" data-open="click"
+data-menu="vertical-menu-modern" data-col="2-columns">
+<% include ./partials/navbar%>
+<% include ./partials/leftpane%>
+
+<div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">My Students</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">                       
+                        <li class="breadcrumb-item"><a href="#">My Students</a></li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section id="personal-info">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 ">
+                  <div class="card">
+                    <div class="card-header border border-top-0 border-left-0 border-right-0">
+                      <h4 class="card-title pb-1">My Students</h4>
+                    </div>
+                    <div id="msg" style="color:red; display:none;" class="text-center ml-2 mt-1">
+                    </div>
+                    <form>
+                      <div class="card-content">
+                        <div class="card-body">
+                          
+                          <div class="table-responsive">
+                            <table id="tblexportData" class="table table-hover-animation mb-0 table-hover">
+                              <thead>
+                                <tr>
+                                  <th>CANDIDATES</th>
+                                  <th>GENDER</th>
+                                  <th>Qualification</th>
+                                  <th>Year Of Passing</th>
+                                  <th>Experience</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <% if(students && students.length >0) { %>
+                                    <% students[0].data.forEach((curr,i)=>{ %>
+                                        <tr>
+                                            <td class="text-capitalize">
+                                                <a href="/college/candidate/<%= curr._id%>"><%= curr?.name ? curr?.name : 'NA' %></a>
+                                            </td>
+
+                                            <td class="text-capitalize">
+                                                <%= curr?.sex ?  curr?.sex : 'NA' %>
+                                            </td>
+
+                                            <td>
+                                                <%=curr.qualifications?.Qualification ? qualification.find(j=>j._id.toString() == curr.qualifications?.Qualification.toString())?.name: "NA" %>
+                                            </td>
+
+                                            <td>
+                                                <%= curr.qualifications?.PassingYear ? curr.qualifications?.PassingYear :'NA' %>
+                                            </td>
+                                            <td class="text-capitalize">
+                                              <% if (curr.totalExperience) { %>
+                                                  <%= curr.totalExperience %> Years
+                                              <% } else { %>
+                                                  Fresher
+                                              <% } %>
+                                          </td>                                          
+                                        </tr>
+                                    <% })%> 
+                                <% } else{ %>
+                                    <tr><td colspan="6" class="text-center">No Result Found</td></tr>
+                                    <% }%>
+                              </tbody>
+                            </table>
+                            <% if (totalPages> 1) { %>
+                              <ul class="pagination justify-content-end ml-2 mb-2">
+                                <% let first=1 %> <% let last=totalPages> 4 ? 4 : totalPages %>
+                                <% if (totalPages> 4 && page >= 2) { %> <% first=page - 1 %> <%
+                                last=page + 1 %> <% if (last> totalPages) last = totalPages %>
+                                <% } %> <% if (first> 1) { %>
+                                <li class="page-item">
+                                  <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                                </li>
+                                <% } %> <% for (let i=first; i <=last; i +=1) { %> <% if
+                                (i===page) { %>
+                                <li class="active page-item">
+                                  <a href="javascript:void()" class="page-link"> <%= i %> </a>
+                                </li>
+                                <% } else { %>
+                                <li class="page-item">
+                                  <a class="page-link pageAnchor" href="<%= i %>"> <%= i %> </a>
+                                </li>
+                                <% } %> <% } %> <% if (totalPages> last) { %>
+                                <li class="page-item">
+                                  <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                                </li>
+                                <li class="page-item">
+                                  <a class="pageAnchor page-link" href="<%= totalPages %>"
+                                    >Last</a
+                                  >
+                                </li>
+                                <% } %>
+                              </ul>
+                              <% } %>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <% include ./partials/footer%>
+  </body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const pageAnchors = document.querySelectorAll("a.pageAnchor");
+      const { origin, pathname, search } = window.location;
+      let searchParams = search.split("?")[1];
+      let obj;
+      let url = `${origin}${pathname}?`;
+      if (searchParams) {
+        obj = JSON.parse(
+          '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+          function (key, value) {
+            return key === "" ? value : decodeURIComponent(value);
+          }
+        );
+        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+        keyArr.forEach((x) => {
+          if (x !== "page") {
+            url += `${x}=${obj[x]}&`;
+          }
+        });
+      }
+      pageAnchors.forEach((el) => {
+        const n = el.getAttribute("href");
+        el.setAttribute("href", `${url}page=${n}`);
+      });
+    });
+
+    $(document).ready(function () {
+                        const isProfileCompleted = "<%= isProfileCompleted %>"
+                        if(isProfileCompleted === 'false'){
+                            $('#msg').show();
+                            $('#msg').text("Please complete your profile");
+                            
+                            $('#submitBtn').attr('disabled', `disabled`)
+                            $('#submitBtn').addClass('disabled')
+                        }
+                      })
+</script>

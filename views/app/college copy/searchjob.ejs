@@ -1,0 +1,199 @@
+<% include ../../partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static" data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Available Jobs</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">                       
+                        <li class="breadcrumb-item"><a href="#">Available Jobs</a></li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section id="personal-info">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 ">
+                  <div class="card">
+                    <div class="card-header border border-top-0 border-left-0 border-right-0">
+                      <h4 class="card-title pb-1">Search Job</h4>
+                    </div>
+                    <form>
+                      <div class="card-content">
+                        <div class="card-body">
+                          <div class="row mb-2 mx-0" id="allFields">
+                            <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                              <label>Minimum Qualification</label>
+                              <select class="form-control" id="qualification" name="qualification">
+                                <option value="">Select Option</option>
+                                <% allQualification.forEach((i)=> { %> <% if(i._id==data.qualification){ %>
+                                    <option selected value="<%= i._id %>" class="text-capitalize">
+                                      <%= i.name %>
+                                    </option>
+                                    <% } else { %>
+                                      <option value="<%= i._id %>" class="text-capitalize">
+                                        <%= i.name %>
+                                      </option>
+                                      <% } %>
+                                        <% }); %>
+                              </select>
+                            </div>
+                            <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                              <label>Minimum Experience(Yrs)</label>
+                              <select class="form-control" name="experience" id="exp-field">
+                                <option value="">Select</option>
+                                <option value="0" <% if (data.experience=='0' ) { %> selected <% }%>>0</option>
+                                <% for(let i=1; i<16; i++) {%>
+                                  <option value="<%= i %>" <% if (data.experience==i ) { %> selected <% }%> ><%= i %></option>
+                               <% } %>
+                              </select>
+                            </div>
+                            <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                              <label>Industry</label>
+                              <select class="form-control" id="industry" name="industry">
+                                <option value="">Select Option</option>
+                                <% allIndustry.forEach((i)=> { %> <% if(i._id==data.industry){ %>
+                                    <option selected value="<%= i._id %>" class="text-capitalize">
+                                      <%= i.name %>
+                                    </option>
+                                    <% } else { %>
+                                      <option value="<%= i._id %>" class="text-capitalize">
+                                        <%= i.name %>
+                                      </option>
+                                      <% } %>
+                                        <% }); %>
+                              </select>
+                            </div>
+                            <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                              <label>Job Type</label>
+                              <select class="form-control" id="jobType" name="jobType">
+                                <option value="">Select Option</option>
+                                <option value="Part Time"  <% if(data.jobType=="Part Time" ) { %> selected <% } %>>Part Time</option>
+                                <option value="Full Time" <% if(data.jobType=="Full Time" ) { %> selected <% } %> >Full Time</option>                        
+                              </select>
+                              </select>
+                            </div>
+                            <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                              <label>Minimum Offered Salary</label>
+                              <select class="form-control" id="minSalary" name="minSalary">
+                                <option value="">Select Option</option>
+                                <option value="5000" <% if(data.minSalary=="5000" ) {%> selected <% } %>>5000</option>
+                                <option value="10000" <% if(data.minSalary=="10000" ) {%> selected <% } %>>10000</option>
+                                <option value="15000" <% if(data.minSalary=="15000" ) {%> selected <% } %>>15000</option>
+                                <option value="20000" <% if(data.minSalary=="20000" ) {%> selected <% } %>>20000</option>
+                                <option value="30000" <% if(data.minSalary=="30000" ) {%> selected <% } %>>30000</option>    
+                                <option value="40000" <% if(data.minSalary=="40000" ) {%> selected <% } %>>40000</option> 
+                                <option value="50000" <% if(data.minSalary=="50000" ) {%> selected <% } %>>50000</option> 
+                                <option value="70000" <% if(data.minSalary=="70000" ) {%> selected <% } %>>70000</option>           
+                                <option value="80000" <% if(data.minSalary=="80000" ) {%> selected <% } %>>80000+</option>         
+                              </select>
+                            </div>
+                            <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                              <label>Technical Skills</label>
+                              <select class="form-control text-capitalize" name="techSkills" id="techSkills">
+                                <option value="">Select</option>
+                                <% skills.forEach((skills)=> { %>
+                                  <% if (skills.type == 'technical') { %>
+                                    <option  class="text-capitalize"
+                                     value="<%= skills._id %>" <% if (data.techSkills== skills._id ) { %> selected <% }%> ><%= skills.name %></option>
+                                  <% } %>
+                                <% }); %>
+                              </select>
+                            </div>
+                            <div class="filterSearchJob col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                              <label>State</label>
+                              <select class="form-control" id="state" name="state">
+                                <option value="">Select Option</option>
+                                <% allStates.forEach((i)=> { %> <% if(i._id==data.state){ %>
+                                    <option selected value="<%= i._id %>" class="text-capitalize">
+                                      <%= i.name %>
+                                    </option>
+                                    <% } else { %>
+                                      <option value="<%= i._id %>" class="text-capitalize">
+                                        <%= i.name %>
+                                      </option>
+                                      <% } %>
+                                        <% }); %>
+                              </select>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 mt-2 text-right">
+                              <button
+                                class="btn btn-success  waves-effect waves-light  text-white d-inline px-lg-2 px-md-1 px-sm-2" id="search-button"
+                                type="submit">
+                                Go
+                              </button>
+                              <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white ml-xl-1 ml-lg-1 ml-md-0 ml-sm-1 ml-1"
+                                  href="/college/availablejobs">RESET</a>
+                            </div>
+                          </div>
+                          <div class="table-responsive">
+                            <table id="tblexportData" class="table table-hover-animation mb-0 table-hover">
+                              <thead>
+                                <tr>
+                                  <th>Qualification</th>
+                                  <th>Company</th>
+                                  <th>Job Type</th>
+                                  <th>Industry</th>
+                                  <th>City</th>
+                                  <th>State</th>
+                                  <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <% if (jobs && jobs.length> 0) { %>
+                                <% jobs.forEach((i)=> { %>
+                                  <tr>
+                                    <td class="text-capitalize">
+                                      <%= ! i._qualification ? "NA" : i._qualification.name %>
+                                    </td>
+                                    <td class="text-capitalize">
+                                      <%= !i._company ? "NA" : i._company.name %>
+                                    </td>
+                                    <td class="text-capitalize">
+                                      <%= !i.jobType ? "NA" : i.jobType %>
+                                    </td>
+                                    <td class="text-capitalize">
+                                      <%= ! i._industry ? "NA" : i._industry.name %>
+                                    </td>
+                                    <td class="text-capitalize">
+                                      <%= ! i.city ? "NA" : i.city.name %>
+                                    </td>
+                                    <td class="text-capitalize">
+                                      <%= !i.state ? "NA" : i.state.name %>
+                                    </td>
+                                    <td class="text-capitalize">
+                                      <a href="/college/job/<%= i._id%>"><i  class="fa-solid success mr-2 fa-eye"></i></a>
+                                    </td>
+                                  </tr>
+                                  <% }); %>
+                                  <% } else { %>
+                                    <td colspan="7" class="text-center mt-3">No result found</td>
+                                    <% } %>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <% include ./partials/footer%>
+  </body>

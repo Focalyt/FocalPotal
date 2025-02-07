@@ -1,0 +1,376 @@
+<% include ../../partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns" id="inner_job_page">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <div id="preloader"></div>
+        <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper"></div>
+          <section id="Concerned-Person ">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 px-3">
+                <div class="row">
+                  <div class="col-xl-4">
+                    <div class="card bg-white shadow">
+                      <div class="card-body">
+                        <div class="user-avatar-section">
+                          <div class="d-flex align-items-center flex-column border-bottom mb-2 pb-2">
+                            <% if (candidate.image) { %>
+                              <img class="img-fluid rounded mb-2 mt-2" height="60" width="80"
+                                src="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.image %>" alt="User avatar">
+                              <% } else { %>
+                                <img class="img-fluid rounded mb-2 mt-2" src="/images/elements/1.png" alt="User avatar">
+                                <% } %>
+                                  <div class="user-info text-center">
+                                    <h4 class="name">
+                                      <%=candidate.name%>
+                                    </h4>
+                                    <span class="exp-badge bg-label-secondary">
+                                      <%=candidate.isExperienced? 'Experienced' : 'Fresher' %>
+                                    </span>
+                                  </div>
+                          </div>
+                        </div>
+                        <div class="info-container">
+                          <ul class="list-unstyled">
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Gender:</span>
+                              <span class="name">
+                                <%=candidate.sex%>
+                              </span>
+                            </li>
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Mobile No.</span>
+                              
+                                  <span class="mobile">
+                                    <%=candidate.mobile%>
+                                  </span>
+                            </li>
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Email:</span>
+                              <span class="email">
+                                <%=candidate.email%>
+                              </span>
+                            </li>
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Experience:</span>
+                              <span class="exp-badge bg-label-success">
+                                <%=candidate.totalExperience?candidate.totalExperience + ' Years' : 'Fresher' %>
+                              </span>
+                            </li>
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Qualification:</span>
+                              <span><%=candidate.highestQualification ? qualification.find(i=>i._id == candidate.highestQualification)?.name: "NA" %></span>
+                            </li>
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Residence:</span>
+                              <% if (candidate.city && candidate.state) { %>
+                                <span>
+                                  <%=candidate.city?.name%> (<%=candidate.state?.name%>)
+                                </span>
+                                <% } else if (candidate.state) { %>
+                                  <span>
+                                    <%=candidate.state?.name%>
+                                  </span>
+                                  <% } else if (candidate.city) { %>
+                                    <span>
+                                      <%=candidate.city?.name%>
+                                    </span>
+                                    <% } else { %>
+                                      <span> NA</span>
+                                      <% } %>
+                            </li>
+                          </ul>
+                          <p id="subscription"></p>
+                          
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card bg-white shadow">
+                      <div class="card-body">
+
+                        <div class="info-container">
+                          <div class="justify-content-center text-center">
+                            <div class="col-xl-12">
+                              <img
+                                src="https://cloudvo.com/blog/wp-content/uploads/2017/10/download-1459071_960_720-350x350.png"
+                                class="down_img mb-2" draggable="false">
+                            </div>
+                            <div class="col-xl-12">
+                              <button onclick="addTextContent('<%= candidate._id%>')" id="loader"
+                                class="btn btn-primary me-3 waves-effect waves-light btn-sm" data-bs-target="#editUser"
+                                data-bs-toggle="modal" target="_blank">Download CV</button>
+                              <%if (candidate.resume) { %>
+                                <button id="loader" class="btn btn-primary me-3 waves-effect waves-light btn-sm" onclick="downloadCandidateResume()">Download Candidate's CV</button>
+                                <% } %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card bg-white shadow d-none">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0 py-1">
+                        <h4 class="card-title text-primary">Take Action</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="info-container">
+                          <div class="justify-content-center text-center">
+                            <div class="col-xl-12">
+                              <select class="form-control">
+                                <option>Select option</option>
+                                <option>Pending</option>
+                                <option>Shortlist</option>
+                                <option>Reject</option>
+                                <option>Offer</option>
+                                <option>Hired</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-8">
+                    <!-- User Pills -->
+                    <ul class="nav nav-pills flex-column flex-md-row mb-3 d-none">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="javascript:void(0);">
+                          <i class="ti ti-user-check ti-xs me-1"></i>QUALIFICATION</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">
+                          <i class="ti ti-lock ti-xs me-1"></i>SKILLS</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);l">
+                          <i class="ti ti-currency-dollar ti-xs me-1"></i>EXPERIENCE</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);"><i class="ti ti-bell ti-xs me-1"></i>LOCATION
+                          PREFERENCES</a>
+                      </li>
+                    </ul>
+                    <!--/ User Pills -->
+                    <!-- Project table -->
+                    <div class="content-body">
+                      <section class="list-view">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="card mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1 table_head_style shadow">Qualification Details</h4>
+                              </div>
+                              <div class="card-content">
+                                <div class="table-responsive">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Qualification</th>
+                                        <th>College</th>
+                                        <th>University</th>
+                                        <th>Grade/CGPA</th>
+                                        <th>Year of Passing</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                      <% candidate.qualifications.forEach((i)=> { %>
+                                        <tr>
+                                          <td>
+                                            <%=i.Qualification?.name ? i.Qualification?.name : 'NA' %>
+                                          </td>
+                                          <td>
+                                            <%=i.College?i.College:'NA' %>
+                                          </td>
+                                          <td>
+                                            <%=i.University ? i.University.name : 'NA' %>
+                                          </td>
+                                          <td>
+                                            <%=i.Result?i.Result:'NA' %>
+                                          </td>
+                                          <td>
+                                            <%=i.PassingYear ? i.PassingYear:'NA' %>
+                                          </td>
+                                        </tr>
+                                        <% }); %>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="card mt-1 mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1 table_head_style shadow">Technical Skills Details</h4>
+                              </div>
+                              <div class="card-content">
+                                <div class="table-responsive">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Technical</th>
+                                        <th>Media</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                      <% candidate.techSkills.forEach((i)=> { %>
+                                        <tr>
+                                          <td>
+                                            <%=i.id.name%>
+                                          </td>
+                                          <td><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + i.URL %>"
+                                              target="_blank">View</a></td>
+                                        </tr>
+                                        <% }); %>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="card mt-1 mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1 table_head_style shadow">Non Technical Skills Details</h4>
+                              </div>
+                              <div class="card-content">
+                                <div class="table-responsive">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Non Technical</th>
+                                        <th>Media</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                      <% candidate.nonTechSkills.forEach((i)=> { %>
+                                        <tr>
+                                          <td>
+                                            <%=i.id.name %>
+                                          </td>
+                                          <td><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + i.URL %>"
+                                              target="_blank">View</a></td>
+                                        </tr>
+                                        <% }); %>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="card mt-1 mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1 table_head_style shadow">Experience Details</h4>
+                              </div>
+                              <div class="card-content">
+                                <div class="table-responsive">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Duration</th>
+                                        <th>Company Name</th>
+                                        <th>Industry</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                      <% candidate.experiences.forEach((i)=> { %>
+                                        <tr>
+                                          <td>
+                                            <%=i.FromDate? moment(i.FromDate).format('MMM-YYYY') : ' NA ' %> To
+                                              <%=i.ToDate? moment(i.ToDate).format('MMM-YYYY') : ' NA ' %>
+                                          </td>
+                                          <td>
+                                            <%=i.Company_Name? i.Company_Name : 'NA' %>
+                                          </td>
+                                          <td>
+                                            <%=i.Industry_Name?.name ? i.Industry_Name?.name : 'NA' %>
+                                          </td>
+                                        </tr>
+                                        <% }); %>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="card mt-1 mb-5">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1 table_head_style shadow">Location Preferences</h4>
+                              </div>
+                              <div class="card-content">
+                                <div class="table-responsive">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Location 1</th>
+                                        <th>Location 2</th>
+                                        <th>Location 3</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                      <tr>
+                                        <!-- <%candidate.locationPreferences.forEach((location)=>{%>
+                                                  <td><%=location.city %></td>
+                                                  
+                                                  <%})%> -->
+                                        <td>
+                                          <%=candidate.locationPreferences[0]?.city?.name %>
+                                        </td>
+                                        <td>
+                                          <%=candidate.locationPreferences[1]?.city?.name %>
+                                        </td>
+                                        <td>
+                                          <%=candidate.locationPreferences[2]?.city?.name %>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <!-- /Project table -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+        </div>
+        <script>
+        
+          const element = document.getElementById('loader')
+          const preloader = $('#preloader');
+          preloader.hide();
+          function addTextContent(id) {
+            preloader.show();
+            axios.get(`/college/createResume/${id}`, {
+              headers: { 'x-auth': localStorage.getItem('token') }
+            }).then(res => {
+              preloader.hide();
+              window.open(res.data.uploadData, '_blank')
+            }).catch((err) => {
+              preloader.hide();
+              console.log(err.message)
+            })
+          }
+          function downloadCandidateResume() {
+            const url = "<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.resume %>"
+            window.open(url, '_blank')
+          }
+
+        </script>
+
+<% include ./partials/footer%>
+</div>

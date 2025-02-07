@@ -1,0 +1,82 @@
+
+<nav class="header-navbar navbar-expand-lg navbar navbar-with-menu floating-nav navbar-theme navbar-shadow">
+  <div class="navbar-wrapper">
+    <div class="navbar-container content">
+      <div class="navbar-collapse" id="navbar-mobile">
+        <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+          <ul class="nav navbar-nav">
+            <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs"
+                href="#"><i class="ficon feather icon-menu"></i></a></li>
+          </ul>
+          <ul class="nav navbar-nav bookmark-icons d-none">
+            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="mailto:info@focalyt.in" target="_top"
+                data-toggle="tooltip" data-placement="top" title="Email"><i
+                  class="ficon feather icon-mail text-white"></i></a></li>
+          </ul>
+        </div>
+        <ul class="nav navbar-nav float-right">
+          <li class="nav-item nav-search">
+            <div class="search-input">
+              <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
+              <input class="input" type="text" placeholder="Explore Vuexy..." tabindex="-1" data-search="template-list">
+              <div class="search-input-close"><i class="feather icon-x"></i></div>
+              <ul class="search-list search-list-main"></ul>
+            </div>
+          </li>
+       
+          <li class="dropdown dropdown-user nav-item" id="logout-block"><a
+              class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+              <div class="user-nav d-sm-flex d-flex">
+                <span class="user-name text-bold-600 text-white text-capitalize mb-0" id="user-name"></span>
+                <span class="text-white">
+                  <ul class="list-unstyled">
+                    <li>
+                      <span class="user-status text-white">Available</span>
+                    </li>
+                  </ul>
+                </span>
+              </div>
+                <span><img src="/images/loader.png" alt="avatar" height="40" width="40"></span>
+              </a>
+            <div class="dropdown-menu dropdown-menu-right" id="logout-div">
+              <a class="dropdown-item" href="/college/myProfile"><i class="feather icon-user"></i> Edit
+                Profile</a>
+              <div class="dropdown-divider"></div><a class="dropdown-item" onclick="logout()" href="#"><i
+                  class="feather icon-power"></i>
+                Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<script>
+  $('#user-name').text('Welcome ' + localStorage.getItem('name'))
+  $('#name-of-user').text(localStorage.getItem('name'))
+  const logoutBlock = document.getElementById('logout-div');
+  logoutBlock.addEventListener('click', () => {
+    $('#logout-div').toggleClass('show')
+  })
+
+  const logout = e => {
+    $.ajax({
+      type: 'GET',
+      url: '/api/logout',
+      headers: { 'x-auth': localStorage.getItem('token') },
+      success: (res) => {
+        localStorage.clear()
+        sessionStorage.clear();
+        window.location.href = '/college/login'
+      }
+    });
+  }
+
+
+  $(document).on("click", function(e) {
+  var logoutDiv = $("#logout-div");
+  if (!logoutDiv.is(e.target) && logoutDiv.has(e.target).length === 0) {
+    logoutDiv.removeClass("show");
+  }
+});
+  </script>

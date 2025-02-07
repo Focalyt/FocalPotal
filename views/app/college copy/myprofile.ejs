@@ -1,0 +1,643 @@
+<% include ../../partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper">
+            <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+              <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                  <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Your Profile </h3>
+                    <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                        <!-- <li class="breadcrumb-item"><a href="/candidate/dashboard">Home</a>
+                        </li> -->
+                        <li class="breadcrumb-item"><a href="#">Your Profile</a>
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section id="upload-image-template">
+              <template>
+                <input type="file" class="form-control" id="candidate-file" value=""
+                  onchange="imageChangeHandler(event)">
+                <input type="hidden" class="form-control" name="image" id="profilepic" value="" />
+                <div class="col-xl-3 mb-1">
+              </template>
+            </section>
+
+
+            <section id="representativeTemplate">
+              <template>
+                <div class="row representativerow">
+                  <div class="col-xl-2 mb-1">
+                    <label>Name</label>
+                    <input class="form-control" type="text" value="" name="name"
+                      onkeypress="if(this.value.length==25) return false" maxlength="25">
+                  </div>
+                  <div class="col-xl-2 mb-1">
+                    <label>Designation</label>
+                    <input class="form-control" type="text" value="" name="designation"
+                      onkeypress="if(this.value.length==25) return false" maxlength="25">
+                  </div>
+                  <div class="col-xl-2 mb-1">
+                    <label>Email</label>
+                    <input class="form-control" type="text" value="" name="email"
+                      onkeypress="if(this.value.length==30) return false" maxlength="30">
+                  </div>
+                  <div class="col-xl-2 mb-1">
+                    <label>Contact Number</label>
+                    <input class="form-control" type="text" value="" name="email"
+                      onkeypress="return checkMobileNumber(this.value)" maxlength="10">
+                  </div>
+
+                </div>
+
+              </template>
+            </section>
+
+            <form method="post">
+              <section id="college-info">
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12">
+                    <div class="card">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0">
+                        <h4 class="card-title pb-1">College Information</h4>
+                      </div>
+                      <div class="card-content">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1">
+                              <label>College Name<span class="mandatory"> *</span></label>
+                              <input type="text" name="name" class="form-control" id="collegename"
+                                value="<%=college.name%>" onkeypress="if(this.value.length==30) return false"
+                                maxlength="30" required>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1 mb-1">
+                              <label>State <span class="mandatory"> *</span></label>
+                              <select class="form-control" name="stateId" id="state" value="">
+                                <option value="">Select Option</option>
+                                <% state?.forEach((i)=> { %>
+                                  <option value="<%= i._id %>" <% if (college.stateId?.toString()==i._id.toString()) { %> selected<%}%>
+                                      class="text-capitalize">
+                                      <%= i.name %>
+                                  </option>
+                                  <% }); %>
+                              </select>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1 mb-1">
+                              <label>City <span class="mandatory"> *</span></label>
+                              <select class="form-control" name="cityId" id="city" value="">
+                                <option value="">Select City</option>
+                                <% city.forEach((i)=> { %>
+                                  <% if (college.cityId?.toString()==i._id) { %>
+                                    <option value="<%= i._id %>" class="text-capitalize cityclass" selected>
+                                      <%= i.name %>
+                                    </option>
+                                    <% } else { %>
+                                      <option value="<%= i._id %>" class="text-capitalize cityclass">
+                                        <%= i.name %>
+                                      </option>
+                                      <% } %>
+                                        <% }); %>
+
+                              </select>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1" id="loc-field">
+                              <label for="work-loc">Work Location<span class="mandatory"> *</span></label>
+                              <div class="input-group mb-2">
+                              <div class="input-group-prepend bg-locat">
+                              <div class="input-group-text bg-intext"><img src="/images/isist.png" id="siteforcomp" ></div>
+                              </div>
+                               <input type="text" class="form-control" id="work-loc" value="<%= college?.place %>">
+                                <input type="hidden" id="place" name="place" value="" class="form-control" />
+                                <input type="hidden" id="latitude" name="latitude" value="" class="form-control" />
+                                <input type="hidden" id="longitude" name="longitude" value="" class="form-control" />
+                              </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1 mb-1">
+                              <label>University <span class="mandatory"> *</span></label>
+                              <select class="form-control text-capitalize" id="university" name="_university" value="">
+                                <option value="">Select Option</option>
+                                <% university?.forEach((i)=> { %>
+                                  <option value="<%= i._id %>" <% if (college._university?.toString()==i._id.toString()) { %> selected<%}%> class="text-capitalize">
+                                    <%= i.name %>
+                                  </option>
+                                  <% }); %>
+                              </select>
+                            </div>
+                          
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1 mb-1">
+                              <label>Website</label>
+                              <input type="text" name="website" class="form-control" value="<%=college.website%>"
+                                maxlength="100" id="website" onkeypress="if(this.value.length==100) return false">
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1 mb-1">
+                              <label>Linkedin URL</label>
+                              <input type="text" name="linkedin" class="form-control" value="<%=college.linkedin%>"
+                                id="linkedin-url">
+                            </div>
+
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1 mb-1">
+                              <label>Facebook</label>
+                              <input type="text" name="facebook" class="form-control" value="<%=college.facebook%>"
+                                id="facebook-url" onkeypress="if(this.value.length==100) return false">
+                            </div>
+                          
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1 mb-1">
+                              <label>Zipcode</label>
+                              <input type="number" onkeypress="if(this.value.length==6) return false" name="zipcode"
+                                maxlength="6" value="<%= college.zipcode %>" class="form-control" id="zipcode">
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1 mb-1">
+                              <label>Address</label>
+                              <textarea class="form-control" name="address" id="address" cols="3"
+                                onkeypress="if(this.value.length==150) return false" maxlength="150"
+                                rows="3"><%=college.address%></textarea>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1 mb-1">
+                              <label>Description</label>
+                              <textarea class="form-control" name="description" id="description" cols="3" rows="3"
+                                onkeypress="if(this.value.length==500) return false"
+                                maxlength="500"><%=college.description%></textarea>
+                            </div>
+                            <div class="col-xl-1 col-lg-1 col-md-6 mb-0 mt-2" style="align-self: center;">
+                              <div class="image-upload"></div>
+                              <% if (college?.logo) { %>
+                                <label for="uploadlogo" style="cursor: pointer;">
+                                  <img src="<%= process.env.MIPIE_BUCKET_URL +'/' + college?.logo %>"
+                                    class="pointer companylogo" height="auto" width="60">
+                                  <img style="display:none" class="custom-cursor-pointer default"
+                                    src="/images/add_receipt.png" width="60" height="auto" id="logopic" /></label>
+                                <i class="feather icon-x remove_uploaded_pic pointer" style="color:red;"
+                                  id="removelogo"></i>
+                                College Logo
+                                <% } else { %>
+                                  <label for="uploadlogo" style="cursor: pointer; align-self: center;">
+                                    <img class="custom-cursor-pointer default" src="/images/add_receipt.png" width="60"
+                                      height="auto" id="logopic" /></label>
+                                  <i style="color:red;display:none" id="removelogo"
+                                    class=" pointer feather  icon-x remove_uploaded_pic"></i>
+                                  <p class="mt-1 custom-cursor-pointer">
+                                    <label>Upload logo</label>
+                                  </p>
+                                  <% } %>
+
+                                    <input id="uploadlogo" data-id="logo" type="file" name="filelogo"
+                                      class="my-logo-uploader form-control" style="display:none;" />
+                                    <input type="hidden" class="form-control hiddenlogo" name="logo" id="logo"
+                                      value="<%=college?.logo %>" />
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </section>
+              <section id="Concerned-Person">
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12">
+                    <div class="card">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0">
+                        <h4 class="card-title pb-1">Concerned Person</h4>
+                      </div>
+                      <div class="card-content">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1">
+                              <label>Name <span class="mandatory"> *</span></label>
+                              <input type="text" name="name" class="form-control" id="username"
+                                value="<%= college._concernPerson.name %>" maxlength="25" required>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1">
+                              <label>Designation<span class="mandatory"> *</span></label>
+                              <input class="form-control" onkeypress="if(this.value.length==25) return false"
+                                maxlength="25" name="designation" type="text" id="designation"
+                                value="<%= college._concernPerson.designation %>">
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1">
+                              <label>Email<span class="mandatory"> *</span></label>
+                              <input type="email" name="email" class="form-control" id="email"
+                                value="<%= college._concernPerson.email %>"
+                                onkeypress="if(this.value.length==30) return false" maxlength="30" required>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 mb-1">
+                              <label>Contact Number<span class="mandatory"> *</span></label>
+                              <input type="number" name="mobile" class="form-control" id="mobile"
+                                value="<%= college._concernPerson.mobile %>" disabled>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+
+              <section id="representativeinfo">
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12">
+                    <div class="card">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0">
+                        <h4 class="card-title pb-1">College Representative</h4>
+                      </div>
+                      <div class="card-content">
+                        <div class="card-body">
+                          <div id="representativeList">
+                            <% if (college.collegeRepresentatives?.length>0) { %>
+                              <% college.collegeRepresentatives.forEach((exec,index)=> { %>
+                                <div class="row representativerow">
+                                  <div class="col-xl-2 mb-1">
+                                    <label>Name</label>
+                                    <input class="form-control" type="text" value="<%= exec.name%>" name="name"
+                                      maxlength="25" onkeypress="if(this.value.length==25) return false">
+                                  </div>
+                                  <div class="col-xl-2 mb-1">
+                                    <label>Designation</label>
+                                    <input class="form-control" type="text" value="<%= exec.designation%>"
+                                      name="designation" onkeypress="if(this.value.length==25) return false"
+                                      maxlength="25">
+                                  </div>
+                                  
+                                  <div class="col-xl-2 mb-1">
+                                    <label>Email</label>
+                                    <input class="form-control" type="text" value="<%= exec.email%>" name="email"
+                                      onkeypress="if(this.value.length==30) return false" maxlength="30">
+                                  </div>
+                                  <div class="col-xl-2 mb-1">
+                                    <label>Contact Number</label>
+                                    <input class="form-control" type="text" value="<%= exec.mobile%>" name="mobile"
+                                      onkeypress="return checkMobileNumber(this.value)" maxlength="10">
+                                  </div>
+                                  <% if (index===0) { %>
+                                    <div class="col-xl-2 my-auto">
+                                      <a class="btn btn-success text-white" id="add-button">+</a>
+                                    </div>
+                                    <% } %>
+  
+                                </div>
+  
+                                <% }); %>
+  
+                                  <% } else { %>
+                                    <div class="row representativerow">
+                                      <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12 mb-1">
+                                        <label>Name</label>
+                                        <input class="form-control" type="text" value="" name="name"
+                                          onkeypress="if(this.value.length==25) return false" maxlength="25">
+                                      </div>
+                                      <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12 mb-1">
+                                        <label>Designation</label>
+                                        <input class="form-control" type="text" value="" name="designation"
+                                          onkeypress="if(this.value.length==25) return false" maxlength="25">
+                                      </div>
+                                      <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12 mb-1">
+                                        <label>Email</label>
+                                        <input class="form-control" type="text" value="" name="email"
+                                          onkeypress="if(this.value.length==30) return false" maxlength="30">
+                                      </div>
+                                      <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12 mb-1">
+                                        <label>Contact Number </label>
+                                        <input class="form-control" type="text" value="" name="mobile"
+                                          onkeypress="return checkMobileNumber(this.value)" maxlength="10">
+                                      </div>
+                                      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 my-auto">
+                                        <a class="btn btn-success text-white" id="add-button">+</a>
+                                      </div>
+                                      
+                                    </div>
+                                    <% } %>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-xl-12 text-right">
+                              <a class="btn btn-danger" value="Reset" id="reset-btn">Reset</a>
+                              <a class="btn btn-success text-white" id="save-button">Save</a>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-xl-12">
+                              <div id="msg" style="color:red; display:none;">
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </form>
+          </div>
+        </div>
+        <script
+        src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE%>&callback=initMap&libraries=places&v=weekly"
+        defer></script>
+        <script>
+          function initMap() {
+            const options = {
+                componentRestrictions: { country: "in" },
+                types: ["establishment"]
+            };
+            
+            const location = document.getElementById("work-loc")
+            var _addEventListener = (location.addEventListener) ? location.addEventListener : location.attachEvent;
+            var arrowEvent = false;
+        function addEventListenerWrapper(type, listener) {
+            if (type == "keydown") {
+                var orig_listener = listener;
+                listener = function(event) {
+                    var suggestion_selected = $("#work-loc-selected").length > 0;
+                    if(event.which == 38 || event.which == 40){
+                      arrowEvent = true
+                    }
+                    else if (event.which == 13 && !suggestion_selected && arrowEvent == false){
+                        var simulated_downarrow = $.Event("keydown", {
+                            keyCode: 40,
+                            which: 40
+                        });
+                        orig_listener.apply(location, [simulated_downarrow]);
+                    }
+
+                    orig_listener.apply(location, [event]);
+                };
+            }
+
+            _addEventListener.apply(location, [type, listener]);
+        }
+
+        location.addEventListener = addEventListenerWrapper;
+        location.attachEvent = addEventListenerWrapper;
+
+        var autocomplete = new google.maps.places.Autocomplete(location,options);
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            let place = autocomplete.getPlace();
+            document.getElementById('place').value = location.value;
+            document.getElementById('latitude').value = place.geometry.location.lat();
+            document.getElementById('longitude').value = place.geometry.location.lng();
+        });            
+        }
+        window.initMap = initMap;
+        </script>
+        <script>
+          $(document).ready(function () {
+            $('#uploadlogo').change(function (e) {
+              let filename = e.target.files[0].name
+              let type = e.target.files[0].type;
+              let size = e.target.files[0].size;
+              if (!checkImageSize(size) || !checkImageValidation(type)) {
+                $('#uploadlogo').val('');
+                alert("This format not accepted and each image should be 2MB")
+              } else {
+                let body = {
+                  file: e.target.files[0]
+                }
+                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+                axios.post('/api/uploadSingleFile', body, header)
+                  .then(result => {
+                    if (result.data.status) {
+                      $('#logo').val(result.data.data.Key)
+                      $('#logopic').attr('src', result.data.data.Location)
+                      $('#removelogo').show();
+                    }
+                  })
+              }
+            });
+
+            $('#removelogo').click(() => {
+              $('#logopic').attr('src', `/images/add_receipt.png`)
+              $('#removelogo').hide();
+              header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+              let data = {
+                key: $('#logo').val()
+              }
+              axios.post('/api/deleteSingleFile', data, header)
+                .then(result => {
+                  $('.companylogo').hide()
+                  $('#logopic').show()
+                  if (result.status) {
+                    axios.post("/company/removelogo", data).then(() => console.log('deleted'))
+                  }
+                })
+              return false;
+            })
+            $('#state').change(function (e) {
+              let stateId = e.target.value
+
+              header = { headers: { 'x-auth': localStorage.getItem('token') } }
+
+              axios.get('/company/getcitiesbyId', { params: { stateId } }, header)
+                .then(result => {
+                  if (result.data.cityValues.length > 0) {
+                    $('select#city option.cityclass').remove();
+                    let options
+                    result.data.cityValues.forEach(i => {
+                      options = options + `<option value="${i._id}" class="text-capitalize cityclass">${i.name}</option>`
+                    })
+                    $('select#city').append(options);
+                  }
+                })
+            });
+            $('#add-button').bind('click', () => {
+              let html = $('#representativeTemplate template').html();
+              $('#representativeList').append(html);
+            })
+
+            $('#save-button').bind('click', () => {
+              if (!validateForm()) {
+                let body = {
+                  concernedPerson: getPersonInformation(),
+                  collegeInfo: getCollegeInfo(),
+                  representativeInfo: getRepresentativeInfo()
+                }
+
+                header = { headers: { 'x-auth': localStorage.getItem('token') } }
+                axios.post('/college/myprofile', body, header)
+                  .then(result => {
+                    window.location.href = "/college/myprofile";
+                  })
+              }
+            })
+            $('#reset-btn').bind('click', () => {
+              window.location.href = "/college/myprofile";
+            })
+
+            function validateForm() {
+              $('.error').removeClass('error')
+              $('#msg').hide();
+
+              let collegename = $('#collegename')
+              let state = $('#state')
+              let city = $('#city')
+              let university = $('#university')
+              let email = $('#email')
+              let designation = $('#designation')
+              let mobile = $('#mobile')
+              let hasError = false
+              let firstError
+              const currentLocation=document.getElementById('work-loc');
+              let currentLoc=currentLocation.value;
+              if (!$(collegename).val().trim()) {
+                $(collegename).parent().addClass('error');
+                firstError = firstError ? firstError : $(collegename)
+                hasError = true
+              }
+
+              if(currentLoc.trim()===""){
+              $('#loc-field').addClass('error')
+              firstError=firstError?firstError:$('#work-loc')
+              hasError = true
+            }
+
+              if (!$(state).val().trim()) {
+                $(state).parent().addClass('error')
+                firstError = firstError ? firstError : $(state)
+                hasError = true
+              }
+              if (!$(city).val().trim()) {
+                $(city).parent().addClass('error')
+                firstError = firstError ? firstError : $(city)
+                hasError = true
+              }
+
+              if (!$(university).val().trim()) {
+                $(university).parent().addClass('error')
+                firstError = firstError ? firstError : $(university)
+                hasError = true
+              }
+
+              if (!username) {
+                $('#username.form-control').parent().addClass('error')
+                firstError = firstError ? firstError : $('#username.form-control')
+                hasError = true
+              }
+
+              if (!$(designation).val().trim()) {
+                $(designation).parent().addClass('error');
+                firstError = firstError ? firstError : $(designation)
+                hasError = true
+              }
+
+              if (!checkEmail($(email).val().trim())) {
+                $(email).parent().addClass('error')
+                firstError = firstError ? firstError : $(email)
+                hasError = true
+              }
+
+              if (!checkMobile($(mobile).val().trim())) {
+                $(mobile).parent().addClass('error')
+                firstError = firstError ? firstError : $(mobile)
+                hasError = true
+              }
+
+              $(firstError).focus()
+              return hasError
+            }
+
+            const mobile = document.getElementById('mobile')
+            mobile.addEventListener('keypress', (e) => {
+              let k = e.which;
+              if (k > 58 || k < 48)
+                e.preventDefault();
+            })
+
+            const checkMobile = (number) => {
+              if (number.length == 10 && !isNaN(number)) return true
+              else return false
+            }
+            const checkEmail = (email) => {
+              if (!email) {
+                return false
+              }
+              let emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
+              return emailReg.test(email);
+            }
+            function getPersonInformation() {
+              let personalObj = {}
+              $('#Concerned-Person').find('.form-control').each(function () {
+                let type = $(this).prop("type");
+                let name = $(this).prop("name")
+                let val = $(this).val()
+                if (val !== '' && type != "button" && type != "submit" && type != "file"&&name!=="") {
+                  personalObj[name] = val
+                }
+              });
+              return personalObj;
+            }
+
+
+            function getCollegeInfo() {
+              let collegeObj = {}
+              $('#college-info').find('.form-control').each(function () {
+                let type = $(this).prop("type");
+                let name = $(this).prop("name")
+                let val = $(this).val()
+                if (val !== '' && type != "button" && type != "submit" && type != "file") {
+                  collegeObj[name] = val
+                }
+              });
+              return collegeObj;
+            }
+
+
+            function getRepresentativeInfo() {
+              let representativeArray = []
+              $('#representativeinfo .representativerow').each(function () {
+                let self = this
+                let locObj = {}
+                $(self).find('.form-control').each(function () {
+                  let type = $(this).prop("type");
+                  let name = $(this).prop("name")
+                  let val = $(this).val()
+                  if (val !== '' && type != "button" && type != "submit" && type != "file") {
+                    locObj[name] = val
+                  }
+                });
+                if (!$.isEmptyObject(locObj)) {
+                  representativeArray.push(locObj)
+                }
+
+              })
+              return representativeArray
+            }
+
+            const checkImageSize = (size) => {
+              let finalSize = ((size / 1024) / 1024);
+              if (finalSize > 2) {
+                return false
+              }
+              return true;
+            }
+
+            const checkImageValidation = (file) => {
+              let regex = /(\/jpg|\/jpeg|\/png)$/i
+              return regex.test(file)
+            }
+          });
+
+          function checkMobileNumber(number) {
+              if (number.length <= 10 && !isNaN(number)){
+                return true
+              } 
+              else return false
+            }
+        </script>
+        <% include ./partials/footer%>

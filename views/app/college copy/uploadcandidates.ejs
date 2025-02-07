@@ -1,0 +1,263 @@
+<% include ../../partials/header %>
+ <!-- <style>
+.right-element{
+    justify-content: flex-end!important;
+}
+</style>  -->
+
+
+
+
+    <% include ./partials/navbar%>
+        <% include ./partials/leftpane%>
+
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns">
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <div class="col-12 mb-2">
+                    <div class="row breadcrumbs-top justify-content-between align-items-center flex-wrap"
+                        style="flex-wrap: nowrap">
+                        <div class="col-12 col-sm-auto text-center text-sm-left">
+                            <h4 class="content-header-title mb-0 mx-3 text-upload">Upload Candidates</h4>
+                        </div>
+                        <div class="col-12 col-sm-auto text-center">
+                            <form action="/college/single" method="get">
+                                <button type="submit" class="btn btn-success lovepreet">Download Sample</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="preloader"></div>
+            <div class="content-body">
+                <% include ../../partials/flash %>
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="custom-bulk-align card mb-0">
+                        <div class="content-header row d-xl-block d-lg-block d-md-block d-sm-block d-block">
+                            <div class="col-12 rounded equal-height-2 coloumn-2">
+                                <div class="content-header-left col-md-12 col-12">
+                                    <div class="row breadcrumbs-top p-1">
+                                        <div class="col-12">
+                                            <!-- <h3 class="content-header-title float-left mb-0">
+                                                Choose File
+                                            </h3><br><br> -->
+                                            <form action="/college/uploadfiles"
+                                                id="candidateUpload" method="post"
+                                                enctype="multipart/form-data">
+                                                <input style="display:block;" type="file"
+                                                    id="myFile" name="filename" />
+                                                <div class="custom-bulkupload-btn-block"
+                                                    style="display:block;">
+                                                    <button type="submit"
+                                                        class="btn btn-success my-1 mt-2"
+                                                        id="submitBtn">
+                                                        Submit
+                                                    </button>
+                                                </div>
+
+
+                                                <!-- <div class="row">
+                                                    <div class="col-xl-12">
+                                                        <div id="msg"
+                                                            style="color:red; display:none;">
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            </form>
+
+
+                                        </div>
+                                        <div class="col-12">
+                                            
+                                                <div class="card-content">
+                                                    <div class="table-responsive">
+                                                        <% if (imports && imports.length> 0) { %>
+                                                        <table
+                                                            class="table table-hover-animation mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>NAME</th>
+                                                                    <th>MESSAGE</th>
+                                                                    <th>STATUS</th>
+                                                                    <th>RECORD INSERTED</th>
+                                                                    <th>DATE TIME</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% let count=0 %>
+                                                                <% imports.forEach((l, i)=> { %>
+                                                                <tr>
+                                                                    <td class="text-capitalize">
+                                                                        <%= l.name %>
+                                                                    </td>
+                                                                    <td class="text-capitalize">
+                                                                        <!-- <img
+                                                                                    src="https://mmt-all.s3.ap-south-1.amazonaws.com/<%= l.image %>"
+                                                                                    width="50"
+                                                                                /> -->
+                                                                        <div
+                                                                            style="max-height:200px !important; overflow:auto !important;">
+                                                                            <%- l.message %>
+                                                                        </div>
+
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <%- l.status %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%- l.record %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= moment(l.createdAt).format('Do MMMM, YYYY HH:mm') %>
+                                                                    </td>
+
+                                                                    <!-- <td>
+                                                                                        <a class="btn btn-success"
+                                                                                            href="/college/candidate/createResume/<%= l._id %>">Create
+                                                                                            Resume</a>
+                                                                                    </td> -->
+                                                                    </a>
+
+                                                                    <% if(l.status) { %>
+
+                                                                    <% } else { %>
+
+                                                                    </label>
+                                                                    <% } %>
+                                                    </div>
+                                                    </td>
+                                                    </tr>
+                                                    <% }) %>
+                                                    </tbody>
+                                                    </table>
+                                                    <% } else { %>
+                                                    <p class="text-center mt-3">No result found
+                                                    </p>
+                                                    <% } %>
+                                                   
+                                                </div>
+                                               
+                                        </div>
+                                        <% if (totalPages> 1) { %>
+                                            <ul class="pagination  justify-content-end mb-0 mt-3">
+                                                <% let first=1 %>
+                                                    <% let last=totalPages> 4 ? 4 :
+                                                        totalPages %> <% if (totalPages> 4 && page >= 2) { %> <%
+                                                                first=page - 1 %>
+                                                                <% last=page + 1 %>
+                                                                    <% if (last>
+                                                                        totalPages) last = totalPages %> <% } %>
+                                                                            <% if (first>
+                                                                                1) { %>
+                                                                                <li class="page-item">
+                                                                                    <a class="pageAnchor page-link"
+                                                                                        href="<%= 1 %>">First</a>
+                                                                                </li>
+                                                                                <% } %>
+                                                                                    <% for (let i=first; i <=last; i
+                                                                                        +=1) { %>
+                                                                                        <% if (i===page) { %>
+                                                                                            <li
+                                                                                                class="active page-item">
+                                                                                                <a href="javascript:void()"
+                                                                                                    class="page-link">
+                                                                                                    <%= i %>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <% } else { %>
+                                                                                                <li
+                                                                                                    class="page-item">
+                                                                                                    <a class="page-link pageAnchor"
+                                                                                                        href="<%= i %>">
+                                                                                                        <%= i %>
+                                                                                                    </a>
+                                                                                                </li>
+                                                                                                <% } %>
+                                                                                                    <% } %>
+                                                                                                        <% if
+                                                                                                            (totalPages>
+                                                                                                            last)
+                                                                                                            { %>
+                                                                                                            <li
+                                                                                                                class="page-item">
+                                                                                                                <a class="pageAnchor page-link"
+                                                                                                                    href="<%= last + 1 %>">...</a>
+                                                                                                            </li>
+                                                                                                            <li
+                                                                                                                class="page-item">
+                                                                                                                <a class="pageAnchor page-link"
+                                                                                                                    href="<%= totalPages %>">Last</a>
+                                                                                                            </li>
+                                                                                                            <% } %>
+                                            </ul>
+                                            <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        </div> 
+                    </div>
+                </section>
+                <% include ./partials/footer %>
+            </div>
+
+            <script>
+                const preloader = $('#preloader');
+                preloader.hide();
+                $('#candidateUpload').submit(function () {
+                    preloader.show();
+                    return true;
+                });
+            </script>
+            <script>
+                $(document).ready(function () {
+                    const isProfileCompleted = "<%= isProfileCompleted %>"
+                    if (isProfileCompleted === 'false') {
+                        $('#msg').show();
+                        $('#msg').text("Please Complete Your profile");
+
+                        $('#submitBtn').attr('disabled', `disabled`)
+                        $('#submitBtn').addClass('disabled')
+                    }
+
+                })
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const pageAnchors = document.querySelectorAll("a.pageAnchor");
+                    const {
+                        origin,
+                        pathname,
+                        search
+                    } = window.location;
+                    let searchParams = search.split("?")[1];
+                    let obj;
+                    let url = `${origin}${pathname}?`;
+                    if (searchParams) {
+                        obj = JSON.parse(
+                            '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+                            function (key, value) {
+                                return key === "" ? value : decodeURIComponent(value);
+                            }
+                        );
+                        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+                        keyArr.forEach((x) => {
+                            if (x !== "page") {
+                                url += `${x}=${obj[x]}&`;
+                            }
+                        });
+                    }
+                    pageAnchors.forEach((el) => {
+                        const n = el.getAttribute("href");
+                        el.setAttribute("href", `${url}page=${n}`);
+                    });
+                });
+            </script>

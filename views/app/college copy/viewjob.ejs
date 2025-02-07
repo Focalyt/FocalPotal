@@ -1,0 +1,390 @@
+<% include ../../partials/header %>
+
+  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static" data-open="click"
+    data-menu="vertical-menu-modern" data-col="2-columns" id="inner_job_page">
+
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
+        <div class="app-content content">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper"></div>
+          <section id="Concerned-Person ">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 px-3">
+                <div class="row">
+                  <div class="col-xl-4">
+                    <div class="card bg-white shadow">
+                      <div class="card-body">
+                        <div class="user-avatar-section">
+                          <div class="d-flex align-items-center flex-column border-bottom mb-1 pb-1">
+                            <div class="user-info text-center">
+                              <img src="<%= process.env.MIPIE_BUCKET_URL +'/' + jobDetails._company.logo %>" alt=""
+                                class="img-fluid border rounded p-1 shadow" width="50%" draggable="false">
+                              <h4 class="mt-2">
+                                <%= !jobDetails._company.name ? "NA" : jobDetails._company.name %>
+                              </h4>
+                              <div class="" >
+                             
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p class="mt-1 small text-uppercase text-muted font-weight-bold">Details</p>
+                        <div class="info-container">
+                          <ul class="list-unstyled">
+                            <li class="mb-1">
+                              <span class="font-weight-bold">Company Name:</span>
+                              <span>
+                                <%= !jobDetails._company?.name ? "NA" : jobDetails._company?.name %>
+                              </span>
+                            </li>
+
+
+                            <li class="mb-1 ">
+                              <span class="font-weight-bold">City:</span>
+                              <span>
+                                <%= !city ? "NA" : city.name %>
+                              </span>
+                            </li>
+                            <li class="mb-1 State">
+                              <span class="font-weight-bold">State:</span>
+                              <span>
+                                <%= !state ? "NA" : state.name %>
+                              </span>
+                            </li>
+                            <li>
+                              <a href="<%= !jobDetails._company.twitter? "" :jobDetails._company?.twitter %>" target="_blank"><i
+                                class="fa-brands fa-twitter" style='font-size:25px;color: #00ACEE;padding:5px'></i></a>
+                            <a href="<%= !jobDetails._company.facebook? "" :jobDetails._company?.facebook %>"
+                              target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"
+                                style='font-size:25px;color:  #0A66C2;padding:5px'></i></a>
+                            <a href="<%= !jobDetails._company.linkedin? "" :jobDetails._company?.linkedin %>"
+                              target="_blank"><i class='fa fa-linkedin'
+                                style='font-size:25px;color: #0A66C2;padding:5px'></i></a>
+                            </li>
+                          </ul>
+
+                          <div class="d-none">
+                            <a href="javascript:;" class="btn btn-primary me-3 waves-effect waves-light btn-sm"
+                              data-bs-target="#editUser" data-bs-toggle="modal">UNMASK / MASK</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+              <div class="card bg-white shadow">
+                <div class="card-body p-0">
+                  <div class="info-container">
+                    <div class="row justify-content-center">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="card mb-3">
+                        <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                          <h4 class="card-title"><img src="/images/icons/media.png" class="img-fluid pr-1">Media Gallery</h4>
+                        </div>
+                        <div class="card-content">
+                          <div class="col-xl-12 pb-1">
+                            <% jobDetails._company.mediaGallery.forEach((i)=> { %>
+                              <img src="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>" class="img-fluid p-1"
+                                style="width:150px;height:auto;">
+                              <% }); %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                  </div>
+
+
+                  </div>
+                  <div class="col-xl-8">
+                    <!-- User Pills -->
+                    <ul class="nav nav-pills flex-column flex-md-row mb-3 d-none">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="javascript:void(0);">
+                          <i class="ti ti-user-check ti-xs me-1"></i>Qualification</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">
+                          <i class="ti ti-lock ti-xs me-1"></i>Job Type</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">
+                          <i class="ti ti-currency-dollar ti-xs me-1"></i>City</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);"><i class="ti ti-bell ti-xs me-1"></i>State</a>
+                      </li>
+                    </ul>
+                    <!--/ User Pills -->
+                    <!-- Project table -->
+                    <div class="content-body">
+                      <section class="list-view">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="card mb-2">
+                              <div class="card-header">
+                                <h4 class="card-title pb-1">
+                                  <img src="/images/icons/profile_title.png" class="img-fluid pr-1"><%= jobDetails.title %>
+                                </h4>
+                              </div>
+                              <div class="card-content">
+                                <div class="table-responsive">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Qualification</th>
+                                        <th>Job Type</th>
+                                        <th>Experience</th>
+                                        <th>City(Job Location)</th>
+                                        <th>State(Job Location)</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                      <tr>
+                                        <td>
+                                          <%= !jobDetails._qualification ? "NA" : jobDetails._qualification.name %>
+                                        </td>
+                                        <td>
+                                          <%= !jobDetails.jobType ? "NA" : jobDetails.jobType %>
+                                        </td>
+                                        <td>
+                                          <%= !jobDetails.experience ? "Fresher" : jobDetails.experience %>
+                                        </td>
+                                        <td>
+                                          <%= !jobDetails.city ? "NA" : jobDetails.city.name %>
+                                        </td>
+                                        <td>
+                                          <%= !jobDetails.state ? "NA" : jobDetails.state.name %>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card mt-1 mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                <h4 class="card-title"><img src="/images/icons/description.png" class="img-fluid pr-1">Description</h4>
+                              </div>
+                              <div class="card-content " id="jobDescription">
+                                <div class="table-responsive ">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <tbody id="table-body">
+                                      <tr>
+                                        <td>
+                                          <%= !jobDetails.jobDescription ? "" : jobDetails.jobDescription %>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card mt-1 mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                <h4 class="card-title"><img src="/images/icons/skills.png" class="img-fluid pr-1">Skills</h4>
+                              </div>
+                              <div class="card-content">
+                                <div class="table-responsive text-capitalize">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th> Technical</th>
+                                        <th> Non Technical</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                      <tr>
+                                        <td>
+                                          <% jobDetails._techSkills?.forEach((i) => { %>  
+                                            <li><%= !i.name ? "NA" : i.name %></li>
+                                          <% }); %>
+                                        </td>
+                                        <td>
+                                          <% jobDetails._nonTechSkills?.forEach((i) => { %>  
+                                            <li><%= !i.name ? "NA" : i.name %></li>
+                                          <% }); %>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card mt-1 mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                <h4 class="card-title"><img src="/images/icons/other.png" class="img-fluid pr-1">Other Details</h4>
+                              </div>
+                              <div class="card-content">
+                                <div class="table-responsive text-capitalize">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th> Industry</th>
+                                        <th> Job Category</th>
+                                        <th>Compensation</th>
+                                        <th> Pay Type</th>
+                                        <th> Shift</th>
+                                        <th> Work Type</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                      <tr>
+                                        <td>
+                                          <%= !jobDetails._industry? "NA" : jobDetails._industry?.name %>
+                                        </td>
+                                        <td>
+                                          <%= !jobDetails._jobCategory? "NA" : jobDetails._jobCategory?.name %>
+                                        </td>
+                                        <td>
+                                          <%= !jobDetails.compensation? "NA" : jobDetails.compensation %>
+                                        </td>
+                                        <td>
+                                          <%= !jobDetails.pay? "NA" : jobDetails.pay %>
+                                        </td>
+                                        <td>
+                                          <%= !jobDetails.shift? "NA" : jobDetails.shift %>
+                                        </td>
+                                        <td>
+                                          <%= !jobDetails.work? "NA" : jobDetails.work %>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="card mt-1 mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                <h4 class="card-title"><img src="/images/icons/salary.png" class="img-fluid pr-1">Salary</h4>
+                              </div>
+                              <div class="card-content">
+                                <div class="table-responsive ">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <tbody id="table-body">
+                                      <tr>
+                                        <td>
+                                          <% if(jobDetails.isFixed){ %>
+                                            <span>
+                                              <%= !jobDetails.amount ? "NA" : jobDetails.amount %>
+                                            </span>
+                                            <% } else { %>
+                                              <% if(jobDetails.isFixed==undefined){ %>
+                                                <span>NA</span>
+                                                <% } else if(jobDetails.min && jobDetails.max) {%>
+                                                  <span>
+                                                    <%= jobDetails.min %> - <%= jobDetails.max %>
+                                                  </span>
+                                                  <% } else { %>
+                                                    <span>
+                                                      <%= !jobDetails.min && !jobDetails.max? "NA" : jobDetails.min ?
+                                                        jobDetails.min : jobDetails.max %>
+                                                    </span>
+                                                    <% } %>
+                                                      </span>
+                                                      <% } %>
+
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="card mt-1 mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                <h4 class="card-title"><img src="/images/icons/video.png" class="img-fluid pr-1">Video JD</h4>
+                              </div>
+                              <div class="card-content">
+                                <div class="table-responsive ">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <tbody id="table-body">
+                                      <tr>
+                                        <td>
+                                          <% if (jobDetails.jobVideo) { %>
+                                            <span><a
+                                                href="<%= process.env.MIPIE_BUCKET_URL +'/' + jobDetails.jobVideo %>"
+                                                target="_blank">View Now</span>
+                                            <%}else{%>
+                                              No Video
+                                              <% } %>
+                                        </td>
+
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card mt-1 mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                <h4 class="card-title"><img src="/images/icons/remarks.png" class="img-fluid pr-1">Benefits &amp; Perks</h4>
+                              </div>
+                              <div class="card-content " id="Remarks">
+                                <div class="table-responsive ">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <tbody id="table-body">
+                                      <tr>
+                                        <td>
+                                          <% jobDetails.benifits?.forEach((i) => { %>
+                                            <li><%= !i ? "NA" : i %></li>  
+                                            <% }); %>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card mt-1 mb-2">
+                              <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                                <h4 class="card-title"><img src="/images/icons/other.png" class="img-fluid pr-1">Remarks (if any)</h4>
+                              </div>
+                              <div class="card-content " id="Remarks">
+                                <div class="table-responsive ">
+                                  <table class="table table-hover-animation mb-0 table-hover">
+                                    <tbody id="table-body">
+                                      <tr>
+                                        <td>
+                                          <%= !jobDetails.remarks ? "" : jobDetails.remarks %>
+                                        </td>
+
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <!-- /Project table -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+
+          <% include ./partials/footer%>
