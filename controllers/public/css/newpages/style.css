@@ -17441,7 +17441,7 @@ display: none;
     padding-block: 20px;
   }
   .images{
-
+gap: 0;
   }
   .main_images img{
     position: relative;
