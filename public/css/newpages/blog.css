@@ -1520,6 +1520,13 @@ border-color: rgba(255, 255, 255, 0.4);
   transform: translate(0) scale(1);
 }
 @media (max-width: 768px) {
+  .main-home-images{
+    width: 70px!important;
+    height: 70px!important;
+  }
+  .home-images{
+    gap: 0px;
+  }
   .new_images{
     gap: 0px;
   }
