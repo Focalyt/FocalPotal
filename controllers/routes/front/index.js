@@ -62,6 +62,50 @@ var transporter = nodemailer.createTransport({
 router.get("/", async (req, res) => {
 	try {
 		const data = req.query
+		const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  console.log(fullUrl);
+  
+  // Modify script to run after DOM is loaded and escape quotes properly
+  const storageScript = `
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          // Store current URL immediately
+          const data = {
+            url: '${fullUrl.replace(/'/g, "\\'")}',
+            timestamp: new Date().getTime()
+          };
+          localStorage.setItem('entryUrl', JSON.stringify(data));
+          
+          // Verify it was stored
+          console.log('URL stored:', localStorage.getItem('entryUrl'));
+          
+          // Function to check and clean expired URL
+          function cleanExpiredUrl() {
+            const stored = localStorage.getItem('entryUrl');
+            if (stored) {
+              const data = JSON.parse(stored);
+              const now = new Date().getTime();
+              const hours24 = 24 * 60 * 60 * 1000;
+              
+              if (now - data.timestamp > hours24) {
+                localStorage.removeItem('entryUrl');
+                console.log('Expired URL removed');
+              }
+            }
+          }
+          
+          // Check for expired URLs
+          cleanExpiredUrl();
+          
+        } catch (error) {
+          console.error('Error storing URL:', error);
+        }
+      });
+    </script>
+  `;
+
+
 		let { qualification, experience, industry, jobType, state, Salary } = req.query
 		if (qualification && !ObjectId.isValid(qualification)) {
 			qualification = ''
@@ -140,7 +184,7 @@ router.get("/", async (req, res) => {
 			},]).sort({ sequence: 1, createdAt: -1 }).skip(perPage * page - perPage).limit(perPage);
 
 		rePath = res.render(`${req.vPath}/front`, {
-			recentJobs, allQualification, allIndustry, allStates, data, totalPages, page,
+			recentJobs, allQualification, allIndustry, allStates, data, totalPages, page, storageScript: storageScript
 		});
 	} catch (err) {
 		const ipAddress = req.header('x-forwarded-for') || req.socket.remoteAddress;
@@ -317,6 +361,48 @@ router.post("/jobsearch", (req, res) => {
 });
 router.get("/courses", async (req, res) => {
 	let filter = { status: true}
+	const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  console.log(fullUrl);
+  
+  // Modify script to run after DOM is loaded and escape quotes properly
+  const storageScript = `
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          // Store current URL immediately
+          const data = {
+            url: '${fullUrl.replace(/'/g, "\\'")}',
+            timestamp: new Date().getTime()
+          };
+          localStorage.setItem('entryUrl', JSON.stringify(data));
+          
+          // Verify it was stored
+          console.log('URL stored:', localStorage.getItem('entryUrl'));
+          
+          // Function to check and clean expired URL
+          function cleanExpiredUrl() {
+            const stored = localStorage.getItem('entryUrl');
+            if (stored) {
+              const data = JSON.parse(stored);
+              const now = new Date().getTime();
+              const hours24 = 24 * 60 * 60 * 1000;
+              
+              if (now - data.timestamp > hours24) {
+                localStorage.removeItem('entryUrl');
+                console.log('Expired URL removed');
+              }
+            }
+          }
+          
+          // Check for expired URLs
+          cleanExpiredUrl();
+          
+        } catch (error) {
+          console.error('Error storing URL:', error);
+        }
+      });
+    </script>
+  `;
      	const countJobs = await Courses.find(filter).countDocuments()
 		 const contact = await Contact.find({ status: true, isDeleted: false }).sort({ createdAt: 1 })
 		const perPage = 18;
@@ -326,6 +412,7 @@ router.get("/courses", async (req, res) => {
 		let courses = await Courses.find(filter).sort({  createdAt: -1 }).skip(perPage * page - perPage).limit(perPage)
 		rePath = res.render(`${req.vPath}/front/courses`, {
 		courses,
+		storageScript: storageScript,
 		phoneToCall: contact[0]?.mobile,
 		totalPages,
 		page
