@@ -91,16 +91,19 @@
           <h4 class="color-pink fw-bold pb-xxl-4 pb-xp-4 pb-lg-3 pb-md-2 sm-1 pb-1">About Us</h4>
           <ul class="footer-list p-0">
             <li>
-              <a href="#">Our Team</a>
+              <a href="/about_us#fsd">Our Team</a>
             </li>
             <li>
-              <a href="#">Mission</a>
+              <a href="/about_us#vision">Mission</a>
             </li>
             <li>
-              <a href="#">Vision</a>
+              <a href="/about_us#vision">Vision</a>
             </li>
-            <li>
+            <!-- <li>
               <a href="#">Blog &amp; Articles</a>
+            </li> -->
+            <li>
+              <a href="/community">community</a>
             </li>
           </ul>
         </div>
@@ -108,13 +111,13 @@
           <h4 class="color-pink fw-bold pb-xxl-4 pb-xp-4 pb-lg-3 pb-md-2 sm-1 pb-1">Useful Links</h4>
           <ul class="footer-list p-0">
             <li>
-              <a href="#">Career</a>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#careerModal">Career</a>
             </li>
             <li>
               <a href="https://result.focalyt.com/">Results</a>
             </li>
             <li>
-              <a href="#">Partner With Us</a>
+              <a href="/contact">Partner With Us</a>
             </li>
             <li>
               <a href="#">How to Register?</a>
@@ -123,6 +126,109 @@
               <a href="/contact">Contact Us</a>
             </li>
           </ul>
+          <div class="modal fade" id="careerModal" tabindex="-1" aria-labelledby="careerModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="careerModalLabel">Career Opportunities</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                       
+                        <section id="current-openings"  class="py-4">
+                          <form class="career-form" id="careerForm">
+                              <div class="row g-4">
+                                  <!-- Personal Information -->
+                                  <div class="col-12">
+                                      <h4 class="mb-4">Personal Information</h4>
+                                  </div>
+  
+                                  <!-- Full Name -->
+                                  <div class="col-md-6">
+                                      <label for="fullName" class="form-label required-field">Full Name</label>
+                                      <input type="text" class="form-control" id="fullName" required>
+                                  </div>
+  
+                                  <!-- Email -->
+                                  <div class="col-md-6">
+                                      <label for="email" class="form-label required-field">Email Address</label>
+                                      <input type="email" class="form-control" id="email" required>
+                                  </div>
+  
+                                  <!-- Phone -->
+                                  <div class="col-md-6">
+                                      <label for="phone" class="form-label required-field">Phone Number</label>
+                                      <input type="tel" class="form-control" id="phone" required>
+                                  </div>
+  
+                                  <!-- Location -->
+                                  <div class="col-md-6">
+                                      <label for="location" class="form-label required-field">Current Location</label>
+                                      <input type="text" class="form-control" id="location" required>
+                                  </div>
+  
+                                  <!-- Position -->
+                                  <div class="col-12">
+                                      <label for="position" class="form-label required-field">Position Applied For</label>
+                                      <select class="form-select" id="position" required>
+                                          <option value="">Select Position</option>
+                                          <option value="software-engineer">Software Engineer</option>
+                                          <option value="product-designer">Product Designer</option>
+                                          <option value="marketing-specialist">Marketing Specialist</option>
+                                          <option value="other">Other</option>
+                                      </select>
+                                  </div>
+  
+                                  <!-- Experience -->
+                                  <div class="col-12">
+                                      <label for="experience" class="form-label required-field">Years of Experience</label>
+                                      <select class="form-select" id="experience" required>
+                                          <option value="">Select Experience</option>
+                                          <option value="fresher">Fresher</option>
+                                          <option value="1-3">1-3 years</option>
+                                          <option value="3-5">3-5 years</option>
+                                          <option value="5+">5+ years</option>
+                                      </select>
+                                  </div>
+  
+                                  <!-- CV Upload -->
+                                  <div class="col-12">
+                                      <label for="cv" class="form-label required-field">Upload CV</label>
+                                      <input type="file" class="form-control" id="cv" accept=".pdf,.doc,.docx" required>
+                                      <div class="form-text">Accepted formats: PDF, DOC, DOCX (Max size: 5MB)</div>
+                                  </div>
+  
+                                  <!-- Additional Information -->
+                                  <div class="col-12">
+                                      <label for="message" class="form-label">Additional Information</label>
+                                      <textarea class="form-control" id="message" rows="4" placeholder="Tell us about yourself and why you'd be a great fit for this position"></textarea>
+                                  </div>
+  
+                                  <!-- Terms Checkbox -->
+                                  <div class="col-12">
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" id="terms" required>
+                                          <label class="form-check-label" for="terms">
+                                              I agree to the processing of my personal data according to the privacy policy
+                                          </label>
+                                      </div>
+                                  </div>
+  
+                                  <!-- Submit Button -->
+                                  <div class="col-12">
+                                      <a type="submit" class="new_link text-center">Submit Application</a>
+                                  </div>
+                              </div>
+                          </form>
+                      </section>
+                            
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary bg-btn-color" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         <!-- <div class="col-xl-auto col-lg-auto col-md-6 col-auto">
           <h4 class="color-pink fw-bold pb-xxl-4 pb-xp-4 pb-lg-3 pb-md-2 sm-1 pb-1">Download Now</h4>
@@ -170,6 +276,27 @@
 <script src="/js/newpage/js/custom.js"></script>
 <script src="/js/newpage/js/comparison.js"></script>
 </body>
+<script>
+  document.getElementById('careerForm').addEventListener('submit', function(e) {
+e.preventDefault();
+
+// Create success message element
+const successMessage = document.createElement('div');
+successMessage.className = 'form-success-message';
+successMessage.textContent = 'Form submitted successfully!';
+
+// Add to document
+document.body.appendChild(successMessage);
+
+// Show the message
+successMessage.style.display = 'block';
+
+// Remove the message after animation
+setTimeout(() => {
+successMessage.remove();
+}, 3000);
+});
+</script>
 <!-- <script>
 $(".center").slick({
   dots: false,

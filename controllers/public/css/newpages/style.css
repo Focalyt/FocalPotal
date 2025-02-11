@@ -17355,7 +17355,7 @@ transform: translateY(6px);
   border-radius: 10px;
   padding: 10px 20px;
   border: 1px solid #fc2b5a;
-  /* color: #fff; */
+  color: #fff;
 }
 
 .new_link a{
