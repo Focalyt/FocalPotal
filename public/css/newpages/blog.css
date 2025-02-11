@@ -844,6 +844,7 @@ background-color: #333;
 }
 #products{
   background: rgb(239, 239, 239);
+  overflow-x: hidden;
 }
 .products{
   font-size: 45px;
