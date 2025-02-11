@@ -340,56 +340,6 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     await updateSpreadSheetValues(sheetData);
 
 
-    // Extract UTM Parameters
-    // const sanitizeInput = (value) => typeof value === 'string' ? value.replace(/[^a-zA-Z0-9-_]/g, '') : value;
-    // const utm_params = {
-    //   utm_source: sanitizeInput(req.query.utm_source || 'unknown'),
-    //   utm_medium: sanitizeInput(req.query.utm_medium || 'unknown'),
-    //   utm_campaign: sanitizeInput(req.query.utm_campaign || 'unknown'),
-    //   utm_term: sanitizeInput(req.query.utm_term || ''),
-    //   utm_content: sanitizeInput(req.query.utm_content || '')
-    // };
-
-    // Extract fbp and fbc values
-    // let fbp = req.cookies?._fbp || '';
-    // let fbc = req.cookies?._fbc || '';
-    // if (!fbc && req.query.fbclid) {
-    //   fbc = `fb.${Date.now()}.${req.query.fbclid}`;
-    // }
-
-    // Prepare user data for Facebook Event
-    // const user_data = {
-    //   em: [hashValue(candidate.email)],                          // Hashed email
-    //   ph: [hashValue(candidate.mobile)],                        // Hashed phone number
-    //   fn: hashValue(candidate.name?.split(" ")[0]),             // Hashed first name
-    //   ln: hashValue(candidate.name?.split(" ")[1] || ""),       // Hashed last name
-    //   zp: hashValue(candidate.zip || ""),                       // Hashed postcode
-    //   db: hashValue(candidate.dob ? moment(candidate.dob).format('YYYY-MM-DD') : ""), // Hashed date of birth
-    //   ct: hashValue(candidate.city?.name),                      // Hashed city
-    //   st: hashValue(candidate.state?.name),                     // Hashed state/region
-    //   country: hashValue("India"),                              // Hashed country
-    //   ge: hashValue(candidate.sex === 'Male' ? 'm' : candidate.sex === 'Female' ? 'f' : ''), // Hashed gender
-    //   client_ip_address: req.ip || '',                          // IP address (no hash required)
-    //   client_user_agent: req.headers['user-agent'] || '',       // User agent (no hash required)
-    //   fbp: req.cookies?._fbp || '',                             // Browser ID
-    //   fbc: req.cookies?._fbc || (req.query.fbclid ? `fb.${Date.now()}.${req.query.fbclid}` : ''), // Click ID
-    //   external_id: hashValue(candidate._id.toString())          // Hashed External ID (user database ID)
-    // };
-
-    // Prepare custom data for Facebook Event
-    // const custom_data = {
-    //   currency: "INR",
-    //   value: course.registrationCharges || 0,
-    //   content_ids: [courseId],
-    //   content_type: "course",
-    //   num_items: 1,
-    //   ...utm_params
-    // };
-
-    // // Send Event to Facebook
-    // console.log("Sending Facebook Event...");
-    // const fbEventSent = await sendEventToFacebook("Course Apply", user_data, custom_data);
-
 
     return res.status(200).json({ status: true, msg: "Course applied successfully." });
   } catch (error) {
@@ -607,13 +557,58 @@ router
 router.get("/login", async (req, res) => {
   let user = req.session.user
   let { returnUrl } = req.query
+
+  
+  const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  console.log(fullUrl);
+  
+  // Modify script to run after DOM is loaded and escape quotes properly
+  const storageScript = `
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          // Store current URL immediately
+          const data = {
+            url: '${fullUrl.replace(/'/g, "\\'")}',
+            timestamp: new Date().getTime()
+          };
+          localStorage.setItem('entryUrl', JSON.stringify(data));
+          
+          // Verify it was stored
+          console.log('URL stored:', localStorage.getItem('entryUrl'));
+          
+          // Function to check and clean expired URL
+          function cleanExpiredUrl() {
+            const stored = localStorage.getItem('entryUrl');
+            if (stored) {
+              const data = JSON.parse(stored);
+              const now = new Date().getTime();
+              const hours24 = 24 * 60 * 60 * 1000;
+              
+              if (now - data.timestamp > hours24) {
+                localStorage.removeItem('entryUrl');
+                console.log('Expired URL removed');
+              }
+            }
+          }
+          
+          // Check for expired URLs
+          cleanExpiredUrl();
+          
+        } catch (error) {
+          console.error('Error storing URL:', error);
+        }
+      });
+    </script>
+  `;
+
   if (user && user.role == 3 && returnUrl && returnUrl.trim() !== '') {
     return res.redirect(returnUrl)
   }
   else if (user && user.role == 3) {
     return res.redirect("/candidate/dashboard");
   }
-  return res.render(`${req.vPath}/app/candidate/login`, { apikey: process.env.AUTH_KEY_GOOGLE });
+  return res.render(`${req.vPath}/app/candidate/login`, { apikey: process.env.AUTH_KEY_GOOGLE,storageScript: storageScript });
 });
 router.get("/searchjob", [isCandidate], async (req, res) => {
   const data = req.query;
