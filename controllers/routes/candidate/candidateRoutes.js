@@ -152,7 +152,7 @@ class MetaConversionAPI {
 
   async trackCourseApplication(courseData, userData, metaParams) {
     try {
-       console.log(courseData, userData, metaParams)
+      //  console.log(courseData, userData, metaParams)
       const eventData = {
         data: [{
           event_name: 'Course Apply',
@@ -243,9 +243,46 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
   try {
     const { courseId } = req.params;
     const validation = { mobile: req.session.user.mobile };
+    let entryUrl;
+    if (typeof req.body.entryUrl === 'string') {
+      const parsedData = JSON.parse(req.body.entryUrl);
+      entryUrl = parsedData.url;
+    } else {
+      // If it's already an object
+      entryUrl = req.body.entryUrl.url;
+    }
+    
+    console.log("Entry URL:", entryUrl);
+
+    // Create URL object to parse parameters
+    const urlObj = new URL(entryUrl);
+    const params = urlObj.searchParams;
+
+    // Extract Facebook and UTM parameters
+   let fbp = params.get('fbp');
+   
+   // Generate fbp if not exists
+   if (!fbp) {
+     const timestamp = Date.now();
+     const random = Math.floor(Math.random() * 1000000000);
+     fbp = `fb.1.${timestamp}.${random}`;
+   }
+
+    // Extract Facebook and UTM parameters
+    const metaParams = {
+      fbc: params.get('fbc') || null,
+      fbp: fbp|| null,
+      adId: params.get('ad_id') || null,
+      campaignId: params.get('campaign_id') || null,
+      adsetId: params.get('adset_id') || null,
+      // Additional UTM parameters if needed
+      utmSource: params.get('utm_source') || null,
+      utmMedium: params.get('utm_medium') || null,
+      utmCampaign: params.get('utm_campaign') || null
+    };
 
     // Get Meta parameters
-    const metaParams = getMetaParameters(req);
+    // const metaParams = getMetaParameters(req);
 
     // Validate courseId and candidate's mobile number
     const { value, error } = await CandidateValidators.userMobile(validation);
@@ -254,6 +291,8 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     }
 
     const candidateMobile = value.mobile;
+    
+    
 
     // Fetch course and candidate
     const course = await Courses.findById(courseId);
@@ -567,6 +606,10 @@ router.get("/login", async (req, res) => {
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
+        const storedurl = localStorage.getItem('entryUrl');
+        if(!storedurl){
+
+
           // Store current URL immediately
           const data = {
             url: '${fullUrl.replace(/'/g, "\\'")}',
@@ -575,7 +618,7 @@ router.get("/login", async (req, res) => {
           localStorage.setItem('entryUrl', JSON.stringify(data));
           
           // Verify it was stored
-          console.log('URL stored:', localStorage.getItem('entryUrl'));
+          console.log('URL stored:', localStorage.getItem('entryUrl'))};
           
           // Function to check and clean expired URL
           function cleanExpiredUrl() {
@@ -1063,6 +1106,51 @@ router.delete('/document', [isCandidate], async (req, res) => {
 router.get("/searchcourses", [isCandidate], async (req, res) => {
   try {
     const data = req.query;
+
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  console.log(fullUrl);
+  
+  // Modify script to run after DOM is loaded and escape quotes properly
+  const storageScript = `
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+        const storedurl = localStorage.getItem('entryUrl');
+        if(!storedurl){
+          // Store current URL immediately
+          const data = {
+            url: '${fullUrl.replace(/'/g, "\\'")}',
+            timestamp: new Date().getTime()
+          };
+          localStorage.setItem('entryUrl', JSON.stringify(data));
+          
+          // Verify it was stored
+          console.log('URL stored:', localStorage.getItem('entryUrl'))};
+          
+          // Function to check and clean expired URL
+          function cleanExpiredUrl() {
+            const stored = localStorage.getItem('entryUrl');
+            if (stored) {
+              const data = JSON.parse(stored);
+              const now = new Date().getTime();
+              const hours24 = 24 * 60 * 60 * 1000;
+              
+              if (now - data.timestamp > hours24) {
+                localStorage.removeItem('entryUrl');
+                console.log('Expired URL removed');
+              }
+            }
+          }
+          
+          // Check for expired URLs
+          cleanExpiredUrl();
+          
+        } catch (error) {
+          console.error('Error storing URL:', error);
+        }
+      });
+    </script>
+  `;
     const perPage = 10;
     const p = parseInt(req.query.page);
     const page = p || 1;
@@ -1106,7 +1194,8 @@ router.get("/searchcourses", [isCandidate], async (req, res) => {
       courses,
       data,
       totalPages,
-      page
+      page,
+      storageScript: storageScript
     });
 
   } catch (err) {
@@ -1118,6 +1207,50 @@ router.get("/searchcourses", [isCandidate], async (req, res) => {
 router.get("/course/:courseId", [isCandidate], async (req, res) => {
   try {
     const { courseId } = req.params;
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  console.log(fullUrl);
+  
+  // Modify script to run after DOM is loaded and escape quotes properly
+  const storageScript = `
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+        const storedurl = localStorage.getItem('entryUrl');
+        if(!storedurl){
+          // Store current URL immediately
+          const data = {
+            url: '${fullUrl.replace(/'/g, "\\'")}',
+            timestamp: new Date().getTime()
+          };
+          localStorage.setItem('entryUrl', JSON.stringify(data));
+          
+          // Verify it was stored
+          console.log('URL stored:', localStorage.getItem('entryUrl'))};
+          
+          // Function to check and clean expired URL
+          function cleanExpiredUrl() {
+            const stored = localStorage.getItem('entryUrl');
+            if (stored) {
+              const data = JSON.parse(stored);
+              const now = new Date().getTime();
+              const hours24 = 24 * 60 * 60 * 1000;
+              
+              if (now - data.timestamp > hours24) {
+                localStorage.removeItem('entryUrl');
+                console.log('Expired URL removed');
+              }
+            }
+          }
+          
+          // Check for expired URLs
+          cleanExpiredUrl();
+          
+        } catch (error) {
+          console.error('Error storing URL:', error);
+        }
+      });
+    </script>
+  `;
     const contact = await Contact.find({ status: true, isDeleted: false }).sort({ createdAt: 1 })
     const userMobile = req.session.user.mobile;
     let validation = { mobile: userMobile }
@@ -1176,7 +1309,8 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
       menu: 'Cources',
       isApplied,
       mobileNumber,
-      canApply
+      canApply,
+      storageScript: storageScript
     });
   } catch (err) {
     req.flash("error", err.message || "Something went wrong!");

@@ -70,6 +70,8 @@ router.get("/", async (req, res) => {
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
+		const storedurl = localStorage.getItem('entryUrl');
+		if(!storedurl){
           // Store current URL immediately
           const data = {
             url: '${fullUrl.replace(/'/g, "\\'")}',
@@ -78,7 +80,7 @@ router.get("/", async (req, res) => {
           localStorage.setItem('entryUrl', JSON.stringify(data));
           
           // Verify it was stored
-          console.log('URL stored:', localStorage.getItem('entryUrl'));
+          console.log('URL stored:', localStorage.getItem('entryUrl'))};
           
           // Function to check and clean expired URL
           function cleanExpiredUrl() {
@@ -369,6 +371,8 @@ router.get("/courses", async (req, res) => {
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
+		const storedurl = localStorage.getItem('entryUrl');
+		if(!storedurl){
           // Store current URL immediately
           const data = {
             url: '${fullUrl.replace(/'/g, "\\'")}',
@@ -377,7 +381,7 @@ router.get("/courses", async (req, res) => {
           localStorage.setItem('entryUrl', JSON.stringify(data));
           
           // Verify it was stored
-          console.log('URL stored:', localStorage.getItem('entryUrl'));
+          console.log('URL stored:', localStorage.getItem('entryUrl'))};
           
           // Function to check and clean expired URL
           function cleanExpiredUrl() {

@@ -767,17 +767,31 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
-
+<!-- Your existing login page HTML -->
+<%- storageScript %>
 
   <script>
     
     function applyCourse(id) {
       $('#apply-btn').addClass('disabled');
-      document.getElementById('apply-btn').setAttribute('disabled', true)
+      document.getElementById('apply-btn').setAttribute('disabled', true);
+
+      // Get stored entry URL from localStorage
+  const entryUrlData = localStorage.getItem('entryUrl');
+  
+
+  // Prepare data to send
+  const data = {
+    entryUrl: entryUrlData ? entryUrlData : null,
+    
+  };
+  console.log(data);
+
+
       axios({
         method: 'post',
         url: `/candidate/course/${id}/apply`,
-        data:{},
+        data:data,
         headers: {
           'x-auth': localStorage.getItem('token')
         }
