@@ -50,7 +50,10 @@ router.route("/register")
 	})
 	.post(async (req, res) => {
 		try {
-			const { collegeName, concernedPerson, email, mobile } = req.body;
+			const { collegeName, concernedPerson, email, mobile,type,password,confirmPassword } = req.body;
+			const hashPass = await bcrypt.hash(password, 10);
+			const hashConPass = await bcrypt.hash(confirmPassword, 10);
+
 			const { value, error } = await CollegeValidators.register({ collegeName, concernedPerson, email, mobile })
 			if (error) {
 				console.log('====== register error ', error, value)
@@ -88,7 +91,10 @@ router.route("/register")
 				}
 				let college = await College.create({
 					_concernPerson: user._id,
-					name: collegeName
+					name: collegeName,
+					type:type,
+					password:hashPass,
+					confirmPassword:hashConPass
 				});
 				if (!college) {
 					return res.send({ status: "failure", error: "College not created!" });

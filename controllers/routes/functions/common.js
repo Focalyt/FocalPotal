@@ -1,6 +1,7 @@
 const pick = require('lodash.pick');
 const { decode } = require('jsonwebtoken');
 const { sign } = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const { headerAuthKey, jwtSecret } = require('../../../config');
 // const jwt = require('jsonwebtoken');
 // const crypto = require('crypto');
@@ -299,6 +300,53 @@ module.exports.verifyOtp = async (req, res) => {
     // }
   } catch (err) {
     return req.errFunc(err);
+  }
+};
+
+module.exports.verifyPass = async (req, res) => {
+  try {
+    // Extracting mobile and password from request body
+    const { mobile, pass } = req.body;
+
+    // Check if user exists
+    const user = await User.findOne({ mobile: mobile });
+
+    if (!user) {
+      return res.status(404).json({
+        error: 'User not found'
+      });
+    }
+
+    // Find the associated college
+    const college = await College.findOne({ _concernPerson: user._id });
+
+    if (!college) {
+      return res.status(404).json({
+        error: 'College not found'
+      });
+    }
+
+    console.log('College Found:', college);
+
+    // Validate the password using bcrypt
+    const isValid = await bcrypt.compare(pass, college.password);
+    console.log('Password Valid:', isValid);
+
+    if (isValid) {
+      return res.send({
+        status: true,
+        message: 'Password verified!'
+      });
+    } else {
+      return res.send({
+        status: false,
+        message: 'Invalid Password!'
+      });
+    }
+
+  } catch (err) {
+    console.error('Error:', err);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 module.exports.resendOTP = async (req, res) => {
