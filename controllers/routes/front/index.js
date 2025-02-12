@@ -425,8 +425,53 @@ router.get("/courses", async (req, res) => {
 router.get("/coursedetails/:id", async(req, res) => {
 	const {id}=req.params
     let course=await Courses.findOne({_id:id})
+	const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+	console.log(fullUrl);
+	
+	// Modify script to run after DOM is loaded and escape quotes properly
+	const storageScript = `
+	  <script>
+		document.addEventListener('DOMContentLoaded', function() {
+		  try {
+		  const storedurl = localStorage.getItem('entryUrl');
+		  if(!storedurl){
+			// Store current URL immediately
+			const data = {
+			  url: '${fullUrl.replace(/'/g, "\\'")}',
+			  timestamp: new Date().getTime()
+			};
+			localStorage.setItem('entryUrl', JSON.stringify(data));
+			
+			// Verify it was stored
+			console.log('URL stored:', localStorage.getItem('entryUrl'))};
+			
+			// Function to check and clean expired URL
+			function cleanExpiredUrl() {
+			  const stored = localStorage.getItem('entryUrl');
+			  if (stored) {
+				const data = JSON.parse(stored);
+				const now = new Date().getTime();
+				const hours24 = 24 * 60 * 60 * 1000;
+				
+				if (now - data.timestamp > hours24) {
+				  localStorage.removeItem('entryUrl');
+				  console.log('Expired URL removed');
+				}
+			  }
+			}
+			
+			// Check for expired URLs
+			cleanExpiredUrl();
+			
+		  } catch (error) {
+			console.error('Error storing URL:', error);
+		  }
+		});
+	  </script>
+	`;
 	rePath = res.render(`${req.vPath}/front/coursedetails`, {
-		course
+		course,
+		storageScript: storageScript,
 	});
 });
 router.get("/contact", (req, res) => {

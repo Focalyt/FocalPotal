@@ -252,34 +252,52 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       entryUrl = req.body.entryUrl.url;
     }
     
+    
     console.log("Entry URL:", entryUrl);
 
     // Create URL object to parse parameters
     const urlObj = new URL(entryUrl);
     const params = urlObj.searchParams;
 
-    // Extract Facebook and UTM parameters
-   let fbp = params.get('fbp');
-   
-   // Generate fbp if not exists
-   if (!fbp) {
-     const timestamp = Date.now();
-     const random = Math.floor(Math.random() * 1000000000);
-     fbp = `fb.1.${timestamp}.${random}`;
-   }
+     // Get fbclid from URL
+     const fbclid = params.get('fbclid');
+     console.log("fbclid:", fbclid);
 
-    // Extract Facebook and UTM parameters
-    const metaParams = {
-      fbc: params.get('fbc') || null,
-      fbp: fbp|| null,
-      adId: params.get('ad_id') || null,
-      campaignId: params.get('campaign_id') || null,
-      adsetId: params.get('adset_id') || null,
-      // Additional UTM parameters if needed
-      utmSource: params.get('utm_source') || null,
-      utmMedium: params.get('utm_medium') || null,
-      utmCampaign: params.get('utm_campaign') || null
-    };
+    
+     // Generate fbc from fbclid
+     let fbc = null;
+     if (fbclid) {
+       // Facebook click ID format: fb.1.{timestamp}.{fbclid}
+       fbc = `fb.1.${Date.now()}.${fbclid}`;
+     }
+
+     console.log("fbc:", fbc);
+ 
+     // Get or generate fbp
+     let fbp = params.get('fbp');
+
+     if (!fbp) {
+       const timestamp = Date.now();
+       const random = Math.floor(Math.random() * 1000000000);
+       fbp = `fb.1.${timestamp}.${random}`;
+     }
+
+     console.log("fbp:", fbp);
+
+
+ 
+     const metaParams = {
+       fbc: fbc,
+       fbclid: fbclid || null, // Store original fbclid
+       fbp: fbp,
+       adId: params.get('ad_id') || null,
+       campaignId: params.get('campaign_id') || null,
+       adsetId: params.get('adset_id') || null,
+       utmSource: params.get('utm_source') || null,
+       utmMedium: params.get('utm_medium') || null,
+       utmCampaign: params.get('utm_campaign') || null
+     };
+   
 
     // Get Meta parameters
     // const metaParams = getMetaParameters(req);
