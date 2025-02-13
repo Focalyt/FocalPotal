@@ -1306,7 +1306,7 @@
     var adminTableBody = [];
     var companyTableBody = [];
     var collegeTableBody = [];
-    var candidateTableBody = <%- JSON.stringify(candidates) %>;
+    var candidateTableBody = '<%- JSON.stringify(candidates) %>';
 
     var selectedTag = "candidate";
     var selectedTags = [];
@@ -1317,8 +1317,8 @@
     var searchbycollege = "";
     var searchbycandidate = "";
 
-    var candidates = <%- JSON.stringify(candidates) %>;
-    var page = <%- page %>;
+    var candidates = '<%- JSON.stringify(candidates) %>';
+    var page = '<%- page %>';
     adminPage = 0;
     companyPage = 0;
     collegePage = 0;
