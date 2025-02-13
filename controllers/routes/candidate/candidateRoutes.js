@@ -152,48 +152,55 @@ class MetaConversionAPI {
 
   async trackCourseApplication(courseData, userData, metaParams) {
     try {
-       console.log(courseData, userData, metaParams)
-      const eventData = {
-        data: [{
-          event_name: 'Course Apply',
-          event_time: Math.floor(Date.now() / 1000),
-          action_source: 'website',
-          user_data: {
-            em: this._hashData(userData.email),
-            ph: this._hashData(userData.phone),
-            fn: this._hashData(userData.firstName),
-            ln: this._hashData(userData.lastName),
-            ct: this._hashData(userData.city),
-            st: this._hashData(userData.state),
-            db: this._hashData(userData.dob),
-            ge: this._hashData(userData.gender),
-            country: this._hashData('in'),
-            client_ip_address: userData.ipAddress,
-            client_user_agent: userData.userAgent,
-            external_id: this._hashData(userData.phone),
-            fbc: metaParams.fbc, // Facebook Click ID
-            fbp: metaParams.fbp  // Facebook Browser ID
-          },
-          custom_data: {
-            content_name: courseData.courseName,
-            content_category: 'Course',
-            currency: 'INR',
-            value: courseData.courseValue
-          },
-          event_source_url: courseData.sourceUrl
-        }],
-        access_token: this.accessToken
-      };
-
-      const response = await axios.post(this.metaAPIUrl, eventData);
-      console.log('Course application event tracked successfully', response.data);
-      return response.data;
+      console.log(courseData, userData, metaParams);
+      
+      // Only add fields that have values
+      const user_data = {};
+  
+      // Add fields only if they exist and are not empty
+      if (userData.email) user_data.em = this._hashData(userData.email);
+      if (userData.phone) user_data.ph = this._hashData(userData.phone);
+      if (userData.firstName) user_data.fn = this._hashData(userData.firstName);
+      if (userData.lastName) user_data.ln = this._hashData(userData.lastName);
+      if (userData.city) user_data.ct = this._hashData(userData.city);
+      if (userData.state) user_data.st = this._hashData(userData.state);
+      if (userData.dob) user_data.db = this._hashData(userData.dob);
+      if (userData.gender) user_data.ge = this._hashData(userData.gender);
+      if (userData.ipAddress) user_data.client_ip_address = userData.ipAddress;
+      if (userData.userAgent) user_data.client_user_agent = userData.userAgent;
+      if (userData.phone) user_data.external_id = this._hashData(userData.phone);
+      if (metaParams?.fbc) user_data.fbc = metaParams.fbc;
+      if (metaParams?.fbp) user_data.fbp = metaParams.fbp;
+  
+      // Only create and send event if we have at least some user data
+      if (Object.keys(user_data).length > 0) {
+        const eventData = {
+          data: [{
+            event_name: 'Course Apply',
+            event_time: Math.floor(Date.now() / 1000),
+            action_source: 'website',
+            user_data,
+            custom_data: {
+              ...(courseData.courseName && { content_name: courseData.courseName }),
+              content_category: 'Course',
+              currency: 'INR'
+            },
+            ...(courseData.sourceUrl && { event_source_url: courseData.sourceUrl })
+          }],
+          access_token: this.accessToken
+        };
+  
+        const response = await axios.post(this.metaAPIUrl, eventData);
+        console.log('Course application event tracked successfully', response.data);
+        return response.data;
+      }
+  
+      return null;
     } catch (error) {
       console.error('Meta Conversion API Error:', error.response?.data || error.message);
       return null;
     }
-  }
-}
+  }}
 
 
 // Helper function to extract Meta parameters from cookies and URL
