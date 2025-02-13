@@ -160,6 +160,20 @@
       <li class="nav-item <% if(menu==='razorpayPayments') {%>active<%}%>"><a href="/admin/razorpayPayments"><i
             class="fa-solid fa-money-bill"></i><span class="menu-title" data-i18n="Todo">Razorpay Payments</span></a>
       </li>
+      <li class=" nav-item"><a href="#"><i class="fa-solid fa-coins"></i><span class="menu-title"
+            data-i18n="Todo">Chatbot FAQs</span></a>
+        <ul class="menu-content">
+          
+            <li class="nav-item <% if(menu==='chatBotFAQ') {%>active<%}%>"><a href="/admin/chatBotFAQ/add"><i
+                  class="fa-solid fa-money-bill"></i><span class="menu-title" data-i18n="Todo">Add Chatbot FAQs</span></a>
+            </li>
+              <li class="<% if(menu==='chatBotList') {%>active<%}%>"><a href="/admin/chatBotFAQ/view"><i
+                    class="feather icon-user"></i><span class="menu-title" data-i18n="Analytics">View</span></a>
+              </li>
+            
+        </ul>
+      </li>
+      
       <% if(currentUser.role==0) { %>
         <li class="nav-item <% if(menu==='admin-roles') {%>active<%}%>"><a href="/admin/roles"><i
               class="fa-solid fa-lock"></i><span class="menu-title" data-i18n="Todo">Admin Roles</span></a>
