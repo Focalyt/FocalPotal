@@ -153,10 +153,10 @@ class MetaConversionAPI {
   async trackCourseApplication(courseData, userData, metaParams) {
     try {
       console.log(courseData, userData, metaParams);
-      
+
       // Only add fields that have values
       const user_data = {};
-  
+
       // Add fields only if they exist and are not empty
       if (userData.email) user_data.em = this._hashData(userData.email);
       if (userData.phone) user_data.ph = this._hashData(userData.phone);
@@ -171,7 +171,7 @@ class MetaConversionAPI {
       if (userData.phone) user_data.external_id = this._hashData(userData.phone);
       if (metaParams?.fbc) user_data.fbc = metaParams.fbc;
       if (metaParams?.fbp) user_data.fbp = metaParams.fbp;
-  
+
       // Only create and send event if we have at least some user data
       if (Object.keys(user_data).length > 0) {
         const eventData = {
@@ -189,18 +189,19 @@ class MetaConversionAPI {
           }],
           access_token: this.accessToken
         };
-  
+
         const response = await axios.post(this.metaAPIUrl, eventData);
         console.log('Course application event tracked successfully', response.data);
         return response.data;
       }
-  
+
       return null;
     } catch (error) {
       console.error('Meta Conversion API Error:', error.response?.data || error.message);
       return null;
     }
-  }}
+  }
+}
 
 
 // Helper function to extract Meta parameters from cookies and URL
@@ -258,53 +259,53 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       // If it's already an object
       entryUrl = req.body.entryUrl.url;
     }
-    
-    
+
+
     console.log("Entry URL:", entryUrl);
 
     // Create URL object to parse parameters
     const urlObj = new URL(entryUrl);
     const params = urlObj.searchParams;
 
-     // Get fbclid from URL
-     const fbclid = params.get('fbclid');
-     console.log("fbclid:", fbclid);
-
-    
-     // Generate fbc from fbclid
-     let fbc = null;
-     if (fbclid) {
-       // Facebook click ID format: fb.1.{timestamp}.{fbclid}
-       fbc = `fb.1.${Date.now()}.${fbclid}`;
-     }
-
-     console.log("fbc:", fbc);
- 
-     // Get or generate fbp
-     let fbp = params.get('fbp');
-
-     if (!fbp) {
-       const timestamp = Date.now();
-       const random = Math.floor(Math.random() * 1000000000);
-       fbp = `fb.1.${timestamp}.${random}`;
-     }
-
-     console.log("fbp:", fbp);
+    // Get fbclid from URL
+    const fbclid = params.get('fbclid');
+    console.log("fbclid:", fbclid);
 
 
- 
-     const metaParams = {
-       fbc: fbc,
-       fbclid: fbclid || null, // Store original fbclid
-       fbp: fbp,
-       adId: params.get('ad_id') || null,
-       campaignId: params.get('campaign_id') || null,
-       adsetId: params.get('adset_id') || null,
-       utmSource: params.get('utm_source') || null,
-       utmMedium: params.get('utm_medium') || null,
-       utmCampaign: params.get('utm_campaign') || null
-     };
-   
+    // Generate fbc from fbclid
+    let fbc = null;
+    if (fbclid) {
+      // Facebook click ID format: fb.1.{timestamp}.{fbclid}
+      fbc = `fb.1.${Date.now()}.${fbclid}`;
+    }
+
+    console.log("fbc:", fbc);
+
+    // Get or generate fbp
+    let fbp = params.get('fbp');
+
+    if (!fbp) {
+      const timestamp = Date.now();
+      const random = Math.floor(Math.random() * 1000000000);
+      fbp = `fb.1.${timestamp}.${random}`;
+    }
+
+    console.log("fbp:", fbp);
+
+
+
+    const metaParams = {
+      fbc: fbc,
+      fbclid: fbclid || null, // Store original fbclid
+      fbp: fbp,
+      adId: params.get('ad_id') || null,
+      campaignId: params.get('campaign_id') || null,
+      adsetId: params.get('adset_id') || null,
+      utmSource: params.get('utm_source') || null,
+      utmMedium: params.get('utm_medium') || null,
+      utmCampaign: params.get('utm_campaign') || null
+    };
+
 
     // Get Meta parameters
     // const metaParams = getMetaParameters(req);
@@ -316,8 +317,8 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     }
 
     const candidateMobile = value.mobile;
-    
-    
+
+
 
     // Fetch course and candidate
     const course = await Courses.findById(courseId);
@@ -351,6 +352,15 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       _course: courseId
     }).save();
 
+    let candidateMob = candidate.mobile;
+
+    // Check if the mobile number already has the country code
+    if (!candidateMob.startsWith("91") && candidateMob.length == 10) {
+      candidateMob = "91" + candidate.mobile; // Add country code if missing and the length is 10
+    }
+
+    console.log(candidateMob);
+
     // Track conversion event
     const metaApi = new MetaConversionAPI();
     await metaApi.trackCourseApplication(
@@ -362,7 +372,7 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       },
       {
         email: candidate.email,
-        phone: candidate.mobile,
+        phone: candidateMob,
         firstName: candidate.name.split(' ')[0],
         lastName: candidate.name.split(' ').slice(1).join(' '),
         gender: candidate?.sex === 'Male' ? 'm' : candidate?.sex === 'Female' ? 'f' : '',
@@ -399,7 +409,7 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       course?.registrationCharges,
       appliedData?.registrationFee,
       'Lead From Portal'
-      
+
     ];
     await updateSpreadSheetValues(sheetData);
 
@@ -622,10 +632,10 @@ router.get("/login", async (req, res) => {
   let user = req.session.user
   let { returnUrl } = req.query
 
-  
+
   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   console.log(fullUrl);
-  
+
   // Modify script to run after DOM is loaded and escape quotes properly
   const storageScript = `
     <script>
@@ -676,7 +686,7 @@ router.get("/login", async (req, res) => {
   else if (user && user.role == 3) {
     return res.redirect("/candidate/dashboard");
   }
-  return res.render(`${req.vPath}/app/candidate/login`, { apikey: process.env.AUTH_KEY_GOOGLE,storageScript: storageScript });
+  return res.render(`${req.vPath}/app/candidate/login`, { apikey: process.env.AUTH_KEY_GOOGLE, storageScript: storageScript });
 });
 router.get("/searchjob", [isCandidate], async (req, res) => {
   const data = req.query;
@@ -1133,10 +1143,10 @@ router.get("/searchcourses", [isCandidate], async (req, res) => {
     const data = req.query;
 
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  console.log(fullUrl);
-  
-  // Modify script to run after DOM is loaded and escape quotes properly
-  const storageScript = `
+    console.log(fullUrl);
+
+    // Modify script to run after DOM is loaded and escape quotes properly
+    const storageScript = `
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
@@ -1233,10 +1243,10 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
   try {
     const { courseId } = req.params;
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  console.log(fullUrl);
-  
-  // Modify script to run after DOM is loaded and escape quotes properly
-  const storageScript = `
+    console.log(fullUrl);
+
+    // Modify script to run after DOM is loaded and escape quotes properly
+    const storageScript = `
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
