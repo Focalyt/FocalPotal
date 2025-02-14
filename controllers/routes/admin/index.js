@@ -51,7 +51,8 @@ const freelancerRoutes=require('./freelancer')
 const rolesRoutes = require('./adminRoles')
 const coinsRoutes = require('./coinsAlgo')
 const reportRoutes = require('./report')
-const razorpayPaymentsRoutes = require('./razorpayPayments')
+const razorpayPaymentsRoutes = require('./razorpayPayments');
+const chatBotFaqRoutes = require("./chatBotFAQs");
 const cashBackRoutes=require('./cbLogic');
 const jobListings=require('./joblisting')
 const vouchers=require('./vouchers')
@@ -95,6 +96,7 @@ router.use('/roles', rolesRoutes)
 router.use('/coinsAlgo',coinsRoutes)
 router.use('/report', reportRoutes)
 router.use('/razorpayPayments', razorpayPaymentsRoutes)
+router.use('/chatBotFAQ', chatBotFaqRoutes)
 router.use('/cashback',cashBackRoutes)
 router.use('/joblisting',jobListings)
 router.use("/Vouchers",vouchers)
