@@ -1,0 +1,132 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">View FAQ</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item active">View FAQ</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+
+        <div class="col-xl-12 col-lg-12">
+            <div class="card mt-1">
+                <div class="card-content">
+                    <div class="mt-2 px-2">
+                        <!-- Existing question-answer pairs will be added here -->
+                        <div id="faqQuestionsAnswer">
+                            <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Questions</th>
+                                    <th scope="col">Answers</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Larry the Bird</td>
+                                    <td>@twitter</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                       
+                    </div>
+
+                    
+                   
+                </div>
+            </div>
+        </div>
+
+
+      
+
+
+			<div class="text-right reset">
+				
+			</div>
+            <script>
+                document.getElementById('sub-btn').addEventListener('click', (event) => {
+                     event.preventDefault();
+                     const haserrors = validations();
+                     if (haserrors == "false" || haserrors == false) {
+                         return false;
+                     }
+                     const selectedSector = document.getElementById("sector").value;
+                     const selectedSectors = Array.from(document.getElementById("sector").selectedOptions).map(option => option.value);
+             
+                     let body = {
+                         sectors: selectedSectors,
+                         courseLevel: document.getElementById("courseLevel").value,
+                         name: document.getElementById("name").value,
+                         duration: document.getElementById("duration").value,
+                         certifyingAgency: $('#certifyingAgency').val(),
+                         certifyingAgencyWebsite: document.getElementById('certifyingAgencyWebsite').value,
+                         qualification: document.getElementById("qualification").value,
+                         age: $('#age').val(),
+                         brochure: $('#hidden-brochure').val(),
+                         thumbnail: $('#hidden-thumbnail').val(),
+                         youtubeURL: $('#youtubeURL').val(),
+                         courseType: $('#courseType').val(),
+                         experience: document.getElementById('experience').value,
+                         trainingMode: $('#trainingMode').val(),
+                         onlineTrainingTiming: document.getElementById("onlineTrainingTiming").value,
+                         offlineTrainingTiming: document.getElementById("offlineTrainingTiming").value,
+                         address: document.getElementById("address").value,
+                         city: document.getElementById("city").value,
+                         state: document.getElementById("state").value,
+                         appLink: document.getElementById("appLink").value,
+                         ojt: document.getElementById("ojt").value,
+                         registrationCharges: $('#registrationCharges').val(),
+                         courseFee: $('#courseFee').val(),
+                         cutPrice: $('#cutPrice').val(),
+                         examFee: $('#examFee').val(),
+                         otherFee: $('#otherFee').val(),
+                         emiOptionAvailable: $('#emiOptionAvailable').val(),
+                         maxEMITenure: $('#maxEMITenure').val(),
+                         stipendDuringTraining: $('#stipendDuringTraining').val(),
+                         lastDateForApply: $('#lastDateForApply').val(),
+                         requiredDocuments: $('#requiredDocuments').val(),
+                         courseFeatures: $('.courseFeature').val(),
+                         importantTerms: $('.importantTerms').val(),
+                         faq: $('#faq').val(),
+                         testimonialvideos: document.getElementById("hidden-testimonialvideos").value,
+                         photos: document.getElementById("hidden-photos").value,
+                         audios: document.getElementById("hidden-audios")?.value || '',
+                         videos: document.getElementById("hidden-videos").value,
+                         counslername: $('#counslername').val(),
+                         counslerphonenumber: $('#counslerphonenumber').val(),
+                         counslerwhatsappnumber: $('#counslerwhatsappnumber').val(),
+                         counsleremail: $('#counsleremail').val(),
+                         questionAnswers: Array.from(document.querySelectorAll(".questionanswerrow")).map(row => {
+                             let question = row.querySelector(".question").value;
+                             let answer = row.querySelector(".answer").value;
+                             return { Question: question, Answer: answer };
+                         })
+                     };
+             
+                     console.log("Form Data:", body); // ✅ Debugging log before submission
+                 });
+             </script>
+             
+            
+			<% include ../partials/footer %>
+				
+	</div>
