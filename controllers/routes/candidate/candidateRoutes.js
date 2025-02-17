@@ -352,6 +352,34 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       _course: courseId
     }).save();
 
+    
+    // Capitalize every word's first letter
+    function capitalizeWords(str) {
+      if (!str) return '';
+      return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+    }
+
+    // Update Spreadsheet
+    const sheetData = [
+      moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
+      moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
+      capitalizeWords(course?.name), // Apply the capitalizeWords function
+      candidate?.name,
+      candidate?.mobile,
+      candidate?.email,
+      candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+      candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+      candidate?.state?.name,
+      candidate?.city?.name,
+      'Course',
+      `${process.env.BASE_URL}/coursedetails/${courseId}`,
+      course?.registrationCharges,
+      appliedData?.registrationFee,
+      'Lead From Portal'
+
+    ];
+    await updateSpreadSheetValues(sheetData);
+
     let candidateMob = candidate.mobile;
 
     // Check if the mobile number already has the country code
@@ -386,32 +414,6 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     );
 
 
-    // Capitalize every word's first letter
-    function capitalizeWords(str) {
-      if (!str) return '';
-      return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-    }
-
-    // Update Spreadsheet
-    const sheetData = [
-      moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
-      moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
-      capitalizeWords(course?.name), // Apply the capitalizeWords function
-      candidate?.name,
-      candidate?.mobile,
-      candidate?.email,
-      candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
-      candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
-      candidate?.state?.name,
-      candidate?.city?.name,
-      'Course',
-      `${process.env.BASE_URL}/coursedetails/${courseId}`,
-      course?.registrationCharges,
-      appliedData?.registrationFee,
-      'Lead From Portal'
-
-    ];
-    await updateSpreadSheetValues(sheetData);
 
 
 
