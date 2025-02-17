@@ -296,7 +296,8 @@
 															<% collegeDocuments.forEach((doc)=> { %>
 																<div class="col-xl-2 mb-1 galleryImage"
 																	style="align-self: center;">
-																	<div class="image-upload d-flex justify-content-center">
+																	<div
+																		class="image-upload d-flex justify-content-center">
 																		<label for="media-group">
 																			<a href="<%= process.env.MIPIE_BUCKET_URL +'/' + doc.path %>"
 																				target="_blank"><i
@@ -305,13 +306,16 @@
 
 																		</label>
 																	</div>
-																	<div class="image-upload d-flex justify-content-center text-break">
+																	<div
+																		class="image-upload d-flex justify-content-center text-break">
 																		<%=doc.name%>
-																	 </div>
-																	 <div class="image-upload d-flex justify-content-center text-break">
-																		<%=moment(doc.createdAt).utcOffset("+05:30").format('DD MMM YYYY hh:mm A')%>
-																	 </div>
-																	
+																	</div>
+																	<div
+																		class="image-upload d-flex justify-content-center text-break">
+																		<%=moment(doc.createdAt).utcOffset("+05:30").format('DD
+																			MMM YYYY hh:mm A')%>
+																	</div>
+
 																</div>
 																<% }); %>
 																	<% }%>

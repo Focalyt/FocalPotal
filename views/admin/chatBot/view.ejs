@@ -1,0 +1,193 @@
+<% include ../partials/header %>
+  <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+      <div class="row breadcrumbs-top">
+        <div class="col-12">
+          <h3 class="content-header-title float-left mb-0">View FAQ</h3>
+          <div class="breadcrumb-wrapper col-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+              <li class="breadcrumb-item active">View FAQ</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-body">
+    <% include ../partials/flash %>
+
+      <div class="col-xl-12 col-lg-12">
+        <div class="card mt-1">
+          <div class="card-content">
+            <div class="col-xl-6">
+              <div class="row">
+                <div class="archieve pl-1">
+                  <input style="margin-bottom: 4px" type="checkbox" onclick="archived()" id="checkbox1" <%=isChecked %>
+                  />
+                  &nbsp;
+                  <p>Show Archived</p>
+                  <span class="checkmark"></span>
+                </div>
+
+              </div>
+            </div>
+            <div class="mt-2 px-2">
+              <!-- Existing question-answer pairs will be added here -->
+              <div id="faqQuestionsAnswer">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Questions</th>
+                      <th scope="col">Answers</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Edit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% Que.forEach(q=> { %>
+                      <tr>
+                        <td>
+                          <%= q.Question %>
+                        </td>
+                        <td>
+                          <%= q.Answer %>
+                        </td>
+                        <td>
+                          <div class="custom-control custom-switch custom-control-inline">
+
+                            <input type="checkbox" onclick="myOnOffFunc('<%= q._id %>', '<%= q.status %>', 'FAQ');"
+                              class="custom-control-input" id="customSwitch<%= q._id %>" <% if (q.status) { %> checked<%
+                              } %> />
+                              <label class="custom-control-label" for="customSwitch<%= q._id %>">
+                              </label>
+
+                          </div>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-primary stateone" data-bs-toggle="modal"
+                          data-bs-target="#staticBackdrop<%= q._id %>">
+                            <i class="feather icon-edit fa-lg primary"></i>
+                          </button>
+                         
+                          
+                          <!-- Modal -->
+                          <div class="modal fade" id="staticBackdrop<%= q._id %>" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel<%= q._id %>" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="staticBackdropLabel<%= q._id %>">Edit FAQ</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <form action="" id="editForm<%= q._id %>">
+                                    
+                                    <label for="editQuestion<%= q._id %>" class="form-label">Question</label>
+                            <input type="text" class="form-control" id="editQuestion<%= q._id %>"
+                                name="question" value="<%= q.Question %>">
+
+                                <label for="editAnswer<%= q._id %>" class="form-label">Answer</label>
+                                <textarea class="form-control" id="editAnswer<%= q._id %>"
+                                    name="answer"><%= q.Answer %></textarea>
+                                  </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary" onclick="editData('<%= q._id %>')">Save</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <% }) %>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="text-right reset">
+
+      </div>
+      <style>
+        .stateone{
+          background: transparent!important;
+        }
+        #faqQuestionsAnswer{
+          overflow-x: auto;
+        }
+      </style>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      <script>
+
+        function myOnOffFunc(id, status) {
+          let myStatus = true;
+          if (status === true || status === "true") {
+            myStatus = false;
+          }
+          let data = { id: id, status: myStatus }
+          let headers = { 'x-auth': localStorage.getItem('token') }
+          axios.patch(`/admin/chatBotFAQ/changeStatus`, data, { headers: headers })
+            .then((res) => {
+              location.reload()
+            }).catch((err) => {
+              console.log(err)
+            })
+        }
+        function archived() {
+          var checkbox = document.getElementById('checkbox1');
+
+          if (checkbox.checked) {
+
+            var status = false;
+            // alert("isDeleted = " + isDeleted)
+            $.ajax({
+              type: "GET",
+              url: "/admin/chatBotFAQ/view?status=false",
+              success: () => window.location.href = "/admin/chatBotFAQ/view?status=false",
+
+            }
+
+            );
+          } else {
+            var status = true;
+            // alert("isDeleted = " + isDeleted);
+            $.ajax({
+              type: "GET",
+              url: "/admin/chatBotFAQ/view?status=true",
+              success: () => window.location.href = "/admin/chatBotFAQ/view?status=true"
+            });
+          }
+        }
+        function editData(id) {
+          const question = document.getElementById('editQuestion'+id).value;
+          const answer = document.getElementById('editAnswer'+id).value;
+
+         
+          let data = { id: id, Question: question, Answer: answer }
+          let headers = { 'x-auth': localStorage.getItem('token') }
+          axios.patch(`/admin/chatBotFAQ/edit`, data, { headers: headers })
+            .then((res) => {
+              location.reload()
+            }).catch((err) => {
+              console.log(err)
+            })
+        }
+      </script>
+
+      <% include ../partials/footer %>
+
+  </div>
