@@ -413,6 +413,55 @@
                     </div>
                     <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 course_card_footer">
                       <div class="row py-2">
+                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center align-items-center text-center">
+                              <a href="#" data-bs-toggle="modal" data-bs-target="#callbackModal">
+                                  <span class="learnn pt-1 text-white">Book a Call Back</span>
+                                  <img src="public_assets/images/link.png" class="align-text-top">
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal fade" id="callbackModal" tabindex="-1" aria-labelledby="callbackModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="callbackModalLabel">Book a Call Back</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="callbackForm">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="state" class="form-label">State</label>
+                                        <input type="text" class="form-control" id="state" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="district" class="form-label">District</label>
+                                        <input type="text" class="form-control" id="district" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="contact" class="form-label">Contact Number</label>
+                                        <input type="tel" class="form-control" id="contact" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                    <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 course_card_footer">
+                      <div class="row py-2">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center align-items-center text-center">
                           <a href="/coursedetails/<%=course._id%>"><span class="learnn pt-1 text-white">Learn More</span> <img src="public_assets/images/link.png" class="align-text-top"></a>
                         </div>
