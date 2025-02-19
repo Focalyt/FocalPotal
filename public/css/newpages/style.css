@@ -17158,6 +17158,7 @@ transform: translateY(6px);
 #demoForm select:not([value=""]) {
   color: #000;
   width: 100%;
+  background: transparent;
 }
 
 /* Add a custom dropdown arrow if needed */

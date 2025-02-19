@@ -224,6 +224,11 @@
         <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mx-auto mt-xxl-5 mt-xl-3 mt-lg-3 mt-md-3 mt-sm-3 mt-3 ">
           <div class="row my-xl-5 my-lg-5 my-md-3 my-sm-3 my-3">
             <h1 class="text-center text-uppercase jobs-heading pb-4">Select course for your career</h1>
+            <ul>
+              <li>
+                  <a href="#" class="choose--sector"> Sector : <span class="find__sector"></span></a>
+              </li>
+          </ul>
             <%courses.forEach((course)=>{%>
               <div class="col-lg-4 col-md-6 col-sm-12 col-12 pb-4 card-padd">
                 
@@ -360,12 +365,13 @@
                       </div>
                       </div>
                     </div>
-                    <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 course_card_footer">
-                      <div class="row py-2">
+                    <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 course_card_footer_new">
+                      <div class="row pt-2">
                           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center align-items-center text-center">
                               <a href="#" data-bs-toggle="modal" data-bs-target="#callbackModal">
                                   <span class="learnn pt-1 text-white">Book a Call Back</span>
-                                  <img src="public_assets/images/link.png" class="align-text-top">
+                                                                    
+                                  <img src="public_assets/images/call.svg" class="align-text-top">
                               </a>
                           </div>
                       </div>
@@ -374,34 +380,36 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="callbackModalLabel">Book a Call Back</h5>
+                                <h5 class="modal-title text-black" id="callbackModalLabel">Book a Call Back</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form id="callbackForm">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="name" required>
+                                        <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="state" class="form-label">State</label>
-                                        <input type="text" class="form-control" id="state" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="district" class="form-label">District</label>
-                                        <input type="text" class="form-control" id="district" required>
+                                        <input type="text" class="form-control" id="state" placeholder="Enter your state" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="contact" class="form-label">Contact Number</label>
-                                        <input type="tel" class="form-control" id="contact" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required>
+                                        <input type="tel" class="form-control" id="contact" pattern="[0-9]{10}" 
+                                               placeholder="Enter 10-digit mobile number" 
+                                               title="Please enter a valid 10-digit phone number" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" required>
+                                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">Message (Optional)</label>
+                                        <textarea class="form-control" id="message" rows="3" 
+                                                  placeholder="Enter your message here..."></textarea>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="submit_btn g-recaptcha">Submit</button>
                                     </div>
                                 </form>
                             </div>
