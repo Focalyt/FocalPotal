@@ -3,82 +3,30 @@
 
 
 
-<!-- <section class="d-xxl-block d-xl-block d-lg-block d-md-block d-sm-none d-none">
+<section class="d-xxl-block d-xl-block d-lg-block d-md-block  d-sm-none d-none section-padding-60 pb-0
+ mt-5">
   <div class="container">
       <div class="row">
           <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
               <ul class="list-unstyled d-xxl-flex d-xl-flex d-lg-flex d-md-flex d-none d-sm-none" id="job_cat_ul">
-                  <li class="job_cat_li">
+                <% uniqueSectors.forEach(function(sector) { %>  
+                <li class="job_cat_li">
                       <div class="social">
-                          <div class="ps-0">
+                          <!-- <div class="ps-0">
                               <img src="public_assets/images/icons/home_icon.png" class="img-fluid" draggable="false">
-                          </div>
-                          <div class=" data_col">
-                              <p>Work From</p>
-                              <p>Home Jobs</p>
+                          </div> -->
+                          <div class=" data_col text-uppercase">
+                              <p><%= sector.name %></p>
+                              
                           </div>
                         </div>
-                  </li>
-                  <li class="job_cat_li">
-                      <div class="social">
-                          <div class="ps-0">
-                              <img src="public_assets/images/icons/home_icon.png" class="img-fluid" draggable="false">
-                          </div>
-                          <div class=" data_col">
-                              <p>Work From</p>
-                              <p>Home Jobs</p>
-                          </div>
-                        </div>
-                  </li>
-                  <li class="job_cat_li">
-                      <div class="social">
-                          <div class="ps-0">
-                              <img src="public_assets/images/icons/home_icon.png" class="img-fluid" draggable="false">
-                          </div>
-                          <div class=" data_col">
-                              <p>10th Pass</p>
-                              <p>Jobs</p>
-                          </div>
-                        </div>
-                  </li>
-                  <li class="job_cat_li">
-                      <div class="social">
-                          <div class="ps-0">
-                              <img src="public_assets/images/icons/home_icon.png" class="img-fluid" draggable="false">
-                          </div>
-                          <div class=" data_col">
-                              <p>12th Pass</p>
-                              <p>Home Jobs</p>
-                          </div>
-                        </div>
-                  </li>
-                  <li class="job_cat_li">
-                      <div class="social">
-                          <div class="ps-0">
-                              <img src="public_assets/images/icons/home_icon.png" class="img-fluid" draggable="false">
-                          </div>
-                          <div class=" data_col">
-                              <p>Jobs For</p>
-                              <p>Freshers</p>
-                          </div>
-                        </div>
-                  </li>
-                  <li class="job_cat_li">
-                      <div class="social">
-                          <div class="ps-0">
-                              <img src="public_assets/images/icons/home_icon.png" class="img-fluid" draggable="false">
-                          </div>
-                          <div class=" data_col">
-                              <p>Jobs For</p>
-                              <p>Women</p>
-                          </div>
-                        </div>
-                  </li>
+                  </li><%})%>
+                  
               </ul>
           </div>
       </div>
   </div>
-</section> -->
+</section> 
 
 <section class="bg_pattern py-xl-5 py-lg-5 py-md-5 py-sm-2 py-2 d-none">
   <div class="container">
@@ -270,14 +218,15 @@
 </section> -->
 
 <!-- start -->
-<section class="jobs section-padding-120 mt-5">
+<section class="jobs">
     <div class="container">
       <div class="row">
         <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mx-auto mt-xxl-5 mt-xl-3 mt-lg-3 mt-md-3 mt-sm-3 mt-3 ">
           <div class="row my-xl-5 my-lg-5 my-md-3 my-sm-3 my-3">
-            <h1 class="text-center text-uppercase jobs-heading pb-4">Matching courses Near You</h1>
+            <h1 class="text-center text-uppercase jobs-heading pb-4">Select course for your career</h1>
             <%courses.forEach((course)=>{%>
               <div class="col-lg-4 col-md-6 col-sm-12 col-12 pb-4 card-padd">
+                
                 <div class="card bg-dark courseCard">
                   <div class="bg-img">
                     <a href="#"  data-bs-target="#videoModal" data-bs-toggle="modal" data-bs-link="<%= process.env.MIPIE_BUCKET_URL +'/' + course.videos[0] %>"
