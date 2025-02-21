@@ -40,6 +40,7 @@
     "helmet": "^3.20.0",
     "inquirer": "^6.5.0",
     "joi": "^17.9.2",
+    "jslint": "^0.12.1",
     "json2csv": "^4.5.2",
     "jsonwebtoken": "^8.5.1",
     "lodash.pick": "^4.4.0",

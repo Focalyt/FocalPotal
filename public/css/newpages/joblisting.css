@@ -807,6 +807,30 @@ footer-brand img {
     display: block;
     max-height: 230px;
 }
+#callbackForm .form-control {
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 12px 15px;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+#callbackForm .form-control:focus {
+    box-shadow: none;
+    border-color: #80bdff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#callbackForm textarea.form-control {
+    resize: none;
+    min-height: 80px;
+}
+
+#callbackForm .form-label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
 
 
 
