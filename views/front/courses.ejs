@@ -275,13 +275,13 @@
                         <%=course.courseType==='coursejob' ? 'Course + Jobs' : 'Course' %>
                       </div>
                     </div>
-                    <div class="card-body px-0 pb-0">
-                      <h4 class="text-center text-white fw-bolder mb-2 mx-auto text-capitalize ellipsis"
-                        title="<%=course.name%>">
-                        <%=course.name%>
-                      </h4>
-                      <!-- <h5 class="fw-light mx-auto"><%=course.certifyingAgency%></h5> -->
-                      <!-- <h3 class="text-center digi-price mb-0"> -->
+                    <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
+                    <div class="right_obj shadow"><%=course.courseType === 'coursejob' ? 'Course + Jobs' : 'Course'%></div>
+                  </div>
+                  <div class="card-body px-0 pb-0">
+                    <h4 class="text-center text-white fw-bolder mb-2 mx-auto text-capitalize ellipsis" title="<%=course.name%>"><%=course.name%></h4>
+                    <!-- <h5 class="fw-light mx-auto"><%=course.certifyingAgency%></h5> -->
+                    <!-- <h3 class="text-center digi-price mb-0"> -->
                       <!-- <span class="c_rupee"></span>  -->
                       <!-- <span class="c_price"><del class="course">&#8377;<%=course.courseFee%></del></span> -->
                       <!-- <span class="c_rupee"></span> -->
