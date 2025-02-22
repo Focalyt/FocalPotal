@@ -472,8 +472,7 @@ router.get("/courses", async (req, res) => {
         { $sort: { name: 1 } }
     ]);
 		  
-		  console.log(courses)
-		  console.log(uniqueSectors)
+		 
 		
 		rePath = res.render(`${req.vPath}/front/courses`, {
 		courses,
