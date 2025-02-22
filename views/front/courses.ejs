@@ -409,7 +409,8 @@
                                   href="/candidate/login?returnUrl=/candidate/course/<%=course._id%>">Apply Now</a>
                               </div>
                               <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2 text-center">
-                                <a href="https://wa.me/918699017301?text=hi" class="btn cta-callnow">Chat Now</a>
+                                <!-- <a href="https://wa.me/918699017301?text=hi" class="btn cta-callnow">Chat Now</a> -->
+                                <a onclick="openChatbot()" class="btn cta-callnow">Chat Now</a>
                               </div>
                               <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
                                 <div class="row pt-2">
@@ -679,6 +680,25 @@
   // If the form is valid, then submit it
   form.submit();
 }
+function openChatbot() {
+  // Toggle the chat container's active state
+  const chatContainer = document.getElementById("iframe-box");
+  if (chatContainer) {
+    chatContainer.classList.toggle("active");
+  } else {
+    console.error("Chat container (iframe-box) not found!");
+  }
+
+  // Trigger the bootm-box click event to initialize the chat
+  const bootmBox = document.getElementById("bootm-box");
+  if (bootmBox) {
+    bootmBox.click();
+  } else {
+    console.error("Element with ID 'bootm-box' not found!");
+  }
+}
+
+
      </script>
     <%- storageScript %>
     <%- include('./newpartials/footer') %>

@@ -308,7 +308,7 @@ router.post('/courses',async (req, res) => {
             return res.redirect("/courses");
     }
     const response_key = req.body["g-recaptcha-response"];
-    console.log(response_key)
+    console.log(response_key )
     // Put secret key here, which we get from google console
     const secret_key = "6Lej1gsqAAAAADDB6EA8QfiRcJdgESc4UBMqOXeq";
 
