@@ -1,5 +1,5 @@
-<%include ./newpartials/header%>
-  <%include ./newpartials/jobcategory%>
+<%- include ./newpartials/header%>
+  <%- include ./newpartials/jobcategory%>
 
 
 
@@ -211,22 +211,69 @@
   </div>
 </section> -->
 
-<!-- start -->
-<section class="jobs section-padding-120 mt-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mx-auto mt-xxl-5 mt-xl-3 mt-lg-3 mt-md-3 mt-sm-3 mt-3 ">
-          <div class="row my-xl-5 my-lg-5 my-md-3 my-sm-3 my-3">
-            <h1 class="text-center text-uppercase jobs-heading pb-4">Matching courses Near You</h1>
-            <%courses.forEach((course)=>{%>
-              <div class="col-lg-4 col-md-6 col-sm-12 col-12 pb-4 card-padd">
-                <div class="card bg-dark courseCard">
-                  <div class="bg-img">
-                    <a href="#"  data-bs-target="#videoModal" data-bs-toggle="modal" data-bs-link="<%= process.env.MIPIE_BUCKET_URL +'/' + course.videos[0] %>"
-                                                                    class="pointer img-fluid"><img src="<%= course.thumbnail ? process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail : 'public_assets/images/newjoblisting/course_img.svg' %>" class="digi" alt="">
-                    <img src="public_assets/images/newjoblisting/play.svg" alt="" class="group1"></a>
-                   
-                    <div class="flag">
+    <!-- start -->
+    <section class="jobs section-padding-120 mt-5">
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mx-auto mt-xxl-5 mt-xl-3 mt-lg-3 mt-md-3 mt-sm-3 mt-3 ">
+            <div class="row my-xl-5 my-lg-5 my-md-3 my-sm-3 my-3">
+              <h1 class="text-center text-uppercase jobs-heading pb-4">Select course for your career</h1>
+              <div class="container">
+                <div class="row">
+                  <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <ul class="list-unstyled d-xxl-flex d-xl-flex d-lg-flex d-md-flex d-sm-none d-none" id="job_cat_ul">
+                      <% uniqueSectors.forEach(function(sector) { %>
+                        <li class="job_cat_li">
+                          <div class="socials">
+                            <!-- <div class="ps-0">
+                                      <img src="public_assets/images/icons/home_icon.png" class="img-fluid" draggable="false">
+                                  </div> -->
+                            <div class=" data_col text-uppercase">
+                              <a href="#<%= sector._id %>" >
+                                <%= sector.name %>
+                              </a>
+        
+                            </div>
+                          </div>
+                        </li>
+                        <%})%>
+        
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <% uniqueSectors.forEach(function(sector) { %>
+              
+                <ul>
+                  <li>
+                    <a id="<%= sector._id %>" href="#" class="choose--sector text-uppercase">  <%= sector.name %><span class="find__sector"></span></a>
+                  </li>
+                </ul>
+                <%courses.forEach((course)=>{%>
+                  <% if (course.sectors.some(s => s.toString() === sector._id.toString())) { %>
+
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12 pb-4 card-padding">
+
+                  <div class="card bg-dark courseCard">
+                    <div class="bg-img">
+                      <a href="#" data-bs-target="#videoModal" data-bs-toggle="modal"
+                        data-bs-link="<%= process.env.MIPIE_BUCKET_URL +'/' + course.videos[0] %>"
+                        class="pointer img-fluid"><img
+                          src="<%= course.thumbnail ? process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail : 'public_assets/images/newjoblisting/course_img.svg' %>"
+                          class="digi" alt="">
+                        <img src="public_assets/images/newjoblisting/play.svg" alt="" class="group1"></a>
+                      <!-- <div id="base">
+                      <p class="text-center p-0 match_card fw-bolder">Now At</p>
+                      <p class="text-center p-0 match_del fw-bold"><del class="text"><%=course.courseFee%></del></p>
+                      <p class="text-center p-0 match_final fw-bold"><%=course.cutPrice%></p>
+                    </div> -->
+                      <div class="flag">
+                      </div>
+                      <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
+                      <div class="right_obj shadow">
+                        <%=course.courseType==='coursejob' ? 'Course + Jobs' : 'Course' %>
+                      </div>
                     </div>
                     <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
                     <div class="right_obj shadow"><%=course.courseType === 'coursejob' ? 'Course + Jobs' : 'Course'%></div>
@@ -375,7 +422,55 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="modal fade" id="callbackModal" tabindex="-1"
+                              <div class="modal fade" id="callbackModal" tabindex="-1" aria-labelledby="callbackModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title text-black" id="callbackModalLabel">Request for Call Back</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form id="callbackForm">
+                                        <!-- Two-column layout for Name and State -->
+                                        <div class="row mb-3">
+                                          <div class="col-md-6 col-6">
+                                            <label for="name" class="form-label">Name</label>
+                                            <input type="text" class="form-control" id="name" required placeholder="Enter your name" required>
+                                          </div>
+                                          <div class="col-md-6 col-6">
+                                            <label for="state" class="form-label">State</label>
+                                            <input type="text" class="form-control" id="state" required placeholder="Enter your state" required>
+                                          </div>
+                                        </div>
+                                        
+                                        <!-- Two-column layout for Contact Number and Email -->
+                                        <div class="row mb-3">
+                                          <div class="col-md-6 col-6">
+                                            <label for="contact" class="form-label">Contact Number</label>
+                                            <input type="tel" class="form-control" id="contact" pattern="[0-9]{10}" 
+                                              placeholder="Enter 10-digit mobile number" required title="Please enter a valid 10-digit phone number" required>
+                                          </div>
+                                          <div class="col-md-6 col-6">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" required id="email" placeholder="Enter your email" required>
+                                          </div>
+                                        </div>
+                                        
+                                        <!-- Full-width textarea for Message -->
+                                        <div class="mb-3">
+                                          <label for="message" class="form-label">Message</label>
+                                          <textarea class="form-control" id="message" rows="3" required placeholder="Enter your message here..."></textarea>
+                                        </div>
+                                        
+                                        <div class="modal-footer">
+                                          <button type="submit" class="submit_btn g-recaptcha">Submit</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- <div class="modal fade" id="callbackModal" tabindex="-1"
                                 aria-labelledby="callbackModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                   <div class="modal-content">
@@ -420,7 +515,7 @@
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              </div> -->
                             </div>
                           </div>
                         </div>
@@ -438,7 +533,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                
                 <% } %>
 
                 <%})%>
@@ -447,6 +542,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
     <!-- end -->
@@ -472,38 +568,4 @@
     <!-- footer -->
     <!-- Your existing login page HTML -->
     <%- storageScript %>
-      <%include ./newpartials/footer%>
-        <script>
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     // URL se hash (post ID) nikalna
-//     const Id = window.location.hash.substring(1);
-
-//     if (Id) {
-//         const element = document.getElementById(Id);
-//         if (element) {
-//           element.scrollIntoView({ behavior: "smooth", block: "start" });
-//         }
-//     }
-// });
-
-
-          const videoModal = document.getElementById('videoModal')
-          if (videoModal) {
-            videoModal.addEventListener('show.bs.modal', event => {
-              // Button that triggered the modal
-              const button = event.relatedTarget
-              // Extract info from data-bs-* attributes
-              const link = button.getAttribute('data-bs-link')
-
-              // Update the modal's content.
-              const modalBody = videoModal.querySelector('.modal-body #vodeoElement')
-
-              modalBody.src = link
-              document.getElementById('courseVid').load()
-            })
-            videoModal.addEventListener('hide.bs.modal', event => {
-              document.getElementById('courseVid').pause()
-            })
-          }
-        </script>
+    <%- include('./newpartials/footer') %>

@@ -147,7 +147,7 @@ router.post('/contact',async (req, res) => {
 });
 
 
-router.post('/futureTechnologyLabs',async (req, res) => {
+router.post('/labs',async (req, res) => {
   try {
    
     const { name, designation,organisation,state, mobile, email, message } = req.body;
@@ -157,24 +157,24 @@ router.post('/futureTechnologyLabs',async (req, res) => {
       if (!str) return '';
       return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
     };
-    const sheetData = [
-      moment(new Date()).utcOffset('+05:30').format('DD/MM/YYYY'),
-      moment(new Date()).utcOffset('+05:30').format('hh:mm A'),
+    // const sheetData = [
+    //   moment(new Date()).utcOffset('+05:30').format('DD/MM/YYYY'),
+    //   moment(new Date()).utcOffset('+05:30').format('hh:mm A'),
       
-      capitalizeWords(organisation), // Apply the capitalizeWords function
-      capitalizeWords(name),
-      capitalizeWords(designation),
-      mobile,
-      email,
-      state,
-      message
+    //   capitalizeWords(organisation), // Apply the capitalizeWords function
+    //   capitalizeWords(name),
+    //   capitalizeWords(designation),
+    //   mobile,
+    //   email,
+    //   state,
+    //   message
 
 
-    ];
-    await updateSpreadSheetLabLeadsValues(sheetData);
+    // ];
+    // await updateSpreadSheetLabLeadsValues(sheetData);
     if(!name || !designation || !organisation|| !state || !mobile|| !email || !message){
         req.flash("success", "Please fill all fields");
-            return res.redirect("/futureTechnologyLabs");
+            return res.redirect("/labs");
     }
     const response_key = req.body["g-recaptcha-response"];
     // Put secret key here, which we get from google console
@@ -277,12 +277,12 @@ router.post('/futureTechnologyLabs',async (req, res) => {
             res.send(`
               <script>
                 alert('Message sent successfully!');
-                window.location.href = '/futureTechnologyLabs';
+                window.location.href = '/labs';
               </script>
             `);
           } else {
             req.flash("success", "Captcha  failed");
-            return res.redirect("/futureTechnologyLabs");
+            return res.redirect("/labs");
           }
         })
         .catch((error) => {

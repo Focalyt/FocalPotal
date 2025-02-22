@@ -1,11 +1,12 @@
 <%include ./newpartials/header%>
+  <script src="https://www.google.com/recaptcha/api.js"></script>
 
-<section class="section-padding-120 mt-5 bg-white">
-  <div class="container">
-    <div class="labs_section">
-      <div class="row align-items-center">
-        <div class="col-md-7">
-          
+  <section class="section-padding-120 mt-5 bg-white">
+    <div class="container">
+      <div class="labs_section">
+        <div class="row align-items-center">
+          <div class="col-md-7">
+
             <div class="home-2_hero-image-block">
               <div class="new_font_edit">
                 <h2 class="new">Setup Future Technology Lab setup with Zero cost</h2>
@@ -22,21 +23,22 @@
                 </video> -->
                 <div class="drone-path">
                   <svg id="svg-path" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-                      <path id="motionPath" fill="none" stroke="transparent"/>
+                    <path id="motionPath" fill="none" stroke="transparent" />
                   </svg>
-              </div>
-            
+                </div>
+
               </div>
               <div class="icon-container" data-target="robotics-section">
-                <img class="home_images" src="public_assets/images/icons/new_icon/robotic.png" alt="robotic" class="img1">
+                <img class="home_images" src="public_assets/images/icons/new_icon/robotic.png" alt="robotic"
+                  class="img1">
                 <!-- <video class="home_images drone-video" autoplay loop muted playsinline>
                   <source src="public_assets/videos/drone.mp4" type="video/mp4">
                 </video> -->
                 <div class="drone-path">
                   <svg id="svg-path" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-                      <path id="motionPath" fill="none" stroke="transparent"/>
+                    <path id="motionPath" fill="none" stroke="transparent" />
                   </svg>
-              </div>
+                </div>
               </div>
               <div class="icon-container" data-target="ai-section">
                 <img class="home_images" src="public_assets/images/icons/new_icon/ai.png" alt="ai" class="img1">
@@ -45,9 +47,9 @@
                 </video> -->
                 <div class="drone-path">
                   <svg id="svg-path" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-                      <path id="motionPath" fill="none" stroke="transparent"/>
+                    <path id="motionPath" fill="none" stroke="transparent" />
                   </svg>
-              </div>
+                </div>
               </div>
               <div class="icon-container" data-target="iot-section">
                 <img class="home_images" src="public_assets/images/icons/new_icon/iot.png" alt="iot" class="img1">
@@ -56,9 +58,9 @@
                 </video> -->
                 <div class="drone-path">
                   <svg id="svg-path" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-                      <path id="motionPath" fill="none" stroke="transparent"/>
+                    <path id="motionPath" fill="none" stroke="transparent" />
                   </svg>
-              </div>
+                </div>
               </div>
               <div class="icon-container" data-target="arvr-section">
                 <img class="home_images" src="public_assets/images/icons/new_icon/ar_vr.png" alt="ar_vr" class="img1">
@@ -67,823 +69,15 @@
                 </video> -->
                 <div class="drone-path">
                   <svg id="svg-path" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-                      <path id="motionPath" fill="none" stroke="transparent"/>
+                    <path id="motionPath" fill="none" stroke="transparent" />
                   </svg>
+                </div>
               </div>
-              </div>   
             </div>
             <div>
               <div class="book_a_demo">
-                  <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Book a free demo
-                  </button>
-                  <!-- Modal -->
-                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog new-model-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="staticBackdropLabel">Book your Free Demo Today!</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body new-modal-body">
-                          <div class="container">
-                            <div class="row">
-                              
-                              <div class="col-md-12">
-                                <div class="demo_table">
-                                  <form method="post" id="demoForm">
-                                    <div class="demo_form">
-                                     
-                                      <div class="form_name">
-                                        <div class="first_name">
-                                          <input name="name" type="text" class="form_input" placeholder id="fullName" required>
-                                          <label class="label">Full
-                                            Name
-                                            <span class="imp">*</span></label>
-                                        </div>
-                                        <div class="email">
-                                          <input name="email" type="text" class="form_input" placeholder id="email" required>
-                                          <label class="label">Email
-                                            <span class="imp">*</span></label>
-                                        </div>
-                                      </div>
-                                      <div class="form_name">
-                                        <div class="phone">
-                                          <input name="mobile" class="form_input" type="text" placeholder id="phone" required maxlength="10" pattern="^\d{10}$" oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
-                                          <label class="label">Phone
-                                            <span class="imp">*</span></label>
-                                        </div>
-                                        <div class="Organisation">
-                                          <input name="organisation" class="form_input" required placeholder type="text" id="organisation">
-                                          <label class="label">Name
-                                            of
-                                            Institute
-                                            <span>*</span></label>
-                                        </div>
-                                      </div>
-                                      <div class="form_name">
-                                        <div class="designation select-container">
-                                          <select name="designation" class="form_designation_input" id="designation" required>
-                                            <option value disabled selected>Select
-                                              your
-                                              designation</option>
-                                            <option value="manager">Manager
-                                            </option>
-                                            <option value="developer">
-                                              Developer</option>
-                                            <option value="designer">
-                                              Designer</option>
-                                            <option value="tester">Tester
-                                            </option>
-                                          </select>
-                                          <label class="label" for="Designation">
-                                            Designation
-                                            <span class="imp">*</span></label>
-                                        </div>
-                                        <div class="state">
-                                          <select name="state" class="form_designation_input" id="state" required>
-                                            <option value disabled selected>Select
-                                              your
-                                              State
-                                            </option>
-                                            <option value="Andhra Pradesh">
-                                              Andhra
-                                              Pradesh</option>
-                                            <option value="Arunachal Pradesh">
-                                              Arunachal
-                                              Pradesh</option>
-                                            <option value="Assam">Assam
-                                            </option>
-                                            <option value="Bihar">Bihar
-                                            </option>
-                                            <option value="Chhattisgarh">
-                                              Chhattisgarh</option>
-                                            <option value="Goa">Goa</option>
-                                            <option value="Gujarat">Gujarat
-                                            </option>
-                                            <option value="Haryana">Haryana
-                                            </option>
-                                            <option value="Himachal Pradesh">
-                                              Himachal
-                                              Pradesh</option>
-                                            <option value="Jharkhand">
-                                              Jharkhand</option>
-                                            <option value="Karnataka">
-                                              Karnataka</option>
-                                            <option value="Kerala">Kerala
-                                            </option>
-                                            <option value="Madhya Pradesh">
-                                              Madhya
-                                              Pradesh</option>
-                                            <option value="Maharashtra">
-                                              Maharashtra</option>
-                                            <option value="Manipur">Manipur
-                                            </option>
-                                            <option value="Meghalaya">
-                                              Meghalaya</option>
-                                            <option value="Mizoram">Mizoram
-                                            </option>
-                                            <option value="Nagaland">
-                                              Nagaland</option>
-                                            <option value="Odisha">Odisha
-                                            </option>
-                                            <option value="Punjab">Punjab
-                                            </option>
-                                            <option value="Rajasthan">
-                                              Rajasthan</option>
-                                            <option value="Sikkim">Sikkim
-                                            </option>
-                                            <option value="Tamil Nadu">Tamil
-                                              Nadu</option>
-                                            <option value="Telangana">
-                                              Telangana</option>
-                                            <option value="Tripura">Tripura
-                                            </option>
-                                            <option value="Uttar Pradesh">
-                                              Uttar
-                                              Pradesh</option>
-                                            <option value="Uttarakhand">
-                                              Uttarakhand</option>
-                                            <option value="West Bengal">West
-                                              Bengal</option>
-                                            <option value="Andaman and Nicobar Islands">
-                                              Andaman
-                                              and
-                                              Nicobar
-                                              Islands
-                                            </option>
-                                            <option value="Chandigarh">
-                                              Chandigarh</option>
-                                            <option value="Dadra and Nagar Haveli and Daman and Diu">
-                                              Dadra
-                                              and
-                                              Nagar
-                                              Haveli
-                                              and
-                                              Daman
-                                              and
-                                              Diu</option>
-                                            <option value="Delhi">Delhi
-                                            </option>
-                                            <option value="Lakshadweep">
-                                              Lakshadweep</option>
-                                            <option value="Puducherry">
-                                              Puducherry</option>
-                                            <option value="Ladakh">Ladakh
-                                            </option>
-                                            <option value="Jammu and Kashmir">
-                                              Jammu
-                                              and
-                                              Kashmir</option>
-                                          </select>
-                                          <label class="label">State
-                                            <span class="imp">*</span></label>
-                                        </div>
-                                      </div>
-  
-                                      <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
-                                placeholder="Message us" rows="2" ></textarea> -->
-                                      <div class="textarea-container">
-                                        <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
-                                        <label for="exampleTextarea">Your
-                                          Message</label>
-                                      </div>
-  
-                                      <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v">Book
-                                        Demo</button>
-                                    </div>
-                                    <%
-                                  if(success
-                                  &&
-                                  success.length>
-                                  0) { %>
-                                    <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
-                                      <%-
-                                      success
-                                      %>
-                                    </div>
-                                    <% } %>
-  
-                                  </form>
-  
-                                </div>
-  
-                              </div>
-  
-                            </div>
-                          </div>
-                        </div>
-  
-                      </div>
-                    </div>
-                  </div>
-                </div>
-          </div>
-          
-        </div>
-        <div class="col-md-5">
-
-          <div class="elementor-widget-right-side">
-            <div class="elementor_widget_image">
-              <figure>
-                <img src="public_assets/images/labs/future-labs.png" alt>
-              </figure>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</section>
-<section class="hardware">
-  <div class="container">
-    <h1>Common Challenges Faced by Institutes</h1>
-    <div class="challenges-grid">
-        <div class="challenge-card">
-            <div class="icon">💡</div>
-            <h3 class="challenge-title">High Investment Barrier</h3>
-            <p class="challenge-description">Want to Introduce Technology and Innovation in your Institute? HIGH INVESTMENT shouldn't hold you up</p>
-            <div class="divider"></div>
-            <p class="solution">Zero hardware investment required for setting up a Focalyt Future Technology Lab in your Institute: Student enrollments are the perfect solution for you.</p>
-        </div>
-
-        <div class="challenge-card">
-            <div class="icon">🔄</div>
-            <h3 class="challenge-title">Rapid Technological Changes</h3>
-            <p class="challenge-description">Worried about Rapid Change in Technologies and hardware lab obsolescence?</p>
-            <div class="divider"></div>
-            <p class="solution">We are always up to date with the Technological Innovation & our team is always equipped with latest kits.</p>
-        </div>
-
-        <div class="challenge-card">
-            <div class="icon">🎓</div>
-            <h3 class="challenge-title">Career-Ready Certification</h3>
-            <p class="challenge-description">Want your students and Faculty to be certified in ways that boost their future prospects?</p>
-            <div class="divider"></div>
-            <p class="solution">We provide industry-recognized certifications that directly enhance career opportunities.</p>
-        </div>
-    </div>
-
-    <a href="#contact" class="cta-button">Get Started Today</a>
-</div>
-</section>
-<section class="solution">
-  <div class="benefits-container">
-    <h1 class="main-title">Revolutionizing Education Technology</h1>
-    
-    <div class="benefits-wrapper">
-      <div class="benefit-item">
-        <div class="icon-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        </div>
-        <div class="content">
-          <h2>Expert Support</h2>
-          <p>Our team of skilled trainers and engineers provides proper guidance and hands-on training to your students and faculty. You will receive continuous support at every step of the process.</p>
-        </div>
-      </div>
-  
-      <div class="benefit-item reverse">
-        <div class="icon-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        </div>
-        <div class="content">
-          <h2>Reduced Costs</h2>
-          <p>No need for heavy investments in infrastructure and equipment. We offer modern technology & innovative training solutions that fit your budget without requiring significant capital expenditure.</p>
-        </div>
-      </div>
-  
-      <div class="benefit-item">
-        <div class="icon-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-        </div>
-        <div class="content">
-          <h2>Enhanced Market Visibility</h2>
-          <p>Your institute will be recognized as a modern, innovative institution that provides cutting-edge technology and future-ready education, strengthening your reputation in the education sector.</p>
-        </div>
-      </div>
-  
-      <div class="benefit-item reverse">
-        <div class="icon-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-        </div>
-        <div class="content">
-          <h2>Hands-On Practical Training</h2>
-          <p>Students gain not just theoretical knowledge but also practical, real-world experience. With advanced tools and technologies, they develop industry-ready skills that are highly in demand today.</p>
-        </div>
-      </div>
-  
-      <div class="benefit-item">
-        <div class="icon-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-        </div>
-        <div class="content">
-          <h2>Access Emerging Technologies</h2>
-          <p>Stay ahead with access to the latest tools and kits for every new innovation. This ensures that your students are always in sync with global technological advancements.</p>
-        </div>
-      </div>
-  
-      <div class="benefit-item reverse">
-        <div class="icon-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg>
-        </div>
-        <div class="content">
-          <h2>Focus on Learning Outcomes</h2>
-          <p>Free yourself from infrastructure and maintenance worries and focus solely on enhancing student learning and growth. All backend and hardware management is handled by us.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- <section class="hardware_prob">
-  <div class="container">
-   
-  <div class="bottom-border">
-    <h2 class="text-white text-center">Common Challenges Faced by Institute</h2>
-    <p class="common_text">Want to Introduce Technology and Innovation in your Institue, HIGH INVESTMENT in the same is holding you up</p>
-  
-  <div class="zero_investment">
-    <p class="zero text-center">
-      Zero hardware Investent is required for setting up a Focalyt Future Technology Lab in your Institute: Student enrollments are the perfect solution for you.
-    </p>
-  </div>
-  </div>
-<div class="change_tech">
-  <h2 class="change">Worried about Rapid Change in Technologies and the fear of hardware lab becoming obsolete after some time</h2>
-  <div class="zero_investment">
-    <p class="zero text-center">
-      We are always up to date with the Technological Innovation &
-      our team is always equipped with latest kits.
-    </p>
-  </div>
-</div>
-<div class="change_tech">
-  <h2 class="new_change">Want your student and Faculty to be certified that is
-    useful in their future prospect.</h2>
-  <div class="zero_investment">
-    <p class="zero text-center">
-      Want your student and Faculty to be certified that is
-useful in their future prospect.
-    </p>
-  </div>
-</div>
-
-  </div>
-</section> -->
-<section id="bookDemo" class="bg-white">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-12">
-          <div class="section-header">
-            <h2 class="book_demo_today text-black text-center">
-              Book your FREE Demo Today!
-            </h2>
-            <p class="header_underline"></p>
-
-            <p class="demoQuate text-black text-center">
-              Are you ready to experience the power of AI and Robotics? Request a free demo of our AI and Robotics
-              ecosystem today!
-            </p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="demo_table">
-            <form method="post" id="demoForm">
-              <div class="demo_form">
-                <h3 class="request_demo text-black pb-3">
-                  Request your Demo Today
-                </h3>
-                <div class="form_name">
-                  <div class="first_name">
-                    <input name="name" type="text" class="form_input" placeholder="" id="fullName" required>
-                    <label class="label">Full Name <span class="imp">*</span></label>
-                  </div>
-                  <div class="email">
-                    <input name="email" type="text" class="form_input" placeholder="" id="email" required>
-                    <label class="label">Email <span class="imp">*</span></label>
-                  </div>
-                </div>
-                <div class="form_name">
-                  <div class="phone">
-                    <input name="mobile" class="form_input" type="text" placeholder="" id="phone" required
-                      maxlength="10" 
-                      pattern="^\d{10}$" 
-                      oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
-                    <label class="label">Phone <span class="imp">*</span></label>
-                  </div>
-                  <div class="Organisation">
-                    <input name="organisation"  class="form_input" required placeholder="" type="text" id="organisation">
-                    <label class="label">Name of Institute <span>*</span></label>
-                  </div>
-                </div>
-                <div class="form_name">
-                  <div  class="designation select-container">
-                    <select name="designation" class="form_designation_input" id="designation" required>
-                      <option value="" disabled selected>Select your designation</option>
-                      <option value="manager">Manager</option>
-                      <option value="developer">Developer</option>
-                      <option value="designer">Designer</option>
-                      <option value="tester">Tester</option>
-                    </select>
-                    <label class="label" for="Designation"> Designation <span class="imp">*</span></label>
-                  </div>
-                  <div class="state">
-                    <select name="state" class="form_designation_input" id="state" required>
-                      <option value="" disabled selected>Select your State</option>
-                      <option value="Andhra Pradesh">Andhra Pradesh</option>
-                      <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                      <option value="Assam">Assam</option>
-                      <option value="Bihar">Bihar</option>
-                      <option value="Chhattisgarh">Chhattisgarh</option>
-                      <option value="Goa">Goa</option>
-                      <option value="Gujarat">Gujarat</option>
-                      <option value="Haryana">Haryana</option>
-                      <option value="Himachal Pradesh">Himachal Pradesh</option>
-                      <option value="Jharkhand">Jharkhand</option>
-                      <option value="Karnataka">Karnataka</option>
-                      <option value="Kerala">Kerala</option>
-                      <option value="Madhya Pradesh">Madhya Pradesh</option>
-                      <option value="Maharashtra">Maharashtra</option>
-                      <option value="Manipur">Manipur</option>
-                      <option value="Meghalaya">Meghalaya</option>
-                      <option value="Mizoram">Mizoram</option>
-                      <option value="Nagaland">Nagaland</option>
-                      <option value="Odisha">Odisha</option>
-                      <option value="Punjab">Punjab</option>
-                      <option value="Rajasthan">Rajasthan</option>
-                      <option value="Sikkim">Sikkim</option>
-                      <option value="Tamil Nadu">Tamil Nadu</option>
-                      <option value="Telangana">Telangana</option>
-                      <option value="Tripura">Tripura</option>
-                      <option value="Uttar Pradesh">Uttar Pradesh</option>
-                      <option value="Uttarakhand">Uttarakhand</option>
-                      <option value="West Bengal">West Bengal</option>
-                      <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                      <option value="Chandigarh">Chandigarh</option>
-                      <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-                      <option value="Delhi">Delhi</option>
-                      <option value="Lakshadweep">Lakshadweep</option>
-                      <option value="Puducherry">Puducherry</option>
-                      <option value="Ladakh">Ladakh</option>
-                      <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                    </select>
-                    <label class="label">State <span class="imp">*</span></label>
-                  </div>                  
-                </div>            
-               
-                
-                <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
-                    placeholder="Message us" rows="2" ></textarea> -->
-                    <div class="textarea-container">
-                      <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
-                      <label for="exampleTextarea">Your Message</label>
-                    </div>
-                
-                    <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v" >Book Demo</button>
-              </div>
-              <% if(success && success.length> 0) { %>
-                <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
-                    <%- success %>
-                </div>
-                <% } %>
-                
-            </form>
-            
-          </div>
-          
-
-        </div>
-        <div class="col-md-6">
-          <div class="demo_experience">
-            <h3 class="Robotics text-black">
-              Experience the power of Future Technology Labs with us!
-            </h3>
-            <div class="underline"></div>
-            <div class="robo_area">
-              <p>
-                Discover the power of Focalyt-Future Technology Labs – an innovative hub for Drone Technology, AI, Robotics, AR/VR, IoT, and Future Skills! Our state-of-the-art labs empower students with hands-on learning, industry-relevant skills, and real-world applications. Designed for schools, colleges, and skilling institutions, our expert-driven solutions bring cutting-edge technology to the classroom, preparing learners for the careers of tomorrow.
-              <p>
-                In as little as one hour, we can assign the right resources to your specific educational requirements and help unlock the countless possibilities Focalyt provides.
-              </p>
-              <p>
-                Contact us today for a free demonstration tailored to your institution’s needs! Experience how Focalyt-Future Technology Labs can transform learning with Drone Technology, AI, Robotics, AR/VR, IoT, and more. Act now and bring cutting-edge innovation to your classrooms—preparing students for the future of technology-driven careers!
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-<section id="products" class="">
-  <div class="container">
-    <div class="row g-3">
-      <h2 class="products text-center">
-        Our Products
-      </h2>
-      <p class="pro_labs text-center text-capitalize"> explore Our future Technology Labs</p>
-
-      <div class="col-md-12">
-        <div class="row justify-content-evenly py-3 g-5">
-          <div class="col-md-3">
-            <div class="ar_labs">
-              <figure>
-                <img src="public_assets/images/labs/ar_vr.jpg" alt="AR/VR">
-              </figure>
-              <h4 class="h4 text-capitalize">Ar/Vr Labs</h4>
-
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="ar_labs">
-              <figure>
-                <img src="public_assets/images/labs/drone.jpg" alt="Drone">
-              </figure>
-              <h4 class="h4 text-capitalize">Drone Labs</h4>
-
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="ar_labs">
-              <figure>
-                <img src="public_assets/images/course/robo.png" alt="Robotics">
-              </figure>
-              <h4 class="h4 text-capitalize">Robotics Labs</h4>
-
-            </div>
-          </div>
-
-        </div>
-        <div class="row justify-content-evenly pt-3 pb-5 g-5">
-          <div class="col-md-3">
-            <div class="ar_labs">
-              <figure>
-                <img src="public_assets/images/course/iot.png" alt="IOT">
-              </figure>
-              <h4 class="h4 text-capitalize">IOT (Internet Of Things)</h4>
-
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="ar_labs">
-              <figure>
-                <img src="public_assets/images/labs/ai.png" alt="AI">
-              </figure>
-              <h4 class="h4 text-capitalize">Artificial intelligence</h4>
-
-            </div>
-          </div>
-          <div class="col-md-12 text-center">
-            <!-- <div class="book_a_demo ">
-              <a href="#" id="book_a_demo" class="a_btn text-uppercase">
-                View Full Menu
-              </a>
-            </div> -->
-            <div>
-                <div class="book_a_demo">
-                    <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                      Book a free demo
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                      <div class="modal-dialog new-model-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Book your Free Demo Today!</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body new-modal-body">
-                            <div class="container">
-                              <div class="row">
-                                
-                                <div class="col-md-12">
-                                  <div class="demo_table">
-                                    <form method="post" id="demoForm">
-                                      <div class="demo_form">
-                                       
-                                        <div class="form_name">
-                                          <div class="first_name">
-                                            <input name="name" type="text" class="form_input" placeholder id="fullName" required>
-                                            <label class="label">Full
-                                              Name
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="email">
-                                            <input name="email" type="text" class="form_input" placeholder id="email" required>
-                                            <label class="label">Email
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                        </div>
-                                        <div class="form_name">
-                                          <div class="phone">
-                                            <input name="mobile" class="form_input" type="text" placeholder id="phone" required maxlength="10" pattern="^\d{10}$" oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
-                                            <label class="label">Phone
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="Organisation">
-                                            <input name="organisation" class="form_input" required placeholder type="text" id="organisation">
-                                            <label class="label">Name
-                                              of
-                                              Institute
-                                              <span>*</span></label>
-                                          </div>
-                                        </div>
-                                        <div class="form_name">
-                                          <div class="designation select-container">
-                                            <select name="designation" class="form_designation_input" id="designation" required>
-                                              <option value disabled selected>Select
-                                                your
-                                                designation</option>
-                                              <option value="manager">Manager
-                                              </option>
-                                              <option value="developer">
-                                                Developer</option>
-                                              <option value="designer">
-                                                Designer</option>
-                                              <option value="tester">Tester
-                                              </option>
-                                            </select>
-                                            <label class="label" for="Designation">
-                                              Designation
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="state">
-                                            <select name="state" class="form_designation_input" id="state" required>
-                                              <option value disabled selected>Select
-                                                your
-                                                State
-                                              </option>
-                                              <option value="Andhra Pradesh">
-                                                Andhra
-                                                Pradesh</option>
-                                              <option value="Arunachal Pradesh">
-                                                Arunachal
-                                                Pradesh</option>
-                                              <option value="Assam">Assam
-                                              </option>
-                                              <option value="Bihar">Bihar
-                                              </option>
-                                              <option value="Chhattisgarh">
-                                                Chhattisgarh</option>
-                                              <option value="Goa">Goa</option>
-                                              <option value="Gujarat">Gujarat
-                                              </option>
-                                              <option value="Haryana">Haryana
-                                              </option>
-                                              <option value="Himachal Pradesh">
-                                                Himachal
-                                                Pradesh</option>
-                                              <option value="Jharkhand">
-                                                Jharkhand</option>
-                                              <option value="Karnataka">
-                                                Karnataka</option>
-                                              <option value="Kerala">Kerala
-                                              </option>
-                                              <option value="Madhya Pradesh">
-                                                Madhya
-                                                Pradesh</option>
-                                              <option value="Maharashtra">
-                                                Maharashtra</option>
-                                              <option value="Manipur">Manipur
-                                              </option>
-                                              <option value="Meghalaya">
-                                                Meghalaya</option>
-                                              <option value="Mizoram">Mizoram
-                                              </option>
-                                              <option value="Nagaland">
-                                                Nagaland</option>
-                                              <option value="Odisha">Odisha
-                                              </option>
-                                              <option value="Punjab">Punjab
-                                              </option>
-                                              <option value="Rajasthan">
-                                                Rajasthan</option>
-                                              <option value="Sikkim">Sikkim
-                                              </option>
-                                              <option value="Tamil Nadu">Tamil
-                                                Nadu</option>
-                                              <option value="Telangana">
-                                                Telangana</option>
-                                              <option value="Tripura">Tripura
-                                              </option>
-                                              <option value="Uttar Pradesh">
-                                                Uttar
-                                                Pradesh</option>
-                                              <option value="Uttarakhand">
-                                                Uttarakhand</option>
-                                              <option value="West Bengal">West
-                                                Bengal</option>
-                                              <option value="Andaman and Nicobar Islands">
-                                                Andaman
-                                                and
-                                                Nicobar
-                                                Islands
-                                              </option>
-                                              <option value="Chandigarh">
-                                                Chandigarh</option>
-                                              <option value="Dadra and Nagar Haveli and Daman and Diu">
-                                                Dadra
-                                                and
-                                                Nagar
-                                                Haveli
-                                                and
-                                                Daman
-                                                and
-                                                Diu</option>
-                                              <option value="Delhi">Delhi
-                                              </option>
-                                              <option value="Lakshadweep">
-                                                Lakshadweep</option>
-                                              <option value="Puducherry">
-                                                Puducherry</option>
-                                              <option value="Ladakh">Ladakh
-                                              </option>
-                                              <option value="Jammu and Kashmir">
-                                                Jammu
-                                                and
-                                                Kashmir</option>
-                                            </select>
-                                            <label class="label">State
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                        </div>
-    
-                                        <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
-                                  placeholder="Message us" rows="2" ></textarea> -->
-                                        <div class="textarea-container">
-                                          <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
-                                          <label for="exampleTextarea">Your
-                                            Message</label>
-                                        </div>
-    
-                                        <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v">Book
-                                          Demo</button>
-                                      </div>
-                                      <%
-                                    if(success
-                                    &&
-                                    success.length>
-                                    0) { %>
-                                      <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
-                                        <%-
-                                        success
-                                        %>
-                                      </div>
-                                      <% } %>
-    
-                                    </form>
-    
-                                  </div>
-    
-                                </div>
-    
-                              </div>
-                            </div>
-                          </div>
-    
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-</section>
-
-<!-- labs description sectroin  -->
-<section class="bg-white">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="labs-desc" id="arvr-section">
-          <div class="desc_img">
-            <figure>
-              <img src="public_assets/images/course/ar_vr.jpg" alt="">
-            </figure>
-          </div>
-          <div class="desc_img_content">
-            <h2 class="desc_header text-uppercase">AR vr labs</h2>
-
-            <div>
-              <h5 class="desc_sub_header">What is an AR/VR Lab?</h5>
-              <p class="desc_para">
-                An Augmented Reality (AR) and Virtual Reality (VR) Lab is a cutting-edge facility designed to provide immersive, interactive, and experiential learning experiences. These labs leverage AR, VR, and Mixed Reality (MR) technologies to enhance education, research, and training across multiple industries, including education, healthcare, engineering, manufacturing, and defense.
-              </p>
-            </div>
-            <div>
-              <h5 class="desc_sub_header">Why AR/VR Labs?</h5>
-              <p class="desc_para">
-                Traditional learning methods rely on textbooks, videos, and simulations. AR/VR Labs take learning beyond the classroom by providing a real-time, interactive environment where students and professionals can visualize concepts, explore virtual environments, and gain hands-on experience with complex subjects.
-              </p>
-            </div>
-            
-            <div>
-              <div class="book_a_demo">
-                <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop">
                   Book a free demo
                 </button>
                 <!-- Modal -->
@@ -891,7 +85,7 @@ useful in their future prospect.
                   <div class="modal-dialog new-model-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Book your FREE Demo Today!</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Book your Free Demo Today!</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body new-modal-body">
@@ -900,7 +94,7 @@ useful in their future prospect.
                             
                             <div class="col-md-12">
                               <div class="demo_table">
-                                <form method="post" id="demoForm">
+                                <form method="post" id="demo--Form">
                                   <div class="demo_form">
                                    
                                     <div class="form_name">
@@ -1088,952 +282,643 @@ useful in their future prospect.
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="labs-desc" id="drone-section">
-          <div class="desc_img_content">
-            <h2 class="desc_header text-uppercase">Drone Labs</h2>
 
-            <div>
-              <h5 class="desc_sub_header">What is a Drone Lab?</h5>
-              <p class="desc_para">
-                A Drone Lab is an advanced learning space designed to provide hands-on experience with Unmanned Aerial Vehicles (UAVs). These labs are equipped with cutting-edge drone technology, flight simulators, and real-world training environments to help students learn about drone operation, maintenance, programming, and industry applications.
-              </p>
+          </div>
+          <div class="col-md-5">
+
+            <div class="elementor-widget-right-side">
+              <div class="elementor_widget_image">
+                <figure>
+                  <img src="public_assets/images/labs/future-labs.png" alt>
+                </figure>
+              </div>
             </div>
-            <div>
-              <h5 class="desc_sub_header">Why Learn in a Drone Lab?</h5>
-              <p class="desc_para">
-                Drones are transforming industries like agriculture, defense, construction, filmmaking, logistics, and disaster management. With the rise of drone technology, certified drone pilots and experts are in high demand. A Drone Lab gives students the skills, knowledge, and hands-on experience to excel in this futuristic career path.
-              </p>
-            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+  <section class="hardware">
+    <div class="container">
+      <h1>Common Challenges Faced by Institutes</h1>
+      <div class="challenges-grid">
+        <div class="challenge-card">
+          <div class="icon">💡</div>
+          <h3 class="challenge-title">High Investment Barrier</h3>
+          <p class="challenge-description">Want to Introduce Technology and Innovation in your Institute? HIGH
+            INVESTMENT shouldn't hold you up</p>
+          <div class="divider"></div>
+          <p class="solution">Zero hardware investment required for setting up a Focalyt Future Technology Lab in your
+            Institute: Student enrollments are the perfect solution for you.</p>
+        </div>
+
+        <div class="challenge-card">
+          <div class="icon">🔄</div>
+          <h3 class="challenge-title">Rapid Technological Changes</h3>
+          <p class="challenge-description">Worried about Rapid Change in Technologies and hardware lab obsolescence?</p>
+          <div class="divider"></div>
+          <p class="solution">We are always up to date with the Technological Innovation & our team is always equipped
+            with latest kits.</p>
+        </div>
+
+        <div class="challenge-card">
+          <div class="icon">🎓</div>
+          <h3 class="challenge-title">Career-Ready Certification</h3>
+          <p class="challenge-description">Want your students and Faculty to be certified in ways that boost their
+            future prospects?</p>
+          <div class="divider"></div>
+          <p class="solution">We provide industry-recognized certifications that directly enhance career opportunities.
+          </p>
+        </div>
+      </div>
+
+      <div class="book_a_demo text-center">
+        <button type="button" class="a_btn text-uppercase model_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="--x: 166px; --y: 12.421875px;">
+          Book a free demo
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="solution">
+    <div class="benefits-container">
+      <h1 class="main-title">Revolutionizing Education Technology</h1>
+
+      <div class="benefits-wrapper">
+        <div class="benefit-item">
+          <div class="icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <div class="content">
+            <h2>Expert Support</h2>
+            <p>Our team of skilled trainers and engineers provides proper guidance and hands-on training to your
+              students and faculty. You will receive continuous support at every step of the process.</p>
+          </div>
+        </div>
+
+        <div class="benefit-item reverse">
+          <div class="icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <div class="content">
+            <h2>Reduced Costs</h2>
+            <p>No need for heavy investments in infrastructure and equipment. We offer modern technology & innovative
+              training solutions that fit your budget without requiring significant capital expenditure.</p>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+              </path>
+            </svg>
+          </div>
+          <div class="content">
+            <h2>Enhanced Market Visibility</h2>
+            <p>Your institute will be recognized as a modern, innovative institution that provides cutting-edge
+              technology and future-ready education, strengthening your reputation in the education sector.</p>
+          </div>
+        </div>
+
+        <div class="benefit-item reverse">
+          <div class="icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+              </path>
+            </svg>
+          </div>
+          <div class="content">
+            <h2>Hands-On Practical Training</h2>
+            <p>Students gain not just theoretical knowledge but also practical, real-world experience. With advanced
+              tools and technologies, they develop industry-ready skills that are highly in demand today.</p>
+          </div>
+        </div>
+
+        <div class="benefit-item">
+          <div class="icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <div class="content">
+            <h2>Access Emerging Technologies</h2>
+            <p>Stay ahead with access to the latest tools and kits for every new innovation. This ensures that your
+              students are always in sync with global technological advancements.</p>
+          </div>
+        </div>
+
+        <div class="benefit-item reverse">
+          <div class="icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z">
+              </path>
+            </svg>
+          </div>
+          <div class="content">
+            <h2>Focus on Learning Outcomes</h2>
+            <p>Free yourself from infrastructure and maintenance worries and focus solely on enhancing student learning
+              and growth. All backend and hardware management is handled by us.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <section class="hardware_prob">
+  <div class="container">
+   
+  <div class="bottom-border">
+    <h2 class="text-white text-center">Common Challenges Faced by Institute</h2>
+    <p class="common_text">Want to Introduce Technology and Innovation in your Institue, HIGH INVESTMENT in the same is holding you up</p>
+  
+  <div class="zero_investment">
+    <p class="zero text-center">
+      Zero hardware Investent is required for setting up a Focalyt Future Technology Lab in your Institute: Student enrollments are the perfect solution for you.
+    </p>
+  </div>
+  </div>
+<div class="change_tech">
+  <h2 class="change">Worried about Rapid Change in Technologies and the fear of hardware lab becoming obsolete after some time</h2>
+  <div class="zero_investment">
+    <p class="zero text-center">
+      We are always up to date with the Technological Innovation &
+      our team is always equipped with latest kits.
+    </p>
+  </div>
+</div>
+<div class="change_tech">
+  <h2 class="new_change">Want your student and Faculty to be certified that is
+    useful in their future prospect.</h2>
+  <div class="zero_investment">
+    <p class="zero text-center">
+      Want your student and Faculty to be certified that is
+useful in their future prospect.
+    </p>
+  </div>
+</div>
+
+  </div>
+</section> -->
+  <section id="bookDemo" class="bg-white">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-12">
+          <div class="section-header">
+            <h2 class="book_demo_today text-black text-center">
+              Book your FREE Demo Today!
+            </h2>
+            <p class="header_underline"></p>
+
+            <p class="demoQuate text-black text-center">
+              Are you ready to experience the power of AI and Robotics? Request a free demo of our AI and Robotics
+              ecosystem today!
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="demo_table">
+            <form method="post" id="demoForm">
+              <div class="demo_form">
+                <h3 class="request_demo text-black pb-3">
+                  Request your Demo Today
+                </h3>
+                <div class="form_name">
+                  <div class="first_name">
+                    <input name="name" type="text" class="form_input" placeholder="" id="fullName" required>
+                    <label class="label">Full Name <span class="imp">*</span></label>
+                  </div>
+                  <div class="email">
+                    <input name="email" type="text" class="form_input" placeholder="" id="email" required>
+                    <label class="label">Email <span class="imp">*</span></label>
+                  </div>
+                </div>
+                <div class="form_name">
+                  <div class="phone">
+                    <input name="mobile" class="form_input" type="text" placeholder="" id="phone" required
+                      maxlength="10" 
+                      pattern="^\d{10}$" 
+                      oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
+                    <label class="label">Phone <span class="imp">*</span></label>
+                  </div>
+                  <div class="Organisation">
+                    <input name="organisation"  class="form_input" required placeholder="" type="text" id="organisation">
+                    <label class="label">Name of Institute <span>*</span></label>
+                  </div>
+                </div>
+                <div class="form_name">
+                  <div  class="designation select-container">
+                    <select name="designation" class="form_designation_input" id="designation" required>
+                      <option value="" disabled selected>Select your designation</option>
+                      <option value="manager">Manager</option>
+                      <option value="developer">Developer</option>
+                      <option value="designer">Designer</option>
+                      <option value="tester">Tester</option>
+                    </select>
+                    <label class="label" for="Designation"> Designation <span class="imp">*</span></label>
+                  </div>
+                  <div class="state">
+                    <select name="state" class="form_designation_input" id="state" required>
+                      <option value="" disabled selected>Select your State</option>
+                      <option value="Andhra Pradesh">Andhra Pradesh</option>
+                      <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                      <option value="Assam">Assam</option>
+                      <option value="Bihar">Bihar</option>
+                      <option value="Chhattisgarh">Chhattisgarh</option>
+                      <option value="Goa">Goa</option>
+                      <option value="Gujarat">Gujarat</option>
+                      <option value="Haryana">Haryana</option>
+                      <option value="Himachal Pradesh">Himachal Pradesh</option>
+                      <option value="Jharkhand">Jharkhand</option>
+                      <option value="Karnataka">Karnataka</option>
+                      <option value="Kerala">Kerala</option>
+                      <option value="Madhya Pradesh">Madhya Pradesh</option>
+                      <option value="Maharashtra">Maharashtra</option>
+                      <option value="Manipur">Manipur</option>
+                      <option value="Meghalaya">Meghalaya</option>
+                      <option value="Mizoram">Mizoram</option>
+                      <option value="Nagaland">Nagaland</option>
+                      <option value="Odisha">Odisha</option>
+                      <option value="Punjab">Punjab</option>
+                      <option value="Rajasthan">Rajasthan</option>
+                      <option value="Sikkim">Sikkim</option>
+                      <option value="Tamil Nadu">Tamil Nadu</option>
+                      <option value="Telangana">Telangana</option>
+                      <option value="Tripura">Tripura</option>
+                      <option value="Uttar Pradesh">Uttar Pradesh</option>
+                      <option value="Uttarakhand">Uttarakhand</option>
+                      <option value="West Bengal">West Bengal</option>
+                      <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                      <option value="Chandigarh">Chandigarh</option>
+                      <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                      <option value="Delhi">Delhi</option>
+                      <option value="Lakshadweep">Lakshadweep</option>
+                      <option value="Puducherry">Puducherry</option>
+                      <option value="Ladakh">Ladakh</option>
+                      <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                    </select>
+                    <label class="label">State <span class="imp">*</span></label>
+                  </div>                  
+                </div>            
+               
+                
+                <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
+                    placeholder="Message us" rows="2" ></textarea> -->
+                    <div class="textarea-container">
+                      <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
+                      <label for="exampleTextarea">Your Message</label>
+                    </div>
+                
+                    <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v" >Book Demo</button>
+              </div>
+              <% if(success && success.length> 0) { %>
+                <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
+                    <%- success %>
+                </div>
+                <% } %>
+                
+            </form>
             
-            <div>
-                <div class="book_a_demo">
-                    <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                      Book a free demo
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                      <div class="modal-dialog new-model-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Book your Free Demo Today!</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body new-modal-body">
-                            <div class="container">
-                              <div class="row">
-                                
-                                <div class="col-md-12">
-                                  <div class="demo_table">
-                                    <form method="post" id="demoForm">
-                                      <div class="demo_form">
-                                       
-                                        <div class="form_name">
-                                          <div class="first_name">
-                                            <input name="name" type="text" class="form_input" placeholder id="fullName" required>
-                                            <label class="label">Full
-                                              Name
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="email">
-                                            <input name="email" type="text" class="form_input" placeholder id="email" required>
-                                            <label class="label">Email
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                        </div>
-                                        <div class="form_name">
-                                          <div class="phone">
-                                            <input name="mobile" class="form_input" type="text" placeholder id="phone" required maxlength="10" pattern="^\d{10}$" oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
-                                            <label class="label">Phone
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="Organisation">
-                                            <input name="organisation" class="form_input" required placeholder type="text" id="organisation">
-                                            <label class="label">Name
-                                              of
-                                              Institute
-                                              <span>*</span></label>
-                                          </div>
-                                        </div>
-                                        <div class="form_name">
-                                          <div class="designation select-container">
-                                            <select name="designation" class="form_designation_input" id="designation" required>
-                                              <option value disabled selected>Select
-                                                your
-                                                designation</option>
-                                              <option value="manager">Manager
-                                              </option>
-                                              <option value="developer">
-                                                Developer</option>
-                                              <option value="designer">
-                                                Designer</option>
-                                              <option value="tester">Tester
-                                              </option>
-                                            </select>
-                                            <label class="label" for="Designation">
-                                              Designation
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="state">
-                                            <select name="state" class="form_designation_input" id="state" required>
-                                              <option value disabled selected>Select
-                                                your
-                                                State
-                                              </option>
-                                              <option value="Andhra Pradesh">
-                                                Andhra
-                                                Pradesh</option>
-                                              <option value="Arunachal Pradesh">
-                                                Arunachal
-                                                Pradesh</option>
-                                              <option value="Assam">Assam
-                                              </option>
-                                              <option value="Bihar">Bihar
-                                              </option>
-                                              <option value="Chhattisgarh">
-                                                Chhattisgarh</option>
-                                              <option value="Goa">Goa</option>
-                                              <option value="Gujarat">Gujarat
-                                              </option>
-                                              <option value="Haryana">Haryana
-                                              </option>
-                                              <option value="Himachal Pradesh">
-                                                Himachal
-                                                Pradesh</option>
-                                              <option value="Jharkhand">
-                                                Jharkhand</option>
-                                              <option value="Karnataka">
-                                                Karnataka</option>
-                                              <option value="Kerala">Kerala
-                                              </option>
-                                              <option value="Madhya Pradesh">
-                                                Madhya
-                                                Pradesh</option>
-                                              <option value="Maharashtra">
-                                                Maharashtra</option>
-                                              <option value="Manipur">Manipur
-                                              </option>
-                                              <option value="Meghalaya">
-                                                Meghalaya</option>
-                                              <option value="Mizoram">Mizoram
-                                              </option>
-                                              <option value="Nagaland">
-                                                Nagaland</option>
-                                              <option value="Odisha">Odisha
-                                              </option>
-                                              <option value="Punjab">Punjab
-                                              </option>
-                                              <option value="Rajasthan">
-                                                Rajasthan</option>
-                                              <option value="Sikkim">Sikkim
-                                              </option>
-                                              <option value="Tamil Nadu">Tamil
-                                                Nadu</option>
-                                              <option value="Telangana">
-                                                Telangana</option>
-                                              <option value="Tripura">Tripura
-                                              </option>
-                                              <option value="Uttar Pradesh">
-                                                Uttar
-                                                Pradesh</option>
-                                              <option value="Uttarakhand">
-                                                Uttarakhand</option>
-                                              <option value="West Bengal">West
-                                                Bengal</option>
-                                              <option value="Andaman and Nicobar Islands">
-                                                Andaman
-                                                and
-                                                Nicobar
-                                                Islands
-                                              </option>
-                                              <option value="Chandigarh">
-                                                Chandigarh</option>
-                                              <option value="Dadra and Nagar Haveli and Daman and Diu">
-                                                Dadra
-                                                and
-                                                Nagar
-                                                Haveli
-                                                and
-                                                Daman
-                                                and
-                                                Diu</option>
-                                              <option value="Delhi">Delhi
-                                              </option>
-                                              <option value="Lakshadweep">
-                                                Lakshadweep</option>
-                                              <option value="Puducherry">
-                                                Puducherry</option>
-                                              <option value="Ladakh">Ladakh
-                                              </option>
-                                              <option value="Jammu and Kashmir">
-                                                Jammu
-                                                and
-                                                Kashmir</option>
-                                            </select>
-                                            <label class="label">State
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                        </div>
-    
-                                        <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
-                                  placeholder="Message us" rows="2" ></textarea> -->
-                                        <div class="textarea-container">
-                                          <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
-                                          <label for="exampleTextarea">Your
-                                            Message</label>
-                                        </div>
-    
-                                        <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v">Book
-                                          Demo</button>
-                                      </div>
-                                      <%
-                                    if(success
-                                    &&
-                                    success.length>
-                                    0) { %>
-                                      <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
-                                        <%-
-                                        success
-                                        %>
-                                      </div>
-                                      <% } %>
-    
-                                    </form>
-    
-                                  </div>
-    
-                                </div>
-    
-                              </div>
-                            </div>
-                          </div>
-    
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-            </div>
-          </div>
-          <div class="desc_img">
-            <figure>
-              <img src="public_assets/images/course/drone.jpg" alt="">
-            </figure>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="labs-desc" id="robotics-section">
-          <div class="desc_img">
-            <figure>
-              <img src="public_assets/images/course/robo.jpg" alt="">
-            </figure>
-          </div>
-          <div class="desc_img_content">
-            <h2 class="desc_header text-uppercase">Robotics labs</h2>
-            <div>
-              <h5 class="desc_sub_header">What is a Robotics Lab?</h5>
-              <p class="desc_para">
-                A Robotics Lab is an advanced learning space designed to provide students with hands-on experience in robotics, automation, and AI-powered machines. Equipped with cutting-edge robotic kits, programming tools, and AI integration platforms, our lab enables students to design, build, and control robots for various real-world applications.
-              </p>
-            </div>
-            <div>
-              <h5 class="desc_sub_header">Why Learn Robotics?</h5>
-              <p class="desc_para">
-                The future belongs to automation, AI, and robotics, and industries like manufacturing, healthcare, defense, space exploration, and smart cities rely heavily on robotic technology. By learning robotics, students develop problem-solving skills, logical thinking, and hands-on experience with emerging technologies that are shaping the future.
-              </p>
-            </div>
-            <div>
-                <div class="book_a_demo">
-                    <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                      Book a free demo
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                      <div class="modal-dialog new-model-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Book your Free Demo Today!</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body new-modal-body">
-                            <div class="container">
-                              <div class="row">
-                                
-                                <div class="col-md-12">
-                                  <div class="demo_table">
-                                    <form method="post" id="demoForm">
-                                      <div class="demo_form">
-                                       
-                                        <div class="form_name">
-                                          <div class="first_name">
-                                            <input name="name" type="text" class="form_input" placeholder id="fullName" required>
-                                            <label class="label">Full
-                                              Name
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="email">
-                                            <input name="email" type="text" class="form_input" placeholder id="email" required>
-                                            <label class="label">Email
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                        </div>
-                                        <div class="form_name">
-                                          <div class="phone">
-                                            <input name="mobile" class="form_input" type="text" placeholder id="phone" required maxlength="10" pattern="^\d{10}$" oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
-                                            <label class="label">Phone
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="Organisation">
-                                            <input name="organisation" class="form_input" required placeholder type="text" id="organisation">
-                                            <label class="label">Name
-                                              of
-                                              Institute
-                                              <span>*</span></label>
-                                          </div>
-                                        </div>
-                                        <div class="form_name">
-                                          <div class="designation select-container">
-                                            <select name="designation" class="form_designation_input" id="designation" required>
-                                              <option value disabled selected>Select
-                                                your
-                                                designation</option>
-                                              <option value="manager">Manager
-                                              </option>
-                                              <option value="developer">
-                                                Developer</option>
-                                              <option value="designer">
-                                                Designer</option>
-                                              <option value="tester">Tester
-                                              </option>
-                                            </select>
-                                            <label class="label" for="Designation">
-                                              Designation
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="state">
-                                            <select name="state" class="form_designation_input" id="state" required>
-                                              <option value disabled selected>Select
-                                                your
-                                                State
-                                              </option>
-                                              <option value="Andhra Pradesh">
-                                                Andhra
-                                                Pradesh</option>
-                                              <option value="Arunachal Pradesh">
-                                                Arunachal
-                                                Pradesh</option>
-                                              <option value="Assam">Assam
-                                              </option>
-                                              <option value="Bihar">Bihar
-                                              </option>
-                                              <option value="Chhattisgarh">
-                                                Chhattisgarh</option>
-                                              <option value="Goa">Goa</option>
-                                              <option value="Gujarat">Gujarat
-                                              </option>
-                                              <option value="Haryana">Haryana
-                                              </option>
-                                              <option value="Himachal Pradesh">
-                                                Himachal
-                                                Pradesh</option>
-                                              <option value="Jharkhand">
-                                                Jharkhand</option>
-                                              <option value="Karnataka">
-                                                Karnataka</option>
-                                              <option value="Kerala">Kerala
-                                              </option>
-                                              <option value="Madhya Pradesh">
-                                                Madhya
-                                                Pradesh</option>
-                                              <option value="Maharashtra">
-                                                Maharashtra</option>
-                                              <option value="Manipur">Manipur
-                                              </option>
-                                              <option value="Meghalaya">
-                                                Meghalaya</option>
-                                              <option value="Mizoram">Mizoram
-                                              </option>
-                                              <option value="Nagaland">
-                                                Nagaland</option>
-                                              <option value="Odisha">Odisha
-                                              </option>
-                                              <option value="Punjab">Punjab
-                                              </option>
-                                              <option value="Rajasthan">
-                                                Rajasthan</option>
-                                              <option value="Sikkim">Sikkim
-                                              </option>
-                                              <option value="Tamil Nadu">Tamil
-                                                Nadu</option>
-                                              <option value="Telangana">
-                                                Telangana</option>
-                                              <option value="Tripura">Tripura
-                                              </option>
-                                              <option value="Uttar Pradesh">
-                                                Uttar
-                                                Pradesh</option>
-                                              <option value="Uttarakhand">
-                                                Uttarakhand</option>
-                                              <option value="West Bengal">West
-                                                Bengal</option>
-                                              <option value="Andaman and Nicobar Islands">
-                                                Andaman
-                                                and
-                                                Nicobar
-                                                Islands
-                                              </option>
-                                              <option value="Chandigarh">
-                                                Chandigarh</option>
-                                              <option value="Dadra and Nagar Haveli and Daman and Diu">
-                                                Dadra
-                                                and
-                                                Nagar
-                                                Haveli
-                                                and
-                                                Daman
-                                                and
-                                                Diu</option>
-                                              <option value="Delhi">Delhi
-                                              </option>
-                                              <option value="Lakshadweep">
-                                                Lakshadweep</option>
-                                              <option value="Puducherry">
-                                                Puducherry</option>
-                                              <option value="Ladakh">Ladakh
-                                              </option>
-                                              <option value="Jammu and Kashmir">
-                                                Jammu
-                                                and
-                                                Kashmir</option>
-                                            </select>
-                                            <label class="label">State
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                        </div>
-    
-                                        <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
-                                  placeholder="Message us" rows="2" ></textarea> -->
-                                        <div class="textarea-container">
-                                          <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
-                                          <label for="exampleTextarea">Your
-                                            Message</label>
-                                        </div>
-    
-                                        <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v">Book
-                                          Demo</button>
-                                      </div>
-                                      <%
-                                    if(success
-                                    &&
-                                    success.length>
-                                    0) { %>
-                                      <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
-                                        <%-
-                                        success
-                                        %>
-                                      </div>
-                                      <% } %>
-    
-                                    </form>
-    
-                                  </div>
-    
-                                </div>
-    
-                              </div>
-                            </div>
-                          </div>
-    
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="labs-desc" id="iot-section">
-          <div class="desc_img_content">
-            <h2 class="desc_header text-uppercase">Internet of things (IOT)</h2>
-            <div>
-              <h5 class="desc_sub_header">What is an IoT Lab?</h5>
-              <p class="desc_para">
-                An Internet of Things (IoT) Lab is an advanced learning space where students explore the world of connected devices, automation, and smart technology. Equipped with IoT development boards, sensors, cloud platforms, and AI integration tools, our IoT Lab helps students build real-world smart systems used in homes, industries, healthcare, agriculture, and more.
-              </p>
-            </div>
-            <div>
-              <h5 class="desc_sub_header">Why Learn IoT?</h5>
-              <p class="desc_para">
-                The Internet of Things (IoT) is revolutionizing industries by connecting devices, analyzing data, and automating tasks. From smart homes and wearable tech to industrial automation and smart cities, IoT is shaping the future. Learning IoT opens doors to high-demand careers in AI, robotics, data science, and cybersecurity.
-              </p>
-            </div>
-            <div>
-            <div>
-                <div class="book_a_demo">
-                    <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                      Book a free demo
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                      <div class="modal-dialog new-model-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Book your Free Demo Today!</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body new-modal-body">
-                            <div class="container">
-                              <div class="row">
-                                
-                                <div class="col-md-12">
-                                  <div class="demo_table">
-                                    <form method="post" id="demoForm">
-                                      <div class="demo_form">
-                                       
-                                        <div class="form_name">
-                                          <div class="first_name">
-                                            <input name="name" type="text" class="form_input" placeholder id="fullName" required>
-                                            <label class="label">Full
-                                              Name
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="email">
-                                            <input name="email" type="text" class="form_input" placeholder id="email" required>
-                                            <label class="label">Email
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                        </div>
-                                        <div class="form_name">
-                                          <div class="phone">
-                                            <input name="mobile" class="form_input" type="text" placeholder id="phone" required maxlength="10" pattern="^\d{10}$" oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
-                                            <label class="label">Phone
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="Organisation">
-                                            <input name="organisation" class="form_input" required placeholder type="text" id="organisation">
-                                            <label class="label">Name
-                                              of
-                                              Institute
-                                              <span>*</span></label>
-                                          </div>
-                                        </div>
-                                        <div class="form_name">
-                                          <div class="designation select-container">
-                                            <select name="designation" class="form_designation_input" id="designation" required>
-                                              <option value disabled selected>Select
-                                                your
-                                                designation</option>
-                                              <option value="manager">Manager
-                                              </option>
-                                              <option value="developer">
-                                                Developer</option>
-                                              <option value="designer">
-                                                Designer</option>
-                                              <option value="tester">Tester
-                                              </option>
-                                            </select>
-                                            <label class="label" for="Designation">
-                                              Designation
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="state">
-                                            <select name="state" class="form_designation_input" id="state" required>
-                                              <option value disabled selected>Select
-                                                your
-                                                State
-                                              </option>
-                                              <option value="Andhra Pradesh">
-                                                Andhra
-                                                Pradesh</option>
-                                              <option value="Arunachal Pradesh">
-                                                Arunachal
-                                                Pradesh</option>
-                                              <option value="Assam">Assam
-                                              </option>
-                                              <option value="Bihar">Bihar
-                                              </option>
-                                              <option value="Chhattisgarh">
-                                                Chhattisgarh</option>
-                                              <option value="Goa">Goa</option>
-                                              <option value="Gujarat">Gujarat
-                                              </option>
-                                              <option value="Haryana">Haryana
-                                              </option>
-                                              <option value="Himachal Pradesh">
-                                                Himachal
-                                                Pradesh</option>
-                                              <option value="Jharkhand">
-                                                Jharkhand</option>
-                                              <option value="Karnataka">
-                                                Karnataka</option>
-                                              <option value="Kerala">Kerala
-                                              </option>
-                                              <option value="Madhya Pradesh">
-                                                Madhya
-                                                Pradesh</option>
-                                              <option value="Maharashtra">
-                                                Maharashtra</option>
-                                              <option value="Manipur">Manipur
-                                              </option>
-                                              <option value="Meghalaya">
-                                                Meghalaya</option>
-                                              <option value="Mizoram">Mizoram
-                                              </option>
-                                              <option value="Nagaland">
-                                                Nagaland</option>
-                                              <option value="Odisha">Odisha
-                                              </option>
-                                              <option value="Punjab">Punjab
-                                              </option>
-                                              <option value="Rajasthan">
-                                                Rajasthan</option>
-                                              <option value="Sikkim">Sikkim
-                                              </option>
-                                              <option value="Tamil Nadu">Tamil
-                                                Nadu</option>
-                                              <option value="Telangana">
-                                                Telangana</option>
-                                              <option value="Tripura">Tripura
-                                              </option>
-                                              <option value="Uttar Pradesh">
-                                                Uttar
-                                                Pradesh</option>
-                                              <option value="Uttarakhand">
-                                                Uttarakhand</option>
-                                              <option value="West Bengal">West
-                                                Bengal</option>
-                                              <option value="Andaman and Nicobar Islands">
-                                                Andaman
-                                                and
-                                                Nicobar
-                                                Islands
-                                              </option>
-                                              <option value="Chandigarh">
-                                                Chandigarh</option>
-                                              <option value="Dadra and Nagar Haveli and Daman and Diu">
-                                                Dadra
-                                                and
-                                                Nagar
-                                                Haveli
-                                                and
-                                                Daman
-                                                and
-                                                Diu</option>
-                                              <option value="Delhi">Delhi
-                                              </option>
-                                              <option value="Lakshadweep">
-                                                Lakshadweep</option>
-                                              <option value="Puducherry">
-                                                Puducherry</option>
-                                              <option value="Ladakh">Ladakh
-                                              </option>
-                                              <option value="Jammu and Kashmir">
-                                                Jammu
-                                                and
-                                                Kashmir</option>
-                                            </select>
-                                            <label class="label">State
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                        </div>
-    
-                                        <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
-                                  placeholder="Message us" rows="2" ></textarea> -->
-                                        <div class="textarea-container">
-                                          <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
-                                          <label for="exampleTextarea">Your
-                                            Message</label>
-                                        </div>
-    
-                                        <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v">Book
-                                          Demo</button>
-                                      </div>
-                                      <%
-                                    if(success
-                                    &&
-                                    success.length>
-                                    0) { %>
-                                      <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
-                                        <%-
-                                        success
-                                        %>
-                                      </div>
-                                      <% } %>
-    
-                                    </form>
-    
-                                  </div>
-    
-                                </div>
-    
-                              </div>
-                            </div>
-                          </div>
-    
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-            </div>
           </div>
           
+
         </div>
-        <div class="desc_img">
-          <figure>
-            <img src="public_assets/images/course/iot.jpg" alt="">
-          </figure>
+        <div class="col-md-6">
+          <div class="demo_experience">
+            <h3 class="Robotics text-black">
+              Experience the power of Future Technology Labs with us!
+            </h3>
+            <div class="underline"></div>
+            <div class="robo_area">
+              <p>
+                Discover the power of Focalyt-Future Technology Labs – an innovative hub for Drone Technology, AI,
+                Robotics, AR/VR, IoT, and Future Skills! Our state-of-the-art labs empower students with hands-on
+                learning, industry-relevant skills, and real-world applications. Designed for schools, colleges, and
+                skilling institutions, our expert-driven solutions bring cutting-edge technology to the classroom,
+                preparing learners for the careers of tomorrow.
+              <p>
+                In as little as one hour, we can assign the right resources to your specific educational requirements
+                and help unlock the countless possibilities Focalyt provides.
+              </p>
+              <p>
+                Contact us today for a free demonstration tailored to your institution’s needs! Experience how
+                Focalyt-Future Technology Labs can transform learning with Drone Technology, AI, Robotics, AR/VR, IoT,
+                and more. Act now and bring cutting-edge innovation to your classrooms—preparing students for the future
+                of technology-driven careers!
+              </p>
+            </div>
+
+          </div>
         </div>
       </div>
-      <div class="col-md-12">
-        <div class="labs-desc" id="ai-section">
-          <div class="desc_img">
-            <figure>
-              <img src="public_assets/images/course/ai.jpg" alt="">
-            </figure>
+    </div>
+  </section>
+
+  <section id="products" class="">
+    <div class="container">
+      <div class="row g-3">
+        <h2 class="products text-center">
+          Our Products
+        </h2>
+        <p class="pro_labs text-center text-capitalize"> explore Our future Technology Labs</p>
+
+        <div class="col-md-12">
+          <div class="row justify-content-evenly py-3 g-5">
+            <div class="col-md-3">
+              <div class="ar_labs">
+                <figure>
+                  <img src="public_assets/images/labs/ar_vr.jpg" alt="AR/VR">
+                </figure>
+                <h4 class="h4 text-capitalize">Ar/Vr Labs</h4>
+
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="ar_labs">
+                <figure>
+                  <img src="public_assets/images/labs/drone.jpg" alt="Drone">
+                </figure>
+                <h4 class="h4 text-capitalize">Drone Labs</h4>
+
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="ar_labs">
+                <figure>
+                  <img src="public_assets/images/course/robo.png" alt="Robotics">
+                </figure>
+                <h4 class="h4 text-capitalize">Robotics Labs</h4>
+
+              </div>
+            </div>
+
           </div>
-          <div class="desc_img_content">
-            <h2 class="desc_header text-uppercase">Artificial Intelligence (AI)</h2>
-            <div>
-              <h5 class="desc_sub_header">What is an AI Lab?</h5>
-              <p class="desc_para">
-                An Artificial Intelligence (AI) Lab is an advanced learning environment where students gain hands-on experience in Machine Learning (ML), Deep Learning, Natural Language Processing (NLP), Computer Vision, and AI-driven automation. Equipped with AI-powered tools, cloud computing platforms, and data analytics software, our AI Lab helps students build real-world AI solutions for industries like healthcare, finance, robotics, cybersecurity, and automation.
-              </p>
+          <div class="row justify-content-evenly pt-3 pb-5 g-5">
+            <div class="col-md-3">
+              <div class="ar_labs">
+                <figure>
+                  <img src="public_assets/images/course/iot.png" alt="IOT">
+                </figure>
+                <h4 class="h4 text-capitalize">IOT (Internet Of Things)</h4>
+
+              </div>
             </div>
-            <div>
-              <h5 class="desc_sub_header">Why Learn AI?</h5>
-              <p class="desc_para">
-                Artificial Intelligence is reshaping the world by enabling machines to think, learn, and make decisions. AI is at the core of smart assistants, autonomous vehicles, robotics, fraud detection, and predictive analytics. Learning AI opens up exciting career opportunities in tech companies, research institutions, and industries looking for AI-powered innovation.
-              </p>
+            <div class="col-md-3">
+              <div class="ar_labs">
+                <figure>
+                  <img src="public_assets/images/labs/ai.png" alt="AI">
+                </figure>
+                <h4 class="h4 text-capitalize">Artificial intelligence</h4>
+
+              </div>
             </div>
-            <div>
+            <div class="col-md-12 text-center">
+              <div class="book_a_demo">
+                <button type="button" class="a_btn text-uppercase model_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="--x: 166px; --y: 12.421875px;">
+                  Book a free demo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- labs description sectroin  -->
+  <section class="bg-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="labs-desc" id="arvr-section">
+            <div class="desc_img">
+              <figure>
+                <img src="public_assets/images/course/ar_vr.jpg" alt="">
+              </figure>
+            </div>
+            <div class="desc_img_content">
+              <h2 class="desc_header text-uppercase">AR vr labs</h2>
+
+              <div>
+                <h5 class="desc_sub_header">What is an AR/VR Lab?</h5>
+                <p class="desc_para">
+                  An Augmented Reality (AR) and Virtual Reality (VR) Lab is a cutting-edge facility designed to provide
+                  immersive, interactive, and experiential learning experiences. These labs leverage AR, VR, and Mixed
+                  Reality (MR) technologies to enhance education, research, and training across multiple industries,
+                  including education, healthcare, engineering, manufacturing, and defense.
+                </p>
+              </div>
+              <div>
+                <h5 class="desc_sub_header">Why AR/VR Labs?</h5>
+                <p class="desc_para">
+                  Traditional learning methods rely on textbooks, videos, and simulations. AR/VR Labs take learning
+                  beyond the classroom by providing a real-time, interactive environment where students and
+                  professionals can visualize concepts, explore virtual environments, and gain hands-on experience with
+                  complex subjects.
+                </p>
+              </div>
+<div class="book_a_demo">
+  <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="--x: 166px; --y: 12.421875px;">
+    Book a free demo
+  </button>
+</div>
+              <div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="labs-desc" id="drone-section">
+            <div class="desc_img_content">
+              <h2 class="desc_header text-uppercase">Drone Labs</h2>
+
+              <div>
+                <h5 class="desc_sub_header">What is a Drone Lab?</h5>
+                <p class="desc_para">
+                  A Drone Lab is an advanced learning space designed to provide hands-on experience with Unmanned Aerial
+                  Vehicles (UAVs). These labs are equipped with cutting-edge drone technology, flight simulators, and
+                  real-world training environments to help students learn about drone operation, maintenance,
+                  programming, and industry applications.
+                </p>
+              </div>
+              <div>
+                <h5 class="desc_sub_header">Why Learn in a Drone Lab?</h5>
+                <p class="desc_para">
+                  Drones are transforming industries like agriculture, defense, construction, filmmaking, logistics, and
+                  disaster management. With the rise of drone technology, certified drone pilots and experts are in high
+                  demand. A Drone Lab gives students the skills, knowledge, and hands-on experience to excel in this
+                  futuristic career path.
+                </p>
+              </div>
+              <div class="book_a_demo">
+                <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="--x: 166px; --y: 12.421875px;">
+                  Book a free demo
+                </button>
+              </div>
+
+              <div>
+
+              </div>
+            </div>
+            <div class="desc_img">
+              <figure>
+                <img src="public_assets/images/course/drone.jpg" alt="">
+              </figure>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="labs-desc" id="robotics-section">
+            <div class="desc_img">
+              <figure>
+                <img src="public_assets/images/course/robo.jpg" alt="">
+              </figure>
+            </div>
+            <div class="desc_img_content">
+              <h2 class="desc_header text-uppercase">Robotics labs</h2>
+              <div>
+                <h5 class="desc_sub_header">What is a Robotics Lab?</h5>
+                <p class="desc_para">
+                  A Robotics Lab is an advanced learning space designed to provide students with hands-on experience in
+                  robotics, automation, and AI-powered machines. Equipped with cutting-edge robotic kits, programming
+                  tools, and AI integration platforms, our lab enables students to design, build, and control robots for
+                  various real-world applications.
+                </p>
+              </div>
+              <div>
+                <h5 class="desc_sub_header">Why Learn Robotics?</h5>
+                <p class="desc_para">
+                  The future belongs to automation, AI, and robotics, and industries like manufacturing, healthcare,
+                  defense, space exploration, and smart cities rely heavily on robotic technology. By learning robotics,
+                  students develop problem-solving skills, logical thinking, and hands-on experience with emerging
+                  technologies that are shaping the future.
+                </p>
+              </div>
+              <div class="book_a_demo">
+                <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="--x: 166px; --y: 12.421875px;">
+                  Book a free demo
+                </button>
+              </div>
+              <div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="labs-desc" id="iot-section">
+            <div class="desc_img_content">
+              <h2 class="desc_header text-uppercase">Internet of things (IOT)</h2>
+              <div>
+                <h5 class="desc_sub_header">What is an IoT Lab?</h5>
+                <p class="desc_para">
+                  An Internet of Things (IoT) Lab is an advanced learning space where students explore the world of
+                  connected devices, automation, and smart technology. Equipped with IoT development boards, sensors,
+                  cloud platforms, and AI integration tools, our IoT Lab helps students build real-world smart systems
+                  used in homes, industries, healthcare, agriculture, and more.
+                </p>
+              </div>
+              <div>
+                <h5 class="desc_sub_header">Why Learn IoT?</h5>
+                <p class="desc_para">
+                  The Internet of Things (IoT) is revolutionizing industries by connecting devices, analyzing data, and
+                  automating tasks. From smart homes and wearable tech to industrial automation and smart cities, IoT is
+                  shaping the future. Learning IoT opens doors to high-demand careers in AI, robotics, data science, and
+                  cybersecurity.
+                </p>
+              </div>
+              <div class="book_a_demo">
+                <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="--x: 166px; --y: 12.421875px;">
+                  Book a free demo
+                </button>
+              </div>
+              <div>
+                <div>
+
+                </div>
+              </div>
+
+            </div>
+            <div class="desc_img">
+              <figure>
+                <img src="public_assets/images/course/iot.jpg" alt="">
+              </figure>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="labs-desc" id="ai-section">
+              <div class="desc_img">
+                <figure>
+                  <img src="public_assets/images/course/ai.jpg" alt="">
+                </figure>
+              </div>
+              <div class="desc_img_content">
+                <h2 class="desc_header text-uppercase">Artificial Intelligence (AI)</h2>
+                <div>
+                  <h5 class="desc_sub_header">What is an AI Lab?</h5>
+                  <p class="desc_para">
+                    An Artificial Intelligence (AI) Lab is an advanced learning environment where students gain hands-on
+                    experience in Machine Learning (ML), Deep Learning, Natural Language Processing (NLP), Computer
+                    Vision, and AI-driven automation. Equipped with AI-powered tools, cloud computing platforms, and
+                    data analytics software, our AI Lab helps students build real-world AI solutions for industries like
+                    healthcare, finance, robotics, cybersecurity, and automation.
+                  </p>
+                </div>
+                <div>
+                  <h5 class="desc_sub_header">Why Learn AI?</h5>
+                  <p class="desc_para">
+                    Artificial Intelligence is reshaping the world by enabling machines to think, learn, and make
+                    decisions. AI is at the core of smart assistants, autonomous vehicles, robotics, fraud detection,
+                    and predictive analytics. Learning AI opens up exciting career opportunities in tech companies,
+                    research institutions, and industries looking for AI-powered innovation.
+                  </p>
+                </div>
                 <div class="book_a_demo">
-                    <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                      Book a free demo
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                      <div class="modal-dialog new-model-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Book your Free Demo Today!</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body new-modal-body">
-                            <div class="container">
-                              <div class="row">
-                                
-                                <div class="col-md-12">
-                                  <div class="demo_table">
-                                    <form method="post" id="demoForm">
-                                      <div class="demo_form">
-                                       
-                                        <div class="form_name">
-                                          <div class="first_name">
-                                            <input name="name" type="text" class="form_input" placeholder id="fullName" required>
-                                            <label class="label">Full
-                                              Name
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="email">
-                                            <input name="email" type="text" class="form_input" placeholder id="email" required>
-                                            <label class="label">Email
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                        </div>
-                                        <div class="form_name">
-                                          <div class="phone">
-                                            <input name="mobile" class="form_input" type="text" placeholder id="phone" required maxlength="10" pattern="^\d{10}$" oninput="this.value = this.value.slice(0, 10).replace(/[^0-9]/g, '')">
-                                            <label class="label">Phone
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="Organisation">
-                                            <input name="organisation" class="form_input" required placeholder type="text" id="organisation">
-                                            <label class="label">Name
-                                              of
-                                              Institute
-                                              <span>*</span></label>
-                                          </div>
-                                        </div>
-                                        <div class="form_name">
-                                          <div class="designation select-container">
-                                            <select name="designation" class="form_designation_input" id="designation" required>
-                                              <option value disabled selected>Select
-                                                your
-                                                designation</option>
-                                              <option value="manager">Manager
-                                              </option>
-                                              <option value="developer">
-                                                Developer</option>
-                                              <option value="designer">
-                                                Designer</option>
-                                              <option value="tester">Tester
-                                              </option>
-                                            </select>
-                                            <label class="label" for="Designation">
-                                              Designation
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                          <div class="state">
-                                            <select name="state" class="form_designation_input" id="state" required>
-                                              <option value disabled selected>Select
-                                                your
-                                                State
-                                              </option>
-                                              <option value="Andhra Pradesh">
-                                                Andhra
-                                                Pradesh</option>
-                                              <option value="Arunachal Pradesh">
-                                                Arunachal
-                                                Pradesh</option>
-                                              <option value="Assam">Assam
-                                              </option>
-                                              <option value="Bihar">Bihar
-                                              </option>
-                                              <option value="Chhattisgarh">
-                                                Chhattisgarh</option>
-                                              <option value="Goa">Goa</option>
-                                              <option value="Gujarat">Gujarat
-                                              </option>
-                                              <option value="Haryana">Haryana
-                                              </option>
-                                              <option value="Himachal Pradesh">
-                                                Himachal
-                                                Pradesh</option>
-                                              <option value="Jharkhand">
-                                                Jharkhand</option>
-                                              <option value="Karnataka">
-                                                Karnataka</option>
-                                              <option value="Kerala">Kerala
-                                              </option>
-                                              <option value="Madhya Pradesh">
-                                                Madhya
-                                                Pradesh</option>
-                                              <option value="Maharashtra">
-                                                Maharashtra</option>
-                                              <option value="Manipur">Manipur
-                                              </option>
-                                              <option value="Meghalaya">
-                                                Meghalaya</option>
-                                              <option value="Mizoram">Mizoram
-                                              </option>
-                                              <option value="Nagaland">
-                                                Nagaland</option>
-                                              <option value="Odisha">Odisha
-                                              </option>
-                                              <option value="Punjab">Punjab
-                                              </option>
-                                              <option value="Rajasthan">
-                                                Rajasthan</option>
-                                              <option value="Sikkim">Sikkim
-                                              </option>
-                                              <option value="Tamil Nadu">Tamil
-                                                Nadu</option>
-                                              <option value="Telangana">
-                                                Telangana</option>
-                                              <option value="Tripura">Tripura
-                                              </option>
-                                              <option value="Uttar Pradesh">
-                                                Uttar
-                                                Pradesh</option>
-                                              <option value="Uttarakhand">
-                                                Uttarakhand</option>
-                                              <option value="West Bengal">West
-                                                Bengal</option>
-                                              <option value="Andaman and Nicobar Islands">
-                                                Andaman
-                                                and
-                                                Nicobar
-                                                Islands
-                                              </option>
-                                              <option value="Chandigarh">
-                                                Chandigarh</option>
-                                              <option value="Dadra and Nagar Haveli and Daman and Diu">
-                                                Dadra
-                                                and
-                                                Nagar
-                                                Haveli
-                                                and
-                                                Daman
-                                                and
-                                                Diu</option>
-                                              <option value="Delhi">Delhi
-                                              </option>
-                                              <option value="Lakshadweep">
-                                                Lakshadweep</option>
-                                              <option value="Puducherry">
-                                                Puducherry</option>
-                                              <option value="Ladakh">Ladakh
-                                              </option>
-                                              <option value="Jammu and Kashmir">
-                                                Jammu
-                                                and
-                                                Kashmir</option>
-                                            </select>
-                                            <label class="label">State
-                                              <span class="imp">*</span></label>
-                                          </div>
-                                        </div>
-    
-                                        <!-- <textarea class="form-contro mb-3 message-to pe-1" name="message" id="exampleFormControlTextarea1"
-                                  placeholder="Message us" rows="2" ></textarea> -->
-                                        <div class="textarea-container">
-                                          <textarea id="message" name="message" placeholder=" " rows="2" required></textarea>
-                                          <label for="exampleTextarea">Your
-                                            Message</label>
-                                        </div>
-    
-                                        <button type="submit" class="submit_btn g-recaptcha" data-callback='onSubmit' data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v">Book
-                                          Demo</button>
-                                      </div>
-                                      <%
-                                    if(success
-                                    &&
-                                    success.length>
-                                    0) { %>
-                                      <div class="alertLoginSuccess alert-success alert-dismissible error_login text-danger" role="alert">
-                                        <%-
-                                        success
-                                        %>
-                                      </div>
-                                      <% } %>
-    
-                                    </form>
-    
-                                  </div>
-    
-                                </div>
-    
-                              </div>
-                            </div>
-                          </div>
-    
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <button type="button" class="a_btn text-uppercase model_btn plan--demo" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="--x: 166px; --y: 12.421875px;">
+                    Book a free demo
+                  </button>
+                </div>
+                <div>
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+  </section>
+
+  <!-- faqs  -->
+
+  <section class="faq_video">
+    <div class="container">
+      <div class="row">
+
+      </div>
     </div>
-  </div>
-</section>
-
-<!-- faqs  -->
-
-<section class="faq_video">
-  <div class="container">
-    <div class="row">
-
-    </div>
-  </div>
-</section>
-<script src="/js/newpage/js/animation.js"></script>
-<!-- <style>
+  </section>
+  <script src="/js/newpage/js/animation.js"></script>
+  <!-- <style>
   .flying-drone {
     width: 50px;
     height: 50px;
@@ -2046,23 +931,40 @@ useful in their future prospect.
     object-fit: contain;
 }
 </style> -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+  <!-- <script>
+  function onSubmit(token) {
+    document.getElementsByClassName("demoForm").submit();
+  }
+</script> -->
 
-    // Create drone element
-    const drone = document.createElement('div');
-    drone.className = 'flying-drone';
-    drone.innerHTML = `
+  <script>
+    function onSubmit(token) {
+      document.getElementById("demoForm").submit();
+    }
+    function onSubmit(token) {
+      document.getElementById("demo--Form").submit();
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
+
+      // Create drone element
+      const drone = document.createElement('div');
+      drone.className = 'flying-drone';
+      drone.innerHTML = `
         <video class="drone-video" autoplay loop muted playsinline>
             <source src="public_assets/videos/drone.mp" type="video/mp4">
         </video>
     `;
-    drone.style.cssText = `
+      drone.style.cssText = `
         position: fixed;
         display: none;
         z-index: 9999;
@@ -2071,913 +973,82 @@ useful in their future prospect.
         width: 50px;
         height: 50px;
     `;
-    document.body.appendChild(drone);
+      document.body.appendChild(drone);
 
-    // Add click handlers
-    const icons = document.querySelectorAll('.icon-container');
-    
-    icons.forEach(icon => {
-        icon.addEventListener('click', function() {
-            const targetSection = this.getAttribute('data-target');
-            const targetElement = document.getElementById(targetSection);
-            
-            if (!targetElement) return;
+      // Add click handlers
+      const icons = document.querySelectorAll('.icon-container');
 
-            console.log('Icon clicked, target:', targetSection); // Debug log
+      icons.forEach(icon => {
+        icon.addEventListener('click', function () {
+          const targetSection = this.getAttribute('data-target');
+          const targetElement = document.getElementById(targetSection);
 
-            // Get positions
-            const iconRect = this.getBoundingClientRect();
-            const targetRect = targetElement.getBoundingClientRect();
-            
-            // Calculate positions
-            const startX = iconRect.left + iconRect.width / 2;
-            const startY = iconRect.top + window.scrollY + iconRect.height / 2;
-            const endX = targetRect.left + targetRect.width / 2;
-            const endY = targetRect.top + window.scrollY;
+          if (!targetElement) return;
 
-            // Debug logs
-            console.log('Start position:', startX, startY);
-            console.log('End position:', endX, endY);
+          console.log('Icon clicked, target:', targetSection); // Debug log
 
-            // Show drone and animate
-            gsap.set(drone, {
-                display: 'block',
-                x: startX,
-                y: startY,
-                scale: 0
-            });
+          // Get positions
+          const iconRect = this.getBoundingClientRect();
+          const targetRect = targetElement.getBoundingClientRect();
 
-            const tl = gsap.timeline({
-                onStart: () => console.log('Animation started'),
-                onComplete: () => {
-                    console.log('Animation completed');
-                    gsap.set(drone, { display: 'none' });
-                }
-            });
+          // Calculate positions
+          const startX = iconRect.left + iconRect.width / 2;
+          const startY = iconRect.top + window.scrollY + iconRect.height / 2;
+          const endX = targetRect.left + targetRect.width / 2;
+          const endY = targetRect.top + window.scrollY;
 
-            tl.to(drone, {
-                scale: 1,
-                duration: 0.3,
-                ease: 'back.out'
-            })
-            .to(drone, {
-                duration: 1.5,
-                motionPath: {
-                    path: [
-                        { x: startX, y: startY },
-                        { x: startX + (endX - startX)/2, y: startY - 100 },
-                        { x: endX, y: endY }
-                    ],
-                    curviness: 1.5
-                },
-                ease: 'power2.inOut'
-            }, '-=0.1')
-            .to(window, {
-                duration: 1.5,
-                scrollTo: {
-                    y: targetElement,
-                    offsetY: 50
-                },
-                ease: 'power2.inOut'
-            }, '-=1.5')
-            .to(drone, {
-                scale: 0,
-                duration: 0.3,
-                ease: 'back.in'
-            }, '-=0.3');
-        });
-    });
-});
-</script>
+          // Debug logs
+          console.log('Start position:', startX, startY);
+          console.log('End position:', endX, endY);
 
-<!-- <script>
-  // Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Register GSAP plugins
-    gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
+          // Show drone and animate
+          gsap.set(drone, {
+            display: 'block',
+            x: startX,
+            y: startY,
+            scale: 0
+          });
 
-    // Create drone element
-    const drone = document.createElement('div');
-    drone.className = 'flying-drone';
-    drone.innerHTML = `
-        <video class="drone-video" autoplay loop muted playsinline style="width: 50px; height: 50px;">
-            <source src="public_assets/videos/drone.mp4" type="video/mp4">
-        </video>
-    `;
-    drone.style.cssText = `
-        position: fixed;
-        display: none;
-        z-index: 9999;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-    `;
-    document.body.appendChild(drone);
-
-    // Add click handlers to all icon containers
-    const icons = document.querySelectorAll('.icon-container');
-    
-    icons.forEach(icon => {
-        icon.addEventListener('click', function() {
-            const targetSection = this.getAttribute('data-target');
-            const targetElement = document.getElementById(targetSection);
-            
-            if (!targetElement) return;
-
-            // Get positions for animation
-            const iconRect = this.getBoundingClientRect();
-            const targetRect = targetElement.getBoundingClientRect();
-            
-            // Calculate positions
-            const startX = iconRect.left + iconRect.width / 2;
-            const startY = iconRect.top + window.scrollY + iconRect.height / 2;
-            const endX = targetRect.left + targetRect.width / 2;
-            const endY = targetRect.top + window.scrollY;
-
-            // Show drone and set initial position
-            gsap.set(drone, {
-                display: 'block',
-                x: startX,
-                y: startY,
-                scale: 0
-            });
-
-            // Create animation timeline
-            const tl = gsap.timeline({
-                onComplete: () => {
-                    gsap.set(drone, { display: 'none' });
-                }
-            });
-
-            // Animate drone and scroll
-            tl.to(drone, {
-                scale: 1,
-                duration: 0.3,
-                ease: 'back.out'
-            })
-            .to(drone, {
-                duration: 1.5,
-                motionPath: {
-                    path: [
-                        { x: startX, y: startY },
-                        { x: startX + (endX - startX)/2, y: startY - 100 }, // Control point for curve
-                        { x: endX, y: endY }
-                    ],
-                    curviness: 1.5
-                },
-                ease: 'power2.inOut'
-            }, '-=0.1')
-            .to(window, {
-                duration: 1.5,
-                scrollTo: {
-                    y: targetElement,
-                    offsetY: 50
-                },
-                ease: 'power2.inOut'
-            }, '-=1.5')
-            .to(drone, {
-                scale: 0,
-                duration: 0.3,
-                ease: 'back.in'
-            }, '-=0.3');
-        });
-    });
-});
-</script> -->
-<!-- <script>
-  window.addEventListener('load', function() {
-    if (typeof gsap !== 'undefined') {
-        gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
-        
-        // Use more specific selectors
-        const droneContainers = document.querySelectorAll('[data-target="drone-section"]');
-        
-        droneContainers.forEach(droneContainer => {
-            const droneImage = droneContainer.querySelector('.img1');
-            const droneVideo = droneContainer.querySelector('.drone-video');
-            const targetSection = document.getElementById('drone-section');
-            let isAnimating = false;
-
-            function animate() {
-                console.log('Drone clicked'); // Debug log
-                if (isAnimating) return;
-                isAnimating = true;
-
-                // Switch to video
-                droneImage.classList.add('hidden');
-                droneVideo.classList.add('active');
-                droneVideo.play();
-
-                // Get positions
-                const startRect = droneContainer.getBoundingClientRect();
-                const targetRect = targetSection.getBoundingClientRect();
-
-                // Calculate path
-                const startX = startRect.left + (startRect.width / 2);
-                const startY = startRect.top + (startRect.height / 2);
-                const endX = targetRect.left + (targetRect.width / 2);
-                const endY = targetRect.top;
-                
-                // Create natural curved path
-                const controlX = (startX + endX) / 2;
-                const controlY = Math.min(startY, endY) - 200;
-
-                // Animate the drone
-                gsap.to(droneContainer, {
-                    duration: 2,
-                    ease: "power1.inOut",
-                    motionPath: {
-                        path: [
-                            {x: startX, y: startY},
-                            {x: controlX, y: controlY},
-                            {x: endX, y: endY}
-                        ],
-                        autoRotate: true,
-                        curviness: 1.5
-                    },
-                    onComplete: () => {
-                        gsap.to(droneContainer, {
-                            duration: 0.5,
-                            opacity: 0,
-                            onComplete: () => {
-                                droneContainer.style.display = 'none';
-                                isAnimating = false;
-                            }
-                        });
-                    }
-                });
-
-                // Smooth scroll to target
-                gsap.to(window, {
-                    duration: 2,
-                    ease: "power1.inOut",
-                    scrollTo: {
-                        y: targetSection,
-                        offsetY: 50
-                    }
-                });
-            }
-
-            // Add click event with debug
-            droneContainer.addEventListener('click', function(e) {
-                console.log('Container clicked'); // Debug log
-                animate();
-            });
-        });
-    } else {
-        console.error('GSAP not loaded');
-    }
-});
-</script> -->
-
-<!-- <script>
- gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
-
-document.addEventListener('DOMContentLoaded', function() {
-    const droneContainer = document.querySelector('.icon-container');
-    const droneImage = document.querySelector('.img1');
-    const droneVideo = document.querySelector('.drone-video');
-    const targetSection = document.getElementById('drone-section');
-    let isAnimating = false;
-
-    function animate() {
-        if (isAnimating) return;
-        isAnimating = true;
-
-        // Switch to video
-        droneImage.classList.add('hidden');
-        droneVideo.classList.add('active');
-        droneVideo.play();
-
-        // Get positions
-        const startRect = droneContainer.getBoundingClientRect();
-        const targetRect = targetSection.getBoundingClientRect();
-
-        // Calculate path
-        const startX = startRect.left + (startRect.width / 2);
-        const startY = startRect.top + (startRect.height / 2);
-        const endX = targetRect.left + (targetRect.width / 2);
-        const endY = targetRect.top;
-        
-        // Create natural curved path
-        const controlX = (startX + endX) / 2;
-        const controlY = Math.min(startY, endY) - 200;
-
-        // Animate the drone
-        gsap.to(droneContainer, {
-            duration: 2,
-            ease: "power1.inOut",
-            motionPath: {
-                path: [
-                    {x: startX, y: startY},
-                    {x: controlX, y: controlY},
-                    {x: endX, y: endY}
-                ],
-                autoRotate: true,
-                curviness: 1.5
-            },
-            onComplete: () => {
-                gsap.to(droneContainer, {
-                    duration: 0.5,
-                    opacity: 0,
-                    onComplete: () => {
-                        droneContainer.style.display = 'none';
-                        isAnimating = false;
-                    }
-                });
-            }
-        });
-
-        // Smooth scroll to target
-        gsap.to(window, {
-            duration: 2,
-            ease: "power1.inOut",
-            scrollTo: {
-                y: targetSection,
-                offsetY: 50
-            }
-        });
-    }
-
-    droneContainer.addEventListener('click', animate);
-});
-</script> -->
-
-
- <!-- <script>
-  document.addEventListener('DOMContentLoaded', function () {
-  gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
-
-  const icons = document.querySelectorAll('.icon-container');
-
-  icons.forEach((icon) => {
-    icon.addEventListener('click', function (e) {
-      const targetSectionId = this.getAttribute('data-target');
-      const targetElement = document.getElementById(targetSectionId);
-      const iconImg = this.querySelector('img');
-
-      if (!targetElement || !iconImg) return;
-
-      // Clone the image for animation
-      const clone = iconImg.cloneNode(true);
-      clone.classList.add('clone-image');
-      document.body.appendChild(clone);
-
-      // Get original position
-      const rect = iconImg.getBoundingClientRect();
-
-      gsap.set(clone, {
-        x: rect.left,
-        y: rect.top,
-        width: rect.width,
-        height: rect.height,
-        position: "absolute",
-        zIndex: 1000
-      });
-
-      // Hide original image
-      gsap.to(iconImg, { opacity: 0, duration: 0.3 });
-
-      // Get target position
-      const targetRect = targetElement.getBoundingClientRect();
-
-      // Animation
-      gsap.to(clone, {
-        duration: 1.5,
-        motionPath: {
-          path: [
-            { x: rect.left + 100, y: rect.top - 150 }, // Fly up first
-            { x: targetRect.left + 50, y: targetRect.top - 50 } // Move to target
-          ],
-          curviness: 1.5
-        },
-        rotate: 360,
-        ease: "power1.inOut",
-        onComplete: () => {
-          clone.remove();
-          gsap.to(iconImg, { opacity: 1, duration: 0.3 });
-          scrollToSection(targetSectionId);
-        }
-      });
-    });
-  });
-
-  function scrollToSection(sectionId) {
-    gsap.to(window, {
-      duration: 1,
-      scrollTo: { y: `#${sectionId}`, offsetY: 50 },
-      ease: "power2.inOut"
-    });
-  }
-});
-
-</script>  -->
-
- <!-- <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Register GSAP plugins
-  gsap.registerPlugin(MotionPathPlugin);
-  
-  const icons = document.querySelectorAll('.icon-container');
-  
-  icons.forEach(icon => {
-    icon.addEventListener('click', function(e) {
-      const targetSection = this.getAttribute('data-target');
-      const targetElement = document.getElementById(targetSection);
-      const iconImg = this.querySelector('img');
-      const iconType = iconImg.classList[1]; // Get specific class (drone, ai, etc.)
-      
-      // Create a clone of the clicked image for animation
-      const clone = iconImg.cloneNode(true);
-      clone.classList.add('clone-image');
-      document.body.appendChild(clone);
-      
-      // Set initial position of clone to match original
-      const rect = iconImg.getBoundingClientRect();
-      gsap.set(clone, {
-        x: rect.left,
-        y: rect.top,
-        width: rect.width,
-        height: rect.height
-      });
-      
-      // Hide original
-      gsap.to(iconImg, { opacity: 0, duration: 0.3 });
-      
-      // Different animation for each icon type
-      switch(iconType) {
-        case 'drone':
-          // Drone flying animation
           const tl = gsap.timeline({
+            onStart: () => console.log('Animation started'),
             onComplete: () => {
-              clone.remove();
-              gsap.to(iconImg, { opacity: 1, duration: 0.3 });
-              scrollToSection(targetSection);
+              console.log('Animation completed');
+              gsap.set(drone, { display: 'none' });
             }
           });
-          
-          tl.to(clone, {
-            duration: 1.5,
-            motionPath: {
-              path: [
-                { x: rect.left + 100, y: rect.top - 100 },
-                { x: rect.left + 200, y: rect.top - 50 },
-                { x: window.innerWidth - 100, y: rect.top - 150 }
-              ],
-              curviness: 1.5
-            },
-            rotate: 360,
-            ease: "power1.inOut"
-          });
-          break;
-          
-        case 'ai':
-          // AI digital effect
-          gsap.to(clone, {
-            duration: 1,
-            scale: 1.5,
-            opacity: 0,
-            filter: "blur(10px)",
-            ease: "power2.in",
-            onComplete: () => {
-              clone.remove();
-              gsap.to(iconImg, { opacity: 1, duration: 0.3 });
-              scrollToSection(targetSection);
-            }
-          });
-          break;
-          
-        case 'robotics':
-          // Robotics mechanical movement
-          gsap.to(clone, {
-            duration: 1.2,
-            rotation: 720,
-            scale: 0,
-            x: window.innerWidth / 2,
-            y: window.innerHeight / 2,
-            ease: "steps(12)",
-            onComplete: () => {
-              clone.remove();
-              gsap.to(iconImg, { opacity: 1, duration: 0.3 });
-              scrollToSection(targetSection);
-            }
-          });
-          break;
-          
-        case 'iot':
-          // IoT network effect
-          const dots = 8;
-          const tl2 = gsap.timeline({
-            onComplete: () => {
-              clone.remove();
-              gsap.to(iconImg, { opacity: 1, duration: 0.3 });
-              scrollToSection(targetSection);
-            }
-          });
-          
-          tl2.to(clone, {
-            duration: 0.5,
-            scale: 0.5,
-            ease: "power1.out"
+
+          tl.to(drone, {
+            scale: 1,
+            duration: 0.3,
+            ease: 'back.out'
           })
-          .to(clone, {
-            duration: 1,
-            opacity: 0,
-            rotation: 180,
-            scale: 2,
-            ease: "power1.inOut"
-          });
-          break;
-          
-        case 'arvr':
-          // AR/VR portal effect
-          gsap.to(clone, {
-            duration: 1.5,
-            scale: 20,
-            opacity: 0,
-            ease: "power2.inOut",
-            onComplete: () => {
-              clone.remove();
-              gsap.to(iconImg, { opacity: 1, duration: 0.3 });
-              scrollToSection(targetSection);
-            }
-          });
-          break;
-      }
-    });
-  });
-  
-  function scrollToSection(sectionId) {
-    gsap.to(window, {
-      duration: 1,
-      scrollTo: {
-        y: `#${sectionId}`,
-        offsetY: 50
-      },
-      ease: "power2.inOut"
-    });
-  }
-});
-</script>  -->
-
-<!-- <script>
-  document.addEventListener('DOMContentLoaded', function() {
-  gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
-
-  const icons = document.querySelectorAll('.icon-container');
-
-  icons.forEach(icon => {
-    icon.addEventListener('click', function() {
-      const targetSection = this.getAttribute('data-target');
-      const targetElement = document.getElementById(targetSection);
-      const iconImg = this.querySelector('img.home_images'); // Select the correct image
-      const video = this.querySelector('video.drone-video'); // Select the drone video
-
-      if (!iconImg || !video) {
-        scrollToSection(targetSection);
-        return;
-      }
-
-      // Hide static image and show video for drone
-      if (targetSection === "drone-section") {
-        iconImg.style.display = "none";  // Hide static image
-        video.style.display = "block";   // Show video
-        video.play();                     // Start playing video
-
-        // Clone the video for animation effect
-        const clone = video.cloneNode(true);
-        document.body.appendChild(clone);
-        clone.style.position = "absolute";
-        clone.style.zIndex = "1000";
-
-        // Get the bounding box of the original video
-        const rect = video.getBoundingClientRect();
-
-        gsap.set(clone, {
-          x: rect.left,
-          y: rect.top,
-          width: rect.width,
-          height: rect.height
+            .to(drone, {
+              duration: 1.5,
+              motionPath: {
+                path: [
+                  { x: startX, y: startY },
+                  { x: startX + (endX - startX) / 2, y: startY - 100 },
+                  { x: endX, y: endY }
+                ],
+                curviness: 1.5
+              },
+              ease: 'power2.inOut'
+            }, '-=0.1')
+            .to(window, {
+              duration: 1.5,
+              scrollTo: {
+                y: targetElement,
+                offsetY: 50
+              },
+              ease: 'power2.inOut'
+            }, '-=1.5')
+            .to(drone, {
+              scale: 0,
+              duration: 0.3,
+              ease: 'back.in'
+            }, '-=0.3');
         });
-
-        // Animate flying drone movement
-        gsap.to(clone, {
-          duration: 2.5,
-          motionPath: {
-            path: [
-              { x: rect.left + 100, y: rect.top - 100 },
-              { x: rect.left + 200, y: rect.top - 50 },
-              { x: window.innerWidth - 100, y: rect.top - 150 }
-            ],
-            curviness: 1.5
-          },
-          rotate: 360,
-          ease: "power1.inOut",
-          onComplete: () => {
-            clone.remove(); // Remove the cloned video after animation
-
-            // Hide the video and show the static image again
-            video.style.display = "none";
-            iconImg.style.display = "block";
-
-            // Scroll to the target section after animation
-            scrollToSection(targetSection);
-          }
-        });
-
-      } else {
-        // If it's not the drone section, just scroll to the target
-        scrollToSection(targetSection);
-      }
-    });
-  });
-
-  function scrollToSection(sectionId) {
-    gsap.to(window, {
-      duration: 1,
-      scrollTo: {
-        y: `#${sectionId}`,
-        offsetY: 50
-      },
-      ease: "power2.inOut"
-    });
-  }
-});
-
-</script> -->
-
-<!-- <script>
-  document.addEventListener('DOMContentLoaded', function() {
-  gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
-
-  const icons = document.querySelectorAll('.icon-container');
-
-  icons.forEach(icon => {
-    icon.addEventListener('click', function() {
-      const targetSection = this.getAttribute('data-target');
-      const targetElement = document.getElementById(targetSection);
-      const iconImg = this.querySelector('img.home_images'); // Select static image
-      const video = this.querySelector('video.drone-video'); // Select drone video
-
-      if (!iconImg || !video || !targetElement) {
-        scrollToSection(targetSection);
-        return;
-      }
-
-      if (targetSection === "drone-section") {
-        // Get the starting position of the icon
-        const rect = iconImg.getBoundingClientRect();
-        const targetRect = targetElement.getBoundingClientRect();
-
-        // Hide the static image, show the video
-        iconImg.style.display = "none";
-        video.style.display = "block";
-        video.play(); // Play video
-
-        // Clone the video for animation
-        const clone = video.cloneNode(true);
-        document.body.appendChild(clone);
-        clone.style.position = "absolute";
-        clone.style.zIndex = "1000";
-
-        // Set initial position of the clone
-        gsap.set(clone, {
-          x: rect.left,
-          y: rect.top,
-          width: rect.width,
-          height: rect.height
-        });
-
-        // Animate drone flying to the target section
-        gsap.to(clone, {
-          duration: 2.5,
-          motionPath: {
-            path: [
-              { x: rect.left + 100, y: rect.top - 50 }, // Slight lift
-              { x: (rect.left + targetRect.left) / 2, y: targetRect.top - 100 }, // Mid air
-              { x: targetRect.left + 50, y: targetRect.top } // Land near section
-            ],
-            curviness: 1.5
-          },
-          scale: 1.2,
-          ease: "power1.inOut",
-          onComplete: () => {
-            clone.remove(); // Remove animated clone
-
-            // Hide video and show the static image again
-            video.style.display = "none";
-            iconImg.style.display = "block";
-
-            // Scroll smoothly to the section
-            scrollToSection(targetSection);
-          }
-        });
-      } else {
-        scrollToSection(targetSection);
-      }
-    });
-  });
-
-  function scrollToSection(sectionId) {
-    gsap.to(window, {
-      duration: 1,
-      scrollTo: {
-        y: `#${sectionId}`,
-        offsetY: 50
-      },
-      ease: "power2.inOut"
-    });
-  }
-});
-
-</script> -->
-
-  <!-- <script>
-document.addEventListener('DOMContentLoaded', function() {
-  gsap.registerPlugin(MotionPathPlugin, ScrollToPlugin);
-
-  const droneIcons = document.querySelectorAll('.icon-container[data-target]');
-
-  droneIcons.forEach(droneIcon => {
-    droneIcon.addEventListener('click', function() {
-      // Immediately scroll to the target section
-      const targetSectionId = this.getAttribute('data-target');
-      const targetSection = document.getElementById(targetSectionId);
-      
-      if (!targetSection) {
-        console.error('Target section not found');
-        return;
-      }
-
-      // Scroll to section first
-      gsap.to(window, {
-        duration: 1.5,
-        scrollTo: { 
-          y: `#${targetSectionId}`, 
-          offsetY: 50 
-        },
-        ease: "power2.inOut",
-        onComplete: () => {
-          // After scrolling, initiate drone animation
-          initiatePostScrollDroneAnimation(this, targetSection);
-        }
       });
     });
-  });
-
-  function initiatePostScrollDroneAnimation(triggerElement, targetSection) {
-    // Create drone flight container
-    const droneContainer = createDroneFlightElement(triggerElement);
-    document.body.appendChild(droneContainer);
-
-    // Get precise positioning
-    const startRect = triggerElement.getBoundingClientRect();
-    const targetRect = targetSection.getBoundingClientRect();
-
-    // Drone animation within the section
-    const droneTimeline = gsap.timeline({
-      onComplete: () => {
-        gsap.to(droneContainer, {
-          duration: 0.5,
-          opacity: 0,
-          scale: 0.5,
-          onComplete: () => {
-            droneContainer.remove();
-          }
-        });
-      }
-    });
-
-    // Animate drone within the section
-    droneTimeline
-      .fromTo(droneContainer, 
-        { 
-          opacity: 0, 
-          scale: 0.5,
-          x: startRect.left,
-          y: startRect.top,
-          rotation: -45
-        },
-        {
-          duration: 0.8,
-          opacity: 1,
-          scale: 1,
-          x: targetRect.left + targetRect.width / 2,
-          y: targetRect.top + targetRect.height / 2,
-          rotation: 0,
-          ease: "power1.inOut"
-        }
-      );
-  }
-
-  function createDroneFlightElement(triggerElement) {
-    const originalDrone = triggerElement.querySelector('.home_images');
-    
-    const droneElement = originalDrone.cloneNode(true);
-    droneElement.style.position = 'fixed';
-    droneElement.style.zIndex = '9999';
-    droneElement.style.display = 'block';
-    droneElement.style.width = '100px';
-    droneElement.style.height = 'auto';
-    
-    return droneElement;
-  }
-});
-</script> -->
-
-  
-  <!-- <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const iconContainers = document.querySelectorAll('.icon-container');
-    let isAnimating = false;
-
-    function smoothScroll(targetElement, duration) {
-        const start = window.pageYOffset;
-        const target = targetElement.getBoundingClientRect().top + start;
-        let startTime = null;
-
-        function animation(currentTime) {
-            if (startTime === null) startTime = currentTime;
-            const timeElapsed = currentTime - startTime;
-            const progress = Math.min(timeElapsed / duration, 1);
-
-            // Easing function
-            const easing = t => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-            const easedProgress = easing(progress);
-
-            window.scrollTo(0, start + (target - start) * easedProgress);
-
-            if (progress < 1) {
-                requestAnimationFrame(animation);
-            }
-        }
-
-        requestAnimationFrame(animation);
-    }
-
-    iconContainers.forEach(container => {
-        container.addEventListener('click', function(e) {
-            if (isAnimating) return;
-            isAnimating = true;
-
-            const targetId = this.getAttribute('data-target');
-            const targetSection = document.getElementById(targetId);
-            if (!targetSection) return;
-
-            // Create flying video container
-            const flyingVideoContainer = document.createElement('div');
-            flyingVideoContainer.className = 'flying-video';
-            
-            // Clone and setup video
-            const originalVideo = this.querySelector('.drone-video');
-            if (!originalVideo) return;
-
-            const video = originalVideo.cloneNode(true);
-            flyingVideoContainer.appendChild(video);
-            document.body.appendChild(flyingVideoContainer);
-
-            // Get positions
-            const iconRect = this.getBoundingClientRect();
-            const targetRect = targetSection.getBoundingClientRect();
-
-            // Set initial position
-            flyingVideoContainer.style.transform = `translate(${iconRect.left}px, ${iconRect.top}px)`;
-            
-            // Force browser reflow
-            flyingVideoContainer.offsetHeight;
-
-            // Start video playback
-            video.play();
-
-            // Start scroll animation
-            smoothScroll(targetSection, 4000);
-
-            // Start flying animation
-            requestAnimationFrame(() => {
-                flyingVideoContainer.style.transform = `translate(
-                    ${targetRect.left + targetRect.width/2 - 50}px, 
-                    ${targetRect.top}px
-                )`;
-            });
-
-            // Cleanup after animation
-            setTimeout(() => {
-                flyingVideoContainer.style.transition = 'opacity 0.5s ease-out';
-                flyingVideoContainer.style.opacity = '0';
-                setTimeout(() => {
-                    flyingVideoContainer.remove();
-                    isAnimating = false;
-                }, 500);
-            }, 4000);
-        });
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        if (isAnimating) {
-            const flyingVideos = document.querySelectorAll('.flying-video');
-            flyingVideos.forEach(video => video.remove());
-            isAnimating = false;
-        }
-    });
-});    </script> -->
-<%include ./newpartials/footer%>
+  </script>
+  <%include ./newpartials/footer%>
