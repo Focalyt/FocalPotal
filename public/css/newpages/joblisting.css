@@ -835,6 +835,18 @@ footer-brand img {
 }
 
 
+.state{
+margin-bottom: 0.5rem;
+}
+
+.designation_input {
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px 12px;
+    color: #333;
+    transition: all 0.3sease;
+  }
 
 @media only screen and (max-width: 1930px) {
     .bg-img {

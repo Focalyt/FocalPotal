@@ -1,185 +1,387 @@
-<%include ./newpartials/header%>
-  <%include ./newpartials/jobcategory%>
+<%- include ./newpartials/header%>
+  <%- include ./newpartials/jobcategory%>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 
 
 
 
+    <section class="bg_pattern py-xl-5 py-lg-5 py-md-5 py-sm-2 py-2 d-none">
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-11 col-11 mx-auto pb-xl-3 pb-lg-3 pb-md-3 pb-sm-1 pb-1">
+            <div class="row" id="two_slect">
+              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 px-0">
+                <div class="input-group mb-xl-3 mb-lg-3 mb-md-1 mb-sm-0 mb-0">
+                  <button class="btn btn-outline-secondary" type="button"><img
+                      src="public_assets/images/icons/location.png" class="img-fluid" draggable="false">
+                  </button>
+                  <select class="form-select city_form" id="inputGroupSelect03"
+                    aria-label="Example select with button addon">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 px-0">
+                <div class="input-group mb-xl-3 mb-lg-3 mb-md-1 mb-sm-0 mb-0">
+                  <button class="btn btn-outline-secondary exp" type="button">EXP</button>
+                  <select class="form-select last_select" id="inputGroupSelect03"
+                    aria-label="Example select with button addon">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-8 col-xl-8 col-md-8 col-sm-8 col-11 mx-auto">
+            <div class="row justify-content-around" id="features_cta">
+              <ul class="d-flex justify-content-between overflow-x-auto">
+                <!-- <li class="cta_cols">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newpage/index/job_search.png" data-src="public_assets/images/newpage/index/job_search.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newpage/index/job_search_v.png" data-src="public_assets/images/newpage/index/job_search_v.png">
+                  </figure>
+                  <h4 class="head">Job Search</h4>
+                </li>
+                <li class="cta_cols">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newpage/index/learn_earn.png" data-src="public_assets/images/newpage/index/learn_earn.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newpage/index/learn_earn_v.png" data-src="public_assets/images/newpage/index/learn_earn_v.png">
+                  </figure>
+                  <h4 class="head">Learn &amp; Earn</h4>
+                </li>
+                <li class="cta_cols">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newpage/index/job_safety.png" data-src="public_assets/images/newpage/index/job_safety.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newpage/index/job_safety_v.png" data-src="public_assets/images/newpage/index/job_safety_v.png">
+                  </figure>
+                  <h4 class="head">Loans &amp; Advances</h4>
+                </li>
+                <li class="cta_cols">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newpage/index/skill_course.png" data-src="public_assets/images/newpage/index/skill_course.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newpage/index/skill_course_v.png" data-src="public_assets/images/newpage/index/skill_course_v.png">
+                  </figure>
+                  <h4 class="head">Skill Course</h4>
+                </li> 
+             
+                 <li class="cta_cols">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newjobicons/aerospace.png" data-src="public_assets/images/newjobicons/aerospace.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newjobicons/aerospace_v.png" data-src="public_assets/images/newjobicons/aerospace_v.png">
+                  </figure>
+                  <h4 class="head">Aerospace &amp;Aviation</h4>
+                </li> -->
+                <li class="cta_cols cta_cols_list">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newjobicons/agriculture.png"
+                      data-src="public_assets/images/newjobicons/agriculture.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newjobicons/agriculture_v.png"
+                      data-src="public_assets/images/newjobicons/agriculture_v.png">
+                  </figure>
+                  <h4 class="head">Agriculture</h4>
+                </li>
+                <li class="cta_cols cta_cols_list">
+                  <figure class="figure">
+                    <img class="Sirv image-main"
+                      src="public_assets/images/newjobicons/apparel_Made_Ups_&_Home_Furnishing.png"
+                      data-src="public_assets/images/newjobicons/apparel_Made_Ups_&_Home_Furnishing.png">
+                    <img class="Sirv image-hover"
+                      src="public_assets/images/newjobicons/apparel_Made_Ups_&_Home_Furnishing_v.png"
+                      data-src="public_assets/images/newjobicons/apparel_Made_Ups_&_Home_Furnishing_v.png">
+                  </figure>
+                  <!-- Apparel Made-Ups &  -->
+                  <h4 class="head">Home Furnishing</h4>
+                </li>
+                <li class="cta_cols cta_cols_list">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newjobicons/automotive.png"
+                      data-src="public_assets/images/newjobicons/automotive.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newjobicons/automotive_v.png"
+                      data-src="public_assets/images/newjobicons/automotive_v.png">
+                  </figure>
+                  <h4 class="head">Automotive</h4>
+                </li>
+                <li class="cta_cols cta_cols_list">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newjobicons/beautywellness.png"
+                      data-src="public_assets/images/newjobicons/beautywellness.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newjobicons/beautywellness.png_v.png"
+                      data-src="public_assets/images/newjobicons/beautywellness.png_v.png">
+                  </figure>
+                  <h4 class="head">Beauty &amp;Wellness</h4>
+                </li>
+                <!-- <li class="cta_cols">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newjobicons/bfsi.png" data-src="public_assets/images/newjobicons/bfsi.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newjobicons/bfsi_v.png" data-src="public_assets/images/newjobicons/bfsi_v.png">
+                  </figure>
+                  <h4 class="head">BFSI</h4>
+                </li> -->
+                <!-- <li class="cta_cols">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newjobicons/capital_Goods.png" data-src="public_assets/images/newjobicons/capital_Goods.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newjobicons/capital_Goods_v.png" data-src="public_assets/images/newjobicons/capital_Goods_v.png">
+                  </figure>
+                  <h4 class="head">Capital Goods</h4>
+                </li> -->
+                <li class="cta_cols cta_cols_list">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newjobicons/domestic_Workers.png"
+                      data-src="public_assets/images/newjobicons/domestic_Workers.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newjobicons/domestic_Workers_v.png"
+                      data-src="public_assets/images/newjobicons/domestic_Workers_v.png">
+                  </figure>
+                  <h4 class="head">Domestic Workers</h4>
+                </li>
+                <li class="cta_cols cta_cols_list">
+                  <figure class="figure">
+                    <img class="Sirv image-main" src="public_assets/images/newjobicons/furniture_&_Fittings.png"
+                      data-src="public_assets/images/newjobicons/furniture_&_Fittings.png">
+                    <img class="Sirv image-hover" src="public_assets/images/newjobicons/furniture_&_Fittings_v.png"
+                      data-src="public_assets/images/newjobicons/furniture_&_Fittings_v.png">
+                  </figure>
+                  <h4 class="head">Furniture &Fittings</h4>
+                </li>
+              </ul>
+            </div>
 
+          </div>
+        </div>
+    </section>
 
-    <section class="jobs section-padding-60">
+    <!-- <section class="section-padding-120 mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <div class="row">
+          <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mx-auto my-4">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                  class="active activeclass" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                  aria-label="Slide 2" class="activeclass"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                  aria-label="Slide 3" class="activeclass"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                  aria-label="Slide 4" class="activeclass"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"
+                  aria-label="Slide 5" class="activeclass"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5"
+                  aria-label="Slide 6" class="activeclass"></button>
+              </div>
+              <div class="carousel-inner ">
+                <div class="carousel-item active">
+                  <img src="public_assets/images/newjoblisting/banner1.jpg" class="d-block w-100 rounded shadow" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="public_assets/images/newjoblisting/banner2.jpg" class="d-block w-100 rounded shadow" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="public_assets/images/newjoblisting/banner3.jpg" class="d-block w-100 rounded shadow" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="public_assets/images/newjoblisting/banner5.jpg" class="d-block w-100 rounded shadow" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="public_assets/images/newjoblisting/banner6.jpg" class="d-block w-100 rounded shadow" alt="...">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon pree" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon pree" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+    <!-- start -->
+    <section class="jobs section-padding-120 mt-5">
       <div class="container">
         <div class="row">
           <div
             class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mx-auto mt-xxl-5 mt-xl-3 mt-lg-3 mt-md-3 mt-sm-3 mt-3 ">
             <div class="row my-xl-5 my-lg-5 my-md-3 my-sm-3 my-3">
               <h1 class="text-center text-uppercase jobs-heading pb-4">Select course for your career</h1>
+              <div class="container">
+                <div class="row">
+                  <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <ul class="list-unstyled d-xxl-flex d-xl-flex d-lg-flex d-md-flex d-sm-none d-none" id="job_cat_ul">
+                      <% uniqueSectors.forEach(function(sector) { %>
+                        <li class="job_cat_li">
+                          <div class="socials">
+                            <!-- <div class="ps-0">
+                                      <img src="public_assets/images/icons/home_icon.png" class="img-fluid" draggable="false">
+                                  </div> -->
+                            <div class=" data_col text-uppercase">
+                              <a href="#<%= sector._id %>">
+                                <%= sector.name %>
+                              </a>
 
-              <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            </div>
+                          </div>
+                        </li>
+                        <%})%>
 
-                <div class="filter-container">
-                  <!-- Header -->
-                  <div class="filter-header">
-                    <span>▶</span> <!-- Chevron Icon -->
-                    <h2>Filter by Sector</h2>
-                  </div>
-
-                  <!-- Filter Buttons -->
-                  <div class="filter-buttons">
-                    <button class="filter-button active" onclick="setActive(this)">
-                      All
-                      <span class="count">12</span>
-                      <div class="active-indicator"></div>
-                    </button>
-                    <% uniqueSectors.forEach(function(sector) { %>
-                      <button class="filter-button text-uppercase" onclick="setActive(this)">
-                        <%= sector.name %>
-                          <span class="count">
-                            <%= sector.count %>
-                          </span>
-                          <div class="active-indicator"></div>
-                      </button>
-                      <%})%>
-
+                    </ul>
                   </div>
                 </div>
-
               </div>
-
               <% uniqueSectors.forEach(function(sector) { %>
 
-                <div class="row mt-3">
-                  <div class="flex items-center gap-3 text-gray-600 mb-4">
-                    <span class="font-medium text-uppercase">Selected Sector:</span>
-                    <span class="px-4 py-1 font-medium bg-light text-danger text-uppercase rounded-pill small">
-                      <%= sector.name %>
-                    </span>
-                  </div>
+                <ul>
+                  <li>
+                    <a id="<%= sector._id %>" href="#" class="choose--sector text-uppercase">
+                      <%= sector.name %><span class="find__sector"></span>
+                    </a>
+                  </li>
+                </ul>
+                <%courses.forEach((course)=>{%>
+                  <% if (course.sectors.some(s=> s.toString() === sector._id.toString())) { %>
 
-                  <%courses.forEach((course)=>{%>
-                    <% if (course.sectors.some(s=> s.toString() === sector._id.toString())) { %>
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-12 pb-4 card-padding">
 
-                      <div class="col-lg-4 col-md-6 col-sm-12 col-12 pb-4 card-padd">
-
-                        <div class="card bg-dark courseCard">
-                          <div class="bg-img">
-                            <a href="#" data-bs-target="#videoModal" data-bs-toggle="modal"
-                              data-bs-link="<%= process.env.MIPIE_BUCKET_URL +'/' + course.videos[0] %>"
-                              class="pointer img-fluid"><img
-                                src="<%= course.thumbnail ? process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail : 'public_assets/images/newjoblisting/course_img.svg' %>"
-                                class="digi" alt="">
-                              <img src="public_assets/images/newjoblisting/play.svg" alt="" class="group1"></a>
-                            <!-- <div id="base">
+                      <div class="card bg-dark courseCard">
+                        <div class="bg-img">
+                          <a href="#" data-bs-target="#videoModal" data-bs-toggle="modal"
+                            data-bs-link="<%= process.env.MIPIE_BUCKET_URL +'/' + course.videos[0] %>"
+                            class="pointer img-fluid"><img
+                              src="<%= course.thumbnail ? process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail : 'public_assets/images/newjoblisting/course_img.svg' %>"
+                              class="digi" alt="">
+                            <img src="public_assets/images/newjoblisting/play.svg" alt="" class="group1"></a>
+                          <!-- <div id="base">
                       <p class="text-center p-0 match_card fw-bolder">Now At</p>
                       <p class="text-center p-0 match_del fw-bold"><del class="text"><%=course.courseFee%></del></p>
                       <p class="text-center p-0 match_final fw-bold"><%=course.cutPrice%></p>
                     </div> -->
-                            <div class="flag">
-                            </div>
-                            <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
-                            <div class="right_obj shadow">
-                              <%=course.courseType==='coursejob' ? 'Course + Jobs' : 'Course' %>
-                            </div>
+                          <div class="flag">
                           </div>
-                          <div class="card-body px-0 pb-0">
-                            <h4 class="text-center text-white fw-bolder mb-2 mx-auto text-capitalize ellipsis"
-                              title="<%=course.name%>">
-                              <%=course.name%>
-                            </h4>
-                            <!-- <h5 class="fw-light mx-auto"><%=course.certifyingAgency%></h5> -->
-                            <!-- <h3 class="text-center digi-price mb-0"> -->
-                            <!-- <span class="c_rupee"></span>  -->
-                            <!-- <span class="c_price"><del class="course">&#8377;<%=course.courseFee%></del></span> -->
-                            <!-- <span class="c_rupee"></span> -->
-                            <!-- <span class="c_price"><%=course.cutPrice ? course.cutPrice.toLowerCase()==='free'? course.cutPrice : '₹ ' + course.cutPrice : 'N/A' %></span>
+                          <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
+                          <div class="right_obj shadow">
+                            <%=course.courseType==='coursejob' ? 'Course + Jobs' : 'Course' %>
+                          </div>
+                        </div>
+                        <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
+                        <div class="right_obj shadow">
+                          <%=course.courseType==='coursejob' ? 'Course + Jobs' : 'Course' %>
+                        </div>
+                      </div>
+                      <div class="card-body px-0 pb-0">
+                        <h4 class="text-center text-white fw-bolder mb-2 mx-auto text-capitalize ellipsis"
+                          title="<%=course.name%>">
+                          <%=course.name%>
+                        </h4>
+                        <!-- <h5 class="fw-light mx-auto"><%=course.certifyingAgency%></h5> -->
+                        <!-- <h3 class="text-center digi-price mb-0"> -->
+                        <!-- <span class="c_rupee"></span>  -->
+                        <!-- <span class="c_price"><del class="course">&#8377;<%=course.courseFee%></del></span> -->
+                        <!-- <span class="c_rupee"></span> -->
+                        <!-- <span class="c_price"><%=course.cutPrice ? course.cutPrice.toLowerCase()==='free'? course.cutPrice : '₹ ' + course.cutPrice : 'N/A' %></span>
                     </h3> -->
-                            <!-- <h3 class="text-center digi-price mb-0">
+                        <!-- <h3 class="text-center digi-price mb-0">
                       
                     </h3> -->
-                            <!-- <h2 class="text-center digi-price mb-3"> -->
-                            <!-- <span class="r-price">&#8377; <%=course.cutPrice%></span> -->
-                            <!-- </h2> -->
-                            <div class="row" id="course_height">
-                              <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 mx-auto mb-2">
+                        <!-- <h2 class="text-center digi-price mb-3"> -->
+                        <!-- <span class="r-price">&#8377; <%=course.cutPrice%></span> -->
+                        <!-- </h2> -->
+                        <div class="row" id="course_height">
+                          <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 mx-auto mb-2">
+                              <div class="row">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
                                   <div class="row">
-                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
-                                      <div class="row">
-                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
-                                          <figure class="text-end">
-                                            <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0"
-                                              draggable="false">
-                                          </figure>
-                                        </div>
-                                        <div
-                                          class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
-                                          <p class="mb-0 text-white">Eligibility</p>
-                                          <p class="mb-0 text-white"><small class="sub_head">(<%=course.qualification%>
-                                                )</small></p>
-                                        </div>
-                                      </div>
+                                    <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
+                                      <figure class="text-end">
+                                        <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0"
+                                          draggable="false">
+                                      </figure>
                                     </div>
-                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
-                                      <div class="row">
-                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
-                                          <figure class="text-end">
-                                            <img src="public_assets/images/icons/duration.png" class="img-fluid p-0"
-                                              draggable="false">
-                                          </figure>
-                                        </div>
-                                        <div
-                                          class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
-                                          <p class="mb-0 text-white">Duration</p>
-                                          <p class="mb-0 text-white"><small class="sub_head">(<%=course.duration%>
-                                                )</small>
-                                          </p>
-                                        </div>
-                                      </div>
+                                    <div
+                                      class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
+                                      <p class="mb-0 text-white">Eligibility</p>
+                                      <p class="mb-0 text-white"><small class="sub_head">(<%=course.qualification%>
+                                            )</small></p>
                                     </div>
-                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
-                                      <div class="row">
-                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
-                                          <figure class="text-end">
-                                            <img src="public_assets/images/icons/location-pin.png" class="img-fluid p-0"
-                                              draggable="false">
-                                          </figure>
-                                        </div>
-                                        <div
-                                          class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
-                                          <p class="mb-0 text-white">Location</p>
-                                          <div class="ellipsis-wrapper">
-                                            <p class="mb-0 text-white para_ellipsis"
-                                              title="<%= course.city ? course.city + ', ' + course.state : 'NA' %>">
-                                              <small class="sub_head">
-                                                <% if (course.city) { %>
-                                                  (<%= course.city + ', ' + course.state %>)
-                                                    <% } else { %>
-                                                      NA
-                                                      <% } %>
-                                              </small>
-                                            </p>
-                                          </div>
-                                          <!-- <p class="mb-0 text-white para_ellipsis"><small class="sub_head"><% if(course.city) { %>(<%=course.city +', ' + course.state%>)<% } else { %> NA  <% } %>  </small></p> -->
+                                  </div>
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
+                                  <div class="row">
+                                    <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
+                                      <figure class="text-end">
+                                        <img src="public_assets/images/icons/duration.png" class="img-fluid p-0"
+                                          draggable="false">
+                                      </figure>
+                                    </div>
+                                    <div
+                                      class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
+                                      <p class="mb-0 text-white">Duration</p>
+                                      <p class="mb-0 text-white"><small class="sub_head">(<%=course.duration%>)</small>
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
+                                  <div class="row">
+                                    <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
+                                      <figure class="text-end">
+                                        <img src="public_assets/images/icons/location-pin.png" class="img-fluid p-0"
+                                          draggable="false">
+                                      </figure>
+                                    </div>
+                                    <div
+                                      class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
+                                      <p class="mb-0 text-white">Location</p>
+                                      <div class="ellipsis-wrapper">
+                                        <p class="mb-0 text-white para_ellipsis"
+                                          title="<%= course.city ? course.city + ', ' + course.state : 'NA' %>">
+                                          <small class="sub_head">
+                                            <% if (course.city) { %>
+                                              (<%= course.city + ', ' + course.state %>)
+                                                <% } else { %>
+                                                  NA
+                                                  <% } %>
+                                          </small>
+                                        </p>
+                                      </div>
+                                      <!-- <p class="mb-0 text-white para_ellipsis"><small class="sub_head"><% if(course.city) { %>(<%=course.city +', ' + course.state%>)<% } else { %> NA  <% } %>  </small></p> -->
 
-                                        </div>
-                                      </div>
                                     </div>
-                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
-                                      <div class="row">
-                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
-                                          <figure class="text-end">
-                                            <img src="public_assets/images/icons/job-mode.png" class="img-fluid p-0"
-                                              draggable="false">
-                                          </figure>
-                                        </div>
-                                        <div
-                                          class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
-                                          <p class="mb-0 text-white">Mode</p>
-                                          <p class="mb-0 text-white"><small class="sub_head">(<%=course.trainingMode%>
-                                                )</small></p>
-                                        </div>
-                                      </div>
+                                  </div>
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
+                                  <div class="row">
+                                    <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
+                                      <figure class="text-end">
+                                        <img src="public_assets/images/icons/job-mode.png" class="img-fluid p-0"
+                                          draggable="false">
+                                      </figure>
                                     </div>
-                                    <!-- <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
+                                    <div
+                                      class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
+                                      <p class="mb-0 text-white">Mode</p>
+                                      <p class="mb-0 text-white"><small class="sub_head">(<%=course.trainingMode%>
+                                            )</small></p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
                                 <div class="row">
                                   <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center mb-2">
                                     <figure class="course_star">
@@ -191,120 +393,271 @@
                                     </div>
                                 </div>
                             </div> -->
+                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2 text-center">
+                                  <div class="row">
+                                    <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 my-auto">
+                                      <p class="text-white">Last Date for apply</p>
+                                    </div>
                                     <div
-                                      class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2 text-center">
-                                      <div class="row">
-                                        <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 my-auto">
-                                          <p class="text-white">Last Date for apply</p>
-                                        </div>
-                                        <div
-                                          class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 text-white courses_features ps-0">
-                                          <p class="color-yellow fw-bold">
-                                            <%=course.lastDateForApply?
-                                              moment(course.lastDateForApply).utcOffset("+05:30").format('MMM DD
-                                              YYYY'): 'NA' %>
-                                          </p>
-                                          <!-- <p class="mb-0 text-white">Mode</p>
+                                      class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 text-white courses_features ps-0">
+                                      <p class="color-yellow fw-bold">
+                                        <%=course.lastDateForApply?
+                                          moment(course.lastDateForApply).utcOffset("+05:30").format('MMM DD
+                                          YYYY'): 'NA' %>
+                                      </p>
+                                      <!-- <p class="mb-0 text-white">Mode</p>
                                                                   <p class="mb-0 text-white"><small class="sub_head">(Blended)</small></p> -->
-                                        </div>
-                                      </div>
                                     </div>
+                                  </div>
+                                </div>
 
-                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2 text-center">
-                                      <a class="btn cta-callnow btn-bg-color"
-                                        href="/candidate/login?returnUrl=/candidate/course/<%=course._id%>">Apply
-                                        Now</a>
-                                    </div>
-                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2 text-center">
-                                      <a href="https://wa.me/918699017301?text=hi" class="btn cta-callnow">Chat Now</a>
-                                    </div>
-                                    <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                                      <div class="row pt-2">
-                                        <div
-                                          class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center align-items-center text-center">
-                                          <a href="#" data-bs-toggle="modal" data-bs-target="#callbackModal">
-                                            <span class="learnn pt-1 btn cta-callnow w-100">Request for Call Back</span>
+                              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2 text-center">
+                                <a class="btn cta-callnow btn-bg-color"
+                                  href="/candidate/login?returnUrl=/candidate/course/<%=course._id%>">Apply Now</a>
+                              </div>
+                              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2 text-center">
+                                <a href="https://wa.me/918699017301?text=hi" class="btn cta-callnow">Chat Now</a>
+                              </div>
+                              <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                <div class="row pt-2">
+                                  <div
+                                    class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center align-items-center text-center">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#callbackModal">
+                                      <span class="learnn pt-1 btn cta-callnow w-100">Request for Call Back</span>
 
-                                            <!-- <img src="public_assets/images/call.svg" class="align-text-top"> -->
-                                          </a>
-                                        </div>
-                                      </div>
+                                        <!-- <img src="public_assets/images/call.svg" class="align-text-top"> -->
+                                      </a>
                                     </div>
-                                    <div class="modal fade" id="callbackModal" tabindex="-1"
-                                      aria-labelledby="callbackModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title text-black " id="callbackModalLabel">Request for Call
-                                              Back
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                              aria-label="Close"></button>
+                                  </div>
+                                </div>
+                                <div class="modal fade" id="callbackModal" tabindex="-1"
+                                  aria-labelledby="callbackModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title text-black" id="callbackModalLabel">Request for Call Back
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                          aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <form method="post" id="callbackForm">
+                                          <!-- Two-column layout for Name and State -->
+                                          <div class="row mb-3">
+                                            <div class="col-md-6 col-6">
+                                              <label for="name" class="form-label">Name</label>
+                                              <input name="name" type="text" class="form-control" id="name" required
+                                                placeholder="Enter your name">
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                              <div class="state">
+                                                <label for="name" class="form-label">State</label>
+                                                <select name="state" class="designation_input" id="state" required>
+                                                  <option value disabled selected>Select
+                                                    your
+                                                    State
+                                                  </option>
+                                                  <option value="Andhra Pradesh">
+                                                    Andhra
+                                                    Pradesh</option>
+                                                  <option value="Arunachal Pradesh">
+                                                    Arunachal
+                                                    Pradesh</option>
+                                                  <option value="Assam">Assam
+                                                  </option>
+                                                  <option value="Bihar">Bihar
+                                                  </option>
+                                                  <option value="Chhattisgarh">
+                                                    Chhattisgarh</option>
+                                                  <option value="Goa">Goa</option>
+                                                  <option value="Gujarat">Gujarat
+                                                  </option>
+                                                  <option value="Haryana">Haryana
+                                                  </option>
+                                                  <option value="Himachal Pradesh">
+                                                    Himachal
+                                                    Pradesh</option>
+                                                  <option value="Jharkhand">
+                                                    Jharkhand</option>
+                                                  <option value="Karnataka">
+                                                    Karnataka</option>
+                                                  <option value="Kerala">Kerala
+                                                  </option>
+                                                  <option value="Madhya Pradesh">
+                                                    Madhya
+                                                    Pradesh</option>
+                                                  <option value="Maharashtra">
+                                                    Maharashtra</option>
+                                                  <option value="Manipur">Manipur
+                                                  </option>
+                                                  <option value="Meghalaya">
+                                                    Meghalaya</option>
+                                                  <option value="Mizoram">Mizoram
+                                                  </option>
+                                                  <option value="Nagaland">
+                                                    Nagaland</option>
+                                                  <option value="Odisha">Odisha
+                                                  </option>
+                                                  <option value="Punjab">Punjab
+                                                  </option>
+                                                  <option value="Rajasthan">
+                                                    Rajasthan</option>
+                                                  <option value="Sikkim">Sikkim
+                                                  </option>
+                                                  <option value="Tamil Nadu">Tamil
+                                                    Nadu</option>
+                                                  <option value="Telangana">
+                                                    Telangana</option>
+                                                  <option value="Tripura">Tripura
+                                                  </option>
+                                                  <option value="Uttar Pradesh">
+                                                    Uttar
+                                                    Pradesh</option>
+                                                  <option value="Uttarakhand">
+                                                    Uttarakhand</option>
+                                                  <option value="West Bengal">West
+                                                    Bengal</option>
+                                                  <option value="Andaman and Nicobar Islands">
+                                                    Andaman
+                                                    and
+                                                    Nicobar
+                                                    Islands
+                                                  </option>
+                                                  <option value="Chandigarh">
+                                                    Chandigarh</option>
+                                                  <option value="Dadra and Nagar Haveli and Daman and Diu">
+                                                    Dadra
+                                                    and
+                                                    Nagar
+                                                    Haveli
+                                                    and
+                                                    Daman
+                                                    and
+                                                    Diu</option>
+                                                  <option value="Delhi">Delhi
+                                                  </option>
+                                                  <option value="Lakshadweep">
+                                                    Lakshadweep</option>
+                                                  <option value="Puducherry">
+                                                    Puducherry</option>
+                                                  <option value="Ladakh">Ladakh
+                                                  </option>
+                                                  <option value="Jammu and Kashmir">
+                                                    Jammu
+                                                    and
+                                                    Kashmir</option>
+                                                </select>
+
+                                              </div>
+                                            </div>
                                           </div>
-                                          <div class="modal-body">
-                                            <form id="callbackForm">
-                                              <div class="mb-3">
-                                                <label for="name" class="form-label">Name</label>
-                                                <input type="text" class="form-control" id="name"
-                                                  placeholder="Enter your name" required>
-                                              </div>
-                                              <div class="mb-3">
-                                                <label for="state" class="form-label">State</label>
-                                                <input type="text" class="form-control" id="state"
-                                                  placeholder="Enter your state" required>
-                                              </div>
-                                              <div class="mb-3">
-                                                <label for="contact" class="form-label">Contact Number</label>
-                                                <input type="tel" class="form-control" id="contact" pattern="[0-9]{10}"
-                                                  placeholder="Enter 10-digit mobile number"
-                                                  title="Please enter a valid 10-digit phone number" required>
-                                              </div>
-                                              <div class="mb-3">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email"
-                                                  placeholder="Enter your email" required>
-                                              </div>
-                                              <div class="mb-3">
-                                                <label for="message" class="form-label">Message (Optional)</label>
-                                                <textarea class="form-control" id="message" rows="3"
-                                                  placeholder="Enter your message here..."></textarea>
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button type="submit" class="submit_btn g-recaptcha">Submit</button>
-                                              </div>
-                                            </form>
+
+                                          <!-- Two-column layout for Contact Number and Email -->
+                                          <div class="row mb-3">
+                                            <div class="col-md-6 col-6">
+                                              <label for="contact" class="form-label">Contact Number</label>
+                                              <input type="tel" name="mobile" class="form-control" id="contact"
+                                                pattern="[0-9]{10}" placeholder="Enter 10-digit mobile number" required
+                                                title="Please enter a valid 10-digit phone number" required>
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                              <label for="email" class="form-label">Email</label>
+                                              <input type="email" name="email" class="form-control" required id="email"
+                                                placeholder="Enter your email" required>
+                                            </div>
                                           </div>
-                                        </div>
+
+                                          <!-- Full-width textarea for Message -->
+                                          <div class="mb-3">
+                                            <label for="message" class="form-label">Message</label>
+                                            <textarea class="form-control" id="message" rows="3" name="message" required
+                                              placeholder="Enter your message here..."></textarea>
+                                          </div>
+
+                                          <div class="modal-footer">
+                                            <button type="submit" class="submit_btn g-recaptcha"
+                                              data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v"
+                                              data-callback='onSubmit'>Submit</button>
+                                          </div>
+                                        </form>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-
-
-                            <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 course_card_footer">
-                              <div class="row py-2">
-                                <div
-                                  class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center align-items-center text-center">
-                                  <a href="/coursedetails/<%=course._id%>"><span class="learnn pt-1 text-white">Learn
-                                      More</span> <img src="public_assets/images/link.png" class="align-text-top"></a>
+                                <!-- <div class="modal fade" id="callbackModal" tabindex="-1"
+                                aria-labelledby="callbackModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title text-black " id="callbackModalLabel">Request for Call Back
+                                      </h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form id="callbackForm">
+                                        <div class="mb-3">
+                                          <label for="name" class="form-label">Name</label>
+                                          <input type="text" class="form-control" id="name"
+                                            placeholder="Enter your name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                          <label for="state" class="form-label">State</label>
+                                          <input type="text" class="form-control" id="state"
+                                            placeholder="Enter your state" required>
+                                        </div>
+                                        <div class="mb-3">
+                                          <label for="contact" class="form-label">Contact Number</label>
+                                          <input type="tel" class="form-control" id="contact" pattern="[0-9]{10}"
+                                            placeholder="Enter 10-digit mobile number"
+                                            title="Please enter a valid 10-digit phone number" required>
+                                        </div>
+                                        <div class="mb-3">
+                                          <label for="email" class="form-label">Email</label>
+                                          <input type="email" class="form-control" id="email"
+                                            placeholder="Enter your email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                          <label for="message" class="form-label">Message (Optional)</label>
+                                          <textarea class="form-control" id="message" rows="3"
+                                            placeholder="Enter your message here..."></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="submit" class="submit_btn g-recaptcha">Submit</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
                                 </div>
+                              </div> -->
                               </div>
                             </div>
                           </div>
                         </div>
+
+
+                        <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 course_card_footer">
+                          <div class="row py-2">
+                            <div
+                              class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center align-items-center text-center">
+                              <a href="/coursedetails/<%=course._id%>"><span class="learnn pt-1 text-white">Learn
+                                  More</span> <img src="public_assets/images/link.png" class="align-text-top"></a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <% } %>
+                    </div>
 
-                        <%})%>
+                    <% } %>
+
+                      <%})%>
                         <%})%>
 
-                </div>
-                
             </div>
           </div>
         </div>
+      </div>
+      </div>
     </section>
     <!-- end -->
 
@@ -328,145 +681,20 @@
 
     <!-- footer -->
     <!-- Your existing login page HTML -->
+
+    <script>
+      function onSubmit(token) {
+        const form = document.getElementById('callbackForm');
+        // Check if the form is valid
+        if (!form.checkValidity()) {
+          // This will trigger the browser to display its built-in validation messages
+          form.reportValidity();
+          return;
+        }
+        // If the form is valid, then submit it
+        form.submit();
+      }
+    </script>
+  
     <%- storageScript %>
-      <%include ./newpartials/footer%>
-        <script>
-
-          // document.addEventListener("DOMContentLoaded", function () {
-          //     // URL se hash (post ID) nikalna
-          //     const Id = window.location.hash.substring(1);
-
-          //     if (Id) {
-          //         const element = document.getElementById(Id);
-          //         if (element) {
-          //           element.scrollIntoView({ behavior: "smooth", block: "start" });
-          //         }
-          //     }
-          // });
-
-
-          const videoModal = document.getElementById('videoModal')
-          if (videoModal) {
-            videoModal.addEventListener('show.bs.modal', event => {
-              // Button that triggered the modal
-              const button = event.relatedTarget
-              // Extract info from data-bs-* attributes
-              const link = button.getAttribute('data-bs-link')
-
-              // Update the modal's content.
-              const modalBody = videoModal.querySelector('.modal-body #vodeoElement')
-
-              modalBody.src = link
-              document.getElementById('courseVid').load()
-            })
-            videoModal.addEventListener('hide.bs.modal', event => {
-              document.getElementById('courseVid').pause()
-            })
-          }
-        </script>
-
-        <script>
-          function setActive(selectedButton) {
-            // Remove active class from all buttons
-            document.querySelectorAll(".filter-button").forEach(button => {
-              button.classList.remove("active");
-              let indicator = button.querySelector(".active-indicator");
-              if (indicator) indicator.remove(); // Remove indicator if exists
-            });
-
-            // Add active class to the clicked button
-            selectedButton.classList.add("active");
-
-            // Add active indicator dynamically
-            let indicator = document.createElement("div");
-            indicator.classList.add("active-indicator");
-            selectedButton.appendChild(indicator);
-          }
-        </script>
-        <style>
-          .filter-container {
-            /* max-width: 600px; */
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-          }
-
-          .filter-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
-            color: #6b7280;
-            font-weight: 500;
-          }
-
-          .filter-buttons {
-            display: flex;
-            /* flex-wrap: wrap; */
-            overflow-y: hidden;
-            overflow-x: auto;
-            gap: 12px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-          }
-
-          .filter-buttons::-webkit-scrollbar {
-            display: none;
-            /* Hide scrollbar in Chrome, Safari, and Edge */
-          }
-
-          .filter-button {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            border-radius: 20px;
-            font-weight: 500;
-            border: 1px solid #e5e7eb;
-            background: white;
-            color: #374151;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-          }
-
-          .filter-button:hover {
-            border-color: #ec4899;
-          }
-
-          .filter-button.active {
-            background: #ec4899;
-            color: white;
-
-            transform: scale(1.05);
-          }
-
-          .count {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            font-size: 12px;
-            border-radius: 50%;
-            background: #f3f4f6;
-          }
-
-          .filter-button.active .count {
-            background: #db2777;
-            color: white;
-          }
-
-          .active-indicator {
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%) rotate(45deg);
-            width: 8px;
-            height: 8px;
-            background: #ec4899;
-          }
-        </style>
+      <%- include('./newpartials/footer') %>

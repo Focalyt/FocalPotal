@@ -14,6 +14,7 @@ const router = express.Router();
 const fetch = require("cross-fetch");
 const { authChat } = require("../../helpers");
 const { updateSpreadSheetLabLeadsValues } = require("./services/googleservice");
+const { updateSpreadSheetRequestCallValues } = require("./services/googleservice");
 const moment = require("moment");
 
 router.use('/', frontRoutes);
@@ -157,21 +158,21 @@ router.post('/labs',async (req, res) => {
       if (!str) return '';
       return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
     };
-    // const sheetData = [
-    //   moment(new Date()).utcOffset('+05:30').format('DD/MM/YYYY'),
-    //   moment(new Date()).utcOffset('+05:30').format('hh:mm A'),
+    const sheetData = [
+      moment(new Date()).utcOffset('+05:30').format('DD/MM/YYYY'),
+      moment(new Date()).utcOffset('+05:30').format('hh:mm A'),
       
-    //   capitalizeWords(organisation), // Apply the capitalizeWords function
-    //   capitalizeWords(name),
-    //   capitalizeWords(designation),
-    //   mobile,
-    //   email,
-    //   state,
-    //   message
+      capitalizeWords(organisation), // Apply the capitalizeWords function
+      capitalizeWords(name),
+      capitalizeWords(designation),
+      mobile,
+      email,
+      state,
+      message
 
 
-    // ];
-    // await updateSpreadSheetLabLeadsValues(sheetData);
+    ];
+    await  (sheetData);
     if(!name || !designation || !organisation|| !state || !mobile|| !email || !message){
         req.flash("success", "Please fill all fields");
             return res.redirect("/labs");
@@ -298,35 +299,36 @@ router.post('/labs',async (req, res) => {
 router.post('/courses',async (req, res) => {
   try {
    
-    const { name, designation,organisation,state, mobile, email, message } = req.body;
+    const { name, state, mobile, email, message } = req.body;
     console.log("Form Data:", req.body);
     // Capitalize every word's first letter
+    
+    if(!name || !state || !mobile|| !email || !message){
+        req.flash("success", "Please fill all fields");
+            return res.redirect("/courses");
+    }
+    const response_key = req.body["g-recaptcha-response"];
+    console.log(response_key )
+    // Put secret key here, which we get from google console
+    const secret_key = "6Lej1gsqAAAAADDB6EA8QfiRcJdgESc4UBMqOXeq";
+
     function capitalizeWords(str) {
       if (!str) return '';
       return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
     };
-    // const sheetData = [
-    //   moment(new Date()).utcOffset('+05:30').format('DD/MM/YYYY'),
-    //   moment(new Date()).utcOffset('+05:30').format('hh:mm A'),
-      
-    //   capitalizeWords(organisation), // Apply the capitalizeWords function
-    //   capitalizeWords(name),
-    //   capitalizeWords(designation),
-    //   mobile,
-    //   email,
-    //   state,
-    //   message
+    const sheetData = [
+      moment(new Date()).utcOffset('+05:30').format('DD/MM/YYYY'),
+      moment(new Date()).utcOffset('+05:30').format('hh:mm A'), 
+      capitalizeWords(name),
+
+      mobile,
+      email,
+      state,
+      message
 
 
-    // ];
-    // await updateSpreadSheetLabLeadsValues(sheetData);
-    if(!name || !designation || !organisation|| !state || !mobile|| !email || !message){
-        req.flash("success", "Please fill all fields");
-            return res.redirect("/labs");
-    }
-    const response_key = req.body["g-recaptcha-response"];
-    // Put secret key here, which we get from google console
-    const secret_key = "6Lej1gsqAAAAADDB6EA8QfiRcJdgESc4UBMqOXeq";
+    ];
+    await updateSpreadSheetRequestCallValues(sheetData);
 
 
 
@@ -374,18 +376,12 @@ router.post('/courses',async (req, res) => {
                                                                       style="text-align:left;line-height:32px;font-size:18px!important;font-family:'Manrope',sans-serif!important;margin:10px 50px 21px">
                                                                       You have received a new message with the following details:- </p>
                                                                   <ul style="list-style-type:none;padding-left:0px;margin:20px 50px">
-                                                                  <li style="padding-top:0px;margin-left:0px !important"><span
-                                                                              style="line-height:32px;color:#4d4d4d;font-size:18px!important;font-family:'Manrope',sans-serif!important">Organisation
-                                                                              : ${organisation}</span>
-                                                                      </li>    
+                                                                   
                                                                   <li style="padding-top:0px;margin-left:0px !important"><span
                                                                               style="line-height:32px;font-size:18px!important;font-family:'Manrope',sans-serif!important">
                                                                               User Name:- ${name} (${mobile}) </span></li>
                                                                       <br/>
-                                                                      <li style="padding-top:0px;margin-left:0px !important"><span
-                                                                              style="line-height:32px;color:#4d4d4d;font-size:18px!important;font-family:'Manrope',sans-serif!important">Designation
-                                                                              : ${designation}</span>
-                                                                      </li>
+                                                                     
                                                                       <li style="padding-top:0px;margin-left:0px !important"><span
                                                                               style="line-height:32px;color:#4d4d4d;font-size:18px!important;font-family:'Manrope',sans-serif!important">Email
                                                                               : ${email}</span>

@@ -1209,7 +1209,9 @@ select.city_form {
     background: #FC2B5A;
     color: #fff;
 }
-
+#contact::placeholder {
+    font-size: 12px;
+  }
 .course_card_footer img,
 .course_card_footer_new img {
     width: 20px;
