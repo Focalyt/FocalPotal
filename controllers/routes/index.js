@@ -342,7 +342,7 @@ router.post('/courses',async (req, res) => {
         .then((google_response) => {
             console.log('====================> ', google_response)
           if (google_response.success == true && google_response.score >=0.5) {
-            let subject = " Future Technology Labs: New Demo Request";
+            let subject = "Call Back Request for Course Lead";
             let msg = `<html lang="en">
             <head>
             <meta charset="utf-8">
