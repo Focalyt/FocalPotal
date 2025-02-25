@@ -6,11 +6,12 @@ const serviceAccountKeyFile = "./focalyt-new-key.json";
 const tabName = 'candidates';
 const futureTechnologyLabstabName = 'FutureTechnology Lab'
 const RequestCallBackstabName = 'Request Callback Leads'
-
+const startCarrer = 'Focalyt Carrer'
 module.exports = {
   updateSpreadSheetValues,
   updateSpreadSheetLabLeadsValues,
-  updateSpreadSheetRequestCallValues
+  updateSpreadSheetRequestCallValues,
+  updateSpreadSheetStartCarrerValues
 }
 
 async function getAuthToken() {
@@ -59,6 +60,19 @@ async function updateSpreadSheetRequestCallValues(data) {
   googleSheetClient.spreadsheets.values.append({
     spreadsheetId:sheetId,
     range: `${RequestCallBackstabName}`,
+    valueInputOption: 'USER_ENTERED',
+    insertDataOption: 'INSERT_ROWS',
+    resource: {
+      "majorDimension": "ROWS",
+      "values": [data]
+    },
+  });
+}
+async function updateSpreadSheetStartCarrerValues(data) {
+  const googleSheetClient = await getAuthToken();
+  googleSheetClient.spreadsheets.values.append({
+    spreadsheetId:sheetId,
+    range: `${startCarrer}`,
     valueInputOption: 'USER_ENTERED',
     insertDataOption: 'INSERT_ROWS',
     resource: {
