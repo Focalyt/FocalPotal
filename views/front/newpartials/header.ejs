@@ -3,43 +3,44 @@
   <head>
   
     <!-- Meta Pixel Code -->
-    <script>
-      (async function(f, b, e, v, n, t, s) {
-        if (f.fbq) return; // अगर fbq पहले से मौजूद है तो आगे नहीं बढ़ेगा
-        n = f.fbq = function() {
-          n.callMethod ?
-            n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = '2.0';
-        n.queue = [];
     
-        // Script asynchronously लोड करें
-        t = b.createElement(e);
-        t.async = true;
-        t.src = v;
-    
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s);
-    
-        // Initialize and track events
-        await new Promise((resolve) => {
-          t.onload = resolve; // जब स्क्रिप्ट लोड हो जाए तो इसे resolve करें
-        });
-    
-        fbq('init', '3800389873545664'); // Facebook Pixel ID
-        fbq('track', 'PageView'); // PageView Event
-    
-      })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=3800389873545664&ev=PageView&noscript=1"
-    /></noscript>
     
   <!-- End Meta Pixel Code -->
   <meta charset="UTF-8">
+  <script>
+    (async function(f, b, e, v, n, t, s) {
+      if (f.fbq) return; // अगर fbq पहले से मौजूद है तो आगे नहीं बढ़ेगा
+      n = f.fbq = function() {
+        n.callMethod ?
+          n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+  
+      // Script asynchronously लोड करें
+      t = b.createElement(e);
+      t.async = true;
+      t.src = v;
+  
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+  
+      // Initialize and track events
+      await new Promise((resolve) => {
+        t.onload = resolve; // जब स्क्रिप्ट लोड हो जाए तो इसे resolve करें
+      });
+  
+      fbq('init', '3800389873545664'); // Facebook Pixel ID
+      fbq('track', 'PageView'); // PageView Event
+  
+    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=3800389873545664&ev=PageView&noscript=1"
+  /></noscript>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="color-scheme" content="dark light">
@@ -136,30 +137,30 @@
               </div>
               <ul class="site-menu-main">
                 <li class="nav-item">
-                  <a class='nav-link-item drop-trigger'  href="/">Home</a>
+                  <a class='nav-link-item drop-trigger'  href="https://focalyt.com/">Home</a>
                 </li>
                 <li    class="nav-item nav-item-has-children">
                   <!-- <a href="https://about.focalyt.com/" target="_blank" class="nav-link-item drop-trigger">About Us
                   </a> -->
-                  <a href="/about_us"  class="nav-link-item drop-trigger">About Us
+                  <a href="https://focalyt.com/about_us"  class="nav-link-item drop-trigger">About Us
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class='nav-link-item drop-trigger'  href="/joblisting">Jobs</a>
+                  <a class='nav-link-item drop-trigger'  href="https://focalyt.com/joblisting">Jobs</a>
                 </li>
                 <li class="nav-item">
-                  <a class='nav-link-item drop-trigger' href='/courses'>Courses</a>
+                  <a class='nav-link-item drop-trigger' href='https://focalyt.com/courses'>Courses</a>
                 </li>
                 <li class="nav-item">
-                  <a class='nav-link-item drop-trigger' href='/labs'>Labs</a>
+                  <a class='nav-link-item drop-trigger' href='https://focalyt.com/labs'>Labs</a>
                 </li>
                 <li class="nav-item d-xl-none d-lg-none d-md-none d-sm-block d-block">
-                  <a class='nav-link-item drop-trigger' href='/contact'>Contact Us</a>
+                  <a class='nav-link-item drop-trigger' href='https://focalyt.com/contact'>Contact Us</a>
                 </li>
                 <!-- active -->
                 <li class="nav-item  d-xl-flex d-lg-flex d-md-flex d-sm-none d-none">
                   <!-- active_menu -->
-                  <a class='nav-link-item drop-trigger ' href='/contact'>Contact Us</a>
+                  <a class='nav-link-item drop-trigger ' href='https://focalyt.com/contact'>Contact Us</a>
                 </li>
                 <li class="nav-item small">
                   <!-- Container for hoverable area -->
@@ -169,8 +170,8 @@
                     
                     <!-- Dropdown Menu -->
                     <ul class="dropdown-menu" id="loginDropdown">
-                      <li><a href="/company/login" target="_blank" class="dropdown-item">Login as Corporate</a></li>
-                      <li><a href="/candidate/login" target="_blank" class="dropdown-item">Login as Student</a></li>
+                      <li><a href="/company/login" class="dropdown-item">Login as Corporate</a></li>
+                      <li><a href="/candidate/login" class="dropdown-item">Login as Student</a></li>
                     </ul>
                   </div>
                 </li>

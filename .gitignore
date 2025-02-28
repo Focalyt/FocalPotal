@@ -55,3 +55,6 @@ Thumbs.db
 /views/front/blog.ejs
 /views/front/courses copy 2.ejs
 views/front/courses copy 2.ejs
+views/front/index.ejs
+controllers/routes/services/googleservice.js
+controllers/routes/index.js
