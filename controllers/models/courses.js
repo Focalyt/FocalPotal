@@ -9,6 +9,11 @@ const courseSchema = new Schema({
     }],
     courseLevel: String,
     name: { type: String, lowercase: true, trim: true },
+    courseFeeType: {
+        type: String, // Specifies which type of user created the post
+        enum: ['Paid', 'Free'], // Allowed user types
+        required: true,
+      },
     duration: String,
     courseType: String,
     youtubeURL: String,
