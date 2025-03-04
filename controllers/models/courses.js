@@ -14,6 +14,12 @@ const courseSchema = new Schema({
         enum: ['Paid', 'Free'], // Allowed user types
         required: true,
       },
+      typeOfProject: {
+        type: String, // Specifies which type of user created the post
+        enum: ['P&T', 'T&P',""], // Allowed user types
+        
+      },
+    projectName: String,
     duration: String,
     courseType: String,
     youtubeURL: String,

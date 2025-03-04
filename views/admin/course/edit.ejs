@@ -62,16 +62,71 @@
                                                     selected <% } %>>Degree</option>
                                             </select>
                                         </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="courseFeeTypeblock">
+                                            <label>Course Fee Type</label>
+                                            <select class="form-control" name="courseFeeType" id="courseFeeType"
+                                                onchange="toggleCourseFeeType()">
+                                                <option value="">Select Course Fee Type</option>
+                                                <option value="Paid" <% if(course.courseFeeType==="Paid" ) {%> selected
+                                                    <% } %>>Paid</option>
+                                                <option value="Free" <% if(course.courseFeeType==="Free" ) {%> selected
+                                                    <% } %>>Free</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="projectNameblock" style="display: none;">
+                                            <label>Project name </label>
+                                            <input class="form-control" type="text" name="projectName" id="projectName"
+                                                value="<%=course.projectName%>">
+                                        </div>
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="courseProjectblock" style="display: none;">
+                                            <label>Type of Project</label>
+                                            <select class="form-control" name="typeOfProject" id="typeOfProject">
+                                                <option value="">Select Type of Project</option>
+                                                <option value="T&P" <% if(course.typeOfProject==="T&P" ) {%> selected
+                                                    <% } %>>T&P</option>
+                                                <option value="P&T" <% if(course.typeOfProject==="P&T" ) {%> selected
+                                                    <% } %>>P&T</option>
+
+                                            </select>
+                                        </div>
+
+
+                                        <script>
+                                            function toggleCourseFeeType() {
+                                                var courseFeeType = document.getElementById("courseFeeType").value;
+                                                var typeOfProject = document.getElementById("courseProjectblock");
+                                                var projectName = document.getElementById("projectNameblock");
+                                                console.log(courseFeeType)
+
+                                                if (courseFeeType === "Free") {
+                                                    typeOfProject.style.display = "block";
+                                                    projectName.style.display = "block";
+                                                } else {
+                                                    typeOfProject.style.display = "none";
+                                                    projectName.style.display = "none";
+                                                }
+                                            }
+
+                                            window.onload = function () {
+                                                toggleCourseFeeType();
+                                            };
+                                        </script>
 
                                         <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
-                                        id="courseblock">
-                                        <label>Course Type</label>
-                                        <select class="form-control" name="courseType" id="courseType">
-                                            <option value="">Select Type</option>
-                                            <option value="course"<% if(course.courseType==="course" ) {%> selected <% } %>>Course Only</option>
-                                            <option value="coursejob" <% if(course.courseType==="coursejob" ) {%> selected <% } %>>Course and Job</option>
-                                        </select>
-                                    </div>
+                                            id="courseblock">
+                                            <label>Course Type</label>
+                                            <select class="form-control" name="courseType" id="courseType">
+                                                <option value="">Select Type</option>
+                                                <option value="course" <% if(course.courseType==="course" ) {%> selected
+                                                    <% } %>>Course Only</option>
+                                                <option value="coursejob" <% if(course.courseType==="coursejob" ) {%>
+                                                    selected <% } %>>Course and Job</option>
+                                            </select>
+                                        </div>
                                         <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1" id="nameblock">
                                             <label>Name</label>
                                             <input class="form-control" type="text" value="<%=course.name%>" id="name">
@@ -183,16 +238,17 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
-                                            id="cityblock">
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1" id="cityblock">
                                             <label>City</label>
-                                            <input class="form-control" type="text" name="city" id="city" value="<%=course.city%>">
+                                            <input class="form-control" type="text" name="city" id="city"
+                                                value="<%=course.city%>">
                                         </div>
                                         <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
-                                        id="stateblock">
-                                        <label>State</label>
-                                        <input class="form-control" type="text" name="state" id="state" value="<%=course.state%>">
-                                    </div>
+                                            id="stateblock">
+                                            <label>State</label>
+                                            <input class="form-control" type="text" name="state" id="state"
+                                                value="<%=course.state%>">
+                                        </div>
                                         <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
                                             id="applinkblock" style="display: none;">
                                             <label>App link</label>
@@ -289,8 +345,9 @@
                                         </div>
                                         <div class="col-xl-3 mb-1">
                                             <label>Youtube URL</label>
-                                            <input type="text" class="form-control" required placeholder="enter youtube url" value="<%=course.youtubeURL%>"
-                                                id="youtubeURL"/>
+                                            <input type="text" class="form-control" required
+                                                placeholder="enter youtube url" value="<%=course.youtubeURL%>"
+                                                id="youtubeURL" />
                                         </div>
                                         <div class="col-xl-6 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
                                             <label>Required Documents</label>
@@ -298,7 +355,7 @@
                                                 id="requiredDocuments" value="<%=course.requiredDocuments%>"></textarea>
                                         </div>
 
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -320,122 +377,148 @@
 
                                             <% if (course.videos.length>0) { %>
                                                 <% course.videos.forEach((i)=> { %>
-                                                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 videogallery" style="align-self: center;">
-                                                    <div class="image-upload">
-                                                      <label for="media-group">
-                                                        <a id="uploadedvideo" target="_blank"
-                                                                href="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>"
-                                                                class="pointer img-fluid">
-                                                                Uploaded Video
-                                                            </a>
-                                                        
-                                                      </label>
-                                                      <i class="feather  icon-x remove_uploaded_pic" style="color:red;" value="<%=i%>"
-                                                        onclick='removevideo("<%=course._id%>", this)'></i>
+                                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 videogallery"
+                                                        style="align-self: center;">
+                                                        <div class="image-upload">
+                                                            <label for="media-group">
+                                                                <a id="uploadedvideo" target="_blank"
+                                                                    href="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>"
+                                                                    class="pointer img-fluid">
+                                                                    Uploaded Video
+                                                                </a>
+
+                                                            </label>
+                                                            <i class="feather  icon-x remove_uploaded_pic"
+                                                                style="color:red;" value="<%=i%>"
+                                                                onclick='removevideo("<%=course._id%>", this)'></i>
+                                                        </div>
                                                     </div>
-                                                  </div>
-                                                  <% }); %>
-                                                    <% }%>
+                                                    <% }); %>
+                                                        <% }%>
 
 
-                                            <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 mb-1">
-                                                <label for="videos">
-                                                    <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                            <div
+                                                                class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                                <label for="videos">
+                                                                    <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
                                                         id="outputtwo"> -->
-                                                    Add Videos
-                                                </label>
-                                                <input id="videos" type="file" multiple />
-                                                <input type="hidden" class="form-control hiddenmediagroup" name="videos"
-                                                    id="hidden-videos" />
-                                            </div>
+                                                                    Add Videos
+                                                                </label>
+                                                                <input id="videos" type="file" multiple />
+                                                                <input type="hidden"
+                                                                    class="form-control hiddenmediagroup" name="videos"
+                                                                    id="hidden-videos" />
+                                                            </div>
 
 
 
 
-                                            <% if (course.photos.length>0) { %>
-                                                <% course.photos.forEach((i)=> { %>
-                                                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 galleryImage" style="align-self: center;">
-                                                    <div class="image-upload">
-                                                      <label for="media-group">
-                                                        <img src="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>" height="auto" width="60%"
-                                                          class="pointer img-fluid">
-                                                      </label>
-                                                      <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
-                                                      <i class="feather  icon-x remove_uploaded_pic" style="color:red;" value="<%=i%>"
-                                                        onclick='removepic("<%=course._id%>", this)'></i>
-                                                    </div>
-                                                  </div>
-                                                  <% }); %>
-                                                    <% }%>
-                                            <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 mb-1">
-                                                <label for="photos">
-                                                    <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                            <% if (course.photos.length>0) { %>
+                                                                <% course.photos.forEach((i)=> { %>
+                                                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 galleryImage"
+                                                                        style="align-self: center;">
+                                                                        <div class="image-upload">
+                                                                            <label for="media-group">
+                                                                                <img src="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>"
+                                                                                    height="auto" width="60%"
+                                                                                    class="pointer img-fluid">
+                                                                            </label>
+                                                                            <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
+                                                                            <i class="feather  icon-x remove_uploaded_pic"
+                                                                                style="color:red;" value="<%=i%>"
+                                                                                onclick='removepic("<%=course._id%>", this)'></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <% }); %>
+                                                                        <% }%>
+                                                                            <div
+                                                                                class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                                                <label for="photos">
+                                                                                    <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
                                                         id="outputtwo"> -->
-                                                    Add Photos
-                                                </label>
-                                                <input id="photos" type="file" multiple/>
-                                                <input type="hidden" class="form-control hiddenmediagroup" name="photos"
-                                                    id="hidden-photos" />
-                                            </div>
+                                                                                    Add Photos
+                                                                                </label>
+                                                                                <input id="photos" type="file"
+                                                                                    multiple />
+                                                                                <input type="hidden"
+                                                                                    class="form-control hiddenmediagroup"
+                                                                                    name="photos" id="hidden-photos" />
+                                                                            </div>
 
-                                            <% if (course.brochure!== '') { %>
-                                                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 brochureImage" style="align-self: center;">
-                                                    <div class="image-upload">
-                                                      <label for="media-group">
-                                                       <a target="_blank"
-                                                       href="<%= process.env.MIPIE_BUCKET_URL +'/' + course.brochure %>"
-                                                       class="pointer img-fluid">Uploaded Brochure</a>
-                                                      </label>
-                                                      <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
-                                                      <i class="feather  icon-x remove_uploaded_pic" style="color:red;"
-                                                        onclick='removebrochure("<%=course._id%>", "<%=course.brochure%>", this)'></i>
-                                                    </div>
-                                                  </div>
-                                                    <% }%>
+                                                                            <% if (course.brochure!=='' ) { %>
+                                                                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 brochureImage"
+                                                                                    style="align-self: center;">
+                                                                                    <div class="image-upload">
+                                                                                        <label for="media-group">
+                                                                                            <a target="_blank"
+                                                                                                href="<%= process.env.MIPIE_BUCKET_URL +'/' + course.brochure %>"
+                                                                                                class="pointer img-fluid">Uploaded
+                                                                                                Brochure</a>
+                                                                                        </label>
+                                                                                        <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
+                                                                                        <i class="feather  icon-x remove_uploaded_pic"
+                                                                                            style="color:red;"
+                                                                                            onclick='removebrochure("<%=course._id%>", "<%=course.brochure%>", this)'></i>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <% }%>
 
-                                                    <div class="col-xl-3 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
-                                                    id="brochures">
-                                                    <label for="brochure">
-                                                        <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                                                    <div class="col-xl-3 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
+                                                                                        id="brochures">
+                                                                                        <label for="brochure">
+                                                                                            <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
                                                             id="uploadbrochure"> -->
-                                                        Add Brochure
-                                                    </label>
-                                                    <input id="brochure" type="file"/>
-                                                    <input type="hidden" class="form-control hiddenmediagroup"
-                                                        name="brochure" id="hidden-brochure" value="" />
-                                                </div>
+                                                                                            Add Brochure
+                                                                                        </label>
+                                                                                        <input id="brochure"
+                                                                                            type="file" />
+                                                                                        <input type="hidden"
+                                                                                            class="form-control hiddenmediagroup"
+                                                                                            name="brochure"
+                                                                                            id="hidden-brochure"
+                                                                                            value="" />
+                                                                                    </div>
 
 
-                                                <% if (course.thumbnail && course.thumbnail!== '') { %>
-                                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 thumbnailImage" style="align-self: center;">
-                                                      <div class="image-upload">
-                                                        <label for="media-group">
-                                                         <a target="_blank"
-                                                         href="<%= process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail %>"
-                                                         class="pointer img-fluid">Uploaded Thumbnail</a>
-                                                        </label>
-                                                        <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
-                                                        <i class="feather  icon-x remove_uploaded_pic" style="color:red;"
-                                                          onclick='removethumbnail("<%=course._id%>", "<%=course.thumbnail%>", this)'></i>
-                                                      </div>
-                                                    </div>
-                                                      <% }%>
-  
-                                                      <div class="col-xl-3 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
-                                                      id="thumbnails">
-                                                      <label for="thumbnail">
-                                                          <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                                                    <% if (course.thumbnail &&
+                                                                                        course.thumbnail!=='' ) { %>
+                                                                                        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 thumbnailImage"
+                                                                                            style="align-self: center;">
+                                                                                            <div class="image-upload">
+                                                                                                <label
+                                                                                                    for="media-group">
+                                                                                                    <a target="_blank"
+                                                                                                        href="<%= process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail %>"
+                                                                                                        class="pointer img-fluid">Uploaded
+                                                                                                        Thumbnail</a>
+                                                                                                </label>
+                                                                                                <!-- <i class="feather  icon-plus add_multiple_gal"></i> -->
+                                                                                                <i class="feather  icon-x remove_uploaded_pic"
+                                                                                                    style="color:red;"
+                                                                                                    onclick='removethumbnail("<%=course._id%>", "<%=course.thumbnail%>", this)'></i>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <% }%>
+
+                                                                                            <div class="col-xl-3 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1"
+                                                                                                id="thumbnails">
+                                                                                                <label for="thumbnail">
+                                                                                                    <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
                                                               id="uploadbrochure"> -->
-                                                          Add Thumbnail
-                                                      </label>
-                                                      <input id="thumbnail" type="file"/>
-                                                      <input type="hidden" class="form-control hiddenmediagroup"
-                                                          name="thumbnail" id="hidden-thumbnail" value="" />
-                                                  </div>
+                                                                                                    Add Thumbnail
+                                                                                                </label>
+                                                                                                <input id="thumbnail"
+                                                                                                    type="file" />
+                                                                                                <input type="hidden"
+                                                                                                    class="form-control hiddenmediagroup"
+                                                                                                    name="thumbnail"
+                                                                                                    id="hidden-thumbnail"
+                                                                                                    value="" />
+                                                                                            </div>
 
 
 
-                                            <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                                                            <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mb-1">
                                                 <label for="audios">
                                                     <img src="/images/add_receipt.png" width="20%" height="auto"
                                                         id="outputtwo">
@@ -458,65 +541,69 @@
 
             <div class="row">
                 <div class="col-xl-12 col-lg-12 px-3">
-                  <div class="card">
-                    <div class="card-content">
-                      <div class="card-content">
-                        <div class="card-body">
-                          <div class="row">
-                            <label for="contact-directly" class="px-1 h1 col-6">Do you want to Add the
-                              Dedicated
-                              Counsler Number?</label>
-                         
-                            <div class="col-xl-12 col-lg-12 col-12">
-                              <div class="form-check-inline">
-                                <input type="radio" id="contact-directly-yes" name="isContact" value="true"
-                                  onclick="showContactInfo()"/>
-                                  <label for="contact-directly-yes">Yes</label>
-                              </div>
-                              <div class="form-check-inline">
-                                <input type="radio" id="contact-directly-no" name="isContact" value="false"
-                                  onclick="hideContactInfo()"/>
-                                  <label for="contact-directly-no">No</label>
-                              </div>
-                            </div>
-                            <div class="col-12" id="contact-info" style="display: none;">
-                              <div class="row">
-                                <div class="col-xl-3 mb-1" id="counsler-name">
-                                  <label>Name</label><span class="mandatory"> </label>
-                                    <input type="text" class="form-control"
-                                      onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 32 || event.charCode == 8;"
-                                      name="nameof" id="counslername" placeholder="Name" value="<%=course.counslername%>" >
-                                </div>
-                                    <div class="col-xl-3 mb-1" id="counsler-phoneNumber">
-                                    <label>PhoneNumber</label><span class="mandatory"> *</span></label>
-                                    <input type="tel" class="form-control" id="counslerphonenumber"
-                                      pattern="[+]?[0-9]{1,3}\s?\d{9,12}"
-                                       placeholder="Phone no" name="phoneNumberof"
-                                       onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                         maxlength="10" value="<%=course.counslerphonenumber%>" />
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <label for="contact-directly" class="px-1 h1 col-6">Do you want to Add the
+                                            Dedicated
+                                            Counsler Number?</label>
 
+                                        <div class="col-xl-12 col-lg-12 col-12">
+                                            <div class="form-check-inline">
+                                                <input type="radio" id="contact-directly-yes" name="isContact"
+                                                    value="true" onclick="showContactInfo()" />
+                                                <label for="contact-directly-yes">Yes</label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <input type="radio" id="contact-directly-no" name="isContact"
+                                                    value="false" onclick="hideContactInfo()" />
+                                                <label for="contact-directly-no">No</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12" id="contact-info" style="display: none;">
+                                            <div class="row">
+                                                <div class="col-xl-3 mb-1" id="counsler-name">
+                                                    <label>Name</label><span class="mandatory"> </label>
+                                                        <input type="text" class="form-control"
+                                                            onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 32 || event.charCode == 8;"
+                                                            name="nameof" id="counslername" placeholder="Name"
+                                                            value="<%=course.counslername%>">
+                                                </div>
+                                                <div class="col-xl-3 mb-1" id="counsler-phoneNumber">
+                                                    <label>PhoneNumber</label><span class="mandatory"> *</span></label>
+                                                    <input type="tel" class="form-control" id="counslerphonenumber"
+                                                        pattern="[+]?[0-9]{1,3}\s?\d{9,12}" placeholder="Phone no"
+                                                        name="phoneNumberof"
+                                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                        maxlength="10" value="<%=course.counslerphonenumber%>" />
+
+                                                </div>
+                                                <div class="col-xl-3 mb-1 " id="counsler-whatsappNumber">
+                                                    <label>Whatsapp Number</label><span class="mandatory"></label>
+                                                        <input type="tel" class="form-control"
+                                                            id="counslerwhatsappnumber"
+                                                            pattern="[+]?[0-9]{1,3}\s?\d{9,12}"
+                                                            placeholder="Whatsapp Number" name="whatsappNumberof"
+                                                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                            maxlength="10" value="<%=course.counslerwhatsappnumber%>">
+                                                </div>
+                                                <div class="col-xl-3 mb-1" id="counsler-email">
+                                                    <label>Email</label><span class="mandatory"></label>
+                                                        <input class="form-control" type="email" name="emailof"
+                                                            placeholder="Enter your email" id="counsleremail"
+                                                            value="<%=course.counsleremail%>">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                <div class="col-xl-3 mb-1 " id="counsler-whatsappNumber">
-                                  <label>Whatsapp Number</label><span class="mandatory"></label>
-                                    <input type="tel" class="form-control" id="counslerwhatsappnumber"
-                                    pattern="[+]?[0-9]{1,3}\s?\d{9,12}"
-                                    placeholder="Whatsapp Number" name="whatsappNumberof"
-                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10" value="<%=course.counslerwhatsappnumber%>" > 
                                 </div>
-                                <div class="col-xl-3 mb-1" id="counsler-email">
-                                  <label>Email</label><span class="mandatory"></label>
-                                    <input class="form-control" type="email" name="emailof"
-                                      placeholder="Enter your email" id="counsleremail" value="<%=course.counsleremail%>" >
-                                </div>
-                              </div>
                             </div>
-                          </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
 
 
 
@@ -533,31 +620,36 @@
                                         <div class="row">
                                             <% if (course.testimonialvideos.length>0) { %>
                                                 <% course.testimonialvideos.forEach((i)=> { %>
-                                                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 testimonialgallery" style="align-self: center;">
-                                                    <div class="image-upload">
-                                                      <label for="media-group">
-                                                        <a id="uploadedvideo" target="_blank"
-                                                                href="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>"
-                                                                class="pointer img-fluid">
-                                                                Uploaded Video
-                                                            </a>
-                                                        
-                                                      </label>
-                                                      <i class="feather  icon-x remove_uploaded_pic" style="color:red;" value="<%=i%>"
-                                                        onclick='removetestimonial("<%=course._id%>", "<%=i%>", this)'></i>
+                                                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-3  mb-1 testimonialgallery"
+                                                        style="align-self: center;">
+                                                        <div class="image-upload">
+                                                            <label for="media-group">
+                                                                <a id="uploadedvideo" target="_blank"
+                                                                    href="<%= process.env.MIPIE_BUCKET_URL +'/' + i %>"
+                                                                    class="pointer img-fluid">
+                                                                    Uploaded Video
+                                                                </a>
+
+                                                            </label>
+                                                            <i class="feather  icon-x remove_uploaded_pic"
+                                                                style="color:red;" value="<%=i%>"
+                                                                onclick='removetestimonial("<%=course._id%>", "<%=i%>", this)'></i>
+                                                        </div>
                                                     </div>
-                                                  </div>
-                                                  <% }); %>
-                                                    <% }%>
-                                            <div class="col-xl-3 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
-                                                <label for="testimonialvideos">
-                                                    <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
+                                                    <% }); %>
+                                                        <% }%>
+                                                            <div
+                                                                class="col-xl-3 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1">
+                                                                <label for="testimonialvideos">
+                                                                    <!-- <img src="/images/add_receipt.png" width="20%" height="auto"
                                                         id="outputtwo"> -->
-                                                </label>
-                                                <input id="testimonialvideos" type="file" multiple />
-                                                <input type="hidden" class="form-control hiddenmediagroup"
-                                                    name="testimonialvideos" id="hidden-testimonialvideos" />
-                                            </div>
+                                                                </label>
+                                                                <input id="testimonialvideos" type="file" multiple />
+                                                                <input type="hidden"
+                                                                    class="form-control hiddenmediagroup"
+                                                                    name="testimonialvideos"
+                                                                    id="hidden-testimonialvideos" />
+                                                            </div>
                                         </div>
                                     </section>
                                 </div>
@@ -588,7 +680,7 @@
                                                     placeholder="Bulleted points" name="importantTerms"
                                                     id="importantTerms"></textarea>
                                             </div>
-                                           </div>
+                                        </div>
                                     </section>
                                 </div>
 
@@ -596,7 +688,7 @@
                         </div>
                     </div>
                     <section id="questionanswerTemplate">
-                        <template >
+                        <template>
                             <div class="row questionanswerrow">
                                 <div class="col-xl-6 mb-1">
                                     <label>Question</label>
@@ -605,44 +697,44 @@
                                 </div>
                                 <div class="col-xl-6 mb-1">
                                     <label>Answer</label>
-                                    <textarea name="answer" class="form-control answer" cols="50"
-                                        rows="1"></textarea>
+                                    <textarea name="answer" class="form-control answer" cols="50" rows="1"></textarea>
                                 </div>
                             </div>
                         </template>
                     </section>
                     <div class="col-xl-12 col-lg-12">
-                            <div class="card mt-1">
-                                <div class="card-content">
-                                    <div class="mt-2 px-2">
-                                        <!-- Existing question-answer pairs will be added here -->
-                                        <div id="questionanswerlist">
-                                            <% if (course.questionAnswers.length>0) { %>
-                                                <% course.questionAnswers.forEach((q, index)=> { %>
-                                            <div class="row questionanswerrow actuallist">
-                                                <div class="col-xl-6 mb-1">
-                                                    <label>Question</label>
-                                                    <textarea name="question" class="form-control question<%=index%>"
-                                                        cols="50"
-                                                        rows="1"><%=q.Question%></textarea>
+                        <div class="card mt-1">
+                            <div class="card-content">
+                                <div class="mt-2 px-2">
+                                    <!-- Existing question-answer pairs will be added here -->
+                                    <div id="questionanswerlist">
+                                        <% if (course.questionAnswers.length>0) { %>
+                                            <% course.questionAnswers.forEach((q, index)=> { %>
+                                                <div class="row questionanswerrow actuallist">
+                                                    <div class="col-xl-6 mb-1">
+                                                        <label>Question</label>
+                                                        <textarea name="question"
+                                                            class="form-control question<%=index%>" cols="50"
+                                                            rows="1"><%=q.Question%></textarea>
+                                                    </div>
+                                                    <div class="col-xl-6 mb-1">
+                                                        <label>Answer</label>
+                                                        <textarea name="answer<%=index%>"
+                                                            class="form-control answer<%=index%>" cols="50"
+                                                            rows="1"><%=q.Answer%></textarea>
+                                                    </div>
                                                 </div>
-                                                <div class="col-xl-6 mb-1">
-                                                    <label>Answer</label>
-                                                    <textarea name="answer<%=index%>" class="form-control answer<%=index%>" cols="50"
-                                                        rows="1"><%=q.Answer%></textarea>
-                                                </div>
-                                            </div>
-                                            <% }); %>
-                                        <% }%>
-                                        </div>
-                                        <div class="col-xl-12 mb-1 px-0 text-right">
-                                            <a class="btn btn-success text-white add-button">+ Add Another</a>
-                                        </div>
+                                                <% }); %>
+                                                    <% }%>
+                                    </div>
+                                    <div class="col-xl-12 mb-1 px-0 text-right">
+                                        <a class="btn btn-success text-white add-button">+ Add Another</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
+                    </div>
+
 
 
                     <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2 text-right">
@@ -657,145 +749,144 @@
             </section>
             </form>
     </div>
-                                    <script
-                                        src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script>
-                                    <script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script>
+    <script>
 
-                                        function showContactInfo() {
-              document.getElementById("contact-info").style.display = "block";
-              var coinLabel = document.querySelector('label[for="25 coin"]');
-              coinLabel.style.display = "block";
-            }
-            function hideContactInfo() {
-              document.getElementById("contact-info").style.display = "none";
-              var coinLabel = document.querySelector('label[for="25 coin"]');
-              coinLabel.style.display = "none";
-            }
-            $(document).ready(function () {
-              if ($('#contact-directly-yes').prop('checked')) {
+        function showContactInfo() {
+            document.getElementById("contact-info").style.display = "block";
+            var coinLabel = document.querySelector('label[for="25 coin"]');
+            coinLabel.style.display = "block";
+        }
+        function hideContactInfo() {
+            document.getElementById("contact-info").style.display = "none";
+            var coinLabel = document.querySelector('label[for="25 coin"]');
+            coinLabel.style.display = "none";
+        }
+        $(document).ready(function () {
+            if ($('#contact-directly-yes').prop('checked')) {
                 showContactInfo();
-              }
+            }
+        });
+
+
+
+
+
+
+        // Function to initialize CKEditor for existing and new question-answer pairs
+        function initializeCKEditor(selector, check) {
+            let ele = document.querySelector(selector)
+            if (check) {
+                ele.value = ''
+            }
+            // 
+            ClassicEditor
+                .create(ele)
+                .then(editor => {
+                    editor.model.document.on('change:data', () => {
+                        ele.value = editor.getData();
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        // Event listener to add a new question-answer pair when the button is clicked
+        document.querySelector('.add-button').addEventListener('click', function () {
+            let html = $('#questionanswerTemplate template').html();
+            $('#questionanswerlist').append(html);
+            initializeCKEditor('.questionanswerrow:last-of-type .question', true);
+            initializeCKEditor('.questionanswerrow:last-of-type .answer', true);
+        });
+
+        // // Initialize CKEditor for the existing fields
+        setTimeout(() => {
+            $('.questionanswerrow').each(function (i) {
+                initializeCKEditor('.question' + i, false);
+                initializeCKEditor('.answer' + i, false);
             });
+        }, 500)
 
+        function removetestimonial(courseId, i, e) {
+            let data = {
+                key: e.attributes.value.textContent
+            }
+            axios.post('/api/deletefile', data)
+                .then(result => {
+                    if (result.status) {
+                        let parentdiv = $(e).closest('div.testimonialgallery')
+                        $(parentdiv).remove();
+                        axios.post("/admin/courses/removetestimonial", { courseId, key: e.attributes.value.textContent }).then(() => console.log('deleted'))
+                    }
+                })
+            return false;
+        }
 
+        function removevideo(courseId, e) {
+            let data = {
+                key: e.attributes.value.textContent
+            }
+            axios.post('/api/deletefile', data)
+                .then(result => {
+                    if (result.status) {
+                        let parentdiv = $(e).closest('div.videogallery')
+                        $(parentdiv).remove();
+                        axios.post("/admin/courses/removevideo", { courseId, key: e.attributes.value.textContent }).then(() => console.log('deleted'))
+                    }
+                })
+            return false;
+        }
 
+        function removepic(courseId, e) {
+            let data = {
+                key: e.attributes.value.textContent
+            }
+            axios.post('/api/deletefile', data)
+                .then(result => {
+                    if (result.status) {
+                        let parentdiv = $(e).closest('div.galleryImage')
+                        $(parentdiv).remove();
+                        axios.post("/admin/courses/removephoto", { courseId, key: e.attributes.value.textContent }).then(() => console.log('deleted'))
+                    }
+                })
+            return false;
+        }
 
+        function removebrochure(courseId, brochure, e) {
+            let data = {
+                key: brochure
+            }
+            axios.post('/api/deletefile', data)
+                .then(result => {
+                    if (result.status) {
+                        let parentdiv = $(e).closest('div.brochureImage')
+                        $(parentdiv).remove();
+                        axios.post("/admin/courses/removebrochure", { courseId: courseId, key: brochure }).then(() => console.log('deleted'))
+                    }
+                })
+            return false;
+        }
 
+        function removethumbnail(courseId, thumbnail, e) {
+            let data = {
+                key: thumbnail
+            }
+            axios.post('/api/deletefile', data)
+                .then(result => {
+                    if (result.status) {
+                        let parentdiv = $(e).closest('div.thumbnailImage')
+                        $(parentdiv).remove();
+                        axios.post("/admin/courses/removethumbnail", { courseId: courseId, key: thumbnail }).then(() => console.log('deleted'))
+                    }
+                })
+            return false;
+        }
 
-                                        // Function to initialize CKEditor for existing and new question-answer pairs
-                                        function initializeCKEditor(selector, check) {
-                                            let ele = document.querySelector(selector)
-                                            if(check){
-                                                ele.value = ''
-                                            }
-                                            // 
-                                            ClassicEditor
-                                                .create(ele)
-                                                .then(editor => {
-                                                    editor.model.document.on('change:data', () => {
-                                                        ele.value = editor.getData();
-                                                    });
-                                                    })
-                                                .catch(error => {
-                                                    console.error(error);
-                                                });
-                                        }
-
-                                        // Event listener to add a new question-answer pair when the button is clicked
-                                        document.querySelector('.add-button').addEventListener('click', function () {
-                                            let html = $('#questionanswerTemplate template').html();
-                                            $('#questionanswerlist').append(html);
-                                            initializeCKEditor('.questionanswerrow:last-of-type .question', true);
-                                            initializeCKEditor('.questionanswerrow:last-of-type .answer', true);
-                                        });
-
-                                        // // Initialize CKEditor for the existing fields
-                                        setTimeout(() => {
-                                            $('.questionanswerrow').each(function(i) {
-                                                    initializeCKEditor('.question' + i, false);
-                                                    initializeCKEditor('.answer' + i, false);
-                                                });
-                                        }, 500)
-                                       
-                                        function removetestimonial(courseId, i, e) {
-                                            let data = {
-                                            key: e.attributes.value.textContent
-                                            }
-                                            axios.post('/api/deletefile', data)
-                                            .then(result => {
-                                                if (result.status) {
-                                                let parentdiv = $(e).closest('div.testimonialgallery')
-                                                $(parentdiv).remove();
-                                                axios.post("/admin/courses/removetestimonial", {courseId, key: e.attributes.value.textContent}).then(() => console.log('deleted'))
-                                                }
-                                            })
-                                            return false;
-                                        }
-
-                                        function removevideo(courseId, e) {
-                                            let data = {
-                                            key: e.attributes.value.textContent
-                                            }
-                                            axios.post('/api/deletefile', data)
-                                            .then(result => {
-                                                if (result.status) {
-                                                let parentdiv = $(e).closest('div.videogallery')
-                                                $(parentdiv).remove();
-                                                axios.post("/admin/courses/removevideo", {courseId, key: e.attributes.value.textContent}).then(() => console.log('deleted'))
-                                                }
-                                            })
-                                            return false;
-                                        }
-
-                                        function removepic(courseId, e) {
-                                            let data = {
-                                            key: e.attributes.value.textContent
-                                            }
-                                            axios.post('/api/deletefile', data)
-                                            .then(result => {
-                                                if (result.status) {
-                                                let parentdiv = $(e).closest('div.galleryImage')
-                                                $(parentdiv).remove();
-                                                axios.post("/admin/courses/removephoto", {courseId, key: e.attributes.value.textContent}).then(() => console.log('deleted'))
-                                                }
-                                            })
-                                            return false;
-                                        }
-
-                                        function removebrochure(courseId, brochure, e) {
-                                            let data = {
-                                            key: brochure
-                                            }
-                                            axios.post('/api/deletefile', data)
-                                            .then(result => {
-                                                if (result.status) {
-                                                let parentdiv = $(e).closest('div.brochureImage')
-                                                $(parentdiv).remove();
-                                                axios.post("/admin/courses/removebrochure", {courseId: courseId, key: brochure}).then(() => console.log('deleted'))
-                                                }
-                                            })
-                                            return false;
-                                        }
-
-                                        function removethumbnail(courseId, thumbnail, e) {
-                                            let data = {
-                                            key: thumbnail
-                                            }
-                                            axios.post('/api/deletefile', data)
-                                            .then(result => {
-                                                if (result.status) {
-                                                let parentdiv = $(e).closest('div.thumbnailImage')
-                                                $(parentdiv).remove();
-                                                axios.post("/admin/courses/removethumbnail", {courseId: courseId, key: thumbnail}).then(() => console.log('deleted'))
-                                                }
-                                            })
-                                            return false;
-                                        }
-                                    
         const checkImageSize = (size) => {
             let finalSize = ((size / 1024) / 1024);
             if (finalSize > 2) {
-            return false
+                return false
             }
             return true;
         }
@@ -805,212 +896,212 @@
             return regex.test(file)
         }
 
-        document.getElementById("testimonialvideos").addEventListener("change", function (e) {            
+        document.getElementById("testimonialvideos").addEventListener("change", function (e) {
             const formData = new FormData();
             let productvideos = [];
-              if (e.target.files.length > 5) {
+            if (e.target.files.length > 5) {
                 alert("You cannot upload more than 5 files");
                 $('#videos').val('');
-              } else {
+            } else {
                 for (let i = 0; i < e.target.files.length; i++) {
-                  let type = e.target.files[i].type;
-                  let size = e.target.files[i].size;
-                //   if (checkImageSize(size) && checkImageValidation(type)) {
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    //   if (checkImageSize(size) && checkImageValidation(type)) {
                     formData.append("files", e.target.files[i]);
-                //   } else {
-                //     $('#videos').val('');
-                //     alert("This format not accepted and each image should be 2MB")
-                //     break;
-                //   }
+                    //   } else {
+                    //     $('#videos').val('');
+                    //     alert("This format not accepted and each image should be 2MB")
+                    //     break;
+                    //   }
 
                 }
 
                 header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
                 axios.post('/api/uploadMultiFiles', formData, header)
-                  .then(result => {
-                    debugger
-                    if (result.data.status) {
-                      let combinedKeys = ''
-                      combinedKeys = result.data.Data.map(img => {
-                        return img.Key
-                      });
-                      $('#hidden-testimonialvideos').val(combinedKeys)
-                    //   result.data.Data.forEach(element => {
-                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
-                    //     $(html.innerHTML).insertBefore('#uploadgallery');
-                    //   });
-                    }
-                  })
-                  .catch(err => {
-                    console.log('==> caught error ', err)
-                  })
-                }
+                    .then(result => {
+                        debugger
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('#hidden-testimonialvideos').val(combinedKeys)
+                            //   result.data.Data.forEach(element => {
+                            //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                            //     $(html.innerHTML).insertBefore('#uploadgallery');
+                            //   });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
         });
 
         document.getElementById("videos").addEventListener("change", function (e) {
-           
+
             const formData = new FormData();
             let productvideos = [];
-              if (e.target.files.length > 5) {
+            if (e.target.files.length > 5) {
                 alert("You cannot upload more than 5 files");
                 $('#videos').val('');
-              } else {
+            } else {
                 for (let i = 0; i < e.target.files.length; i++) {
-                  let type = e.target.files[i].type;
-                  let size = e.target.files[i].size;
-                //   if (checkImageSize(size) && checkImageValidation(type)) {
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    //   if (checkImageSize(size) && checkImageValidation(type)) {
                     formData.append("files", e.target.files[i]);
-                //   } else {
-                //     $('#videos').val('');
-                //     alert("This format not accepted and each image should be 2MB")
-                //     break;
-                //   }
+                    //   } else {
+                    //     $('#videos').val('');
+                    //     alert("This format not accepted and each image should be 2MB")
+                    //     break;
+                    //   }
 
                 }
 
                 header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
                 axios.post('/api/uploadMultiFiles', formData, header)
-                  .then(result => {
-                    if (result.data.status) {
-                      let combinedKeys = ''
-                      combinedKeys = result.data.Data.map(img => {
-                        return img.Key
-                      });
-                      $('#hidden-videos').val(combinedKeys)
-                    //   result.data.Data.forEach(element => {
-                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
-                    //     $(html.innerHTML).insertBefore('#uploadgallery');
-                    //   });
-                    }
-                  })
-                  .catch(err => {
-                    console.log('==> caught error ', err)
-                  })
-                }
+                    .then(result => {
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('#hidden-videos').val(combinedKeys)
+                            //   result.data.Data.forEach(element => {
+                            //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                            //     $(html.innerHTML).insertBefore('#uploadgallery');
+                            //   });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
         });
 
         document.getElementById("photos").addEventListener("change", function (e) {
             const formData = new FormData();
             let productimages = [];
-              if (e.target.files.length > 5) {
+            if (e.target.files.length > 5) {
                 alert("You cannot upload more than 5 images");
                 $('#media-group').val('');
-              } else {
+            } else {
                 for (let i = 0; i < e.target.files.length; i++) {
-                  let type = e.target.files[i].type;
-                  let size = e.target.files[i].size;
-                  if (checkImageSize(size) && checkImageValidation(type)) {
-                    formData.append("files", e.target.files[i]);
-                  } else {
-                    $('#media-group').val('');
-                    alert("This format not accepted and each image should be 2MB")
-                    break;
-                  }
+                    let type = e.target.files[i].type;
+                    let size = e.target.files[i].size;
+                    if (checkImageSize(size) && checkImageValidation(type)) {
+                        formData.append("files", e.target.files[i]);
+                    } else {
+                        $('#media-group').val('');
+                        alert("This format not accepted and each image should be 2MB")
+                        break;
+                    }
 
                 }
 
                 header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
                 axios.post('/api/uploadMultiFiles', formData, header)
-                  .then(result => {
-                    if (result.data.status) {
-                      let combinedKeys = ''
-                      combinedKeys = result.data.Data.map(img => {
-                        return img.Key
-                      });
-                      $('#hidden-photos').val(combinedKeys)
-                    //   result.data.Data.forEach(element => {
-                    //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
-                    //     $(html.innerHTML).insertBefore('#uploadgallery');
-                    //   });
-                    }
-                  })
-                  .catch(err => {
-                    console.log('==> caught error ', err)
-                  })
-                }
+                    .then(result => {
+                        if (result.data.status) {
+                            let combinedKeys = ''
+                            combinedKeys = result.data.Data.map(img => {
+                                return img.Key
+                            });
+                            $('#hidden-photos').val(combinedKeys)
+                            //   result.data.Data.forEach(element => {
+                            //     let html = populateimageToElement($('#imageGalaryTemplate template').html(), element.Location, element.key);
+                            //     $(html.innerHTML).insertBefore('#uploadgallery');
+                            //   });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('==> caught error ', err)
+                    })
+            }
         });
 
         $('#thumbnail').change(function (e) {
-                let file = e.target.files[0]
-                let body = {
-                  file: file
-                }
-                let type = file.name;
-                let size = file.size
-                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
-                if (checkCvValidation(type) === false && checkCVSize(size) === false) {
-                  alert("upload the thumbnail in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
-                  e.target.value = ''
-                } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
-                  alert("uploaded thumbnail size should less than 5MB");
-                  e.target.value = ''
-                } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
-                  alert("upload the thumbnail in .docx, .doc,.jpg, .jpeg, .png or pdf format");
-                  e.target.value = ''
-                } else {
-                  axios.post('/api/uploadAdminFile', body, header)
+            let file = e.target.files[0]
+            let body = {
+                file: file
+            }
+            let type = file.name;
+            let size = file.size
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                alert("upload the thumbnail in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                alert("uploaded thumbnail size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                alert("upload the thumbnail in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                e.target.value = ''
+            } else {
+                axios.post('/api/uploadAdminFile', body, header)
                     .then(result => {
                         console.log('=============> here ', result)
-                      if (result.data.status) {
-                        $('#hidden-thumbnail').val(result.data.data.Key)
-                      }
+                        if (result.data.status) {
+                            $('#hidden-thumbnail').val(result.data.data.Key)
+                        }
                     })
-                }
-              });
+            }
+        });
 
-            
+
 
         $('#brochure').change(function (e) {
-                let file = e.target.files[0]
-                let body = {
-                  file: file
-                }
-                let type = file.name;
-                let size = file.size
-                header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
-                if (checkCvValidation(type) === false && checkCVSize(size) === false) {
-                  alert("upload the brochure in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
-                  e.target.value = ''
-                } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
-                  alert("uploaded brochure size should less than 5MB");
-                  e.target.value = ''
-                } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
-                  alert("upload the brochure in .docx, .doc,.jpg, .jpeg, .png or pdf format");
-                  e.target.value = ''
-                } else {
-                  axios.post('/api/uploadAdminFile', body, header)
+            let file = e.target.files[0]
+            let body = {
+                file: file
+            }
+            let type = file.name;
+            let size = file.size
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            if (checkCvValidation(type) === false && checkCVSize(size) === false) {
+                alert("upload the brochure in .docx, .doc, .jpg, .jpeg, .png or pdf format and size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === true && checkCVSize(size) === false) {
+                alert("uploaded brochure size should less than 5MB");
+                e.target.value = ''
+            } else if (checkCvValidation(type) === false && checkCVSize(size) === true) {
+                alert("upload the brochure in .docx, .doc,.jpg, .jpeg, .png or pdf format");
+                e.target.value = ''
+            } else {
+                axios.post('/api/uploadAdminFile', body, header)
                     .then(result => {
                         console.log('=============> here ', result)
-                      if (result.data.status) {
-                        $('#hidden-brochure').val(result.data.data.Key)
-                      }
+                        if (result.data.status) {
+                            $('#hidden-brochure').val(result.data.data.Key)
+                        }
                     })
-                }
-              });
+            }
+        });
 
-              const checkCvValidation = (file) => {
-                let regex = /(\.docx|\.doc|\.pdf|\.jpg|\.jpeg|\.png)$/i
-                if (!regex.exec(file)) {
-                  return false;
-                } else {
-                  return true;
-                }
-              }
-
-              function checkCVSize(size) {
-                let finalSize = ((size / 1024) / 1024);
-                if (finalSize > 5) {
-                  return false;
-                }
+        const checkCvValidation = (file) => {
+            let regex = /(\.docx|\.doc|\.pdf|\.jpg|\.jpeg|\.png)$/i
+            if (!regex.exec(file)) {
+                return false;
+            } else {
                 return true;
-              }
+            }
+        }
 
-                                    
-                                    
-                                    
-                                    
-                                    </script>
-                                
+        function checkCVSize(size) {
+            let finalSize = ((size / 1024) / 1024);
+            if (finalSize > 5) {
+                return false;
+            }
+            return true;
+        }
+
+
+
+
+
+    </script>
+
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <!-- <scrip>
         $('#add-button').bind('click', () => {
@@ -1181,13 +1272,16 @@
                 courseLevel: document.getElementById("courseLevel").value,
                 name: document.getElementById("name").value,
                 duration: document.getElementById("duration").value,
+                courseFeeType: document.getElementById('courseFeeType').value,
+                typeOfProject: document.getElementById('typeOfProject').value,
+                projectName: document.getElementById('projectName').value,
                 certifyingAgency: $('#certifyingAgency').val(),
                 certifyingAgencyWebsite: certifyingAgencyWebsiteValue,
                 qualification: document.getElementById("qualification").value,
                 age: $('#age').val(),
                 brochure: $('#hidden-brochure').val(),
                 thumbnail: $('#hidden-thumbnail').val(),
-                youtubeURL:$('#youtubeURL').val(),
+                youtubeURL: $('#youtubeURL').val(),
                 courseType: $('#courseType').val(),
                 experience: $('#experience').val(),
                 trainingMode: $('#trainingMode').val(),
@@ -1215,10 +1309,10 @@
                 photos: document.getElementById("hidden-photos").value,
                 audios: document.getElementById("hidden-audios")?.value || '',
                 videos: document.getElementById("hidden-videos").value,
-                counslername:$("#counslername").val(),
-                counslerphonenumber: $("#counslerphonenumber").val(),  
-                counsleremail:$("#counsleremail").val(),
-                counslerwhatsappnumber:$("#counslerwhatsappnumber").val(),  
+                counslername: $("#counslername").val(),
+                counslerphonenumber: $("#counslerphonenumber").val(),
+                counsleremail: $("#counsleremail").val(),
+                counslerwhatsappnumber: $("#counslerwhatsappnumber").val(),
                 // Other fields...
                 // questionAnswers: Array.from(document.getElementById("questionanswerTemplate")).map(row => {
 

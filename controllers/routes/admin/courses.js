@@ -91,6 +91,7 @@ router
 				return res.json({ status: false, message: "Record not added!" })
 			}
 		} catch (err) {
+			console.log(err)
 			req.flash("error", err.message || "Something went wrong!");
 			return res.redirect("back");
 
