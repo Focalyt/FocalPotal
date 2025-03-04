@@ -367,7 +367,7 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       course?.registrationCharges,
       appliedData?.registrationFee,
       'Lead From Portal',
-      course?.courseFeeName,
+      course?.courseFeeType,
       course?.typeOfProject,
       course?.projectName
 
