@@ -366,7 +366,11 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       `${process.env.BASE_URL}/coursedetails/${courseId}`,
       course?.registrationCharges,
       appliedData?.registrationFee,
-      'Lead From Portal'
+      'Lead From Portal',
+      course?.courseFeeName,
+      course?.typeOfProject,
+      course?.projectName
+
 
     ];
     await updateSpreadSheetValues(sheetData);
@@ -629,7 +633,7 @@ router.get("/login", async (req, res) => {
 
   
   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  console.log(fullUrl);
+ 
   
   // Modify script to run after DOM is loaded and escape quotes properly
   const storageScript = `
