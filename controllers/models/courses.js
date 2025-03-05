@@ -16,7 +16,7 @@ const courseSchema = new Schema({
       },
       typeOfProject: {
         type: String, // Specifies which type of user created the post
-        enum: ['P&T', 'T&P',""], // Allowed user types
+        enum: ['P&T', 'T&P',"General"], // Allowed user types
         
       },
     projectName: String,

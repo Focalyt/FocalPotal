@@ -85,7 +85,7 @@
                                 <a class="nav-link" id="institute-tab" data-bs-toggle="tab" href="#institute" role="tab"
                                   aria-controls="institute" aria-selected="false">Institute</a>
                               </li>
-                              <li class="nav-item" role="presentation" onclick="selctedTagFor('candidate')">
+                              <li class="nav-item" role="presentation" >
                                 <a class="nav-link active" id="student-tab" data-bs-toggle="tab" href="#student" role="tab"
                                   aria-controls="student" aria-selected="false">Student</a>
                               </li>
@@ -145,7 +145,7 @@
                                       </tr>
                                     </thead>
                                     <tbody id="companyTableBody">
-                                      <!-- <tr>
+                                      <tr>
                                         <td>
                                           <input type="checkbox">
                                         </td>
@@ -161,7 +161,7 @@
                                         </td>
                                         <td>12345678900</td>
 
-                                      </tr> -->
+                                      </tr>
                                     </tbody>
                                   </table>
                                 </div>
@@ -182,7 +182,7 @@
                                       </tr>
                                     </thead>
                                     <tbody id="collegeTableBody">
-                                      <!-- <tr>
+                                      <tr>
                                         <td>
                                           <input type="checkbox">
                                         </td>
@@ -196,7 +196,7 @@
                                         </td>
                                         <td>12345678900</td>
 
-                                      </tr> -->
+                                      </tr>
                                     </tbody>
                                   </table>
                                 </div>
@@ -219,6 +219,22 @@
 
 
                                     <tbody id="candidateTableBody">
+                                      <!-- <tr>
+                                        <td>
+                                          <input type="checkbox">
+                                        </td>
+                                        <td class="employee-info">
+                                          <img src="/public_assets/images/newpage/logo-ha.svg" alt=""
+                                            class="employee-avatar" />
+                                          <div class='employee-basic-info'>
+                                            <span class="employee-name tooltipp" title="Akash">Akash</span>
+
+                                          </div>
+                                        </td>
+                                        <td>12345678900</td>
+
+                                      </tr> -->
+
 
                                     </tbody>
                                   </table>
@@ -244,622 +260,7 @@
 
 
     </div>
-    <!-- <div class="tagging-container">
-      <div class="tag-input-container">
-          <div class="tags">
-          </div>
-          <input type="text" class="tag-input" placeholder="Tag People">
-      </div>
-      <span class="done">Done</span>
-  </div> -->
-
-
-    <!-- <div class="content-body mt-4">
-		
-      <% include ../partials/flash %>
-      
-        <section class="list-view">
-          
-          <div class="row">
-            
-            <div class="col-12 rounded equal-height-2 coloumn-2">
-              
-              <div class="card">
-                
-                <div class="row">
-  
-                  <div class=" col-xl-5 col-lg-6 col-md-4 col-sm-12 col-12  my-auto ">
-                    <div class="archieve text-left px-1">
-                      <input style="margin-bottom: 4px;" type="checkbox" onclick="archived()"<%-
-                      isChecked=="true" ? "checked" : '' %>
-                      id="checkbox1">
-                      &nbsp;
-                      <p>Show Archived</p>
-                      
-                    </div>
-  
-                  </div>
-   
-  
-                <div class="card-content col-12">
-                  <div class="row mb-2">
-                    <div class="col-xl-12 col-lg-12 px-3">
-                      <form method="GET" id="filterForm">
-                      
-                      <div class="row">
-                        <div class="col-xl-2 mt-1">
-                          <label>Name/ Mobile/ Whatsapp</label>
-                          <input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>"
-                           maxlength="25">
-                        </div>
-                        <div class="col-xl-2 mt-1">
-                          <label>Profile</label>
-                          <select class="form-control text-capitalize" name="Profile" id="profile">
-                            <option value="">Select</option>
-                            <option class="text-capitalize" value= "All" 
-                            <% if (data.Profile=='All' ) { %> selected <% }%> >All</option>
-                            <option class="text-capitalize" value= "true" 
-                            <% if (data.Profile=='true' ) { %> selected <% }%> >Completed</option>
-                            <option class="text-capitalize" value= "false" 
-                            <% if (data.Profile=='false' ) { %> selected <% }%> >Due</option>
-                          </select>
-                        </div>
-                        <div class="col-xl-2 mt-1">
-                          <label>Verfied</label>
-                          <select class="form-control text-capitalize" name="verified">
-                            <option value="">Select</option>
-                            <option class="text-capitalize" value= true
-                            <% if (data.verified == 'true') { %> selected <% }%> >Verified</option>
-                            <option class="text-capitalize" value= false
-                            <% if (data.verified == 'false') { %> selected <% }%> >Not Verified</option>
-                          </select>
-                        </div>
-                        
-                          <input type="hidden" class="form-control" name="status" value="<%- isChecked=='true' ? false : true%>">
-                        
-                        <div style="margin-top: 2.5rem !important;" class="col-xl-2 text-center mt-3">
-                          <button 
-                            class="btn btn-success  waves-effect waves-light  text-white d-inline "
-                            id="submit-btn">Go</button>
-                            <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
-                            href="/admin/post/add">RESET</a>
-                        </div>
-                      </div>
-                      </form>
-                    </div>
-                  </div> 
-                  <div class="table-responsive">
-                    <% if (candidates && candidates.length> 0) { %>
-                      <table id="tblexportData" class="table table-hover-animation mb-0 table-hover" width="100%">
-                        <thead>
-                          <tr>
-                            <th class="three column wide" width="18%"  style="cursor: pointer;">Select </th>
-                            <th class="three column wide candidate-wrap" width="19%">CANDIDATE NAME</th>
-                            <th class="one column wide" width="15%">MOBILE NO.</th>
-
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <% let count=0 %>
-                            <% candidates.forEach((l, i)=> { %>
-                              <tr>
-                                <td class="text-capitalize">
-                                 <input type="checkbox">
-                                </td>
-                                <td class="text-capitalize candid-wrap d-flex align-items-center" style="width:300px">
-                                  <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                                  <div class='employee-basic-info'>
-                                    <a  href="/admin/candidate/details/<%=l._id%>">	<%= l.name ? l.name : "NA" %></a>
-                                    <% if(l.verified == true){ %>
-                                      <i class="fa-solid fa-circle-check" style="color: #28c76f ;"></i>
-                                    <% } %>
-                                  
-                                  </div>
-                                  
-                                </td>
-                                <td class="text-capitalize">
-                                  <%= l.mobile ? l.mobile : "NA" %>
-                                </td>
-                                
-                              </tr>
-                              <% }) %>
-                        </tbody>
-                      </table>
-                      <% } else { %>
-                        <p class="text-center mt-3">No result found</p>
-                        <% } %>
-  
-                          <% if (totalPages> 1) { %>
-                            <ul class="pagination justify-content-end ml-2 mb-2">
-                              <% let first=1 %>
-                                <% let last=totalPages> 4 ? 4 :
-                                  totalPages %> <% if (totalPages> 4 && page >= 2) { %> <%
-                                      first=page - 1 %>
-                                      <% last=page + 1 %>
-                                        <% if (last>
-                                          totalPages) last = totalPages %> <% } %>
-                                            <% if (first>
-                                              1) { %>
-                                              <li class="page-item">
-                                                <a class="pageAnchor page-link"
-                                                  href="<%= 1 %>">First</a>
-                                              </li>
-                                              <% } %>
-                                                <% for (let i=first; i
-                                                  <=last; i +=1) { %>
-                                                  <% if (i===page) { %>
-                                                    <li
-                                                      class="active page-item">
-                                                      <a href="javascript:void()"
-                                                        class="page-link">
-                                                        <%= i %>
-                                                      </a>
-                                                    </li>
-                                                    <% } else { %>
-                                                      <li
-                                                        class="page-item">
-                                                        <a class="page-link pageAnchor"
-                                                          href="<%= i %>">
-                                                          <%= i %>
-                                                        </a>
-                                                      </li>
-                                                      <% } %>
-                                                        <% } %>
-                                                          <% if
-                                                            (totalPages>
-                                                            last)
-                                                            { %>
-                                                            <li
-                                                              class="page-item">
-                                                              <a class="pageAnchor page-link"
-                                                                href="<%= last + 1 %>">...</a>
-                                                            </li>
-                                                            <li
-                                                              class="page-item">
-                                                              <a class="pageAnchor page-link"
-                                                                href="<%= totalPages %>">Last</a>
-                                                            </li>
-                                                            <% }
-                                                              %>
-                            </ul>
-                            <% } %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <input type="hidden" id="candidate-id" value="">
-        <div class="modal fade" id="sendSMS" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Profile Completion SMS</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body pt-1" id="popup-body">
-                  <p>Are you sure you want to send Bulk SMS </p>
-          <p class="text-right font-weight-bold text-danger mr-2"><i>Total Messages : </i></p>
-                </div>
-                <div class="modal-footer">
-                  <button class="btn btn-primary"
-          onclick="sendSMS('<%= data?.name%>','<%= data?.FromDate %>','<%= data?.ToDate %>','')"
-                    id="sendBtn" data-dismiss="modal">Send</button>
-                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i
-                      class="feather icon-x d-block d-lg-none"></i>
-                    <span class="d-none d-lg-block">Cancel</span></button>
-                </div>
-              </div>
-            </div>
-          </div>
-      Notification modal start
-      <div class="modal fade" id="notificationmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Send Notifications</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body pt-1">
-          <div class="row">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-1 text-left">
-            <label>Status<span class="required text-danger"> *</span></label>
-            <select class="form-control text-capitalize" id="notificationevent" value="">
-            <option value="">Select Option</option>
-            </select>
-          </div>
-          <div class="col-xl-12 mb-1 text-left">
-            <label>Message<span class="required text-danger"> *</span></label>
-            <textarea class="form-control" cols="5" id="notificationmessage" value="" rows="3"></textarea>
-          </div>
-          </div>
-          <p class="text-success font-weight-bolder" id = 'successMsg' style="display: none;"></p>
-          <p class="text-danger font-weight-bolder" id = 'errorMsg' style="display: none;"></p>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" id="sendBtn" onclick="sendNotifications()">Send</button>
-        </div>
-        </div>
-      </div>
-      </div>
-      Notification modal end
-          <script>
-            function exportCandidates(){
-              // $.ajax({
-              // 	type: "POST",
-              // 	url: "/admin/candidate/downloadCSV",
-              // 	success: (res) => {
-              // 		console.log(res)
-              // 		window.open(res.path, '_blank')
-              // 		// setTimeout(removeFile,20000)
-              // 	}
-              // });
-              const body={FromDate:$('#from-date').val(),ToDate:$('#to-date').val(), username:$('#username').val(), isProfileCompleted:$('#profile').val() }
-              axios.post(`/admin/candidate/downloadCSV`,body , { responseType: 'blob' }).then(res => {
-                    const href = URL.createObjectURL(res.data);
-                                  window.open(href, '_blank')
-                  }).catch((err) => {
-                  console.log(err.message)
-                  })
-            }
-            function updateProfileVisible(mobile,visibility){
-                          let field;
-              if(visibility=='true'){
-                field=false
-              }else{
-                field=true
-              }
-              $.ajax({
-                type: "POST",
-                url: "/admin/candidate/changeprofilestatus",
-                data: {
-                  mobile,
-                  status: field,
-                },
-                success: () => location.reload(),
-              });
-            }
-            function sendNotifications(){
-              const event=$('#notificationevent').val();
-              const message=$('#notificationmessage').val();
-                          const candidateId=$('#candidate-id').val();
-              const body={
-                title:event,
-                message:message,
-                candidateId
-              }
-              if(message&&event){
-                axios.post("/admin/candidate/sendNotification",body).then((res)=>{
-                  if(res.data.status){
-                  $('#errorMsg').hide();
-                  $('#errorMsg').text('');
-                  $('#successMsg').show();
-                  $('#successMsg').text(res.data.message)
-                  window.location.reload();
-                  }else{
-                  $('#successMsg').hide();
-                  $('#successMsg').text('');
-                  $('#errorMsg').show();
-                  $('#errorMsg').text(res.data.message)
-                  }
-                })
-              }else{
-                $('#successMsg').hide();
-                  $('#successMsg').text('');
-                  $('#errorMsg').show();
-                  $('#errorMsg').text("Please fill the required fields!")
-              }
-            }
-            function onNotificationsHandler(candidateId){
-              $('select option.notificationoption').remove();
-              document.getElementById('candidate-id').value=candidateId
-              let optionsName=['Signup','Profile Completion','Applied Jobs','Interview Scheduling','Shortlisting','Focalyt Earnings','Focalyt Alerts']
-              for(let i=0;i<optionsName.length;i++){
-                  let option=document.createElement('option');
-                  option.text=optionsName[i];
-                  option.value=optionsName[i]
-                  option.classList.add('notificationoption')
-                  document.getElementById('notificationevent').append(option)
-                }
-            }
-            function removeFile() {
-              $.ajax({
-                type: "DELETE",
-                url: "/admin/candidate/deleteCSV",
-                success: (res) => {
-                  if(res.status){
-                    console.log('File Deleted')
-                  } else {
-                    console.log('File not Deleted')
-                  }
-                }
-              });
-            }
-  
-            function myOnOffFunc(id, status, model) {
-              // eslint-disable-line
-              let myStatus = true;
-              if (status === true || status === "true") {
-                myStatus = false;
-              }
-              $.ajax({
-                type: "POST",
-                url: "/admin/changestatus",
-                data: {
-                  id,
-                  status: myStatus,
-                  model,
-                },
-                success: () => location.reload(),
-              });
-            }
-            function deleteRecord(id, status, model) {
-              // eslint-disable-line
-              let myStatus = true;
-              if (status === true || status === "true") {
-                myStatus = false;
-              }
-              var x = confirm("Are you sure you want to delete?");
-              if (x) {
-                $.ajax({
-                  type: "POST",
-                  url: "/admin/deleteRecord",
-                  data: {
-                    id,
-                    status: myStatus,
-                    model,
-                  },
-                  success: () => window.location.href = "/admin/candidate"
-                });
-              }
-            }
-          </script>
-          <script>
-            !(function () {
-              "use strict";
-              Array.isArray ||
-                (Array.isArray = function (r) {
-                  return "[object Array]" === Object.prototype.toString.call(r);
-                });
-              var r = {
-                get: function () {
-                  var r = window.location.search,
-                    t = {};
-                  return "" === r
-                    ? t
-                    : ((r = r.slice(1)),
-                      (r = r.split("&")),
-                      r.map(function (r) {
-                        var i, o;
-                        (r = r.split("=")),
-                          (i = r[0]),
-                          (o = r[1]),
-                          t[i]
-                            ? (Array.isArray(t[i]) || (t[i] = [t[i]]),
-                              t[i].push(o))
-                            : (t[i] = o);
-                      }),
-                      t);
-                },
-              };
-              if (window) {
-                if (window.qs)
-                  throw new Error(
-                    "Error bootstrapping qs: window.qs already set."
-                  );
-                window.qs = r;
-              }
-            })();
-          </script>
-          <script>
-            document.addEventListener("DOMContentLoaded", () => {
-              let order = '<%= sortingOrder%>'
-              let value = '<%= sortingValue%>'
-              let iconClass
-              if(order == -1){
-                iconClass = "fa-solid fa-arrow-down success"
-              }else{
-                iconClass = "fa-solid fa-arrow-up success"
-              }
-              $(`#${value}`).removeAttr('class')
-              $(`#${value}`).attr('class', iconClass)
-              $(`#${value}`).attr('value', `${order*-1}`)
-  
-              const pageAnchors = document.querySelectorAll("a.pageAnchor");
-              const { origin, pathname, search } = window.location;
-              const obj = window.qs.get(search);
-              const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
-              let url = `${origin}${pathname}?`;
-              keyArr.forEach((x) => {
-                if (x !== "page") {
-                  url += `${x}=${obj[x]}&`;
-                }
-              });
-              pageAnchors.forEach((el) => {
-                const n = el.getAttribute("href");
-                el.setAttribute("href", `${url}page=${n}`);
-              });
-            });
-            // show deleted data
-            function archived() {
-              let checkbox = document.getElementById('checkbox1');
-              window.location.href = `/admin/post/add?status=${!checkbox.checked}`
-            }
-  
-            // show selected colleges
-            function selectedCollege() {
-              var e = document.getElementById("college");
-              var selectedItem = e.options[e.selectedIndex].value;
-              // alert(selectedItem);
-              var clgId = selectedItem;
-              // alert("isDeleted = " + isDeleted)
-              $.ajax({
-                type: "GET",
-                url: "/admin/candidate?clgId=" + `${clgId}`,
-                success: () => window.location.href = "/admin/candidate?clgId=" + `${clgId}`
-              });
-            }
-  
-            // delete archieve data permanently
-            function deleteArchieve(id, isDeleted, model) {
-              // alert(isDeleted)
-              let myStatus = true;
-              if (isDeleted === true || isDeleted === "true") {
-                myStatus = true;
-              }
-  
-              var x = confirm("Are you sure you want to delete?");
-              if (x) {
-                $.ajax({
-                  type: "POST",
-                  url: "/admin/deleteArchieve",
-                  data: {
-                    id,
-                    isDeleted: myStatus,
-                    model,
-                  },
-                  success: () => window.location.href = "/admin/candidate?isDeleted=true"
-                });
-              }
-            }
-          </script>
-  
-          <script type="text/javascript">
-            
-            $('#submit-btn').click(()=>{
-              if(validate()){
-                return false
-              }
-            })
-            function validate(){
-              $('.error').removeClass('error')
-              let fromDate = $('#from-date').val();
-              let toDate = $('#to-date').val()
-              let hasError = false
-              let firstError
-              
-              if(fromDate && !toDate){
-                $('#to-date').parent().addClass('error')
-                              firstError = firstError ? firstError :$('#to-date')
-                              hasError = true
-              }
-              if(!fromDate && toDate){
-                $('#from-date').parent().addClass('error')
-                              firstError = firstError ? firstError :$('#from-date')
-                              hasError = true
-              }
-              $(firstError).focus()
-                          return hasError
-            }
-            function exportToExcel(tableID, filename = '') {
-  
-              /* Get the HTML data using Element by Id */
-              var table = document.getElementById("tblexportData");
-  
-              /* Declaring array variable */
-              var rows = [];
-  
-              //iterate through rows of table
-              for (var i = 0, row; row = table.rows[i]; i++) {
-                //rows would be accessed using the "row" variable assigned in the for loop
-                //Get each cell value/column from the row
-                column1 = row.cells[0].innerText;
-                column2 = row.cells[1].innerText;
-                column3 = row.cells[2].innerText;
-                column4 = row.cells[3].innerText;
-                column5 = row.cells[4].innerText;
-  
-                /* add a new records in the array */
-                rows.push(
-                  [
-                    column1,
-                    column2,
-                    column3,
-                    column4,
-                    column5
-                  ]
-                );
-  
-              }
-              console.log("rows",rows,rows.length)
-              csvContent = "data:text/csv;charset=utf-8,";
-              /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-              rows.forEach(function (rowArray) {
-                row = rowArray.join(",");
-                csvContent += row + "\r\n";
-              });
-  
-              /* create a hidden <a> DOM node and set its download attribute */
-              var encodedUri = encodeURI(csvContent);
-              var link = document.createElement("a");
-              link.setAttribute("href", encodedUri);
-              link.setAttribute("download", "candidates list");
-              document.body.appendChild(link);
-              /* download the data file named "Stock_Price_Report.csv" */
-              link.click();
-            }
-  
-            function sendSMS(name,fromDate,toDate,count){
-              const params = window.location.search
-                          $('#sendBtn').addClass('disabled')
-              $.ajax({
-                  type: "POST",
-                  url: "/admin/candidate/bulkSMS",
-                  data: {
-                    isProfileCompleted : false,
-                    name,
-                    fromDate,
-                    toDate,
-                    count
-                  },
-                  success: () => {
-                    let smsHistory = document.getElementById('smsHistory')
-                    smsHistory.textContent="Last Sent : Just Now ()" 
-                    $('#sendBtn').removeClass('disabled')
-                  },
-                  error: () =>{
-                    window.location.href = `/admin/candidate${params}`
-                  }
-                });
-            }
-  
-            function sorting(value){
-              let order = $(`#${value}`).attr('value')
-              let str = `?`
-              let form = document.getElementById('filterForm');
-                          let data = new FormData(form);
-              let obj = {}
-                          for (let [key, value] of data) {
-                obj[key] = value
-                str += `${key}=${value}&`
-                             }
-              window.location.href = `/admin/candidate${str}value=${value}&order=${order}`
-            }
-  
-            function loginAs(mobile){
-              $.ajax({
-                  type: "POST",
-                  data: {mobile, module: 'candidate'},
-                  url: "/api/loginAsCandidate",
-                  success: (data) => {
-                    if(data.role===3) {
-                      localStorage.setItem("candidate", data.name);
-                                          localStorage.setItem("token", data.token);
-                                          window.location.href = "/candidate/dashboard";
-                    }									
-                  }
-                });
-            }
-            
-          </script>
-    </div> -->
+    
   </div>
   
 
@@ -1261,6 +662,130 @@
   </style>
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <% let candidates = []; %> <!-- Candidates Array -->
+<% let page = 1; %>       <!-- Initial Page Number -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  // Initializing Variables
+  var candidateslist  = [];
+  var page = 1;
+  var isLoading = false; // Prevent multiple API calls
+  var hasMoreData = true; // जब तक डेटा मौजूद है, लोड होगा
+
+  // Function to Fetch Candidates
+  function fetchCandidates() {
+    if (isLoading || !hasMoreData) return; // अगर पहले से API कॉल हो रही है या डेटा नहीं है तो रोकें
+    isLoading = true;
+
+    $.ajax({
+      url: "/admin/post/candidateslist?page=" + page,
+      type: "GET",
+      success: function (response) {
+        console.log('candidate data', response)
+        if (response && response.length > 0) {
+          newCandidateslist = candidateslist.concat(response); // Add new data
+          console.log(newCandidateslist)
+          appendCandidatesToDOM(newCandidateslist)
+           // Append New Data to DOM
+          page++; // ✅ Page तब ही बढ़ेगा जब डेटा आएगा
+        } else {
+          hasMoreData = false; // अगर कोई डेटा नहीं मिला तो आगे API कॉल मत करो
+        }
+        isLoading = false;
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching candidates:", error);
+        isLoading = false;
+      },
+    });
+  }
+
+ // ✅ **Scroll Event Handler: जब यूज़र 50% Scroll कर ले तब API कॉल हो**
+ $(document).ready(function () {
+    $("#candidateTableBody").on("scroll", function () {
+        let scrollTop = $(this).scrollTop(); // कितने px स्क्रॉल हुआ
+        let scrollHeight = $(this)[0].scrollHeight; // पूरे स्क्रॉल की हाइट
+        let clientHeight = $(this).innerHeight(); // अंदर की हाइट
+
+        let scrolledPercentage = (scrollTop + clientHeight) / scrollHeight * 100;
+        console.log("Scrolled:", scrolledPercentage + "%"); // Debugging
+
+        // जब scroll 50% के बाद हो जाए, तो API call करो
+        if (scrolledPercentage > 80 && !isLoading && hasMoreData) {
+            console.log("Fetching More Data...");
+            fetchCandidates();
+        }
+    });
+});
+
+
+  // Function to Render Candidates in the Table
+  // ✅ **DOM में नया डेटा Map करने का Function (Table में Add करें)**
+function appendCandidatesToDOM(candidates) {
+  console.log("adding data in consoel", candidates)
+    candidates.forEach(candidate => {
+        $("#candidateTableBody").append(`
+            <tr>
+              <td><input value="${candidate._id}" type="checkbox"></td>
+                <td>${candidate.name}</td>
+                <td>${candidate.mobile}</td>
+            </tr>
+        `);
+    });
+}
+
+let selectedTags = []; // Selected candidates store होंगे
+
+// ✅ Function: Checkbox Click होने पर Data Store/Remove होगा
+$(document).on("change", "#candidateTableBody input[type=checkbox]", function () {
+    let candidateId = $(this).val();
+    let candidateName = $(this).closest("tr").find("td:nth-child(2)").text().trim();
+    let candidateMobile = $(this).closest("tr").find("td:nth-child(3)").text().trim();
+    let userType = "candidate"; // Default type candidate
+
+    if ($(this).prop("checked")) {
+        // ✅ अगर checkbox select किया गया तो add करो
+        selectedTags.push({
+            userId: candidateId,
+            name: candidateName,
+            userType: userType
+        });
+
+        updateTagList();
+    } else {
+        // ✅ अगर uncheck किया गया तो remove करो
+        selectedTags = selectedTags.filter(c => c.userId !== candidateId);
+        updateTagList();
+    }
+
+    console.log("Selected Candidates:", selectedTags);
+});
+
+function updateTagList() {
+    $("#tagscandidate").empty(); // पहले सभी Tags को Clear करें
+    selectedTags.forEach((selectedTag, index) => {
+        $("#tagscandidate").append(`
+            <div class="btn btn-primary tag-item" style="padding: 0.3rem 1rem;" data-id="${selectedTag.userId}">
+                ${selectedTag.name} 
+                <span class="badge bg-secondary remove-tag" data-index="${index}">
+                    <i class="fa-solid fa-x" style="color: #000000;" aria-hidden="true"></i>
+                </span>
+            </div>
+        `);
+    });
+}
+
+// function appendTagsToDOM(selectedTags) {
+//   console.log("adding data in consoel", selectedTags)
+  
+// }
+
+
+  fetchCandidates()
+</script>
 
 
 
@@ -1269,7 +794,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script>
+  <!-- <script>
     // tag users 
     // Select input and tags container
     const inputField = document.querySelector('.tag-input');
@@ -1306,7 +831,7 @@
     var adminTableBody = [];
     var companyTableBody = [];
     var collegeTableBody = [];
-    var candidateTableBody = '<%- JSON.stringify(candidates) %>';
+    var candidateTableBody = '<%- JSON.stringify(candidates) %>'  ;
 
     var selectedTag = "candidate";
     var selectedTags = [];
@@ -1577,6 +1102,8 @@
       $("#post-form").on("submit", function (e) {
         e.preventDefault(); // Prevent the default form submission
 
+        console.log("Post Submiting")
+
         const formData = new FormData();
         formData.append("content", $("#post-content").val());
         const files = $("#file-upload")[0].files;
@@ -1658,7 +1185,7 @@
           loadData();
         }
         
-  </script>
+  </script> -->
 
 
   <% include ../partials/footer %>

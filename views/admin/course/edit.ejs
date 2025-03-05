@@ -90,12 +90,14 @@
                                                     <% } %>>T&P</option>
                                                 <option value="P&T" <% if(course.typeOfProject==="P&T" ) {%> selected
                                                     <% } %>>P&T</option>
+                                                    <option value="General" <% if(course.typeOfProject==="General" ) {%> selected
+                                                        <% } %>>General</option>
 
                                             </select>
                                         </div>
 
 
-                                        <script>
+                                        <!-- <script>
                                             function toggleCourseFeeType() {
                                                 var courseFeeType = document.getElementById("courseFeeType").value;
                                                 var typeOfProject = document.getElementById("courseProjectblock");
@@ -114,7 +116,7 @@
                                             window.onload = function () {
                                                 toggleCourseFeeType();
                                             };
-                                        </script>
+                                        </script> -->
 
                                         <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
                                             id="courseblock">

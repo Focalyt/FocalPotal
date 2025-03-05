@@ -36,6 +36,16 @@ router.get('/policy', async (req, res) => {
     return res.redirect('back');
   }
 });
+
+router.get('/policy', async (req, res) => {
+  try {
+    return res.render(`${req.vPath}/front/policy`);
+  } catch (err) {
+    req.session.formData = req.body;
+    req.flash('error', err.message || 'Something went wrong!');
+    return res.redirect('back');
+  }
+});
 router.post('/contact',async (req, res) => {
   try {
    
