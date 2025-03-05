@@ -158,66 +158,72 @@ const upload = multer({ storage }).single('file');
 
 module.exports.uploadPostFiles = async (req, res) => {
   try {
-    
-    // Validate user authentication
-    const userId = req.user?._id || req.session?.user?._id|| req.body.userId;
+    // ✅ Validate user authentication
+    const userId = req.user?._id || req.session?.user?._id || req.body.userId;
     const userType = req.user?.userType || req.session?.user?.userType || req.body?.userType || "admin";
-    let postdata = JSON.parse(req.body.data);
-    console.log(postdata)
-    const tags = postdata.map(item => ({
-      userId: item._id,
-      name: item.name,
-      userType: item.userType
-    }));
 
     if (!userId || !userType) {
-      return res.status(401).send({
-        status: false,
-        message: 'User not authenticated',
-      });
+      return res.status(401).send({ status: false, message: "User not authenticated" });
     }
 
-    const files = req.files?.files;
+    // ✅ Handle File Uploads
+    let files = req.files?.files;
     if (!files) {
-      return res.status(400).send({
-        status: false,
-        message: 'No files uploaded',
-      });
+      return res.status(400).send({ status: false, message: "No files uploaded" });
     }
 
+    // ✅ Ensure `files` is always an array
+    const filesArray = Array.isArray(files) ? files : [files];
+
+    // ✅ Validate Content Field
     const content = req.body?.content;
     if (!content) {
-      return res.status(400).send({
-        status: false,
-        message: 'Post content is required',
-      });
+      return res.status(400).send({ status: false, message: "Post content is required" });
     }
 
-    const filesArray = Array.isArray(files) ? files : [files];
+    // ✅ Validate and Parse `tags`
+    let tags = req.body?.tags;
+    console.log("Raw Tags from Request:", tags);
+
+    // Convert stringified JSON into an object
+    if (typeof tags === "string") {
+      try {
+        tags = JSON.parse(tags);
+      } catch (err) {
+        return res.status(400).json({ success: false, error: "Invalid JSON format for tags" });
+      }
+    }
+
+    console.log("Parsed Tags Array:", tags);
+
+    // Ensure `tags` is an array
+    if (!Array.isArray(tags)) {
+      return res.status(400).json({ success: false, error: "Tags should be an array" });
+    }
+
+    // Validate Each Tag Object
+    if (!tags.every(tag => tag.userId && tag.name && tag.userType)) {
+      return res.status(400).json({ success: false, error: "Each tag must have userId, name, and userType" });
+    }
+
+    // ✅ Upload Files to S3
     const uploadedFiles = [];
     const uploadPromises = [];
 
-    // Process and upload files
     filesArray.forEach((item) => {
       const { name, mimetype } = item;
       const ext = name?.split('.').pop().toLowerCase();
 
       console.log(`Processing File: ${name}, Extension: ${ext}`);
 
-      // Validate file type
       if (!allowedImageExtensions.includes(ext) && !allowedVideoExtensions.includes(ext)) {
-        throw new Error(
-          `File type not supported: ${ext}. Allowed types are ${[
-            ...allowedImageExtensions,
-            ...allowedVideoExtensions,
-          ].join(', ')}`
-        );
+        throw new Error(`File type not supported: ${ext}`);
       }
 
       // Determine fileType
-      const fileType = allowedImageExtensions.includes(ext) ? 'image' : 'video';
+      const fileType = allowedImageExtensions.includes(ext) ? "image" : "video";
 
-      // Set S3 Key (path) based on file type
+      // Generate unique S3 key
       const key = `post/${userId}/${fileType}s/${uuid()}.${ext}`;
       const params = {
         Bucket: bucketName,
@@ -231,39 +237,37 @@ module.exports.uploadPostFiles = async (req, res) => {
         s3.upload(params).promise().then((uploadResult) => {
           uploadedFiles.push({
             fileURL: uploadResult.Location,
-            fileType, // Only 'image' or 'video'
+            fileType,
           });
         })
       );
     });
 
-    // Wait for all uploads to complete
+    // ✅ Wait for all uploads to complete
     await Promise.all(uploadPromises);
 
-    // Save post to MongoDB
+    // ✅ Save post to MongoDB
     const newPost = new Post({
       content,
       files: uploadedFiles,
       createdBy: userId,
       userType,
-      tags
+      tags, // ✅ Ensure tags is correctly stored as an array of objects
     });
 
     const savedPost = await newPost.save();
 
     return res.send({
       status: true,
-      message: 'Post created successfully',
+      message: "Post created successfully",
       data: savedPost,
     });
   } catch (err) {
-    console.error('Error uploading files:', err);
-    return res.status(500).send({
-      status: false,
-      message: err.message || 'Internal Server Error',
-    });
+    console.error("❌ Error uploading files:", err);
+    return res.status(500).send({ status: false, message: err.message || "Internal Server Error" });
   }
 };
+
 
 module.exports.editPost = async (req, res) => {
   try {
