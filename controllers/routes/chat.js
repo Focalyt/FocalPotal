@@ -67,7 +67,7 @@ class MetaConversionAPI {
 
 	async trackCourseApplication(courseData, userData, metaParams) {
 		try {
-			console.log('Course Data Console', courseData,'User Data Console', userData,'Meta Params Console', metaParams)
+			console.log('Course Data Console', courseData, 'User Data Console', userData, 'Meta Params Console', metaParams)
 			const eventData = {
 				data: [{
 					event_name: 'Course Apply',
@@ -142,7 +142,7 @@ const getMetaParameters = (req) => {
 	const campaignId = req.query.campaign_id || null;
 	const adsetId = req.query.adset_id || null;
 
-	
+
 
 	return {
 		fbc,      // Only included if fbclid exists or _fbc cookie is present
@@ -446,20 +446,23 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 				`${process.env.BASE_URL}/coursedetails/${courseId}`,
 				course?.registrationCharges,
 				appliedData?.registrationFee,
-				"Leads From ChatBot"
+				"Leads From ChatBot",
+				course?.courseFeeType,
+				course?.typeOfProject,
+				course?.projectName
 			];
 			await updateSpreadSheetValues(sheetData);
 
 			// Track conversion event
-				const metaApi = new MetaConversionAPI();
-				await metaApi.trackCourseApplication(
-				  {
+			const metaApi = new MetaConversionAPI();
+			await metaApi.trackCourseApplication(
+				{
 					courseName: course.name,
 					courseId: courseId,
 					courseValue: course.registrationCharges,
 					sourceUrl: `${process.env.BASE_URL}/coursedetails/${courseId}`
-				  },
-				  {
+				},
+				{
 					email: candidate.email,
 					phone: candidate.mobile,
 					firstName: candidate.name.split(' ')[0],
@@ -470,9 +473,9 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 					state: candidate.state?.name,
 					ipAddress: req.ip,
 					userAgent: req.headers['user-agent']
-				  },
-				  metaParams
-				);
+				},
+				metaParams
+			);
 
 			// Capitalize every word's first letter
 			function capitalizeWords(str) {
@@ -480,7 +483,7 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 				return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
 			}
 
-			
+
 
 			if (!apply) {
 				req.flash("error", "Already failed");
@@ -1212,21 +1215,22 @@ commonRoutes.get("/getCreditCount", async (req, res) => {
 
 commonRoutes.get("/chatbotfaq", async (req, res) => {
 	try {
-		
-			const filter = {
-			  status: true
-			}
-		
-			const Que= await FAQ.find(filter)
-			return res.status(200).send( {
-				Que
-			});
-		  } catch (err) {
-			res.status(500).send({
-				status: "failure",
-				msg: "Error fetching faqs from server.",
-				error: err.message,
-			});}
+
+		const filter = {
+			status: true
+		}
+
+		const Que = await FAQ.find(filter)
+		return res.status(200).send({
+			Que
+		});
+	} catch (err) {
+		res.status(500).send({
+			status: "failure",
+			msg: "Error fetching faqs from server.",
+			error: err.message,
+		});
+	}
 });
 
 
