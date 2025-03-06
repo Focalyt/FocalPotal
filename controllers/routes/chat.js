@@ -13,7 +13,7 @@ const apiKey = process.env.MIPIE_RAZORPAY_KEY;
 const razorSecretKey = process.env.MIPIE_RAZORPAY_SECRET;
 
 const {
-	coinsOffers, PaymentDetails, Vacancy, Courses, Candidate, Company, AppliedJobs, AppliedCourses, User, CandidateCashBack
+	coinsOffers, PaymentDetails, Vacancy, Courses, Candidate, Company, AppliedJobs, AppliedCourses, User, CandidateCashBack, FAQ
 } = require("../models");
 
 const { sendNotification } = require('./services/notification');
@@ -1212,21 +1212,11 @@ commonRoutes.get("/getCreditCount", async (req, res) => {
 
 commonRoutes.get("/chatbotfaq", async (req, res) => {
 	try {
-		const status = req.query.status === undefined ? true : req.query.status === "true"; 
 		
-			let isChecked  = "checked";
-			if(status=="true" || status==true){
-			  isChecked=""
-		
-			}else{
-			  isChecked="checked"
-		
-			}
 			const filter = {
-			  status: status
+			  status: true
 			}
 		
-			console.log(isChecked)
 			const Que= await FAQ.find(filter)
 			return res.status(200).send( {
 				Que
