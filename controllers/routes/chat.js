@@ -1210,6 +1210,35 @@ commonRoutes.get("/getCreditCount", async (req, res) => {
 	}
 });
 
+commonRoutes.get("/chatbotfaq", async (req, res) => {
+	try {
+		const status = req.query.status === undefined ? true : req.query.status === "true"; 
+		
+			let isChecked  = "checked";
+			if(status=="true" || status==true){
+			  isChecked=""
+		
+			}else{
+			  isChecked="checked"
+		
+			}
+			const filter = {
+			  status: status
+			}
+		
+			console.log(isChecked)
+			const Que= await FAQ.find(filter)
+			return res.status(200).send( {
+				Que
+			});
+		  } catch (err) {
+			res.status(500).send({
+				status: "failure",
+				msg: "Error fetching faqs from server.",
+				error: err.message,
+			});}
+});
+
 
 
 chatRoutes.use("/", commonRoutes);
