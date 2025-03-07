@@ -97,13 +97,20 @@ router
 	})
 	.post(auth1, async (req, res) => {
 		try {
+			console.log("Start jd adding",req.files)
+			if(req.file){
 			delete req.body._company;
 			req.body._company = req.session.company._id;
+			console.log(req.body)
 			body.videosJd = videosJd
 			const comp = await Vacancy.create(req.body);
 			if (!comp) throw req.ykError("Vacancy not create!");
 			req.flash("success", "Vacancy added successfully!");
 			return res.redirect("/panel/company/vacancy");
+		}
+		else{
+			console.log("files not available")
+		}
 		} catch (err) {
 			req.flash("error", err.message || "Something went wrong!");
 			return res.redirect("back");

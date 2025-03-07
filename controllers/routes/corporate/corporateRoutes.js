@@ -1199,77 +1199,78 @@ router
   })
   .post("/addjd", async (req, res) => {
     try {
-      const coinsRequired = await CoinsAlgo.findOne().select("contactcoins")
-      const jobDetails = {};
-      const company = await Company.findOne({
-        _concernPerson: req.session.user._id,
-        status: true
-      });
-      if (!company) {
-        req.flash('error', 'Your company is deactivated')
-        return res.redirect("/company/list/jobs");
-      }
-      console.log(req.body,"+++++>")
-      if (req.body) {
-        Object.keys(req.body).forEach((key) => {
-          if (req.body[key] !== "") {
-            jobDetails[key] = req.body[key];
-          }
-        });
-        if (req.body.latitude && req.body.longitude) {
-          jobDetails['location'] = {
-            type: 'Point',
-            coordinates: [req.body.longitude, req.body.latitude]
-          }
-        }
-      }
-      const companyId = await Company.findOne({
-        _concernPerson: req.session.user._id,
-        status: true
-      });
+      console.log(req)
+      // const coinsRequired = await CoinsAlgo.findOne().select("contactcoins")
+      // const jobDetails = {};
+      // const company = await Company.findOne({
+      //   _concernPerson: req.session.user._id,
+      //   status: true
+      // });
+      // if (!company) {
+      //   req.flash('error', 'Your company is deactivated')
+      //   return res.redirect("/company/list/jobs");
+      // }
+      // console.log(req.body,"+++++>")
+      // if (req.body) {
+      //   Object.keys(req.body).forEach((key) => {
+      //     if (req.body[key] !== "") {
+      //       jobDetails[key] = req.body[key];
+      //     }
+      //   });
+      //   if (req.body.latitude && req.body.longitude) {
+      //     jobDetails['location'] = {
+      //       type: 'Point',
+      //       coordinates: [req.body.longitude, req.body.latitude]
+      //     }
+      //   }
+      // }
+      // const companyId = await Company.findOne({
+      //   _concernPerson: req.session.user._id,
+      //   status: true
+      // });
 
-      jobDetails._company = companyId._id;
-      if (jobDetails['isEdit'] == "true") {
-        jobDetails['_subQualification'] = []
-      }
-      if (jobDetails.isContact == true) {
-        jobDetails['nameof'] = req.body.nameof;
-        jobDetails['phoneNumberof'] = req.body.phoneNumberof;
-        jobDetails['whatsappNumberof'] = req.body.whatsappNumberof;
-        jobDetails['emailof'] = req.body.emailof;
-        jobDetails['isedited'] = true
-      } else {
-        jobDetails['nameof'] = "";
-        jobDetails['phoneNumberof'] = "";
-        jobDetails['whatsappNumberof'] = "";
-        jobDetails['emailof'] = "";
-      }
-      const jd = await Vacancy.create(jobDetails);
+      // jobDetails._company = companyId._id;
+      // if (jobDetails['isEdit'] == "true") {
+      //   jobDetails['_subQualification'] = []
+      // }
+      // if (jobDetails.isContact == true) {
+      //   jobDetails['nameof'] = req.body.nameof;
+      //   jobDetails['phoneNumberof'] = req.body.phoneNumberof;
+      //   jobDetails['whatsappNumberof'] = req.body.whatsappNumberof;
+      //   jobDetails['emailof'] = req.body.emailof;
+      //   jobDetails['isedited'] = true
+      // } else {
+      //   jobDetails['nameof'] = "";
+      //   jobDetails['phoneNumberof'] = "";
+      //   jobDetails['whatsappNumberof'] = "";
+      //   jobDetails['emailof'] = "";
+      // }
+      // const jd = await Vacancy.create(jobDetails);
       
-      const coins = +(coinsRequired.contactcoins)
-      if (jobDetails.isContact === true || jobDetails.isContact === "true") {
-        if(company.creditLeft>=coins){
-          let jobDetails = await Company.findOneAndUpdate(
-            { _concernPerson: req.session.user._id },
-            {
-              $inc: { creditLeft: -coins },
-            },
-            { new: true, upsert: true }
-          );
-        }
-      }
-      let data = {
-        title: 'Job Posted',
-        message: `You have posted job for ${jd.title}.`,
-        _company: companyId._id
-        , source: 'System'
-      }
-      await sendNotification(data)
-      if (!jd) {
-        return res.send({ status: "false", error: "job description failed" });
-      } else {
-        return res.send({ status: true, message: "job added" })
-      }
+      // const coins = +(coinsRequired.contactcoins)
+      // if (jobDetails.isContact === true || jobDetails.isContact === "true") {
+      //   if(company.creditLeft>=coins){
+      //     let jobDetails = await Company.findOneAndUpdate(
+      //       { _concernPerson: req.session.user._id },
+      //       {
+      //         $inc: { creditLeft: -coins },
+      //       },
+      //       { new: true, upsert: true }
+      //     );
+      //   }
+      // }
+      // let data = {
+      //   title: 'Job Posted',
+      //   message: `You have posted job for ${jd.title}.`,
+      //   _company: companyId._id
+      //   , source: 'System'
+      // }
+      // await sendNotification(data)
+      // if (!jd) {
+      //   return res.send({ status: "false", error: "job description failed" });
+      // } else {
+      //   return res.send({ status: true, message: "job added" })
+      // }
     } catch (e) {
       console.log(e)
       res.status(500).send({ status: false, msg: e.message });

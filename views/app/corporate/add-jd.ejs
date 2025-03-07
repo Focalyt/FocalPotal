@@ -133,16 +133,16 @@
                                   id="jd-subqua" oninvalid="this.setCustomValidity('Please Select Sub Qualification')"
                                   oninput="this.setCustomValidity('')">
                                   <% subQualification.forEach((item)=>{%>
-                                      <% if(vacancy?._subQualification?.includes(item._id)) { %>
-                                    <option value="<%= item._id %>" class="text-capitalize" selected>
-                                      <%= item.name %> 
-                                    </option>
-                                    <% } else { %>                                      
-                                      <option value="<%=item._id %>" class="text-capitalize">
+                                    <% if(vacancy?._subQualification?.includes(item._id)) { %>
+                                      <option value="<%= item._id %>" class="text-capitalize" selected>
                                         <%= item.name %>
                                       </option>
-                                      <% } %>
-                                        <% }); %>
+                                      <% } else { %>
+                                        <option value="<%=item._id %>" class="text-capitalize">
+                                          <%= item.name %>
+                                        </option>
+                                        <% } %>
+                                          <% }); %>
                                 </select>
                               </div>
                               <div class="col-xl-3 mb-1" id="sub-qua-field">
@@ -226,8 +226,9 @@
                               </div>
                               <div class="col-xl-4 mb-1">
                                 <label for="noOfVacancies">Number of Vacancies</label>
-                                <input id="noOfVacancies" class="form-control" type="number" name="noOfPosition" 
-                                       onkeypress="if(this.value.length==4) return false" value="<%= vacancy?.noOfPosition %>" maxlength="3" />
+                                <input id="noOfVacancies" class="form-control" type="number" name="noOfPosition"
+                                  onkeypress="if(this.value.length==4) return false"
+                                  value="<%= vacancy?.noOfPosition %>" maxlength="3" />
                               </div>
                             </div>
                           </div>
@@ -243,25 +244,28 @@
                         <div class="card-content">
                           <div class="card-body">
                             <div class="row">
-                              
+
                               <div class="col-xl-3 mb-1" id="gender-preference">
                                 <div class="demo-inline-spacing" id="gender-preference-div">
                                   <label>Gender Preferences</label><span class="mandatory"> *</span></label>
                                   <br>
                                   <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="genderPreference" id="genderRadio1"
-                                      value="male" <% if(vacancy?.genderPreference==='male' ) {%> checked <% } %> />
+                                    <input class="form-check-input" type="radio" name="genderPreference"
+                                      id="genderRadio1" value="male" <% if(vacancy?.genderPreference==='male' ) {%>
+                                    checked <% } %> />
                                       <label class="form-check-label" for="genderRadio1">Male</label>
                                   </div>
                                   <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="genderPreference" id="genderRadio2"
-                                      value="female" <% if(vacancy?.genderPreference==='female' ) {%> checked <% } %> />
+                                    <input class="form-check-input" type="radio" name="genderPreference"
+                                      id="genderRadio2" value="female" <% if(vacancy?.genderPreference==='female' ) {%>
+                                    checked <% } %> />
                                       <label class="form-check-label" for="genderRadio2">Female</label>
                                   </div>
                                   <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="genderPreference" id="genderRadio3"
-                                      value="no preference" <% if(vacancy?.genderPreference==='no preference' ||
-                                      !vacancy?.genderPreference) {%> checked <% } %> />
+                                    <input class="form-check-input" type="radio" name="genderPreference"
+                                      id="genderRadio3" value="no preference" <%
+                                      if(vacancy?.genderPreference==='no preference' || !vacancy?.genderPreference) {%>
+                                    checked <% } %> />
                                       <label class="form-check-label" for="genderRadio3">No Preference</label>
                                   </div>
                                 </div>
@@ -361,7 +365,7 @@
                             <div class="row">
                               <div class="col-xl-3 mb-1">
                                 <div class="demo-inline-spacing">
-                                  <label>Shift</label>
+                                  <label>Shift <span class="mandatory"> *</span></label>
                                   <br>
                                   <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="shift" id="inlineRadio8"
@@ -387,9 +391,8 @@
                               </div>
                               <div class="col-xl-2 mb-1">
                                 <label for="timings">Shift Timings</label>
-                                <input id="timings" class="form-control" type="text" name="shifttimings"                                      
-                                       value="<%= vacancy?.shifttimings %>" 
-                                       maxlength="3" />
+                                <input id="timings" class="form-control" type="text" name="shifttimings"
+                                  value="<%= vacancy?.shifttimings %>" maxlength="3" />
                               </div>
                               <div class="col-xl-3 mb-1" id="jd-work-field">
                                 <div class="demo-inline-spacing">
@@ -403,8 +406,8 @@
                                   </div>
                                   <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="work" id="wfh"
-                                      value="Work from home" <% if(vacancy?.work==='Work from home' ) {%> checked <%
-                                      } %>/>
+                                      value="Work from home" <% if(vacancy?.work==='Work from home' ) {%> checked <% }
+                                      %>/>
                                       <label class="form-check-label" for="wfh">Work from home</label>
                                   </div>
                                   <div class="form-check form-check-inline">
@@ -446,9 +449,10 @@
 
                               <div class="col-xl-3">
                                 <label for="remarks">Remarks</label>
-                                <textarea id="remarks" name="remarks" class="form-control" cols="3" rows="3" maxlength="150"><%= vacancy?.remarks %></textarea>
-                            </div>
-                            
+                                <textarea id="remarks" name="remarks" class="form-control" cols="3" rows="3"
+                                  maxlength="150"><%= vacancy?.remarks %></textarea>
+                              </div>
+
                             </div>
                           </div>
                         </div>
@@ -465,7 +469,7 @@
                             <div class="row">
                               <div class="col-xl-3 mb-1">
                                 <label>Payout</label>
-                                  <select id="payout" class="form-control" name="payOut">
+                                <select id="payout" class="form-control" name="payOut">
                                   <option value="">Select option</option>
                                   <option value="Daily" <% if(vacancy?.payOut==='Daily' ) {%> selected <% } %>>Daily
                                   </option>
@@ -479,38 +483,40 @@
                               </div>
                               <div class="col-xl-3 mb-1">
                                 <label for="techSkills">Tech Skills Required</label>
-                                <select id="techSkills" class="form-control chosen" multiple name="_techSkills" data-placeholder="Select Technical Skills">
-                                  <% techskills.forEach((item) => { %>
+                                <select id="techSkills" class="form-control chosen" multiple name="_techSkills"
+                                  data-placeholder="Select Technical Skills">
+                                  <% techskills.forEach((item)=> { %>
                                     <% if(vacancy?._techSkills?.includes(item._id)) { %>
                                       <option value="<%= item._id %>" class="text-capitalize" selected>
                                         <%= item.name %>
                                       </option>
-                                    <% } else { %>
-                                      <option value="<%= item._id %>" class="text-capitalize">
-                                        <%= item.name %>
-                                      </option>
-                                    <% } %>
-                                  <% }); %>
+                                      <% } else { %>
+                                        <option value="<%= item._id %>" class="text-capitalize">
+                                          <%= item.name %>
+                                        </option>
+                                        <% } %>
+                                          <% }); %>
                                 </select>
                               </div>
-                              
+
                               <div class="col-xl-3 mb-1">
                                 <label for="nonTechSkills">Non Tech Skills Required</label>
-                                <select id="nonTechSkills" class="form-control chosen" multiple name="_nonTechSkills" data-placeholder="Select Non-Technical Skills">
-                                  <% nontechskills.forEach((item) => { %>
+                                <select id="nonTechSkills" class="form-control chosen" multiple name="_nonTechSkills"
+                                  data-placeholder="Select Non-Technical Skills">
+                                  <% nontechskills.forEach((item)=> { %>
                                     <% if(vacancy?._nonTechSkills?.includes(item._id)) { %>
                                       <option value="<%= item._id %>" class="text-capitalize" selected>
                                         <%= item.name %>
                                       </option>
-                                    <% } else { %>
-                                      <option value="<%= item._id %>" class="text-capitalize">
-                                        <%= item.name %>
-                                      </option>
-                                    <% } %>
-                                  <% }); %>
+                                      <% } else { %>
+                                        <option value="<%= item._id %>" class="text-capitalize">
+                                          <%= item.name %>
+                                        </option>
+                                        <% } %>
+                                          <% }); %>
                                 </select>
                               </div>
-                              
+
                               <div class="col-xl-3 mb-1">
                                 <label>Requirement (If any)</label>
                                 <select class="form-control" name="requirement" id="requirement-feild">
@@ -651,64 +657,63 @@
                 </section>
                 <div class="row">
                   <div class="col-xl-6 col-lg-6 px-3">
-                      <div class="card mt-1">
-                          <div class="card-content">
-                            <div class="card-body">
-                              <div class="qs_list">
-                                  <div class="row questionanswerrow">
-                                      <div class="col-xl-6">
-                                          <label>Question</label>
-                                          <textarea name="question" class="form-control question" cols="50"
-                                              rows="1">Do you offer a safe working environment?</textarea>
-                                      </div>
-                                      <div class="col-xl-6">
-                                          <label>Answer</label>
-                                          <textarea name="answer" class="form-control answer" cols="50"
-                                              rows="1">Do you offer a safe working environment?</textarea>
-                                      </div>
-                                      <div class="col-xl-12 mb-1 text-right ">
-                                        <a class="btn btn-success text-white add-button">+ Add Another</a>
-                                    </div>
-                                  </div>
-                                  
+                    <div class="card mt-1">
+                      <div class="card-content">
+                        <div class="card-body">
+                          <div class="qs_list">
+                            <div class="row questionanswerrow">
+                              <div class="col-xl-6">
+                                <label>Question</label>
+                                <textarea name="question" class="form-control question" cols="50"
+                                  rows="1">Do you offer a safe working environment?</textarea>
+                              </div>
+                              <div class="col-xl-6">
+                                <label>Answer</label>
+                                <textarea name="answer" class="form-control answer" cols="50"
+                                  rows="1">Do you offer a safe working environment?</textarea>
+                              </div>
+                              <div class="col-xl-12 mb-1 text-right ">
+                                <a class="btn btn-success text-white add-button">+ Add Another</a>
                               </div>
                             </div>
 
-                              <script
-                                  src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script>
-                              <script>
-                                  function initializeCKEditor(selector) {
-                                      ClassicEditor
-                                          .create(document.querySelector(selector))
-                                          .catch(error => {
-                                              console.error(error);
-                                          });
-                                  }
+                          </div>
+                        </div>
 
-                                  function addQuestionAnswer() {
-                                      var newRow = document.createElement("div");
-                                      newRow.className = "row questionanswerrow";
-                                      newRow.innerHTML = `
+                        <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script>
+                        <script>
+                          function initializeCKEditor(selector) {
+                            ClassicEditor
+                              .create(document.querySelector(selector))
+                              .catch(error => {
+                                console.error(error);
+                              });
+                          }
+
+                          function addQuestionAnswer() {
+                            var newRow = document.createElement("div");
+                            newRow.className = "row questionanswerrow";
+                            newRow.innerHTML = `
                                   
                               `;
-                                      document.querySelector(".qs_list").appendChild(newRow);
-                                      initializeCKEditor('.question:last-of-type');
-                                      initializeCKEditor('.answer:last-of-type');
-                                  }
+                            document.querySelector(".qs_list").appendChild(newRow);
+                            initializeCKEditor('.question:last-of-type');
+                            initializeCKEditor('.answer:last-of-type');
+                          }
 
-                                  document.querySelector(".add-button").addEventListener("click", function () {
-                                      addQuestionAnswer();
-                                  });
+                          document.querySelector(".add-button").addEventListener("click", function () {
+                            addQuestionAnswer();
+                          });
 
-                                  // Initialize CKEditor for 1wthe existing fields
-                                  initializeCKEditor('.question');
-                                  initializeCKEditor('.answer');
-                              </script>
+                          // Initialize CKEditor for 1wthe existing fields
+                          initializeCKEditor('.question');
+                          initializeCKEditor('.answer');
+                        </script>
 
-                          </div>
                       </div>
+                    </div>
                   </div>
-              </div>
+                </div>
 
                 <div class="row">
                   <div class="col-xl-12 col-lg-12 px-3">
@@ -724,15 +729,15 @@
                               </div>
                               <div class="col-xl-5">
                                 <label for="duties">Job Duties</label>
-                                <textarea id="duties" name="duties" class="form-control" cols="3" rows="3" maxlength="150"><%= vacancy?.duties %></textarea>
-                            </div>
+                                <textarea id="duties" name="duties" class="form-control" cols="3" rows="3"
+                                  maxlength="150"><%= vacancy?.duties %></textarea>
+                              </div>
 
                               <div class="col-xl-3 mb-1">
                                 <label>Add Video JD</label>
-                                <input class="form-control" type="file" name="jobVideo"
-                                        placeholder="Add Youtube url" id="jobvideo" value="<%= vacancy?.jobVideo %>">
+                                <input class="form-control" type="file" name="jobVideo" id="jobvideo">
                               </div>
-                             
+
                               <div class="col-xl-12 mb-1 text-right">
                                 <button id="sub-btn" class="btn btn-success waves-effect waves-light text-white">
                                   SUBMIT
@@ -1075,7 +1080,7 @@
           </script>
           <script>
             $('#preloader').hide();
-            let lessCoins=false
+            let lessCoins = false
             const stateDropDown = (event, cityId) => {
               const stateId = event.target.value;
               let body = { stateId: stateId };
@@ -1117,17 +1122,17 @@
                 return true;
               }
             }
-            
+
             function getQuestionAnswers() {
               let questionsAnswersArray = [];
               const elements = document.querySelectorAll('#questionanswerlist .questionanswerrow');
               Array.from(elements).forEach((item) => {
                 let queAnsObj = {}
                 let formControls = item.querySelectorAll('.form-control');
-                if(formControls[0].value.trim()!==""&&formControls[1].value.trim()!==""){
-                 queAnsObj['Question'] = formControls[0].value;
-                 queAnsObj['Answer'] = formControls[1].value;
-                 questionsAnswersArray.push(queAnsObj);
+                if (formControls[0].value.trim() !== "" && formControls[1].value.trim() !== "") {
+                  queAnsObj['Question'] = formControls[0].value;
+                  queAnsObj['Answer'] = formControls[1].value;
+                  questionsAnswersArray.push(queAnsObj);
                 }
               })
               return questionsAnswersArray;
@@ -1166,84 +1171,82 @@
               // 25coin modal
               const creditLeft = +("<%=company.creditLeft%>");
               const coinsRequired = +("<%=coinsRequired?.contactcoins%>");
-             
+
               if (creditLeft < coinsRequired && isContactvalue === "true") {
                 e.preventDefault();
                 document.getElementById("sub-btn").setAttribute("data-toggle", "modal");
                 document.getElementById("sub-btn").setAttribute("data-target", "#addCoins");
                 document.getElementById("sub-btn").setAttribute("data-dismiss", "modal");
-                lessCoins=true
+                lessCoins = true
               } else if (isContactvalue === true && creditLeft < coinsRequired) {
                 e.preventDefault();
                 document.getElementById("sub-btn").setAttribute("data-toggle", "modal");
                 document.getElementById("sub-btn").setAttribute("data-target", "#addCoins");
                 document.getElementById("sub-btn").setAttribute("data-dismiss", "modal");
-                lessCoins=true
+                lessCoins = true
               } else {
                 document.getElementById("sub-btn").removeAttribute("data-toggle");
                 document.getElementById("sub-btn").removeAttribute("data-target");
                 document.getElementById("sub-btn").removeAttribute("data-dismiss");
-                lessCoins=false
-              } 
-              let body = {                
-              displayCompanyName: $('#organizationName').val(),
-              videosJd : $('#jobvideo').val(),  
-                _techSkills: $('#techSkills').val(),
-                requirement: $('#requirement-feild').val(),
-                _nonTechSkills: $('#nonTechSkills').val(),             
-                noOfPosition: $('#noOfVacancies').val(),
-                shifttimings:$('#shifttimings').val(),
-                remarks: $('#remarks').val(),
-                title: $('#jobTitle').val(),
-                _industry: $('#jd-industry').val(),
-                experience: $('#jd-exp').val(),
-                _qualification: $('#jd-qua').val(),
-                _subQualification: $('#jd-subqua').val(),
-                isedited: $('#availService').val(),
-                validity: $('#endDate').val(),
-                state: $('#state-field').val(),
-                city: $('#city').val(),
-                place: $('#place').val(),
-                latitude: $('#latitude').val(),
-                longitude: $('#longitude').val(), 
-                payOut: $('#payOut').val(),
-                genderPreference:  $('[name=genderPreference]:checked').val(),
-                jobType: $('#inlineRadio1').val() || $('#inlineRadio2').val(),
-                compensation: $('#inlineRadio3').val()||$('#inlineRadio4').val()|| $('#inlineRadio5').val(),
-                pay: $('#inlineRadio6').val()||$('#inlineRadio7').val(),
-                jobDescription: $('#jobDescription').val(),
-                duties:$('#duties').val(),
-                ageMin: $('#min-age').val(),
-                ageMax: $('#max-age').val(),
-                nameof: $('#name').val(),
-                shift:  $('[name=shift]:checked').val(),
-                salaryRange: $('#salaryRange-feild').val(),
-                jobVideo: $('#jobvideo').val(),
-                work: $('[name=work]:checked').val(),
-                benifits: $('#additional-benifits').val(),
-                isFixed: document.getElementById('fixedCheck').checked ? true : false ,
-                isContact: document.getElementById('contact-directly-yes').checked  ? true : false,
-                phoneNumberof: $('#phoneNumber').val(),
-                whatsappNumberof: $('#whatsappNumber').val(),
-                emailof: $('#email').val(),
-                cutprice: $('#cutprice').val(),
-                nameof:$('#name').val(),
-                questionsAnswers: getQuestionAnswers()
-              };
-              if (body['isFixed'] == true) {
-                  body['amount'] = $('#fixed-range-input').val();
+                lessCoins = false
+              }
+              let formData = new FormData(); // FormData Object बनाएं
+
+              // ✅ Form Fields Append करें
+              formData.append("displayCompanyName", document.getElementById('organizationName').value);
+              formData.append("title", document.getElementById('jobTitle').value);
+              formData.append("experience", document.getElementById('jd-exp').value);
+              formData.append("qualification", document.getElementById('jd-qua').value);
+              formData.append("subQualification", document.getElementById('jd-subqua').value);
+              formData.append("validity", document.getElementById('endDate').value);
+              formData.append("state", document.getElementById('state-field').value);
+              formData.append("city", document.getElementById('city').value);
+              formData.append("place", document.getElementById('place').value);
+              formData.append("latitude", document.getElementById('latitude').value);
+              formData.append("longitude", document.getElementById('longitude').value);
+              formData.append("noOfPosition", document.getElementById('noOfVacancies').value);
+              formData.append("remarks", document.getElementById('remarks').value);
+              formData.append("jobDescription", document.getElementById('jobDescription').value);
+              formData.append("duties", document.getElementById('duties').value);
+
+              // ✅ Radio Buttons & Checkboxes Values
+              formData.append("genderPreference", document.querySelector('[name=genderPreference]:checked').value);
+              formData.append("jobType", document.querySelector('[name=jobType]:checked').value);
+              formData.append("compensation", document.querySelector('[name=compensation]:checked').value);
+              formData.append("pay", document.querySelector('[name=pay]:checked').value);
+              formData.append("work", document.querySelector('[name=work]:checked').value);
+              formData.append("shift", document.querySelector('[name=shift]:checked').value);
+              formData.append("isFixed", document.getElementById('fixedCheck').checked ? "true" : "false");
+              formData.append("isContact", document.getElementById('contact-directly-yes').checked ? "true" : "false");
+
+              // ✅ Salary Details (Fixed/Range)
+              if (document.getElementById('fixedCheck').checked) {
+                formData.append("amount", document.getElementById('fixed-range-input').value);
               } else {
-                  body['min'] = $('#min-input').val();
-                  body['max'] = $('#max-input').val();
+                formData.append("min", document.getElementById('min-input').value);
+                formData.append("max", document.getElementById('max-input').value);
               }
 
-              console.log(body, 'body>>>>>>>>>>>>>')
-              if(!lessCoins){
-                axios.post("/company/addjd", body).then((res) => {
-                   if(res&&res.status){
-                    window.location.href="/company/list/jobs"
-                   }
+              // ✅ फ़ाइल (File) Append करें
+              let fileInput = document.getElementById('jobvideo');
+              if (fileInput.files.length > 0) {
+                formData.append("jobVideo", fileInput.files[0]); // Only the first selected file
+              }
+
+              console.log(formData, 'body>>>>>>>>>>>>>')
+              if (!lessCoins) {
+                axios.post('/company/addjd', formData, {
+                  headers: { 'Content-Type': 'multipart/form-data' }
                 })
+                  .then(response => {
+                    console.log(response.data);
+                    if (response.data.status) {
+                      window.location.href = "/company/list/jobs"; // Success पर redirect करें
+                    }
+                  })
+                  .catch(error => {
+                    console.error("Error submitting the form:", error);
+                  });
               }
             })
             function validations() {
@@ -1296,7 +1299,7 @@
               let minSalary = document.getElementById('min-input').value
               let maxSalary = document.getElementById('max-input').value
               let fixedSalary = document.getElementById('fixed-range-input').value
-              let videosJd= document.getElementById("jobvideo").value
+
               let firstError = ''
               let flag = true
               if (title.trim() === '') {

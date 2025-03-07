@@ -158,6 +158,8 @@ const upload = multer({ storage }).single('file');
 
 module.exports.uploadPostFiles = async (req, res) => {
   try {
+
+    
     // ✅ Validate user authentication
     const userId = req.user?._id || req.session?.user?._id || req.body.userId;
     const userType = req.user?.userType || req.session?.user?.userType || req.body?.userType || "admin";
