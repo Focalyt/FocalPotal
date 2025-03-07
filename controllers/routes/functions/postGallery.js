@@ -50,6 +50,7 @@ const upload = multer({ storage }).single('file');
 module.exports.uploadPostFiles = async (req, res) => {
   try {
     // Validate user authentication
+    console.log("Upload API Calling")
     const userId = req.user?._id || req.session?.user?._id;
     const userType = req.user?.userType || req.session?.user?.userType || req.body?.userType || "admin";
     let postdata = JSON.parse(req.body.data);
@@ -58,6 +59,7 @@ module.exports.uploadPostFiles = async (req, res) => {
       name: item.name,
       userType: item.userType
     }));
+    console.log(postdata)
 
     if (!userId || !userType) {
       return res.status(401).send({

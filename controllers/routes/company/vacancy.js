@@ -99,6 +99,7 @@ router
 		try {
 			delete req.body._company;
 			req.body._company = req.session.company._id;
+			body.videosJd = videosJd
 			const comp = await Vacancy.create(req.body);
 			if (!comp) throw req.ykError("Vacancy not create!");
 			req.flash("success", "Vacancy added successfully!");

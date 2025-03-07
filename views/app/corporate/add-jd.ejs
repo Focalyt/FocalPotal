@@ -44,10 +44,10 @@
                                   placeholder="Enter the job title" oninput="this.setCustomValidity('')"
                                   maxlength="25" />
                               </div>
-                              <div class="col-xl-2 mb-1">
+                              <!-- <div class="col-xl-2 mb-1">
                                 <label>Cut Price</label>
                                 <input class="form-control" id="cutprice" type="number">
-                              </div>  
+                              </div>   -->
 
                               <div class="col-xl-3 mb-1" id="jd-industry-field">
                                 <label>Industry</label><span class="mandatory"> *</span></label>
@@ -729,7 +729,7 @@
 
                               <div class="col-xl-3 mb-1">
                                 <label>Add Video JD</label>
-                                <input class="form-control" type="text" name="jobVideo"
+                                <input class="form-control" type="file" name="jobVideo"
                                         placeholder="Add Youtube url" id="jobvideo" value="<%= vacancy?.jobVideo %>">
                               </div>
                              
@@ -1186,7 +1186,8 @@
                 lessCoins=false
               } 
               let body = {                
-              displayCompanyName: $('#organizationName').val(),   
+              displayCompanyName: $('#organizationName').val(),
+              videosJd : $('#jobvideo').val(),  
                 _techSkills: $('#techSkills').val(),
                 requirement: $('#requirement-feild').val(),
                 _nonTechSkills: $('#nonTechSkills').val(),             
@@ -1295,6 +1296,7 @@
               let minSalary = document.getElementById('min-input').value
               let maxSalary = document.getElementById('max-input').value
               let fixedSalary = document.getElementById('fixed-range-input').value
+              let videosJd= document.getElementById("jobvideo").value
               let firstError = ''
               let flag = true
               if (title.trim() === '') {
