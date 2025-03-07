@@ -152,50 +152,42 @@ class MetaConversionAPI {
 
   async trackCourseApplication(courseData, userData, metaParams) {
     try {
-      console.log(courseData, userData, metaParams);
+       console.log(courseData, userData, metaParams)
+      const eventData = {
+        data: [{
+          event_name: 'Course Apply',
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: 'website',
+          user_data: {
+            em: this._hashData(userData.email),
+            ph: this._hashData(userData.phone),
+            fn: this._hashData(userData.firstName),
+            ln: this._hashData(userData.lastName),
+            ct: this._hashData(userData.city),
+            st: this._hashData(userData.state),
+            db: this._hashData(userData.dob),
+            ge: this._hashData(userData.gender),
+            country: this._hashData('in'),
+            client_ip_address: userData.ipAddress,
+            client_user_agent: userData.userAgent,
+            external_id: this._hashData(userData.phone),
+            fbc: metaParams.fbc, // Facebook Click ID
+            fbp: metaParams.fbp  // Facebook Browser ID
+          },
+          custom_data: {
+            content_name: courseData.courseName,
+            content_category: 'Course',
+            currency: 'INR',
+            value: courseData.courseValue
+          },
+          event_source_url: courseData.sourceUrl
+        }],
+        access_token: this.accessToken
+      };
 
-      // Only add fields that have values
-      const user_data = {};
-
-      // Add fields only if they exist and are not empty
-      if (userData.email) user_data.em = this._hashData(userData.email);
-      if (userData.phone) user_data.ph = this._hashData(userData.phone);
-      if (userData.firstName) user_data.fn = this._hashData(userData.firstName);
-      if (userData.lastName) user_data.ln = this._hashData(userData.lastName);
-      if (userData.city) user_data.ct = this._hashData(userData.city);
-      if (userData.state) user_data.st = this._hashData(userData.state);
-      if (userData.dob) user_data.db = this._hashData(userData.dob);
-      if (userData.gender) user_data.ge = this._hashData(userData.gender);
-      if (userData.ipAddress) user_data.client_ip_address = userData.ipAddress;
-      if (userData.userAgent) user_data.client_user_agent = userData.userAgent;
-      if (userData.phone) user_data.external_id = this._hashData(userData.phone);
-      if (metaParams?.fbc) user_data.fbc = metaParams.fbc;
-      if (metaParams?.fbp) user_data.fbp = metaParams.fbp;
-
-      // Only create and send event if we have at least some user data
-      if (Object.keys(user_data).length > 0) {
-        const eventData = {
-          data: [{
-            event_name: 'Course Apply',
-            event_time: Math.floor(Date.now() / 1000),
-            action_source: 'website',
-            user_data,
-            custom_data: {
-              ...(courseData.courseName && { content_name: courseData.courseName }),
-              content_category: 'Course',
-              currency: 'INR'
-            },
-            ...(courseData.sourceUrl && { event_source_url: courseData.sourceUrl })
-          }],
-          access_token: this.accessToken
-        };
-
-        const response = await axios.post(this.metaAPIUrl, eventData);
-        console.log('Course application event tracked successfully', response.data);
-        return response.data;
-      }
-
-      return null;
+      const response = await axios.post(this.metaAPIUrl, eventData);
+      console.log('Course application event tracked successfully', response.data);
+      return response.data;
     } catch (error) {
       console.error('Meta Conversion API Error:', error.response?.data || error.message);
       return null;
@@ -259,53 +251,52 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       // If it's already an object
       entryUrl = req.body.entryUrl.url;
     }
-
-
+    
     console.log("Entry URL:", entryUrl);
 
     // Create URL object to parse parameters
     const urlObj = new URL(entryUrl);
     const params = urlObj.searchParams;
 
-    // Get fbclid from URL
-    const fbclid = params.get('fbclid');
-    console.log("fbclid:", fbclid);
+     // Get fbclid from URL
+     const fbclid = params.get('fbclid');
+     console.log("fbclid:", fbclid);
+
+    
+     // Generate fbc from fbclid
+     let fbc = null;
+     if (fbclid) {
+       // Facebook click ID format: fb.1.{timestamp}.{fbclid}
+       fbc = `fb.1.${Date.now()}.${fbclid}`;
+     }
+
+     console.log("fbc:", fbc);
+ 
+     // Get or generate fbp
+     let fbp = params.get('fbp');
+
+     if (!fbp) {
+       const timestamp = Date.now();
+       const random = Math.floor(Math.random() * 1000000000);
+       fbp = `fb.1.${timestamp}.${random}`;
+     }
+
+     console.log("fbp:", fbp);
 
 
-    // Generate fbc from fbclid
-    let fbc = null;
-    if (fbclid) {
-      // Facebook click ID format: fb.1.{timestamp}.{fbclid}
-      fbc = `fb.1.${Date.now()}.${fbclid}`;
-    }
-
-    console.log("fbc:", fbc);
-
-    // Get or generate fbp
-    let fbp = params.get('fbp');
-
-    if (!fbp) {
-      const timestamp = Date.now();
-      const random = Math.floor(Math.random() * 1000000000);
-      fbp = `fb.1.${timestamp}.${random}`;
-    }
-
-    console.log("fbp:", fbp);
-
-
-
-    const metaParams = {
-      fbc: fbc,
-      fbclid: fbclid || null, // Store original fbclid
-      fbp: fbp,
-      adId: params.get('ad_id') || null,
-      campaignId: params.get('campaign_id') || null,
-      adsetId: params.get('adset_id') || null,
-      utmSource: params.get('utm_source') || null,
-      utmMedium: params.get('utm_medium') || null,
-      utmCampaign: params.get('utm_campaign') || null
-    };
-
+ 
+     const metaParams = {
+       fbc: fbc,
+       fbclid: fbclid || null, // Store original fbclid
+       fbp: fbp,
+       adId: params.get('ad_id') || null,
+       campaignId: params.get('campaign_id') || null,
+       adsetId: params.get('adset_id') || null,
+       utmSource: params.get('utm_source') || null,
+       utmMedium: params.get('utm_medium') || null,
+       utmCampaign: params.get('utm_campaign') || null
+     };
+   
 
     // Get Meta parameters
     // const metaParams = getMetaParameters(req);
@@ -317,8 +308,8 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     }
 
     const candidateMobile = value.mobile;
-
-
+    
+    
 
     // Fetch course and candidate
     const course = await Courses.findById(courseId);
@@ -351,6 +342,38 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       _candidate: candidate._id,
       _course: courseId
     }).save();
+
+    
+    // Capitalize every word's first letter
+    function capitalizeWords(str) {
+      if (!str) return '';
+      return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+    }
+
+    // Update Spreadsheet
+    const sheetData = [
+      moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
+      moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
+      capitalizeWords(course?.name), // Apply the capitalizeWords function
+      candidate?.name,
+      candidate?.mobile,
+      candidate?.email,
+      candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+      candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+      candidate?.state?.name,
+      candidate?.city?.name,
+      'Course',
+      `${process.env.BASE_URL}/coursedetails/${courseId}`,
+      course?.registrationCharges,
+      appliedData?.registrationFee,
+      'Lead From Portal',
+      course?.courseFeeType,
+      course?.typeOfProject,
+      course?.projectName
+
+
+    ];
+    await updateSpreadSheetValues(sheetData);
 
     let candidateMob = candidate.mobile;
 
@@ -386,32 +409,8 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     );
 
 
-    // Capitalize every word's first letter
-    function capitalizeWords(str) {
-      if (!str) return '';
-      return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-    }
 
-    // Update Spreadsheet
-    const sheetData = [
-      moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
-      moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
-      capitalizeWords(course?.name), // Apply the capitalizeWords function
-      candidate?.name,
-      candidate?.mobile,
-      candidate?.email,
-      candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
-      candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
-      candidate?.state?.name,
-      candidate?.city?.name,
-      'Course',
-      `${process.env.BASE_URL}/coursedetails/${courseId}`,
-      course?.registrationCharges,
-      appliedData?.registrationFee,
-      'Lead From Portal'
 
-    ];
-    await updateSpreadSheetValues(sheetData);
 
 
 
@@ -632,10 +631,10 @@ router.get("/login", async (req, res) => {
   let user = req.session.user
   let { returnUrl } = req.query
 
-
+  
   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  console.log(fullUrl);
-
+ 
+  
   // Modify script to run after DOM is loaded and escape quotes properly
   const storageScript = `
     <script>
@@ -686,7 +685,7 @@ router.get("/login", async (req, res) => {
   else if (user && user.role == 3) {
     return res.redirect("/candidate/dashboard");
   }
-  return res.render(`${req.vPath}/app/candidate/login`, { apikey: process.env.AUTH_KEY_GOOGLE, storageScript: storageScript });
+  return res.render(`${req.vPath}/app/candidate/login`, { apikey: process.env.AUTH_KEY_GOOGLE,storageScript: storageScript });
 });
 router.get("/searchjob", [isCandidate], async (req, res) => {
   const data = req.query;
@@ -1143,10 +1142,10 @@ router.get("/searchcourses", [isCandidate], async (req, res) => {
     const data = req.query;
 
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-    console.log(fullUrl);
-
-    // Modify script to run after DOM is loaded and escape quotes properly
-    const storageScript = `
+  console.log(fullUrl);
+  
+  // Modify script to run after DOM is loaded and escape quotes properly
+  const storageScript = `
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
@@ -1243,10 +1242,10 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
   try {
     const { courseId } = req.params;
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-    console.log(fullUrl);
-
-    // Modify script to run after DOM is loaded and escape quotes properly
-    const storageScript = `
+  console.log(fullUrl);
+  
+  // Modify script to run after DOM is loaded and escape quotes properly
+  const storageScript = `
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {

@@ -391,11 +391,15 @@ module.exports.otpCandidateLogin = async (req, res) => {
     const { mobile } = req.body;
     const user = await User.findOne({ mobile, role: '3' });
     const token = await user.generateAuthToken();
+    console.log(user)
     if (!user || user === null) {
       throw req.ykError('Login failed!');
     }
     const candidate = await Candidate.findOne({ mobile }, " _id ");
+
+    console.log("Candidate Data",candidate)
     if (!candidate || candidate === null) {
+      console.log("Candidate not found in Candidate collection.");
       throw req.ykError('Login failed!');
     }
     let userData;

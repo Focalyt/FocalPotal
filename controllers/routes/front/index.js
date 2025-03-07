@@ -363,8 +363,9 @@ router.post("/jobsearch", (req, res) => {
 });
 router.get("/courses", async (req, res) => {
 	let filter = { status: true}
+	
 	const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  console.log(fullUrl);
+  
   
   // Modify script to run after DOM is loaded and escape quotes properly
   const storageScript = `
@@ -413,12 +414,72 @@ router.get("/courses", async (req, res) => {
 		const p = parseInt(req.query.page);
 		const page = p || 1;
 		const totalPages = Math.ceil(countJobs / perPage);
-		let courses = await Courses.find(filter).sort({  createdAt: -1 }).skip(perPage * page - perPage).limit(perPage)
+		let courses = await Courses.aggregate([
+			{ $match: filter },
+			{ $unwind: "$sectors" },
+			{
+			  $lookup: {
+				from: "coursesectors",
+				localField: "sectors",
+				foreignField: "_id",
+				as: "sectorDetails"
+			  }
+			},
+			{
+			  $unwind: "$sectorDetails"
+			},
+			{
+			  $group: {
+				_id: "$_id",
+				doc: { $first: "$$ROOT" },  // Keep the entire original document
+				sectors: { $push: "$sectors" },
+				sectorNames: { $push: "$sectorDetails.name" }
+			  }
+			},
+			{
+			  $addFields: {
+				"doc.sectors": "$sectors",
+				"doc.sectorNames": "$sectorNames"
+			  }
+			},
+			{
+			  $replaceRoot: { newRoot: "$doc" }
+			},
+			{ $sort: { createdAt: -1 } },
+			{ $skip: perPage * (page - 1) },
+			{ $limit: perPage }
+		  ]);
+
+    // Extract unique sectors from the courses
+    const uniqueSectors = await Courses.aggregate([
+        { $match: filter },
+        { $unwind: "$sectors" },
+        {
+            $lookup: {
+                from: "coursesectors",
+                localField: "sectors",
+                foreignField: "_id",
+                as: "sectorDetails"
+            }
+        },
+        { $unwind: "$sectorDetails" },
+        {
+            $group: {
+                _id: "$sectorDetails._id",
+                name: { $first: "$sectorDetails.name" }
+            }
+        },
+        { $sort: { name: 1 } }
+    ]);
+		  
+		 
+		
 		rePath = res.render(`${req.vPath}/front/courses`, {
 		courses,
 		storageScript: storageScript,
 		phoneToCall: contact[0]?.mobile,
 		totalPages,
+		uniqueSectors,
 		page
 	});
 });

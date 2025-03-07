@@ -1,6 +1,6 @@
 <%- include ./newpartials/header%>
   <%- include ./newpartials/jobcategory%>
-  <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 
 
 
@@ -231,150 +231,157 @@
                                       <img src="public_assets/images/icons/home_icon.png" class="img-fluid" draggable="false">
                                   </div> -->
                             <div class=" data_col text-uppercase">
-                              <a href="#<%= sector._id %>" >
+                              <a href="#<%= sector._id %>">
                                 <%= sector.name %>
                               </a>
-        
+
                             </div>
                           </div>
                         </li>
                         <%})%>
-        
+
                     </ul>
                   </div>
                 </div>
               </div>
               <% uniqueSectors.forEach(function(sector) { %>
-              
+
                 <ul>
                   <li>
-                    <a id="<%= sector._id %>" href="#" class="choose--sector text-uppercase">  <%= sector.name %><span class="find__sector"></span></a>
+                    <a id="<%= sector._id %>" href="#" class="choose--sector text-uppercase">
+                      <%= sector.name %><span class="find__sector"></span>
+                    </a>
                   </li>
                 </ul>
                 <%courses.forEach((course)=>{%>
-                  <% if (course.sectors.some(s => s.toString() === sector._id.toString())) { %>
+                  <% if (course.sectors.some(s=> s.toString() === sector._id.toString())) { %>
 
-                <div class="col-lg-4 col-md-6 col-sm-12 col-12 pb-4 card-padding">
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-12 pb-4 card-padding">
 
-                  <div class="card bg-dark courseCard">
-                    <div class="bg-img">
-                      <a href="#" data-bs-target="#videoModal" data-bs-toggle="modal"
-                        data-bs-link="<%= process.env.MIPIE_BUCKET_URL +'/' + course.videos[0] %>"
-                        class="pointer img-fluid"><img
-                          src="<%= course.thumbnail ? process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail : 'public_assets/images/newjoblisting/course_img.svg' %>"
-                          class="digi" alt="">
-                        <img src="public_assets/images/newjoblisting/play.svg" alt="" class="group1"></a>
-                      <!-- <div id="base">
+                      <div class="card bg-dark courseCard">
+                        <div class="bg-img">
+                          <a href="#" data-bs-target="#videoModal" data-bs-toggle="modal"
+                            data-bs-link="<%= process.env.MIPIE_BUCKET_URL +'/' + course.videos[0] %>"
+                            class="pointer img-fluid"><img
+                              src="<%= course.thumbnail ? process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail : 'public_assets/images/newjoblisting/course_img.svg' %>"
+                              class="digi" alt="">
+                            <img src="public_assets/images/newjoblisting/play.svg" alt="" class="group1"></a>
+                          <!-- <div id="base">
                       <p class="text-center p-0 match_card fw-bolder">Now At</p>
                       <p class="text-center p-0 match_del fw-bold"><del class="text"><%=course.courseFee%></del></p>
                       <p class="text-center p-0 match_final fw-bold"><%=course.cutPrice%></p>
                     </div> -->
-                      <div class="flag">
+                          <div class="flag">
+                          </div>
+                          <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
+                          <div class="right_obj shadow">
+                            <%=course.courseType==='coursejob' ? 'Course + Jobs' : 'Course' %>
+                          </div>
+                        </div>
+                        <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
+                        <div class="right_obj shadow">
+                          <%=course.courseType==='coursejob' ? 'Course + Jobs' : 'Course' %>
+                        </div>
                       </div>
-                      <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
-                      <div class="right_obj shadow">
-                        <%=course.courseType==='coursejob' ? 'Course + Jobs' : 'Course' %>
-                      </div>
-                    </div>
-                    <!-- <img src="public_assets/images/newjoblisting/Group2.png" class="group2" alt=""> -->
-                    <div class="right_obj shadow"><%=course.courseType === 'coursejob' ? 'Course + Jobs' : 'Course'%></div>
-                  </div>
-                  <div class="card-body px-0 pb-0">
-                    <h4 class="text-center text-white fw-bolder mb-2 mx-auto text-capitalize ellipsis" title="<%=course.name%>"><%=course.name%></h4>
-                    <!-- <h5 class="fw-light mx-auto"><%=course.certifyingAgency%></h5> -->
-                    <!-- <h3 class="text-center digi-price mb-0"> -->
-                      <!-- <span class="c_rupee"></span>  -->
-                      <!-- <span class="c_price"><del class="course">&#8377;<%=course.courseFee%></del></span> -->
-                      <!-- <span class="c_rupee"></span> -->
-                      <!-- <span class="c_price"><%=course.cutPrice ? course.cutPrice.toLowerCase()==='free'? course.cutPrice : '₹ ' + course.cutPrice : 'N/A' %></span>
+                      <div class="card-body px-0 pb-0">
+                        <h4 class="text-center text-white fw-bolder mb-2 mx-auto text-capitalize ellipsis"
+                          title="<%=course.name%>">
+                          <%=course.name%>
+                        </h4>
+                        <!-- <h5 class="fw-light mx-auto"><%=course.certifyingAgency%></h5> -->
+                        <!-- <h3 class="text-center digi-price mb-0"> -->
+                        <!-- <span class="c_rupee"></span>  -->
+                        <!-- <span class="c_price"><del class="course">&#8377;<%=course.courseFee%></del></span> -->
+                        <!-- <span class="c_rupee"></span> -->
+                        <!-- <span class="c_price"><%=course.cutPrice ? course.cutPrice.toLowerCase()==='free'? course.cutPrice : '₹ ' + course.cutPrice : 'N/A' %></span>
                     </h3> -->
-                      <!-- <h3 class="text-center digi-price mb-0">
+                        <!-- <h3 class="text-center digi-price mb-0">
                       
                     </h3> -->
-                      <!-- <h2 class="text-center digi-price mb-3"> -->
-                      <!-- <span class="r-price">&#8377; <%=course.cutPrice%></span> -->
-                      <!-- </h2> -->
-                      <div class="row" id="course_height">
-                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                          <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 mx-auto mb-2">
-                            <div class="row">
-                              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
-                                <div class="row">
-                                  <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
-                                    <figure class="text-end">
-                                      <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0"
-                                        draggable="false">
-                                    </figure>
-                                  </div>
-                                  <div
-                                    class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
-                                    <p class="mb-0 text-white">Eligibility</p>
-                                    <p class="mb-0 text-white"><small class="sub_head">(<%=course.qualification%>
-                                          )</small></p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
-                                <div class="row">
-                                  <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
-                                    <figure class="text-end">
-                                      <img src="public_assets/images/icons/duration.png" class="img-fluid p-0"
-                                        draggable="false">
-                                    </figure>
-                                  </div>
-                                  <div
-                                    class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
-                                    <p class="mb-0 text-white">Duration</p>
-                                    <p class="mb-0 text-white"><small class="sub_head">(<%=course.duration%>)</small>
-                                    </p>
+                        <!-- <h2 class="text-center digi-price mb-3"> -->
+                        <!-- <span class="r-price">&#8377; <%=course.cutPrice%></span> -->
+                        <!-- </h2> -->
+                        <div class="row" id="course_height">
+                          <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 mx-auto mb-2">
+                              <div class="row">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
+                                  <div class="row">
+                                    <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
+                                      <figure class="text-end">
+                                        <img src="public_assets/images/icons/eligibility.png" class="img-fluid p-0"
+                                          draggable="false">
+                                      </figure>
+                                    </div>
+                                    <div
+                                      class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
+                                      <p class="mb-0 text-white">Eligibility</p>
+                                      <p class="mb-0 text-white"><small class="sub_head">(<%=course.qualification%>
+                                            )</small></p>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
-                                <div class="row">
-                                  <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
-                                    <figure class="text-end">
-                                      <img src="public_assets/images/icons/location-pin.png" class="img-fluid p-0"
-                                        draggable="false">
-                                    </figure>
-                                  </div>
-                                  <div
-                                    class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
-                                    <p class="mb-0 text-white">Location</p>
-                                    <div class="ellipsis-wrapper">
-                                      <p class="mb-0 text-white para_ellipsis"
-                                        title="<%= course.city ? course.city + ', ' + course.state : 'NA' %>">
-                                        <small class="sub_head">
-                                          <% if (course.city) { %>
-                                            (<%= course.city + ', ' + course.state %>)
-                                              <% } else { %>
-                                                NA
-                                                <% } %>
-                                        </small>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
+                                  <div class="row">
+                                    <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
+                                      <figure class="text-end">
+                                        <img src="public_assets/images/icons/duration.png" class="img-fluid p-0"
+                                          draggable="false">
+                                      </figure>
+                                    </div>
+                                    <div
+                                      class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
+                                      <p class="mb-0 text-white">Duration</p>
+                                      <p class="mb-0 text-white"><small class="sub_head">(<%=course.duration%>)</small>
                                       </p>
                                     </div>
-                                    <!-- <p class="mb-0 text-white para_ellipsis"><small class="sub_head"><% if(course.city) { %>(<%=course.city +', ' + course.state%>)<% } else { %> NA  <% } %>  </small></p> -->
+                                  </div>
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
+                                  <div class="row">
+                                    <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
+                                      <figure class="text-end">
+                                        <img src="public_assets/images/icons/location-pin.png" class="img-fluid p-0"
+                                          draggable="false">
+                                      </figure>
+                                    </div>
+                                    <div
+                                      class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
+                                      <p class="mb-0 text-white">Location</p>
+                                      <div class="ellipsis-wrapper">
+                                        <p class="mb-0 text-white para_ellipsis"
+                                          title="<%= course.city ? course.city + ', ' + course.state : 'NA' %>">
+                                          <small class="sub_head">
+                                            <% if (course.city) { %>
+                                              (<%= course.city + ', ' + course.state %>)
+                                                <% } else { %>
+                                                  NA
+                                                  <% } %>
+                                          </small>
+                                        </p>
+                                      </div>
+                                      <!-- <p class="mb-0 text-white para_ellipsis"><small class="sub_head"><% if(course.city) { %>(<%=course.city +', ' + course.state%>)<% } else { %> NA  <% } %>  </small></p> -->
 
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
-                                <div class="row">
-                                  <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
-                                    <figure class="text-end">
-                                      <img src="public_assets/images/icons/job-mode.png" class="img-fluid p-0"
-                                        draggable="false">
-                                    </figure>
-                                  </div>
-                                  <div
-                                    class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
-                                    <p class="mb-0 text-white">Mode</p>
-                                    <p class="mb-0 text-white"><small class="sub_head">(<%=course.trainingMode%>
-                                          )</small></p>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2">
+                                  <div class="row">
+                                    <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 my-auto">
+                                      <figure class="text-end">
+                                        <img src="public_assets/images/icons/job-mode.png" class="img-fluid p-0"
+                                          draggable="false">
+                                      </figure>
+                                    </div>
+                                    <div
+                                      class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 text-white courses_features ps-0">
+                                      <p class="mb-0 text-white">Mode</p>
+                                      <p class="mb-0 text-white"><small class="sub_head">(<%=course.trainingMode%>
+                                            )</small></p>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <!-- <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
+                                <!-- <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
                                 <div class="row">
                                   <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center mb-2">
                                     <figure class="course_star">
@@ -386,31 +393,30 @@
                                     </div>
                                 </div>
                             </div> -->
-                              <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2 text-center">
-                                <div class="row">
-                                  <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 my-auto">
-                                    <p class="text-white">Last Date for apply</p>
-                                  </div>
-                                  <div
-                                    class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 text-white courses_features ps-0">
-                                    <p class="color-yellow fw-bold">
-                                      <%=course.lastDateForApply?
-                                        moment(course.lastDateForApply).utcOffset("+05:30").format('MMM DD YYYY'): 'NA'
-                                        %>
-                                    </p>
-                                    <!-- <p class="mb-0 text-white">Mode</p>
+                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2 text-center">
+                                  <div class="row">
+                                    <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 my-auto">
+                                      <p class="text-white">Last Date for apply</p>
+                                    </div>
+                                    <div
+                                      class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 text-white courses_features ps-0">
+                                      <p class="color-yellow fw-bold">
+                                        <%=course.lastDateForApply?
+                                          moment(course.lastDateForApply).utcOffset("+05:30").format('MMM DD
+                                          YYYY'): 'NA' %>
+                                      </p>
+                                      <!-- <p class="mb-0 text-white">Mode</p>
                                                                   <p class="mb-0 text-white"><small class="sub_head">(Blended)</small></p> -->
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
 
                               <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2 text-center">
                                 <a class="btn cta-callnow btn-bg-color"
                                   href="/candidate/login?returnUrl=/candidate/course/<%=course._id%>">Apply Now</a>
                               </div>
                               <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-2 text-center">
-                                <!-- <a href="https://wa.me/918699017301?text=hi" class="btn cta-callnow">Chat Now</a> -->
-                                <a onclick="openChatbot()" class="btn cta-callnow">Chat Now</a>
+                                <a href="https://wa.me/918699017301?text=hi" class="btn cta-callnow">Chat Now</a>
                               </div>
                               <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
                                 <div class="row pt-2">
@@ -419,158 +425,166 @@
                                     <a href="#" data-bs-toggle="modal" data-bs-target="#callbackModal">
                                       <span class="learnn pt-1 btn cta-callnow w-100">Request for Call Back</span>
 
-                                      <!-- <img src="public_assets/images/call.svg" class="align-text-top"> -->
-                                    </a>
+                                        <!-- <img src="public_assets/images/call.svg" class="align-text-top"> -->
+                                      </a>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="modal fade" id="callbackModal" tabindex="-1" aria-labelledby="callbackModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title text-black" id="callbackModalLabel">Request for Call Back</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <form method="post" id="callbackForm">
-                                        <!-- Two-column layout for Name and State -->
-                                        <div class="row mb-3">
-                                          <div class="col-md-6 col-6">
-                                            <label for="name" class="form-label">Name</label>
-                                            <input name="name" type="text" class="form-control" id="name" required placeholder="Enter your name" >
-                                          </div>
-                                          <div class="col-md-6 col-6">
-                                               <div class="state">
-                                                <label for="name" class="form-label">State</label>
-                                        <select name="state" class="designation_input" id="state" required>
-                                          <option value disabled selected>Select
-                                            your
-                                            State
-                                          </option>
-                                          <option value="Andhra Pradesh">
-                                            Andhra
-                                            Pradesh</option>
-                                          <option value="Arunachal Pradesh">
-                                            Arunachal
-                                            Pradesh</option>
-                                          <option value="Assam">Assam
-                                          </option>
-                                          <option value="Bihar">Bihar
-                                          </option>
-                                          <option value="Chhattisgarh">
-                                            Chhattisgarh</option>
-                                          <option value="Goa">Goa</option>
-                                          <option value="Gujarat">Gujarat
-                                          </option>
-                                          <option value="Haryana">Haryana
-                                          </option>
-                                          <option value="Himachal Pradesh">
-                                            Himachal
-                                            Pradesh</option>
-                                          <option value="Jharkhand">
-                                            Jharkhand</option>
-                                          <option value="Karnataka">
-                                            Karnataka</option>
-                                          <option value="Kerala">Kerala
-                                          </option>
-                                          <option value="Madhya Pradesh">
-                                            Madhya
-                                            Pradesh</option>
-                                          <option value="Maharashtra">
-                                            Maharashtra</option>
-                                          <option value="Manipur">Manipur
-                                          </option>
-                                          <option value="Meghalaya">
-                                            Meghalaya</option>
-                                          <option value="Mizoram">Mizoram
-                                          </option>
-                                          <option value="Nagaland">
-                                            Nagaland</option>
-                                          <option value="Odisha">Odisha
-                                          </option>
-                                          <option value="Punjab">Punjab
-                                          </option>
-                                          <option value="Rajasthan">
-                                            Rajasthan</option>
-                                          <option value="Sikkim">Sikkim
-                                          </option>
-                                          <option value="Tamil Nadu">Tamil
-                                            Nadu</option>
-                                          <option value="Telangana">
-                                            Telangana</option>
-                                          <option value="Tripura">Tripura
-                                          </option>
-                                          <option value="Uttar Pradesh">
-                                            Uttar
-                                            Pradesh</option>
-                                          <option value="Uttarakhand">
-                                            Uttarakhand</option>
-                                          <option value="West Bengal">West
-                                            Bengal</option>
-                                          <option value="Andaman and Nicobar Islands">
-                                            Andaman
-                                            and
-                                            Nicobar
-                                            Islands
-                                          </option>
-                                          <option value="Chandigarh">
-                                            Chandigarh</option>
-                                          <option value="Dadra and Nagar Haveli and Daman and Diu">
-                                            Dadra
-                                            and
-                                            Nagar
-                                            Haveli
-                                            and
-                                            Daman
-                                            and
-                                            Diu</option>
-                                          <option value="Delhi">Delhi
-                                          </option>
-                                          <option value="Lakshadweep">
-                                            Lakshadweep</option>
-                                          <option value="Puducherry">
-                                            Puducherry</option>
-                                          <option value="Ladakh">Ladakh
-                                          </option>
-                                          <option value="Jammu and Kashmir">
-                                            Jammu
-                                            and
-                                            Kashmir</option>
-                                        </select>
-                                        
+                                <div class="modal fade" id="callbackModal" tabindex="-1"
+                                  aria-labelledby="callbackModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title text-black" id="callbackModalLabel">Request for Call Back
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                          aria-label="Close"></button>
                                       </div>
+                                      <div class="modal-body">
+                                        <form method="post" id="callbackForm">
+                                          <!-- Two-column layout for Name and State -->
+                                          <div class="row mb-3">
+                                            <div class="col-md-6 col-6">
+                                              <label for="name" class="form-label">Name</label>
+                                              <input name="name" type="text" class="form-control" id="name" required
+                                                placeholder="Enter your name">
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                              <div class="state">
+                                                <label for="name" class="form-label">State</label>
+                                                <select name="state" class="designation_input" id="state" required>
+                                                  <option value disabled selected>Select
+                                                    your
+                                                    State
+                                                  </option>
+                                                  <option value="Andhra Pradesh">
+                                                    Andhra
+                                                    Pradesh</option>
+                                                  <option value="Arunachal Pradesh">
+                                                    Arunachal
+                                                    Pradesh</option>
+                                                  <option value="Assam">Assam
+                                                  </option>
+                                                  <option value="Bihar">Bihar
+                                                  </option>
+                                                  <option value="Chhattisgarh">
+                                                    Chhattisgarh</option>
+                                                  <option value="Goa">Goa</option>
+                                                  <option value="Gujarat">Gujarat
+                                                  </option>
+                                                  <option value="Haryana">Haryana
+                                                  </option>
+                                                  <option value="Himachal Pradesh">
+                                                    Himachal
+                                                    Pradesh</option>
+                                                  <option value="Jharkhand">
+                                                    Jharkhand</option>
+                                                  <option value="Karnataka">
+                                                    Karnataka</option>
+                                                  <option value="Kerala">Kerala
+                                                  </option>
+                                                  <option value="Madhya Pradesh">
+                                                    Madhya
+                                                    Pradesh</option>
+                                                  <option value="Maharashtra">
+                                                    Maharashtra</option>
+                                                  <option value="Manipur">Manipur
+                                                  </option>
+                                                  <option value="Meghalaya">
+                                                    Meghalaya</option>
+                                                  <option value="Mizoram">Mizoram
+                                                  </option>
+                                                  <option value="Nagaland">
+                                                    Nagaland</option>
+                                                  <option value="Odisha">Odisha
+                                                  </option>
+                                                  <option value="Punjab">Punjab
+                                                  </option>
+                                                  <option value="Rajasthan">
+                                                    Rajasthan</option>
+                                                  <option value="Sikkim">Sikkim
+                                                  </option>
+                                                  <option value="Tamil Nadu">Tamil
+                                                    Nadu</option>
+                                                  <option value="Telangana">
+                                                    Telangana</option>
+                                                  <option value="Tripura">Tripura
+                                                  </option>
+                                                  <option value="Uttar Pradesh">
+                                                    Uttar
+                                                    Pradesh</option>
+                                                  <option value="Uttarakhand">
+                                                    Uttarakhand</option>
+                                                  <option value="West Bengal">West
+                                                    Bengal</option>
+                                                  <option value="Andaman and Nicobar Islands">
+                                                    Andaman
+                                                    and
+                                                    Nicobar
+                                                    Islands
+                                                  </option>
+                                                  <option value="Chandigarh">
+                                                    Chandigarh</option>
+                                                  <option value="Dadra and Nagar Haveli and Daman and Diu">
+                                                    Dadra
+                                                    and
+                                                    Nagar
+                                                    Haveli
+                                                    and
+                                                    Daman
+                                                    and
+                                                    Diu</option>
+                                                  <option value="Delhi">Delhi
+                                                  </option>
+                                                  <option value="Lakshadweep">
+                                                    Lakshadweep</option>
+                                                  <option value="Puducherry">
+                                                    Puducherry</option>
+                                                  <option value="Ladakh">Ladakh
+                                                  </option>
+                                                  <option value="Jammu and Kashmir">
+                                                    Jammu
+                                                    and
+                                                    Kashmir</option>
+                                                </select>
+
+                                              </div>
+                                            </div>
                                           </div>
-                                        </div>
-                                        
-                                        <!-- Two-column layout for Contact Number and Email -->
-                                        <div class="row mb-3">
-                                          <div class="col-md-6 col-6">
-                                            <label for="contact" class="form-label">Contact Number</label>
-                                            <input type="tel" name="mobile" class="form-control" id="contact" pattern="[0-9]{10}" 
-                                              placeholder="Enter 10-digit mobile number" required title="Please enter a valid 10-digit phone number" required>
+
+                                          <!-- Two-column layout for Contact Number and Email -->
+                                          <div class="row mb-3">
+                                            <div class="col-md-6 col-6">
+                                              <label for="contact" class="form-label">Contact Number</label>
+                                              <input type="tel" name="mobile" class="form-control" id="contact"
+                                                pattern="[0-9]{10}" placeholder="Enter 10-digit mobile number" required
+                                                title="Please enter a valid 10-digit phone number" required>
+                                            </div>
+                                            <div class="col-md-6 col-6">
+                                              <label for="email" class="form-label">Email</label>
+                                              <input type="email" name="email" class="form-control" required id="email"
+                                                placeholder="Enter your email" required>
+                                            </div>
                                           </div>
-                                          <div class="col-md-6 col-6">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="email" name="email" class="form-control" required id="email" placeholder="Enter your email" required>
+
+                                          <!-- Full-width textarea for Message -->
+                                          <div class="mb-3">
+                                            <label for="message" class="form-label">Message</label>
+                                            <textarea class="form-control" id="message" rows="3" name="message" required
+                                              placeholder="Enter your message here..."></textarea>
                                           </div>
-                                        </div>
-                                        
-                                        <!-- Full-width textarea for Message -->
-                                        <div class="mb-3">
-                                          <label for="message" class="form-label">Message</label>
-                                          <textarea class="form-control" id="message" rows="3" name="message" required placeholder="Enter your message here..."></textarea>
-                                        </div>
-                                        
-                                        <div class="modal-footer">
-                                          <button type="submit" class="submit_btn g-recaptcha"  data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v" 
-                                          data-callback='onSubmit'>Submit</button>
-                                        </div>
-                                      </form>
+
+                                          <div class="modal-footer">
+                                            <button type="submit" class="submit_btn g-recaptcha"
+                                              data-sitekey="6Lej1gsqAAAAAEs4KUUi8MjisY4_PKrC5s9ArN1v"
+                                              data-callback='onSubmit'>Submit</button>
+                                          </div>
+                                        </form>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                              <!-- <div class="modal fade" id="callbackModal" tabindex="-1"
+                                <!-- <div class="modal fade" id="callbackModal" tabindex="-1"
                                 aria-labelledby="callbackModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                   <div class="modal-content">
@@ -616,28 +630,28 @@
                                   </div>
                                 </div>
                               </div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 course_card_footer">
+                          <div class="row py-2">
+                            <div
+                              class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center align-items-center text-center">
+                              <a href="/coursedetails/<%=course._id%>"><span class="learnn pt-1 text-white">Learn
+                                  More</span> <img src="public_assets/images/link.png" class="align-text-top"></a>
                             </div>
                           </div>
                         </div>
                       </div>
-
-
-                      <div class="col-xxl-12 col-12 col-lg-12 col-md-12 col-sm-12 col-12 course_card_footer">
-                        <div class="row py-2">
-                          <div
-                            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 justify-content-center align-items-center text-center">
-                            <a href="/coursedetails/<%=course._id%>"><span class="learnn pt-1 text-white">Learn
-                                More</span> <img src="public_assets/images/link.png" class="align-text-top"></a>
-                          </div>
-                        </div>
-                      </div>
                     </div>
-                  </div>
-                
-                <% } %>
 
-                <%})%>
-                <%})%>
+                    <% } %>
+
+                      <%})%>
+                        <%})%>
 
             </div>
           </div>
@@ -669,36 +683,18 @@
     <!-- Your existing login page HTML -->
 
     <script>
-     function onSubmit(token) {
-  const form = document.getElementById('callbackForm');
-  // Check if the form is valid
-  if (!form.checkValidity()) {
-    // This will trigger the browser to display its built-in validation messages
-    form.reportValidity();
-    return;
-  }
-  // If the form is valid, then submit it
-  form.submit();
-}
-function openChatbot() {
-  // Toggle the chat container's active state
-  const chatContainer = document.getElementById("iframe-box");
-  if (chatContainer) {
-    chatContainer.classList.toggle("active");
-  } else {
-    console.error("Chat container (iframe-box) not found!");
-  }
-
-  // Trigger the bootm-box click event to initialize the chat
-  const bootmBox = document.getElementById("bootm-box");
-  if (bootmBox) {
-    bootmBox.click();
-  } else {
-    console.error("Element with ID 'bootm-box' not found!");
-  }
-}
-
-
-     </script>
+      function onSubmit(token) {
+        const form = document.getElementById('callbackForm');
+        // Check if the form is valid
+        if (!form.checkValidity()) {
+          // This will trigger the browser to display its built-in validation messages
+          form.reportValidity();
+          return;
+        }
+        // If the form is valid, then submit it
+        form.submit();
+      }
+    </script>
+  
     <%- storageScript %>
-    <%- include('./newpartials/footer') %>
+      <%- include('./newpartials/footer') %>

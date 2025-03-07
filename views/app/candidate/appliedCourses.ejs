@@ -97,25 +97,41 @@
                                   <div class="job-single-head border-0 pb-0">
                                     <div>
                                       <h6 class="text-capitalize font-weight-bolder">
-                                        <%=appliedcourse._course.name ? appliedcourse._course.name : 'NA' %>
+                                        <%= appliedcourse._course && appliedcourse._course.name ? appliedcourse._course.name : 'NA' %>
                                       </h6>
+                                      
                                       <span class="text-capitalize set-lineh">
-                                        <%= appliedcourse._course.sectors?appliedcourse._course.sectors[0]?.name : "" %>
+                                        <%= appliedcourse._course && appliedcourse._course.sectors && appliedcourse._course.sectors.length > 0 ? appliedcourse._course.sectors[0].name : "" %>
                                       </span>
+                                      
                                     </div>
                                   </div>
-                                  <a href="/candidate/course/<%= appliedcourse._course._id%>">
+                                  <a href="<%= appliedcourse._course ? `/candidate/course/${appliedcourse._course._id}` : '#' %>">
+
                                     <div class="job-overview mt-1">
                                       <ul class="mb-xl-2 mb-lg-2 mb-md-2 mb-sm-0 mb-0 list-unstyled">
                                         <li><i class="la la-money"></i> 
-                                          <h3 class="jobDetails-wrap"><%=appliedcourse._course.cutPrice ? appliedcourse._course.cutPrice.toLowerCase()==='free'? appliedcourse._course.cutPrice : '₹ ' + appliedcourse._course.cutPrice  : 'N/A' %>
+                                          <h3 class="jobDetails-wrap">
+                                            <%= appliedcourse._course && appliedcourse._course.cutPrice 
+                                              ? appliedcourse._course.cutPrice.toLowerCase() === 'free' 
+                                                ? appliedcourse._course.cutPrice 
+                                                : '₹ ' + appliedcourse._course.cutPrice  
+                                              : 'N/A' 
+                                            %>
                                           </h3>
+                                          
                                           <span class="text-capitalize jobDetails-wrap">
                                             Course Fee
                                           </span>
                                         </li>
                                         <li><i class="la la-shield"></i>
-                                          <h3 class="jobDetails-wrap"><%=appliedcourse._course.courseLevel ? appliedcourse._course.courseLevel : 'N/A' %>
+                                          <h3 class="jobDetails-wrap">
+                                            <%= appliedcourse._course && appliedcourse._course.courseLevel 
+                                              ? appliedcourse._course.courseLevel 
+                                              : 'N/A' 
+                                            %>
+                                          </h3>
+                                          
                                           <span class="jobDetails-wrap">
                                             Course Level
                                           </span>
@@ -139,10 +155,17 @@
                               </div>
                               <div class="col-lg-4 col-md-5 column mt-xl-1 mt-lg-1 mt-md-1 mt-sm-3 mt-0">
                                 <div class="extra-job-info mt-1">
-                                  <span class="px-0"><i class="la la-map "></i><strong>Last Date</strong>
-                                    <%=moment(appliedcourse._course.lastDateForApply ||
-                                    appliedcourse._course.createdAt).utcOffset('+05:30').format('DD MMM YYYY') %></i>
-                                  </span>
+                                  <% if (appliedcourse._course) { %>
+                                    <span class="px-0">
+                                      <i class="la la-map "></i><strong>Last Date</strong>  
+                                      <%= moment(appliedcourse._course.lastDateForApply || appliedcourse._course.createdAt)
+                                          .utcOffset('+05:30')
+                                          .format('DD MMM YYYY') %>
+                                    </span>
+                                  <% } else { %>
+                                    <span class="px-0"><i class="la la-map"></i><strong>Last Date</strong> N/A</span>
+                                  <% } %>
+                                  
                                 </div>
                               </div>
                             </div>

@@ -158,14 +158,16 @@ figure img {
 
 .bg-img {
     position: relative;
-    border-radius: 11px;
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
     border: 1px solid #ffffff;
     box-shadow: rgb(227, 59, 22, 77%) 0px 0px 0.25em, rgba(24, 86, 201, 0.05) 0px 0.25em 1em;
 }
 
 .bg-img img {
     width: 100%;
-    border-radius: 10px;
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
 }
 
 /* .bg-img .group1 {
@@ -555,6 +557,7 @@ body {
   border: 1px solid #666762;
   background-color: #fff;
   transition: .2s ease-in-out;
+  color: #000;
 }
 input[type="text"], input[type="password"], input[type="email"], textarea
 {
@@ -622,6 +625,7 @@ a{
 .contact-form .form-group .form-contro {
     border: 1px solid #666762;
     background-color: #fff;
+    color: #000;
 }
 input[type="text"], input[type="password"], input[type="email"], textarea {
     background: #e4e4e4 none repeat scroll 0 0;

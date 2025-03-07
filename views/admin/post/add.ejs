@@ -34,7 +34,7 @@
                 <input type="file" id="file-upload" name="file" class="d-none" multiple accept="image/*,video/*">
               </div>
               <div>
-                <button onclick="setTabPills()" class="border-none" style="border:none; background:transparent" type="button"
+                <button class="border-none" style="border:none; background:transparent" type="button"
                   data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                   <img src="	https://static.xx.fbcdn.net/rsrc.php/v4/yq/r/b37mHA1PjfK.png" alt="Media Icon">
                   <!-- Facebook Media Icon -->
@@ -48,8 +48,8 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title text-white" id="staticBackdropLabel">Tag People</h5>
-                      <button onclick="closePopup()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        style="background:transparent; border:none">
+                      <button onclick="closePopup()" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close" style="background:transparent; border:none">
                         <i class="fa-solid fa-x" style="color: #ffffff;"></i>
                       </button>
                     </div>
@@ -60,80 +60,47 @@
                             <div class="tag-input-container">
                               <div class="tags" id="tagscandidate">
                                 <!-- Tags will dynamically appear here -->
-                               
+
                               </div>
                               <!-- <input type="text" class="tag-input" placeholder="Taged"> -->
                               <!-- <textarea name="content" id="post-content" class="form-control" rows="1" placeholder="What's on your mind?"
                               required>
                               <span>test</span>
                              </textarea> -->
-                             
+
                             </div>
                             <span class="done" data-bs-dismiss="modal" id="donebutton">Done</span>
                           </div>
                           <div class="nav--pills">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                              <li class="nav-item" role="presentation" onclick="selctedTagFor('admin')">
+                              <!-- <li class="nav-item" role="presentation" onclick="selctedTagFor('admin')">
                                 <a class="nav-link" id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab"
                                   aria-controls="admin" aria-selected="true">Admin</a>
-                              </li>
-                              <li class="nav-item" role="presentation" onclick="selctedTagFor('company')">
+                              </li> -->
+                              <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="company-tab" data-bs-toggle="tab" href="#company" role="tab"
                                   aria-controls="company" aria-selected="false">Company</a>
                               </li>
-                              <li class="nav-item" role="presentation" onclick="selctedTagFor('college')">
+                              <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="institute-tab" data-bs-toggle="tab" href="#institute" role="tab"
                                   aria-controls="institute" aria-selected="false">Institute</a>
                               </li>
-                              <li class="nav-item" role="presentation" onclick="selctedTagFor('candidate')">
-                                <a class="nav-link active" id="student-tab" data-bs-toggle="tab" href="#student" role="tab"
-                                  aria-controls="student" aria-selected="false">Student</a>
+                              <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="student-tab" data-bs-toggle="tab" href="#student"
+                                  role="tab" aria-controls="student" aria-selected="false">Student</a>
                               </li>
                             </ul>
 
                             <!-- Tab Content -->
                             <div class="tab-content" id="myTabContent">
-                              <div class="tab-pane fade" id="admin" role="tabpanel"
-                                aria-labelledby="admin-tab">
-                                <!-- Admin content goes here -->
-                                <!-- <div class="inner_search">
-                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
-                                  <input type="text" placeholder="Search" id="searchbyAdmin" name="searchbyAdmin">
-                                </div> -->
-                                <div class='employee-attendance-table'>
-                                  <table class="employee-table">
-                                    <thead>
-                                      <tr class='header-tr'>
-                                        <th>Select</th>
-                                        <th>Name</th>
-                                        <!-- <th>Mobile</th> -->
-                                      </tr>
-                                    </thead>
-                                    <tbody id="adminTableBody">
-                                      <!-- <tr>
-                                        <td>
-                                          <input type="checkbox">
-                                        </td>
-                                        <td class="employee-info">
-                                          <img src="/public_assets/images/newpage/logo-ha.svg" alt=""
-                                            class="employee-avatar" />
-                                          <div class='employee-basic-info'>
-                                            <span class="employee-name tooltipp" title="Akash">Akash</span>
 
-                                          </div>
-                                        </td>
-                                        <td>12345678900</td>
-
-                                      </tr> -->
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
                               <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
                                 <!-- Company content goes here -->
                                 <div class="inner_search">
-                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
-                                  <input type="text" placeholder="Search" id="searchbyCompany" name="searchbyCompany" oninput="debouncedSearch()">
+                                  <i class="fa-solid fa-magnifying-glass search-icon"
+                                    onclick="searchbynameorphone()"></i>
+                                  <input type="text" placeholder="Search" id="searchbyCompany" name="searchbyCompany"
+                                    oninput="debouncedSearch()">
                                 </div>
                                 <div class='employee-attendance-table'>
                                   <table class="employee-table">
@@ -169,8 +136,10 @@
                               <div class="tab-pane fade" id="institute" role="tabpanel" aria-labelledby="institute-tab">
                                 <!-- Institute content goes here -->
                                 <div class="inner_search">
-                                  <i class="fa-solid fa-magnifying-glass search-icon" onclick="searchbynameorphone()"></i>
-                                  <input type="text" placeholder="Search" id="searchbyInstitute" name="searchbyInstitute" oninput="debouncedSearch()">
+                                  <i class="fa-solid fa-magnifying-glass search-icon"
+                                    onclick="searchbynameorphone()"></i>
+                                  <input type="text" placeholder="Search" id="searchbyInstitute"
+                                    name="searchbyInstitute" oninput="debouncedSearch()">
                                 </div>
                                 <div class='employee-attendance-table'>
                                   <table class="employee-table">
@@ -201,11 +170,13 @@
                                   </table>
                                 </div>
                               </div>
-                              <div class="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab">
+                              <div class="tab-pane fade show active" id="student" role="tabpanel"
+                                aria-labelledby="student-tab">
                                 <!-- Student content goes here -->
                                 <div class="inner_search">
                                   <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                                  <input type="text" placeholder="Search" id="searchbyCanditate" name="searchbyCanditate" oninput="debouncedSearch()">
+                                  <input type="text" placeholder="Search" id="searchbyCanditate"
+                                    name="searchbyCanditate" oninput="debouncedSearch()">
                                 </div>
                                 <div class='employee-attendance-table'>
                                   <table class="employee-table">
@@ -219,6 +190,8 @@
 
 
                                     <tbody id="candidateTableBody">
+                                      
+
 
                                     </tbody>
                                   </table>
@@ -241,627 +214,13 @@
           <!-- Submit Button -->
           <button type="submit" class="btn btn-primary mt-3">Post</button>
         </form>
+        <div id="image-preview" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
 
 
     </div>
-    <!-- <div class="tagging-container">
-      <div class="tag-input-container">
-          <div class="tags">
-          </div>
-          <input type="text" class="tag-input" placeholder="Tag People">
-      </div>
-      <span class="done">Done</span>
-  </div> -->
 
-
-    <!-- <div class="content-body mt-4">
-		
-      <% include ../partials/flash %>
-      
-        <section class="list-view">
-          
-          <div class="row">
-            
-            <div class="col-12 rounded equal-height-2 coloumn-2">
-              
-              <div class="card">
-                
-                <div class="row">
-  
-                  <div class=" col-xl-5 col-lg-6 col-md-4 col-sm-12 col-12  my-auto ">
-                    <div class="archieve text-left px-1">
-                      <input style="margin-bottom: 4px;" type="checkbox" onclick="archived()"<%-
-                      isChecked=="true" ? "checked" : '' %>
-                      id="checkbox1">
-                      &nbsp;
-                      <p>Show Archived</p>
-                      
-                    </div>
-  
-                  </div>
-   
-  
-                <div class="card-content col-12">
-                  <div class="row mb-2">
-                    <div class="col-xl-12 col-lg-12 px-3">
-                      <form method="GET" id="filterForm">
-                      
-                      <div class="row">
-                        <div class="col-xl-2 mt-1">
-                          <label>Name/ Mobile/ Whatsapp</label>
-                          <input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>"
-                           maxlength="25">
-                        </div>
-                        <div class="col-xl-2 mt-1">
-                          <label>Profile</label>
-                          <select class="form-control text-capitalize" name="Profile" id="profile">
-                            <option value="">Select</option>
-                            <option class="text-capitalize" value= "All" 
-                            <% if (data.Profile=='All' ) { %> selected <% }%> >All</option>
-                            <option class="text-capitalize" value= "true" 
-                            <% if (data.Profile=='true' ) { %> selected <% }%> >Completed</option>
-                            <option class="text-capitalize" value= "false" 
-                            <% if (data.Profile=='false' ) { %> selected <% }%> >Due</option>
-                          </select>
-                        </div>
-                        <div class="col-xl-2 mt-1">
-                          <label>Verfied</label>
-                          <select class="form-control text-capitalize" name="verified">
-                            <option value="">Select</option>
-                            <option class="text-capitalize" value= true
-                            <% if (data.verified == 'true') { %> selected <% }%> >Verified</option>
-                            <option class="text-capitalize" value= false
-                            <% if (data.verified == 'false') { %> selected <% }%> >Not Verified</option>
-                          </select>
-                        </div>
-                        
-                          <input type="hidden" class="form-control" name="status" value="<%- isChecked=='true' ? false : true%>">
-                        
-                        <div style="margin-top: 2.5rem !important;" class="col-xl-2 text-center mt-3">
-                          <button 
-                            class="btn btn-success  waves-effect waves-light  text-white d-inline "
-                            id="submit-btn">Go</button>
-                            <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
-                            href="/admin/post/add">RESET</a>
-                        </div>
-                      </div>
-                      </form>
-                    </div>
-                  </div> 
-                  <div class="table-responsive">
-                    <% if (candidates && candidates.length> 0) { %>
-                      <table id="tblexportData" class="table table-hover-animation mb-0 table-hover" width="100%">
-                        <thead>
-                          <tr>
-                            <th class="three column wide" width="18%"  style="cursor: pointer;">Select </th>
-                            <th class="three column wide candidate-wrap" width="19%">CANDIDATE NAME</th>
-                            <th class="one column wide" width="15%">MOBILE NO.</th>
-
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <% let count=0 %>
-                            <% candidates.forEach((l, i)=> { %>
-                              <tr>
-                                <td class="text-capitalize">
-                                 <input type="checkbox">
-                                </td>
-                                <td class="text-capitalize candid-wrap d-flex align-items-center" style="width:300px">
-                                  <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                                  <div class='employee-basic-info'>
-                                    <a  href="/admin/candidate/details/<%=l._id%>">	<%= l.name ? l.name : "NA" %></a>
-                                    <% if(l.verified == true){ %>
-                                      <i class="fa-solid fa-circle-check" style="color: #28c76f ;"></i>
-                                    <% } %>
-                                  
-                                  </div>
-                                  
-                                </td>
-                                <td class="text-capitalize">
-                                  <%= l.mobile ? l.mobile : "NA" %>
-                                </td>
-                                
-                              </tr>
-                              <% }) %>
-                        </tbody>
-                      </table>
-                      <% } else { %>
-                        <p class="text-center mt-3">No result found</p>
-                        <% } %>
-  
-                          <% if (totalPages> 1) { %>
-                            <ul class="pagination justify-content-end ml-2 mb-2">
-                              <% let first=1 %>
-                                <% let last=totalPages> 4 ? 4 :
-                                  totalPages %> <% if (totalPages> 4 && page >= 2) { %> <%
-                                      first=page - 1 %>
-                                      <% last=page + 1 %>
-                                        <% if (last>
-                                          totalPages) last = totalPages %> <% } %>
-                                            <% if (first>
-                                              1) { %>
-                                              <li class="page-item">
-                                                <a class="pageAnchor page-link"
-                                                  href="<%= 1 %>">First</a>
-                                              </li>
-                                              <% } %>
-                                                <% for (let i=first; i
-                                                  <=last; i +=1) { %>
-                                                  <% if (i===page) { %>
-                                                    <li
-                                                      class="active page-item">
-                                                      <a href="javascript:void()"
-                                                        class="page-link">
-                                                        <%= i %>
-                                                      </a>
-                                                    </li>
-                                                    <% } else { %>
-                                                      <li
-                                                        class="page-item">
-                                                        <a class="page-link pageAnchor"
-                                                          href="<%= i %>">
-                                                          <%= i %>
-                                                        </a>
-                                                      </li>
-                                                      <% } %>
-                                                        <% } %>
-                                                          <% if
-                                                            (totalPages>
-                                                            last)
-                                                            { %>
-                                                            <li
-                                                              class="page-item">
-                                                              <a class="pageAnchor page-link"
-                                                                href="<%= last + 1 %>">...</a>
-                                                            </li>
-                                                            <li
-                                                              class="page-item">
-                                                              <a class="pageAnchor page-link"
-                                                                href="<%= totalPages %>">Last</a>
-                                                            </li>
-                                                            <% }
-                                                              %>
-                            </ul>
-                            <% } %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <input type="hidden" id="candidate-id" value="">
-        <div class="modal fade" id="sendSMS" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Profile Completion SMS</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body pt-1" id="popup-body">
-                  <p>Are you sure you want to send Bulk SMS </p>
-          <p class="text-right font-weight-bold text-danger mr-2"><i>Total Messages : </i></p>
-                </div>
-                <div class="modal-footer">
-                  <button class="btn btn-primary"
-          onclick="sendSMS('<%= data?.name%>','<%= data?.FromDate %>','<%= data?.ToDate %>','')"
-                    id="sendBtn" data-dismiss="modal">Send</button>
-                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i
-                      class="feather icon-x d-block d-lg-none"></i>
-                    <span class="d-none d-lg-block">Cancel</span></button>
-                </div>
-              </div>
-            </div>
-          </div>
-      Notification modal start
-      <div class="modal fade" id="notificationmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Send Notifications</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body pt-1">
-          <div class="row">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-1 text-left">
-            <label>Status<span class="required text-danger"> *</span></label>
-            <select class="form-control text-capitalize" id="notificationevent" value="">
-            <option value="">Select Option</option>
-            </select>
-          </div>
-          <div class="col-xl-12 mb-1 text-left">
-            <label>Message<span class="required text-danger"> *</span></label>
-            <textarea class="form-control" cols="5" id="notificationmessage" value="" rows="3"></textarea>
-          </div>
-          </div>
-          <p class="text-success font-weight-bolder" id = 'successMsg' style="display: none;"></p>
-          <p class="text-danger font-weight-bolder" id = 'errorMsg' style="display: none;"></p>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" id="sendBtn" onclick="sendNotifications()">Send</button>
-        </div>
-        </div>
-      </div>
-      </div>
-      Notification modal end
-          <script>
-            function exportCandidates(){
-              // $.ajax({
-              // 	type: "POST",
-              // 	url: "/admin/candidate/downloadCSV",
-              // 	success: (res) => {
-              // 		console.log(res)
-              // 		window.open(res.path, '_blank')
-              // 		// setTimeout(removeFile,20000)
-              // 	}
-              // });
-              const body={FromDate:$('#from-date').val(),ToDate:$('#to-date').val(), username:$('#username').val(), isProfileCompleted:$('#profile').val() }
-              axios.post(`/admin/candidate/downloadCSV`,body , { responseType: 'blob' }).then(res => {
-                    const href = URL.createObjectURL(res.data);
-                                  window.open(href, '_blank')
-                  }).catch((err) => {
-                  console.log(err.message)
-                  })
-            }
-            function updateProfileVisible(mobile,visibility){
-                          let field;
-              if(visibility=='true'){
-                field=false
-              }else{
-                field=true
-              }
-              $.ajax({
-                type: "POST",
-                url: "/admin/candidate/changeprofilestatus",
-                data: {
-                  mobile,
-                  status: field,
-                },
-                success: () => location.reload(),
-              });
-            }
-            function sendNotifications(){
-              const event=$('#notificationevent').val();
-              const message=$('#notificationmessage').val();
-                          const candidateId=$('#candidate-id').val();
-              const body={
-                title:event,
-                message:message,
-                candidateId
-              }
-              if(message&&event){
-                axios.post("/admin/candidate/sendNotification",body).then((res)=>{
-                  if(res.data.status){
-                  $('#errorMsg').hide();
-                  $('#errorMsg').text('');
-                  $('#successMsg').show();
-                  $('#successMsg').text(res.data.message)
-                  window.location.reload();
-                  }else{
-                  $('#successMsg').hide();
-                  $('#successMsg').text('');
-                  $('#errorMsg').show();
-                  $('#errorMsg').text(res.data.message)
-                  }
-                })
-              }else{
-                $('#successMsg').hide();
-                  $('#successMsg').text('');
-                  $('#errorMsg').show();
-                  $('#errorMsg').text("Please fill the required fields!")
-              }
-            }
-            function onNotificationsHandler(candidateId){
-              $('select option.notificationoption').remove();
-              document.getElementById('candidate-id').value=candidateId
-              let optionsName=['Signup','Profile Completion','Applied Jobs','Interview Scheduling','Shortlisting','Focalyt Earnings','Focalyt Alerts']
-              for(let i=0;i<optionsName.length;i++){
-                  let option=document.createElement('option');
-                  option.text=optionsName[i];
-                  option.value=optionsName[i]
-                  option.classList.add('notificationoption')
-                  document.getElementById('notificationevent').append(option)
-                }
-            }
-            function removeFile() {
-              $.ajax({
-                type: "DELETE",
-                url: "/admin/candidate/deleteCSV",
-                success: (res) => {
-                  if(res.status){
-                    console.log('File Deleted')
-                  } else {
-                    console.log('File not Deleted')
-                  }
-                }
-              });
-            }
-  
-            function myOnOffFunc(id, status, model) {
-              // eslint-disable-line
-              let myStatus = true;
-              if (status === true || status === "true") {
-                myStatus = false;
-              }
-              $.ajax({
-                type: "POST",
-                url: "/admin/changestatus",
-                data: {
-                  id,
-                  status: myStatus,
-                  model,
-                },
-                success: () => location.reload(),
-              });
-            }
-            function deleteRecord(id, status, model) {
-              // eslint-disable-line
-              let myStatus = true;
-              if (status === true || status === "true") {
-                myStatus = false;
-              }
-              var x = confirm("Are you sure you want to delete?");
-              if (x) {
-                $.ajax({
-                  type: "POST",
-                  url: "/admin/deleteRecord",
-                  data: {
-                    id,
-                    status: myStatus,
-                    model,
-                  },
-                  success: () => window.location.href = "/admin/candidate"
-                });
-              }
-            }
-          </script>
-          <script>
-            !(function () {
-              "use strict";
-              Array.isArray ||
-                (Array.isArray = function (r) {
-                  return "[object Array]" === Object.prototype.toString.call(r);
-                });
-              var r = {
-                get: function () {
-                  var r = window.location.search,
-                    t = {};
-                  return "" === r
-                    ? t
-                    : ((r = r.slice(1)),
-                      (r = r.split("&")),
-                      r.map(function (r) {
-                        var i, o;
-                        (r = r.split("=")),
-                          (i = r[0]),
-                          (o = r[1]),
-                          t[i]
-                            ? (Array.isArray(t[i]) || (t[i] = [t[i]]),
-                              t[i].push(o))
-                            : (t[i] = o);
-                      }),
-                      t);
-                },
-              };
-              if (window) {
-                if (window.qs)
-                  throw new Error(
-                    "Error bootstrapping qs: window.qs already set."
-                  );
-                window.qs = r;
-              }
-            })();
-          </script>
-          <script>
-            document.addEventListener("DOMContentLoaded", () => {
-              let order = '<%= sortingOrder%>'
-              let value = '<%= sortingValue%>'
-              let iconClass
-              if(order == -1){
-                iconClass = "fa-solid fa-arrow-down success"
-              }else{
-                iconClass = "fa-solid fa-arrow-up success"
-              }
-              $(`#${value}`).removeAttr('class')
-              $(`#${value}`).attr('class', iconClass)
-              $(`#${value}`).attr('value', `${order*-1}`)
-  
-              const pageAnchors = document.querySelectorAll("a.pageAnchor");
-              const { origin, pathname, search } = window.location;
-              const obj = window.qs.get(search);
-              const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
-              let url = `${origin}${pathname}?`;
-              keyArr.forEach((x) => {
-                if (x !== "page") {
-                  url += `${x}=${obj[x]}&`;
-                }
-              });
-              pageAnchors.forEach((el) => {
-                const n = el.getAttribute("href");
-                el.setAttribute("href", `${url}page=${n}`);
-              });
-            });
-            // show deleted data
-            function archived() {
-              let checkbox = document.getElementById('checkbox1');
-              window.location.href = `/admin/post/add?status=${!checkbox.checked}`
-            }
-  
-            // show selected colleges
-            function selectedCollege() {
-              var e = document.getElementById("college");
-              var selectedItem = e.options[e.selectedIndex].value;
-              // alert(selectedItem);
-              var clgId = selectedItem;
-              // alert("isDeleted = " + isDeleted)
-              $.ajax({
-                type: "GET",
-                url: "/admin/candidate?clgId=" + `${clgId}`,
-                success: () => window.location.href = "/admin/candidate?clgId=" + `${clgId}`
-              });
-            }
-  
-            // delete archieve data permanently
-            function deleteArchieve(id, isDeleted, model) {
-              // alert(isDeleted)
-              let myStatus = true;
-              if (isDeleted === true || isDeleted === "true") {
-                myStatus = true;
-              }
-  
-              var x = confirm("Are you sure you want to delete?");
-              if (x) {
-                $.ajax({
-                  type: "POST",
-                  url: "/admin/deleteArchieve",
-                  data: {
-                    id,
-                    isDeleted: myStatus,
-                    model,
-                  },
-                  success: () => window.location.href = "/admin/candidate?isDeleted=true"
-                });
-              }
-            }
-          </script>
-  
-          <script type="text/javascript">
-            
-            $('#submit-btn').click(()=>{
-              if(validate()){
-                return false
-              }
-            })
-            function validate(){
-              $('.error').removeClass('error')
-              let fromDate = $('#from-date').val();
-              let toDate = $('#to-date').val()
-              let hasError = false
-              let firstError
-              
-              if(fromDate && !toDate){
-                $('#to-date').parent().addClass('error')
-                              firstError = firstError ? firstError :$('#to-date')
-                              hasError = true
-              }
-              if(!fromDate && toDate){
-                $('#from-date').parent().addClass('error')
-                              firstError = firstError ? firstError :$('#from-date')
-                              hasError = true
-              }
-              $(firstError).focus()
-                          return hasError
-            }
-            function exportToExcel(tableID, filename = '') {
-  
-              /* Get the HTML data using Element by Id */
-              var table = document.getElementById("tblexportData");
-  
-              /* Declaring array variable */
-              var rows = [];
-  
-              //iterate through rows of table
-              for (var i = 0, row; row = table.rows[i]; i++) {
-                //rows would be accessed using the "row" variable assigned in the for loop
-                //Get each cell value/column from the row
-                column1 = row.cells[0].innerText;
-                column2 = row.cells[1].innerText;
-                column3 = row.cells[2].innerText;
-                column4 = row.cells[3].innerText;
-                column5 = row.cells[4].innerText;
-  
-                /* add a new records in the array */
-                rows.push(
-                  [
-                    column1,
-                    column2,
-                    column3,
-                    column4,
-                    column5
-                  ]
-                );
-  
-              }
-              console.log("rows",rows,rows.length)
-              csvContent = "data:text/csv;charset=utf-8,";
-              /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-              rows.forEach(function (rowArray) {
-                row = rowArray.join(",");
-                csvContent += row + "\r\n";
-              });
-  
-              /* create a hidden <a> DOM node and set its download attribute */
-              var encodedUri = encodeURI(csvContent);
-              var link = document.createElement("a");
-              link.setAttribute("href", encodedUri);
-              link.setAttribute("download", "candidates list");
-              document.body.appendChild(link);
-              /* download the data file named "Stock_Price_Report.csv" */
-              link.click();
-            }
-  
-            function sendSMS(name,fromDate,toDate,count){
-              const params = window.location.search
-                          $('#sendBtn').addClass('disabled')
-              $.ajax({
-                  type: "POST",
-                  url: "/admin/candidate/bulkSMS",
-                  data: {
-                    isProfileCompleted : false,
-                    name,
-                    fromDate,
-                    toDate,
-                    count
-                  },
-                  success: () => {
-                    let smsHistory = document.getElementById('smsHistory')
-                    smsHistory.textContent="Last Sent : Just Now ()" 
-                    $('#sendBtn').removeClass('disabled')
-                  },
-                  error: () =>{
-                    window.location.href = `/admin/candidate${params}`
-                  }
-                });
-            }
-  
-            function sorting(value){
-              let order = $(`#${value}`).attr('value')
-              let str = `?`
-              let form = document.getElementById('filterForm');
-                          let data = new FormData(form);
-              let obj = {}
-                          for (let [key, value] of data) {
-                obj[key] = value
-                str += `${key}=${value}&`
-                             }
-              window.location.href = `/admin/candidate${str}value=${value}&order=${order}`
-            }
-  
-            function loginAs(mobile){
-              $.ajax({
-                  type: "POST",
-                  data: {mobile, module: 'candidate'},
-                  url: "/api/loginAsCandidate",
-                  success: (data) => {
-                    if(data.role===3) {
-                      localStorage.setItem("candidate", data.name);
-                                          localStorage.setItem("token", data.token);
-                                          window.location.href = "/candidate/dashboard";
-                    }									
-                  }
-                });
-            }
-            
-          </script>
-    </div> -->
   </div>
-  
+
 
   <style>
     #add-model .hideScroll .model-open .model {
@@ -1214,452 +573,571 @@
     }
 
 
-    .new-model-dialog{
+    .new-model-dialog {
       max-width: 850px;
     }
-    .header-tr tr:nth-child(1){
+
+    .header-tr tr:nth-child(1) {
       width: 135px;
     }
+
     tbody tr td:nth-child(1) input[type="checkbox"] {
       /* width: 135px; */
       width: 50px;
-  }
-
-  @media (max-width: 768px) {
-    .employee-table tr{
-      table-layout: auto;
     }
-    .employee-attendance-table {
+
+    @media (max-width: 768px) {
+      .employee-table tr {
+        table-layout: auto;
+      }
+
+      .employee-attendance-table {
         overflow-x: scroll;
-    }
+      }
 
-    .employee-table {
+      .employee-table {
         min-width: 100%;
-    }
+      }
 
 
-    .employee-info {
+      .employee-info {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
+      }
 
-    .employee-table td:first-child, .employee-table th:first-child {
-        min-width: 70px; 
-    }
+      .employee-table td:first-child,
+      .employee-table th:first-child {
+        min-width: 70px;
+      }
 
-    .employee-table td input[type="checkbox"] {
-        width: 20px; 
-        height: 20px; 
-    }
+      .employee-table td input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+      }
 
-   
-    .employee-table td {
-        min-width: 120px; 
+
+      .employee-table td {
+        min-width: 120px;
+      }
     }
-}
   </style>
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <% let candidates=[]; %> <!-- Candidates Array -->
+    <% let page=1; %> <!-- Initial Page Number -->
 
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+      <script>
+        let selectedFiles = []; // ✅ Yeh array uploaded files ko store karega
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <!-- <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script> -->
+$(document).ready(function () {
+    $("#file-upload").on("change", function () {
+        handleFilePreview(this);
+    });
+});
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+// ✅ **Function to Preview & Remove Images**
+function handleFilePreview(input) {
+    let previewContainer = $("#image-preview");
+    previewContainer.html(""); // ✅ Purane previews hatao
 
-  <script>
-    // tag users 
-    // Select input and tags container
-    const inputField = document.querySelector('.tag-input');
-    const tagsContainer = document.querySelector('.tags');
+    if (input.files && input.files.length > 0) {
+        selectedFiles = Array.from(input.files); // ✅ Files ko store karo
+        
+        selectedFiles.forEach((file, index) => {
+            if (file.type.startsWith("image/") || file.type.startsWith("video/")) { // ✅ Sirf images/videos ka preview dikhaye
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    let mediaElement = file.type.startsWith("image/")
+                        ? `<img src="${e.target.result}" style="width: 100px; height: 100px; border-radius: 8px; object-fit: cover; border: 1px solid #ccc;">`
+                        : `<video src="${e.target.result}" style="width: 100px; height: 100px; border-radius: 8px; object-fit: cover; border: 1px solid #ccc;" controls></video>`;
 
-    // Function to create a tag
-    function createTag(tagName) {
-      // Create the tag element
-      const tag = document.createElement('div');
-      tag.classList.add('tag');
-      tag.innerHTML = `${tagName} <span class="remove-tag">&times;</span>`;
-
-      // Add a click event to the remove button
-      tag.querySelector('.remove-tag').addEventListener('click', () => {
-        tag.remove(); // Remove the tag
-      });
-
-      // Append the tag to the tags container
-      tagsContainer.appendChild(tag);
+                    let previewItem = `
+                        <div style="position: relative; display: inline-block;" data-index="${index}">
+                            ${mediaElement}
+                            <span class="remove-btn" 
+                                style="position: absolute; top: -5px; right: -5px; background: white; color: white; border-radius: 50%; padding: 3px 6px; cursor: pointer;">
+                                ❌
+                            </span>
+                        </div>`;
+                    previewContainer.append(previewItem);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
     }
+}
 
-    // Handle input field keypress
-    inputField.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' && inputField.value.trim() !== '') {
-        e.preventDefault(); // Prevent form submission
-        createTag(inputField.value.trim()); // Add the tag
-        inputField.value = ''; // Clear the input field
-      }
+// ✅ **Remove Image from Preview & Array**
+$(document).on("click", ".remove-btn", function () {
+    let index = $(this).parent().data("index"); // ✅ Correct index lo
+    selectedFiles.splice(index, 1); // ✅ Array se remove karo
+    $(this).parent().remove(); // ✅ Preview se bhi remove karo
+
+    // ✅ Indexes ko reset karo taki naye indexes properly assign hoon
+    $("#image-preview").children("div").each(function (newIndex) {
+        $(this).attr("data-index", newIndex);
     });
 
-  </script>
-  <script>
+    console.log("Updated Files Array:", selectedFiles);
+});
 
-    var adminTableBody = [];
-    var companyTableBody = [];
-    var collegeTableBody = [];
-    var candidateTableBody = `<%- JSON.stringify(candidates) %>`;
+// // ✅ **Submit Button Event for Posting**
+// $("#post-form").on("submit", function (e) {
+//     e.preventDefault(); // Default Form Submit ko rokna hai
 
-    var selectedTag = "candidate";
-    var selectedTags = [];
+//     let content = $("#post-content").val();
+//     let formData = new FormData();
 
-    var searchby = "";
-    // var searchbyadmin = "";
-    var searchbycompany = "";
-    var searchbycollege = "";
-    var searchbycandidate = "";
+//     formData.append("content", content);
 
-    var candidates = `<%- JSON.stringify(candidates) %>`;
-    var page = `%- page %>`;
-    adminPage = 0;
-    companyPage = 0;
-    collegePage = 0;
-    candidatePage = page;
-    var isSelectedFromtab = false;
-  
-    function loadData() {
-      var tableBody = document.getElementById(selectedTag+"TableBody");
-      tableBody.innerHTML = "";  // Clear the table before re-rendering.
+//     // ✅ **Jo bachi hui files hai sirf wahi bhejni hai**
+//     selectedFiles.forEach((file) => {
+//         formData.append("files", file);
+//     });
 
-      switch (selectedTag) {
-        case "admin":
-          candidates = adminTableBody;
-          break;
+//     console.log("Final Form Data:", formData);
 
-        case "company":
-          candidates = companyTableBody;
-          break;
+//     // ✅ API Call for Uploading
+//     $.ajax({
+//         url: "/api/postfiles",
+//         type: "POST",
+//         data: formData,
+//         processData: false,
+//         contentType: false,
+//         success: function (response) {
+//             console.log("✅ Post Created Successfully:", response);
+//             alert("Post created successfully!");
+//             $("#post-form")[0].reset();
+//             selectedFiles = []; // ✅ Array reset karo
+//             $("#image-preview").html(""); // ✅ Preview bhi clear karo
+//         },
+//         error: function (xhr, status, error) {
+//             console.error("❌ Error creating post:", error);
+//             alert("Failed to create post. Please try again.");
+//         }
+//     });
+// });
 
-        case "college":
-          candidates = collegeTableBody;
-          break;
+       
+ </script>
 
-        case "candidate":
-          candidates = candidateTableBody;
-          break;
-      }
+      <script>
+        // Initializing Variables
+        var candidateslist = [];
+        var candidatePage = 1;
+        var candidateIsLoading = false; // Prevent multiple API calls
+        var candidateHasMoreData = true; // जब तक डेटा मौजूद है, लोड होगा
 
+        var compnieslist = [];
+        var companiesPage = 1;
+        var companiesIsLoading = false; // Prevent multiple API calls
+        var companiesHasMoreData = true; // जब तक डेटा मौजूद है, लोड होगा
 
-        const selectedTagsMap = new Map(selectedTags.map((tag, index) => [tag._id, { isChecked: true, index, userType: tag.userType }]));
-        candidates = candidates.map(candidate => {
-            if (selectedTagsMap.has(candidate._id)) {
-                return {
-                    ...candidate,
-                    ...selectedTagsMap.get(candidate._id)
-                };
-            }
-            return candidate;
-        });
-        candidates.forEach((candidate, index) => {
-          var isLastCandidate = index === candidates.length - 1;
-          var row = `
-            <tr>
-              <td><input type="checkbox" ${candidate.isChecked ? "checked" : ""} onchange="handleOnSelectTag(event, ${index})"></td>
-              <td class="employee-info">
-                <img src="/public_assets/images/newpage/logo-ha.svg" alt="" class="employee-avatar" />
-                <div class='employee-basic-info'>
-                  <span class="employee-name tooltipp" title="${candidate.name}">
-                    ${candidate.name}
-                  </span>
-                </div>
-              </td>
-              <td style='${((selectedTag === "college") || (selectedTag == "company") || (selectedTag == "admin")) ? "display: none;" : ""}'>${candidate.mobile}</td>
-            </tr>
-          `;
-      
-          tableBody.innerHTML += row;
-        });
-    }
-  
-    function loadMore() {
-      if(selectedTag != "admin"){
-        var newData = [];
-        switch (selectedTag) {
-          // case "admin":
-          //   page = adminPage + 1;
-          //   break;
+        var instituteslist = [];
+        var institutesPage = 1;
+        var institutesIsLoading = false; // Prevent multiple API calls
+        var institutesHasMoreData = true; // जब तक डेटा मौजूद है, लोड होगा
 
-          case "company":
-            page = companyPage + 1;
-            searchby = searchbycompany;
-            break;
-
-          case "college":
-            page = collegePage + 1;
-            searchby = searchbycollege;
-            break;
-
-          case "candidate":
-            page = candidatePage + 1;
-            searchby = searchbycandidate;
-            break;
-          
-          default:
-            searchby = "";
-            break;
-        }
+        // Function to Fetch Candidates
+        function fetchCandidates() {
+          if (candidateIsLoading || !candidateHasMoreData) return; // अगर पहले से API कॉल हो रही है या डेटा नहीं है तो रोकें
+          candidateIsLoading = true;
 
           $.ajax({
-            url: "/admin/post/getTagsList", // API endpoint
-            type: "POST",
-            data: {page: page, search: searchby, searchfor: selectedTag },
+            url: "/admin/post/candidateslist?page=" + candidatePage,
+            type: "GET",
             success: function (response) {
-              newData = response.candidates;
-              if(candidates.length > 0){
-                // candidates = [...candidates, ...newData];
-                console.log("/admin/post/getTagsList  ==>  ", selectedTag)
-                switch (selectedTag) {  
-                  // case "admin":
-                  //   adminTableBody = [...adminTableBody, ...newData];
-                  //   break;
-
-                  case "company":
-                    companyTableBody = isSelectedFromtab ? newData : [...companyTableBody, ...newData];
-                    break;
-
-                  case "college":
-                    collegeTableBody = isSelectedFromtab ? newData : [...collegeTableBody, ...newData];
-                    break;
-
-                  case "candidate":
-                    candidateTableBody = isSelectedFromtab ? newData : [...candidateTableBody, ...newData];
-                    break;
-                } 
+              console.log('candidate data', response)
+              if (response && response.length > 0) {
+                newCandidateslist = candidateslist.concat(response); // Add new data
+                console.log("New Candidate List", newCandidateslist)
+                appendCandidatesToDOM(newCandidateslist)
+                // Append New Data to DOM
+                candidatePage++; // ✅ Page तब ही बढ़ेगा जब डेटा आएगा
               } else {
-                candidateTableBody = newData;
+                candidateHasMoreData = false; // अगर कोई डेटा नहीं मिला तो आगे API कॉल मत करो
               }
-              loadData();
+              candidateIsLoading = false;
             },
             error: function (xhr, status, error) {
-              console.error("Error:", error);
+              console.error("Error fetching candidates:", error);
+              candidateIsLoading = false;
             },
-          });             
-      } else {
-        adminTableBody = [
-          {
-            _id: "5df0af9147ec65328e37425d",
-            name: "Focalyt",
+          });
+        };
+
+        // Function to Render Candidates in the Table
+        // ✅ **DOM में नया डेटा Map करने का Function (Table में Add करें)**
+        function appendCandidatesToDOM(candidates) {
+          console.log("adding data in consoel", candidates)
+          candidates.forEach(candidate => {
+            $("#candidateTableBody").append(`
+            <tr>
+              <td><input value="${candidate._id}" type="checkbox"></td>
+                <td>${candidate.name}</td>
+                <td>${candidate.mobile}</td>
+            </tr>
+        `);
+          });
+        }
+
+
+        // ✅ **Scroll Event Handler: जब यूज़र 50% Scroll कर ले तब API कॉल हो**
+        $(document).ready(function () {
+          $("#candidateTableBody").on("scroll", function () {
+            let scrollTop = $(this).scrollTop(); // कितने px स्क्रॉल हुआ
+            let scrollHeight = $(this)[0].scrollHeight; // पूरे स्क्रॉल की हाइट
+            let clientHeight = $(this).innerHeight(); // अंदर की हाइट
+
+            let scrolledPercentage = (scrollTop + clientHeight) / scrollHeight * 100;
+            console.log("Scrolled:", scrolledPercentage + "%"); // Debugging
+
+            // जब scroll 50% के बाद हो जाए, तो API call करो
+            if (scrolledPercentage > 80 && !candidateIsLoading && candidateHasMoreData) {
+              console.log("Fetching More Data...");
+              fetchCandidates();
+            }
+          });
+        });
+
+
+        // Function to Fetch Candidates
+        function fetchCompnies() {
+          if (companiesIsLoading || !companiesHasMoreData) return; // अगर पहले से API कॉल हो रही है या डेटा नहीं है तो रोकें
+          companiesIsLoading = true;
+
+          $.ajax({
+            url: "/admin/post/companylist?page=" + companiesPage,
+            type: "GET",
+            success: function (response) {
+              console.log('company data', response)
+              if (response && response.length > 0) {
+                newCompnieslist = compnieslist.concat(response); // Add new data
+                console.log(newCompnieslist)
+                appendCompaniesToDOM(newCompnieslist)
+                // Append New Data to DOM
+                companiesPage++; // ✅ Page तब ही बढ़ेगा जब डेटा आएगा
+              } else {
+                companiesHasMoreData = false; // अगर कोई डेटा नहीं मिला तो आगे API कॉल मत करो
+              }
+              companiesIsLoading = false;
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching companies:", error);
+              companiesIsLoading = false;
+            },
+          });
+        }
+
+        // Function to Render Candidates in the Table
+        // ✅ **DOM में नया डेटा Map करने का Function (Table में Add करें)**
+        function appendCompaniesToDOM(companies) {
+          console.log("adding data in consoel", companies)
+          companies.forEach(company => {
+            $("#companyTableBody").append(`
+            <tr>
+              <td><input value="${company._id}" type="checkbox"></td>
+                <td>${company.name}</td>
+                <td>${company.mobile}</td>
+            </tr>
+        `);
+          });
+        }
+
+        // ✅ **Scroll Event Handler: जब यूज़र 50% Scroll कर ले तब API कॉल हो**
+        $(document).ready(function () {
+          $("#companyTableBody").on("scroll", function () {
+            let scrollTop = $(this).scrollTop(); // कितने px स्क्रॉल हुआ
+            let scrollHeight = $(this)[0].scrollHeight; // पूरे स्क्रॉल की हाइट
+            let clientHeight = $(this).innerHeight(); // अंदर की हाइट
+
+            let scrolledPercentage = (scrollTop + clientHeight) / scrollHeight * 100;
+            console.log("Scrolled:", scrolledPercentage + "%"); // Debugging
+
+            // जब scroll 50% के बाद हो जाए, तो API call करो
+            if (scrolledPercentage > 80 && !companiesIsLoading && companiesHasMoreData) {
+              console.log("Fetching More Data...");
+              fetchCompnies();
+            }
+          });
+        });
+
+        // Function to Fetch Candidates
+        function fetchInstitutes() {
+          if (institutesIsLoading || !institutesHasMoreData) return; // अगर पहले से API कॉल हो रही है या डेटा नहीं है तो रोकें
+          institutesIsLoading = true;
+
+          $.ajax({
+            url: "/admin/post/institutelist?page=" + institutesPage,
+            type: "GET",
+            success: function (response) {
+              console.log('Institutes data', response)
+              if (response && response.length > 0) {
+                newInstituteslist = instituteslist.concat(response); // Add new data
+                console.log(newInstituteslist)
+                appendInstitutesToDOM(newInstituteslist)
+                // Append New Data to DOM
+                institutesPage++; // ✅ Page तब ही बढ़ेगा जब डेटा आएगा
+              } else {
+                institutesHasMoreData = false; // अगर कोई डेटा नहीं मिला तो आगे API कॉल मत करो
+              }
+              institutesIsLoading = false;
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching institutes:", error);
+              institutesIsLoading = false;
+            },
+          });
+        }
+
+        // Function to Render Candidates in the Table
+        // ✅ **DOM में नया डेटा Map करने का Function (Table में Add करें)**
+        function appendInstitutesToDOM(institutes) {
+          console.log("adding data in consoel", institutes)
+          institutes.forEach(institute => {
+            $("#collegeTableBody").append(`
+            <tr>
+              <td><input value="${institute._id}" type="checkbox"></td>
+                <td>${institute.name}</td>
+                <td>${institute.mobile}</td>
+            </tr>
+        `);
+          });
+        }
+
+        // ✅ **Scroll Event Handler: जब यूज़र 50% Scroll कर ले तब API कॉल हो**
+        $(document).ready(function () {
+          $("#collegeTableBody").on("scroll", function () {
+            let scrollTop = $(this).scrollTop(); // कितने px स्क्रॉल हुआ
+            let scrollHeight = $(this)[0].scrollHeight; // पूरे स्क्रॉल की हाइट
+            let clientHeight = $(this).innerHeight(); // अंदर की हाइट
+
+            let scrolledPercentage = (scrollTop + clientHeight) / scrollHeight * 100;
+            console.log("Scrolled:", scrolledPercentage + "%"); // Debugging
+
+            // जब scroll 50% के बाद हो जाए, तो API call करो
+            if (scrolledPercentage > 80 && !institutesIsLoading && institutesHasMoreData) {
+              console.log("Fetching More Data...");
+              fetchInstitutes();
+            }
+          });
+        });
+
+
+
+        let selectedTags = []; // Selected candidates store होंगे
+
+        // ✅ Function: Checkbox Click होने पर Data Store/Remove होगा
+        $(document).on("change", "#candidateTableBody input[type=checkbox]", function () {
+          let id = $(this).val();
+          let name = $(this).closest("tr").find("td:nth-child(2)").text().trim();
+          let candidateMobile = $(this).closest("tr").find("td:nth-child(3)").text().trim();
+          let userType = "candidate"; // Default type candidate
+
+          if ($(this).prop("checked")) {
+            // ✅ अगर checkbox select किया गया तो add करो
+            selectedTags.push({
+              userId: id,
+              name: name,
+              userType: userType
+            });
+
+            updateTagList();
+            hideOrShowDoneButton()
+          } else {
+            // ✅ अगर uncheck किया गया तो remove करो
+            selectedTags = selectedTags.filter(c => c.userId !== id);
+            updateTagList();
+            hideOrShowDoneButton()
           }
-        ]
-        loadData();
-      }
-    }
-  
-    // Initial data load
-    loadData();
 
+          console.log("Selected Candidates:", selectedTags);
+        });
 
+        $(document).on("change", "#companyTableBody input[type=checkbox]", function () {
+          let id = $(this).val();
+          let name = $(this).closest("tr").find("td:nth-child(2)").text().trim();
+          let candidateMobile = $(this).closest("tr").find("td:nth-child(3)").text().trim();
+          let userType = "company"; // Default type candidate
 
-    function handleOnSelectTag(e, i){
-      candidates[i].isChecked = e.target.checked;
+          if ($(this).prop("checked")) {
+            // ✅ अगर checkbox select किया गया तो add करो
+            selectedTags.push({
+              userId: id,
+              name: name,
+              userType: userType
+            });
 
-      if(e.target.checked){
-        candidates[i].index = i;
-        candidates[i].userType = selectedTag;
-        selectedTags.push(candidates[i])
-      } else {
-        selectedTags = selectedTags.filter((el) => { return el.index !== i; });
-      }
-      setTabPills();
-      hideOrShowDoneButton();
-    }
+            updateTagList();
+            hideOrShowDoneButton()
+          } else {
+            // ✅ अगर uncheck किया गया तो remove करो
+            selectedTags = selectedTags.filter(c => c.userId !== id);
+            updateTagList();
+            hideOrShowDoneButton()
+          }
 
-    function setTabPills(){ //tagscandidate
-      var tableBody = document.getElementById("tagscandidate");
-        
-        tableBody.innerHTML = "";  // Clear the table before re-rendering.
-    
-        selectedTags.forEach((tag, index) => {
-          var showtags = `
-            <div type="text" class="btn btn-primary" style="padding: 0.3rem 1rem;">
-            ${tag.name} <span class="badge bg-secondary" onclick="handleRemoveSelectedTag(${index})"><i class="fa-solid fa-x" style="color: #000000;" aria-hidden="true"></i></span>
+          console.log("Selected Tags:", selectedTags);
+        });
+        $(document).on("change", "#collegeTableBody input[type=checkbox]", function () {
+          let id = $(this).val();
+          let name = $(this).closest("tr").find("td:nth-child(2)").text().trim();
+          let candidateMobile = $(this).closest("tr").find("td:nth-child(3)").text().trim();
+          let userType = "institute"; // Default type candidate
+
+          if ($(this).prop("checked")) {
+            // ✅ अगर checkbox select किया गया तो add करो
+            selectedTags.push({
+              userId: id,
+              name: name,
+              userType: userType
+            });
+            hideOrShowDoneButton()
+
+            updateTagList();
+          } else {
+            // ✅ अगर uncheck किया गया तो remove करो
+            selectedTags = selectedTags.filter(c => c.userId !== id);
+
+            updateTagList();
+            hideOrShowDoneButton()
+          }
+
+          console.log("Selected Candidates:", selectedTags);
+        });
+
+        function updateTagList() {
+          $("#tagscandidate").empty(); // पहले सभी Tags को Clear करें
+          selectedTags.forEach((selectedTag, index) => {
+            $("#tagscandidate").append(`
+            <div class="btn btn-primary tag-item" style="padding: 0.3rem 1rem;" data-id="${selectedTag.userId}">
+                ${selectedTag.name} 
+                <span class="badge bg-secondary remove-tag" data-index="${index}">
+                    <i class="fa-solid fa-x" style="color: #000000;" aria-hidden="true"></i>
+                </span>
             </div>
-          `;
-    
-          tableBody.innerHTML += showtags;
+        `);
+          });
+        }
+
+        // ✅ Remove Tag on Click
+        $(document).on("click", ".remove-tag", function () {
+          let index = $(this).data("index");
+          let userId = selectedTags[index].userId;
+
+          // ✅ Remove from Array
+          selectedTags.splice(index, 1);
+
+          // ✅ Uncheck the Checkbox
+          $(`#candidateTableBody input[value="${userId}"]`).prop("checked", false);
+          $(`#collegeTableBody input[value="${userId}"]`).prop("checked", false);
+          $(`#companyTableBody input[value="${userId}"]`).prop("checked", false);
+
+          // ✅ Update UI
+          updateTagList();
+          hideOrShowDoneButton()
         });
-    }
 
-    function handleRemoveSelectedTag(i){
-      candidates[selectedTags[i].index].isChecked = false;
-      // delete selectedTags[i];
-      selectedTags.splice(i, 1);
-      setTabPills();
-      loadData();
-      hideOrShowDoneButton();
-    }
+        function closePopup() {
+          $("#candidateTableBody input[type=checkbox]:checked").prop("checked", false);
+          $("#companyTableBody input[type=checkbox]:checked").prop("checked", false);
+          $("#collegeTableBody input[type=checkbox]:checked").prop("checked", false);
+          selectedTags = [];
+          updateTagList();
+          hideOrShowDoneButton();
+          
 
-    function searchbynameorphone(){
-     switch (selectedTag) {
-      case 'admin':
-        searchbyadmin = "";
-        break;
-
-      case 'company':
-        searchbycompany = document.getElementById("searchbyCompany").value;
-        break;
-
-      case 'college':
-        searchbycollege = document.getElementById("searchbyInstitute").value;
-        break;
-
-      case 'candidate':
-        searchbycandidate = document.getElementById("searchbyCanditate").value;
-        break;
-
-      default:
-        searchby = '';
-        break;
-     }
-     
-     loadMore();
-    }
-
-    function scrollDetected() {
-      document.querySelectorAll(".employee-attendance-table tbody").forEach((tbody) => {
-          tbody.removeEventListener("scroll", handleScroll);
-      });
-
-      let tableBody = document.getElementById(selectedTag + "TableBody");
-      if (tableBody) {
-          tableBody.addEventListener("scroll", handleScroll);
-      }
-    }
-
-    function scrollDetected() {
-      document.querySelectorAll(".employee-attendance-table tbody").forEach((tbody) => {
-          tbody.removeEventListener("scroll", handleScroll);
-      });
-
-      let tableBody = document.getElementById(selectedTag + "TableBody");
-      if (tableBody) {
-          tableBody.addEventListener("scroll", handleScroll);
-      }
-    }
-
-    function handleScroll(event) {
-        let tbody = event.target;
-        if (tbody.scrollHeight - tbody.scrollTop <= tbody.clientHeight + 1) {
-            isSelectedFromtab = false;
-            loadMore();
-        }
-    }
-
-    function selctedTagFor(selectedFor) {
-        selectedTag = selectedFor;
-        candidatePage = 0;
-        collegePage = 0;
-        companyPage = 0;
-        isSelectedFromtab = true;
-
-        setTimeout(() => {
-            loadMore();
-        }, 0);
-
-        setTimeout(scrollDetected, 500);
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        scrollDetected();
-    });
-
-    
-    $(document).ready(function () {
-      // Handle form submission
-      $("#post-form").on("submit", function (e) {
-        e.preventDefault(); // Prevent the default form submission
-
-        const formData = new FormData();
-        formData.append("content", $("#post-content").val());
-        const files = $("#file-upload")[0].files;
-        console.log("Content:", $("#post-content").val());
-        console.log("Files:", files);
-        formData.append("data", JSON.stringify(selectedTags));
-        for (let i = 0; i < files.length; i++) {
-          formData.append("files", files[i]);
-          console.log(`File ${i + 1}:`, files[i].name);
         }
 
-        // Show a loading spinner or disable the submit button (optional)
-        $("button[type=submit]").text("Posting...").attr("disabled", true);
-
-        // Send data to the API
-        $.ajax({
-          url: "/api/postfiles", // API endpoint
-          type: "POST",
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function (response) {
-            // Handle successful response
-            console.log("Response:", response);
-            alert("Post created successfully!");
-            // Optionally clear the form
-            $("#post-form")[0].reset();
-            $("button[type=submit]").text("Post").attr("disabled", false);
-          },
-          error: function (xhr, status, error) {
-            // Handle error response
-            console.error("Error:", error);
-            alert("Failed to create post. Please try again.");
-            $("button[type=submit]").text("Post").attr("disabled", false);
-          },
-        });
-      });
-    });
-
-      function debounce(func, delay) {
-            let timeout;
-            return function(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), delay);
-            };
-        }
-
-        function searchFunction() {
-            searchbynameorphone();
-            candidatePage = 0;
-            collegePage = 0;
-            companyPage = 0;
-            candidateTableBody = [];
-            collegeTableBody = [];
-            companyTableBody = [];
-        }
-
-        const debouncedSearch = debounce(searchFunction, 500);
-
-        function hideOrShowDoneButton(){
+        function hideOrShowDoneButton() {
           const message = document.getElementById("donebutton");
           if (selectedTags.length === 0) {
-              message.style.display = "none"; 
+            message.style.display = "none";
           } else {
-              message.style.display = "block"; 
+            message.style.display = "block";
           }
         }
         hideOrShowDoneButton();
 
-        function closePopup(){
-          selectedTags = [];
-          hideOrShowDoneButton();
-          candidates.forEach(item => {
-            if ("isChecked" in item) {
-                item.isChecked = false;
+        // function appendTagsToDOM(selectedTags) {
+        //   console.log("adding data in consoel", selectedTags)
+
+        // }
+
+        fetchCompnies()
+        fetchCandidates()
+        fetchInstitutes()
+
+        $(document).ready(function () {
+    $("#post-form").on("submit", function (e) {
+        e.preventDefault(); // Default Form Submit को रोकें
+
+        // ✅ Form Data को Extract करें
+        let content = $("#post-content").val();
+        let files = $("#file-upload")[0].files;
+
+        // ✅ Selected Tags (Candidate, Company, Institute)
+        let taggedUsers = selectedTags; // यह Array में सभी Selected Users देगा
+
+        // ✅ FormData Object बनाएं
+        const formData = new FormData();
+        formData.append("content", content);
+
+        // ✅ Files को Add करें
+        selectedFiles.forEach((file) => {
+        formData.append("files", file);
+    });
+
+        // ✅ Tags को JSON में Convert करके Append करें
+        formData.append("tags", JSON.stringify(taggedUsers));
+
+        // ✅ Data को Console में Print करें
+        console.log("🔹 Post Content:", content);
+        console.log("🔹 Attached Files:", files);
+        console.log("🔹 Tagged Users:", taggedUsers);
+        console.log("🔹 Tagged Users:", taggedUsers);
+
+
+        // ✅ API Call करें
+        $.ajax({
+            url: "/api/postfiles", // API Endpoint
+            type: "POST",
+            data: formData,
+            processData: false,  // Required for FormData
+            contentType: false,  // Required for FormData
+            success: function (response) {
+                console.log("✅ Post Created Successfully:", response);
+                alert("Post created successfully!");
+
+                // ✅ Form Reset करें
+                $("#post-form")[0].reset();
+                $("#image-preview").html(""); // ✅ Preview bhi clear karo
+                selectedTags = [];
+                updateTagList();
+            },
+            error: function (xhr, status, error) {
+                console.error("❌ Error creating post:", error);
+                alert("Failed to create post. Please try again.");
             }
-          });
-          setTabPills();
-          loadData();
-        }
-        
-  </script>
+        });
+    });
+});
+
+      </script>
 
 
-  <% include ../partials/footer %>
-    </div>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <!-- <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script> -->
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+      
+
+
+      <% include ../partials/footer %>
+        </div>

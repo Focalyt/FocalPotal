@@ -16,9 +16,14 @@
           <option value="Female">Female</option>
         </select>
       </div>
+      
       <div class="col-xl-12 mb-1" id="dob-div">
         <input type="text" name="dob" class="form-control" value="" id="dob" placeholder="Date of Birth/जन्म तिथि"
          onfocus="(this.type='date')" onblur="this.value ? '' :(this.type='text')">
+      </div>
+      <div class="col-xl-12 mb-1" id="email-div">
+        <input type="text" name="email" class="form-control" value="" id="email" placeholder="Email/ईमेल"
+         onfocus="(this.type='email')" onblur="this.value ? '' :(this.type='email')">
       </div>
       <div class="col-xl-12 mb-1" id="experience-div">
         <select class="form-control single-field" value="" name="experience" id="experience">
@@ -85,6 +90,12 @@
           } else {
             $('#gender-div').addClass('error')
             $('#gender').focus()
+          }
+          if (res.data.candidate.email) {
+            $('#email').val(res.data.candidate.email)
+          } else {
+            $('#email-div').addClass('error')
+            $('#email').focus()
           }
           if(res.data.candidate.whatsapp){
             $('#whatsapp').val(res.data.candidate.whatsapp)
@@ -180,6 +191,7 @@
         console.log(courseid,"this is course id .,,,,,,,,..,,..,...><")
       $('#user-details .error').removeClass('error')
       let gender = $('#gender').val()
+      let email = $('#email').val()
       let state = $('#state').val()
       let city = $('#city').val()
       let pincode = $('#pincode').val()
@@ -195,7 +207,10 @@
       let location = $('#work-loc').val()
       if (!gender) {
         $('#gender-div').addClass('error')
-      } if (!state) {
+      } 
+      if (!email) {
+        $('#email-div').addClass('error')
+      }if (!state) {
         $('#state-div').addClass('error')
       } if (!city) {
         $('#city-div').addClass('error')
@@ -211,13 +226,14 @@
         $('#dob-div').addClass('error')
       }
   
-      if (gender && state && city && pincode && highestQualification && experience
+      if (gender && email && state && city && pincode && highestQualification && experience
         && longitude && latitude && place && location) {
           let body;
             body = {
               highestQualification,
               personalInfo: {
                 sex: gender,
+                email,
                 state,
                 city,
                 pincode,

@@ -28,7 +28,7 @@ const candidateServices = require('../services/candidate')
 const { candidateCashbackEventName } = require('../../db/constant');
 const candidate = require("../services/candidate");
 const router = express.Router();
-router.use(isAdmin);
+// router.use(isAdmin);
 
 
 router
@@ -136,6 +136,76 @@ router
 		}
 
 	});
+
+
+	router.get("/candidateslist", async (req, res) => {
+		try {
+		const ITEMS_PER_PAGE = 10;
+		console.log("fetching students data")
+		  let page = parseInt(req.query.page) || 1; // Page Number from Query Params
+		  if (page < 1) page = 1;
+	  
+		  let skip = (page - 1) * ITEMS_PER_PAGE; // कितने items स्किप करने हैं
+		  let filter = { isDeleted: false, status: true };
+	  
+		  const candidates = await Candidate.find(filter)
+			.skip(skip)
+			.limit(ITEMS_PER_PAGE);
+	  
+		  res.json(candidates); // Response as JSON
+		  
+
+		} catch (error) {
+		  console.error("Error fetching candidates:", error);
+		  res.status(500).json({ error: "Internal Server Error" });
+		}
+	  });
+	router.get("/companylist", async (req, res) => {
+		try {
+		const ITEMS_PER_PAGE = 10;
+		console.log("fetching companies data")
+		  let page = parseInt(req.query.page) || 1; // Page Number from Query Params
+		  if (page < 1) page = 1;
+	  
+		  let skip = (page - 1) * ITEMS_PER_PAGE; // कितने items स्किप करने हैं
+		  let filter = { isDeleted: false, status: true };
+	  
+		  const companies = await Company.find(filter)
+			.skip(skip)
+			.limit(ITEMS_PER_PAGE);
+	  
+		  res.json(companies); // Response as JSON
+		  
+
+		} catch (error) {
+		  console.error("Error fetching companies:", error);
+		  res.status(500).json({ error: "Internal Server Error" });
+		}
+	  });
+
+	  router.get("/institutelist", async (req, res) => {
+		try {
+		const ITEMS_PER_PAGE = 10;
+		console.log("fetching students data")
+		  let page = parseInt(req.query.page) || 1; // Page Number from Query Params
+		  if (page < 1) page = 1;
+	  
+		  let skip = (page - 1) * ITEMS_PER_PAGE; // कितने items स्किप करने हैं
+		  let filter = { isDeleted: false, status: true };
+	  
+		  const colleges = await College.find(filter)
+			.skip(skip)
+			.limit(ITEMS_PER_PAGE);
+	  
+		  res.json(colleges); // Response as JSON
+		  
+
+		} catch (error) {
+		  console.error("Error fetching candidates:", error);
+		  res.status(500).json({ error: "Internal Server Error" });
+		}
+	  });
+
 
 router.post('/getTagsList', async (req, res) => {
 	try {

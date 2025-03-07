@@ -13,7 +13,7 @@ const apiKey = process.env.MIPIE_RAZORPAY_KEY;
 const razorSecretKey = process.env.MIPIE_RAZORPAY_SECRET;
 
 const {
-	coinsOffers, PaymentDetails, Vacancy, Courses, Candidate, Company, AppliedJobs, AppliedCourses, User, CandidateCashBack
+	coinsOffers, PaymentDetails, Vacancy, Courses, Candidate, Company, AppliedJobs, AppliedCourses, User, CandidateCashBack, FAQ
 } = require("../models");
 
 const { sendNotification } = require('./services/notification');
@@ -67,7 +67,7 @@ class MetaConversionAPI {
 
 	async trackCourseApplication(courseData, userData, metaParams) {
 		try {
-			console.log('Course Data Console', courseData,'User Data Console', userData,'Meta Params Console', metaParams)
+			console.log('Course Data Console', courseData, 'User Data Console', userData, 'Meta Params Console', metaParams)
 			const eventData = {
 				data: [{
 					event_name: 'Course Apply',
@@ -142,7 +142,7 @@ const getMetaParameters = (req) => {
 	const campaignId = req.query.campaign_id || null;
 	const adsetId = req.query.adset_id || null;
 
-	
+
 
 	return {
 		fbc,      // Only included if fbclid exists or _fbc cookie is present
@@ -430,36 +430,6 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 				_course: courseId
 			}).save();
 
-			// Track conversion event
-				const metaApi = new MetaConversionAPI();
-				await metaApi.trackCourseApplication(
-				  {
-					courseName: course.name,
-					courseId: courseId,
-					courseValue: course.registrationCharges,
-					sourceUrl: `${process.env.BASE_URL}/coursedetails/${courseId}`
-				  },
-				  {
-					email: candidate.email,
-					phone: candidate.mobile,
-					firstName: candidate.name.split(' ')[0],
-					lastName: candidate.name.split(' ').slice(1).join(' '),
-					gender: candidate?.sex === 'Male' ? 'm' : candidate?.sex === 'Female' ? 'm' : '',
-					dob: candidate?.dob ? moment(candidate.dob).format('YYYYMMDD') : '',
-					city: candidate.city?.name,
-					state: candidate.state?.name,
-					ipAddress: req.ip,
-					userAgent: req.headers['user-agent']
-				  },
-				  metaParams
-				);
-
-			// Capitalize every word's first letter
-			function capitalizeWords(str) {
-				if (!str) return '';
-				return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-			}
-
 			// Update Spreadsheet
 			const sheetData = [
 				moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
@@ -476,9 +446,44 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 				`${process.env.BASE_URL}/coursedetails/${courseId}`,
 				course?.registrationCharges,
 				appliedData?.registrationFee,
-				"Leads From ChatBot"
+				"Leads From ChatBot",
+				course?.courseFeeType,
+				course?.typeOfProject,
+				course?.projectName
 			];
 			await updateSpreadSheetValues(sheetData);
+
+			// Track conversion event
+			const metaApi = new MetaConversionAPI();
+			await metaApi.trackCourseApplication(
+				{
+					courseName: course.name,
+					courseId: courseId,
+					courseValue: course.registrationCharges,
+					sourceUrl: `${process.env.BASE_URL}/coursedetails/${courseId}`
+				},
+				{
+					email: candidate.email,
+					phone: candidate.mobile,
+					firstName: candidate.name.split(' ')[0],
+					lastName: candidate.name.split(' ').slice(1).join(' '),
+					gender: candidate?.sex === 'Male' ? 'm' : candidate?.sex === 'Female' ? 'm' : '',
+					dob: candidate?.dob ? moment(candidate.dob).format('YYYYMMDD') : '',
+					city: candidate.city?.name,
+					state: candidate.state?.name,
+					ipAddress: req.ip,
+					userAgent: req.headers['user-agent']
+				},
+				metaParams
+			);
+
+			// Capitalize every word's first letter
+			function capitalizeWords(str) {
+				if (!str) return '';
+				return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+			}
+
+
 
 			if (!apply) {
 				req.flash("error", "Already failed");
@@ -1205,6 +1210,26 @@ commonRoutes.get("/getCreditCount", async (req, res) => {
 		res.status(200).send({ status: true, credit: candidate.creditLeft });
 	} catch (error) {
 		console.log('error: ', error);
+	}
+});
+
+commonRoutes.get("/chatbotfaq", async (req, res) => {
+	try {
+
+		const filter = {
+			status: true
+		}
+
+		const Que = await FAQ.find(filter)
+		return res.status(200).send({
+			Que
+		});
+	} catch (err) {
+		res.status(500).send({
+			status: "failure",
+			msg: "Error fetching faqs from server.",
+			error: err.message,
+		});
 	}
 });
 
