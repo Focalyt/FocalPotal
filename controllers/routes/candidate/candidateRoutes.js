@@ -378,9 +378,14 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     let candidateMob = candidate.mobile;
 
     // Check if the mobile number already has the country code
-    if (!candidateMob.startsWith("91") && candidateMob.length == 10) {
-      candidateMob = "91" + candidate.mobile; // Add country code if missing and the length is 10
-    }
+    if (typeof candidateMob !== "string") {
+      candidateMob = String(candidateMob); // Convert to string
+  }
+  
+  if (!candidateMob.startsWith("91") && candidateMob.length === 10) {
+      candidateMob = "91" + candidateMob; // Add country code if missing and the length is 10
+  }
+  
 
     console.log(candidateMob);
 

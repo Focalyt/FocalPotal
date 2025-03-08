@@ -58,3 +58,5 @@ views/front/courses copy 2.ejs
 views/front/index.ejs
 controllers/routes/services/googleservice.js
 controllers/routes/index.js
+views/app/candidate/view-course copy.ejs
+views/app/candidate/view-course.ejs

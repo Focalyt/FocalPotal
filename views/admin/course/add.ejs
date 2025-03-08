@@ -64,10 +64,11 @@
                                             <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
                                                 id="courseFeeTypeblock">
                                                 <label>Course Fee Type</label>
-                                                <select class="form-control" name="courseFeeType" id="courseFeeType" onchange="toggleCourseFeeType()">
+                                                <select class="form-control" name="courseFeeType" id="courseFeeType"
+                                                    onchange="toggleCourseFeeType()">
                                                     <option value="">Select Course Fee Type</option>
                                                     <option value="Paid">Paid</option>
-                                                    <option value="Free">Free</option>                                                   
+                                                    <option value="Free">Free</option>
                                                 </select>
                                             </div>
                                             <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
@@ -83,10 +84,10 @@
                                                     <option value="">Select Type of Project</option>
                                                     <option value="T&P">T&P</option>
                                                     <option value="P&T">P&T</option>
-                                                    <option value="General">General</option>                                                   
+                                                    <option value="General">General</option>
                                                 </select>
                                             </div>
-                                            
+
 
                                             <!-- <script>
                                                 function toggleCourseFeeType() {
@@ -323,12 +324,26 @@
                                                     placeholder="enter youtube url" id="youtubeURL" />
                                             </div>
 
-
-
-                                            <div class="col-xl-6 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                            <!-- <div class="col-xl-6 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
                                                 <label>Required Documents</label>
                                                 <textarea class="form-control" name="requiredDocuments"
                                                     id="requiredDocuments"></textarea>
+                                            </div> -->
+                                            <div class="col-12">
+                                                <div id="documentContainer">
+                                                    <div class="row">
+                                                        <div
+                                                            class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                            <label>Required Documents</label>
+                                                            <input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-12 mb-1 px-0 text-right">
+                                                <a class="btn btn-success text-white add-another-button">+ Add
+                                                    Another</a>
                                             </div>
 
                                             <!-- <script
@@ -635,6 +650,30 @@
 
 
     </div>
+    <style>
+        #documentContainer {
+            width: 100%;
+        }
+    </style>
+    <script>
+        document.querySelector('.add-another-button').addEventListener('click', function () {
+            let container = document.querySelector("#documentContainer .row"); // Existing row select karega
+
+            let newInputDiv = document.createElement("div");
+            newInputDiv.classList.add("col-xl-3", "mb-1");
+
+            let newLabel = document.createElement("label");
+            newLabel.textContent = "Required Documents";
+
+            let newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.classList.add("form-control");
+
+            newInputDiv.appendChild(newLabel);
+            newInputDiv.appendChild(newInput);
+            container.appendChild(newInputDiv); // Same row ke andar naye fields add honge
+        });
+    </script>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
 
@@ -1031,7 +1070,7 @@
 
                 if (res && res.status) {
                     window.location.href = "/admin/courses"
-                   
+
                 }
             }).catch(error => {
                 console.error('Error adding courses:', error);
