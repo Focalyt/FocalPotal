@@ -48,6 +48,7 @@ const courseSchema = new Schema({
     stipendDuringTraining: String,
     lastDateForApply: String,
     requiredDocuments: String,
+    docsRequired:[{ Name: String }],
     testimonialvideos: [{
         type: String
     }],
