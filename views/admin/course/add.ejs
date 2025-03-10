@@ -329,22 +329,7 @@
                                                 <textarea class="form-control" name="requiredDocuments"
                                                     id="requiredDocuments"></textarea>
                                             </div> -->
-                                            <div class="col-12">
-                                                <div id="documentContainer">
-                                                    <div class="row">
-                                                        <div
-                                                            class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
-                                                            <label>Required Documents</label>
-                                                            <input type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xl-12 mb-1 px-0 text-right">
-                                                <a class="btn btn-success text-white add-another-button">+ Add
-                                                    Another</a>
-                                            </div>
+                                            
 
                                             <!-- <script
                                                 src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script> -->
@@ -355,6 +340,32 @@
                                 </div>
                             </div>
                         </div>
+                </section>
+                <section id="docsRequired">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                    <h4 class="card-title pb-1">Documents Required</h4>
+                                </div>
+                                <div class="col-12">
+                                    <div id="documentContainer">
+                                        <div class="row requiredDocsRow">
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1">
+                                                <label>Document Name</label>
+                                                <input rows="1" name="name" type="text" class="form-control docsName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-12 mb-1 px-0 text-right">
+                                    <a class="btn btn-success text-white add-another-button">+ Add
+                                        Another</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
                 <section id="personal-info">
                     <div class="row">
@@ -620,7 +631,7 @@
                                         }
 
                                         // Event listener to add a new question-answer pair when the button is clicked
-                                        document.querySelector('.add-button').addEventListener('click', function () {
+                                            document.querySelector('.add-button').addEventListener('click', function () {
                                             let html = $('#questionanswerTemplate template').html();
                                             $('#questionanswerlist').append(html);
                                             initializeCKEditor('.questionanswerrow:last-of-type .question', true);
@@ -657,22 +668,30 @@
     </style>
     <script>
         document.querySelector('.add-another-button').addEventListener('click', function () {
-            let container = document.querySelector("#documentContainer .row"); // Existing row select karega
+    let container = document.querySelector("#documentContainer"); // Pure container ko select karega
 
-            let newInputDiv = document.createElement("div");
-            newInputDiv.classList.add("col-xl-3", "mb-1");
+    // Nayi row create karein
+    let newRow = document.createElement("div");
+    newRow.classList.add("row", "requiredDocsRow");
 
-            let newLabel = document.createElement("label");
-            newLabel.textContent = "Required Documents";
+    let newInputDiv = document.createElement("div");
+    newInputDiv.classList.add("col-xl-3", "mb-1");
 
-            let newInput = document.createElement("input");
-            newInput.type = "text";
-            newInput.classList.add("form-control");
+    let newLabel = document.createElement("label");
+    newLabel.textContent = "Document Name";
 
-            newInputDiv.appendChild(newLabel);
-            newInputDiv.appendChild(newInput);
-            container.appendChild(newInputDiv); // Same row ke andar naye fields add honge
-        });
+    let newInput = document.createElement("input");
+    newInput.type = "text";
+    newInput.classList.add("form-control", "docsName");
+
+    newInputDiv.appendChild(newLabel);
+    newInputDiv.appendChild(newInput);
+    newRow.appendChild(newInputDiv); // Naye row ke andar input field add karein
+    container.appendChild(newRow); // Naye row ko container ke andar add karein
+});
+
+
+
     </script>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
@@ -1044,7 +1063,7 @@
                 maxEMITenure: $('#maxEMITenure').val(),
                 stipendDuringTraining: $('#stipendDuringTraining').val(),
                 lastDateForApply: $('#lastDateForApply').val(),
-                requiredDocuments: $('#requiredDocuments').val(),
+                // requiredDocuments: $('#requiredDocuments').val(),
                 courseFeatures: $('.courseFeature').val(), // Get value of Course Features textarea
                 importantTerms: $('.importantTerms').val(),
                 faq: $('#faq').val(),
@@ -1056,6 +1075,13 @@
                 counslerphonenumber: $('#counslerphonenumber').val(),
                 counslerwhatsappnumber: $('#counslerwhatsappnumber').val(),
                 counsleremail: $('#counsleremail').val(),
+                docsRequired: Array.from(document.querySelectorAll(".requiredDocsRow")).map(row => {
+                    let name = row.querySelector(".docsName").value;
+                   
+                    return { Name: name};
+
+                }),
+                
                 questionAnswers: Array.from(document.querySelectorAll(".questionanswerrow")).map(row => {
                     let question = row.querySelector(".question").value;
                     let answer = row.querySelector(".answer").value;
@@ -1063,6 +1089,7 @@
                 })
 
             }
+            
 
 
             console.log('==============> Body ', body)
@@ -1136,7 +1163,7 @@
             var maxEMITenure = $('#maxEMITenure').val();
             var stipendDuringTraining = $('#stipendDuringTraining').val();
             var lastDateForApply = $('#lastDateForApply').val();
-            var requiredDocuments = $('#requiredDocuments').val();
+            // var requiredDocuments = $('#requiredDocuments').val();
             var courseFeatures = $('#courseFeatures').val();
             var importantTerms = $('#importantTerms').val();
             var photos = $('#photos').val();
