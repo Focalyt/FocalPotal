@@ -33,17 +33,18 @@
                                     <div class="uploader-header">Document Uploader</div>
 
                                     <div id="documentContainer">
+                                        <% docsRequired.forEach((a)=>{%>
                                         <div class="doc-row">
 
                                             <div class="file-container d-flex align-items-center gap-4">
-                                                <label class="field-label">Select File:</label>
+                                                <label class="field-label"><%- a.Name%></label>
                                                 <label class="file-input-label">
                                                     Choose File
                                                     <input type="file" id="docPopUp" class="file-input fileInput"
                                                         accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                                                        onchange="validateFile(this)">
+                                                        onchange="validateFile(this,'<%- a._id%>' )">
                                                 </label>
-                                                <div id="image-preview"
+                                                <div id="<%- a._id%>image-preview"
                                                     style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
                                                 <div class="add-doc-container">
                                                     <button class="upload-btn"
@@ -53,6 +54,7 @@
 
 
                                         </div>
+                                        <%})%>
                                     </div>
 
 
@@ -279,7 +281,7 @@
                     <script>
                     let selectedFiles = [];
                     
-                    function validateFile(input) {
+                    function validateFile(input,courseId) {
                         const allowedExtensions = ["pdf", "doc", "docx", "jpg", "jpeg", "png"];
                         let validFiles = true;
                         
@@ -298,11 +300,11 @@
                         }
                         
                         // Preview files
-                        displayFilePreview(input.files);
+                        displayFilePreview(input.files,courseId);
                     }
                     
-                    function displayFilePreview(files) {
-                        let previewContainer = document.getElementById("image-preview");
+                    function displayFilePreview(files, courseId) {
+                        let previewContainer = document.getElementById(`${courseId}image-preview`);
                         previewContainer.innerHTML = ""; // Clear existing previews
                         
                         if (files && files.length > 0) {
