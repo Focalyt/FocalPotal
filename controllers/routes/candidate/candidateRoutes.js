@@ -3677,4 +3677,22 @@ router.route('/review/:job')
       return res.status(500).send({ status: false, message: err.message })
     }
   })
+
+  // router.get("/reqDocs/:courseId", isCandidate, async (req, res) => {
+  router.get("/reqDocs", isCandidate, async (req, res) => {
+ 
+    try {
+    
+  
+      res.render(`${req.vPath}/app/candidate/requiredDocuments`, {
+        menu: 'appliedCourse',
+      });
+    } catch (err) {
+      console.log("caught error ", err);
+    }
+  });
+ 
+  
+  
+
 module.exports = router;
