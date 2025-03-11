@@ -199,7 +199,7 @@ module.exports = {
                   $expr: {
                     $and: [
                       { $eq: ["$_candidate", "$$id"] },
-                      { $eq: ["$_company", mongoose.Types.ObjectId(companyId)] },
+                      { $eq: ["$_company",new mongoose.Types.ObjectId(companyId)] },
                     ],
                   },
                 },

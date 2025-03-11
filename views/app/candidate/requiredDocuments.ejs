@@ -34,39 +34,171 @@
 
                                     <div id="documentContainer">
                                         <% docsRequired.forEach((a)=>{%>
-                                        <div class="doc-row">
+                                            <div class="doc-row">
 
-                                            <div class="file-container d-flex align-items-center gap-4">
-                                                <label class="field-label"><%- a.Name%></label>
-                                                <label class="file-input-label">
-                                                    Choose File
-                                                    <input type="file" id="docPopUp" class="file-input fileInput"
-                                                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                                                        onchange="validateFile(this,'<%- a._id%>' )">
-                                                </label>
-                                                <div id="<%- a._id%>image-preview"
-                                                    style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
-                                                <div class="add-doc-container">
-                                                    <button class="upload-btn"
-                                                        onclick="uploadFile(this)">Upload</button>
+                                                <div class="file-containers d-flex align-items-center gap-4">
+                                                    <label class="field-label"><%- a.Name%></label>
+                                                    
+                                                    <div class="add-doc-container">
+                                                        <!-- <button class="upload-btn"
+                                                            onclick="uploadFile(this)">Upload</button> -->
+                                                        <button class="upload-btn"
+                                                            onclick="openPopup('<%- a._id%>')">Upload Documents</button>
+                                                    </div>
                                                 </div>
+
+
                                             </div>
-
-
-                                        </div>
-                                        <%})%>
+                                            
+                                                    <div id="popup<%- a._id%>" class="file-container trans_parent d-none">
+                                                        <form class="popupModel">
+                                                            <span onclick="closePopup('<%- a._id%>')" class="close">X</span>
+                                                            <div class="contents">
+                                                                <span class="title m-0"><%- a.Name%></span>
+                                                                <p class="message">Select a file to upload from your computer or
+                                                                    device.</p>
+            
+                                                                <div class="actions">
+                                                                    <label for="file" class="button upload-btn">Choose File
+                                                                        <input type="file" id='<%- a._id%>docPopUp' class="file-input fileInput"
+                                                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                                            onchange="validateFile(this,'<%- a._id%>' )">
+                                                                    </label>
+                                                                </div>
+                                                                <div id="<%- a._id%>image-preview"
+                                                                    style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                                                </div>
+                                                            </div>
+                                                            <button class="upload-btn upload-new-btn"  onclick="uploadFile(this)">Upload</button>
+                                                        </form>
+                                                    </div>
+                                             
+                                            <%})%>
+                                           
                                     </div>
 
-
-
-
                                 </div>
-
                             </div>
+
+                           
+
                         </div>
                     </div>
 
                     <style>
+                        /* From Uiverse.io by Yaya12085 */
+                        .trans_parent{
+                            background-color: rgba(0, 0, 0, 0.5);
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            z-index: 12;
+                            top: 50%;
+                            left: 50%;
+                            transform:translate(-50%, -50%);
+                        }
+                        .popupModel {
+                            position: relative;
+                            background: white;
+                            max-width: 400px;
+                            margin: 85px auto;
+                            padding: 20px;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                            width: 100%;
+                            text-align: center;                           
+                        }
+
+                        .contents>*,
+                        .popupModel>* {
+                            padding: 0.875em;
+                        }
+
+                        .title {
+                            font-size: 1.25em;
+                            font-weight: 600;
+                            line-height: 1.2;
+                            display: flex;
+                            justify-content: center;
+                        }
+
+                        .message {
+                            line-height: 1.2;
+                            text-align: center;
+                        }
+
+                        .actions {
+                            display: flex;
+                            align-items: center;
+                            flex-wrap: wrap;
+                        }
+
+                        .upload-btn {
+                            background-color: transparent;
+                            border: 0.125rem dashed hsla(223, 10%, 50%, 0.4);
+                            flex: 1;
+                            padding: 0.375rem 2rem;
+                        }
+
+                        .upload-btn:hover {
+                            background-color: hsla(223, 10%, 60%, 0.2);
+                        }
+                        .upload-new-btn{
+                            position: relative;
+                            z-index: 13;
+                        }
+                        .close {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background-color: rgb(226, 94, 54);
+                            height: 30px;
+                            width: 30px;
+                            border-radius: 50%;
+                            position: absolute;
+                            right: 10px;
+                            top: 10px;
+                            color: #fff;
+                            font-weight: bold;
+                            cursor: pointer;
+                            z-index: 13;
+                        }
+
+                        .result {
+                            margin-top: 4px;
+                            background-color: rgba(0, 140, 255, 0.062);
+                            display: flex;
+                            align-items: center;
+                            position: relative;
+                            border-radius: 1em;
+                        }
+
+                        .file-uploaded {
+                            font-weight: 300;
+                        }
+
+                        .file-uploaded::before {
+                            position: absolute;
+                            content: "X";
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background-color: rgba(26, 7, 1, 0.212);
+                            height: 30px;
+                            width: 30px;
+                            border-radius: 50%;
+                            right: 10px;
+                            top: 10px;
+                            color: rgb(255, 255, 255);
+                            font-weight: bold;
+                            cursor: pointer;
+                        }
+
+                        .file-uploaded:hover::before {
+                            background-color: rgba(233, 40, 6, 0.664);
+                        }
+
+                       
                         .uploader-container {
                             background-color: #ffffff;
                             border-radius: 12px;
@@ -75,7 +207,7 @@
                             margin: 20px auto;
                             max-width: 900px;
                         }
-                    
+
                         .uploader-header {
                             /* background: linear-gradient(135deg, #3498db, #2c3e50); */
                             background: linear-gradient(135deg, #6b45a9, #e83a5f);
@@ -85,22 +217,23 @@
                             font-size: 24px;
                             font-weight: 600;
                         }
-                    
+
                         .doc-row {
                             display: flex;
                             flex-wrap: wrap;
                             gap: 15px;
                             padding: 25px;
                             border-bottom: 1px solid #eaeaea;
-                            background-color:  #f8f9fa;;
+                            background-color: #f8f9fa;
+                            ;
                             transition: all 0.3s ease;
                         }
-                    
+
                         .doc-row:hover {
                             background-color: #f0f7ff;
                             transform: translateY(-2px);
                         }
-                    
+
                         .field-label {
                             display: block;
                             margin-bottom: 8px;
@@ -109,13 +242,13 @@
                             font-size: 14px;
                             white-space: nowrap;
                         }
-                    
-                        .file-container {
+
+                        .file-containers {
                             flex: 1 1 250px;
                             position: relative;
                             gap: 40px;
                         }
-                    
+
                         .file-input-label {
                             display: block;
                             position: relative;
@@ -134,16 +267,16 @@
                             margin: 0 !important;
                             transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
                         }
-                    
+
                         .file-input-label:hover {
                             background-color: #e8e8e8;
                             border-color: #d0d0d0;
                         }
-                    
+
                         .file-input-label:active {
                             transform: scale(0.98);
                         }
-                    
+
                         .file-input {
                             position: absolute;
                             top: 0;
@@ -153,10 +286,10 @@
                             opacity: 0;
                             cursor: pointer;
                         }
-                    
+
                         .upload-btn {
                             /* background-color: #3498db; */
-                            background:  linear-gradient(135deg, #6b45a9, #e83a5f);
+                            background: linear-gradient(135deg, #6b45a9, #e83a5f);
                             color: white;
                             border: none;
                             border-radius: 6px;
@@ -168,23 +301,22 @@
                             box-shadow: 0 3px 10px rgba(107, 69, 169, 0.3);
                             transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
                         }
-                    
+
                         .upload-btn:hover {
                             /* background-color: #2980b9; */
                             background: linear-gradient(135deg, #5d3b93, #d62e50);
-                            transform: translateY(-2px);
                             box-shadow: 0 5px 15px rgba(232, 58, 95, 0.4);
                         }
-                    
+
                         .upload-btn:active {
                             transform: translateY(0);
                         }
-                    
+
                         .add-doc-container {
                             display: flex;
                             align-items: center;
                         }
-                    
+
                         #image-preview {
                             display: flex;
                             flex-wrap: wrap;
@@ -192,7 +324,7 @@
                             margin-top: 15px;
                             min-height: 60px;
                         }
-                    
+
                         .preview-item {
                             position: relative;
                             display: inline-block;
@@ -200,18 +332,18 @@
                             margin-bottom: 10px;
                             transition: opacity 0.3s ease, transform 0.3s ease;
                         }
-                    
-                        .preview-item img, 
+
+                        .preview-item img,
                         .preview-item video {
                             width: 80px;
                             height: 80px;
                             border-radius: 8px;
                             object-fit: cover;
                             border: 1px solid #ddd;
-                            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                             transition: transform 0.2s ease;
                         }
-                    
+
                         .preview-item .preview-icon {
                             width: 80px;
                             height: 80px;
@@ -225,10 +357,10 @@
                             font-weight: bold;
                             font-size: 12px;
                             text-align: center;
-                            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                             transition: transform 0.2s ease, box-shadow 0.2s ease;
                         }
-                    
+
                         .remove-btn {
                             position: absolute;
                             top: -8px;
@@ -244,16 +376,16 @@
                             justify-content: center;
                             cursor: pointer;
                             border: 2px solid white;
-                            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
                             transition: all 0.2s;
                             transition: background-color 0.2s ease, transform 0.2s ease;
                         }
-                    
+
                         .remove-btn:hover {
                             background: #ff0000;
                             transform: scale(1.1);
                         }
-                    
+
                         .file-name {
                             font-size: 12px;
                             color: #555;
@@ -264,153 +396,181 @@
                             text-align: center;
                             margin-top: 5px;
                         }
-                    
+
                         @media (max-width: 768px) {
                             .doc-row {
                                 flex-direction: column;
                             }
-                    
+
                             .upload-btn {
                                 width: 100%;
                                 margin-top: 15px;
                             }
                         }
                     </style>
-                   
+
                     <!-- JavaScript Code -->
                     <script>
-                    let selectedFiles = [];
-                    
-                    function validateFile(input,courseId) {
-                        const allowedExtensions = ["pdf", "doc", "docx", "jpg", "jpeg", "png"];
-                        let validFiles = true;
-                        
-                        // Check each file for valid extension
-                        Array.from(input.files).forEach(file => {
-                            const fileExtension = file.name.split('.').pop().toLowerCase();
-                            if (!allowedExtensions.includes(fileExtension)) {
-                                validFiles = false;
-                            }
-                        });
-                        
-                        if (!validFiles) {
-                            alert("Please upload only PDF, DOC, DOCX, JPG, JPEG, or PNG files!");
-                            input.value = ""; // Clear input on invalid files
-                            return;
+
+                        function openPopup(id) {
+                            $(`#popup${id}`).removeClass('d-none')
+
                         }
-                        
-                        // Preview files
-                        displayFilePreview(input.files,courseId);
-                    }
-                    
-                    function displayFilePreview(files, courseId) {
-                        let previewContainer = document.getElementById(`${courseId}image-preview`);
-                        previewContainer.innerHTML = ""; // Clear existing previews
-                        
-                        if (files && files.length > 0) {
-                            selectedFiles = Array.from(files); // Store files for later use
+                        function closePopup(id) {                            
+                            $(`#popup${id}`).addClass('d-none')
+
+                        }
+                        function removeFile(id) {  
+                            console.log(id);
+                            const a =    document.getElementById(`${id}docPopUp`).value;
+                            console.log(a);
+                                               
+
                             
-                            selectedFiles.forEach((file, index) => {
-                                const previewItem = document.createElement("div");
-                                previewItem.className = "preview-item";
-                                previewItem.dataset.index = index;
-                                
-                                // Create appropriate preview based on file type
-                                if (file.type.startsWith("image/")) {
-                                    // Image preview
-                                    let reader = new FileReader();
-                                    reader.onload = function(e) {
-                                        previewItem.innerHTML = `
+                            document.getElementById(`${id}docPopUp`).value = "";
+                            document.getElementById(`${id}image-preview`).innerHTML = "";
+
+                            
+
+                            
+
+                            
+                        }
+
+
+                        let selectedFiles = [];
+
+                        function validateFile(input, courseId) {
+                            const allowedExtensions = ["pdf", "doc", "docx", "jpg", "jpeg", "png"];
+                            let validFiles = true;
+
+                            // Check each file for valid extension
+                            Array.from(input.files).forEach(file => {
+                                const fileExtension = file.name.split('.').pop().toLowerCase();
+                                if (!allowedExtensions.includes(fileExtension)) {
+                                    validFiles = false;
+                                }
+                            });
+
+                            if (!validFiles) {
+                                alert("Please upload only PDF, DOC, DOCX, JPG, JPEG, or PNG files!");
+                                input.value = ""; // Clear input on invalid files
+                                return;
+                            }
+
+                            // Preview files
+                            displayFilePreview(input.files, courseId);
+                        }
+
+                        function displayFilePreview(files, courseId) {
+                            let previewContainer = document.getElementById(`${courseId}image-preview`);
+                            previewContainer.innerHTML = ""; // Clear existing previews
+
+                            if (files && files.length > 0) {
+                                selectedFiles = Array.from(files); // Store files for later use
+
+                                selectedFiles.forEach((file, index) => {
+                                    const previewItem = document.createElement("div");
+                                    previewItem.className = "preview-item";
+                                    previewItem.dataset.index = index;
+
+                                    // Create appropriate preview based on file type
+                                    if (file.type.startsWith("image/")) {
+                                        // Image preview
+                                        let reader = new FileReader();
+                                        reader.onload = function (e) {
+                                            previewItem.innerHTML = `
                                             <img src="${e.target.result}" alt="${file.name}">
-                                            <div class="remove-btn" onclick="removeFile(${index})">×</div>
+                                            <div class="remove-btn" onclick="removeFile('${courseId}')">×</div>
                                             <div class="file-name">${truncateFilename(file.name)}</div>
                                         `;
-                                    };
-                                    reader.readAsDataURL(file);
-                                } else if (file.type.startsWith("video/")) {
-                                    // Video preview
-                                    let reader = new FileReader();
-                                    reader.onload = function(e) {
+                                        };
+                                        reader.readAsDataURL(file);
+                                    } else {
+                                        // Generic file icon for PDFs, DOCs, etc.
+                                        let fileIcon = getFileIcon(file.name);
                                         previewItem.innerHTML = `
-                                            <video src="${e.target.result}" controls></video>
-                                            <div class="remove-btn" onclick="removeFile(${index})">×</div>
-                                            <div class="file-name">${truncateFilename(file.name)}</div>
-                                        `;
-                                    };
-                                    reader.readAsDataURL(file);
-                                } else {
-                                    // Generic file icon for PDFs, DOCs, etc.
-                                    let fileIcon = getFileIcon(file.name);
-                                    previewItem.innerHTML = `
                                         <div class="preview-icon">${fileIcon}</div>
-                                        <div class="remove-btn" onclick="removeFile(${index})">×</div>
+                                        <div class="remove-btn" onclick="removeFile()">×</div>
                                         <div class="file-name">${truncateFilename(file.name)}</div>
                                     `;
+                                    }
+
+                                    previewContainer.appendChild(previewItem);
+                                });
+                            }
+                        }
+
+                        function getFileIcon(filename) {
+                            const extension = filename.split('.').pop().toLowerCase();
+
+                            switch (extension) {
+                                case 'pdf':
+                                    return 'PDF';
+                                case 'doc':
+                                case 'docx':
+                                    return 'DOC';
+                                default:
+                                    return 'FILE';
+                            }
+                        }
+
+                        function truncateFilename(filename) {
+                            if (filename.length > 15) {
+                                const extension = filename.split('.').pop();
+                                const name = filename.substring(0, filename.length - extension.length - 1);
+                                return name.substring(0, 10) + '...' + '.' + extension;
+                            }
+                            return filename;
+                        }
+
+                        
+
+                        function uploadFile(button) {
+                            console.log('<%=courseId%>');
+                            const courseId = '<%=courseId%>';
+                            let inputElement = button.closest('.file-container').querySelector('.file-input');
+                            let files = inputElement.files;
+                            console.log(files)
+
+                            if (files.length === 0) {
+                                alert("Please select a file before uploading.");
+                                return;
+                            }
+
+                            let formData = new FormData();
+                            formData.append("file", files[0]);
+                            axios.post(`/candidate/reqDocs/${courseId}`, formData, {
+                                headers: {
+                                    'x-auth': localStorage.getItem('token'),
+                                    'Content-Type': 'multipart/form-data'
                                 }
-                                
-                                previewContainer.appendChild(previewItem);
-                            });
+                            })
+                                .then(result => {
+
+
+                                }).catch(err => {
+                                    console.log(err.message)
+                                    window.location.reload()
+                                })
                         }
-                    }
-                    
-                    function getFileIcon(filename) {
-                        const extension = filename.split('.').pop().toLowerCase();
-                        
-                        switch(extension) {
-                            case 'pdf':
-                                return 'PDF';
-                            case 'doc':
-                            case 'docx':
-                                return 'DOC';
-                            default:
-                                return 'FILE';
-                        }
-                    }
-                    
-                    function truncateFilename(filename) {
-                        if (filename.length > 15) {
-                            const extension = filename.split('.').pop();
-                            const name = filename.substring(0, filename.length - extension.length - 1);
-                            return name.substring(0, 10) + '...' + '.' + extension;
-                        }
-                        return filename;
-                    }
-                    
-                    function removeFile(index) {
-                        // Remove from selectedFiles array
-                        selectedFiles.splice(index, 1);
-                        
-                        // If no files left, clear the input
-                        if (selectedFiles.length === 0) {
-                            document.getElementById("docPopUp").value = "";
-                        }
-                        
-                        // Create a new FileList from the remaining files
-                        const dt = new DataTransfer();
-                        selectedFiles.forEach(file => dt.items.add(file));
-                        
-                        // Update the file input
-                        document.getElementById("docPopUp").files = dt.files;
-                        
-                        // Refresh preview
-                        displayFilePreview(dt.files);
-                    }
-                    
-                    function uploadFile(button) {
-                        if (selectedFiles.length === 0) {
-                            alert("Please select files to upload first");
-                            return;
-                        }
-                        
+
+
+
+                        // if (selectedFiles.length === 0) {
+                        //     alert("Please select files to upload first");
+                        //     return;
+                        // }
+
                         // Here you would typically implement your upload logic
                         // For demonstration, we'll just show a success message
-                        alert(`${selectedFiles.length} file(s) uploaded successfully!`);
-                        
+                        // alert(`${selectedFiles.length} file(s) uploaded successfully!`);
+
                         // Clear form after successful upload
-                        document.getElementById("docPopUp").value = "";
-                        document.getElementById("image-preview").innerHTML = "";
-                        selectedFiles = [];
-                    }
+                        // document.getElementById("docPopUp").value = "";
+                        // document.getElementById("image-preview").innerHTML = "";
+                        // selectedFiles = [];}
+
                     </script>
 
 

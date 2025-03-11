@@ -23,7 +23,21 @@ const candidateSchema = new Schema(
       },
     ],
     appliedJobs: [{ type: ObjectId, ref: "Vacancy"}],
-    appliedCourses: [{ type: ObjectId, ref: "courses"}],
+    appliedCourses: [
+      {
+        courseId: { type: ObjectId, ref: "courses" }, // Course reference
+        uploadedDocs: [
+          {
+            docId: { type: ObjectId, ref: "courses.docsRequired" }, // Course ke required document ka reference
+            fileUrl: { type: String, required: true }, // Uploaded File URL
+            status: { type: String, enum: ["Pending", "Verified", "Rejected"], default: "Pending" }, // Verification Status
+            reason: { type: String }, // Rejection ka reason
+            verifiedBy:{type: ObjectId, ref: "User" },
+            uploadedAt: { type: Date, default: Date.now } // Upload Timestamp
+          }
+        ]
+      }
+    ],
     regFee: {
       type: Number,
       default: 0
