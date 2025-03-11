@@ -3723,21 +3723,25 @@ router.route('/review/:job')
   })
 
 router.route('/reqDocs/:courseId')
-  .get(isCandidate, async (req, res) => {
-    // router.get("/reqDocs", isCandidate, async (req, res) => {
-
+  .get(isCandidate, async (req, res) => {    
     try {
-      const { courseId } = req.params;
       const filter = { status: true };
       const validation = { mobile: req.session.user.mobile };
-
       const { value, error } = await CandidateValidators.userMobile(validation);
       if (error) {
         return res.status(400).json({ status: false, msg: "Invalid mobile number.", error });
-      }
-
-
+      };
       const candidateMobile = value.mobile;
+      const { courseId } = req.params;
+      const candidate = await Candidate.findOne({
+        mobile: candidateMobile,
+        appliedCourses: courseId  // Check if courseId exists in appliedCourses
+      });
+
+      if (!candidate) {
+        console.log("You have not applied for this course.")
+        res.redirect("/candidate/searchcourses");
+      };
       const course = await Courses.findById(courseId);
       let docsRequired = null
       if (course) {
@@ -3745,14 +3749,57 @@ router.route('/reqDocs/:courseId')
         console.log(docsRequired, courseId);
       } else {
         console.log("Course not found");
+      };
+
+      let uploadedDocs = [];
+      if (candidate.docsForCourses && candidate.docsForCourses.length > 0) {
+        const courseEntry = candidate.docsForCourses.find(
+          entry => entry.courseId.toString() === courseId.toString()
+        );
+        if (courseEntry && courseEntry.uploadedDocs) {
+          uploadedDocs = courseEntry.uploadedDocs;
+        }
       }
+      let mergedDocs = [];
+      
+      if (course && course.docsRequired) {
+        docsRequired = course.docsRequired;
+      
+      // Create a merged array with both required docs and uploaded docs info
+      mergedDocs = docsRequired.map(reqDoc => {
+        // Convert Mongoose document to plain object
+        const docObj = reqDoc.toObject ? reqDoc.toObject() : reqDoc;
+        
+        // Find matching uploaded docs for this required doc
+        const matchingUploads = uploadedDocs.filter(
+          uploadDoc => uploadDoc.docsId.toString() === docObj._id.toString()
+        );
+        
+        return {
+          _id: docObj._id,
+          Name: docObj.docName || 'Document',
+          description: docObj.description || '',
+          uploads: matchingUploads || []
+        };
+      });
+      
+      console.log("Merged docs:", JSON.stringify(mergedDocs, null, 2));
+    } else {
+      console.log("Course not found or no docs required");
+    };
 
+        console.log("Merged docs:", mergedDocs);
+      
 
+      
+
+      
       res.render(`${req.vPath}/app/candidate/requiredDocuments`, {
         menu: 'appliedCourse',
         docsRequired,
-        courseId
-
+        courseId,
+        uploadedDocs,
+        mergedDocs: mergedDocs || []
       });
     } catch (err) {
       console.log("caught error ", err);
@@ -3770,7 +3817,6 @@ router.route('/reqDocs/:courseId')
         console.log("docs id not valid")
         return res.status(400).json({ error: "Invalid document ID format." });
       }
-      console.log("docObjectId:", docObjectId, "Type:", typeof docObjectId, "Valid:", mongoose.Types.ObjectId.isValid(docObjectId));
 
       const validation = { mobile: req.session.user.mobile };
       const { value, error } = await CandidateValidators.userMobile(validation);
@@ -3844,61 +3890,62 @@ router.route('/reqDocs/:courseId')
 
       const fileUrl = uploadedFiles[0].fileURL;
       // First check if this course already exists in docsForCourses
-const existingCourseDoc = await Candidate.findOne({
-  mobile: candidateMobile,
-  "docsForCourses.courseId": courseId
-});
+      const existingCourseDoc = await Candidate.findOne({
+        mobile: candidateMobile,
+        "docsForCourses.courseId": courseId
+      });
 
-if (existingCourseDoc) {
-  // Course already exists in docsForCourses, push to its uploadedDocs array
-  const updatedCandidate = await Candidate.findOneAndUpdate(
-    { mobile: candidateMobile, "docsForCourses.courseId": courseId },
-    { 
-      $push: { 
-        "docsForCourses.$.uploadedDocs": { 
-          docsId: new mongoose.Types.ObjectId(docsId),
-          fileUrl: fileUrl,
-          status: "Pending",
-          uploadedAt: new Date() 
-        } 
-      } 
-    },
-    { new: true }
-  );
-  
-  console.log("Added document to existing course's uploadedDocs array",updatedCandidate);
-  return res.status(200).json({ 
-    status: true, 
-    message: "Document uploaded successfully", 
-    data: updatedCandidate 
-  });
-} else {
-  // Course doesn't exist in docsForCourses yet, create a new entry
-  const updatedCandidate = await Candidate.findOneAndUpdate(
-    { mobile: candidateMobile },
-    { 
-      $push: { 
-        "docsForCourses": { 
-          courseId: new mongoose.Types.ObjectId(courseId),
-          uploadedDocs: [{
-            docsId: new mongoose.Types.ObjectId(docsId),
-            fileUrl: fileUrl,
-            status: "Pending",
-            uploadedAt: new Date()
-          }]
-        } 
-      } 
-    },
-    { new: true }
-  );
-  
-  console.log("Added new course entry to docsForCourses with the document",updatedCandidate);
-  return res.status(200).json({ 
-    status: true, 
-    message: "Document uploaded successfully", 
-    data: updatedCandidate 
-  });
-} }
+      if (existingCourseDoc) {
+        // Course already exists in docsForCourses, push to its uploadedDocs array
+        const updatedCandidate = await Candidate.findOneAndUpdate(
+          { mobile: candidateMobile, "docsForCourses.courseId": courseId },
+          {
+            $push: {
+              "docsForCourses.$.uploadedDocs": {
+                docsId: new mongoose.Types.ObjectId(docsId),
+                fileUrl: fileUrl,
+                status: "Pending",
+                uploadedAt: new Date()
+              }
+            }
+          },
+          { new: true }
+        );
+
+        console.log("Added document to existing course's uploadedDocs array", updatedCandidate);
+        return res.status(200).json({
+          status: true,
+          message: "Document uploaded successfully",
+          data: updatedCandidate
+        });
+      } else {
+        // Course doesn't exist in docsForCourses yet, create a new entry
+        const updatedCandidate = await Candidate.findOneAndUpdate(
+          { mobile: candidateMobile },
+          {
+            $push: {
+              "docsForCourses": {
+                courseId: new mongoose.Types.ObjectId(courseId),
+                uploadedDocs: [{
+                  docsId: new mongoose.Types.ObjectId(docsId),
+                  fileUrl: fileUrl,
+                  status: "Pending",
+                  uploadedAt: new Date()
+                }]
+              }
+            }
+          },
+          { new: true }
+        );
+
+        console.log("Added new course entry to docsForCourses with the document", updatedCandidate);
+        return res.status(200).json({
+          status: true,
+          message: "Document uploaded successfully",
+          data: updatedCandidate
+        });
+      }
+    }
     catch (err) {
       console.log(err)
       return res.status(500).send({ status: false, message: err.message })

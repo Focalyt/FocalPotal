@@ -3,6 +3,7 @@ const { sign } = require("jsonwebtoken");
 
 const { ObjectId } = Schema.Types;
 const { jwtSecret } = require("../../config");
+const { boolean } = require("joi");
 
 const candidateSchema = new Schema(
   {
@@ -22,26 +23,28 @@ const candidateSchema = new Schema(
         ),
       },
     ],
-    appliedJobs: [{ type: ObjectId, ref: "Vacancy"}],
+    appliedJobs: [{ type: ObjectId, ref: "Vacancy" }],
     appliedCourses: [
       {
-        type: ObjectId, ref: "courses" , // Course reference
-       
-      }
-    ],
-docsForCourses: [
-  {
-    courseId: { type: ObjectId, ref: "courses" }, // Changed from type to courseId
-    uploadedDocs: [
-      {
-        docsId: { type: ObjectId, ref: "courses.docsRequired" },
-        fileUrl: String,
-        status: String,
-        uploadedAt: Date
+        type: ObjectId, ref: "courses", // Course reference
+
       }
-    ]
-  }
-],
+    ],
+    docsForCourses: [
+      {
+        courseId: { type: ObjectId, ref: "courses" }, // Changed from type to courseId
+        uploadedDocs: [
+          {
+            docsId: { type: ObjectId, ref: "courses.docsRequired" },
+            fileUrl: String,
+            status: { type: String, enum: ["Pending", "Verified", "Rejected"], default: "Pending" }, // Verification Status
+            reason: { type: String }, // Rejection ka reason
+            verifiedBy:{ type: ObjectId, ref: "User" },
+            uploadedAt: { type: Date, default: Date.now } // Upload Timestamp
+          }
+        ]
+      }
+    ],
     regFee: {
       type: Number,
       default: 0
@@ -159,9 +162,9 @@ docsForCourses: [
     creditLeft: {
       type: Number,
     },
-    visibility:{
-      type:Boolean,
-      default:true
+    visibility: {
+      type: Boolean,
+      default: true
     },
     location: {
       type: {
@@ -173,12 +176,12 @@ docsForCourses: [
       },
     },
     upi: { type: String },
-    referredBy:{
+    referredBy: {
       type: ObjectId, ref: "Candidate"
     },
-    verified:{
-      type:Boolean,
-      default:false
+    verified: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }
