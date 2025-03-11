@@ -45,41 +45,143 @@
                                                         <button class="upload-btn"
                                                             onclick="openPopup('<%- a._id%>')">Upload Documents</button>
                                                     </div>
+
+                                                </div>
+                                                <div class="d-flex flex-wrap align-items-center justify-content-end">
+
+                                                    <!-- <img src="/images/filtern.png"
+                                                        class="btn btn-link collapsed py-0 mx-0" data-toggle="collapse"
+                                                        data-target="#collapseOne" aria-expanded="true"
+                                                        aria-controls="collapseOne" id="filter-docs"> -->
+                                                        <img src="/images/filtern.png" 
+                                                        class="btn btn-link collapsed py-0 mx-0 filter-docs" 
+                                                        data-doc-id="<%- a._id%>" 
+                                                        alt="Filter">
                                                 </div>
 
 
+
+                                            </div>
+                                            <div id="doc-data-<%- a._id%>" style="display: none;">
+                                                <% if(docsRequired && docsRequired.length > 0) { %>
+                                                    <% docsRequired.forEach((doc, index)=> { %>
+                                                        <% if (doc.id === a._id) { %>  
+                                                            <tr>
+                                                                <td><%= index + 1 %></td>
+                                                                <td></td>
+                                                                <td>
+                                                                    <div id="image-preview<%- a._id %>" 
+                                                                         class="image-preview"
+                                                                         style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <% if(doc.status) { %>
+                                                                        <span class="status-<%= doc.status.toLowerCase() %>">
+                                                                            <%= doc.status %>
+                                                                        </span>
+                                                                    <% } else { %>
+                                                                        <span class="status-pending">Pending</span>
+                                                                    <% } %>
+                                                                </td>
+                                                                <td><%= doc.rejectionReason || '-' %></td>
+                                                            </tr>
+                                                        <% } %>
+                                                    <% }); %>
+                                                <% } %>
                                             </div>
 
-                                            <div id="popup<%- a._id%>" class="file-container trans_parent d-none">
-                                                <form class="popupModel">
-                                                    <span onclick="closePopup('<%- a._id%>')" class="close">X</span>
-                                                    <div class="contents">
-                                                        <span class="title m-0"><%- a.Name%></span>
-                                                        <p class="message">Select a file to upload from your computer or
-                                                            device.</p>
+                                            <div id="collapseOne<%- a._id%>" style="display: none;">
+                                                <div
+                                                    class="pl-xl-0 pr-xl-1 pl-lg-0 pr-lg-1 pl-md-0 pr-md-1  px-sm-0 px-0 mx-auto">
+                                                    <div class="table-content shadow-cashback shadow-cashback">
+                                                        <div class="tab_head font-weight-bolder py-1 px-1"> Uploaded Document
+                                                        </div>
 
-                                                        <div class="actions">
-                                                            <label for="file" class="button upload-btn">Choose File
-                                                                <input type="file" id='<%- a._id%>docPopUp'
-                                                                    class="file-input fileInput"
-                                                                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                                                                    onchange="validateFile(this,'<%- a._id%>' )">
-                                                            </label>
-                                                        </div>
-                                                        <div id="<%- a._id%>image-preview"
-                                                            style="display: flex; flex-wrap: wrap; gap: 10px;">
-                                                        </div>
+                                                        <table class="table ">
+                                                            <thead>
+                                                                <tr class="tab_row">
+                                                                    <th scope="col">S.No</th>
+                                                                    <th scope="col">Date</th>
+                                                                    <th scope="col">View</th>
+                                                                    <th scope="col">Status</th>
+                                                                    <th scope="col">Reason (If rejected)</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% if(docsRequired && docsRequired.length> 0) { %>
+                                                                    <% docsRequired.forEach((doc, index)=> { %>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <%= index + 1 %>
+                                                                            </td>
+                                                                            <td></td>
+                                                                            <td>
+                                                                                <div id="image-preview<%- a._id %>"
+                                                                                    style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                                                                </div>
+                                                                            </td>
+                                                                            <!-- <td><span class="">Approved</span></td> -->
+                                                                            <td>
+                                                                                <% if(doc.status) { %>
+                                                                                    <span
+                                                                                        class="status-<%= doc.status.toLowerCase() %>">
+                                                                                        <%= doc.status %>
+                                                                                    </span>
+                                                                                    <% } else { %>
+                                                                                        <span
+                                                                                            class="status-pending">Pending</span>
+                                                                                        <% } %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= doc.rejectionReason || '-' %>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <% }); %>
+                                                                            <% } else { %>
+                                                                                <tr>
+                                                                                    <td colspan="5" class="text-center">
+                                                                                        No
+                                                                                        documents required</td>
+                                                                                </tr>
+                                                                                <% } %>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                    <button class="upload-btn upload-new-btn"
-                                                        onclick="uploadFile(this,'<%- a.Name%>', '<%- a._id%>' )">Upload</button>
-                                                </form>
-                                            </div>
+                                                </div>
 
+                                            </div>
+                                            
+                                                    <div id="popup<%- a._id%>" class="file-container trans_parent d-none">
+                                                        <form class="popupModel">
+                                                            <span onclick="closePopup('<%- a._id%>')" class="close">X</span>
+                                                            <div class="contents">
+                                                                <span class="title m-0"><%- a.Name%></span>
+                                                                <p class="message">Select a file to upload from your computer or
+                                                                    device.</p>
+            
+                                                                <div class="actions">
+                                                                    <label for="file" class="button upload-btn">Choose File
+                                                                        <input type="file" id='<%- a._id%>docPopUp' class="file-input fileInput"
+                                                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                                            onchange="validateFile(this,'<%- a._id%>' )">
+                                                                    </label>
+                                                                </div>
+                                                                <div id="<%- a._id%>image-preview"
+                                                                    style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                                                </div>
+                                                            </div>
+                                                            <button class="upload-btn upload-new-btn"  onclick="uploadFile(this)">Upload</button>
+                                                        </form>
+                                                    </div>
+                                             
                                             <%})%>
 
                                     </div>
 
                                 </div>
+
                             </div>
 
 
@@ -403,10 +505,7 @@
                         }
 
                         @media (max-width: 768px) {
-                            .doc-row {
-                                flex-direction: column;
-                            }
-
+                          
                             .upload-btn {
                                 width: 100%;
                                 margin-top: 15px;
@@ -415,7 +514,48 @@
                     </style>
 
                     <!-- JavaScript Code -->
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
                     <script>
+$(document).ready(function () {
+    $(".filter-docs").click(function () {
+        let docId = $(this).data("doc-id"); // Get the document ID
+        let previewSection = $("#collapseOne" + docId); // Find related preview section
+
+        // Hide all other preview sections except the selected one
+        $(".collapse-section").not(previewSection).slideUp(300).removeClass('active');
+
+        if (previewSection.hasClass('active')) {
+            previewSection.slideUp(300).removeClass('active');
+        } else {
+            // Clear other tables before opening a new one
+            $(".collapse-section tbody").empty();
+
+            // Populate the specific table with only relevant data
+            let docData = $(`#doc-data-${docId}`).html();
+            previewSection.find("tbody").html(docData);
+
+            previewSection.slideDown(300).addClass('active');
+        }
+    });
+});
+
+
+
+//                         $(document).ready(function () {
+//     $(".filter-docs").click(function () {
+//         let parentRow = $(this).closest(".doc-row"); // Get parent document row
+//         let docId = $(this).data("doc-id"); // Get document ID
+//         let previewSection = $("#collapseOne" + docId); // Find related preview section
+
+//         // Hide all other preview sections except the current one
+//         $(".collapse-section").not(previewSection).slideUp(300);
+
+//         // Toggle visibility of the clicked section
+//         previewSection.stop(true, true).slideToggle(300);
+//     });
+// });
+
 
                         function openPopup(id) {
                             $(`#popup${id}`).removeClass('d-none')
