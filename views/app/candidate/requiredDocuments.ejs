@@ -38,7 +38,7 @@
 
                                                 <div class="file-containers d-flex align-items-center gap-4">
                                                     <label class="field-label"><%- a.Name%></label>
-                                                    
+
                                                     <div class="add-doc-container">
                                                         <!-- <button class="upload-btn"
                                                             onclick="uploadFile(this)">Upload</button> -->
@@ -49,45 +49,47 @@
 
 
                                             </div>
-                                            
-                                                    <div id="popup<%- a._id%>" class="file-container trans_parent d-none">
-                                                        <form class="popupModel">
-                                                            <span onclick="closePopup('<%- a._id%>')" class="close">X</span>
-                                                            <div class="contents">
-                                                                <span class="title m-0"><%- a.Name%></span>
-                                                                <p class="message">Select a file to upload from your computer or
-                                                                    device.</p>
-            
-                                                                <div class="actions">
-                                                                    <label for="file" class="button upload-btn">Choose File
-                                                                        <input type="file" id='<%- a._id%>docPopUp' class="file-input fileInput"
-                                                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                                                            onchange="validateFile(this,'<%- a._id%>' )">
-                                                                    </label>
-                                                                </div>
-                                                                <div id="<%- a._id%>image-preview"
-                                                                    style="display: flex; flex-wrap: wrap; gap: 10px;">
-                                                                </div>
-                                                            </div>
-                                                            <button class="upload-btn upload-new-btn"  onclick="uploadFile(this)">Upload</button>
-                                                        </form>
+
+                                            <div id="popup<%- a._id%>" class="file-container trans_parent d-none">
+                                                <form class="popupModel">
+                                                    <span onclick="closePopup('<%- a._id%>')" class="close">X</span>
+                                                    <div class="contents">
+                                                        <span class="title m-0"><%- a.Name%></span>
+                                                        <p class="message">Select a file to upload from your computer or
+                                                            device.</p>
+
+                                                        <div class="actions">
+                                                            <label for="file" class="button upload-btn">Choose File
+                                                                <input type="file" id='<%- a._id%>docPopUp'
+                                                                    class="file-input fileInput"
+                                                                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                                                    onchange="validateFile(this,'<%- a._id%>' )">
+                                                            </label>
+                                                        </div>
+                                                        <div id="<%- a._id%>image-preview"
+                                                            style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                                        </div>
                                                     </div>
-                                             
+                                                    <button class="upload-btn upload-new-btn"
+                                                        onclick="uploadFile(this,'<%- a.Name%>', '<%- a._id%>' )">Upload</button>
+                                                </form>
+                                            </div>
+
                                             <%})%>
-                                           
+
                                     </div>
 
                                 </div>
                             </div>
 
-                           
+
 
                         </div>
                     </div>
 
                     <style>
                         /* From Uiverse.io by Yaya12085 */
-                        .trans_parent{
+                        .trans_parent {
                             background-color: rgba(0, 0, 0, 0.5);
                             width: 100%;
                             height: 100%;
@@ -95,8 +97,9 @@
                             z-index: 12;
                             top: 50%;
                             left: 50%;
-                            transform:translate(-50%, -50%);
+                            transform: translate(-50%, -50%);
                         }
+
                         .popupModel {
                             position: relative;
                             background: white;
@@ -106,7 +109,7 @@
                             border-radius: 8px;
                             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
                             width: 100%;
-                            text-align: center;                           
+                            text-align: center;
                         }
 
                         .contents>*,
@@ -143,10 +146,12 @@
                         .upload-btn:hover {
                             background-color: hsla(223, 10%, 60%, 0.2);
                         }
-                        .upload-new-btn{
+
+                        .upload-new-btn {
                             position: relative;
                             z-index: 13;
                         }
+
                         .close {
                             display: flex;
                             align-items: center;
@@ -198,7 +203,7 @@
                             background-color: rgba(233, 40, 6, 0.664);
                         }
 
-                       
+
                         .uploader-container {
                             background-color: #ffffff;
                             border-radius: 12px;
@@ -416,25 +421,25 @@
                             $(`#popup${id}`).removeClass('d-none')
 
                         }
-                        function closePopup(id) {                            
+                        function closePopup(id) {
                             $(`#popup${id}`).addClass('d-none')
 
                         }
-                        function removeFile(id) {  
+                        function removeFile(id) {
                             console.log(id);
-                            const a =    document.getElementById(`${id}docPopUp`).value;
+                            const a = document.getElementById(`${id}docPopUp`).value;
                             console.log(a);
-                                               
 
-                            
+
+
                             document.getElementById(`${id}docPopUp`).value = "";
                             document.getElementById(`${id}image-preview`).innerHTML = "";
 
-                            
 
-                            
 
-                            
+
+
+
                         }
 
 
@@ -524,13 +529,22 @@
                             return filename;
                         }
 
-                        
 
-                        function uploadFile(button) {
-                            console.log('<%=courseId%>');
-                            const courseId = '<%=courseId%>';
+
+                        function uploadFile(button, docsname, docsId) {
+                            let courseId = '<%= courseId %>';
+
+                            if (!courseId || courseId === "undefined") {
+                                console.error("Error: courseId is missing.");
+                                alert("Error: Course ID is not available.");
+                                return;
+                            }
+
+                            console.log("Course ID:", courseId);
+
                             let inputElement = button.closest('.file-container').querySelector('.file-input');
                             let files = inputElement.files;
+                            let docsName = docsname
                             console.log(files)
 
                             if (files.length === 0) {
@@ -540,7 +554,11 @@
 
                             let formData = new FormData();
                             formData.append("file", files[0]);
-                            axios.post(`/candidate/reqDocs/${courseId}`, formData, {
+                            formData.append("docsName", docsname);
+                            formData.append("courseId", courseId);
+                            formData.append("docsId", docsId);
+
+                            axios.post(`/candidate/reqDocs/${courseId}`,formData, {
                                 headers: {
                                     'x-auth': localStorage.getItem('token'),
                                     'Content-Type': 'multipart/form-data'

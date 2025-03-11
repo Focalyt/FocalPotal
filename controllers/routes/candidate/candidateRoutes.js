@@ -276,16 +276,16 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
   try {
     let { courseId } = req.params;
     // Check if courseId is a string
-if (typeof courseId === "string") {
-  console.log("courseId is a string:", courseId);
+    if (typeof courseId === "string") {
+      console.log("courseId is a string:", courseId);
 
-  // Validate if it's a valid ObjectId before converting
-  if (mongoose.Types.ObjectId.isValid(courseId)) {
-      courseId = new mongoose.Types.ObjectId(courseId); // Convert to ObjectId
-  } else {
-      return res.status(400).json({ error: "Invalid course ID" });
-  }
-}
+      // Validate if it's a valid ObjectId before converting
+      if (mongoose.Types.ObjectId.isValid(courseId)) {
+        courseId = new mongoose.Types.ObjectId(courseId); // Convert to ObjectId
+      } else {
+        return res.status(400).json({ error: "Invalid course ID" });
+      }
+    }
     const validation = { mobile: req.session.user.mobile };
     let entryUrl;
     if (typeof req.body.entryUrl === 'string') {
@@ -3722,108 +3722,187 @@ router.route('/review/:job')
     }
   })
 
-  router.route('/reqDocs/:courseId')
-.get(isCandidate, async (req, res) => {
-  // router.get("/reqDocs", isCandidate, async (req, res) => {
+router.route('/reqDocs/:courseId')
+  .get(isCandidate, async (req, res) => {
+    // router.get("/reqDocs", isCandidate, async (req, res) => {
 
-  try {
-    const { courseId } = req.params;
-    const filter = { status: true };
-    const validation = { mobile: req.session.user.mobile };
+    try {
+      const { courseId } = req.params;
+      const filter = { status: true };
+      const validation = { mobile: req.session.user.mobile };
 
-    const { value, error } = await CandidateValidators.userMobile(validation);
-    if (error) {
-      return res.status(400).json({ status: false, msg: "Invalid mobile number.", error });
+      const { value, error } = await CandidateValidators.userMobile(validation);
+      if (error) {
+        return res.status(400).json({ status: false, msg: "Invalid mobile number.", error });
+      }
+
+
+      const candidateMobile = value.mobile;
+      const course = await Courses.findById(courseId);
+      let docsRequired = null
+      if (course) {
+        docsRequired = course.docsRequired; // requireDocs array fetch ho jayega
+        console.log(docsRequired, courseId);
+      } else {
+        console.log("Course not found");
+      }
+
+
+      res.render(`${req.vPath}/app/candidate/requiredDocuments`, {
+        menu: 'appliedCourse',
+        docsRequired,
+        courseId
+
+      });
+    } catch (err) {
+      console.log("caught error ", err);
     }
+  })
+
+  .post(isCandidate, async (req, res) => {
+
+    try {
+      const { docsName, courseId, docsId } = req.body;
+      console.log("docsId:", docsId, "Type:", typeof docsId, "Valid:", mongoose.Types.ObjectId.isValid(docsId));
+      console.log("courseId:", courseId, "Type:", typeof courseId, "Valid:", mongoose.Types.ObjectId.isValid(courseId));
+      const docObjectId = new mongoose.Types.ObjectId(docsId);
+      if (!mongoose.Types.ObjectId.isValid(docsId)) {
+        console.log("docs id not valid")
+        return res.status(400).json({ error: "Invalid document ID format." });
+      }
+      console.log("docObjectId:", docObjectId, "Type:", typeof docObjectId, "Valid:", mongoose.Types.ObjectId.isValid(docObjectId));
+
+      const validation = { mobile: req.session.user.mobile };
+      const { value, error } = await CandidateValidators.userMobile(validation);
+      if (error) {
+        return res.status(400).json({ status: false, msg: "Invalid mobile number.", error });
+      }
+      const candidateMobile = value.mobile;
+
+      console.log(candidateMobile)
+
+      const candidate = await Candidate.findOne({
+        mobile: candidateMobile,
+        appliedCourses: courseId  // Check if courseId exists in appliedCourses
+
+      });
+
+      if (!candidate) {
+        console.log("You have not applied for this course.")
+        return res.status(400).json({ error: "You have not applied for this course." });
+      }
 
 
-    const candidateMobile = value.mobile;
-    const course = await Courses.findById(courseId);
-    let docsRequired = null
-    if (course) {
-      docsRequired = course.docsRequired; // requireDocs array fetch ho jayega
-      console.log(docsRequired, courseId);
-  } else {
-      console.log("Course not found");
-  }
+      let files = req.files?.file;
+      if (!files) {
+        return res.status(400).send({ status: false, message: "No files uploaded" });
+      }
 
+      console.log("Files", files)
 
-    res.render(`${req.vPath}/app/candidate/requiredDocuments`, {
-      menu: 'appliedCourse',
-      docsRequired,
-      courseId
-      
-    });
-  } catch (err) {
-    console.log("caught error ", err);
-  }
-})
+      // ✅ Ensure `files` is always an array
+      const filesArray = Array.isArray(files) ? files : [files];
+      const uploadedFiles = [];
+      const uploadPromises = [];
 
-.post(isCandidate, async (req, res) => {
+      filesArray.forEach((item) => {
+        const { name, mimetype } = item;
+        const ext = name?.split('.').pop().toLowerCase();
 
-  try {
-    
+        console.log(`Processing File: ${name}, Extension: ${ext}`);
 
-    console.log("Raw File Data:", req.files?.file);
-    let files = req.files?.file;
-    if (!files) {
-      return res.status(400).send({ status: false, message: "No files uploaded" });
+        if (!allowedImageExtensions.includes(ext) && !allowedVideoExtensions.includes(ext)) {
+          throw new Error(`File type not supported: ${ext}`);
+        }
+
+        // Determine fileType
+        const fileType = allowedImageExtensions.includes(ext) ? "image" : "video";
+
+        // Generate unique S3 key
+        const key = `test/${fileType}s/${uuid()}.${ext}`;
+        const params = {
+          Bucket: bucketName,
+          Key: key,
+          Body: item.data,
+          ContentType: mimetype,
+        };
+
+        // Upload to S3
+        uploadPromises.push(
+          s3.upload(params).promise().then((uploadResult) => {
+            uploadedFiles.push({
+              fileURL: uploadResult.Location,
+              fileType,
+            });
+          })
+        );
+      });
+
+      // ✅ Wait for all uploads to complete
+      await Promise.all(uploadPromises);
+      console.log(uploadedFiles)
+
+      const fileUrl = uploadedFiles[0].fileURL;
+      // First check if this course already exists in docsForCourses
+const existingCourseDoc = await Candidate.findOne({
+  mobile: candidateMobile,
+  "docsForCourses.courseId": courseId
+});
+
+if (existingCourseDoc) {
+  // Course already exists in docsForCourses, push to its uploadedDocs array
+  const updatedCandidate = await Candidate.findOneAndUpdate(
+    { mobile: candidateMobile, "docsForCourses.courseId": courseId },
+    { 
+      $push: { 
+        "docsForCourses.$.uploadedDocs": { 
+          docsId: new mongoose.Types.ObjectId(docsId),
+          fileUrl: fileUrl,
+          status: "Pending",
+          uploadedAt: new Date() 
+        } 
+      } 
+    },
+    { new: true }
+  );
+  
+  console.log("Added document to existing course's uploadedDocs array",updatedCandidate);
+  return res.status(200).json({ 
+    status: true, 
+    message: "Document uploaded successfully", 
+    data: updatedCandidate 
+  });
+} else {
+  // Course doesn't exist in docsForCourses yet, create a new entry
+  const updatedCandidate = await Candidate.findOneAndUpdate(
+    { mobile: candidateMobile },
+    { 
+      $push: { 
+        "docsForCourses": { 
+          courseId: new mongoose.Types.ObjectId(courseId),
+          uploadedDocs: [{
+            docsId: new mongoose.Types.ObjectId(docsId),
+            fileUrl: fileUrl,
+            status: "Pending",
+            uploadedAt: new Date()
+          }]
+        } 
+      } 
+    },
+    { new: true }
+  );
+  
+  console.log("Added new course entry to docsForCourses with the document",updatedCandidate);
+  return res.status(200).json({ 
+    status: true, 
+    message: "Document uploaded successfully", 
+    data: updatedCandidate 
+  });
+} }
+    catch (err) {
+      console.log(err)
+      return res.status(500).send({ status: false, message: err.message })
     }
-
-    // ✅ Ensure `files` is always an array
-    const filesArray = Array.isArray(files) ? files : [files];
-     const uploadedFiles = [];
-        const uploadPromises = [];
-    
-        filesArray.forEach((item) => {
-          const { name, mimetype } = item;
-          const ext = name?.split('.').pop().toLowerCase();
-    
-          console.log(`Processing File: ${name}, Extension: ${ext}`);
-    
-          if (!allowedImageExtensions.includes(ext) && !allowedVideoExtensions.includes(ext)) {
-            throw new Error(`File type not supported: ${ext}`);
-          }
-    
-          // Determine fileType
-          const fileType = allowedImageExtensions.includes(ext) ? "image" : "video";
-    
-          // Generate unique S3 key
-          const key = `test/${fileType}s/${uuid()}.${ext}`;
-          const params = {
-            Bucket: bucketName,
-            Key: key,
-            Body: item.data,
-            ContentType: mimetype,
-          };
-    
-          // Upload to S3
-          uploadPromises.push(
-            s3.upload(params).promise().then((uploadResult) => {
-              uploadedFiles.push({
-                fileURL: uploadResult.Location,
-                fileType,
-              });
-            })
-          );
-        });
-    
-        // ✅ Wait for all uploads to complete
-        await Promise.all(uploadPromises);
-
-        console.log(uploadedFiles)
-
-        const docsUploaded ="";
-
-
-  }
-  catch (err) {
-    console.log(err)
-    return res.status(500).send({ status: false, message: err.message })
-  }
-})
-
-
-
+  })
 
 module.exports = router;
