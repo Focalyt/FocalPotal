@@ -53,17 +53,20 @@
                   </ul> -->
                   <ul class="nav nav-tabs justify-content-center" id="courseTabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                      <a class="nav-link " id="search-tab" href="/candidate/searchcourses" role="tab" aria-controls="search" aria-selected="true">
+                      <a class="nav-link " id="search-tab" href="/candidate/searchcourses" role="tab"
+                        aria-controls="search" aria-selected="true">
                         Search Courses
                       </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <a class="nav-link" id="pending-tab" href="/candidate/pendingFee" role="tab" aria-controls="pending" aria-selected="false">
+                      <a class="nav-link" id="pending-tab" href="/candidate/pendingFee" role="tab"
+                        aria-controls="pending" aria-selected="false">
                         Pending for Fee
                       </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <a class="nav-link active" id="applied-tab" href="/candidate/appliedCourses" role="tab" aria-controls="applied" aria-selected="false">
+                      <a class="nav-link active" id="applied-tab" href="/candidate/appliedCourses" role="tab"
+                        aria-controls="applied" aria-selected="false">
                         Applied Courses
                       </a>
                     </li>
@@ -97,56 +100,59 @@
                                   <div class="job-single-head border-0 pb-0">
                                     <div>
                                       <h6 class="text-capitalize font-weight-bolder">
-                                        <%= appliedcourse._course && appliedcourse._course.name ? appliedcourse._course.name : 'NA' %>
+                                        <%= appliedcourse._course && appliedcourse._course.name ?
+                                          appliedcourse._course.name : 'NA' %>
                                       </h6>
-                                      
+
                                       <span class="text-capitalize set-lineh">
-                                        <%= appliedcourse._course && appliedcourse._course.sectors && appliedcourse._course.sectors.length > 0 ? appliedcourse._course.sectors[0].name : "" %>
+                                        <%= appliedcourse._course && appliedcourse._course.sectors &&
+                                          appliedcourse._course.sectors.length> 0 ?
+                                          appliedcourse._course.sectors[0].name : "" %>
                                       </span>
-                                      
+
                                     </div>
                                   </div>
-                                  <a href="<%= appliedcourse._course ? `/candidate/course/${appliedcourse._course._id}` : '#' %>">
+                                  <a
+                                    href="<%= appliedcourse._course ? `/candidate/course/${appliedcourse._course._id}` : '#' %>">
 
                                     <div class="job-overview mt-1">
                                       <ul class="mb-xl-2 mb-lg-2 mb-md-2 mb-sm-0 mb-0 list-unstyled">
-                                        <li><i class="la la-money"></i> 
+                                        <li><i class="la la-money"></i>
                                           <h3 class="jobDetails-wrap">
-                                            <%= appliedcourse._course && appliedcourse._course.cutPrice 
-                                              ? appliedcourse._course.cutPrice.toLowerCase() === 'free' 
-                                                ? appliedcourse._course.cutPrice 
-                                                : '₹ ' + appliedcourse._course.cutPrice  
-                                              : 'N/A' 
-                                            %>
+                                            <%= appliedcourse._course && appliedcourse._course.cutPrice ?
+                                              appliedcourse._course.cutPrice.toLowerCase()==='free' ?
+                                              appliedcourse._course.cutPrice : '₹ ' + appliedcourse._course.cutPrice
+                                              : 'N/A' %>
                                           </h3>
-                                          
+
                                           <span class="text-capitalize jobDetails-wrap">
                                             Course Fee
                                           </span>
                                         </li>
                                         <li><i class="la la-shield"></i>
                                           <h3 class="jobDetails-wrap">
-                                            <%= appliedcourse._course && appliedcourse._course.courseLevel 
-                                              ? appliedcourse._course.courseLevel 
-                                              : 'N/A' 
-                                            %>
+                                            <%= appliedcourse._course && appliedcourse._course.courseLevel ?
+                                              appliedcourse._course.courseLevel : 'N/A' %>
                                           </h3>
-                                          
+
                                           <span class="jobDetails-wrap">
                                             Course Level
                                           </span>
                                         </li>
                                         <li><i class="la la-graduation-cap"></i>
-                                          <h3 class="jobDetails-wrap"><%=appliedcourse._course?.certifyingAgency ? appliedcourse._course.certifyingAgency : 'N/A' %>
-                                          <span class="jobDetails-wrap">
-                                            Course Agency
-                                          </span>
+                                          <h3 class="jobDetails-wrap">
+                                            <%=appliedcourse._course?.certifyingAgency ?
+                                              appliedcourse._course.certifyingAgency : 'N/A' %>
+                                              <span class="jobDetails-wrap">
+                                                Course Agency
+                                              </span>
                                         </li>
                                         <li><i class="la la-money"></i>
-                                          <h3 class="jobDetails-wrap"><%=appliedcourse?.registrationFee === 'Paid' ? 'Paid' : 'Unpaid' %>
-                                          <span class="jobDetails-wrap">
-                                            Registration Status
-                                          </span>
+                                          <h3 class="jobDetails-wrap">
+                                            <%=appliedcourse?.registrationFee==='Paid' ? 'Paid' : 'Unpaid' %>
+                                              <span class="jobDetails-wrap">
+                                                Registration Status
+                                              </span>
                                         </li>
                                       </ul>
                                     </div>
@@ -157,15 +163,14 @@
                                 <div class="extra-job-info mt-1">
                                   <% if (appliedcourse._course) { %>
                                     <span class="px-0">
-                                      <i class="la la-map "></i><strong>Last Date</strong>  
-                                      <%= moment(appliedcourse._course.lastDateForApply || appliedcourse._course.createdAt)
-                                          .utcOffset('+05:30')
-                                          .format('DD MMM YYYY') %>
+                                      <i class="la la-map "></i><strong>Last Date</strong>
+                                      <%= moment(appliedcourse._course.lastDateForApply ||
+                                        appliedcourse._course.createdAt) .utcOffset('+05:30') .format('DD MMM YYYY') %>
                                     </span>
-                                  <% } else { %>
-                                    <span class="px-0"><i class="la la-map"></i><strong>Last Date</strong> N/A</span>
-                                  <% } %>
-                                  
+                                    <% } else { %>
+                                      <span class="px-0"><i class="la la-map"></i><strong>Last Date</strong> N/A</span>
+                                      <% } %>
+
                                 </div>
                                 <div class="add--documents">
                                   <a href="/candidate/reqDocs/<% if (appliedcourse._course) { %><%= appliedcourse._course._id %><% } %>" 

@@ -36,8 +36,8 @@ const candidateSchema = new Schema(
             uploadedAt: { type: Date, default: Date.now } // Upload Timestamp
           }
         ]
-      }
-    ],
+      }
+    ],
     regFee: {
       type: Number,
       default: 0

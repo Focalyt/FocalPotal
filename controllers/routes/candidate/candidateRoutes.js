@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const express = require("express");
+const uuid = require('uuid/v1');
 require('dotenv').config()
 const axios = require("axios")
 const fs = require('fs')
@@ -57,6 +58,7 @@ const {
 } = require("../../models");
 const users = require("../../models/users");
 const AWS = require("aws-sdk");
+const multer = require('multer');
 const crypto = require("crypto");
 const {
   getTotalExperience,
@@ -91,6 +93,37 @@ const { CandidateValidators } = require('../../../helpers/validators');
 // Facebook API Configuration
 const FB_API_VERSION = 'v21.0';
 const FB_GRAPH_API = `https://graph.facebook.com/${FB_API_VERSION}/${fbConversionPixelId}/events`;
+
+AWS.config.update({
+  accessKeyId,
+  secretAccessKey,
+  region,
+});
+// Define the custom error
+class InvalidParameterError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'InvalidParameterError';
+  }
+}
+
+const s3 = new AWS.S3({ region, signatureVersion: 'v4' });
+const allowedVideoExtensions = ['mp4', 'mkv', 'mov', 'avi', 'wmv'];
+const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+
+const destination = path.resolve(__dirname, '..', '..', '..', 'public', 'temp');
+if (!fs.existsSync(destination)) fs.mkdirSync(destination);
+
+const storage = multer.diskStorage({
+  destination,
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const basename = path.basename(file.originalname, ext);
+    cb(null, `${basename}-${Date.now()}${ext}`);
+  },
+});
+
+const upload = multer({ storage }).single('file');
 
 // Function to hash a value using SHA-256
 // const hashValue = (value) => {
@@ -3688,8 +3721,9 @@ router.route('/review/:job')
       return res.status(500).send({ status: false, message: err.message })
     }
   })
+
   router.route('/reqDocs/:courseId')
-  .get( isCandidate, async (req, res) => {
+.get(isCandidate, async (req, res) => {
   // router.get("/reqDocs", isCandidate, async (req, res) => {
 
   try {
@@ -3708,7 +3742,7 @@ router.route('/review/:job')
     let docsRequired = null
     if (course) {
       docsRequired = course.docsRequired; // requireDocs array fetch ho jayega
-      console.log(docsRequired);
+      console.log(docsRequired, courseId);
   } else {
       console.log("Course not found");
   }
@@ -3716,24 +3750,78 @@ router.route('/review/:job')
 
     res.render(`${req.vPath}/app/candidate/requiredDocuments`, {
       menu: 'appliedCourse',
-      docsRequired
+      docsRequired,
+      courseId
       
     });
   } catch (err) {
     console.log("caught error ", err);
   }
 })
-.post(isCandidate, authenti, async (req, res) => {
+
+.post(isCandidate, async (req, res) => {
+
   try {
-     console.log("Documents uploading")
+    
+
+    console.log("Raw File Data:", req.files?.file);
+    let files = req.files?.file;
+    if (!files) {
+      return res.status(400).send({ status: false, message: "No files uploaded" });
+    }
+
+    // ✅ Ensure `files` is always an array
+    const filesArray = Array.isArray(files) ? files : [files];
+     const uploadedFiles = [];
+        const uploadPromises = [];
+    
+        filesArray.forEach((item) => {
+          const { name, mimetype } = item;
+          const ext = name?.split('.').pop().toLowerCase();
+    
+          console.log(`Processing File: ${name}, Extension: ${ext}`);
+    
+          if (!allowedImageExtensions.includes(ext) && !allowedVideoExtensions.includes(ext)) {
+            throw new Error(`File type not supported: ${ext}`);
+          }
+    
+          // Determine fileType
+          const fileType = allowedImageExtensions.includes(ext) ? "image" : "video";
+    
+          // Generate unique S3 key
+          const key = `test/${fileType}s/${uuid()}.${ext}`;
+          const params = {
+            Bucket: bucketName,
+            Key: key,
+            Body: item.data,
+            ContentType: mimetype,
+          };
+    
+          // Upload to S3
+          uploadPromises.push(
+            s3.upload(params).promise().then((uploadResult) => {
+              uploadedFiles.push({
+                fileURL: uploadResult.Location,
+                fileType,
+              });
+            })
+          );
+        });
+    
+        // ✅ Wait for all uploads to complete
+        await Promise.all(uploadPromises);
+
+        console.log(uploadedFiles)
+
+        const docsUploaded ="";
+
+
   }
   catch (err) {
     console.log(err)
     return res.status(500).send({ status: false, message: err.message })
   }
 })
-  
-
 
 
 
