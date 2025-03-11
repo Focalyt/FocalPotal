@@ -241,7 +241,18 @@ const getMetaParameters = (req) => {
 
 router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res) => {
   try {
-    const { courseId } = req.params;
+    let { courseId } = req.params;
+    // Check if courseId is a string
+if (typeof courseId === "string") {
+  console.log("courseId is a string:", courseId);
+
+  // Validate if it's a valid ObjectId before converting
+  if (mongoose.Types.ObjectId.isValid(courseId)) {
+      courseId = new mongoose.Types.ObjectId(courseId); // Convert to ObjectId
+  } else {
+      return res.status(400).json({ error: "Invalid course ID" });
+  }
+}
     const validation = { mobile: req.session.user.mobile };
     let entryUrl;
     if (typeof req.body.entryUrl === 'string') {
@@ -3677,8 +3688,8 @@ router.route('/review/:job')
       return res.status(500).send({ status: false, message: err.message })
     }
   })
-
-router.get("/reqDocs/:courseId", isCandidate, async (req, res) => {
+  router.route('/reqDocs/:courseId')
+  .get( isCandidate, async (req, res) => {
   // router.get("/reqDocs", isCandidate, async (req, res) => {
 
   try {
@@ -3711,7 +3722,18 @@ router.get("/reqDocs/:courseId", isCandidate, async (req, res) => {
   } catch (err) {
     console.log("caught error ", err);
   }
-});
+})
+.post(isCandidate, authenti, async (req, res) => {
+  try {
+     console.log("Documents uploading")
+  }
+  catch (err) {
+    console.log(err)
+    return res.status(500).send({ status: false, message: err.message })
+  }
+})
+  
+
 
 
 
