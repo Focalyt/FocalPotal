@@ -152,7 +152,7 @@ class MetaConversionAPI {
 
   async trackCourseApplication(courseData, userData, metaParams) {
     try {
-       console.log(courseData, userData, metaParams)
+      console.log(courseData, userData, metaParams)
       const eventData = {
         data: [{
           event_name: 'Course Apply',
@@ -251,52 +251,52 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       // If it's already an object
       entryUrl = req.body.entryUrl.url;
     }
-    
+
     console.log("Entry URL:", entryUrl);
 
     // Create URL object to parse parameters
     const urlObj = new URL(entryUrl);
     const params = urlObj.searchParams;
 
-     // Get fbclid from URL
-     const fbclid = params.get('fbclid');
-     console.log("fbclid:", fbclid);
-
-    
-     // Generate fbc from fbclid
-     let fbc = null;
-     if (fbclid) {
-       // Facebook click ID format: fb.1.{timestamp}.{fbclid}
-       fbc = `fb.1.${Date.now()}.${fbclid}`;
-     }
-
-     console.log("fbc:", fbc);
- 
-     // Get or generate fbp
-     let fbp = params.get('fbp');
-
-     if (!fbp) {
-       const timestamp = Date.now();
-       const random = Math.floor(Math.random() * 1000000000);
-       fbp = `fb.1.${timestamp}.${random}`;
-     }
-
-     console.log("fbp:", fbp);
+    // Get fbclid from URL
+    const fbclid = params.get('fbclid');
+    console.log("fbclid:", fbclid);
 
 
- 
-     const metaParams = {
-       fbc: fbc,
-       fbclid: fbclid || null, // Store original fbclid
-       fbp: fbp,
-       adId: params.get('ad_id') || null,
-       campaignId: params.get('campaign_id') || null,
-       adsetId: params.get('adset_id') || null,
-       utmSource: params.get('utm_source') || null,
-       utmMedium: params.get('utm_medium') || null,
-       utmCampaign: params.get('utm_campaign') || null
-     };
-   
+    // Generate fbc from fbclid
+    let fbc = null;
+    if (fbclid) {
+      // Facebook click ID format: fb.1.{timestamp}.{fbclid}
+      fbc = `fb.1.${Date.now()}.${fbclid}`;
+    }
+
+    console.log("fbc:", fbc);
+
+    // Get or generate fbp
+    let fbp = params.get('fbp');
+
+    if (!fbp) {
+      const timestamp = Date.now();
+      const random = Math.floor(Math.random() * 1000000000);
+      fbp = `fb.1.${timestamp}.${random}`;
+    }
+
+    console.log("fbp:", fbp);
+
+
+
+    const metaParams = {
+      fbc: fbc,
+      fbclid: fbclid || null, // Store original fbclid
+      fbp: fbp,
+      adId: params.get('ad_id') || null,
+      campaignId: params.get('campaign_id') || null,
+      adsetId: params.get('adset_id') || null,
+      utmSource: params.get('utm_source') || null,
+      utmMedium: params.get('utm_medium') || null,
+      utmCampaign: params.get('utm_campaign') || null
+    };
+
 
     // Get Meta parameters
     // const metaParams = getMetaParameters(req);
@@ -308,8 +308,8 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     }
 
     const candidateMobile = value.mobile;
-    
-    
+
+
 
     // Fetch course and candidate
     const course = await Courses.findById(courseId);
@@ -343,7 +343,7 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       _course: courseId
     }).save();
 
-    
+
     // Capitalize every word's first letter
     function capitalizeWords(str) {
       if (!str) return '';
@@ -380,12 +380,12 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     // Check if the mobile number already has the country code
     if (typeof candidateMob !== "string") {
       candidateMob = String(candidateMob); // Convert to string
-  }
-  
-  if (!candidateMob.startsWith("91") && candidateMob.length === 10) {
+    }
+
+    if (!candidateMob.startsWith("91") && candidateMob.length === 10) {
       candidateMob = "91" + candidateMob; // Add country code if missing and the length is 10
-  }
-  
+    }
+
 
     console.log(candidateMob);
 
@@ -636,10 +636,10 @@ router.get("/login", async (req, res) => {
   let user = req.session.user
   let { returnUrl } = req.query
 
-  
+
   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
- 
-  
+
+
   // Modify script to run after DOM is loaded and escape quotes properly
   const storageScript = `
     <script>
@@ -690,7 +690,7 @@ router.get("/login", async (req, res) => {
   else if (user && user.role == 3) {
     return res.redirect("/candidate/dashboard");
   }
-  return res.render(`${req.vPath}/app/candidate/login`, { apikey: process.env.AUTH_KEY_GOOGLE,storageScript: storageScript });
+  return res.render(`${req.vPath}/app/candidate/login`, { apikey: process.env.AUTH_KEY_GOOGLE, storageScript: storageScript });
 });
 router.get("/searchjob", [isCandidate], async (req, res) => {
   const data = req.query;
@@ -1147,10 +1147,10 @@ router.get("/searchcourses", [isCandidate], async (req, res) => {
     const data = req.query;
 
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  console.log(fullUrl);
-  
-  // Modify script to run after DOM is loaded and escape quotes properly
-  const storageScript = `
+    console.log(fullUrl);
+
+    // Modify script to run after DOM is loaded and escape quotes properly
+    const storageScript = `
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
@@ -1247,10 +1247,10 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
   try {
     const { courseId } = req.params;
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  console.log(fullUrl);
-  
-  // Modify script to run after DOM is loaded and escape quotes properly
-  const storageScript = `
+    console.log(fullUrl);
+
+    // Modify script to run after DOM is loaded and escape quotes properly
+    const storageScript = `
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
@@ -3677,4 +3677,43 @@ router.route('/review/:job')
       return res.status(500).send({ status: false, message: err.message })
     }
   })
+
+router.get("/reqDocs/:courseId", isCandidate, async (req, res) => {
+  // router.get("/reqDocs", isCandidate, async (req, res) => {
+
+  try {
+    const { courseId } = req.params;
+    const filter = { status: true };
+    const validation = { mobile: req.session.user.mobile };
+
+    const { value, error } = await CandidateValidators.userMobile(validation);
+    if (error) {
+      return res.status(400).json({ status: false, msg: "Invalid mobile number.", error });
+    }
+
+
+    const candidateMobile = value.mobile;
+    const course = await Courses.findById(courseId);
+    let docsRequired = null
+    if (course) {
+      docsRequired = course.docsRequired; // requireDocs array fetch ho jayega
+      console.log(docsRequired);
+  } else {
+      console.log("Course not found");
+  }
+
+
+    res.render(`${req.vPath}/app/candidate/requiredDocuments`, {
+      menu: 'appliedCourse',
+      docsRequired
+      
+    });
+  } catch (err) {
+    console.log("caught error ", err);
+  }
+});
+
+
+
+
 module.exports = router;
