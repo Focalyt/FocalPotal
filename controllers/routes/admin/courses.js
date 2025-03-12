@@ -251,6 +251,20 @@ router.route("/registrations")
 		}
 	});
 
+	router.route("/listview")
+    .get(auth1, async (req, res) => {
+        try {
+            return res.render(`${req.vPath}/admin/course/listview`, {
+                menu: 'listview'
+            });
+        } catch (err) {
+            console.log("Error:", err);
+            req.flash("error", err.message || "Something went wrong!");
+            return res.redirect("back");
+        }
+	
+
+    });
 
 router.route("/assignCourses/:id")
 	.put(async (req, res) => {

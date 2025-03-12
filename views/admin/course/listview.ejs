@@ -1,0 +1,971 @@
+<% include ../partials/header %>
+<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+    <div class="content-header-left col-md-12 col-12 mb-2">
+        <div class="row breadcrumbs-top">
+            <div class="col-9">
+                <h3 class="content-header-title float-left mb-0">View Documents</h3>
+                <div class="breadcrumb-wrapper col-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item active">Documents</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-body">
+    <% include ../partials/flash %>
+    <div class="admin-document-panel">
+        
+        
+        <div class="candidate-info">
+            <div class="candidate-avatar">RS</div>
+            <div class="candidate-details">
+                <h3>Rahul Sharma</h3>
+                <p><strong>Email:</strong> test.@example.com | <strong>Phone:</strong> 0000000000</p>
+                
+                <div class="candidate-stats">
+                    <div class="stat-box">
+                        <h4>Total Documents</h4>
+                        <p>5</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Pending</h4>
+                        <p>2</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Approved</h4>
+                        <p>2</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Rejected</h4>
+                        <p>1</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filter-bar">
+            <span class="filter-label">Status:</span>
+            <select class="filter-select" id="statusFilter" onchange="filterDocuments()">
+                <option value="all">All Documents</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+            </select>
+            
+        </div>
+        
+        <div class="document-list">
+            <table class="document-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Document Name</th>
+                        <th>Upload Date</th>
+                        <th>Document Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="documentTableBody">
+                    <!-- Only showing documents for Rahul Sharma -->
+                    <tr>
+                        <td>1</td>
+                        <td>Aadhar Card</td>
+                        <td>12-03-2025</td>
+                        <td>Identity Proof</td>
+                        <td><span class="status-badge status-pending">Pending</span></td>
+                        <td>
+                            <button class="action-btn view-btn" onclick="openModal(1)">
+                                Verify
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Bank Statement</td>
+                        <td>09-03-2025</td>
+                        <td>Financial</td>
+                        <td><span class="status-badge status-rejected">Rejected</span></td>
+                        <td>
+                            <button class="action-btn view-btn" onclick="openModal(2)">
+                                View
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Birth Certificate</td>
+                        <td>05-03-2025</td>
+                        <td>Identity Proof</td>
+                        <td><span class="status-badge status-approved">Approved</span></td>
+                        <td>
+                            <button class="action-btn view-btn" onclick="openModal(3)">
+                                View
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Marksheet</td>
+                        <td>03-03-2025</td>
+                        <td>Education</td>
+                        <td><span class="status-badge status-approved">Approved</span></td>
+                        <td>
+                            <button class="action-btn view-btn" onclick="openModal(4)">
+                                View
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Medical Certificate</td>
+                        <td>01-03-2025</td>
+                        <td>Medical</td>
+                        <td><span class="status-badge status-pending">Pending</span></td>
+                        <td>
+                            <button class="action-btn view-btn" onclick="openModal(5)">
+                                Verify
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    
+    <!-- Document Verification Modal -->
+    <div id="documentModal" class="document-modal">
+        <div class="modal-content m-c">
+            <div class="modal-header m-h">
+                <h3 id="modalTitle">Document Verification</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body m-b">
+                <div class="document-preview">
+                    <img id="previewImage" src="/api/placeholder/400/500" alt="Document Preview" />
+                    <div class="preview-controls">
+                        <button onclick="zoomIn()">Zoom In</button>
+                        <button onclick="zoomOut()">Zoom Out</button>
+                        <button onclick="rotateImage()">Rotate</button>
+                    </div>
+                </div>
+                <div class="document-info">
+                    <div class="info-section">
+                        <h4>Document Information</h4>
+                        <p><strong>Document Name:</strong> <span id="modalDocName">Aadhar Card</span></p>
+                        <p><strong>Document Type:</strong> <span id="modalDocType">Identity Proof</span></p>
+                        <p><strong>Upload Date:</strong> <span id="modalUploadDate">12-03-2025</span></p>
+                        <p><strong>Status:</strong> <span id="modalStatus" class="status-badge status-pending">Pending</span></p>
+                    </div>
+                    
+                    <div id="rejectionReasonContainer" class="info-section" style="display: none; border-left: 4px solid #dc3545;">
+                        <h4>Rejection Details</h4>
+                        <p><strong>Rejected On:</strong> <span id="rejectionDate">10-03-2025</span></p>
+                        <p><strong>Rejected By:</strong> <span id="rejectionBy">Admin User</span></p>
+                        <p><strong>Reason:</strong></p>
+                        <p id="modalRejectionReason" style="background-color: #fff; padding: 10px; border-radius: 4px;">The document is more than 3 months old. Please provide a recent statement.</p>
+                    </div>
+                    
+                    <div class="info-section">
+                        <h4>Verification Steps</h4>
+                        <ol style="padding-left: 20px; margin-top: 0;">
+                            <li>Check if the document is clearly visible</li>
+                            <li>Verify the document belongs to the candidate</li>
+                            <li>Confirm all required details are present</li>
+                            <li>Check the document validity dates</li>
+                            <li>Ensure there are no signs of tampering</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="modal-actions" id="verificationActions">
+                        <button id="modalApproveBtn" class="approve-btn" onclick="approveDocument()">Approve Document</button>
+                        <button id="modalRejectBtn" class="reject-btn" onclick="showRejectionForm()">Reject Document</button>
+                    </div>
+                    
+                    <div id="rejectionForm" class="rejection-form">
+                        <h4>Provide Rejection Reason</h4>
+                        <textarea id="rejectionReason" placeholder="Please provide a detailed reason for rejection..."></textarea>
+                        <button class="reject-btn" onclick="rejectDocument()">Confirm Rejection</button>
+                        <button class="action-btn" onclick="hideRejectionForm()">Cancel</button>
+                    </div>
+                    
+                    <div class="document-history info-section">
+                        <h4>Document History</h4>
+                        <div class="history-item">
+                            <div class="date">12-03-2025, 10:23 AM</div>
+                            <div>Document uploaded by candidate</div>
+                        </div>
+                        <div id="historyContainer">
+                            <!-- Will be populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<style>
+        
+        .admin-document-panel {
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .panel-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            background-color: #4a6fdc;
+            color: white;
+        }
+        
+        .panel-header h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        
+        .user-selector {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            min-width: 200px;
+        }
+        
+        .candidate-info {
+            background-color: #e9f0fd;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .candidate-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #4a6fdc;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+        
+        .candidate-details {
+            flex-grow: 1;
+        }
+        
+        .candidate-details h3 {
+            margin: 0 0 5px 0;
+            font-size: 22px;
+            color: #333;
+        }
+        
+        .candidate-details p {
+            margin: 0 0 5px 0;
+            color: #555;
+        }
+        
+        .candidate-stats {
+            display: flex;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .stat-box {
+            background: white;
+            border-radius: 4px;
+            padding: 10px 15px;
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .stat-box h4 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .stat-box p {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .document-list {
+            overflow-x: auto;
+            margin: 0 20px 20px 20px;
+        }
+        
+        .document-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .document-table th {
+            background-color: var(--gray-light);
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #444;
+            border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
+        }
+        
+        .document-table tbody tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+        }
+        
+        .document-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .document-table td {
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-approved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .view-btn {
+            color: var(--primary-color);
+        }
+        
+        .view-btn:hover {
+            background-color: rgba(74, 111, 220, 0.1);
+        }
+        
+        .approve-btn {
+            color: var(--success-color);
+            background-color: #d4edda;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .approve-btn:hover {
+            background-color: #c3e6cb;
+        }
+        
+        .reject-btn {
+            color: var(--danger-color);
+            background-color: #f8d7da;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .reject-btn:hover {
+            background-color: #f5c6cb;
+        }
+        
+        .document-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .m-c {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .m-h {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .m-b {
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            overflow-y: auto;
+        }
+        
+        .document-preview {
+            flex: 2;
+            min-width: 400px;
+            background-color: var(--gray-light);
+            border-radius: 4px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .document-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .preview-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            background-color: rgba(255,255,255,0.8);
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        .preview-controls button {
+            background-color: #4a6fdc;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        
+        .document-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .info-section {
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-section h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #4a6fdc;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 8px;
+        }
+        
+        .document-info p {
+            margin-bottom: 10px;
+        }
+        
+        .document-history {
+            margin-top: 20px;
+        }
+        
+        .history-item {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-item .date {
+            font-size: 12px;
+            color: #777;
+        }
+        
+        .modal-actions {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .rejection-form {
+            margin-top: 20px;
+            display: none;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .rejection-form h4 {
+            margin-top: 0;
+            color: #721c24;
+        }
+        
+        .rejection-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 10px;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .rejection-form button {
+            margin-right: 10px;
+        }
+        
+        .filter-bar {
+            margin: 0 20px 20px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            align-items: center;
+        }
+        
+        .filter-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            min-width: 150px;
+        }
+        
+        
+        .page-btn {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .page-btn:hover, .page-btn.active {
+            background-color: #4a6fdc;
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .panel-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .m-b {
+                flex-direction: column;
+            }
+            
+            .candidate-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .candidate-avatar {
+                margin: 0 0 15px 0;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-select {
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+         const documents = [
+            {
+                id: 1,
+                name: 'Aadhar Card',
+                user: 'Rahul Sharma',
+                uploadDate: '12-03-2025',
+                type: 'Identity Proof',
+                status: 'pending',
+                rejectionReason: null,
+                history: [
+                    { date: '12-03-2025, 10:23 AM', action: 'Document uploaded by candidate' }
+                ]
+            },
+            {
+                id: 2,
+                name: 'Bank Statement',
+                user: 'Rahul Sharma',
+                uploadDate: '09-03-2025',
+                type: 'Financial',
+                status: 'rejected',
+                rejectionReason: 'The document is more than 3 months old. Please provide a recent statement.',
+                rejectionDate: '10-03-2025',
+                rejectionBy: 'Admin User',
+                history: [
+                    { date: '09-03-2025, 02:45 PM', action: 'Document uploaded by candidate' },
+                    { date: '10-03-2025, 11:30 AM', action: 'Document rejected - The document is more than 3 months old' }
+                ]
+            },
+            {
+                id: 3,
+                name: 'Birth Certificate',
+                user: 'Rahul Sharma',
+                uploadDate: '05-03-2025',
+                type: 'Identity Proof',
+                status: 'approved',
+                rejectionReason: null,
+                history: [
+                    { date: '05-03-2025, 09:15 AM', action: 'Document uploaded by candidate' },
+                    { date: '06-03-2025, 10:20 AM', action: 'Document approved by Admin User' }
+                ]
+            },
+            {
+                id: 4,
+                name: 'Marksheet',
+                user: 'Rahul Sharma',
+                uploadDate: '03-03-2025',
+                type: 'Education',
+                status: 'approved',
+                rejectionReason: null,
+                history: [
+                    { date: '03-03-2025, 03:30 PM', action: 'Document uploaded by candidate' },
+                    { date: '04-03-2025, 11:45 AM', action: 'Document approved by Admin User' }
+                ]
+            },
+            {
+                id: 5,
+                name: 'Medical Certificate',
+                user: 'Rahul Sharma',
+                uploadDate: '01-03-2025',
+                type: 'Medical',
+                status: 'pending',
+                rejectionReason: null,
+                history: [
+                    { date: '01-03-2025, 05:10 PM', action: 'Document uploaded by candidate' }
+                ]
+            }
+        ];
+        
+      
+        let currentDocId = null;
+        let currentZoom = 1;
+        let currentRotation = 0;
+        
+        // Function to zoom in preview image
+        function zoomIn() {
+            currentZoom += 0.1;
+            updateImageTransform();
+        }
+        
+        // Function to zoom out preview image
+        function zoomOut() {
+            if (currentZoom > 0.5) {
+                currentZoom -= 0.1;
+                updateImageTransform();
+            }
+        }
+        
+        // Function to rotate preview image
+        function rotateImage() {
+            currentRotation += 90;
+            if (currentRotation >= 360) {
+                currentRotation = 0;
+            }
+            updateImageTransform();
+        }
+        
+        // Function to update image transform
+        function updateImageTransform() {
+            const img = document.getElementById('previewImage');
+            img.style.transform = `scale(${currentZoom}) rotate(${currentRotation}deg)`;
+            img.style.transition = 'transform 0.3s ease';
+        }
+        
+        // Function to filter documents
+        function filterDocuments() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            
+            const tableBody = document.getElementById('documentTableBody');
+            tableBody.innerHTML = '';
+            
+            const filteredDocs = documents.filter(doc => {
+                if (statusFilter !== 'all' && doc.status !== statusFilter) return false;
+                if (typeFilter !== 'all' && doc.type !== typeFilter) return false;
+                return true;
+            });
+            
+            filteredDocs.forEach(doc => {
+                const row = document.createElement('tr');
+                const actionText = doc.status === 'pending' ? 'Verify' : 'View';
+                
+                row.innerHTML = `
+                    <td>${doc.id}</td>
+                    <td>${doc.name}</td>
+                    <td>${doc.uploadDate}</td>
+                    <td>${doc.type}</td>
+                    <td><span class="status-badge status-${doc.status}">${doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}</span></td>
+                    <td>
+                        <button class="action-btn view-btn" onclick="openModal(${doc.id})">
+                            ${actionText}
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+     
+        // Function to open document modal
+        function openModal(docId) {
+            const doc = documents.find(d => d.id === docId);
+            if (!doc) return;
+            
+            currentDocId = docId;
+            currentZoom = 1;
+            currentRotation = 0;
+            
+            document.getElementById('modalTitle').textContent = 'Verify: ' + doc.name;
+            document.getElementById('modalDocName').textContent = doc.name;
+            document.getElementById('modalDocType').textContent = doc.type;
+            document.getElementById('modalUploadDate').textContent = doc.uploadDate;
+            
+            const statusElem = document.getElementById('modalStatus');
+            statusElem.textContent = doc.status.charAt(0).toUpperCase() + doc.status.slice(1);
+            statusElem.className = 'status-badge status-' + doc.status;
+            
+            // Reset image transform
+            const img = document.getElementById('previewImage');
+            img.style.transform = '';
+            
+            // Show/hide rejection reason
+            const rejContainer = document.getElementById('rejectionReasonContainer');
+            const rejReason = document.getElementById('modalRejectionReason');
+            
+            if (doc.status === 'rejected' && doc.rejectionReason) {
+                rejContainer.style.display = 'block';
+                rejReason.textContent = doc.rejectionReason;
+                document.getElementById('rejectionDate').textContent = doc.rejectionDate || '';
+                document.getElementById('rejectionBy').textContent = doc.rejectionBy || 'Admin';
+            } else {
+                rejContainer.style.display = 'none';
+            }
+            
+            // Show/hide approve/reject buttons based on status
+            const verificationActions = document.getElementById('verificationActions');
+            
+            if (doc.status === 'pending') {
+                verificationActions.style.display = 'flex';
+            } else {
+                verificationActions.style.display = 'none';
+            }
+            
+            // Update history
+            const historyContainer = document.getElementById('historyContainer');
+            historyContainer.innerHTML = '';
+            
+            if (doc.history && doc.history.length > 0) {
+                // Skip the first item as it's always the upload event shown separately
+                for (let i = 1; i < doc.history.length; i++) {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <div class="date">${doc.history[i].date}</div>
+                        <div>${doc.history[i].action}</div>
+                    `;
+                    historyContainer.appendChild(historyItem);
+                }
+            }
+            
+            document.getElementById('documentModal').style.display = 'flex';
+            document.getElementById('documentModal').style.position = 'absolute';
+            // Hide rejection form if it was open
+            document.getElementById('rejectionForm').style.display = 'none';
+        }
+        
+        // Function to close document modal
+        function closeModal() {
+            document.getElementById('documentModal').style.display = 'none';
+            currentDocId = null;
+        }
+        
+        // Function to show rejection form
+        function showRejectionForm() {
+            document.getElementById('rejectionForm').style.display = 'block';
+            document.getElementById('modalApproveBtn').style.display = 'none';
+            document.getElementById('modalRejectBtn').style.display = 'none';
+        }
+        
+        // Function to hide rejection form
+        function hideRejectionForm() {
+            document.getElementById('rejectionForm').style.display = 'none';
+            document.getElementById('modalApproveBtn').style.display = 'block';
+            document.getElementById('modalRejectBtn').style.display = 'block';
+        }
+        
+        // Function to approve document
+        function approveDocument() {
+            if (!currentDocId) return;
+            
+            // In a real app, you would send an API request here
+            
+            // Update status in our dummy data
+            const doc = documents.find(d => d.id === currentDocId);
+            if (doc) {
+                doc.status = 'approved';
+                doc.rejectionReason = null;
+                
+                // Add history entry
+                const now = new Date();
+                const timeString = now.toLocaleString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit', 
+                    hour12: true,
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
+                
+                doc.history.push({
+                    date: timeString.replace(',', ''),
+                    action: 'Document approved by Admin User'
+                });
+                
+                // Update UI
+                alert('Document has been approved successfully!');
+                filterDocuments(); // Refresh the table
+                closeModal();
+            }
+        }
+        
+        // Function to reject document
+        function rejectDocument() {
+            if (!currentDocId) return;
+            
+            const reason = document.getElementById('rejectionReason').value.trim();
+            if (!reason) {
+                alert('Please provide a reason for rejection.');
+                return;
+            }
+            
+            // In a real app, you would send an API request here
+            
+            // Update status in our dummy data
+            const doc = documents.find(d => d.id === currentDocId);
+            if (doc) {
+                doc.status = 'rejected';
+                doc.rejectionReason = reason;
+                
+                // Add rejection details
+                const now = new Date();
+                const dateString = now.toLocaleDateString('en-US', { 
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
+                
+                const timeString = now.toLocaleString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit', 
+                    hour12: true,
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
+                
+                doc.rejectionDate = dateString;
+                doc.rejectionBy = 'Admin User';
+                
+                // Add history entry
+                doc.history.push({
+                    date: timeString.replace(',', ''),
+                    action: `Document rejected - ${reason.substring(0, 50)}${reason.length > 50 ? '...' : ''}`
+                });
+                
+                // Update UI
+                alert('Document has been rejected with reason provided.');
+                filterDocuments(); // Refresh the table
+                closeModal();
+            }
+        }
+    </script>
+</div>
+<% include ../partials/footer %>
