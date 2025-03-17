@@ -64,6 +64,22 @@
               </li>
         </ul>
       </li>
+      <li class="nav-item">
+            <a href="#"><i class="fa-solid fa-graduation-cap"></i><span class="menu-title"
+                data-i18n="Todo">Events</span></a>
+            <ul class="menu-content">
+              
+                <li class=" <% if(menu==='event') {%>active<%}%>">
+                  <a href="/admin/addEvent/add">
+                        <i class="feather icon-plus-circle"></i>
+                        <span class="menu-item" data-i18n="Analytics">Add Event</span>
+                    </a>
+                    
+                </li>
+               
+            </ul>
+        </li>
+        
 
 
       <li class="nav-item"><a href="#"><i class="fa-solid fa-user"></i><span class="menu-title"
@@ -94,9 +110,9 @@
                   class="feather icon-plus-circle"></i><span class="menu-item" data-i18n="Analytics">Add
                   Freelancer</span></a></li>
             <% } %>
-              <li class=" <% if(menu==='college') {%>active<%}%>"><a href="/admin/college"><i
+              <!-- <li class=" <% if(menu==='college') {%>active<%}%>"><a href="/admin/college"><i
                     class="feather icon-list"></i><span class="menu-item" data-i18n="Analytics">All Colleges</span></a>
-              </li>
+              </li> -->
         </ul>
       </li>
       <li class=" nav-item"><a href="#"><i class="fa-solid fa-coins"></i><span class="menu-title"
