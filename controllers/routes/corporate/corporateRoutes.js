@@ -1530,9 +1530,10 @@ router.route("/createResume/:id").get(isCompany, authenti, async (req, res) => {
 
     // Modify your code to use bundled Chromium in development
 let params = {};
-if (process.env.NODE_ENV !== "development") {
+if (process.env.NODE_ENV !== "development") { 
   params = {
-    executablePath: "/usr/bin/chromium-browser",
+    executablePath: "/usr/bin/google-chrome-stable",
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
   };
 } else {
   // For local development, let Puppeteer use its bundled Chromium
@@ -1540,11 +1541,7 @@ if (process.env.NODE_ENV !== "development") {
     headless: "new" // Use the new headless mode
   };
 }
-const browser = await puppeteer.launch({
-  product: 'chrome',
-  // Or specify path to your locally installed Chrome/Edge
-  // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-});
+const browser = await puppeteer.launch(params);
     console.log("params",params)
     const logo = fs.readFileSync(path.join(__dirname, '../../../public/images/elements/mipie-footer.png'), { encoding: 'base64' });
     const page = await browser.newPage();
