@@ -231,6 +231,7 @@ router.route("/registrations")
 			let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter)
 			let candidates = await AppliedCourses.aggregate(agg);
 			const totalPages = Math.ceil(count / perPage);
+			console.log(candidates)
 
 			return res.render(`${req.vPath}/admin/course/registration`, {
 				candidates,
@@ -251,20 +252,167 @@ router.route("/registrations")
 		}
 	});
 
-	router.route("/listview")
-    .get(auth1, async (req, res) => {
-        try {
-            return res.render(`${req.vPath}/admin/course/listview`, {
-                menu: 'listview'
-            });
-        } catch (err) {
-            console.log("Error:", err);
-            req.flash("error", err.message || "Something went wrong!");
-            return res.redirect("back");
-        }
-	
+router.route("/:courseId/:candidateId/docsview")
+	.get(auth1, async (req, res) => {
+		try {
+			const { candidateId } = req.params;
+			const { courseId } = req.params;
+			const candidate = await Candidate.findById(candidateId);
 
-    });
+			if (!candidate) {
+				console.log("You have not applied for this course.")
+				res.redirect("/candidate/searchcourses");
+			};
+			const course = await Courses.findById(courseId);
+			let docsRequired = null
+			if (course) {
+				docsRequired = course.docsRequired; // requireDocs array fetch ho jayega
+				console.log(docsRequired, courseId);
+			} else {
+				console.log("Course not found");
+			};
+
+			let uploadedDocs = [];
+			if (candidate.docsForCourses && candidate.docsForCourses.length > 0) {
+				const courseEntry = candidate.docsForCourses.find(
+					entry => entry.courseId.toString() === courseId.toString()
+				);
+				if (courseEntry && courseEntry.uploadedDocs) {
+					uploadedDocs = courseEntry.uploadedDocs;
+				}
+			}
+			let mergedDocs = [];
+
+			if (course && course.docsRequired) {
+				docsRequired = course.docsRequired;
+
+				// Create a merged array with both required docs and uploaded docs info
+				mergedDocs = docsRequired.map(reqDoc => {
+					// Convert Mongoose document to plain object
+					const docObj = reqDoc.toObject ? reqDoc.toObject() : reqDoc;
+
+					// Find matching uploaded docs for this required doc
+					const matchingUploads = uploadedDocs.filter(
+						uploadDoc => uploadDoc.docsId.toString() === docObj._id.toString()
+					);
+
+					return {
+						_id: docObj._id,
+						Name: docObj.docName || 'Document',
+						description: docObj.description || '',
+						uploads: matchingUploads || []
+					};
+				});
+
+				console.log("Merged docs:", JSON.stringify(mergedDocs, null, 2));
+			} else {
+				console.log("Course not found or no docs required");
+			};
+
+			
+
+			// ✅ Fix: Use candidate.docsForCourses instead of undefined docsForCourses
+			const countDocsByCourseId = (docsForCourses) => {
+				let courseDocCount = 0;
+				let pendingCount = 0;
+				let rejectedCount = 0;
+				let approvedCount = 0;
+			
+				docsForCourses.forEach(course => {
+					if (course.uploadedDocs) {
+						courseDocCount = course.uploadedDocs.length;
+			
+						// ✅ Count Pending & Rejected Documents
+						approvedCount = course.uploadedDocs.filter(doc => doc.status === "Approved").length;
+						pendingCount = course.uploadedDocs.filter(doc => doc.status === "Pending").length;
+						rejectedCount = course.uploadedDocs.filter(doc => doc.status === "Rejected").length;
+					}
+				});
+			
+				return { 
+					totalDocs: courseDocCount, 
+					pendingDocs: pendingCount, 
+					rejectedDocs: rejectedCount,
+					approvedDocs: approvedCount 
+				};
+			};
+			
+			
+			// ✅ Fix Applied: Use candidate.docsForCourses
+			const courseWiseDocumentCounts = countDocsByCourseId(candidate.docsForCourses || []);
+			
+			
+			
+
+			return res.render(`${req.vPath}/admin/course/listview`, {
+				menu: 'listview',
+				mergedDocs,
+				courseWiseDocumentCounts,
+				candidate,course, courseId
+			});
+		} catch (err) {
+			console.log("Error:", err);
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+
+
+	})
+	.put(async (req,res) =>{
+		try {
+			const { candidateId, courseId, objectId, status, reason } = req.body;
+			const verifiedBy = req.session?.User?._id; // Fetch logged-in user ID from session
+	
+			if (!candidateId || !courseId || !objectId || !status) {
+				return res.status(400).json({ message: "Missing required fields" });
+			}
+	
+			if (status === "Rejected" && !reason) {
+				return res.status(400).json({ message: "Rejection reason is required when status is 'Rejected'" });
+			}
+	
+			// 🔍 Step 1: Find the candidate
+			const candidate = await Candidate.findById(candidateId);
+			if (!candidate) {
+				return res.status(404).json({ message: "Candidate not found" });
+			}
+	
+			// 🔍 Step 2: Find the course inside `docsForCourses`
+			const course = candidate.docsForCourses.find(course => course.courseId.toString() === courseId);
+			if (!course) {
+				return res.status(404).json({ message: "Course not found in candidate's docsForCourses" });
+			}
+	
+			// 🔍 Step 3: Find the document inside `uploadedDocs` using `_id`
+			const document = course.uploadedDocs.find(doc => doc._id.toString() === objectId);
+			if (!document) {
+				return res.status(404).json({ message: "Document not found in uploadedDocs" });
+			}
+	
+			// ✅ Step 4: Update the document fields
+			document.status = status;
+			document.verifiedBy = verifiedBy || null; // Set verifiedBy from session or null
+			document.uploadedAt = new Date(); // Update timestamp
+	
+			if (status === "Rejected") {
+				document.reason = reason; // Set rejection reason if status is "Rejected"
+			} else {
+				document.reason = undefined; // Clear reason for other statuses
+			}
+	
+			// ✅ Step 5: Save the updated candidate document
+			await candidate.save();
+	
+			return res.status(200).json({
+				message: `Document status updated successfully to ${status}`,
+				updatedDocument: document
+			});
+	
+		} catch (error) {
+			console.error("Error updating document status:", error);
+			return res.status(500).json({ message: "Internal server error", error });
+		}
+	})
 
 router.route("/assignCourses/:id")
 	.put(async (req, res) => {

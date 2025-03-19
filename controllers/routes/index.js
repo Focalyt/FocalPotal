@@ -475,13 +475,10 @@ router.post('/callback',async (req, res) => {
       moment(new Date()).utcOffset('+05:30').format('DD/MM/YYYY'),
       moment(new Date()).utcOffset('+05:30').format('hh:mm A'), 
       capitalizeWords(name),
-
       mobile,
       email,
       state,
       message
-
-
     ];
     await updateSpreadSheetRequestCallValues(sheetData);
 

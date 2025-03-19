@@ -38,14 +38,16 @@
 
                                                 <div class="file-containers d-flex align-items-center gap-4">
                                                     <% if (!a.uploads || a.uploads.length === 0) { %>
+                                                        <div class="d-flex align-items-center gap-4" style="gap: 20px;">
+                                                            <div class="d-flex align-items-center gap-4" style="gap: 20px;">
                                                            
                                                                 <span class="title m-0"><%- a.Name%></span>
                                                                 
         
-                                                                <div class="actions">
+                                                                <div class="actionsbtn">
                                                                     <label for="file" class="button upload-btn">Choose File
                                                                         <input type="file" id='<%- a._id%>docPopUp'
-                                                                            class="file-input fileInput"
+                                                                            class="file-inputs fileInput"
                                                                             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                                                                             onchange="validateFile(this,'<%- a._id%>' )">
                                                                     </label>
@@ -53,9 +55,11 @@
                                                                 <div id="<%- a._id%>image-preview"
                                                                     style="display: flex; flex-wrap: wrap; gap: 10px;">
                                                                 </div>
+                                                            </div>
                                                           
                                                             <button class="upload-btn"
-                                                                onclick="uploadFile(this)">Upload</button>
+                                                                onclick="uploadFile(this,'<%- a.Name%>','<%- a._id%>')">Upload</button>
+                                                            </div>
                                                         
                                                         <% } %> 
                                                     
@@ -123,7 +127,7 @@
                                                                     <th scope="col">S.No</th>
                                                                     <th scope="col">Date</th>
                                                                     <th scope="col">View</th>
-                                                                    <th scope="col">Status</th>
+                                                                    <th scope="col">Verification Status</th>
                                                                     <th scope="col">Reason (If rejected)</th>
 
                                                                 </tr>
@@ -137,9 +141,12 @@
                                                                             <td>
                                                                                 <%= moment(upload.uploadedAt).format('DD/MM/YYYY HH:mm:ss') %> 
                                                                               </td>
-                                                                            <td>
-                                                                               <img src="<%= upload.fileUrl %>" alt="Image Preview" style="max-width: 20%; max-height: 300px;" alt=""> 
+                                                                              <td>
+                                                                                <a href="<%= upload.fileUrl %>" target="_blank" class="btn btn-primary">VIEW</a>
                                                                             </td>
+                                                                            
+                                                                            
+                                                                            
                                                                             <!-- <td><span class="">Approved</span></td> -->
                                                                             <td>
                                                                                
@@ -165,8 +172,8 @@
 
                                             </div>
 
-                                            <div id="popup<%- a._id%>" class="file-container trans_parent d-none">
-                                                <form class="popupModel">
+                                            <div id="popup<%- a._id%>" class="file-container2 trans_parent d-none">
+                                                <div class="popupModel">
                                                     <span onclick="closePopup('<%- a._id%>')" class="close">X</span>
                                                     <div class="contents">
                                                         <span class="title m-0"><%- a.Name%></span>
@@ -186,8 +193,8 @@
                                                         </div>
                                                     </div>
                                                     <button class="upload-btn upload-new-btn"
-                                                        onclick="uploadFile(this)">Upload</button>
-                                                </form>
+                                                        onclick="uploadnewFile(this,'<%- a.Name%>','<%- a._id%>')">Upload</button>
+                                                </div>
                                             </div>
 
                                             <%})%>
@@ -689,6 +696,7 @@
 
                         function uploadFile(button, docsname, docsId) {
                             let courseId = '<%= courseId %>';
+                            
 
                             if (!courseId || courseId === "undefined") {
                                 console.error("Error: courseId is missing.");
@@ -698,7 +706,54 @@
 
                             console.log("Course ID:", courseId);
 
-                            let inputElement = button.closest('.file-container').querySelector('.file-input');
+                            let inputElement = button.closest('.file-containers').querySelector('.file-inputs');
+                            let files = inputElement.files;
+                            let docsName = docsname
+                            console.log(docsId);
+                            console.log(docsname)
+
+                            if (files.length === 0) {
+                                alert("Please select a file before uploading.");
+                                return;
+                            }
+
+                            let formData = new FormData();
+                            formData.append("file", files[0]);
+                            formData.append("docsName", docsname);
+                            formData.append("courseId", courseId);
+                            formData.append("docsId", docsId);
+                            console.log(formData)
+
+                            axios.post(`/candidate/reqDocs/${courseId}`, formData, {
+                                headers: {
+                                    'x-auth': localStorage.getItem('token'),
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            })
+                                .then(result => {
+                                    alert("Your documents uploadded successfully");
+                                    window.location.reload()
+                                    
+
+
+                                }).catch(err => {
+                                    console.log(err.message)
+                                    window.location.reload()
+                                })
+                        }
+                        function uploadnewFile(button, docsname, docsId) {
+                            let courseId = '<%= courseId %>';
+                            
+
+                            if (!courseId || courseId === "undefined") {
+                                console.error("Error: courseId is missing.");
+                                alert("Error: Course ID is not available.");
+                                return;
+                            }
+
+                            console.log("Course ID:", courseId);
+
+                            let inputElement = button.closest('.file-container2').querySelector('.file-input');
                             let files = inputElement.files;
                             let docsName = docsname
                             console.log(files)
@@ -713,6 +768,7 @@
                             formData.append("docsName", docsname);
                             formData.append("courseId", courseId);
                             formData.append("docsId", docsId);
+                            console.log(formData)
 
                             axios.post(`/candidate/reqDocs/${courseId}`, formData, {
                                 headers: {
@@ -721,6 +777,8 @@
                                 }
                             })
                                 .then(result => {
+                                    alert("Your documents uploadded successfully");
+                                    window.location.reload()
 
 
                                 }).catch(err => {
@@ -728,6 +786,7 @@
                                     window.location.reload()
                                 })
                         }
+
 
 
 

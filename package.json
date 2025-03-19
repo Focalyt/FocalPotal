@@ -57,7 +57,7 @@
     "openai": "^4.0.1",
     "pdf-parse": "^1.1.1",
     "pm2": "^5.2.0",
-    "puppeteer": "^19.4.1",
+    "puppeteer": "^19.11.1",
     "razorpay": "^2.8.4",
     "read-excel-file": "^5.3.4",
     "strip-tags": "^0.1.1",

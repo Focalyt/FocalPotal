@@ -53,7 +53,7 @@
                                             <% if (view === false) { %>
                                             <th class="one column wide" width="10%">Action</th>
                                             <% } %>
-                                            <th class="one column wide" width="10%">view Docs</th>
+                                            <th class="one column wide" width="10%">View Docs</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -92,7 +92,7 @@
                                             </td>
                                             <% } %>
                                             <td class="text-capitalize">
-                                                <a href="/admin/courses/listview" class="btn btn-danger waves-effect waves-light text-white d-inline btn-sm" style="padding: 8px;">
+                                                <a href="/admin/courses/<%= l.courseId %>/<%= l.candidateId %>/docsview" class="btn btn-danger waves-effect waves-light text-white d-inline btn-sm" style="padding: 8px;">
                                                    View Docs
                                                 </a>
                                             </td>

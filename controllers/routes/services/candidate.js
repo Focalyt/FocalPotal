@@ -438,8 +438,10 @@ module.exports = {
       {
         $addFields: {
           name: { $ifNull: ["$_candidate.name", ""] },
+          candidateId: { $ifNull: ["$_candidate._id", ""] },
           mobile: { $ifNull: ["$_candidate.mobile", ""] },
           courseName: { $ifNull: ["$_course.name", ""] },
+          courseId: { $ifNull: ["$_course._id", ""] },
           registrationCharges: { $ifNull: ["$_course.registrationCharges", 0] },
           registrationFee: { $ifNull: ["$registrationFee", "Unpaid"] },
           sector: { $ifNull: ["$_course.sectors.name", ""] },
@@ -454,8 +456,10 @@ module.exports = {
           courseName: 1,
           registrationCharges: 1,
           registrationFee: 1,
+          candidateId:1,
           sector: 1,
           courseStatus: 1,
+          courseId:1,
           remarks: 1,
           assignDate: 1,
           url: 1,

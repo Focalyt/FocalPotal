@@ -666,7 +666,9 @@ router.get(
       return res.status(404).send({ status: false, msg: 'Company not found!' })
     }
     let coins = await CoinsAlgo.findOne({})
-    if (!companyDetails.creditLeft || companyDetails.creditLeft < coins.shortlist) {
+    
+    if (companyDetails.creditLeft < coins.shortlist) {
+      console.log("Please Subscribe to Unmask More!")
       return res
         .status(400)
         .send({ status: false, msg: "Please Subscribe to Unmask More!" });
@@ -1445,26 +1447,115 @@ router.post("/candidate/statusUpdate", [isCompany, authenti], async (req, res) =
   return res.status(200).send({ status: true, msg: data.type });
 });
 
+// router.route("/createResume/:id").get(isCompany, authenti, async (req, res) => {
+//   try {
+
+//     let url = `${req.protocol}://${req.get("host")}/candidateForm/${req.session.user._id}/${req.params.id}`
+//     console.log(url)
+
+//     const candidate = await Candidate.findById(req.params.id);
+
+//     if (!candidate || !candidate._id) throw req.ykError("No candidate found!");
+//     console.log(candidate)
+
+//     let params = {};
+//     console.log(process.env.NODE_ENV )
+//     if (process.env.NODE_ENV !== "development") {
+//       params = {
+//         executablePath: "/usr/bin/chromium-browser",
+//       };
+//     }
+//     console.log("params",params)
+//     const logo = fs.readFileSync(path.join(__dirname, '../../../public/images/elements/mipie-footer.png'), { encoding: 'base64' });
+//     const browser = await puppeteer.launch(params);
+//     const page = await browser.newPage();
+//     await page.goto(url, { waitUntil: "networkidle2" });
+//     if (!fs.existsSync(path.join(__dirname, '../../../public/documents'))) {
+//       fs.mkdirSync(path.join(__dirname, '../../../public/documents'));
+//       console.log("directory created")
+//     }
+//     console.log("directory found")
+//     const data = await page.pdf({
+
+//       path: path.join(__dirname, `../../../public/documents/output${req.params.id}.pdf`),
+//       format: 'A4',
+//       displayHeaderFooter: true,
+//       preferCSSPageSize: true,
+//       headerTemplate: `
+//      <div style="display:flex;width:90%;font-size: 10px;padding: 5px 0;margin:auto;">
+//        <div style="width:25%;text-align:right"></div>
+//      </div>`,
+//       footerTemplate: `<footer style="margin: auto; width: 100%; border-top:1px solid #666;">
+//      <a href = "${baseUrl}">
+//      <img width="70%" height="auto" style="float: right; padding-right: 20px; padding-left: 36px; width: 25%" src="data:image/png;base64,${logo}" alt="Pivohub" />
+//      </a>
+//      </footer>`,
+//       margin: {
+//         top: '30px',
+//         bottom: '50px',
+//         right: '30px',
+//         left: '30px',
+//       },
+//     });
+//     await browser.close();
+
+//     if (!data) {
+//       throw req.ykError("Unable to create pdf1");
+//     }
+
+//     req.flash("success", "Create pdf successfully!");
+
+//     res.send({
+//       status: 200,
+//       uploadData: `${req.protocol}://${req.get("host")}/documents/output${req.params.id
+//         }.pdf`,
+//     });
+//   } catch (err) {
+//     console.log(err.message);
+//     req.flash("error", err.message || "Something went wrong!");
+//     return res.send({ status: false, err });
+//   }
+// });
+
 router.route("/createResume/:id").get(isCompany, authenti, async (req, res) => {
   try {
 
     let url = `${req.protocol}://${req.get("host")}/candidateForm/${req.session.user._id}/${req.params.id}`
+    console.log(url)
 
     const candidate = await Candidate.findById(req.params.id);
 
     if (!candidate || !candidate._id) throw req.ykError("No candidate found!");
+    console.log(candidate)
 
-    let params = {};
-    if (process.env.NODE_ENV !== "development") {
-      params = {
-        executablePath: "/usr/bin/chromium-browser",
-      };
-    }
+    // Modify your code to use bundled Chromium in development
+let params = {};
+if (process.env.NODE_ENV !== "development") {
+  params = {
+    executablePath: "/usr/bin/chromium-browser",
+  };
+} else {
+  // For local development, let Puppeteer use its bundled Chromium
+  params = {
+    headless: "new" // Use the new headless mode
+  };
+}
+const browser = await puppeteer.launch({
+  product: 'chrome',
+  // Or specify path to your locally installed Chrome/Edge
+  // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+});
+    console.log("params",params)
     const logo = fs.readFileSync(path.join(__dirname, '../../../public/images/elements/mipie-footer.png'), { encoding: 'base64' });
-    const browser = await puppeteer.launch(params);
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
+    if (!fs.existsSync(path.join(__dirname, '../../../public/documents'))) {
+      fs.mkdirSync(path.join(__dirname, '../../../public/documents'));
+      console.log("directory created")
+    }
+    console.log("directory found")
     const data = await page.pdf({
+
       path: path.join(__dirname, `../../../public/documents/output${req.params.id}.pdf`),
       format: 'A4',
       displayHeaderFooter: true,
@@ -1504,7 +1595,6 @@ router.route("/createResume/:id").get(isCompany, authenti, async (req, res) => {
     return res.send({ status: false, err });
   }
 });
-
 router.route("/changeStatus").patch(isCompany, async (req, res) => {
   try {
     const updata = { $set: { status: req.body.status } };
