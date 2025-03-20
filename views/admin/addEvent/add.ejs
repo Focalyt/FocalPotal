@@ -28,16 +28,54 @@
 									<div class="card-body">
 										<div class="row">
 											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
-												<label>College Name
+												<label>Event Type
 													<span class="asterisk">*</span></label>
-												<input type="text" class="form-control" required name="collegeName"
-													palaceholder="College Name" maxlength="50"
-													value='' />
+												<select class="form-control text-capitalize " required name="eventType"> 
+													<!-- chosen  class removed-->
+													<option value="">Select Option</option>
+														<option value="Online" class="text-capitalize">
+														Contest
+														</option>
+														<option value="Offline" class="text-capitalize">
+														Webinar
+														</option>
+														
+												</select>
 											</div>
 											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
-												<label>Website</label>
-												<input type="text" class="form-control" maxlength="50" name="website"
-													value='' />
+												<label>Event Title
+													<span class="asterisk">*</span></label>
+												<input type="text" class="form-control" required name="eventTitle"
+													palaceholder="Event Title"/>
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Event Mode
+													<span class="asterisk">*</span></label>
+												<select class="form-control text-capitalize " required name="mode"> 
+													<!-- chosen  class removed-->
+													<option value="">Select Option</option>
+														<option value="Online" class="text-capitalize">
+														Online
+														</option>
+														<option value="Offline" class="text-capitalize">
+														Offline
+														</option>
+														
+												</select>
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Location</label>
+												<input type="text" class="form-control" maxlength="50" name="location"/>
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Webinar URL</label>
+												<input type="text" class="form-control" maxlength="50" name="url"/>
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Event Timing</label>
+												<input type="text" class="form-control" maxlength="50" name="url"/>
+												<label>Event Timing</label>
+												<input type="text" class="form-control" maxlength="50" name="url"/>
 											</div>
 											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
 												<label>Course
@@ -52,17 +90,7 @@
 												</select>
 											</div>
 
-											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
-												<label>University
-													<span class="asterisk">*</span></label>
-												<select class="form-control text-capitalize chosen" required name="_university">
-													<option value="">Select Option</option>
-														<option value="" class="text-capitalize">
-														
-														</option>
-														
-												</select>
-											</div>
+										
 										
 										
 											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">

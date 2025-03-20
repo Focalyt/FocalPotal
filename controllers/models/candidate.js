@@ -40,6 +40,7 @@ const candidateSchema = new Schema(
             status: { type: String, enum: ["Pending", "Verified", "Rejected"], default: "Pending" }, // Verification Status
             reason: { type: String }, // Rejection ka reason
             verifiedBy:{ type: ObjectId, ref: "User" },
+            verifiedDate:{ type: Date },
             uploadedAt: { type: Date, default: Date.now } // Upload Timestamp
           }
         ]

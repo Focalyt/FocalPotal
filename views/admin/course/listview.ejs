@@ -62,7 +62,7 @@
                         <div class="stat-box">
                             <h4>Approved</h4>
                             <p>
-                                <%=courseWiseDocumentCounts.approvedDocs%>
+                                <%=courseWiseDocumentCounts.verifiedDocs%>
                             </p>
                         </div>
                         <div class="stat-box">
@@ -247,7 +247,7 @@
                     </div>
 
                     <div class="modal-actions" id="verificationActions">
-                        <button id="modalApproveBtn<%= a._id %>" class="approve-btn" onclick="approveDocument('<% if (a.uploads.length > 0) { %><%= a.uploads[a.uploads.length - 1]._id %><% }%>',`<%= a._id %>`)">Approve
+                        <button id="modalApproveBtn<%= a._id %>" class="approve-btn" onclick="updateDocsStatus('<% if (a.uploads.length > 0) { %><%= a.uploads[a.uploads.length - 1]._id %><% }%>','Verified')">Approve
                             Document</button>
                         <button id="modalRejectBtn<%= a._id %>" class="reject-btn" onclick="showRejectionForm('<%= a._id %>')">Reject
                             Document</button>
@@ -257,7 +257,7 @@
                         <h4>Provide Rejection Reason</h4>
                         <textarea id="rejectionReason<%= a._id %>"
                             placeholder="Please provide a detailed reason for rejection..."></textarea>
-                        <button class="reject-btn" onclick="rejectDocument('<%= a._id %>')">Confirm Rejection</button>
+                        <button class="reject-btn" onclick="updateDocsStatus('<% if (a.uploads.length > 0) { %><%= a.uploads[a.uploads.length - 1]._id %><% }%>','Rejected','<%= a._id %>')">Confirm Rejection</button>
                         <button class="action-btn" onclick="hideRejectionForm('<%= a._id %>')">Cancel</button>
                     </div>
                     <% } %>
@@ -920,22 +920,49 @@ function updateTransform() {
         }
 
         // Function to approve document
-        function approveDocument(id) {
-            console.log(id)
+        function updateDocsStatus(id,status,docsid) {
+            console.log(id,status)
+
             const candidateId = '<%= candidate._id %>'
             console.log("candidate Id", candidateId);
 
             const courseId = '<%= course._id %>'
             console.log("course Id", courseId);
-            const status = getElementById(`rejectionReason`).value
+  
+            
+            let data = {
+        candidateId,
+        courseId,
+        objectId: id,
+        status: status
+    };
+
+    if (status === "Rejected") {
+        const reason = document.getElementById(`rejectionReason${docsid}`).value;
+        console.log("reason", reason);
+        data.reason = reason;
+    }
+
+    console.log("data", data);
 
 
-            // axios.post(`/candidate/reqDocs/${courseId}/`, formData, {
-            //                     headers: {
-            //                         'x-auth': localStorage.getItem('token'),
-            //                         'Content-Type': 'multipart/form-data'
-            //                     }
-            //                 })
+            axios.put(`/admin/courses/${courseId}/${candidateId}/docsview`, data, {
+                                headers: {
+                                    'x-auth': localStorage.getItem('token'),
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            })
+                            .then(result => {
+                                    alert("documents verified successfully");
+                                    window.location.reload()
+                                    
+
+
+                                }).catch(err => {
+                                    console.log(err.message)
+                                    alert(err.message);
+                                    window.location.reload()
+                                })
             
 
             // In a real app, you would send an API request here

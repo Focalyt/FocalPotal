@@ -267,7 +267,7 @@ router.route("/:courseId/:candidateId/docsview")
 			let docsRequired = null
 			if (course) {
 				docsRequired = course.docsRequired; // requireDocs array fetch ho jayega
-				console.log(docsRequired, courseId);
+				
 			} else {
 				console.log("Course not found");
 			};
@@ -304,7 +304,7 @@ router.route("/:courseId/:candidateId/docsview")
 					};
 				});
 
-				console.log("Merged docs:", JSON.stringify(mergedDocs, null, 2));
+			
 			} else {
 				console.log("Course not found or no docs required");
 			};
@@ -312,34 +312,37 @@ router.route("/:courseId/:candidateId/docsview")
 			
 
 			// ✅ Fix: Use candidate.docsForCourses instead of undefined docsForCourses
-			const countDocsByCourseId = (docsForCourses) => {
+			const countDocsByCourseId = (docsForCourses, targetCourseId) => {
+				const courseEntry = docsForCourses.find(course => course.courseId.toString() === targetCourseId.toString());
+				
 				let courseDocCount = 0;
 				let pendingCount = 0;
 				let rejectedCount = 0;
 				let approvedCount = 0;
 			
-				docsForCourses.forEach(course => {
-					if (course.uploadedDocs) {
-						courseDocCount = course.uploadedDocs.length;
-			
-						// ✅ Count Pending & Rejected Documents
-						approvedCount = course.uploadedDocs.filter(doc => doc.status === "Approved").length;
-						pendingCount = course.uploadedDocs.filter(doc => doc.status === "Pending").length;
-						rejectedCount = course.uploadedDocs.filter(doc => doc.status === "Rejected").length;
-					}
-				});
+				if (courseEntry && courseEntry.uploadedDocs) {
+					courseDocCount = courseEntry.uploadedDocs.length;
+					approvedCount = courseEntry.uploadedDocs.filter(doc => doc.status === "Verified").length;
+					pendingCount = courseEntry.uploadedDocs.filter(doc => doc.status === "Pending").length;
+					rejectedCount = courseEntry.uploadedDocs.filter(doc => doc.status === "Rejected").length;
+				}
 			
 				return { 
 					totalDocs: courseDocCount, 
 					pendingDocs: pendingCount, 
 					rejectedDocs: rejectedCount,
-					approvedDocs: approvedCount 
+					verifiedDocs: approvedCount 
 				};
 			};
 			
 			
+			
+			
 			// ✅ Fix Applied: Use candidate.docsForCourses
-			const courseWiseDocumentCounts = countDocsByCourseId(candidate.docsForCourses || []);
+			const courseWiseDocumentCounts = countDocsByCourseId(candidate.docsForCourses || [], courseId);
+
+
+			console.log(courseWiseDocumentCounts);
 			
 			
 			
@@ -361,7 +364,13 @@ router.route("/:courseId/:candidateId/docsview")
 	.put(async (req,res) =>{
 		try {
 			const { candidateId, courseId, objectId, status, reason } = req.body;
-			const verifiedBy = req.session?.User?._id; // Fetch logged-in user ID from session
+			
+			const verifiedBy = req.session?.user?._id; // Fetch logged-in user ID from session
+			console.log(verifiedBy)
+			if (!verifiedBy ) {
+				return console.log( "message:", "Missing verifiedBy fields" );
+			}
+			console.log("body data",req.body);
 	
 			if (!candidateId || !courseId || !objectId || !status) {
 				return res.status(400).json({ message: "Missing required fields" });
@@ -392,7 +401,7 @@ router.route("/:courseId/:candidateId/docsview")
 			// ✅ Step 4: Update the document fields
 			document.status = status;
 			document.verifiedBy = verifiedBy || null; // Set verifiedBy from session or null
-			document.uploadedAt = new Date(); // Update timestamp
+			document.verifiedDate = new Date(); // Update timestamp
 	
 			if (status === "Rejected") {
 				document.reason = reason; // Set rejection reason if status is "Rejected"
