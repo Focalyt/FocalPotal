@@ -46,6 +46,9 @@
                                             <th class="three column wide" width="18%" style="cursor: pointer;" onclick="sorting('createdAt')">DATE <i  class="fa-solid fa-arrow-down success cursors pointer" value="1"></i></th>
                                             <th class="three column wide candidate-wrap" width="19%" onclick="sorting('name')">CANDIDATE NAME</th>
                                             <th class="one column wide" width="15%">MOBILE NO.</th>
+                                            <th class="one column wide" width="15%">Lead Status</th>
+                                            <th class="one column wide" width="15%">Demo Status</th>
+                                            <th class="one column wide" width="15%">Center Status</th>
                                             <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('courseName')">Course <i class="" value="1"></i></th>
                                             <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('registrationCharges')">Reg Fee <i  class="" value="1"></i></th>
                                             <th class="one column wide" width="7%"  style="cursor: pointer;" >Reg Status <i  class="" value="1"></i></th>
@@ -68,6 +71,9 @@
                                             <td class="text-capitalize">
                                                 <%= l.mobile ? l.mobile : "N/A" %>
                                             </td>
+                                            <td class="text-capitalize"></td>
+                                            <td class="text-capitalize"></td>
+                                            <td class="text-capitalize"></td>
                                             <td class="text-capitalize">
                                                 <%= l.courseName ? l.courseName : "N/A" %>
                                             </td>
@@ -202,6 +208,11 @@
     <!--Assign/Due modal end-->
 </div>
 <% include ../partials/footer %>
+<style>
+    #tblexportData td{
+        white-space: nowrap;
+    }
+</style>
 <script>
     function handleActionClick(id, remarks, assignDate, url) {
 		const formattedDate = new Date(assignDate).toLocaleDateString('en-GB', {
