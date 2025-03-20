@@ -62,6 +62,7 @@ const loanRoutes = require('./loanEnquiry');
 const courseSectorsRoutes = require('./courseSectors');
 const teamRoutes=require('./team')
 const addEventRoutes = require('./addevents');
+const addCenterRoutes = require('./center');
 
 const router = express.Router();
 router.use('/appBanner', appBannerRoutes);
@@ -106,6 +107,7 @@ router.use("/loanEnquiry",loanRoutes);
 router.use('/courseSectors', courseSectorsRoutes);
 router.use('/team', teamRoutes);
 router.use('/addEvent', addEventRoutes);
+router.use('/center', addCenterRoutes);
 router.use(isAdmin);
 router.post ('/courses',async(req,res)=>{
   
