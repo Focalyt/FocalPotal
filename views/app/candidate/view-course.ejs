@@ -675,15 +675,43 @@
                       </button>
                     </div>
 
+                    <div id="chooseCenterContent" class="modal-content ">
+                      
+                
+                      <div class="modal-body pt-1" id="popup-body-form">
+                        <h5 class="pb-1 mb-3 text-success">Please select a center</h5>
+                        
+                        <div class="form-group">
+                          <select class="form-control" id="centerSelect" name="center">
+                            <option value="">Select Training Center</option>
+                                                    <%centers.forEach((center,i)=>{%>
+                                                        <option value="<%=center._id %>">
+                                                            <%=center.name %>
+                                                        </option>
+                                                        <%})%>
+                          </select>
+                        </div>
+                
+                      </div>
+                
+                      <div class="modal-footer">
+                        <button type="button" onclick="applyCourseProceed()" class="btn btn-primary" id="trainingCenterSbtBtn">Proceed</button>
+                      </div>
+                    </div>
+                    <div id="proceedContent" class="modal-content d-none">
+
                     <div class="modal-body pt-1" id="popup-body">
                       <h5 class="pb-1 mb-0">
                         Register for this Course
                       </h5>
                     </div>
                     <div class="modal-footer">
+                      <button  class="btn btn-primary" id="back-btn" onclick="backbtnclick()">Back</button>
                       <button type="submit" class="btn btn-primary" id="apply-btn" onclick="applyCourse('<%= course._id %>')">Proceed</button>
 
                     </div>
+                  </div>
+
                   </div>
                   <% } else { %>
                     <% include ./partials/coursecompleteprofile %>
@@ -716,11 +744,11 @@
         </div> -->
 
 <!-- Add center pop up  -->
-<div class="modal fade" id="AddCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- <div class="modal fade" id="AddCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header bg-primary">
-        <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Select Center</h5>
+        <h5 class="modal-title text-white text-uppercase" id="trainingCenterTitle">Select Center</h5>
         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -742,11 +770,11 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="addDocumentsBtn">Proceed</button>
+        <button type="button" class="btn btn-primary" id="trainingCenterSbtBtn">Proceed</button>
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Add center pop up end  -->
 
@@ -823,6 +851,25 @@
     });
 </script>
   <script>
+    function applyCourseProceed(){
+      const centerName = document.getElementById('centerSelect').value;
+      console.log(centerName);
+      $('#chooseCenterContent').addClass('d-none');
+      $('#proceedContent').removeClass('d-none');  
+
+
+
+
+    };
+
+    function backbtnclick(){
+      $('#proceedContent').addClass('d-none');  
+      $('#chooseCenterContent').removeClass('d-none');
+
+
+
+
+    };
     
     function applyCourse(id) {
       $('#apply-btn').addClass('disabled');

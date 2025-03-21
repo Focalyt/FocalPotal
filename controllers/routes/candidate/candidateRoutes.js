@@ -24,6 +24,7 @@ const ServerEvent = bizSdk.ServerEvent;
 const {
   User,
   CandidateRegister,
+  Center,
   State,
   City,
   Qualification,
@@ -1353,6 +1354,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
       return res.redirect("/candidate/searchcourses");
     }
     const candidate = await Candidate.findOne({ mobile: userMobile }).lean();
+    const centers = await Center.find();
 
     let canApply = false;
     if (candidate.name && candidate.mobile && candidate.sex && candidate.whatsapp && candidate.city && candidate.state && candidate.highestQualification) {
@@ -1397,6 +1399,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
       isApplied,
       mobileNumber,
       canApply,
+      centers,
       storageScript: storageScript
     });
   } catch (err) {
