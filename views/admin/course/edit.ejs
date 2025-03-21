@@ -1,4 +1,76 @@
 <% include ../partials/header %>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+<style>
+    .choices__list--multiple .choices__item {
+        position: relative !important;
+        margin: 3px 5px 3px 0 !important;
+        padding: 3px 20px 3px 5px !important;
+        border: 1px solid #aaa !important;
+        max-width: 100% !important;
+        border-radius: 3px !important;
+        background-color: #eee !important;
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), to(#eee)) !important;
+        background-image: linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%) !important;
+        background-size: 100% 19px !important;
+        background-repeat: repeat-x !important;
+        background-clip: padding-box !important;
+        -webkit-box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, .05) !important;
+        box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, .05) !important;
+        color: #333 !important;
+        line-height: 13px !important;
+        cursor: default !important;
+    }
+
+    .chosen-container {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 13px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .choices__inner {
+        background-color: #fff;
+    }
+
+    .chosen-choices {
+        position: relative;
+        overflow: hidden;
+        margin: 0;
+        padding: 0 5px;
+        width: 100%;
+        height: auto;
+        border: 1px solid #aaa;
+        background-color: #fff;
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #eee), color-stop(15%, #fff));
+        background-image: linear-gradient(#eee 1%, #fff 15%);
+        cursor: text;
+    }
+
+    .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+        position: absolute;
+        top: 4px;
+        right: 3px;
+        display: block;
+        width: 12px;
+        height: 12px;
+        background: url(chosen-sprite.png) -42px 1px no-repeat;
+        font-size: 1px;
+    }
+
+    .choices__inner {
+        cursor: pointer;
+    }
+
+    .choices[data-type*=select-multiple] .choices__button,
+    .choices[data-type*=text] .choices__button {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMSAyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0yLjU5Mi4wNDRsMTguMzY0IDE4LjM2NC0yLjU0OCAyLjU0OEwuMDQ0IDIuNTkyeiIvPjxwYXRoIGQ9Ik0wIDE4LjM2NEwxOC4zNjQgMGwyLjU0OCAyLjU0OEwyLjU0OCAyMC45MTJ6Ii8+PC9nPjwvc3ZnPg==) !important;
+    }
+</style>
     <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
         <div class="content-header-left col-md-9 col-12 mb-2">
             <div class="row breadcrumbs-top">
@@ -205,28 +277,60 @@
                                             <input class="form-control" type="text"
                                                 value="<%=course.offlineTrainingTiming%>" id="offlineTrainingTiming">
                                         </div>
-                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1" id="trainingCenterblock" style="display: none;">
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1" id="trainingCenterblock" style="display: none;" multiple >
                                             <label>Training Center</label>
-                                            <select class="form-control" name="trainingCenter" id="trainingCenter">
-                                        
-                                                <% if (course.center) { %>
-                                                    <option value="<%= course.center._id %>" selected><%= course.center.name %></option>
-                                                <% } else { %>
-                                                    <option value="">Select Training Center</option>
-                                                <% } %>
-                                        
-                                                <% if (center && Array.isArray(center)) { %>
-                                                    <% center.forEach((c, i) => { %>
-                                                        
-                                                        <option value="<%= c._id %>"><%= c.name %></option>
-                                                        <% if (course.center) { %>
-                                                        <option value="">No Center </option>
-                                                        <% } %>
-                                                    <% }) %>
-                                                <% } %>
-                                                
-                                            </select>
+                                            <% 
+  let selectedCenterIds = [];
+  if (course.center && course.center.length > 0) {
+    selectedCenterIds = course.center.map(c => c._id.toString());
+  }
+%>
+
+<select class="form-control" name="trainingCenter" id="trainingCenter" multiple>
+  <!-- Already Selected Centers -->
+  <% course.center.forEach(c => { %>
+      <option value="<%= c._id %>" selected><%= c.name %></option>
+  <% }) %>
+
+  <!-- Remaining Centers (Remove duplicates) -->
+  <% center.forEach(c => { %>
+      <% if (!selectedCenterIds.includes(c._id.toString())) { %>
+          <option value="<%= c._id %>"><%= c.name %></option>
+      <% } %>
+  <% }) %>
+</select>
+
                                         </div>
+                                        
+                                        <script
+                                                src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+                                          
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function () {
+                                                    const trainingCenterSelect = new Choices('#trainingCenter', {
+                                                        removeItemButton: true,
+                                                        searchEnabled: true,
+                                                        itemSelectText: '',
+                                                        placeholder: false,
+                                                        allowHTML: false,
+                                                        maxItemCount: -1,  // Set to -1 for unlimited selections
+                                                        duplicateItemsAllowed: false,
+                                                        delimiter: ',',
+                                                        paste: true,
+                                                        maxItems: null,
+                                                        silent: false
+                                                    });
+                                                    const emptyOption = document.querySelector('#trainingCenter option[value=""]');
+                                                    if (emptyOption) {
+                                                        emptyOption.remove();
+                                                    }
+
+                                                    
+                                                });
+
+                                            </script>
+                                        
                                         
 
                                         <script>
@@ -1304,11 +1408,13 @@
             const questionAnswers = getQuestionAnswers();
             console.log('Question Answers:', questionAnswers);
             const selectedSectors = Array.from(document.getElementById("sector").selectedOptions).map(option => option.value);
+            const selectedCenters = Array.from(document.getElementById("trainingCenter").selectedOptions).map(option => option.value);
             const certifyingAgencyWebsiteValue = document.getElementById("certifyingAgencyWebsite").value;
+            console.log("selectedCenters",selectedCenters)
 
             let body = {
                 sectors: selectedSectors,
-                center: document.getElementById("trainingCenter").value,
+                center: selectedCenters,
                 courseLevel: document.getElementById("courseLevel").value,
                 name: document.getElementById("name").value,
                 duration: document.getElementById("duration").value,

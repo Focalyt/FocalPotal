@@ -674,6 +674,7 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
+                    <% if (course.center && course.center.length > 0) { %>
 
                     <div id="chooseCenterContent" class="modal-content ">
                       
@@ -682,11 +683,11 @@
                         <h5 class="pb-1 mb-3 text-success">Please select a center</h5>
                         
                         <div class="form-group">
-                          <select class="form-control" id="centerSelect" name="center">
+                          <select onchange="removeDisabled('trainingCenterSbtBtn')" class="form-control" id="centerSelect" name="center">
                             <option value="">Select Training Center</option>
-                                                    <%centers.forEach((center,i)=>{%>
-                                                        <option value="<%=center._id %>">
-                                                            <%=center.name %>
+                                                    <%course.center.forEach((c,i)=>{%>
+                                                        <option value="<%=c._id %>">
+                                                            <%=c.name %>
                                                         </option>
                                                         <%})%>
                           </select>
@@ -695,10 +696,11 @@
                       </div>
                 
                       <div class="modal-footer">
-                        <button type="button" onclick="applyCourseProceed()" class="btn btn-primary" id="trainingCenterSbtBtn">Proceed</button>
+                        <button disabled type="button" onclick="applyCourseProceed()" class="btn btn-primary" id="trainingCenterSbtBtn">Proceed</button>
                       </div>
                     </div>
-                    <div id="proceedContent" class="modal-content d-none">
+                    <% } %>
+                    <div id="proceedContent" class="modal-content <% if(course.center && course.center.length > 0) { %> d-none <% } %>">
 
                     <div class="modal-body pt-1" id="popup-body">
                       <h5 class="pb-1 mb-0">
@@ -706,7 +708,10 @@
                       </h5>
                     </div>
                     <div class="modal-footer">
+                    <% if (course.center && course.center.length > 0) { %>
+
                       <button  class="btn btn-primary" id="back-btn" onclick="backbtnclick()">Back</button>
+                      <% } %>
                       <button type="submit" class="btn btn-primary" id="apply-btn" onclick="applyCourse('<%= course._id %>')">Proceed</button>
 
                     </div>
@@ -851,6 +856,14 @@
     });
 </script>
   <script>
+
+    function removeDisabled(id){
+      document.getElementById(id).removeAttribute('disabled');
+
+    }
+
+
+
     function applyCourseProceed(){
       const centerName = document.getElementById('centerSelect').value;
       console.log(centerName);
@@ -881,9 +894,9 @@
 
   // Prepare data to send
   const data = {
-    entryUrl: entryUrlData ? entryUrlData : null,
-    
-  };
+  entryUrl: entryUrlData ? entryUrlData : null,
+  selectedCenter: document.getElementById('centerSelect')?.value || ''
+};
   console.log(data);
 
 

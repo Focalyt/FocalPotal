@@ -30,6 +30,13 @@ const candidateSchema = new Schema(
 
       }
     ],
+    selectedCenter: [
+      {
+        courseId: { type: ObjectId, ref: "courses" }, // Changed from type to courseId
+        centerId: { type: ObjectId, ref: "Center" }, // Changed from type to courseId        
+      }
+    ],
+    
     docsForCourses: [
       {
         courseId: { type: ObjectId, ref: "courses" }, // Changed from type to courseId

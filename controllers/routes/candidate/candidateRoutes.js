@@ -299,9 +299,14 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     } else {
       // If it's already an object
       entryUrl = req.body.entryUrl.url;
-    }
-
+    };
     console.log("Entry URL:", entryUrl);
+
+    selectedCenter = req.body.selectedCenter;
+
+
+
+    console.log("selectedCenter",selectedCenter)
 
     // Create URL object to parse parameters
     const urlObj = new URL(entryUrl);
@@ -383,13 +388,19 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
     // If event sent successfully, apply for course
     const apply = await Candidate.findOneAndUpdate(
       { mobile: candidateMobile },
-      { $addToSet: { appliedCourses: courseId } },
+      { $addToSet: { appliedCourses: courseId,
+        selectedCenter: {
+          courseId: courseId,
+          centerId: selectedCenter
+        }
+      } },
       { new: true, upsert: true }
     );
 
     const appliedData = await new AppliedCourses({
       _candidate: candidate._id,
-      _course: courseId
+      _course: courseId,
+      _center: selectedCenter
     }).save();
 
 
@@ -1349,7 +1360,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
 
 
 
-    let course = await Courses.findById(courseId).populate('sectors').lean();
+    let course = await Courses.findById(courseId).populate('sectors').populate('center').lean();
     if (!course || course?.status == false /* || course.courseType !== 0 */) {
       return res.redirect("/candidate/searchcourses");
     }
@@ -1390,7 +1401,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
       }
     }
     let mobileNumber = course.phoneNumberof ? course.phoneNumberof : contact[0]?.mobile
-    // console.log('course: ', JSON.stringify(course));
+    console.log('course: ', course);
 
 
     return res.render(`${req.vPath}/app/candidate/view-course`, {

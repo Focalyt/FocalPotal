@@ -138,6 +138,7 @@ router
 				}
 			})
 			course = await Courses.findById(id).populate('sectors').populate('center');
+			console.log(course)
 			return res.render(`${req.vPath}/admin/course/edit`, {
 				course,
 				sectors,

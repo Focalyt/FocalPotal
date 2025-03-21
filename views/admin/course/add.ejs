@@ -1146,9 +1146,12 @@
             //current
             const selectedSectors = Array.from(document.getElementById("sector").selectedOptions).map(option => option.value);
 
+            const centers = document.getElementById("trainingCenter").value
+            const selectedCenter = Array.from(document.getElementById("trainingCenter").selectedOptions).map(option => option.value);
+            console.log(selectedCenter);
             let body = {
                 sectors: selectedSectors,
-                center: document.getElementById("trainingCenter").value,
+                center: selectedCenter,
                 courseLevel: document.getElementById("courseLevel").value,
                 name: document.getElementById("name").value,
                 duration: document.getElementById("duration").value,

@@ -56,6 +56,11 @@ const appliedCoursesSchema = new Schema(
       ref: "Center",
       description: "Reference to the specific course applied for",
     },
+    registeredBy:{
+      type: ObjectId,
+      ref: "User",
+      description: "Reference to the specific course applied for"
+    },
     courseStatus: { 
       type: Number,
       enum: [0, 1], // 0: due, 1: assigned
@@ -73,6 +78,7 @@ const appliedCoursesSchema = new Schema(
       default: "",
       description: "URL associated with the applied course, if applicable",
     },
+    
     remarks: {
       type: String,
       default: "",
