@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const { auth1, isAdmin } = require("../../../helpers");
 const moment = require("moment");
-const { Courses, CourseSectors, Candidate, AppliedCourses } = require("../../models");
+const { Courses, CourseSectors, Candidate, AppliedCourses, Center } = require("../../models");
 const candidateServices = require('../services/candidate')
 const { candidateCashbackEventName } = require('../../db/constant');
 const router = express.Router();
@@ -63,9 +63,12 @@ router
 	.get(async (req, res) => {
 		try {
 			const sectors = await CourseSectors.find({ status: true })
+			const center = await Center.find({ status: true })
+			console.log(center)
 			return res.render(`${req.vPath}/admin/course/add`, {
 				menu: 'addCourse',
-				sectors
+				sectors,
+				center
 			});
 		} catch (err) {
 			req.flash("error", err.message || "Something went wrong!");
@@ -129,12 +132,17 @@ router
 					$nin: course.sectors
 				}
 			})
-			course = await Courses.findById(id).populate('sectors');
-			console.log(course, "this is course>?<<<<edited course")
+			const center = await Center.find({
+				status: true, _id: {
+					$nin: course.center
+				}
+			})
+			course = await Courses.findById(id).populate('sectors').populate('center');
 			return res.render(`${req.vPath}/admin/course/edit`, {
 				course,
 				sectors,
 				id,
+				center,
 				menu: 'course'
 			});
 
@@ -147,12 +155,16 @@ router
 		try {
 			let { id } = req.params
 			let body = req.body;
-			console.log(body)
+			console.log("body data",body)
 			body.photos = req.body.photos?.split(',')
 			body.videos = req.body.videos?.split(',')
 			body.testimonialvideos = req.body.testimonialvideos?.split(',')
+			if (req.body.center === "") {
+				body.center = null;  // Center remove कर दो
+			} else {
+				body.center = req.body.center;
+			}
 			const updateCourse = await Courses.findByIdAndUpdate(id, { $set: body }, { new: true });
-			console.log(updateCourse, "updateCourse updateCourse data")
 			if (updateCourse) {
 				req.flash("success", "Course updated successfully!");
 				return res.json({ status: true, message: "Record added!" })

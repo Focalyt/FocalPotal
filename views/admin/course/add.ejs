@@ -180,25 +180,43 @@
                                                 <textarea class="form-control" type="text" name="offlineTrainingTiming"
                                                     id="offlineTrainingTiming"></textarea>
                                             </div>
+                                            <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                                id="trainingCenterblock" style="display: none;">
+                                                <label>Training Center</label>
+                                                <select class="form-control" name="trainingCenter" id="trainingCenter" >
+                                                    <option value="">Select Training Center</option>
+                                                    <%center.forEach((center,i)=>{%>
+                                                        <option value="<%=center._id %>">
+                                                            <%=center.name %>
+                                                        </option>
+                                                        <%})%>
+                                                </select>
+                                            </div>
 
                                             <script>
                                                 function toggleTrainingBlocks() {
                                                     var trainingMode = document.getElementById("trainingMode").value;
                                                     var onlineBlock = document.getElementById("onlinetrainingblock");
                                                     var offlineBlock = document.getElementById("offlinetrainingblock");
+                                                    var trainingCenterblock = document.getElementById("trainingCenterblock");
 
                                                     if (trainingMode === "Online") {
                                                         onlineBlock.style.display = "block";
                                                         offlineBlock.style.display = "none";
+                                                        trainingCenterblock.style.display = "none";
                                                     } else if (trainingMode === "Offline") {
                                                         onlineBlock.style.display = "none";
                                                         offlineBlock.style.display = "block";
+                                                        trainingCenterblock.style.display = "block";
                                                     } else if (trainingMode === "Blended") {
                                                         onlineBlock.style.display = "block";
                                                         offlineBlock.style.display = "block";
+                                                        trainingCenterblock.style.display = "block";
+                                                        
                                                     } else {
                                                         onlineBlock.style.display = "none";
                                                         offlineBlock.style.display = "none";
+                                                        trainingCenterblock.style.display = "none";
                                                     }
                                                 }
                                             </script>
@@ -1030,6 +1048,7 @@
 
             let body = {
                 sectors: selectedSectors,
+                center:document.getElementById("trainingCenter").value,
                 courseLevel: document.getElementById("courseLevel").value,
                 name: document.getElementById("name").value,
                 duration: document.getElementById("duration").value,

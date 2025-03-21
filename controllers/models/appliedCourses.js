@@ -51,7 +51,12 @@ const appliedCoursesSchema = new Schema(
       ref: "courses",
       description: "Reference to the specific course applied for",
     },
-    courseStatus: {
+    _center: {
+      type: ObjectId,
+      ref: "Center",
+      description: "Reference to the specific course applied for",
+    },
+    courseStatus: { 
       type: Number,
       enum: [0, 1], // 0: due, 1: assigned
       default: 0,

@@ -31,7 +31,7 @@
               </div>
               <div class="card-content">
                 <div class="card-body">
-                  <form class="form-horizontal" action="" method="post">
+                  <form class="form-horizontal" method="post">
                     <div class="row">
                         <!-- <div class="col-xl-4 mb-1">
                           <label>Center  Name</label>
@@ -40,16 +40,12 @@
                         </div> -->
                        
                           <div class="col-xl-4 mb-1">
-                            <label>Select Center
+                            <label>Enter Center Name
                               <span class="asterisk">*</span></label>
-                              <select style="cursor: pointer;" class="form-control"
-                              name="id" required>
-                              <option value="">Select Option</option>
-                                <option value="" class="text-capitalize">
-
-                                </option>
-                               
-                            </select>
+                              <input class="form-control"
+                              name="name" required>
+                              
+                              </input>
                         </div>
                          
                         <div class="col-xl-4 mb-1">
@@ -64,7 +60,6 @@
                     </div>
                   </form>
                  
-                    <button onclick="showForm()" class="btn btn-success font-small-3">Add Custom Center</button>
                    
                 
                   <form id="hideShowCourse" action="" method="post">
@@ -120,20 +115,29 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <% center.forEach((l, i)=> { %>
                             <tr>
                               <td>
+                                <%= l.name %>
                               </td>
-                                <td></td>
+                              <td>
+                                <div class="custom-control custom-switch custom-control-inline">
+                                  <input type="checkbox"
+                                  onclick="myOnOffFunc('<%= l._id %>','<%= l.status %>');"
+                                  class="custom-control-input" id="customSwitch"  <% if(l.status==true ) {%> checked <% } %>>
+                                <label class="custom-control-label" for="customSwitch">
+                                </label>
+                              </div>
+                              </td>
+                              <td valign="middle">
+                               
+                                <a>
+                                  <i class="feather icon-edit fa-lg primary"></i>
+                                </a>
+                              
+                              </td>
                             
-                                <td>
-                                  <div class="custom-control custom-switch custom-control-inline">
-                                    <input type="checkbox"
-                                    onclick="myOnOffFunc('');"
-                                    class="custom-control-input" id="customSwitch">
-                                  <label class="custom-control-label" for="customSwitch">
-                                  </label>
-                                </div>
-                                </td>
+                                
                                 <!-- <td valign="middle">
                                   
                                   <a href="/admin">
@@ -144,7 +148,7 @@
                                
   
                             </tr>
-                            
+                            <% }) %>
                       </tbody>
                     </table>
                    

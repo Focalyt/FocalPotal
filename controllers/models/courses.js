@@ -7,6 +7,9 @@ const courseSchema = new Schema({
     sectors: [{
         type: ObjectId, ref: "CourseSectors"
     }],
+    center: [{
+        type: ObjectId, ref: "Center"
+    }],
     courseLevel: String,
     name: { type: String, lowercase: true, trim: true },
     courseFeeType: {
