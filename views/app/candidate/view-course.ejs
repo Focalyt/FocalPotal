@@ -714,6 +714,42 @@
                     </div>
             </div>
         </div> -->
+
+<!-- Add center pop up  -->
+<div class="modal fade" id="AddCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Select Center</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body pt-1" id="popup-body-form">
+        <h5 class="pb-1 mb-3 text-success">Please select a center</h5>
+        
+        <div class="form-group">
+          <label for="centerSelect">Choose Center:</label>
+          <select class="form-control" id="centerSelect" name="center">
+            <option value=""> Select Center </option>
+            <option value="center1">Center 1 </option>
+            <option value="center2">Center 2 </option>
+            <option value="center3">Center 3 </option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="addDocumentsBtn">Proceed</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add center pop up end  -->
+
         <!-- end apply job Modal -->
 
         <div class="modal fade" id="completeRegistration" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -741,6 +777,7 @@
                 </div>
         </div>
     </div>
+
     <!-- end apply job Modal -->
 <!-- Modal -->
 <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalTitle" aria-hidden="true">
