@@ -1,0 +1,492 @@
+<% include ../partials/header %>
+
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Access </h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                            <li class="breadcrumb-item active">Access </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ../partials/flash %>
+
+            <section class="list-view">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 equal-height-2">
+                        <div class="card">
+                            <div class="card-header border border-top-0 border-left-0 border-right-0">
+
+                                <h4 class="card-title pb-1">Add Role</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <form class="form-horizontal" action="" method="post">
+                                        <div class="row">
+                                            <div class="col-xl-4 mb-1">
+                                                <label>Role Type</label>
+                                                <select class="form-control" name="role">
+                                                    <option value="">Select Option</option>
+                                                    <option value="0"> Admin</option>
+                                                    <option value="10">View</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-4 mb-1">
+                                                <label>Name</label>
+                                                <input type="text" class="form-control" value="" name="name"
+                                                    placeholder="Name" />
+                                            </div>
+                                            <div class="col-xl-4 mb-1">
+                                                <label>Email Id</label>
+                                                <input type="email" class="form-control" value="" name="email"
+                                                    placeholder="Email" />
+                                            </div>
+                                            
+                                            <!-- <div class="col-xl-4 mb-1">
+												<label>Center</label>
+												<input type="text" class="form-control"
+													value="" name="center"
+													placeholder="center" 
+													/>
+											</div> -->
+                                            <div class="col-xl-4 mb-1 dropdown_container">
+                                                <label>Center</label>
+                                                <div class="custom_dropdown">
+                                                    <input type="text" class="form-control dropdown_toggle" value=""
+                                                        name="center" placeholder="Select centers" />
+                                                    <div class="dropdown_menu">
+                                                        <div class="checkbox_item select_all_container">
+                                                            <input type="checkbox" id="select_all"
+                                                                class="select_all_checkbox">
+                                                            <label for="select_all">Select All</label>
+                                                        </div>
+                                                        <hr style="margin: 5px 0;">
+                                                        <div class="checkbox_item">
+                                                            <input type="checkbox" id="center1" value="Center 1"
+                                                                class="center_checkbox">
+                                                            <label for="center1">Center 1</label>
+                                                        </div>
+                                                        <div class="checkbox_item">
+                                                            <input type="checkbox" id="center2" value="Center 2"
+                                                                class="center_checkbox">
+                                                            <label for="center2">Center 2</label>
+                                                        </div>
+                                                        <div class="checkbox_item">
+                                                            <input type="checkbox" id="center3" value="Center 3"
+                                                                class="center_checkbox">
+                                                            <label for="center3">Center 3</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                           
+                                            <!-- <div class="col-xl-4 mb-1">
+                                                <label>Course</label>
+                                                <input type="text" class="form-control" value="" name="course"
+                                                    placeholder="Course" />
+                                            </div> -->
+                                            <div class="col-xl-4 mb-1 dropdown__container">
+                                                <label>Course</label>
+                                                <div class="custom__dropdown">
+                                                    <input type="text" class="form-control dropdown__toggle" 
+                                                           value="" name="course" placeholder="Select courses" />
+                                                    <div class="dropdown__menu">
+                                                        <div class="checkbox__item select__all__container">
+                                                            <input type="checkbox" id="select__all__courses" class="select__all__checkbox">
+                                                            <label for="select__all__courses">Select All</label>
+                                                        </div>
+                                                        <hr style="margin: 5px 0;">
+                                                        <div class="checkbox__item">
+                                                            <input type="checkbox" id="course1" value="Web Development" class="course__checkbox">
+                                                            <label for="course1">Web Development</label>
+                                                        </div>
+                                                        <div class="checkbox__item">
+                                                            <input type="checkbox" id="course2" value="Data Science" class="course__checkbox">
+                                                            <label for="course2">Data Science</label>
+                                                        </div>
+                                                        <div class="checkbox__item">
+                                                            <input type="checkbox" id="course3" value="Mobile App Development" class="course__checkbox">
+                                                            <label for="course3">Mobile App Development</label>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 mb-1">
+                                                <label>Password</label>
+                                                <input type="password" class="form-control" value="" name="password"
+                                                    placeholder="Password" />
+                                            </div>
+                                            <div class="col-xl-12 mb-1 text-right">
+                                                <br />
+
+                                                <button type="submit" class="btn btn-success font-small-3 ">
+                                                    Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 rounded equal-height-2 coloumn-2">
+                        <div class="card">
+                            <div class="row pb-1">
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="card-header">
+                                            <h4 class="card-title">All Roles</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive">
+                                    <table class="table table-hover-animation mb-0 table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Role</th>
+                                                <th>Email Id</th>
+                                                <th>Center</th>
+                                                <th>Course</th>
+                                                <th>Status</th>
+
+                                                <th>Action</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td class="text-capitalize">
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    ***********
+                                                </td>
+
+                                                <td></td>
+
+                                                <td>
+                                                    <div class="custom-control custom-switch custom-control-inline">
+
+                                                        <input type="checkbox" onclick="myOnOffFunc();"
+                                                            class="custom-control-input" id="customSwitch" />
+                                                        <label class="custom-control-label" for="customSwitch">
+                                                        </label>
+
+                                                    </div>
+                                                </td>
+
+                                                <td valign="middle">
+                                                    <a href="/admin/roles/edit/">
+                                                        <i class="feather icon-edit fa-lg primary"></i>
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+
+                                            <p class="text-center mt-3">No result found</p>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <% include ../partials/footer %>
+
+    </div>
+    <style>
+        .select_all_container {
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+        }
+
+        .dropdown_menu hr {
+            margin: 5px 0;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+
+        .dropdown_container {
+            position: relative;
+        }
+
+        .custom_dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .dropdown_toggle {
+            cursor: pointer;
+        }
+
+        .dropdown_menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 8px;
+            margin-top: 2px;
+        }
+
+        .checkbox_item {
+            padding: 6px;
+            cursor: pointer;
+        }
+
+        .checkbox_item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .checkbox_item input {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .custom__dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.dropdown__toggle {
+    cursor: pointer;
+}
+
+.dropdown__menu {
+    display: block; /* Changed from none */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    padding: 8px;
+    margin-top: 2px;
+    max-height: 200px;
+    overflow-y: auto;
+    /* Add transition properties */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease-in-out; /* Smooth transition for all properties */
+}
+
+.dropdown__menu.open { /* New class for open state */
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.checkbox__item {
+    padding: 2px 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.checkbox__item:hover {
+    background-color: #f5f5f5;
+}
+
+.checkbox__item input {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.checkbox__item label {
+    margin-right: 8px;
+}
+
+.select__all__container {
+    font-weight: bold;
+}
+    </style>
+    <script>
+        function myOnOffFunc(id, status, model) {
+            let myStatus = true;
+            if (status === true || status === "true") {
+                myStatus = false;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/admin/changestatus",
+                data: {
+                    id,
+                    status: myStatus,
+                    model,
+                },
+                success: () => location.reload()
+            });
+        }
+    </script>
+     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownToggle = document.querySelector('.dropdown_toggle');
+            const dropdownMenu = document.querySelector('.dropdown_menu');
+            const checkboxes = document.querySelectorAll('.center_checkbox');
+            const selectAllCheckbox = document.querySelector('.select_all_checkbox');
+
+            // Make dropdown clickable by adding event listeners
+            dropdownToggle.addEventListener('click', function (event) {
+                event.stopPropagation(); // Prevent event from bubbling up
+                if (dropdownMenu.style.display === 'block') {
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    dropdownMenu.style.display = 'block';
+                }
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!event.target.closest('.custom_dropdown')) {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+
+            // Select All functionality
+            selectAllCheckbox.addEventListener('change', function (event) {
+                event.stopPropagation();
+                const isChecked = this.checked;
+
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.checked = isChecked;
+                });
+
+                updateInputValue();
+            });
+
+            // Update input value and prevent dropdown from closing when clicking checkboxes
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function (event) {
+                    event.stopPropagation(); // Prevent event from bubbling up
+                    updateInputValue();
+                    updateSelectAllCheckbox();
+                });
+
+                checkbox.parentElement.addEventListener('click', function (event) {
+                    event.stopPropagation(); // Prevent dropdown from closing
+                });
+            });
+
+            // Function to update the "Select All" checkbox based on individual checkboxes
+            function updateSelectAllCheckbox() {
+                const checkedCount = document.querySelectorAll('.center_checkbox:checked').length;
+                selectAllCheckbox.checked = checkedCount === checkboxes.length;
+                selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+            }
+
+            // Function to update input value based on selected checkboxes
+            function updateInputValue() {
+                const selectedCenters = [];
+                checkboxes.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        selectedCenters.push(checkbox.value);
+                    }
+                });
+
+                dropdownToggle.value = selectedCenters.join(', ');
+            }
+
+            // Prevent closing when clicking on Select All
+            document.querySelector('.select_all_container').addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+    
+           </script>
+           <script>
+            document.addEventListener('DOMContentLoaded', function() {
+    const courseDropdownToggle = document.querySelector('.dropdown__toggle');
+    const courseDropdownMenu = document.querySelector('.dropdown__menu');
+    const courseCheckboxes = document.querySelectorAll('.course__checkbox');
+    const courseSelectAllCheckbox = document.querySelector('.select__all__checkbox');
+    
+    // Make dropdown clickable
+    courseDropdownToggle.addEventListener('click', function(event) {
+        event.stopPropagation();
+        courseDropdownMenu.classList.toggle('open');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.custom__dropdown')) {
+            courseDropdownMenu.classList.remove('open');
+        }
+    });
+    
+    // Select All functionality for courses
+    courseSelectAllCheckbox.addEventListener('change', function(event) {
+        event.stopPropagation();
+        const isChecked = this.checked;
+        
+        courseCheckboxes.forEach(function(checkbox) {
+            checkbox.checked = isChecked;
+        });
+        
+        updateCourseInputValue();
+    });
+    
+    // Update input value when checkboxes are clicked
+    courseCheckboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function(event) {
+            event.stopPropagation();
+            updateCourseInputValue();
+            updateCourseSelectAllCheckbox();
+        });
+        
+        checkbox.parentElement.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    });
+    
+    // Function to update the "Select All" checkbox
+    function updateCourseSelectAllCheckbox() {
+        const checkedCount = document.querySelectorAll('.course__checkbox:checked').length;
+        courseSelectAllCheckbox.checked = checkedCount === courseCheckboxes.length;
+        courseSelectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < courseCheckboxes.length;
+    }
+    
+    // Function to update course input value
+    function updateCourseInputValue() {
+        const selectedCourses = [];
+        courseCheckboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                selectedCourses.push(checkbox.value);
+            }
+        });
+        
+        courseDropdownToggle.value = selectedCourses.join(', ');
+    }
+    
+    // Prevent closing when clicking on Select All
+    document.querySelector('.select__all__container').addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+});
+           </script>

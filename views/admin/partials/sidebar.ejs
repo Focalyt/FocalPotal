@@ -195,6 +195,23 @@
             
         </ul>
       </li>
+      <li class=" nav-item"><a href="#"><i class="fa-solid fa-coins"></i><span class="menu-title"
+            data-i18n="Todo">Portal Access</span></a>
+        <ul class="menu-content">
+          
+            <li class="nav-item <% if(menu==='accesstype') { %>active<% } %>">
+                  <a href="/admin/portalaccess/addaccess">
+                      <i class="fa-solid fa-money-bill"></i>
+                      <span class="menu-title" data-i18n="Todo">Access</span>
+                  </a>
+              </li>
+              
+              <li class="<% if(menu==='viewaccess') {%>active<%}%>"><a href="/admin/portalaccess/viewaccess"><i
+                    class="feather icon-user"></i><span class="menu-title" data-i18n="Analytics">Access Type</span></a>
+              </li>
+            
+        </ul>
+      </li>
       
       <% if(currentUser.role==0) { %>
         <li class="nav-item <% if(menu==='admin-roles') {%>active<%}%>"><a href="/admin/roles"><i
