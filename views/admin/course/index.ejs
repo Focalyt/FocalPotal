@@ -83,8 +83,8 @@
 										<th>Course Name</th>
 										<!--th>No of Students</th!-->
 										<th>Duration</th>
-										<th>Certificate Agency</th>
-										<th>Certificate Agency Website</th>
+										<th>Add Leads</th>
+										
 										<th>Status</th>
 										<th>Action</th>
 									</tr>
@@ -98,8 +98,13 @@
 									<td><%=course.courseLevel%></td>
 									<td><%=course.name%></td>
 									<td><%=course.duration%></td>
-									<td><%=course.certifyingAgency%></td>
-									<td><%=course.certifyingAgencyWebsite%></td>
+									<td class="text-capitalize text-nowrap">
+										<a href="/admin/courses/<%=course._id%>/candidate/addleads" class="btn btn-danger waves-effect waves-light text-white d-inline btn-sm" style="padding: 8px;">
+											Add leads
+										</a>
+									</td>
+									
+									
 									<td>
 										<div
 																		class="custom-control custom-switch custom-control-inline">
