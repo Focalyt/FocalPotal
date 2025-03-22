@@ -28,24 +28,26 @@
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
-                                    <form class="form-horizontal" action="" method="post">
+                                    
                                         <div class="row">
                                             <div class="col-xl-4 mb-1">
                                                 <label>Role Type</label>
-                                                <select class="form-control" name="role">
+                                                <select class="form-control" name="role" id="roleName">
                                                     <option value="">Select Option</option>
-                                                    <option value="0"> Admin</option>
-                                                    <option value="10">View</option>
+                                                    <option value="Admin">Admin</option>
+                                                    <option value="Counsellor">Counsellor</option>
+                                                    <option value="Center Manager">Center Manager</option>
+                                                    <option value="Manager">Manager</option>
                                                 </select>
                                             </div>
                                             <div class="col-xl-4 mb-1">
                                                 <label>Name</label>
-                                                <input type="text" class="form-control" value="" name="name"
+                                                <input type="text" class="form-control" id="name" name="name"
                                                     placeholder="Name" />
                                             </div>
                                             <div class="col-xl-4 mb-1">
                                                 <label>Email Id</label>
-                                                <input type="email" class="form-control" value="" name="email"
+                                                <input type="email" class="form-control" id="email" name="email"
                                                     placeholder="Email" />
                                             </div>
                                             
@@ -61,28 +63,40 @@
                                                 <div class="custom_dropdown">
                                                     <input type="text" class="form-control dropdown_toggle" value=""
                                                         name="center" placeholder="Select centers" />
+                                                        <input type="hidden" name="center" id="selectedCenterIds">
                                                     <div class="dropdown_menu">
                                                         <div class="checkbox_item select_all_container">
                                                             <input type="checkbox" id="select_all"
                                                                 class="select_all_checkbox">
                                                             <label for="select_all">Select All</label>
                                                         </div>
+                                                        <div class="checkbox_item">
+                                                            <input type="checkbox" 
+                                                                   id="center" 
+                                                                   data-name="Any"
+                                                                   class="center_checkbox">
+                                                            <label for="center">Any</label>
+                                                        </div>
+
                                                         <hr style="margin: 5px 0;">
-                                                        <div class="checkbox_item">
-                                                            <input type="checkbox" id="center1" value="Center 1"
-                                                                class="center_checkbox">
-                                                            <label for="center1">Center 1</label>
-                                                        </div>
-                                                        <div class="checkbox_item">
-                                                            <input type="checkbox" id="center2" value="Center 2"
-                                                                class="center_checkbox">
-                                                            <label for="center2">Center 2</label>
-                                                        </div>
-                                                        <div class="checkbox_item">
-                                                            <input type="checkbox" id="center3" value="Center 3"
-                                                                class="center_checkbox">
-                                                            <label for="center3">Center 3</label>
-                                                        </div>
+                                                        
+                                                        <% if(centers && centers.length > 0) { %>
+                                                            <% centers.forEach((center, index) => { %>
+                                                               
+                                                                <div class="checkbox_item">
+                                                                    <input type="checkbox" 
+                                                                           id="center<%= index %>" 
+                                                                           value="<%= center._id %>" 
+                                                                           data-name="<%= center.name %>"
+                                                                           class="center_checkbox">
+                                                                    <label for="center<%= index %>"><%= center.name %></label>
+                                                                </div>
+                                                            <% }) %>
+                                                        <% } else { %>
+                                                            <p>No centers available</p>
+                                                        <% } %>
+                                                        
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -98,42 +112,54 @@
                                                 <div class="custom__dropdown">
                                                     <input type="text" class="form-control dropdown__toggle" 
                                                            value="" name="course" placeholder="Select courses" />
+                                                           <input type="hidden" name="course" id="selectedCoursesIds">
                                                     <div class="dropdown__menu">
                                                         <div class="checkbox__item select__all__container">
                                                             <input type="checkbox" id="select__all__courses" class="select__all__checkbox">
                                                             <label for="select__all__courses">Select All</label>
                                                         </div>
-                                                        <hr style="margin: 5px 0;">
                                                         <div class="checkbox__item">
-                                                            <input type="checkbox" id="course1" value="Web Development" class="course__checkbox">
-                                                            <label for="course1">Web Development</label>
+                                                            <input type="checkbox" id="course" data-name="Any" class="course__checkbox">
+                                                            <label for="course">Any</label>
                                                         </div>
+                                                        <hr style="margin: 5px 0;">
+                                                        
+                                                        <% if(courses && courses.length > 0) { %>
+                                                            <% courses.forEach((course, index) => { %>
                                                         <div class="checkbox__item">
+                                                            <input type="checkbox" id="course<%= index %>" value="<%= course._id %>" data-name="<%= course.name %>" class="course__checkbox">
+                                                            <label for="course<%= index %>"><%= course.name %></label>
+                                                        </div>
+                                                        <% }) %>
+                                                        <% } else { %>
+                                                            <p>No course available</p>
+                                                        <% } %>
+                                                        <!-- <div class="checkbox__item">
                                                             <input type="checkbox" id="course2" value="Data Science" class="course__checkbox">
                                                             <label for="course2">Data Science</label>
                                                         </div>
                                                         <div class="checkbox__item">
                                                             <input type="checkbox" id="course3" value="Mobile App Development" class="course__checkbox">
                                                             <label for="course3">Mobile App Development</label>
-                                                        </div>
+                                                        </div> -->
                                                         
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 mb-1">
                                                 <label>Password</label>
-                                                <input type="password" class="form-control" value="" name="password"
+                                                <input type="password" id="password" class="form-control" name="password"
                                                     placeholder="Password" />
                                             </div>
                                             <div class="col-xl-12 mb-1 text-right">
                                                 <br />
 
-                                                <button type="submit" class="btn btn-success font-small-3 ">
+                                                <button onclick="addUser()"  class="btn btn-success font-small-3 ">
                                                     Add
                                                 </button>
                                             </div>
                                         </div>
-                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -328,6 +354,46 @@
 }
     </style>
     <script>
+
+function addUser(){
+        const coursehiddenInput = document.getElementById('selectedCoursesIds').value;
+        const centerhiddenInput = document.getElementById('selectedCenterIds').value;
+        email = document.getElementById('email').value;
+        name = document.getElementById('name').value;
+        password = document.getElementById('password').value;
+        roleName = document.getElementById('roleName').value;
+        // Convert comma-separated values to array
+        const courseArray = coursehiddenInput ? coursehiddenInput.split(',') : [];
+        const centerArray = centerhiddenInput ? centerhiddenInput.split(',') : [];
+
+        let body = {
+            name,
+            email,
+            password,
+            role:0,
+            access:{
+            roleName,
+            courseAccess:courseArray,
+            centerAccess:centerArray
+		}        
+           
+
+        }
+        console.log("Data",body)
+
+        let header = { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" }
+       axios.post('/admin/portalaccess/addaccess', body, header).then(res => {
+        // window.location.reload()
+       }).catch(err => {
+         console.log(err.message)
+       })
+
+
+
+
+    }
+
+        
         function myOnOffFunc(id, status, model) {
             let myStatus = true;
             if (status === true || status === "true") {
@@ -351,6 +417,7 @@
             const dropdownMenu = document.querySelector('.dropdown_menu');
             const checkboxes = document.querySelectorAll('.center_checkbox');
             const selectAllCheckbox = document.querySelector('.select_all_checkbox');
+            const hiddenInput = document.getElementById('selectedCenterIds');
 
             // Make dropdown clickable by adding event listeners
             dropdownToggle.addEventListener('click', function (event) {
@@ -404,13 +471,17 @@
             // Function to update input value based on selected checkboxes
             function updateInputValue() {
                 const selectedCenters = [];
+                const selectedCentersName = []
+                let ids = [];
                 checkboxes.forEach(function (checkbox) {
                     if (checkbox.checked) {
-                        selectedCenters.push(checkbox.value);
+                        selectedCenters.push(checkbox.getAttribute('data-name'));
+                        ids.push(checkbox.value);
                     }
                 });
 
                 dropdownToggle.value = selectedCenters.join(', ');
+                hiddenInput.value = ids.join(',');
             }
 
             // Prevent closing when clicking on Select All
@@ -426,8 +497,10 @@
     const courseDropdownMenu = document.querySelector('.dropdown__menu');
     const courseCheckboxes = document.querySelectorAll('.course__checkbox');
     const courseSelectAllCheckbox = document.querySelector('.select__all__checkbox');
+    const coursehiddenInput = document.getElementById('selectedCoursesIds');
     
     // Make dropdown clickable
+   
     courseDropdownToggle.addEventListener('click', function(event) {
         event.stopPropagation();
         courseDropdownMenu.classList.toggle('open');
@@ -471,17 +544,21 @@
         courseSelectAllCheckbox.checked = checkedCount === courseCheckboxes.length;
         courseSelectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < courseCheckboxes.length;
     }
+
     
     // Function to update course input value
     function updateCourseInputValue() {
         const selectedCourses = [];
+        let ids = [];
         courseCheckboxes.forEach(function(checkbox) {
             if (checkbox.checked) {
-                selectedCourses.push(checkbox.value);
+                selectedCourses.push(checkbox.getAttribute('data-name'));
+                ids.push(checkbox.value);
             }
         });
         
         courseDropdownToggle.value = selectedCourses.join(', ');
+        coursehiddenInput.value = ids.join(',');
     }
     
     // Prevent closing when clicking on Select All

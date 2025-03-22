@@ -80,7 +80,7 @@ module.exports.isAdmin = async (req, res, next) => {
     const { user } = req.session;
     if (!user) {
       throw error;
-    } else if (user.role != 0 && user.role != 10) {
+    } else if (user.role != 0 && user.role != 11 && user.role != 10) {
       throw error;
     }
     return next();

@@ -857,9 +857,10 @@ router
 		try {
 			const user = await User.findOne({
 				email: req.body.email,
-				role: { $in: [0, 10] },
+				role: { $in: [0, 10, 11] },
 				status: true,
 			});
+			console.log("User", user)
 			// if (!user || user === null)
 			// 	throw req.ykError("You are blocked by super admin");
 
@@ -868,16 +869,19 @@ router
 
 			if (user && user.status == false)
 				throw req.ykError("Please Contact With Your Admin");
+			console.log("User status true")
 
 			if (!user.validPassword(req.body.password))
 				throw req.ykError("Enter a valid password");
+			console.log("User valid password")
 
 			if (user) {
-				if (user.role === 10 || user.role === 0) {
+				if (user.role === 10 || user.role === 11 || user.role === 0) {
 					let userData = { role: user.role, name: user.name, _id: user._id, email: user.email }
 					req.session.user = userData;
 					return res.redirect("/admin");
 				}
+				
 			}
 		} catch (err) {
 			req.flash("error", err.message || "Something went wrong!");

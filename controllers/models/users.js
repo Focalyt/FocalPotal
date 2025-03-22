@@ -39,7 +39,12 @@ const userSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
-		role: { type: Number, trim: true }, // 0-admin, 1-company, 2-college 3-student
+		role: { type: Number, trim: true }, // 0-admin, 1-company, 2-college, 3-student, 10-admin view
+		access:{
+			roleName:{type:String},
+			courseAccess:[{type:ObjectId, ref:"course"}],
+			centerAccess:[{type:ObjectId, ref:"Center"}],
+		} , 
 		status: {
 			type: Boolean,
 			default: true,
