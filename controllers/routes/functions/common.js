@@ -178,8 +178,26 @@ module.exports.sendOtptoRegisterCandidate = async (req, res) => {
     const user = await User.findOne({ mobile, role: 3 });
 
     if (user) {
+      console.log('User already exists, Please login.')
       return res.send({ status: false, message: 'User already exists, Please login.' });
     }
+    const auth = authKey;
+    const template = templateId
+    const url = `https://api.msg91.com/api/v5/otp?template_id=${template}&mobile=91${mobile}&authkey=${auth}`;
+    const data = await axios.get(url);
+
+    if (data.data.type !== 'success') throw req.ykError(data.data.message);
+    return res.send({ status: true, message: 'OTP sent successfully!' });
+  } catch (err) {
+    return req.errFunc(err);
+  }
+};
+
+module.exports.sendOtptoAddLead = async (req, res) => {
+  try {
+
+    const { mobile } = req.body;
+
     const auth = authKey;
     const template = templateId
     const url = `https://api.msg91.com/api/v5/otp?template_id=${template}&mobile=91${mobile}&authkey=${auth}`;

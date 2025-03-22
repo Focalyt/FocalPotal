@@ -1,14 +1,56 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
+const uuid = require('uuid/v1');
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
+const fs = require('fs');
+const path = require("path");
 const { auth1, isAdmin } = require("../../../helpers");
 const moment = require("moment");
-const { Courses, CourseSectors, Candidate, AppliedCourses, Center } = require("../../models");
+const { Country, Courses, CourseSectors, Candidate, AppliedCourses, Center } = require("../../models");
 const candidateServices = require('../services/candidate')
 const { candidateCashbackEventName } = require('../../db/constant');
 const router = express.Router();
 router.use(isAdmin);
+
+const AWS = require("aws-sdk");
+const multer = require('multer');
+const {
+  accessKeyId,
+  secretAccessKey,
+  bucketName,
+  region,
+  authKey,
+  msg91WelcomeTemplate,
+} = require("../../../config");
+
+AWS.config.update({
+  accessKeyId,
+  secretAccessKey,
+  region,
+});
+const s3 = new AWS.S3({ region, signatureVersion: 'v4' });
+const allowedVideoExtensions = ['mp4', 'mkv', 'mov', 'avi', 'wmv'];
+const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+const allowedDocumentExtensions = ['pdf', 'doc', 'docx']; // ✅ PDF aur DOC types allow karein
+
+const allowedExtensions = [...allowedVideoExtensions, ...allowedImageExtensions, ...allowedDocumentExtensions];
+const destination = path.resolve(__dirname, '..', '..', '..', 'public', 'temp');
+
+if (!fs.existsSync(destination)) fs.mkdirSync(destination);
+
+const storage = multer.diskStorage({
+  destination,
+  filename: (req, file, cb) => {
+	const ext = path.extname(file.originalname);
+	const basename = path.basename(file.originalname, ext);
+	cb(null, `${basename}-${Date.now()}${ext}`);
+  },
+});
+
+const upload = multer({ storage }).single('file');
+
+
 
 router.route("/").get(async (req, res) => {
 	try {
@@ -64,7 +106,7 @@ router
 		try {
 			const sectors = await CourseSectors.find({ status: true })
 			const center = await Center.find({ status: true })
-			console.log(center)
+			
 			return res.render(`${req.vPath}/admin/course/add`, {
 				menu: 'addCourse',
 				sectors,
@@ -138,7 +180,7 @@ router
 				}
 			})
 			course = await Courses.findById(id).populate('sectors').populate('center');
-			console.log(course)
+			
 			return res.render(`${req.vPath}/admin/course/edit`, {
 				course,
 				sectors,
@@ -534,12 +576,160 @@ router.post("/removephoto", isAdmin, async (req, res) => {
 
 // add leads 
 router.route('/:courseId/candidate/addleads')
-    .get((req, res) => {
+    .get(async ( req, res) => {
 		
         try {
-			const courseId = req.params
+			let {courseId} = req.params
+			const country = await Country.find({});
 			
-            res.render('admin/course/addleads', { menu: 'course', courseId});
+			if (typeof courseId === 'string' && mongoose.Types.ObjectId.isValid(courseId)) {
+				courseId = new mongoose.Types.ObjectId(courseId);
+				
+			} 
+	        let course = await Courses.findById(courseId).populate('center');
+			
+			
+            res.render('admin/course/addleads', { menu: 'course', courseId, course,country});
+        } catch (err) {
+            console.log("Error rendering addleads page:", err);
+            res.redirect('back');
+        }
+    });
+
+router.route('/:courseId/candidate/upload-docs')
+    .post(async ( req, res) => {
+		
+        try {
+			 const { docsName, courseId, docsId } = req.body;
+					console.log("docsId:", docsId, "Type:", typeof docsId, "Valid:", mongoose.Types.ObjectId.isValid(docsId));
+			
+					if (!mongoose.Types.ObjectId.isValid(docsId)) {
+						return res.status(400).json({ error: "Invalid document ID format." });
+					}
+			
+					
+					const candidateMobile = req.body.mobile;
+
+					if(!candidateMobile){
+
+						return res.status(400).json({ error: "mobile number required." });				
+
+					}
+			
+					const candidate = await Candidate.findOne({
+						mobile: candidateMobile,
+						appliedCourses: courseId
+					});
+			
+					if (!candidate) {
+						return res.status(400).json({ error: "You have not applied for this course." });
+					}
+			
+					let files = req.files?.file;
+					if (!files) {
+						return res.status(400).send({ status: false, message: "No files uploaded" });
+					}
+			
+					console.log("Files", files)
+			
+					const filesArray = Array.isArray(files) ? files : [files];
+					const uploadedFiles = [];
+					const uploadPromises = [];
+					const candidateId = candidate._id;
+			
+					filesArray.forEach((item) => {
+						const { name, mimetype } = item;
+						const ext = name?.split('.').pop().toLowerCase();
+			
+						console.log(`Processing File: ${name}, Extension: ${ext}`);
+			
+						if (!allowedExtensions.includes(ext)) { // ✅ Now includes PDFs
+							console.log("File type not supported")
+							throw new Error(`File type not supported: ${ext}`);
+						}
+			
+						let fileType = "document"; // ✅ Default to "document"
+						if (allowedImageExtensions.includes(ext)) {
+							fileType = "image";
+						} else if (allowedVideoExtensions.includes(ext)) {
+							fileType = "video";
+						}
+			
+						const key = `Documents for course/${courseId}/${candidateId}/${docsId}/${uuid()}.${ext}`;
+						const params = {
+							Bucket: bucketName,
+							Key: key,
+							Body: item.data,
+							ContentType: mimetype,
+						};
+			
+						uploadPromises.push(
+							s3.upload(params).promise().then((uploadResult) => {
+								uploadedFiles.push({
+									fileURL: uploadResult.Location,
+									fileType,
+								});
+							})
+						);
+					});
+			
+					await Promise.all(uploadPromises);
+					console.log(uploadedFiles)
+			
+					const fileUrl = uploadedFiles[0].fileURL;
+			
+					const existingCourseDoc = await Candidate.findOne({
+						mobile: candidateMobile,
+						"docsForCourses.courseId": courseId
+					});
+			
+					if (existingCourseDoc) {
+						const updatedCandidate = await Candidate.findOneAndUpdate(
+							{ mobile: candidateMobile, "docsForCourses.courseId": courseId },
+							{
+								$push: {
+									"docsForCourses.$.uploadedDocs": {
+										docsId: new mongoose.Types.ObjectId(docsId),
+										fileUrl: fileUrl,
+										status: "Pending",
+										uploadedAt: new Date()
+									}
+								}
+							},
+							{ new: true }
+						);
+			
+						return res.status(200).json({
+							status: true,
+							message: "Document uploaded successfully",
+							data: updatedCandidate
+						});
+					} else {
+						const updatedCandidate = await Candidate.findOneAndUpdate(
+							{ mobile: candidateMobile },
+							{
+								$push: {
+									"docsForCourses": {
+										courseId: new mongoose.Types.ObjectId(courseId),
+										uploadedDocs: [{
+											docsId: new mongoose.Types.ObjectId(docsId),
+											fileUrl: fileUrl,
+											status: "Pending",
+											uploadedAt: new Date()
+										}]
+									}
+								}
+							},
+							{ new: true }
+						);
+			
+						return res.status(200).json({
+							status: true,
+							message: "Document uploaded successfully",
+							data: updatedCandidate
+						});
+					}
+			
         } catch (err) {
             console.log("Error rendering addleads page:", err);
             res.redirect('back');

@@ -35,6 +35,7 @@ const subQualificationAdminRoutes = express.Router();
 const referenceRoutes = express.Router();
 const smsTemplateRoutes = express.Router();
 
+commonRoutes.post("/sendOtptoAddLead", commonFunc.sendOtptoAddLead);
 commonRoutes.post("/sendCandidateOtp", commonFunc.sendCandidateOtp);
 commonRoutes.post("/postfiles", postFunc.uploadPostFiles);
 commonRoutes.post("/editpost", postFunc.editPost);

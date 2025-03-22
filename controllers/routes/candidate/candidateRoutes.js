@@ -487,14 +487,22 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
   }
 });
 
-router.post("/course/:courseId/admin/apply", [isAdmin, authenti], async (req, res) => {
+router.post("/course/:courseId/admin/apply", [isAdmin], async (req, res) => {
   try {
     let { courseId } = req.params;
-    // Check if courseId is a string
+    console.log("courseId",courseId)
+
+    let {mobile , selectedCenter} = req.body;
+    if (!mobile) {
+      console.log("mobile number not found.");
+      return res.status(404).json({ status: false, msg: "mobile number required." });
+      
+    }
+    // // Check if courseId is a string
     if (typeof courseId === "string") {
       console.log("courseId is a string:", courseId);
 
-      // Validate if it's a valid ObjectId before converting
+    //   // Validate if it's a valid ObjectId before converting
       if (mongoose.Types.ObjectId.isValid(courseId)) {
         courseId = new mongoose.Types.ObjectId(courseId); // Convert to ObjectId
       } else {
@@ -502,32 +510,44 @@ router.post("/course/:courseId/admin/apply", [isAdmin, authenti], async (req, re
       }
     }
     
-    selectedCenter = req.body.selectedCenter;
+    
     console.log("selectedCenter",selectedCenter)
 
-    // Fetch course and candidate
+    if (typeof selectedCenter === "string") {
+      console.log("selectedCenter is a string:", selectedCenter);
+
+    //   // Validate if it's a valid ObjectId before converting
+      if (mongoose.Types.ObjectId.isValid(selectedCenter)) {
+        selectedCenter = new mongoose.Types.ObjectId(selectedCenter); // Convert to ObjectId
+      } else {
+        return res.status(400).json({ error: "Invalid selectedCenter ID" });
+      }
+    }
+
+    // // Fetch course and candidate
     const course = await Courses.findById(courseId);
     if (!course) {
       return res.status(404).json({ status: false, msg: "Course not found." });
     }
 
-    const candidate = await Candidate.findOne({ mobile: candidateMobile }).populate([
+    const candidate = await Candidate.findOne({ mobile: mobile }).populate([
       { path: 'state', select: "name" },
       { path: 'city', select: "name" }
     ]).lean();
+    console.log("candidate", candidate)
 
     if (!candidate) {
       return res.status(404).json({ status: false, msg: "Candidate not found." });
+      console.log("Candidate not found.")
     }
 
-    // Check if already applied
-    if (candidate.appliedCourses && candidate.appliedCourses.includes(courseId)) {
-      return res.status(400).json({ status: false, msg: "Already applied." });
+    // // Check if already applied
+    if (candidate.appliedCourses && candidate.appliedCourses.some(appliedId => appliedId.equals(courseId))) {
+      console.log("Already applied")
+      return res.status(400).json({ status: false, msg: "Course already applied." });
     }
-
-    // If event sent successfully, apply for course
     const apply = await Candidate.findOneAndUpdate(
-      { mobile: candidateMobile },
+      { mobile: mobile },
       { $addToSet: { appliedCourses: courseId,
         selectedCenter: {
           courseId: courseId,
@@ -544,13 +564,13 @@ router.post("/course/:courseId/admin/apply", [isAdmin, authenti], async (req, re
     }).save();
 
 
-    // Capitalize every word's first letter
+    // // Capitalize every word's first letter
     function capitalizeWords(str) {
       if (!str) return '';
       return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
     }
 
-    // Update Spreadsheet
+    // // Update Spreadsheet
     const sheetData = [
       moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
       moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
@@ -587,7 +607,7 @@ router.post("/course/:courseId/admin/apply", [isAdmin, authenti], async (req, re
     }
 
 
-    console.log(candidateMob);
+    console.log("Candidate Mobile",candidateMob);
 
     return res.status(200).json({ status: true, msg: "Course applied successfully." });
   } catch (error) {
@@ -3960,7 +3980,8 @@ router.route('/reqDocs/:courseId')
             return res.status(400).send({ status: false, message: "No files uploaded" });
         }
 
-        console.log("Files", files)
+        console.log("Files", files);
+        const candidateId = candidate._id
 
         const filesArray = Array.isArray(files) ? files : [files];
         const uploadedFiles = [];
@@ -3984,7 +4005,7 @@ router.route('/reqDocs/:courseId')
                 fileType = "video";
             }
 
-            const key = `test/${fileType}s/${uuid()}.${ext}`;
+            const key = `Documents for course/${courseId}/${candidateId}/${docsId}/${uuid()}.${ext}`;
             const params = {
                 Bucket: bucketName,
                 Key: key,

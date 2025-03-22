@@ -16,7 +16,6 @@
     </div>
     <div class="content-body">
         <% include ../partials/flash %>
-            <form class="form-horizontal" action="" method="post" id="formData">
                 <section id="add-leads">
                     <div class="row">
                         <div class="col-xl-12 col-lg-12">
@@ -63,7 +62,41 @@
                                                         OTP</div>
                                                 </div>
                                             </div>
-                                            <!-- <div id="error" style="color:red;font-weight: bold; display:none;">
+
+
+
+                                            <% if(course.center?.length>0) { %>
+                                                <div id="selectCenter"
+                                                    class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none">
+                                                    <select onchange="removeDisabled('applydiv')" class="form-control"
+                                                        id="centerSelect" name="center">
+                                                        <option value="">Select Training Center</option>
+                                                        <%course.center.forEach((c,i)=>{%>
+                                                            <option value="<%=c._id %>">
+                                                                <%=c.name %>
+                                                            </option>
+                                                            <%})%>
+                                                    </select>
+                                                </div>
+                                                <% } %>
+                                                    <div id="applydiv"
+                                                        class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none">
+                                                        <button id="add__centers" type="button"
+                                                            class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
+                                                            Apply Course
+                                                        </button>
+                                                    </div>
+                                                    <script>
+                                                        function removeDisabled(id) {
+                                                            console.log(id)
+                                                            document.getElementById(id).classList.remove('d-none');
+
+                                                        }
+                                                    </script>
+
+
+
+                                                    <!-- <div id="error" style="color:red;font-weight: bold; display:none;">
                                             </div>
                                             <div id="success" style="color:green;font-weight: bold; display:none;">
                                             </div> -->
@@ -71,7 +104,8 @@
 
 
                                         </div>
-                                        <div id="candidateDetails" class="row d-none">
+                                        <form action="">
+                                        <div id="candidateDetails" class="row">
                                             <div class="col-xl-3 mb-1">
                                                 <label>Name <span class="mandatory">*</span></label>
                                                 <input type="text" class="form-control" name="name" maxlength="50"
@@ -92,11 +126,12 @@
                                                     <span class="mandatory">*</span></label>
                                                 <select style="cursor: pointer;" class="form-control" name="countryId"
                                                     id="country" required>
-                                                    <option>Select Option</option>
-
-                                                    <option value="" class="text-capitalize">
-
-                                                    </option>
+                                                    <option value="">Select Option</option>
+													<% country.forEach((i)=> { %>
+														<option value="<%= i.countryId %>" class="text-capitalize">
+															<%= i.name %>
+														</option>
+														<% }); %>
 
                                                 </select>
                                             </div>
@@ -162,67 +197,50 @@
                                             </div>
 
                                         </div>
+                                    </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                 </section>
 
-            </form>
+           
 
-            <section id="add--center">
-                <div class="row ">
-                    <div class="col-xl-12 col-lg-12">
-                        <div class="card">
-                            <div class="card-header border border-top-0 border-left-0 border-right-0">
-                                <h4 class="card-title pb-1">Details</h4>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
-                                            <label>Add Center
-                                                <span class="asterisk">*</span></label>
-                                            <input type="text" class="form-control" required name="center"
-                                                palaceholder="" value='' id="add-center" />
-                                        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
-                                            <button id="add__centers" type="button"
-                                            class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
-                                            Apply
-                                        </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section id="add--docs">
+            <section id="add-docs" class="d-none">
                 <div class="row">
                     <div class="col-xl-12 col-lg-12">
                         <div class="card">
                             <div class="card-header border border-top-0 border-left-0 border-right-0">
-                                <h4 class="card-title pb-1">Add Documents</h4>
+                                <h4 class="card-title pb-1">Upload Student Documents</h4>
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
-                                            <label>Add Docs
-                                                <span class="asterisk">*</span></label>
-                                            <input type="file" class="form-control" required name="file" palaceholder=""
-                                                value='' id="add-file" />
-                                        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
-                                            <button id="add__dcs" type="button"
-                                            class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
-                                            Upload
-                                        </button>
-                                        </div>
-                                    </div>
+                                    <% if (course.docsRequired && course.docsRequired.length> 0) { %>
+                                        <% course.docsRequired.forEach((doc, index)=> { %>
+
+                                            <div class=" file-containers row align-items-center">
+                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+                                                    <label>Add <%= doc.Name %>
+                                                            <span class="asterisk">*</span></label>
+                                                    <input type="file" class="form-control file-inputs fileInput"
+                                                        onchange="validateFile(this )" required name="file"
+                                                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                                        id="file<%= doc.Name %>" />
+                                                </div>
+                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+                                                    <button id="add__dcs" type="button"
+                                                        class="btn btn-success px-lg-2 ml-1 waves-effect waves-light"
+                                                        onclick="uploadFile(this,'<%- doc.Name%>','<%- doc._id%>')">
+                                                        Upload
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <p>No Documents Required</p>
+                                                    <% } %>
                                 </div>
                             </div>
 
@@ -234,8 +252,137 @@
 
             </div>
 
+            <script>
+
+                function uploadFile(button, docsname, docsId) {
+                    let courseId = '<%= courseId %>';
+
+
+                    if (!courseId || courseId === "undefined") {
+                        console.error("Error: courseId is missing.");
+                        alert("Error: Course ID is not available.");
+                        return;
+                    }
+
+                    console.log("Course ID:", courseId);
+
+                    let inputElement = button.closest('.file-containers').querySelector('.file-inputs');
+                    let files = inputElement.files;
+                    let docsName = docsname;
+                    let candidateMobile = document.getElementById("user-input").value
+                    console.log(docsId);
+                    console.log(docsname)
+
+                    if (files.length === 0) {
+                        alert("Please select a file before uploading.");
+                        return;
+                    }
+
+                    let formData = new FormData();
+                    formData.append("file", files[0]);
+                    formData.append("docsName", docsname);
+                    formData.append("courseId", courseId);
+                    formData.append("docsId", docsId);
+                    formData.append("mobile", candidateMobile);
+                    console.log(formData)
+
+                    axios.post(`/admin/courses/${courseId}/candidate/upload-docs`, formData, {
+                        headers: {
+                            'x-auth': localStorage.getItem('token'),
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                        .then(result => {
+                            alert("Your documents uploadded successfully");
+                            // window.location.reload()
+
+                            // ✅ Disable the upload button and file input after success
+                            button.setAttribute('disabled', 'true');
+                            inputElement.setAttribute('disabled', 'true');
+                            button.classList.add('btn-secondary'); // Optional: change button color after upload
+                            button.innerText = 'Uploaded';
+
+
+
+                        }).catch(err => {
+                            console.log(err.message)
+                            // window.location.reload()
+                        })
+                }
+
+
+
+                function validateFile(input) {
+                    const allowedExtensions = ["pdf", "doc", "docx", "jpg", "jpeg", "png"];
+                    let validFiles = true;
+
+                    // Check each file for valid extension
+                    Array.from(input.files).forEach(file => {
+                        const fileExtension = file.name.split('.').pop().toLowerCase();
+                        if (!allowedExtensions.includes(fileExtension)) {
+                            validFiles = false;
+                        }
+                    });
+
+                    if (!validFiles) {
+                        alert("Please upload only PDF, DOC, DOCX, JPG, JPEG, or PNG files!");
+                        input.value = ""; // Clear input on invalid files
+                        return;
+                    }
+
+
+                }
+
+
+            </script>
+
+
+
 
             <script type="text/javascript">
+                $("#country").change(() => {
+				$("#state")
+					.find("option")
+					.remove()
+					.end()
+					.append(
+						'<option disabled selected value="">Select Option</option>'
+					);
+				axios
+					.post("/admin/helper/getstate", {
+						countryId: $("#country").val(),
+					})
+					.then(({ data }) => {
+						data.forEach((d) => {
+							$("#state").append(
+								`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+							);
+						});
+					})
+					.catch((e) => console.log(e));
+			});
+
+			$("#state").change(() => {
+				$('#city')
+					.find("option")
+					.remove()
+					.end()
+					.append(
+						'<option disabled selected value="">Select Option</option>'
+					);
+				axios
+					.post("/admin/helper/getcity", {
+						stateId: $("#state").val(),
+					})
+					.then(({ data }) => {
+						data.forEach((d) => {
+							$("#city").append(
+								`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+							);
+						});
+					})
+					.catch((e) => console.log(e));
+			});
                 const userInput = document.getElementById("user-input");
                 const sendOtpBtn = document.getElementById("send-otp");
                 const otpField = document.getElementById("otp-field");
@@ -244,6 +391,35 @@
                 const resendBtn = document.getElementById("resend-btn");
                 const otpActionRow = document.querySelector(".row.d-none");
                 otpActionRow.style.display = 'none';
+                const applybtn = document.getElementById("add__centers");
+
+                applybtn.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const mobileNumber = userInput.value;
+                    const body = { mobile: mobileNumber };
+                    const selectedCenter = document.getElementById('centerSelect').value
+                    if (selectedCenter) {
+                        body.selectedCenter = selectedCenter;
+                        console.log(selectedCenter)
+                    }
+                    else {
+                        console.log("no center selected");
+                    }
+
+                    console.log("body", body)
+                    axios.post("/candidate/course/<%=courseId%>/admin/apply", body).then((response) => {
+                        alert("Course applied successfully")
+                        document.getElementById('add__centers').setAttribute('disabled', 'true');
+                        document.getElementById('centerSelect').setAttribute('disabled', 'true');
+                        $('#add-docs').removeClass('d-none');
+                    }).catch((error) => {
+
+                        alert(error.response?.data?.msg || "Something went wrong");
+                    });
+                });
+
+
+
 
                 sendOtpBtn.addEventListener('click', (event) => {
                     event.preventDefault();
@@ -255,11 +431,12 @@
                     }
 
                     const body = { mobile: mobileNumber };
-                    axios.post("/api/sendOtp", body).then((response) => {
+                    axios.post("/api/sendOtptoAddLead", body).then((response) => {
                         if (response.data.status === true) {
                             otpField.classList.remove('d-none');
                             $('#otp-actions').removeClass('d-none')
                             sendOtpBtn.classList.add('d-none');
+                            userInput.setAttribute('disabled', 'true');
 
                             // ✅ OTP भेजने के बाद Verify और Resend बटन दिखे
                             otpActionRow.classList.remove('d-none');
@@ -288,43 +465,49 @@
                     const body = { mobile: mobileNumber, otp };
                     axios.post("/api/verifyOtp", body).then((response) => {
                         if (response.data.status === true) {
+                            $('#otp-field').addClass('d-none');
+                            $('#otp-actions').addClass('d-none');
+                            body.courseId = '<%=courseId%>';
                             alert("Candidate OTP verified successfully.");
                             axios.post("/admin/candidate/verifyuser", body).then((response) => {
-                                if (response.data.status === true) {
+                                if (response.data.status === true && response.data.appliedStatus === true) {
 
-                                    console.log("User found", response.data.candidate);
-                                    const data = {
-
-                                    }
-
-                                    axios.post("/candidate/course/<%=courseId%>/apply", body).then((response) => {
-                                        if (response.data.status === true) {
-
-                                            console.log("User found", response.data.candidate)
+                                    alert("Course already applied");
+                                    window.location.href = "/admin/courses/<%=courseId%>/candidate/addleads";
 
 
 
-                                        } else if (response.data.status === false) {
-                                            $('#candidateDetails').removeClass('d-none')
+                                    // axios.post("/candidate/course/<%=courseId%>/apply", body).then((response) => {
+                                    //     if (response.data.status === true) {
 
-<<<<<<< HEAD
-                                          
-
-                                    } else if (response.data.status === false) {
-                                        $('#candidateDetails').removeClass('d-none')
-=======
-                                        }
-                                    }).catch((error) => {
-                                        console.error("Error verifying User:", error);
-                                        alert("Error verifying User. Please try again.");
-                                    });
+                                    //         console.log("User found", response.data.candidate)
 
 
 
+                                    //     } else if (response.data.status === false) {
+                                    //         $('#candidateDetails').removeClass('d-none')
+
+                                    //     }
+                                    // }).catch((error) => {
+                                    //     console.error("Error verifying User:", error);
+                                    //     alert("Error verifying User. Please try again.");
+                                    // });
+
+
+
+
+                                }
+                                else if (response.data.status === true && response.data.appliedStatus === false) {
+                                    '<% if(course.center?.length>0) { %>'
+                                    $('#selectCenter').removeClass('d-none')
+                                    '<% } else { %>'
+
+                                    $('#applydiv').removeClass('d-none')
+
+                                        '<% } %>'
 
                                 } else if (response.data.status === false) {
                                     $('#candidateDetails').removeClass('d-none')
->>>>>>> 0cc80174f4e5f5b6c1c2a045847467e2a338754c
 
                                 }
                             }).catch((error) => {
@@ -364,11 +547,14 @@
             </script>
 
             <script>
+
+
+
                 const imageUploaders = document.querySelectorAll(".my-logo-uploader");
                 const submitBtns = document.querySelectorAll(".btnSubmit");
                 imageUploaders.forEach((x) => {
                     const idText = x.getAttribute("data-id");
-                    const id = document.querySelector(`#${idText}`);
+                    const id = document.querySelector(#${ idText });
 
                     x.addEventListener("change", async (e) => {
                         try {
@@ -411,7 +597,7 @@
                                 const img = document.createElement("img");
                                 img.setAttribute(
                                     "src",
-                                    `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+                                    https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}
                                 );
                                 img.setAttribute("alt", "img");
                                 img.setAttribute("width", "40");
@@ -440,7 +626,7 @@
                                 viewBtn.setAttribute("target", "_blank");
                                 viewBtn.setAttribute(
                                     "href",
-                                    `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+                                    https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}
                                 );
                                 viewBtn.textContent = "View";
                                 p.appendChild(viewBtn);
@@ -461,7 +647,7 @@
                 const imageUpload = document.querySelectorAll(".my-banner-uploader");
                 imageUpload.forEach((x) => {
                     const idText = x.getAttribute("data-id");
-                    const id = document.querySelector(`#${idText}`);
+                    const id = document.querySelector(#${ idText });
 
                     x.addEventListener("change", async (e) => {
                         try {
@@ -504,7 +690,7 @@
                                 const img = document.createElement("img");
                                 img.setAttribute(
                                     "src",
-                                    `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+                                    https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}
                                 );
                                 img.setAttribute("alt", "img");
                                 img.setAttribute("width", "40");
@@ -533,7 +719,7 @@
                                 viewBtn.setAttribute("target", "_blank");
                                 viewBtn.setAttribute(
                                     "href",
-                                    `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+                                    https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}
                                 );
                                 viewBtn.textContent = "View";
                                 p.appendChild(viewBtn);
@@ -554,7 +740,7 @@
                 const imageUploader = document.querySelectorAll(".my-gallery-uploader");
                 imageUploader.forEach((x) => {
                     const idText = x.getAttribute("data-id");
-                    const id = document.querySelector(`#${idText}`);
+                    const id = document.querySelector(#${ idText });
 
                     x.addEventListener("change", async (e) => {
                         try {
@@ -597,7 +783,7 @@
                                 const img = document.createElement("img");
                                 img.setAttribute(
                                     "src",
-                                    `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+                                    https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}
                                 );
                                 img.setAttribute("alt", "img");
                                 img.setAttribute("width", "40");
@@ -625,7 +811,7 @@
                                 viewBtn.setAttribute("target", "_blank");
                                 viewBtn.setAttribute(
                                     "href",
-                                    `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+                                    https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}
                                 );
                                 viewBtn.textContent = "View";
                                 p.appendChild(viewBtn);
@@ -647,7 +833,7 @@
                 );
                 diningUploaders.forEach((x) => {
                     const idText = x.getAttribute("data-id");
-                    const id = x.closest(`#${idText}`);
+                    const id = x.closest(#${ idText });
                     x.addEventListener("change", async (e) => {
                         try {
                             submitBtns.forEach((x) => {
@@ -689,7 +875,7 @@
                                 const img = document.createElement("img");
                                 img.setAttribute(
                                     "src",
-                                    `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+                                    https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}
                                 );
                                 img.setAttribute("alt", "img");
                                 img.setAttribute("width", "50");
@@ -720,12 +906,12 @@
                                 viewBtn.setAttribute("target", "_blank");
                                 viewBtn.setAttribute(
                                     "href",
-                                    `https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+                                    https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}
                                 );
                                 viewBtn.textContent = "View";
                                 p.appendChild(viewBtn);
                                 div.appendChild(p);
-                                $(`#${idText}`).append(div);
+                                $(#${ idText }).append(div);
                                 $(".diningCleaa").addClass("d-none");
                                 $(".diningCleaa").closest(".row").removeAttr("id");
                             });
@@ -754,7 +940,7 @@
                         .then(({ data }) => {
                             data.forEach((d) => {
                                 $("#state").append(
-                                    `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+                                    <option class='text-capitalize' value='${d._id}'>${d.name}</option>
                                 );
                             });
                         })
@@ -776,7 +962,7 @@
                         .then(({ data }) => {
                             data.forEach((d) => {
                                 $("#city").append(
-                                    `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+                                    <option class='text-capitalize' value='${d._id}'>${d.name}</option>
                                 );
                             });
                         })

@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require('mongoose');
 const { extraEdgeAuthToken, extraEdgeUrl } = require("../../../config");
 const axios = require("axios");
 let fs = require("fs");
@@ -159,8 +160,8 @@ router.route("/verifyuser")
 		try {
 			console.log("body data", req.body)
 
-			const { mobile } = req.body
-			const candidate = await Candidate.find({ mobile: mobile })
+			let { mobile, courseId } = req.body
+			let candidate = await Candidate.findOne({ mobile: mobile })
 			if (candidate) {
 				if (candidate.status === false) {
 					console.log("user status flase by admin")
@@ -169,9 +170,28 @@ router.route("/verifyuser")
 					return res.redirect("back");
 				}
 				else {
-					console.log("user found:", candidate)
 
-					return res.send({ status: true, candidate })
+					// // Check if courseId is a string
+					if (typeof courseId === "string") {
+						console.log("courseId is a string:", courseId);
+
+						//   // Validate if it's a valid ObjectId before converting
+						if (mongoose.Types.ObjectId.isValid(courseId)) {
+							courseId = new mongoose.Types.ObjectId(courseId); // Convert to ObjectId
+						} else {
+							return res.status(400).json({ error: "Invalid course ID" });
+						}
+					}
+					console.log("checking apply")
+					// // Check if already applied
+					if (candidate.appliedCourses && candidate.appliedCourses.some(appliedId => appliedId.equals(courseId))) {
+						console.log("course already applied")
+						return res.status(200).json({ status: true, msg: "Course already applied.", appliedStatus:true });
+					}
+					else{
+						return res.status(200).json({ status: true, msg: "Course already not applied.", appliedStatus:false });
+
+					}	
 
 				}
 			}
