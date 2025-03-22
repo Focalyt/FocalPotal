@@ -231,31 +231,9 @@
                                 axios.post("/admin/candidate/verifyuser", body).then((response) => {
                                     if (response.data.status === true) {
 
-                                        console.log("User found", response.data.candidate);
-                                        const data = {
-                                            
-                                        }
+                                          
 
-                                        axios.post("/candidate/course/<%=courseId%>/apply", body).then((response) => {
-                                    if (response.data.status === true) {
-
-                                        console.log("User found", response.data.candidate)
-
-
-
-                                    } else if(response.data.status === false) {
-                                        $('#candidateDetails').removeClass('d-none')
-
-                                    }
-                                }).catch((error) => {
-                                    console.error("Error verifying User:", error);
-                                    alert("Error verifying User. Please try again.");
-                                });
-
-
-
-
-                                    } else if(response.data.status === false) {
+                                    } else if (response.data.status === false) {
                                         $('#candidateDetails').removeClass('d-none')
 
                                     }
