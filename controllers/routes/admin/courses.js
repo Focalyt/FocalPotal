@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require("path");
 const { auth1, isAdmin } = require("../../../helpers");
 const moment = require("moment");
-const { Country, Courses, CourseSectors, Candidate, AppliedCourses, Center } = require("../../models");
+const { Courses, Qualification, CourseSectors, Candidate, AppliedCourses, Center } = require("../../models");
 const candidateServices = require('../services/candidate')
 const { candidateCashbackEventName } = require('../../db/constant');
 const router = express.Router();
@@ -198,7 +198,7 @@ router
 		try {
 			let { id } = req.params
 			let body = req.body;
-			console.log("body data",body)
+			console.log("body data", body)
 			body.photos = req.body.photos?.split(',')
 			body.videos = req.body.videos?.split(',')
 			body.testimonialvideos = req.body.testimonialvideos?.split(',')
@@ -322,7 +322,7 @@ router.route("/:courseId/:candidateId/docsview")
 			let docsRequired = null
 			if (course) {
 				docsRequired = course.docsRequired; // requireDocs array fetch ho jayega
-				
+
 			} else {
 				console.log("Course not found");
 			};
@@ -359,54 +359,54 @@ router.route("/:courseId/:candidateId/docsview")
 					};
 				});
 
-			
+
 			} else {
 				console.log("Course not found or no docs required");
 			};
 
-			
+
 
 			// ✅ Fix: Use candidate.docsForCourses instead of undefined docsForCourses
 			const countDocsByCourseId = (docsForCourses, targetCourseId) => {
 				const courseEntry = docsForCourses.find(course => course.courseId.toString() === targetCourseId.toString());
-				
+
 				let courseDocCount = 0;
 				let pendingCount = 0;
 				let rejectedCount = 0;
 				let approvedCount = 0;
-			
+
 				if (courseEntry && courseEntry.uploadedDocs) {
 					courseDocCount = courseEntry.uploadedDocs.length;
 					approvedCount = courseEntry.uploadedDocs.filter(doc => doc.status === "Verified").length;
 					pendingCount = courseEntry.uploadedDocs.filter(doc => doc.status === "Pending").length;
 					rejectedCount = courseEntry.uploadedDocs.filter(doc => doc.status === "Rejected").length;
 				}
-			
-				return { 
-					totalDocs: courseDocCount, 
-					pendingDocs: pendingCount, 
+
+				return {
+					totalDocs: courseDocCount,
+					pendingDocs: pendingCount,
 					rejectedDocs: rejectedCount,
-					verifiedDocs: approvedCount 
+					verifiedDocs: approvedCount
 				};
 			};
-			
-			
-			
-			
+
+
+
+
 			// ✅ Fix Applied: Use candidate.docsForCourses
 			const courseWiseDocumentCounts = countDocsByCourseId(candidate.docsForCourses || [], courseId);
 
 
 			console.log(courseWiseDocumentCounts);
-			
-			
-			
+
+
+
 
 			return res.render(`${req.vPath}/admin/course/listview`, {
 				menu: 'listview',
 				mergedDocs,
 				courseWiseDocumentCounts,
-				candidate,course, courseId
+				candidate, course, courseId
 			});
 		} catch (err) {
 			console.log("Error:", err);
@@ -416,62 +416,62 @@ router.route("/:courseId/:candidateId/docsview")
 
 
 	})
-	.put(async (req,res) =>{
+	.put(async (req, res) => {
 		try {
 			const { candidateId, courseId, objectId, status, reason } = req.body;
-			
+
 			const verifiedBy = req.session?.user?._id; // Fetch logged-in user ID from session
 			console.log(verifiedBy)
-			if (!verifiedBy ) {
-				return console.log( "message:", "Missing verifiedBy fields" );
+			if (!verifiedBy) {
+				return console.log("message:", "Missing verifiedBy fields");
 			}
-			console.log("body data",req.body);
-	
+			console.log("body data", req.body);
+
 			if (!candidateId || !courseId || !objectId || !status) {
 				return res.status(400).json({ message: "Missing required fields" });
 			}
-	
+
 			if (status === "Rejected" && !reason) {
 				return res.status(400).json({ message: "Rejection reason is required when status is 'Rejected'" });
 			}
-	
+
 			// 🔍 Step 1: Find the candidate
 			const candidate = await Candidate.findById(candidateId);
 			if (!candidate) {
 				return res.status(404).json({ message: "Candidate not found" });
 			}
-	
+
 			// 🔍 Step 2: Find the course inside `docsForCourses`
 			const course = candidate.docsForCourses.find(course => course.courseId.toString() === courseId);
 			if (!course) {
 				return res.status(404).json({ message: "Course not found in candidate's docsForCourses" });
 			}
-	
+
 			// 🔍 Step 3: Find the document inside `uploadedDocs` using `_id`
 			const document = course.uploadedDocs.find(doc => doc._id.toString() === objectId);
 			if (!document) {
 				return res.status(404).json({ message: "Document not found in uploadedDocs" });
 			}
-	
+
 			// ✅ Step 4: Update the document fields
 			document.status = status;
 			document.verifiedBy = verifiedBy || null; // Set verifiedBy from session or null
 			document.verifiedDate = new Date(); // Update timestamp
-	
+
 			if (status === "Rejected") {
 				document.reason = reason; // Set rejection reason if status is "Rejected"
 			} else {
 				document.reason = undefined; // Clear reason for other statuses
 			}
-	
+
 			// ✅ Step 5: Save the updated candidate document
 			await candidate.save();
-	
+
 			return res.status(200).json({
 				message: `Document status updated successfully to ${status}`,
 				updatedDocument: document
 			});
-	
+
 		} catch (error) {
 			console.error("Error updating document status:", error);
 			return res.status(500).json({ message: "Internal server error", error });
@@ -581,6 +581,7 @@ router.route('/:courseId/candidate/addleads')
         try {
 			let {courseId} = req.params
 			const country = await Country.find({});
+			const highestQualifcation = await Qualification.find({status:true})
 			
 			if (typeof courseId === 'string' && mongoose.Types.ObjectId.isValid(courseId)) {
 				courseId = new mongoose.Types.ObjectId(courseId);
@@ -589,7 +590,7 @@ router.route('/:courseId/candidate/addleads')
 	        let course = await Courses.findById(courseId).populate('center');
 			
 			
-            res.render('admin/course/addleads', { menu: 'course', courseId, course,country});
+            res.render('admin/course/addleads', { menu: 'course', courseId, course,country,highestQualifcation });
         } catch (err) {
             console.log("Error rendering addleads page:", err);
             res.redirect('back');

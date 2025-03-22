@@ -149,52 +149,59 @@
                                                     <option>Select Option</option>
                                                 </select>
                                             </div>
-                                            <div class="col-xl-3 mb-1">
-                                                <label>Gender</label>
-                                                <select style="cursor: pointer;" class="form-control" name="gender">
-                                                    <option>Select Option</option>
-                                                    <option>Male</option>
-                                                    <option>Female</option>
+                                            <div class="col-xl-2 mb-1" id="pd-gender">
+                                                <label>Gender<span class="mandatory"> *</span></label>
+                                                <select class="form-control" name="sex" id="user-gender" value="">
+                                                  <option value="">Please select</option>
+                                                  <option value="Male">Male</option>
+                                                  <option value="Female">Female
+                                                  </option>
                                                 </select>
-                                            </div>
+                                              </div>
+                                              <div class="col-xl-2 mb-1" id="dob-field">
+                                                <label>Date of Birth<span class="mandatory"> *</span></label>
+                                                <input type="date" name="dob" class="form-control"
+                                                  value=""
+                                                  id="candidate-dob">
+                                              </div>
+                                              <div class="col-xl-3 mb-1" id="pd-number">
+                                                <label>WhatsApp Number <span class="mandatory"> *</span></label>
+                                                <input type="tel" maxlength="10"
+                                                  name="whatsapp" class="form-control"
+                                                  value="" id="candidate-whatsapp-number">
+                                              </div>
+                                              <div class="col-xl-3 mb-1" id="pd-address">
+                                                <label>Address / पता<span class="mandatory"> *</span></label>
+                                                <input type="text" name="address" class="form-control" value=""
+                                                  id="candidate-address">
+                                              </div>
+                                             
+                                             
                                             <div class="col-xl-3 mb-1">
                                                 <label>Pincode</label>
                                                 <input type="text" class="form-control" name="pincode" minlength="3"
                                                     maxlength="10" value="" />
                                             </div>
-                                            <div class="col-xl-3 mb-1">
-                                                <label>Linked In</label>
-                                                <input type="text" class="form-control" maxlength="50"
-                                                    name="linkedInUrl" value="" />
+                                            <div class="col-xl-3 mb-1" id="highestQuali">
+                                                <label>Highest Qualification <span class="mandatory">
+                                                    *</span></label>
+                                                <select class="form-control single-field" value="" name="highestQualification"
+                                                  id="quali">
+                                                  <option value="">Select Highest Qualification</option>
+                                                  <% highestQualification.forEach((q)=> {%>
+                                                      <option value="<%=q._id%>" class="text-capitalize">
+                                                          <%=q.name%>
+                                                       
+                                                      </option>
+              
+                                                      <%} )%>
+                                                     
+                                                </select>
+                                              </div>
+                                                                                 
                                             </div>
-                                            <div class="col-xl-3 mb-1">
-                                                <label>Facebook</label>
-                                                <input type="text" class="form-control" maxlength="50"
-                                                    name="facebookUrl" value="" />
-                                            </div>
-                                            <div class="col-xl-3 mb-1">
-                                                <label>Twitter</label>
-                                                <input type="text" class="form-control" maxlength="50" name="twitterUrl"
-                                                    value="" />
-                                            </div>
-                                            <div class="col-xl-3 mb-1">
-                                                <label class="col-form-label" for="input-normal">Upload Image</label>
-                                                <div class="row" id="image">
-                                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 firstImage">
-                                                        <div class="image-upload">
-                                                            <label for="files" style="cursor: pointer;">
-                                                                <img src="/images/add_receipt.png" width="40px"
-                                                                    height="auto" id="out" />
-                                                                <p class="mt-1">
-                                                                    Click to upload image
-                                                                </p>
-                                                            </label>
-                                                            <input id="files" data-id="image" type="file" name="filecar"
-                                                                class="my-image-uploader form-control" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
+                                            
 
                                         </div>
                                     </form>
@@ -203,6 +210,7 @@
                             </div>
                         </div>
                 </section>
+           
 
            
 
@@ -1028,4 +1036,19 @@
                 $(".chosen").chosen();
             </script>
     </div>
+    <script>
+        function populateHighestQualification(data, candidate) {
+      let options = '<option value="">Highest Qualification / उच्चतम योग्यता </option>';
+      for (let highestQualification of data) {
+        if (candidate && candidate.highestQualification == highestQualification._id) {
+          options += `<option value="${highestQualification._id}" selected class="text-capitalize">${highestQualification.name}</option>`;
+        } else {
+          options += `<option value="${highestQualification._id}" class="text-capitalize">${highestQualification.name}</option>`;
+        }
+      }
+      $('#highest-qual').html(options);   // For your first dropdown
+      $('#highest-qual-second').html(options);  // For your second dropdown (new)
+    }
+    
+    </script>
     <% include ../partials/footer %>

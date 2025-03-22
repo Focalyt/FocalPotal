@@ -309,8 +309,46 @@
     <%})%>
 
 
+<script>
+function openModal(id) {
+    const modal = document.getElementById(`documentModal${id}`);
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10); 
+    document.body.classList.add('no-scroll');
+}
 
+function closeModal(id) {
+    const modal = document.getElementById(`documentModal${id}`);
+    modal.classList.remove('show');
+    document.body.classList.remove('no-scroll');
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 500); 
+}
+
+
+</script>
     <style>
+/* // */
+
+.no-scroll {
+    overflow: hidden;
+}
+
+.modal-content {
+    background-color: #fff;
+    max-height: 90vh;
+    width: 80%;
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* // */
+
+
         .doc-iframe {
     transform-origin: top left; /* Ensure zoom starts from top-left */
     transition: transform 0.3s ease;
@@ -533,11 +571,18 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            z-index: 9999;
             justify-content: center;
             align-items: center;
+            opacity: 0;
+    transform: translateY(-50px); /* Start slightly above */
+    transition: opacity 0.5s ease, transform 0.5s ease;
         }
-
+        .document-modal.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
         .m-c {
             background-color: white;
             border-radius: 8px;
@@ -887,23 +932,7 @@ function updateTransform() {
         }
 
         // Function to open document modal
-        function openModal(id) {
-           
-            document.getElementById(`documentModal${id}`).style.display = 'flex';
-            document.getElementById(`documentModal${id}`).style.position = 'absolute';
-            // // Hide rejection form if it was open
-            document.getElementById(`rejectionForm${id}`).style.display = 'none';
-
-
-        }
-
-
-        
-        // Function to close document modal
-        function closeModal(id) {
-            document.getElementById(`documentModal${id}`).style.display = 'none';
-            currentDocId = null;
-        }
+      
 
         // Function to show rejection form
         function showRejectionForm(id) {

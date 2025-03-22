@@ -3791,7 +3791,8 @@ router.route('/requestLoan')
         return res.render(`${req.vPath}/app/candidate/requestLoan`, { menu: 'requestLoan', loanpurpose: loanEnquiryPurpose, errMessage })
       }
 
-      return res.render(`${req.vPath}/app/candidate/requestLoan`, { menu: 'requestLoan', loanpurpose: loanEnquiryPurpose, errMessage })
+      return res.render(`${req.vPath}/app/candidate/requestLoan`, 
+        { menu: 'requestLoan', loanpurpose: loanEnquiryPurpose, errMessage })
     }
     catch (err) {
       console.log(err)
@@ -3925,7 +3926,8 @@ router.route('/reqDocs/:courseId')
         
         return {
           _id: docObj._id,
-          Name: docObj.docName || 'Document',
+          Name: docObj.Name,
+          
           description: docObj.description || '',
           uploads: matchingUploads || []
         };
@@ -3935,8 +3937,8 @@ router.route('/reqDocs/:courseId')
     } else {
       console.log("Course not found or no docs required");
     };
-  
 
+    console.log(mergedDocs)
       
       res.render(`${req.vPath}/app/candidate/requiredDocuments`, {
         menu: 'appliedCourse',

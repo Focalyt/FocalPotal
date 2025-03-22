@@ -15,8 +15,8 @@
     <link rel="stylesheet" type="text/css" href="/css/slider-viewJob.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
 
-    <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static" data-open="click"
-        data-menu="vertical-menu-modern" data-col="2-columns" id="inner_job_page">
+    <body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static  pose-lead"
+    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 
         <% include ./partials/navbar%>
             <% include ./partials/leftpane%>
@@ -38,13 +38,13 @@
 
                                                 <div class="file-containers d-flex align-items-center gap-4">
                                                     <% if (!a.uploads || a.uploads.length === 0) { %>
-                                                        <div class="d-flex align-items-center gap-4" style="gap: 20px;">
-                                                            <div class="d-flex align-items-center gap-4" style="gap: 20px;">
+                                                        <div class="d-flex align-items-center gap-4 innerfile-container" style="gap: 20px;">
+                                                            <div class="align-items-center gap-4 innerfile-container" style="gap: 20px;">
                                                            
-                                                                <span class="title m-0"><%- a.Name%></span>
+                                                                <span class="title m-0 text-capitalize"><%- a.Name%></span>
                                                                 
         
-                                                                <div class="actionsbtn">
+                                                                <div class="actionsbtn pt-2">
                                                                     <label for="file" class="button upload-btn">Choose File
                                                                         <input type="file" id='<%- a._id%>docPopUp'
                                                                             class="file-inputs fileInput"
@@ -57,7 +57,7 @@
                                                                 </div>
                                                             </div>
                                                           
-                                                            <button class="upload-btn"
+                                                            <button class="upload-btn mt-3"
                                                                 onclick="uploadFile(this,'<%- a.Name%>','<%- a._id%>')">Upload</button>
                                                             </div>
                                                         
@@ -80,7 +80,7 @@
                                                     <% } %>
                                                     <%if (a.uploads.length > 0 && a.uploads[a.uploads.length - 1].status === 'Rejected') {%>
                                                         <!-- <label class="field-label"><%- a.Name%></label> -->
-                                                        <span class="text-success"> Your <%- a.Name%> is Rejected due to "" please upload new doccument again for verification </span>
+                                                        <span class="text-success"> Your <%- a.Name%> has been rejected due to "<%- a.uploads[a.uploads.length - 1].reason%>". Please upload a new document for verification. </span>
 
 
                                                     <div class="add-doc-container">
@@ -121,20 +121,20 @@
                                                             Document
                                                         </div>
 
-                                                        <table class="table ">
+                                                        <table class="table table-responsive">
                                                             <thead>
-                                                                <tr class="tab_row">
-                                                                    <th scope="col">S.No</th>
-                                                                    <th scope="col">Date</th>
-                                                                    <th scope="col">View</th>
-                                                                    <th scope="col">Verification Status</th>
-                                                                    <th scope="col">Reason (If rejected)</th>
+                                                                <tr class="tab_row docs--rows">
+                                                                    <th scope="col" width="10%">S.No</th>
+                                                                    <th scope="col" width="10%">Date</th>
+                                                                    <th scope="col" width="20%">View</th>
+                                                                    <th scope="col" width="35%">Verification Status</th>
+                                                                    <th scope="col" width="30%">Reason (If rejected)</th>
 
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <% a.uploads.forEach((upload, index)=> { %>
-                                                                        <tr>
+                                                                        <tr class="docs--rows">
                                                                             <td>
                                                                                 <%= index + 1 %>
                                                                             </td>
@@ -160,6 +160,8 @@
                                                                                         
                                                                             </td>
                                                                             <td>
+                                                                                <%- upload.reason ? upload.reason : 'NA' %>
+
                                                                                
                                                                             </td>
                                                                         </tr>
@@ -167,6 +169,7 @@
                                                                        
                                                             </tbody>
                                                         </table>
+                                                   
                                                     </div>
                                                 </div>
 
@@ -244,7 +247,7 @@
                             font-size: 1.25em;
                             font-weight: 600;
                             line-height: 1.2;
-                            display: flex;
+                            /* display: flex; */
                             justify-content: center;
                         }
 
@@ -524,12 +527,20 @@
                             text-align: center;
                             margin-top: 5px;
                         }
-
+.table-responsive{
+    overflow-x: auto;
+}
                         @media (max-width: 768px) {
 
                             .upload-btn {
                                 width: 100%;
                                 margin-top: 15px;
+                            }
+                            .innerfile-container{
+                                flex-direction: column;
+                            }
+                            .docs--rows th , .docs--rows td{
+                                white-space: nowrap;
                             }
                         }
                     </style>
@@ -805,6 +816,7 @@
                         // selectedFiles = [];}
 
                     </script>
+                     <% include ./partials/footer%>
 
 
     </body>
