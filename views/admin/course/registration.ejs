@@ -57,6 +57,7 @@
                                             <th class="one column wide" width="10%">Action</th>
                                             <% } %>
                                             <th class="one column wide" width="10%">View Docs</th>
+                                            <th class="one column wide" width="10%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -101,6 +102,9 @@
                                                 <a href="/admin/courses/<%= l.courseId %>/<%= l.candidateId %>/docsview" class="btn btn-danger waves-effect waves-light text-white d-inline btn-sm" style="padding: 8px;">
                                                    View Docs
                                                 </a>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <i class="feather icon-log-in fa-lg  primary cursor-pointer loginIcon" title="" onclick="loginAs('<%=l.mobile %>')"></i>
                                             </td>
                                         </tr>
                                         <% }) %>
@@ -266,6 +270,20 @@
 //     const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if needed
 //     return `${year}-${month}-${day}`;
 // }
+function loginAs(mobile){
+						$.ajax({
+								type: "POST",
+								data: {mobile, module: 'candidate'},
+								url: "/api/loginAsCandidate",
+								success: (data) => {
+									if(data.role===3) {
+										localStorage.setItem("candidate", data.name);
+                                        localStorage.setItem("token", data.token);
+                                        window.location.href = "/candidate/dashboard";
+									}									
+								}
+							});
+					}
 
     function updateProfileVisible(mobile,visibility){
         let field;
