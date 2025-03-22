@@ -83,7 +83,7 @@
                     <% } %>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="kycbody">
                   <% if (kycRequests.length > 0) { %>
                   <% kycRequests.forEach((kyc, i)=> { %>
                   <tr>
@@ -224,6 +224,13 @@
 <!-- END -->
   
   <% include ../partials/footer %>
+  <style>
+    @media (max-width:768px){
+      .kycbody{
+        white-space: nowrap;
+      }
+    }
+  </style>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const pageAnchors = document.querySelectorAll("a.pageAnchor");
