@@ -532,4 +532,21 @@ router.post("/removephoto", isAdmin, async (req, res) => {
 	res.send({ status: 200, message: "Course Updated Successfully" });
 });
 
+// add leads 
+router.route('/:courseId/candidate/addleads')
+    .get((req, res) => {
+		
+        try {
+			const courseId = req.params
+			
+            res.render('admin/course/addleads', { menu: 'course', courseId});
+        } catch (err) {
+            console.log("Error rendering addleads page:", err);
+            res.redirect('back');
+        }
+    });
+
+
+
+
 module.exports = router;

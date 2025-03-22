@@ -1,5 +1,5 @@
 const express = require("express");
-const { extraEdgeAuthToken ,extraEdgeUrl} = require("../../../config");
+const { extraEdgeAuthToken, extraEdgeUrl } = require("../../../config");
 const axios = require("axios");
 let fs = require("fs");
 let path = require("path");
@@ -33,14 +33,14 @@ const {
 	CandidateDoc
 } = require("../../models");
 
-const { generatePassword, sendMail, getTechSkills, getNonTechSkills,sendSms } = require("../../../helpers");
-const { msg91ProfileStrengthening ,env} = require("../../../config")
+const { generatePassword, sendMail, getTechSkills, getNonTechSkills, sendSms } = require("../../../helpers");
+const { msg91ProfileStrengthening, env } = require("../../../config")
 const router = express.Router();
 const { candidateCashbackEventName, cashbackRequestStatus, cashbackEventType, kycStatus } = require('../../db/constant');
 router.use(isAdmin);
 
 router.route("/")
-	.get(auth1,async (req, res) => {
+	.get(auth1, async (req, res) => {
 		try {
 			let view = false
 			if (req.session.user.role === 10) {
@@ -65,42 +65,41 @@ router.route("/")
 				status
 			};
 			let smsFilter = {
-				isDeleted : false,
-				status : true,
-				isProfileCompleted:false
+				isDeleted: false,
+				status: true,
+				isProfileCompleted: false
 			}
 
 			let numberCheck = isNaN(data?.name)
 			let name = ''
-			
+
 			var format = `/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;`;
-			data?.name?.split('').some(char => 
-				{
-					if(!format.includes(char))
-					name+= char
-				})
-			
+			data?.name?.split('').some(char => {
+				if (!format.includes(char))
+					name += char
+			})
+
 			if (name && numberCheck) {
 				filter["$or"] = [
-					{ "name":{ "$regex": name, "$options": "i"}},
+					{ "name": { "$regex": name, "$options": "i" } },
 				]
 				smsFilter["$or"] = [
-					{ "name":{ "$regex": name, "$options": "i"}},
+					{ "name": { "$regex": name, "$options": "i" } },
 				]
 			}
-			if (name && !numberCheck ) {
+			if (name && !numberCheck) {
 				filter["$or"] = [
-					{ "name":{ "$regex": name, "$options": "i"}},
-					{ "mobile": Number(name )},
-				    { "whatsapp": Number(name) }
+					{ "name": { "$regex": name, "$options": "i" } },
+					{ "mobile": Number(name) },
+					{ "whatsapp": Number(name) }
 				]
 				smsFilter["$or"] = [
-					{ "name":{ "$regex": name, "$options": "i"}},
-					{ "mobile": Number(name )},
-				    { "whatsapp": Number(name) }
+					{ "name": { "$regex": name, "$options": "i" } },
+					{ "mobile": Number(name) },
+					{ "whatsapp": Number(name) }
 				]
 			}
-			
+
 			if (data.FromDate && data.ToDate) {
 				let fdate = moment(data.FromDate).utcOffset("+05:30").startOf('day').toDate()
 				let tdate = moment(data.ToDate).utcOffset("+05:30").endOf('day').toDate()
@@ -123,15 +122,15 @@ router.route("/")
 			const count = await Candidate.countDocuments(filter)
 			let { value, order } = req.query
 			let sorting = {}
-			if( value && order ){
+			if (value && order) {
 				sorting[value] = Number(order)
-			}else{
+			} else {
 				sorting = { createdAt: -1 }
 			}
-			let agg = candidateServices.adminCandidatesList(sorting, perPage, page, candidateCashbackEventName.cashbackrequestaccepted, { value, order}, filter)
+			let agg = candidateServices.adminCandidatesList(sorting, perPage, page, candidateCashbackEventName.cashbackrequestaccepted, { value, order }, filter)
 			let candidates = await Candidate.aggregate(agg)
 			const totalPages = Math.ceil(count / perPage);
-			const smsHistory = await SmsHistory.findOne().sort({createdAt:-1}).select("createdAt count")
+			const smsHistory = await SmsHistory.findOne().sort({ createdAt: -1 }).select("createdAt count")
 			return res.render(`${req.vPath}/admin/candidate`, {
 				candidates: candidates,
 				perPage,
@@ -154,6 +153,41 @@ router.route("/")
 		}
 	})
 
+
+router.route("/verifyuser")
+	.post(auth1, async (req, res) => {
+		try {
+			console.log("body data", req.body)
+
+			const { mobile } = req.body
+			const candidate = await Candidate.find({ mobile: mobile })
+			if (candidate) {
+				if (candidate.status === false) {
+					console.log("user status flase by admin")
+					req.flash("Contact with admin!");
+
+					return res.redirect("back");
+				}
+				else {
+					console.log("user found:", candidate)
+
+					return res.send({ status: true, candidate })
+
+				}
+			}
+			else {
+				console.log("user not found:")
+				return res.send({ status: false, message: "Candidate not found" })
+
+			}
+
+
+		} catch (err) {
+			console.log(err)
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+	})
 
 router
 	.route("/deleteCSV")
@@ -252,7 +286,7 @@ router
 			});
 			// const dirPath = path.join(__dirname, "../../../public/") + filename;
 			//try {
-			
+
 			let errorMessages = []
 			await readXlsxFile(
 				path.join(__dirname, "../../../public/" + filename)
@@ -397,9 +431,9 @@ router
 						});
 
 						if (isExistCandidate) {
-							console.log('==> isExistCandidate exists')	
+							console.log('==> isExistCandidate exists')
 							errorMessages.push(`Candidate with mobile ${mobile} already exists for row ${index + 1}.`)
-							continue;						
+							continue;
 						}
 
 						let dup = allRows.find(can => can.mobile.toString() === mobile.toString())
@@ -413,20 +447,20 @@ router
 								isImported: true
 							});
 
-							if(!user) {
+							if (!user) {
 								errorMessages.push(`User not created for row ${index + 1}.`)
 								continue;
 							}
 
 							const coins = await CoinsAlgo.findOne()
-							let cityData = await City.findOne({_id:cityId,status: { $ne: false }}).select({location: 1 , _id:0})
+							let cityData = await City.findOne({ _id: cityId, status: { $ne: false } }).select({ location: 1, _id: 0 })
 							let obj = cityData.toObject()
 							let addCandidate = {
 								isImported: true,
 								isProfileCompleted: true,
 								availableCredit: coins.candidateCoins,
 								creditLeft: coins.candidateCoins,
-								location : obj.location
+								location: obj.location
 							};
 							if (name) { addCandidate['name'] = name }
 							if (mobile) {
@@ -477,7 +511,7 @@ router
 							// 		console.log(err, "Couldn't send data in extraEdge","row number is ===>",recordCount)
 							// 	    errorMessages.push(`Falied to send data in Extra edge for row ${index + 1}.`)
 							// 	  })
-						      //}
+							//}
 							// }
 						} else {
 							errorMessages.push(`Candidate/User with mobile ${mobile} already exists for row ${index + 1}.`)
@@ -485,7 +519,7 @@ router
 					}
 					var imports = {
 						name: req.files.filename.name,
-						message: errorMessages.length<=0 ? "success" : errorMessages.join('</br>'),
+						message: errorMessages.length <= 0 ? "success" : errorMessages.join('</br>'),
 						status: "Completed",
 						record: allRows.length
 					};
@@ -497,11 +531,11 @@ router
 
 					console.log('========================> allRows ', allRows.length)
 
-				if (allRows.length > 0) {
-					req.flash("success", "Data uploaded successfully");
-				}
+					if (allRows.length > 0) {
+						req.flash("success", "Data uploaded successfully");
+					}
 
-				return res.redirect("/admin/candidate/bulkUpload");
+					return res.redirect("/admin/candidate/bulkUpload");
 				});
 
 			}
@@ -643,18 +677,18 @@ router
 		}
 	});
 router.route("/sendNotification")
-      .post(auth1,async(req,res)=>{
-		try{
-			const {title,message,candidateId}=req.body;
-			const notificationUpdate=await Notification.create({_candidate:candidateId,title,message,source:'Admin'})
-			if(!notificationUpdate){
-				res.status(400).send({status:false,message:"Notification not send"})
+	.post(auth1, async (req, res) => {
+		try {
+			const { title, message, candidateId } = req.body;
+			const notificationUpdate = await Notification.create({ _candidate: candidateId, title, message, source: 'Admin' })
+			if (!notificationUpdate) {
+				res.status(400).send({ status: false, message: "Notification not send" })
 			}
-			res.status(200).send({status:true,message:"Notification send successfully"})
-		}catch(err){
-			req.flash('error',err.message)
+			res.status(200).send({ status: true, message: "Notification send successfully" })
+		} catch (err) {
+			req.flash('error', err.message)
 		}
-	  })
+	})
 router
 	.route("/edit/:id")
 	.get(auth1, async (req, res) => {
@@ -692,67 +726,67 @@ router
 	})
 
 
-	router
-  .route("/candidatedoc/:id")
-  .get(auth1, async (req, res) => {
-    try {
-      const { id } = req.params; 
-      
-      const candidate = await Candidate.findById(id).populate([
-        { path: 'state', select: ['name', 'stateId'] }
-      ]);
-      if (!candidate) throw req.ykError("Candidate not found!");
-      
-      const documents = await CandidateDoc.findOne({ _candidate: id });
-    //   if (!documents) throw req.ykError	Candidate document not found!");
+router
+	.route("/candidatedoc/:id")
+	.get(auth1, async (req, res) => {
+		try {
+			const { id } = req.params;
 
-      return res.render(`${req.vPath}/admin/candidate/candidatedoc`, {
-        candidate,
-        documents,  	
-        menu: 'candidatedoc'
-      });
-    } catch (err) {
-      req.flash("error", err.message || "Something went wrong!");
-      return res.redirect("back");
-    }
-  });
+			const candidate = await Candidate.findById(id).populate([
+				{ path: 'state', select: ['name', 'stateId'] }
+			]);
+			if (!candidate) throw req.ykError("Candidate not found!");
+
+			const documents = await CandidateDoc.findOne({ _candidate: id });
+			//   if (!documents) throw req.ykError	Candidate document not found!");
+
+			return res.render(`${req.vPath}/admin/candidate/candidatedoc`, {
+				candidate,
+				documents,
+				menu: 'candidatedoc'
+			});
+		} catch (err) {
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+	});
 
 router
-.route("/candidatedoc")
-.delete(auth1,async(req,res)=>{
-	try {
-		const documentName = req.query.documentName; 
-		const id=req.query.id 
-		console.log(documentName, "this is document name");
-		
-		const updateResult = await CandidateDoc.updateOne(
-		  { _id: id, [documentName]: { $exists: true } },
-		  { $set: { [documentName]: "" } }
-	  );
-  
-		const 	documents = await CandidateDoc.findOne({ _id: id }).lean();
-		console.log(documents, "documents after delete");
-        
+	.route("/candidatedoc")
+	.delete(auth1, async (req, res) => {
+		try {
+			const documentName = req.query.documentName;
+			const id = req.query.id
+			console.log(documentName, "this is document name");
 
-		const updateadditionaldoc = await CandidateDoc.updateOne(
-			{ _id: id },
-			{ $pull: { AdditionalDocuments: documentName } }  
-		  );
-	
+			const updateResult = await CandidateDoc.updateOne(
+				{ _id: id, [documentName]: { $exists: true } },
+				{ $set: { [documentName]: "" } }
+			);
 
-		const  candidate = await Candidate.findOne({_id:documents._candidate})
-   
-		res.render(`${req.vPath}/admin/candidate/candidatedoc`, {
-			menu: 'candidatedoc',
-			success:true,
-			candidate,
-			documents: documents || {},  
-			message: "Document deleted successfully"
-		});   	
-	} catch (error) {
-		req.flash("error",err.message || "Something went wrong!")
-	}
-})
+			const documents = await CandidateDoc.findOne({ _id: id }).lean();
+			console.log(documents, "documents after delete");
+
+
+			const updateadditionaldoc = await CandidateDoc.updateOne(
+				{ _id: id },
+				{ $pull: { AdditionalDocuments: documentName } }
+			);
+
+
+			const candidate = await Candidate.findOne({ _id: documents._candidate })
+
+			res.render(`${req.vPath}/admin/candidate/candidatedoc`, {
+				menu: 'candidatedoc',
+				success: true,
+				candidate,
+				documents: documents || {},
+				message: "Document deleted successfully"
+			});
+		} catch (error) {
+			req.flash("error", err.message || "Something went wrong!")
+		}
+	})
 
 
 router.route("/createResume/:id").get(auth1, async (req, res) => {
@@ -846,26 +880,26 @@ router
 
 			const { fromDate, toDate, status } = req.query
 			let filter = {}
-			if(fromDate && toDate){
-			  let fdate = moment(fromDate).utcOffset("+05:30").startOf('day').toDate()
-			  let tdate = moment(toDate).utcOffset("+05:30").endOf('day').toDate()
-			  filter["createdAt"] = { $gte: fdate, $lte: tdate }
-			}else if(fromDate){
-			  let fdate = moment(fromDate).utcOffset("+05:30").startOf('day').toDate()
-			  filter["createdAt"] = { $gte: fdate }
-			}else if(toDate){
-			  let tdate = moment(toDate).utcOffset("+05:30").endOf('day').toDate()
-			  filter["createdAt"] = { $lte: tdate }
+			if (fromDate && toDate) {
+				let fdate = moment(fromDate).utcOffset("+05:30").startOf('day').toDate()
+				let tdate = moment(toDate).utcOffset("+05:30").endOf('day').toDate()
+				filter["createdAt"] = { $gte: fdate, $lte: tdate }
+			} else if (fromDate) {
+				let fdate = moment(fromDate).utcOffset("+05:30").startOf('day').toDate()
+				filter["createdAt"] = { $gte: fdate }
+			} else if (toDate) {
+				let tdate = moment(toDate).utcOffset("+05:30").endOf('day').toDate()
+				filter["createdAt"] = { $lte: tdate }
 			}
-			if(status){
-			  filter["status"] = status
-			}		
-			const count = await Referral.countDocuments({referredBy:req.params.id, ...filter})
+			if (status) {
+				filter["status"] = status
+			}
+			const count = await Referral.countDocuments({ referredBy: req.params.id, ...filter })
 			const p = parseInt(req.query.page);
 			const page = p || 1;
 			let perPage = 10
-			const totalPages = Math.ceil(count / perPage); 		
-			const referral = await Referral.find({referredBy:req.params.id, ...filter}).populate([{path:'referredTo', select:'name mobile '}]).skip(perPage * page - perPage).limit(perPage)
+			const totalPages = Math.ceil(count / perPage);
+			const referral = await Referral.find({ referredBy: req.params.id, ...filter }).populate([{ path: 'referredTo', select: 'name mobile ' }]).skip(perPage * page - perPage).limit(perPage)
 
 			res.render(`${req.vPath}/admin/candidate/candidateProfile`, {
 				candidate,
@@ -888,8 +922,8 @@ router
 	.route("/downloadCSV")
 	.post(auth1, async (req, res) => {
 		try {
-			const { FromDate, ToDate ,username,isProfileCompleted} = req.body;
-			let candidates, fdate, tdate,filter = { isDeleted: false };
+			const { FromDate, ToDate, username, isProfileCompleted } = req.body;
+			let candidates, fdate, tdate, filter = { isDeleted: false };
 			if (FromDate && ToDate) {
 				let fdate = moment(FromDate).utcOffset("+05:30").startOf('day').toDate()
 				let tdate = moment(ToDate).utcOffset("+05:30").endOf('day').toDate()
@@ -905,24 +939,23 @@ router
 
 			let numberCheck = isNaN(username)
 			let name = ''
-			
+
 			var format = `/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;`;
-			username?.split('').some(char => 
-				{
-					if(!format.includes(char))
-					name+= char
-				})
-			
+			username?.split('').some(char => {
+				if (!format.includes(char))
+					name += char
+			})
+
 			if (name && numberCheck) {
 				filter["$or"] = [
-					{ "name":{ "$regex": name, "$options": "i"}},
+					{ "name": { "$regex": name, "$options": "i" } },
 				]
 			}
-			if (name && !numberCheck ) {
+			if (name && !numberCheck) {
 				filter["$or"] = [
-					{ "name":{ "$regex": name, "$options": "i"}},
-					{ "mobile": Number(name )},
-				    { "whatsapp": Number(name) }
+					{ "name": { "$regex": name, "$options": "i" } },
+					{ "mobile": Number(name) },
+					{ "whatsapp": Number(name) }
 				]
 			}
 			const populate = [
@@ -1011,11 +1044,11 @@ router
 			return res.status(err)
 		}
 	})
-router.post("/changeprofilestatus",[isAdmin],async(req,res)=>{
-	let {status,mobile}=req.body;
-    const updateCandidate=await Candidate.findOneAndUpdate({mobile:mobile},{visibility:status})
-	console.log("updatedCandidate",updateCandidate)
-	res.send({status:true,message:"Visibility updated successfully!"})
+router.post("/changeprofilestatus", [isAdmin], async (req, res) => {
+	let { status, mobile } = req.body;
+	const updateCandidate = await Candidate.findOneAndUpdate({ mobile: mobile }, { visibility: status })
+	console.log("updatedCandidate", updateCandidate)
+	res.send({ status: true, message: "Visibility updated successfully!" })
 })
 router.get('/getcitiesbyId', async (req, res) => {
 	try {
@@ -1085,16 +1118,16 @@ router.get('/backfill', async (req, res) => {
 	}
 })
 
-router.post('/bulkSMS', async(req,res) => {
-	try{
-		let {isProfileCompleted , name,fromDate,toDate,count} = req.body;
+router.post('/bulkSMS', async (req, res) => {
+	try {
+		let { isProfileCompleted, name, fromDate, toDate, count } = req.body;
 		let smsCount;
-		if(env.toLowerCase()!='production'){
+		if (env.toLowerCase() != 'production') {
 			smsCount = 2
-		  }
+		}
 		let filter = {
 			isDeleted: false,
-			status : true,
+			status: true,
 			isProfileCompleted
 		};
 		if (name) {
@@ -1111,78 +1144,77 @@ router.post('/bulkSMS', async(req,res) => {
 				$lte: tdate
 			}
 		}
-		let user = await User.findOne({_id:req.session.user._id,status:true})
+		let user = await User.findOne({ _id: req.session.user._id, status: true })
 		if (!user || user === null)
-        throw req.ykError("User not found. Enter a valid credentials");
+			throw req.ykError("User not found. Enter a valid credentials");
 
 		const candidates = await Candidate.find(filter).select("name mobile").limit(smsCount)
-		let recipients= []
-		candidates.forEach((i)=>{
-        let data = {}
-		if(i.mobile){
-        let phone = '91' + i.mobile.toString();
-        let num = parseInt(phone)
-        data["mobiles"] = num
-        data["candidatename"] = i.name
-        recipients.push(data)
-		}
-        })
-        let body = {
-			flow_id:msg91ProfileStrengthening,
+		let recipients = []
+		candidates.forEach((i) => {
+			let data = {}
+			if (i.mobile) {
+				let phone = '91' + i.mobile.toString();
+				let num = parseInt(phone)
+				data["mobiles"] = num
+				data["candidatename"] = i.name
+				recipients.push(data)
+			}
+		})
+		let body = {
+			flow_id: msg91ProfileStrengthening,
 			recipients
 		}
 		let sms = {
 			count,
-			module:'Candidate',
-			userId:user._id
+			module: 'Candidate',
+			userId: user._id
 		}
-        const data = sendSms(body);
+		const data = sendSms(body);
 		const smsHistory = await SmsHistory.create(sms)
-        return res.status(200).send({ status: true, message: data.type });
+		return res.status(200).send({ status: true, message: data.type });
 	}
-	catch(err){
+	catch (err) {
 		console.log(err);
-		return res.status(500).send({status:false,message:err})
+		return res.status(500).send({ status: false, message: err })
 	}
 })
 
 router.route('/cashbackRequest')
-.get(async (req, res) => {
-	try{
-		let view = false
-		let data = req.query;
-		if (req.session.user.role === 10) {
-			view = true
-		}
-		const perPage = 10;
-		const p = parseInt(req.query.page, 10);
-		const page = p || 1;
+	.get(async (req, res) => {
+		try {
+			let view = false
+			let data = req.query;
+			if (req.session.user.role === 10) {
+				view = true
+			}
+			const perPage = 10;
+			const p = parseInt(req.query.page, 10);
+			const page = p || 1;
 
-		let filter = { }
-		let numberCheck = isNaN(data.name)
+			let filter = {}
+			let numberCheck = isNaN(data.name)
 			let name = ''
-			
+
 			var format = `/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;`;
-			data.name?.split('').some(char => 
-				{
-					if(!format.includes(char))
-					name+= char
-				})
-			
+			data.name?.split('').some(char => {
+				if (!format.includes(char))
+					name += char
+			})
+
 			if (name && numberCheck) {
 				filter["$or"] = [
-					{ "_candidate.name":{ "$regex": name, "$options": "i"}},
+					{ "_candidate.name": { "$regex": name, "$options": "i" } },
 				]
 			}
-			if (name && !numberCheck ) {
+			if (name && !numberCheck) {
 				filter["$or"] = [
-					{ "_candidate.name":{ "$regex": name, "$options": "i"}},
-					{ "_candidate.mobile": Number(name )},
-				    { "_candidate.whatsapp": Number(name) }
+					{ "_candidate.name": { "$regex": name, "$options": "i" } },
+					{ "_candidate.mobile": Number(name) },
+					{ "_candidate.whatsapp": Number(name) }
 				]
 			}
 
-			if(data.date){
+			if (data.date) {
 				let fdate = moment(data.date).utcOffset("+05:30").startOf('day').toDate()
 				let tdate = moment(data.date).utcOffset("+05:30").endOf('day').toDate()
 				filter["createdAt"] = {
@@ -1191,151 +1223,150 @@ router.route('/cashbackRequest')
 				}
 			}
 
-			if(data.status === cashbackRequestStatus.paid){
+			if (data.status === cashbackRequestStatus.paid) {
 				filter["status"] = cashbackRequestStatus.paid
 			}
-			if(data.status === cashbackRequestStatus.rejected){
+			if (data.status === cashbackRequestStatus.rejected) {
 				filter["status"] = cashbackRequestStatus.rejected
 			}
-			if(data.status === cashbackRequestStatus.pending){
+			if (data.status === cashbackRequestStatus.pending) {
 				filter["status"] = cashbackRequestStatus.pending
 			}
-		
-		let agg = [
-		{
-			'$lookup':
-			{
-				from : 'candidates',
-				localField: '_candidate',
-                foreignField: '_id',
-                as: '_candidate'
-			}
 
-		},
-		{
-			'$unwind' : '$_candidate'
-		},
-		{
-			'$match': filter
-		},
-		{
-		  '$facet' : {
-			metadata: [ { '$count': "total" } ],
-			data: [ { $skip: perPage * page - perPage }, { $limit: perPage } ] 
-		  }
-		}]
-		let cashback = await CashBackRequest.aggregate(agg)
-		let cashbackRequests = cashback[0].data
-		
-		let count = cashback[0].metadata[0]?.total
-		const totalPages = Math.ceil(count / perPage);
-		res.render(`${req.vPath}/admin/candidate/cashbackRequests`, {
-			menu: 'candidate-cashbackRequest', cashbackRequests, totalPages, page, perPage, count, view,data
-		})
-	}catch(err){
-		console.log(err.message)
-		req.flash("error", err.message || "Something went wrong!");
-		return res.redirect("back");
-	}
-})
-.post(async (req, res) => {
-	try{
-		let { requestId, isAccepted, candidateId, comment,isPaid } = req.body
-		let status = cashbackRequestStatus.rejected
-		if(isAccepted == true){
-			status =  cashbackRequestStatus.paid
-		}
-		let updates = {status, isAccepted}
-		if(comment)
-		updates['comment'] = comment
+			let agg = [
+				{
+					'$lookup':
+					{
+						from: 'candidates',
+						localField: '_candidate',
+						foreignField: '_id',
+						as: '_candidate'
+					}
 
-		if(isPaid)
-		updates['isPaid'] = isPaid
-		
-		let updateRequest = await CashBackRequest.findOneAndUpdate(
-			{_id: requestId},
-			updates
-			)
-		if(!updateRequest){
-			req.flash("error", "Updation failed!")
-			return res.redirect("back")
+				},
+				{
+					'$unwind': '$_candidate'
+				},
+				{
+					'$match': filter
+				},
+				{
+					'$facet': {
+						metadata: [{ '$count': "total" }],
+						data: [{ $skip: perPage * page - perPage }, { $limit: perPage }]
+					}
+				}]
+			let cashback = await CashBackRequest.aggregate(agg)
+			let cashbackRequests = cashback[0].data
+
+			let count = cashback[0].metadata[0]?.total
+			const totalPages = Math.ceil(count / perPage);
+			res.render(`${req.vPath}/admin/candidate/cashbackRequests`, {
+				menu: 'candidate-cashbackRequest', cashbackRequests, totalPages, page, perPage, count, view, data
+			})
+		} catch (err) {
+			console.log(err.message)
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
 		}
-	
-		if(isAccepted == false){
-			let add = {
-				candidateId: candidateId,
-				eventType: cashbackEventType.credit,
-				eventName: candidateCashbackEventName.cashbackrequestrejected,
-				amount: updateRequest.amount,
-				isPending: true,
-			  };
-			if(comment){
-				add['comment'] = comment
+	})
+	.post(async (req, res) => {
+		try {
+			let { requestId, isAccepted, candidateId, comment, isPaid } = req.body
+			let status = cashbackRequestStatus.rejected
+			if (isAccepted == true) {
+				status = cashbackRequestStatus.paid
 			}
-			let addCashback = await CandidateCashBack.create(add)
-			if(!addCashback){
-				req.flash("error", "Cashback not added!")
-				return res.redirect("back")
-			}
-			let updateStatus = await CandidateCashBack.findOneAndUpdate(
-				{_id: updateRequest._cashback},
-				{isPending: false}
+			let updates = { status, isAccepted }
+			if (comment)
+				updates['comment'] = comment
+
+			if (isPaid)
+				updates['isPaid'] = isPaid
+
+			let updateRequest = await CashBackRequest.findOneAndUpdate(
+				{ _id: requestId },
+				updates
 			)
-			if(!updateStatus){
-				req.flash("error", "Previous Cashbacks updation failed!")
+			if (!updateRequest) {
+				req.flash("error", "Updation failed!")
 				return res.redirect("back")
 			}
 
-		}else{
-			let updateCashback = await CandidateCashBack.findOneAndUpdate(
-				{_id: updateRequest._cashback},
-				{isPending: false, eventName: candidateCashbackEventName.cashbackrequestaccepted}
-			)
-			if(!updateCashback){
-				req.flash("error", "Cashbacks updation failed!")
-				return res.redirect("back")
+			if (isAccepted == false) {
+				let add = {
+					candidateId: candidateId,
+					eventType: cashbackEventType.credit,
+					eventName: candidateCashbackEventName.cashbackrequestrejected,
+					amount: updateRequest.amount,
+					isPending: true,
+				};
+				if (comment) {
+					add['comment'] = comment
+				}
+				let addCashback = await CandidateCashBack.create(add)
+				if (!addCashback) {
+					req.flash("error", "Cashback not added!")
+					return res.redirect("back")
+				}
+				let updateStatus = await CandidateCashBack.findOneAndUpdate(
+					{ _id: updateRequest._cashback },
+					{ isPending: false }
+				)
+				if (!updateStatus) {
+					req.flash("error", "Previous Cashbacks updation failed!")
+					return res.redirect("back")
+				}
+
+			} else {
+				let updateCashback = await CandidateCashBack.findOneAndUpdate(
+					{ _id: updateRequest._cashback },
+					{ isPending: false, eventName: candidateCashbackEventName.cashbackrequestaccepted }
+				)
+				if (!updateCashback) {
+					req.flash("error", "Cashbacks updation failed!")
+					return res.redirect("back")
+				}
 			}
+			req.flash("success", "Request Updated!")
+			return res.status(201).send({ status: true, msg: 'Request Updated!' })
+		} catch (err) {
+			console.log(err.message)
 		}
-		req.flash("success", "Request Updated!")
-		return res.status(201).send({status: true, msg: 'Request Updated!'})
-	}catch(err){
-		console.log(err.message)
-	}
-})
+	})
 
 router.route('/kycRequest')
-.get(async (req, res) => {
-	try{
-		let data = req.query;
-		let view = false
-		if (req.session.user.role === 10) {
-			view = true
-		}
-		let filter = { }
-		let numberCheck = isNaN(data.name)
+	.get(async (req, res) => {
+		try {
+			let data = req.query;
+			let view = false
+			if (req.session.user.role === 10) {
+				view = true
+			}
+			let filter = {}
+			let numberCheck = isNaN(data.name)
 			let name = ''
-			
+
 			var format = `/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;`;
-			data.name?.split('').some(char => 
-				{
-					if(!format.includes(char))
-					name+= char
-				})
-			
+			data.name?.split('').some(char => {
+				if (!format.includes(char))
+					name += char
+			})
+
 			if (name && numberCheck) {
 				filter["$or"] = [
-					{ "_candidate.name":{ "$regex": name, "$options": "i"}},
+					{ "_candidate.name": { "$regex": name, "$options": "i" } },
 				]
 			}
-			if (name && !numberCheck ) {
+			if (name && !numberCheck) {
 				filter["$or"] = [
-					{ "_candidate.name":{ "$regex": name, "$options": "i"}},
-					{ "_candidate.mobile": Number(name )},
-				    { "_candidate.whatsapp": Number(name) }
+					{ "_candidate.name": { "$regex": name, "$options": "i" } },
+					{ "_candidate.mobile": Number(name) },
+					{ "_candidate.whatsapp": Number(name) }
 				]
 			}
 
-			if(data.date){
+			if (data.date) {
 				let fdate = moment(data.date).utcOffset("+05:30").startOf('day').toDate()
 				let tdate = moment(data.date).utcOffset("+05:30").endOf('day').toDate()
 				filter["createdAt"] = {
@@ -1344,71 +1375,71 @@ router.route('/kycRequest')
 				}
 			}
 
-		const perPage = 10;
-		const p = parseInt(req.query.page, 10);
-		const page = p || 1;
+			const perPage = 10;
+			const p = parseInt(req.query.page, 10);
+			const page = p || 1;
 
-		const agg = [
-		{
-			'$lookup':
-			{
-				from : 'candidates',
-				localField: '_candidate',
-                foreignField: '_id',
-                as: '_candidate'
+			const agg = [
+				{
+					'$lookup':
+					{
+						from: 'candidates',
+						localField: '_candidate',
+						foreignField: '_id',
+						as: '_candidate'
+					}
+
+				},
+				{
+					'$unwind': '$_candidate'
+				},
+				{
+					'$match': filter
+				},
+				{
+					'$facet': {
+						metadata: [{ '$count': "total" }],
+						data: [{ $skip: perPage * page - perPage }, { $limit: perPage }]
+					}
+				}]
+			let kyc = await KycDocument.aggregate(agg)
+			let count = kyc[0].metadata[0]?.total
+			if (!count) {
+				count = 0
 			}
-
-		},
-		{
-			'$unwind' : '$_candidate'
-		},
-		{
-			'$match': filter
-		},
-		{
-		  '$facet' : {
-			metadata: [ { '$count': "total" } ],
-			data: [ { $skip: perPage * page - perPage }, { $limit: perPage } ] 
-		  }
-		}]
-		let kyc = await KycDocument.aggregate(agg)
-		let count = kyc[0].metadata[0]?.total
-		if(!count){
-		  count = 0
+			let kycRequests = kyc[0].data
+			const totalPages = Math.ceil(count / perPage);
+			res.render(`${req.vPath}/admin/candidate/kycRequests`, {
+				menu: 'candidate-kycRequest', kycRequests, totalPages, page, perPage, count, view, data
+			})
+		} catch (err) {
+			console.log(err.message)
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
 		}
-		let kycRequests = kyc[0].data
-		const totalPages = Math.ceil(count / perPage);
-		res.render(`${req.vPath}/admin/candidate/kycRequests`, {
-			menu: 'candidate-kycRequest', kycRequests, totalPages, page, perPage, count, view, data
-		})
-	}catch(err){
-		console.log(err.message)
-		req.flash("error", err.message || "Something went wrong!");
-		return res.redirect("back");
-	}
-})
-.post(async (req, res) => {
-	try{
-		let { kycCompleted, _candidate, comment } = req.body
-		let add = { kycCompleted }
-		if(comment){ add['comment'] = comment }
-		if(kycCompleted == true){ add['status'] = kycStatus.accepted }
-		else{ add['status'] = kycStatus.rejected }
+	})
+	.post(async (req, res) => {
+		try {
+			let { kycCompleted, _candidate, comment } = req.body
+			let add = { kycCompleted }
+			if (comment) { add['comment'] = comment }
+			if (kycCompleted == true) { add['status'] = kycStatus.accepted }
+			else { add['status'] = kycStatus.rejected }
 
-		let updateRequest = await KycDocument.findOneAndUpdate(
-			{_candidate},
-			add
+			let updateRequest = await KycDocument.findOneAndUpdate(
+				{ _candidate },
+				add
 			)
-		if(!updateRequest){
-			req.flash("error", "Updation failed!")
-			return res.redirect("back")
+			if (!updateRequest) {
+				req.flash("error", "Updation failed!")
+				return res.redirect("back")
+			}
+			req.flash("success", "Request Updated!")
+			return res.status(201).send({ status: true, msg: 'Request Updated!' })
+		} catch (err) {
+			console.log(err.message)
 		}
-		req.flash("success", "Request Updated!")
-		return res.status(201).send({status: true, msg: 'Request Updated!'})
-	}catch(err){
-		console.log(err.message)
-	}
-})
+	})
 
 
 module.exports = router;
