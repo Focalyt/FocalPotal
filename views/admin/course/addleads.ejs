@@ -16,203 +16,211 @@
     </div>
     <div class="content-body">
         <% include ../partials/flash %>
-                <section id="add-leads">
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12">
-                            <div class="card">
-                                <div class="card-header border border-top-0 border-left-0 border-right-0">
-                                    <h4 class="card-title pb-1">College </h4>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        <div class="row align-items-center">
-                                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
-                                                <label>Candidate Number
-                                                    <span class="asterisk">*</span></label>
-                                                <input type="number" class="form-control"
-                                                    pattern="^[\+\d]?(?:[\d-.\s()]*)$" minlength="10" maxlength="13"
-                                                    required name="number" palaceholder="Candidate Number" value=''
-                                                    id="user-input" />
+            <section id="add-leads">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1">College </h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+                                            <label>Candidate Number
+                                                <span class="asterisk">*</span></label>
+                                            <input type="number" class="form-control" pattern="^[\+\d]?(?:[\d-.\s()]*)$"
+                                                minlength="10" maxlength="13" required name="number"
+                                                palaceholder="Candidate Number" value='' id="user-input" />
+                                        </div>
+
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none"
+                                            id="otp-field">
+                                            <label>Enter OTP
+                                                <span class="asterisk">*</span></label>
+                                            <input type="number" class="form-control" required name="otp" id="user-otp"
+                                                palaceholder="Enter OTP" value='' />
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 ">
+
+                                            <button id="send-otp" type="button"
+                                                class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
+                                                Send OTP
+                                            </button>
+
+                                        </div>
+                                        <div class="row d-none" id="otp-actions">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                <a class="btn btn-primary float-right btn-inline waves-effect waves-light text-white btn-block"
+                                                    id="verify-login-btn">
+                                                    verify</a>
                                             </div>
-
-                                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none"
-                                                id="otp-field">
-                                                <label>Enter OTP
-                                                    <span class="asterisk">*</span></label>
-                                                <input type="number" class="form-control" required name="otp"
-                                                    id="user-otp" palaceholder="Enter OTP" value='' />
+                                            <div class="colx-l-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                <div class="btn btn-primary btn-block waves-effect waves-light text-white btn-block"
+                                                    id="resend-btn" style="padding: 1rem;">Resend
+                                                    OTP</div>
                                             </div>
-                                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 ">
+                                        </div>
 
-                                                <button id="send-otp" type="button"
-                                                    class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
-                                                    Send OTP
-                                                </button>
 
+
+                                        <% if(course.center?.length>0) { %>
+                                            <div id="selectCenter"
+                                                class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none">
+                                                <select onchange="removeDisabled('applydiv')" class="form-control"
+                                                    id="centerSelect" name="center">
+                                                    <option value="">Select Training Center</option>
+                                                    <%course.center.forEach((c,i)=>{%>
+                                                        <option value="<%=c._id %>">
+                                                            <%=c.name %>
+                                                        </option>
+                                                        <%})%>
+                                                </select>
                                             </div>
-                                            <div class="row d-none" id="otp-actions">
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <a class="btn btn-primary float-right btn-inline waves-effect waves-light text-white btn-block"
-                                                        id="verify-login-btn">
-                                                        verify</a>
-                                                </div>
-                                                <div class="colx-l-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <div class="btn btn-primary btn-block waves-effect waves-light text-white btn-block"
-                                                        id="resend-btn" style="padding: 1rem;">Resend
-                                                        OTP</div>
-                                                </div>
-                                            </div>
-
-
-
-                                            <% if(course.center?.length>0) { %>
-                                                <div id="selectCenter"
+                                            <% } %>
+                                                <div id="applydiv"
                                                     class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none">
-                                                    <select onchange="removeDisabled('applydiv')" class="form-control"
-                                                        id="centerSelect" name="center">
-                                                        <option value="">Select Training Center</option>
-                                                        <%course.center.forEach((c,i)=>{%>
-                                                            <option value="<%=c._id %>">
-                                                                <%=c.name %>
-                                                            </option>
-                                                            <%})%>
-                                                    </select>
+                                                    <button id="add__centers" type="button"
+                                                        class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
+                                                        Apply Course
+                                                    </button>
                                                 </div>
-                                                <% } %>
-                                                    <div id="applydiv"
-                                                        class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none">
-                                                        <button id="add__centers" type="button"
-                                                            class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
-                                                            Apply Course
-                                                        </button>
-                                                    </div>
-                                                    <script>
-                                                        function removeDisabled(id) {
-                                                            console.log(id)
-                                                            document.getElementById(id).classList.remove('d-none');
+                                                <script>
+                                                    function removeDisabled(id) {
+                                                        console.log(id)
+                                                        document.getElementById(id).classList.remove('d-none');
 
-                                                        }
-                                                    </script>
+                                                    }
+                                                </script>
 
 
 
-                                                    <!-- <div id="error" style="color:red;font-weight: bold; display:none;">
+                                                <!-- <div id="error" style="color:red;font-weight: bold; display:none;">
                                             </div>
                                             <div id="success" style="color:green;font-weight: bold; display:none;">
                                             </div> -->
 
 
 
-                                        </div>
-                                        <form action="">
-                                        <div id="candidateDetails" class="row">
-                                            <div class="col-xl-3 mb-1">
-                                                <label>Name <span class="mandatory">*</span></label>
-                                                <input type="text" class="form-control" name="name" maxlength="50"
-                                                    required value="" />
-                                            </div>
-                                            <div class="col-xl-3 mb-1">
-                                                <label>Email <span class="mandatory">*</span></label>
-                                                <input type="email" class="form-control" maxlength="50" name="email"
-                                                    value="" required />
-                                            </div>
-                                            <div class="col-xl-3 mb-1">
-                                                <label>Address</label>
-                                                <input type="text" class="form-control" maxlength="100" name="address"
-                                                    value="" />
-                                            </div>
-                                            <div class="col-xl-3 mb-1">
-                                                <label>Country
-                                                    <span class="mandatory">*</span></label>
-                                                <select style="cursor: pointer;" class="form-control" name="countryId"
-                                                    id="country" required>
-                                                    <option value="">Select Option</option>
-													<% country.forEach((i)=> { %>
-														<option value="<%= i.countryId %>" class="text-capitalize">
-															<%= i.name %>
-														</option>
-														<% }); %>
-
-                                                </select>
-                                            </div>
-                                            <div class="col-xl-3 mb-1">
-                                                <label>State <span class="mandatory">*</span></label>
-                                                <select style="cursor: pointer;" class="form-control" name="stateId"
-                                                    id="state" required>
-                                                    <option>Select Option</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xl-3 mb-1">
-                                                <label>City <span class="mandatory">*</span></label>
-                                                <select style="cursor: pointer;" class="form-control" name="cityId"
-                                                    required id="city">
-                                                    <option>Select Option</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xl-2 mb-1" id="pd-gender">
-                                                <label>Gender<span class="mandatory"> *</span></label>
-                                                <select class="form-control" name="sex" id="user-gender" value="">
-                                                  <option value="">Please select</option>
-                                                  <option value="Male">Male</option>
-                                                  <option value="Female">Female
-                                                  </option>
-                                                </select>
-                                              </div>
-                                              <div class="col-xl-2 mb-1" id="dob-field">
-                                                <label>Date of Birth<span class="mandatory"> *</span></label>
-                                                <input type="date" name="dob" class="form-control"
-                                                  value=""
-                                                  id="candidate-dob">
-                                              </div>
-                                              <div class="col-xl-3 mb-1" id="pd-number">
-                                                <label>WhatsApp Number <span class="mandatory"> *</span></label>
-                                                <input type="tel" maxlength="10"
-                                                  name="whatsapp" class="form-control"
-                                                  value="" id="candidate-whatsapp-number">
-                                              </div>
-                                              <div class="col-xl-3 mb-1" id="pd-address">
-                                                <label>Address / पता<span class="mandatory"> *</span></label>
-                                                <input type="text" name="address" class="form-control" value=""
-                                                  id="candidate-address">
-                                              </div>
-                                             
-                                             
-                                            <div class="col-xl-3 mb-1">
-                                                <label>Pincode</label>
-                                                <input type="text" class="form-control" name="pincode" minlength="3"
-                                                    maxlength="10" value="" />
-                                            </div>
-                                            <div class="col-xl-3 mb-1" id="highestQuali">
-                                                <label>Highest Qualification <span class="mandatory">
-                                                    *</span></label>
-                                                <select class="form-control single-field" value="" name="highestQualification"
-                                                  id="quali">
-                                                  <option value="">Select Highest Qualification</option>
-                                                  <% highestQualification.forEach((q)=> {%>
-                                                      <option value="<%=q._id%>" class="text-capitalize">
-                                                          <%=q.name%>
-                                                       
-                                                      </option>
-              
-                                                      <%} )%>
-                                                     
-                                                </select>
-                                              </div>
-                                                                                 
-                                            </div>
-                                            
-                                            
-
-                                        </div>
-                                    </form>
                                     </div>
                                 </div>
+                                <form action="" id="candidateDetails" class="row d-none">
+
+                                    <div class="row">
+                                        <% if(course.center?.length>0) { %>
+                                            <div id="selectCenterNewLead" class="col-xl-3 mb-1 ">
+                                                <label>Select Training Center <span class="mandatory">*</span></label>
+                                                <select class="form-control" id="centerSelectNewLead"
+                                                    name="selectedCenter" required>
+                                                    <option value="">Select Option</option>
+                                                    <%course.center.forEach((c,i)=>{%>
+                                                        <option value="<%=c._id %>">
+                                                            <%=c.name %>
+                                                        </option>
+                                                        <%})%>
+                                                </select>
+                                            </div>
+                                            <% } %>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>Name <span class="mandatory">*</span></label>
+                                                    <input type="text" class="form-control" name="name" maxlength="50"
+                                                        required value="" />
+                                                </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>Email <span class="mandatory">*</span></label>
+                                                    <input type="email" class="form-control" maxlength="50" name="email"
+                                                        value="" required />
+                                                </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>Address</label>
+                                                    <input type="text" class="form-control" maxlength="100"
+                                                        name="address" value="" />
+                                                </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>Country
+                                                        <span class="mandatory">*</span></label>
+                                                    <select style="cursor: pointer;" class="form-control"
+                                                        name="countryId" id="country" required>
+                                                        <option value="">Select Option</option>
+                                                        <% country.forEach((i)=> { %>
+                                                            <option value="<%= i.countryId %>" class="text-capitalize">
+                                                                <%= i.name %>
+                                                            </option>
+                                                            <% }); %>
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>State <span class="mandatory">*</span></label>
+                                                    <select style="cursor: pointer;" class="form-control" name="state"
+                                                        id="state" required>
+                                                        <option>Select Option</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xl-3 mb-1">
+                                                    <label>City <span class="mandatory">*</span></label>
+                                                    <select style="cursor: pointer;" class="form-control" name="city"
+                                                        required id="city">
+                                                        <option>Select Option</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xl-2 mb-1" id="pd-gender">
+                                                    <label>Gender<span class="mandatory"> *</span></label>
+                                                    <select class="form-control" name="sex" id="user-gender" value="">
+                                                        <option value="">Please select</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xl-2 mb-1" id="dob-field">
+                                                    <label>Date of Birth<span class="mandatory"> *</span></label>
+                                                    <input type="date" name="dob" class="form-control" value=""
+                                                        id="candidate-dob">
+                                                </div>
+                                                <div class="col-xl-3 mb-1" id="pd-number">
+                                                    <label>WhatsApp Number <span class="mandatory"> *</span></label>
+                                                    <input type="tel" maxlength="10" name="whatsapp"
+                                                        class="form-control" value="" id="candidate-whatsapp-number">
+                                                </div>
+
+                                                <div class="col-xl-3 mb-1" id="highestQuali">
+                                                    <label>Highest Qualification <span class="mandatory">
+                                                            *</span></label>
+                                                    <select class="form-control single-field" value=""
+                                                        name="highestQualification" id="quali">
+                                                        <option value="">Select Highest Qualification</option>
+                                                        <% highestQualification.forEach((q)=> {%>
+                                                            <option value="<%=q._id%>" class="text-capitalize">
+                                                                <%=q.name%>
+
+                                                            </option>
+
+                                                            <%} )%>
+
+                                                    </select>
+                                                </div>
+
+                                    </div>
+
+
+
+
+
+                                    <div class="col-xl-3 mb-1">
+
+                                        <button type="submit" class="form-control"> Submit</button>
+                                    </div>
+
+                                </form>
                             </div>
                         </div>
-                </section>
-           
+                    </div>
+                </div>
+            </section>
 
-           
+
+
 
 
             <section id="add-docs" class="d-none">
@@ -348,49 +356,98 @@
 
 
             <script type="text/javascript">
-                $("#country").change(() => {
-				$("#state")
-					.find("option")
-					.remove()
-					.end()
-					.append(
-						'<option disabled selected value="">Select Option</option>'
-					);
-				axios
-					.post("/admin/helper/getstate", {
-						countryId: $("#country").val(),
-					})
-					.then(({ data }) => {
-						data.forEach((d) => {
-							$("#state").append(
-								`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
-							);
-						});
-					})
-					.catch((e) => console.log(e));
-			});
 
-			$("#state").change(() => {
-				$('#city')
-					.find("option")
-					.remove()
-					.end()
-					.append(
-						'<option disabled selected value="">Select Option</option>'
-					);
-				axios
-					.post("/admin/helper/getcity", {
-						stateId: $("#state").val(),
-					})
-					.then(({ data }) => {
-						data.forEach((d) => {
-							$("#city").append(
-								`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
-							);
-						});
-					})
-					.catch((e) => console.log(e));
-			});
+                document.querySelector('form').addEventListener('submit', function (e) {
+                    e.preventDefault(); // Form ka default reload roko
+                    const mobileNumber = userInput.value;
+                    if (!mobileNumber) {
+                        return alert("mobile number required")
+                    }
+
+
+                    const formData = new FormData(this); // Poora form ka data mil gaya
+                    const data = {};
+
+                    formData.forEach((value, key) => {
+                        console.log(key, value); // ✅ Console me har field ka name and value
+                        data[key] = value; // Optional: Object me bhi store karna ho to
+                    });
+
+                    data.courseId = '<%=courseId%>';
+                    data.mobile = mobileNumber;
+
+                    console.log("Final Form Data Object:", data); // ✅ Pura data object format me
+
+                    axios.post("/admin/candidate/addleaddandcourseapply", data).then((response) => {
+                        alert("Candidate added and Course applied")
+                        $('#candidateDetails').addClass('d-none');
+                        '<% if (course.docsRequired && course.docsRequired.length> 0) { %>'
+
+                        $('#add-docs').removeClass('d-none');
+                        '<% } %>'
+
+
+
+
+
+
+                    }).catch((error) => {
+                        console.error("Error sending OTP:", error);
+                        alert("Something went wrong. Please try again.");
+                    });
+                });
+
+
+
+
+
+
+
+
+
+                $("#country").change(() => {
+                    $("#state")
+                        .find("option")
+                        .remove()
+                        .end()
+                        .append(
+                            '<option disabled selected value="">Select Option</option>'
+                        );
+                    axios
+                        .post("/admin/helper/getstate", {
+                            countryId: $("#country").val(),
+                        })
+                        .then(({ data }) => {
+                            data.forEach((d) => {
+                                $("#state").append(
+                                    `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+                                );
+                            });
+                        })
+                        .catch((e) => console.log(e));
+                });
+
+                $("#state").change(() => {
+                    $('#city')
+                        .find("option")
+                        .remove()
+                        .end()
+                        .append(
+                            '<option disabled selected value="">Select Option</option>'
+                        );
+                    axios
+                        .post("/admin/helper/getcity", {
+                            stateId: $("#state").val(),
+                        })
+                        .then(({ data }) => {
+                            data.forEach((d) => {
+                                $("#city").append(
+                                    `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+                                );
+                            });
+                        })
+                        .catch((e) => console.log(e));
+                });
                 const userInput = document.getElementById("user-input");
                 const sendOtpBtn = document.getElementById("send-otp");
                 const otpField = document.getElementById("otp-field");
@@ -512,7 +569,7 @@
 
                                     $('#applydiv').removeClass('d-none')
 
-                                        '<% } %>'
+                                    '<% } %>'
 
                                 } else if (response.data.status === false) {
                                     $('#candidateDetails').removeClass('d-none')
@@ -1038,17 +1095,19 @@
     </div>
     <script>
         function populateHighestQualification(data, candidate) {
-      let options = '<option value="">Highest Qualification / उच्चतम योग्यता </option>';
-      for (let highestQualification of data) {
-        if (candidate && candidate.highestQualification == highestQualification._id) {
-          options += `<option value="${highestQualification._id}" selected class="text-capitalize">${highestQualification.name}</option>`;
-        } else {
-          options += `<option value="${highestQualification._id}" class="text-capitalize">${highestQualification.name}</option>`;
+            let options = '<option value="">Highest Qualification / उच्चतम योग्यता </option>';
+            for (let highestQualification of data) {
+                if (candidate && candidate.highestQualification == highestQualification._id) {
+                    options += `<option value="${highestQualification._id}" selected class="text-capitalize">${highestQualification.name}</option>`;
+                } else {
+                    options += `<option value="${highestQualification._id}" class="text-capitalize">${highestQualification.name}</option>`;
+                }
+            }
+            $('#highest-qual').html(options);   // For your first dropdown
+            $('#highest-qual-second').html(options);  // For your second dropdown (new)
         }
-      }
-      $('#highest-qual').html(options);   // For your first dropdown
-      $('#highest-qual-second').html(options);  // For your second dropdown (new)
-    }
-    
+
+
+
     </script>
     <% include ../partials/footer %>

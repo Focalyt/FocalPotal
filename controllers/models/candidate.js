@@ -139,7 +139,7 @@ const candidateSchema = new Schema(
       type: Number,
     },
     otherUrls: [{}],
-    highestQualification: String,
+    highestQualification: { type: ObjectId, ref: "Qualification" },
     yearOfPassing: String,
     isProfileCompleted: {
       type: Boolean,
@@ -178,9 +178,11 @@ const candidateSchema = new Schema(
       type: {
         type: String,
         enum: ["Point"],
+        default: "Point"
       },
       coordinates: {
-        type: [Number]
+        type: [Number],
+        default: [0, 0]
       },
     },
     upi: { type: String },

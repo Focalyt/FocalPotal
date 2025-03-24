@@ -15,6 +15,7 @@ const {
 	Import,
 	Candidate,
 	Qualification,
+	AppliedCourses,
 	Skill,
 	Country,
 	User,
@@ -186,12 +187,12 @@ router.route("/verifyuser")
 					// // Check if already applied
 					if (candidate.appliedCourses && candidate.appliedCourses.some(appliedId => appliedId.equals(courseId))) {
 						console.log("course already applied")
-						return res.status(200).json({ status: true, msg: "Course already applied.", appliedStatus:true });
+						return res.status(200).json({ status: true, msg: "Course already applied.", appliedStatus: true });
 					}
-					else{
-						return res.status(200).json({ status: true, msg: "Course already not applied.", appliedStatus:false });
+					else {
+						return res.status(200).json({ status: true, msg: "Course already not applied.", appliedStatus: false });
 
-					}	
+					}
 
 				}
 			}
@@ -200,6 +201,70 @@ router.route("/verifyuser")
 				return res.send({ status: false, message: "Candidate not found" })
 
 			}
+
+
+		} catch (err) {
+			console.log(err)
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+	})
+
+router.route("/addleaddandcourseapply")
+	.post(auth1, async (req, res) => {
+		try {
+			console.log("body data", req.body)
+
+			let { name, mobile, email, address, state, city, sex, dob, whatsapp, highestQualification, courseId, selectedCenter  } = req.body;
+			if (mongoose.Types.ObjectId.isValid(highestQualification)) highestQualification = new mongoose.Types.ObjectId(highestQualification);
+			if (mongoose.Types.ObjectId.isValid(state)) state = new mongoose.Types.ObjectId(state);
+			if (mongoose.Types.ObjectId.isValid(city)) city = new mongoose.Types.ObjectId(city);
+			if (mongoose.Types.ObjectId.isValid(courseId)) courseId = new mongoose.Types.ObjectId(courseId);
+			if (mongoose.Types.ObjectId.isValid(selectedCenter)) selectedCenter = new mongoose.Types.ObjectId(selectedCenter);
+
+			if (dob) dob = new Date(dob); // For Date field
+
+			let body = {
+				name,
+				mobile,
+				email,
+				sex,
+				address,
+				state,
+				city,
+				dob,
+				whatsapp,
+				highestQualification,
+				appliedCourses: [
+					courseId
+				],
+				selectedCenter: [
+					{
+						courseId,
+						centerId:selectedCenter
+
+					}
+				],
+				verified: true
+
+
+			}
+
+			console.log("Final Body:", body);
+        
+        const candidate =  await Candidate.create(body);
+
+		 const appliedData = await new AppliedCourses({
+			  _candidate: candidate._id,
+			  _course: courseId,
+			  _center: selectedCenter
+			}).save();
+
+			console.log("Candidate added and course applied")
+
+        res.send({ status: true, msg: "Candidate added and course applied", data: body });
+
+
 
 
 		} catch (err) {

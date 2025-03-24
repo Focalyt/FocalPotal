@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require("path");
 const { auth1, isAdmin } = require("../../../helpers");
 const moment = require("moment");
-const { Courses, Qualification, CourseSectors, Candidate, AppliedCourses, Center } = require("../../models");
+const { Courses, Country, Qualification, CourseSectors, Candidate, AppliedCourses, Center } = require("../../models");
 const candidateServices = require('../services/candidate')
 const { candidateCashbackEventName } = require('../../db/constant');
 const router = express.Router();
@@ -581,16 +581,15 @@ router.route('/:courseId/candidate/addleads')
         try {
 			let {courseId} = req.params
 			const country = await Country.find({});
-			const highestQualifcation = await Qualification.find({status:true})
+			const highestQualification = await Qualification.find({status:true})
 			
 			if (typeof courseId === 'string' && mongoose.Types.ObjectId.isValid(courseId)) {
 				courseId = new mongoose.Types.ObjectId(courseId);
-				
 			} 
 	        let course = await Courses.findById(courseId).populate('center');
 			
 			
-            res.render('admin/course/addleads', { menu: 'course', courseId, course,country,highestQualifcation });
+            res.render('admin/course/addleads', { menu: 'course', courseId, course, country, highestQualification });
         } catch (err) {
             console.log("Error rendering addleads page:", err);
             res.redirect('back');
