@@ -41,7 +41,7 @@
                                             <input type="number" class="form-control" required name="otp" id="user-otp"
                                                 palaceholder="Enter OTP" value='' />
                                         </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 ">
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 " id="sendbtndiv">
 
                                             <button id="send-otp" type="button"
                                                 class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
@@ -49,15 +49,15 @@
                                             </button>
 
                                         </div>
-                                        <div class="row d-none" id="otp-actions">
+                                        <div class="row align-items-center d-none" id="otp-actions">
                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                <a class="btn btn-primary float-right btn-inline waves-effect waves-light text-white btn-block"
+                                                <a class="btn btn-success float-right btn-inline waves-effect waves-light text-white btn-block"
                                                     id="verify-login-btn">
-                                                    verify</a>
+                                                    Verify</a>
                                             </div>
                                             <div class="colx-l-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                <div class="btn btn-primary btn-block waves-effect waves-light text-white btn-block"
-                                                    id="resend-btn" style="padding: 1rem;">Resend
+                                                <div class="btn btn-success btn-block waves-effect waves-light text-white btn-block"
+                                                    id="resend-btn">Resend
                                                     OTP</div>
                                             </div>
                                         </div>
@@ -79,7 +79,7 @@
                                             </div>
                                             <% } %>
                                                 <div id="applydiv"
-                                                    class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none">
+                                                    class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 d-none">
                                                     <button id="add__centers" type="button"
                                                         class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
                                                         Apply Course
@@ -103,116 +103,118 @@
 
 
                                     </div>
-                                </div>
-                                <form action="" id="candidateDetails" class="row d-none">
+                                    <form action="" id="candidateDetails" class="row d-none">
 
-                                    <div class="row">
-                                        <% if(course.center?.length>0) { %>
-                                            <div id="selectCenterNewLead" class="col-xl-3 mb-1 ">
-                                                <label>Select Training Center <span class="mandatory">*</span></label>
-                                                <select class="form-control" id="centerSelectNewLead"
-                                                    name="selectedCenter" required>
-                                                    <option value="">Select Option</option>
-                                                    <%course.center.forEach((c,i)=>{%>
-                                                        <option value="<%=c._id %>">
-                                                            <%=c.name %>
-                                                        </option>
-                                                        <%})%>
-                                                </select>
-                                            </div>
-                                            <% } %>
-                                                <div class="col-xl-3 mb-1">
-                                                    <label>Name <span class="mandatory">*</span></label>
-                                                    <input type="text" class="form-control" name="name" maxlength="50"
-                                                        required value="" />
-                                                </div>
-                                                <div class="col-xl-3 mb-1">
-                                                    <label>Email <span class="mandatory">*</span></label>
-                                                    <input type="email" class="form-control" maxlength="50" name="email"
-                                                        value="" required />
-                                                </div>
-                                                <div class="col-xl-3 mb-1">
-                                                    <label>Address</label>
-                                                    <input type="text" class="form-control" maxlength="100"
-                                                        name="address" value="" />
-                                                </div>
-                                                <div class="col-xl-3 mb-1">
-                                                    <label>Country
-                                                        <span class="mandatory">*</span></label>
-                                                    <select style="cursor: pointer;" class="form-control"
-                                                        name="countryId" id="country" required>
+                                        <div class="col-12">
+                                            <% if(course.center?.length>0) { %>
+                                                <div id="selectCenterNewLead" class="col-xl-3 mb-1 ">
+                                                    <label>Select Training Center <span class="mandatory">*</span></label>
+                                                    <select class="form-control" id="centerSelectNewLead"
+                                                        name="selectedCenter" required>
                                                         <option value="">Select Option</option>
-                                                        <% country.forEach((i)=> { %>
-                                                            <option value="<%= i.countryId %>" class="text-capitalize">
-                                                                <%= i.name %>
+                                                        <%course.center.forEach((c,i)=>{%>
+                                                            <option value="<%=c._id %>">
+                                                                <%=c.name %>
                                                             </option>
-                                                            <% }); %>
-
+                                                            <%})%>
                                                     </select>
                                                 </div>
-                                                <div class="col-xl-3 mb-1">
-                                                    <label>State <span class="mandatory">*</span></label>
-                                                    <select style="cursor: pointer;" class="form-control" name="state"
-                                                        id="state" required>
-                                                        <option>Select Option</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xl-3 mb-1">
-                                                    <label>City <span class="mandatory">*</span></label>
-                                                    <select style="cursor: pointer;" class="form-control" name="city"
-                                                        required id="city">
-                                                        <option>Select Option</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xl-2 mb-1" id="pd-gender">
-                                                    <label>Gender<span class="mandatory"> *</span></label>
-                                                    <select class="form-control" name="sex" id="user-gender" value="">
-                                                        <option value="">Please select</option>
-                                                        <option value="Male">Male</option>
-                                                        <option value="Female">Female
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xl-2 mb-1" id="dob-field">
-                                                    <label>Date of Birth<span class="mandatory"> *</span></label>
-                                                    <input type="date" name="dob" class="form-control" value=""
-                                                        id="candidate-dob">
-                                                </div>
-                                                <div class="col-xl-3 mb-1" id="pd-number">
-                                                    <label>WhatsApp Number <span class="mandatory"> *</span></label>
-                                                    <input type="tel" maxlength="10" name="whatsapp"
-                                                        class="form-control" value="" id="candidate-whatsapp-number">
-                                                </div>
-
-                                                <div class="col-xl-3 mb-1" id="highestQuali">
-                                                    <label>Highest Qualification <span class="mandatory">
-                                                            *</span></label>
-                                                    <select class="form-control single-field" value=""
-                                                        name="highestQualification" id="quali">
-                                                        <option value="">Select Highest Qualification</option>
-                                                        <% highestQualification.forEach((q)=> {%>
-                                                            <option value="<%=q._id%>" class="text-capitalize">
-                                                                <%=q.name%>
-
+                                                <% } %>
+                                                <div class="row">
+                                                    <div class="col-xl-3 mb-1">
+                                                        <label>Name <span class="mandatory">*</span></label>
+                                                        <input type="text" class="form-control" name="name" maxlength="50"
+                                                            required value="" />
+                                                    </div>
+                                                    <div class="col-xl-3 mb-1">
+                                                        <label>Email <span class="mandatory">*</span></label>
+                                                        <input type="email" class="form-control" maxlength="50" name="email"
+                                                            value="" required />
+                                                    </div>
+                                                    <div class="col-xl-3 mb-1">
+                                                        <label>Address</label>
+                                                        <input type="text" class="form-control" maxlength="100"
+                                                            name="address" value="" />
+                                                    </div>
+                                                    <div class="col-xl-3 mb-1">
+                                                        <label>Country
+                                                            <span class="mandatory">*</span></label>
+                                                        <select style="cursor: pointer;" class="form-control"
+                                                            name="countryId" id="country" required>
+                                                            <option value="">Select Option</option>
+                                                            <% country.forEach((i)=> { %>
+                                                                <option value="<%= i.countryId %>" class="text-capitalize">
+                                                                    <%= i.name %>
+                                                                </option>
+                                                                <% }); %>
+    
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xl-3 mb-1">
+                                                        <label>State <span class="mandatory">*</span></label>
+                                                        <select style="cursor: pointer;" class="form-control" name="state"
+                                                            id="state" required>
+                                                            <option>Select Option</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xl-3 mb-1">
+                                                        <label>City <span class="mandatory">*</span></label>
+                                                        <select style="cursor: pointer;" class="form-control" name="city"
+                                                            required id="city">
+                                                            <option>Select Option</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xl-2 mb-1" id="pd-gender">
+                                                        <label>Gender<span class="mandatory"> *</span></label>
+                                                        <select class="form-control" name="sex" id="user-gender" value="">
+                                                            <option value="">Please select</option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female
                                                             </option>
-
-                                                            <%} )%>
-
-                                                    </select>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xl-2 mb-1" id="dob-field">
+                                                        <label>Date of Birth<span class="mandatory"> *</span></label>
+                                                        <input type="date" name="dob" class="form-control" value=""
+                                                            id="candidate-dob">
+                                                    </div>
+                                                    <div class="col-xl-3 mb-1" id="pd-number">
+                                                        <label>WhatsApp Number <span class="mandatory"> *</span></label>
+                                                        <input type="tel" maxlength="10" name="whatsapp"
+                                                            class="form-control" value="" id="candidate-whatsapp-number">
+                                                    </div>
+    
+                                                    <div class="col-xl-3 mb-1" id="highestQuali">
+                                                        <label>Highest Qualification <span class="mandatory">
+                                                                *</span></label>
+                                                        <select class="form-control single-field" value=""
+                                                            name="highestQualification" id="quali">
+                                                            <option value="">Select Highest Qualification</option>
+                                                            <% highestQualification.forEach((q)=> {%>
+                                                                <option value="<%=q._id%>" class="text-capitalize">
+                                                                    <%=q.name%>
+    
+                                                                </option>
+    
+                                                                <%} )%>
+    
+                                                        </select>
+                                                    </div>
                                                 </div>
-
-                                    </div>
-
-
-
-
-
-                                    <div class="col-xl-3 mb-1">
-
-                                        <button type="submit" class="form-control"> Submit</button>
-                                    </div>
-
-                                </form>
+                                        </div>
+    
+    
+    
+    
+    
+                                        <div class="col-xl-3 mb-1">
+    
+                                            <button type="submit" class="form-control btn btn-success px-lg-2 waves-effect waves-light"> Submit</button>
+                                        </div>
+    
+                                    </form>
+                                </div>
+                             
                             </div>
                         </div>
                     </div>
@@ -445,6 +447,7 @@
                 });
                 const userInput = document.getElementById("user-input");
                 const sendOtpBtn = document.getElementById("send-otp");
+                const sendbtndiv = document.getElementById("sendbtndiv");
                 const otpField = document.getElementById("otp-field");
                 const otpInput = document.getElementById("user-otp");
                 const verifyLoginBtn = document.getElementById("verify-login-btn");
@@ -500,6 +503,7 @@
                             otpField.classList.remove('d-none');
                             $('#otp-actions').removeClass('d-none')
                             sendOtpBtn.classList.add('d-none');
+                            sendbtndiv.classList.add('d-none');
                             userInput.setAttribute('disabled', 'true');
 
                             // ✅ OTP भेजने के बाद Verify और Resend बटन दिखे
