@@ -87,7 +87,7 @@
             </div>
 
             <div class="document-list">
-                <table class="document-table">
+                <table class="document-table table table-hover-animation mb-0 table-hover">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -95,6 +95,7 @@
                             <th>Upload Date</th>
                             <th>Status</th>
                             <th>Actions</th>
+                            <th>Upload</th>
                         </tr>
                     </thead>
                     
@@ -134,6 +135,13 @@
                                 <% } else { %>
                                    <p> N/A </p>
                                 <% } %>
+                            </td>
+                           
+                                <td class="text-capitalize">
+                                    <a href="#" class="btn btn-danger waves-effect waves-light text-white d-inline btn-sm" style="padding: 8px;">
+                                       Upload
+                                    </a>
+                                
                             </td>
                         </tr>
                         
@@ -477,10 +485,10 @@ function closeModal(id) {
             white-space: nowrap;
         }
 
-        .document-table tbody tr {
+        /* .document-table tbody tr {
             border-bottom: 1px solid var(--border-color);
             transition: background-color 0.2s;
-        }
+        } */
 
         .document-table tbody tr:hover {
             background-color: #f8f9fa;
