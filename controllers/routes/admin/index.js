@@ -117,6 +117,16 @@ router.post ('/courses',async(req,res)=>{
 })
 router.get('/', async (req, res) => {
   try {
+
+    const userId = req.session?.user?._id;
+    let loggedInUser = null;
+
+    if (userId) {
+      loggedInUser = await User.findById(userId);
+      console.log("Logged In User Details:", loggedInUser);
+    }
+
+
     const totalRevenue = await PaymentDetails.aggregate([
       {$match: { paymentStatus: 'captured',
                }},
@@ -395,23 +405,26 @@ router.get('/', async (req, res) => {
          $lte : moment().subtract(2,'day').utcOffset('+05:30').endOf('day').toDate()}
       }).countDocuments()
 
-    return res.render(`${req.vPath}/admin`,{
-      totalRevenue: totalRevenue[0]?.totalRevenue,
-      monthRevenue: monthRevenue[0]?.monthRevenue,
-      weekRevenue: weekRevenue[0]?.weekRevenue,
-      dayRevenue: dayRevenue[0]?.dayRevenue,
-      yesterdayRevenue:yesterdayRevenue[0]?.yesterdayRevenue,
-      dayBeforeYesterdayRevenue:dayBeforeYesterdayRevenue[0]?.dayBeforeYesterdayRevenue,
-      monthCandidates,weekCandidates,
-      monthCompanies,weekCompanies,
-      monthColleges,weekColleges,
-      yesterdayColleges,yesterdayCompanies,yesterdayJobs,yesterdayHired,yesterdayShortlisted,yesterdayAppliedJobs,dayBeforeYesterdayAppliedJobs,dayBeforeYesterdayCompanies,dayBeforeYesterdayColleges,dayBeforeYesterdayHired,dayBeforeYesterdayJobs,dayBeforeYesterdayShortlisted,
-      dayShortlisted: dayShortlisted.length,weekShortlisted: weekShortlisted.length,
-      monthShortlisted: monthShortlisted.length,totalShortlisted: totalShortlisted.length,
-      totalCandidates, dayCandidates, totalCompanies, dayCompanies, dayColleges, totalColleges,menu:'dashboard',
-      dayJobs,weekJobs,monthJobs,jobs,dayHired,weekHired,monthHired,totalHired,
-      totalAppliedJobs, monthAppliedJobs, weekAppliedJobs, dayAppliedJobs,dayBeforeYesterdayCandidates,yesterdayCandidates,totalAppliedCourses,monthAppliedCourses,weekAppliedCourses,dayAppliedCourses,yesterdayAppliedCourses,dayBeforeYesterdayAppliedCourses
-    });
+      let rederData = {
+        totalRevenue: totalRevenue[0]?.totalRevenue,
+        monthRevenue: monthRevenue[0]?.monthRevenue,
+        weekRevenue: weekRevenue[0]?.weekRevenue,
+        dayRevenue: dayRevenue[0]?.dayRevenue,
+        yesterdayRevenue:yesterdayRevenue[0]?.yesterdayRevenue,
+        dayBeforeYesterdayRevenue:dayBeforeYesterdayRevenue[0]?.dayBeforeYesterdayRevenue,
+        monthCandidates,weekCandidates,
+        monthCompanies,weekCompanies,
+        monthColleges,weekColleges,
+        loggedInUser,
+        yesterdayColleges,yesterdayCompanies,yesterdayJobs,yesterdayHired,yesterdayShortlisted,yesterdayAppliedJobs,dayBeforeYesterdayAppliedJobs,dayBeforeYesterdayCompanies,dayBeforeYesterdayColleges,dayBeforeYesterdayHired,dayBeforeYesterdayJobs,dayBeforeYesterdayShortlisted,
+        dayShortlisted: dayShortlisted.length,weekShortlisted: weekShortlisted.length,
+        monthShortlisted: monthShortlisted.length,totalShortlisted: totalShortlisted.length,
+        totalCandidates, dayCandidates, totalCompanies, dayCompanies, dayColleges, totalColleges,menu:'dashboard',
+        dayJobs,weekJobs,monthJobs,jobs,dayHired,weekHired,monthHired,totalHired,
+        totalAppliedJobs, monthAppliedJobs, weekAppliedJobs, dayAppliedJobs,dayBeforeYesterdayCandidates,yesterdayCandidates,totalAppliedCourses,monthAppliedCourses,weekAppliedCourses,dayAppliedCourses,yesterdayAppliedCourses,dayBeforeYesterdayAppliedCourses
+      };
+
+    return res.render(`${req.vPath}/admin`,rederData);
   } catch (err) {
     req.session.formData = req.body;
     req.flash('error', err.message || 'Something went wrong!');

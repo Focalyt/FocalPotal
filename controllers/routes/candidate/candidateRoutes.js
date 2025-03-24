@@ -430,7 +430,8 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
       'Lead From Portal',
       course?.courseFeeType,
       course?.typeOfProject,
-      course?.projectName
+      course?.projectName,
+      "Self" 
 
 
     ];
@@ -487,134 +488,7 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
   }
 });
 
-router.post("/course/:courseId/admin/apply", [isAdmin], async (req, res) => {
-  try {
-    let { courseId } = req.params;
-    console.log("courseId",courseId)
 
-    let {mobile , selectedCenter} = req.body;
-    if (!mobile) {
-      console.log("mobile number not found.");
-      return res.status(404).json({ status: false, msg: "mobile number required." });
-      
-    }
-    // // Check if courseId is a string
-    if (typeof courseId === "string") {
-      console.log("courseId is a string:", courseId);
-
-    //   // Validate if it's a valid ObjectId before converting
-      if (mongoose.Types.ObjectId.isValid(courseId)) {
-        courseId = new mongoose.Types.ObjectId(courseId); // Convert to ObjectId
-      } else {
-        return res.status(400).json({ error: "Invalid course ID" });
-      }
-    }
-    
-    
-    console.log("selectedCenter",selectedCenter)
-
-    if (typeof selectedCenter === "string") {
-      console.log("selectedCenter is a string:", selectedCenter);
-
-    //   // Validate if it's a valid ObjectId before converting
-      if (mongoose.Types.ObjectId.isValid(selectedCenter)) {
-        selectedCenter = new mongoose.Types.ObjectId(selectedCenter); // Convert to ObjectId
-      } else {
-        return res.status(400).json({ error: "Invalid selectedCenter ID" });
-      }
-    }
-
-    // // Fetch course and candidate
-    const course = await Courses.findById(courseId);
-    if (!course) {
-      return res.status(404).json({ status: false, msg: "Course not found." });
-    }
-
-    const candidate = await Candidate.findOne({ mobile: mobile }).populate([
-      { path: 'state', select: "name" },
-      { path: 'city', select: "name" }
-    ]).lean();
-    console.log("candidate", candidate)
-
-    if (!candidate) {
-      return res.status(404).json({ status: false, msg: "Candidate not found." });
-      console.log("Candidate not found.")
-    }
-
-    // // Check if already applied
-    if (candidate.appliedCourses && candidate.appliedCourses.some(appliedId => appliedId.equals(courseId))) {
-      console.log("Already applied")
-      return res.status(400).json({ status: false, msg: "Course already applied." });
-    }
-    const apply = await Candidate.findOneAndUpdate(
-      { mobile: mobile },
-      { $addToSet: { appliedCourses: courseId,
-        selectedCenter: {
-          courseId: courseId,
-          centerId: selectedCenter
-        }
-      } },
-      { new: true, upsert: true }
-    );
-
-    const appliedData = await new AppliedCourses({
-      _candidate: candidate._id,
-      _course: courseId,
-      _center: selectedCenter
-    }).save();
-
-
-    // // Capitalize every word's first letter
-    function capitalizeWords(str) {
-      if (!str) return '';
-      return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-    }
-
-    // // Update Spreadsheet
-    const sheetData = [
-      moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
-      moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
-      capitalizeWords(course?.name), // Apply the capitalizeWords function
-      candidate?.name,
-      candidate?.mobile,
-      candidate?.email,
-      candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
-      candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
-      candidate?.state?.name,
-      candidate?.city?.name,
-      'Course',
-      `${process.env.BASE_URL}/coursedetails/${courseId}`,
-      course?.registrationCharges,
-      appliedData?.registrationFee,
-      'Lead From Portal',
-      course?.courseFeeType,
-      course?.typeOfProject,
-      course?.projectName
-
-
-    ];
-    await updateSpreadSheetValues(sheetData);
-
-    let candidateMob = candidate.mobile;
-
-    // Check if the mobile number already has the country code
-    if (typeof candidateMob !== "string") {
-      candidateMob = String(candidateMob); // Convert to string
-    }
-
-    if (!candidateMob.startsWith("91") && candidateMob.length === 10) {
-      candidateMob = "91" + candidateMob; // Add country code if missing and the length is 10
-    }
-
-
-    console.log("Candidate Mobile",candidateMob);
-
-    return res.status(200).json({ status: true, msg: "Course applied successfully." });
-  } catch (error) {
-    console.error("Error applying for course:", error.message);
-    return res.status(500).json({ status: false, msg: "Internal server error.", error: error.message });
-  }
-});
 
 // Modified sendEventToFacebook function
 // const sendEventToFacebook = async (event_name, user_data, custom_data) => {
