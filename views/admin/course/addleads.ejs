@@ -227,6 +227,7 @@
 
 
 
+            <% if (course.docsRequired && course.docsRequired.length> 0) { %>
 
 
             <section id="add-docs" class="d-none">
@@ -238,7 +239,6 @@
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
-                                    <% if (course.docsRequired && course.docsRequired.length> 0) { %>
                                         <% course.docsRequired.forEach((doc, index)=> { %>
 
                                             <div class=" file-containers row align-items-center">
@@ -260,9 +260,8 @@
                                             </div>
 
                                             <% }) %>
-                                                <% } else { %>
-                                                    <p>No Documents Required</p>
-                                                    <% } %>
+                                               
+                                                   
                                 </div>
                             </div>
 
@@ -270,6 +269,7 @@
                     </div>
                 </div>
             </section>
+            <% } %>
             <div class="text-right reset">
 
             </div>
@@ -392,11 +392,6 @@
                         $('#add-docs').removeClass('d-none');
                         '<% } %>'
 
-
-
-
-
-
                     }).catch((error) => {
                         console.error("Error sending OTP:", error);
                         alert("Something went wrong. Please try again.");
@@ -475,21 +470,25 @@
                     event.preventDefault();
                     const mobileNumber = userInput.value;
                     const body = { mobile: mobileNumber };
+                    '<% if(course.center?.length>0) { %>'
                     const selectedCenter = document.getElementById('centerSelect').value
-                    if (selectedCenter) {
+                    
+                  
                         body.selectedCenter = selectedCenter;
                         console.log(selectedCenter)
-                    }
-                    else {
-                        console.log("no center selected");
-                    }
+                   '<% } %>'
 
                     console.log("body", body)
-                    axios.post("/candidate/course/<%=courseId%>/admin/apply", body).then((response) => {
+                    axios.post("/admin/candidate/course/<%=courseId%>/apply", body).then((response) => {
                         alert("Course applied successfully")
                         document.getElementById('add__centers').setAttribute('disabled', 'true');
+                         '<% if(course.center?.length>0) { %>'
                         document.getElementById('centerSelect').setAttribute('disabled', 'true');
+                         '<% } %>'
+            '<% if (course.docsRequired && course.docsRequired.length> 0) { %>'
+
                         $('#add-docs').removeClass('d-none');
+                        '<% } %>'
                     }).catch((error) => {
 
                         alert(error.response?.data?.msg || "Something went wrong");
