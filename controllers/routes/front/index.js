@@ -877,7 +877,7 @@ router
 
 			if (user) {
 				if (user.role === 10 || user.role === 11 || user.role === 0) {
-					let userData = { role: user.role, name: user.name, _id: user._id, email: user.email }
+					let userData = { role: user.role, name: user.name, _id: user._id, email: user.email, access:user.access}
 					req.session.user = userData;
 					return res.redirect("/admin");
 				}

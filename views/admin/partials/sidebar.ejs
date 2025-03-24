@@ -12,6 +12,7 @@
   </div>
   <div class="shadow-bottom"></div>
   <div class="main-menu-content border border-left-0 border-right-0 border-bottom-0">
+      <% if (currentUser.role==0 || currentUser.role==10) { %>
     <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
       <li class="nav-item <% if(menu==='dashboard') {%>active<%}%>"><a href="/admin"><i
             class="fa-solid fa-gauge"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
@@ -344,5 +345,32 @@
             </ul>
           </li>
     </ul>
+    <% } else if (currentUser.role==11) { %>
+      <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            <li class="nav-item <% if(menu==='dashboard') {%>active<%}%>"><a href="/admin"><i
+                  class="fa-solid fa-gauge"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
+            </li>
+            <li class="nav-item"><a href="/admin/courses"><i class="fa-brands fa-google-scholar"></i><span class="menu-title"
+                  data-i18n="Todo">Courses</span></a>
+              <ul class="menu-content">
+                
+                    <li class="<% if(menu=='course') {%>active<%}%>"><a href="/admin/courses"><i
+                          class="feather icon-list"></i><span class="menu-item" data-i18n="Analytics">All Courses</span></a>
+                    </li>
+                    <li class="<% if(menu==='courseRegistrations') {%>active<%}%>"><a href="/admin/courses/registrations"><i
+                          class="fas fa-user-friends"></i><span class="menu-item"
+                          data-i18n="Analytics">Registrations</span></a></li>
+                          <!-- <li class="<% if(menu==='listview') {%>active<%}%>">
+                              <a href="/admin/courses/listview">
+                                  <i class="fas fa-user-friends"></i>
+                                  <span class="menu-item" data-i18n="Analytics">View</span>
+                              </a>
+                          </li> -->
+              </ul>
+            </li>
+
+      </ul>
+
+    <% } %>
   </div>
 </div>
