@@ -2,7 +2,7 @@
     <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
         <div class="content-header-left col-md-12 col-12 mb-2">
             <div class="row breadcrumbs-top">
-                <div class="col-9">
+                <div class="col-12">
                     <h3 class="content-header-title float-left mb-0">Add Leads</h3>
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
@@ -21,7 +21,7 @@
                     <div class="col-xl-12 col-lg-12">
                         <div class="card">
                             <div class="card-header border border-top-0 border-left-0 border-right-0">
-                                <h4 class="card-title pb-1">College </h4>
+                                <h4 class="card-title pb-1">Add Lead </h4>
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
@@ -29,9 +29,10 @@
                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
                                             <label>Candidate Number
                                                 <span class="asterisk">*</span></label>
-                                            <input type="number" class="form-control" pattern="^[\+\d]?(?:[\d-.\s()]*)$"
-                                                minlength="10" maxlength="13" required name="number"
-                                                palaceholder="Candidate Number" value='' id="user-input" />
+                                            <input type="tel" class="form-control" pattern="[0-9]{10}"
+                                            onKeyPress="if(this.value.length==10) return false;"
+                                                maxlength="10" required name="number"
+                                                placeholder="Candidate Number" value='' id="user-input" />
                                         </div>
 
                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none"
@@ -66,7 +67,7 @@
 
                                         <% if(course.center?.length>0) { %>
                                             <div id="selectCenter"
-                                                class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none">
+                                                class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-md-0 mb-1 d-none">
                                                 <select onchange="removeDisabled('applydiv')" class="form-control"
                                                     id="centerSelect" name="center">
                                                     <option value="">Select Training Center</option>
@@ -106,21 +107,24 @@
                                     <form action="" id="candidateDetails" class="row d-none">
 
                                         <div class="col-12">
-                                            <% if(course.center?.length>0) { %>
-                                                <div id="selectCenterNewLead" class="col-xl-3 mb-1 ">
-                                                    <label>Select Training Center <span class="mandatory">*</span></label>
-                                                    <select class="form-control" id="centerSelectNewLead"
-                                                        name="selectedCenter" required>
-                                                        <option value="">Select Option</option>
-                                                        <%course.center.forEach((c,i)=>{%>
-                                                            <option value="<%=c._id %>">
-                                                                <%=c.name %>
-                                                            </option>
-                                                            <%})%>
-                                                    </select>
-                                                </div>
-                                                <% } %>
+                                            
                                                 <div class="row">
+                                                    
+                                                        <% if(course.center?.length>0) { %>
+                                                            <div id="selectCenterNewLead" class="col-xl-3 mb-1">
+                                                                <label>Select Training Center <span class="mandatory">*</span></label>
+                                                                <select class="form-control" id="centerSelectNewLead"
+                                                                    name="selectedCenter" required>
+                                                                    <option value="">Select Option</option>
+                                                                    <%course.center.forEach((c,i)=>{%>
+                                                                        <option value="<%=c._id %>">
+                                                                            <%=c.name %>
+                                                                        </option>
+                                                                        <%})%>
+                                                                </select>
+                                                            </div>
+                                                            <% } %>
+                                                    
                                                     <div class="col-xl-3 mb-1">
                                                         <label>Name <span class="mandatory">*</span></label>
                                                         <input type="text" class="form-control" name="name" maxlength="50"
@@ -246,7 +250,7 @@
                                                         accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                                                         id="file<%= doc.Name %>" />
                                                 </div>
-                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-m mb-1">
                                                     <button id="add__dcs" type="button"
                                                         class="btn btn-success px-lg-2 ml-1 waves-effect waves-light"
                                                         onclick="uploadFile(this,'<%- doc.Name%>','<%- doc._id%>')">
@@ -358,7 +362,7 @@
 
 
             <script type="text/javascript">
-
+               
                 document.querySelector('form').addEventListener('submit', function (e) {
                     e.preventDefault(); // Form ka default reload roko
                     const mobileNumber = userInput.value;
@@ -460,6 +464,12 @@
                 const otpActionRow = document.querySelector(".row.d-none");
                 otpActionRow.style.display = 'none';
                 const applybtn = document.getElementById("add__centers");
+                userInput.addEventListener("keypress", (e) => {
+            let k = e.which;
+            if (k > 58 || k < 48)
+                e.preventDefault();
+        })
+
 
                 applybtn.addEventListener('click', (event) => {
                     event.preventDefault();
@@ -602,7 +612,7 @@
                     }
 
                     const body = { mobile: mobileNumber };
-                    axios.post("/api/sendCompanyOtp", body).then((response) => {
+                    axios.post("/api/sendOtptoAddLead", body).then((response) => {
                         if (response.data.status === true) {
                             alert("OTP resent successfully.");
                         } else {
