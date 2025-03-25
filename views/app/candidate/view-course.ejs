@@ -801,12 +801,17 @@
                         </h5>
                         <span>You have successfully registered for this course.<br/> Our team will contact you shortly.</span>
                     </div>
+                    <% if(docsRequired===true) { %>
                     <div class="modal-footer">
-                        <!-- <button type="submit" class="btn btn-primary" id="close">close</button> -->
+                       
                         <button type="button" class="btn btn-primary" id="addDocumentsBtn">
-                          Add Documents
+                         Add Documents  
                       </button>
+                    
+                        <!-- <button type="submit" class="btn btn-primary" id="close">close</button> -->
+                         
                     </div>
+                    <% } %>
                 </div>
         </div>
     </div>
