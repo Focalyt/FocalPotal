@@ -41,7 +41,7 @@ const vacancyTypeRoutes = require('./vacancyType');
 const universityRoutes = require('./university');
 const stateRoutes = require('./states');
 const cityRoutes = require('./city');
-const { isAdmin } = require('../../../helpers');
+// const { isAdmin } = require('../../../helpers');
 const miPieCoinsRoutes = require('./miPieCoins')
 const paymentRoutes = require('./payments')
 const smsRoutes = require('./smsUsage')
@@ -111,7 +111,7 @@ router.use('/addEvent', addEventRoutes);
 router.use('/center', addCenterRoutes);
 router.use('/portalaccess', addPortalAccessRoutes);
 
-router.use(isAdmin);
+// router.use(isAdmin);
 router.post ('/courses',async(req,res)=>{
   
 })

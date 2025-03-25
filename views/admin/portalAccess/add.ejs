@@ -59,11 +59,11 @@
 													placeholder="center" 
 													/>
 											</div> -->
-                                            <div class="col-xl-6 mb-1">
-                                                <label>Password</label>
-                                                <input type="password" id="password" class="form-control" name="password"
-                                                    placeholder="Password" />
-                                            </div>
+                                        <div class="col-xl-6 mb-1">
+                                            <label>Password</label>
+                                            <input type="password" id="password" class="form-control" name="password"
+                                                placeholder="Password" />
+                                        </div>
                                         <div class="col-xl-6 mb-1 dropdown_container">
                                             <label>Center</label>
                                             <div class="custom_dropdown">
@@ -131,22 +131,7 @@
                                                     </div>
                                                     <hr style="margin: 5px 0;">
 
-                                                    <% if(courses && courses.length> 0) { %>
-                                                        <% courses.forEach((course, index)=> { %>
-                                                            <div class="checkbox__item">
-                                                                <input type="checkbox" id="course<%= index %>"
-                                                                    value="<%= course._id %>"
-                                                                    data-name="<%= course.name %>"
-                                                                    class="course__checkbox">
-                                                                <label for="course<%= index %>">
-                                                                    <%= course.name %>
-                                                                </label>
-                                                            </div>
-                                                            <% }) %>
-                                                                <% } else { %>
-                                                                    <p>No course available</p>
-                                                                    <% } %>
-                                                                        <!-- <div class="checkbox__item">
+                                                    <!-- <div class="checkbox__item">
                                                             <input type="checkbox" id="course2" value="Data Science" class="course__checkbox">
                                                             <label for="course2">Data Science</label>
                                                         </div>
@@ -158,7 +143,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-xl-12 mb-1 text-right">
                                             <br />
 
@@ -375,6 +360,83 @@
             font-weight: bold;
         }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const centerCheckboxes = document.querySelectorAll('.center_checkbox');
+            const courseDropdownMenu = document.querySelector('.dropdown__menu');
+
+            centerCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    handleCenterChange();
+                });
+            });
+
+            function handleCenterChange() {
+                let selectedCenters = [];
+
+                // Check if 'Any' is selected
+                const anySelected = document.querySelector('.center_checkbox[data-name="Any"]').checked;
+
+                if (anySelected) {
+                    // If 'Any' is selected, fetch all courses
+                    fetchCourses('any');
+                } else {
+                    // Get all selected center IDs
+                    document.querySelectorAll('.center_checkbox:checked').forEach((cb) => {
+                        if (cb.getAttribute('data-name') !== 'Any') {
+                            selectedCenters.push(cb.value);
+                        }
+                    });
+
+                    if (selectedCenters.length > 0) {
+                        fetchCourses(selectedCenters);
+                    } else {
+                        courseDropdownMenu.innerHTML = '<p>Please select centers</p>';
+                    }
+                }
+            }
+
+            function fetchCourses(centerIds) {
+                // Clear existing courses
+                courseDropdownMenu.innerHTML = '<p>Loading courses...</p>';
+
+                axios.post('/admin/portalaccess/getCoursesByCenter', { centerIds: centerIds })
+                    .then((response) => {
+                        const courses = response.data.courses;
+                        let html = `
+                        <div class="checkbox__item select__all__container">
+                            <input type="checkbox" id="select__all__courses" class="select__all__checkbox">
+                            <label for="select__all__courses">Select All</label>
+                        </div>
+                        <div class="checkbox__item">
+                            <input type="checkbox" id="course" data-name="Any" class="course__checkbox">
+                            <label for="course">Any</label>
+                        </div>
+                        <hr style="margin: 5px 0;">`;
+
+                        if (courses.length > 0) {
+                            courses.forEach((course, index) => {
+                                html += `
+                                <div class="checkbox__item">
+                                    <input type="checkbox" id="course${index}" value="${course._id}" data-name="${course.name}" class="course__checkbox">
+                                    <label for="course${index}">${course.name}</label>
+                                </div>`;
+                            });
+                        } else {
+                            html += `<p>No courses available</p>`;
+                        }
+
+                        courseDropdownMenu.innerHTML = html;
+                    })
+                    .catch((err) => {
+                        console.error('Error fetching courses:', err);
+                        courseDropdownMenu.innerHTML = '<p>Error fetching courses</p>';
+                    });
+            }
+        });
+    </script>
+
     <script>
 
         function addUser() {
@@ -405,12 +467,12 @@
 
             let header = { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" }
             axios.post('/admin/portalaccess/addaccess', body, header).then(res => {
-               
 
-                    alert("Role Added")
-                    window.location.reload()
 
-                
+                alert("Role Added")
+                window.location.reload()
+
+
 
             }).catch(err => {
                 console.log(err.message)
@@ -439,141 +501,159 @@
             });
         }
     </script>
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const dropdownToggle = document.querySelector('.dropdown_toggle');
-            const dropdownMenu = document.querySelector('.dropdown_menu');
-            const checkboxes = document.querySelectorAll('.center_checkbox');
-            const selectAllCheckbox = document.querySelector('.select_all_checkbox');
-            const hiddenInput = document.getElementById('selectedCenterIds');
-            const anyCheckbox = document.querySelector('.center_checkbox[data-name="Any"]');
-
-
-            // Make dropdown clickable by adding event listeners
-            dropdownToggle.addEventListener('click', function (event) {
-                event.stopPropagation(); // Prevent event from bubbling up
-                if (dropdownMenu.style.display === 'block') {
-                    dropdownMenu.style.display = 'none';
-                } else {
-                    dropdownMenu.style.display = 'block';
-                }
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function (event) {
-                if (!event.target.closest('.custom_dropdown')) {
-                    dropdownMenu.style.display = 'none';
-                }
-            });
-
-            // Select All functionality
-            selectAllCheckbox.addEventListener('change', function (event) {
-                event.stopPropagation();
-                const isChecked = this.checked;
-
-                checkboxes.forEach(function (checkbox) {
-                    checkbox.checked = isChecked;
-                    anyCheckbox.checked = false;
-                });
-
-              
-
-                updateInputValue();
-            });
-
-            // Update input value and prevent dropdown from closing when clicking checkboxes
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dropdownToggle = document.querySelector('.dropdown_toggle');
+        const dropdownMenu = document.querySelector('.dropdown_menu');
+        const checkboxes = document.querySelectorAll('.center_checkbox');
+        const selectAllCheckbox = document.querySelector('.select_all_checkbox');
+        const hiddenInput = document.getElementById('selectedCenterIds');
+        const anyCheckbox = document.querySelector('.center_checkbox[data-name="Any"]');
+    
+        // ✅ Dropdown Toggle
+        dropdownToggle.addEventListener('click', function (event) {
+            event.stopPropagation();
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+        });
+    
+        // ✅ Close Dropdown Outside Click
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.custom_dropdown')) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+    
+        // ✅ Select All Functionality
+        selectAllCheckbox.addEventListener('change', function (event) {
+            event.stopPropagation();
+            const isChecked = this.checked;
             checkboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', function (event) {
-                    event.stopPropagation(); // Prevent event from bubbling up
-                    // If any center is clicked, uncheck Any
-                    if (checkbox !== anyCheckbox && checkbox.checked) {
-                        anyCheckbox.checked = false;
-                    }
-
-                    updateInputValue();
-                    updateSelectAllCheckbox();
-                });
-
-                checkbox.parentElement.addEventListener('click', function (event) {
-                    event.stopPropagation(); // Prevent dropdown from closing
-                });
+                checkbox.checked = isChecked;
             });
-
-            // Function to update the "Select All" checkbox based on individual checkboxes
-            function updateSelectAllCheckbox() {
-                const checkedCount = document.querySelectorAll('.center_checkbox:checked').length;
-                selectAllCheckbox.checked = checkedCount === checkboxes.length;
-                
-                selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
-            }
-
-
-
-            // Function to update input value based on selected checkboxes
-            function updateInputValue() {
-                const selectedCenters = [];
-                const selectedCentersName = []
-                let ids = [];
-                checkboxes.forEach(function (checkbox) {
-                    if (checkbox.checked) {
-                        selectedCenters.push(checkbox.getAttribute('data-name'));
-                        ids.push(checkbox.value);
-                    }
-                });
-
-                dropdownToggle.value = selectedCenters.join(', ');
-                hiddenInput.value = ids.join(',');
-            }
-
-            // Prevent closing when clicking on Select All
-            document.querySelector('.select_all_container').addEventListener('click', function (event) {
+            anyCheckbox.checked = false;  // Uncheck 'Any' if Select All is checked
+            updateInputValue();
+        });
+    
+        // ✅ Individual Center Checkbox Logic
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function (event) {
                 event.stopPropagation();
-            });
-            // Handle Any checkbox logic
-            anyCheckbox.addEventListener('change', function (event) {
-                event.stopPropagation();
-                if (this.checked) {
-                    checkboxes.forEach(function (checkbox) {
-                        if (checkbox !== anyCheckbox) {
-                            checkbox.checked = false;
-                        }
+    
+                // If "Any" is selected, uncheck all others
+                if (checkbox === anyCheckbox && anyCheckbox.checked) {
+                    checkboxes.forEach(function (cb) {
+                        if (cb !== anyCheckbox) cb.checked = false;
                     });
+                    selectAllCheckbox.checked = false;
                 }
+    
+                // If any center (except "Any") is checked, uncheck "Any"
+                if (checkbox !== anyCheckbox && checkbox.checked) {
+                    anyCheckbox.checked = false;
+                }
+    
+                // Auto handle Select All
+                const checkedCenters = document.querySelectorAll('.center_checkbox:not([data-name="Any"]):checked').length;
+                const totalCenters = document.querySelectorAll('.center_checkbox:not([data-name="Any"])').length;
+                selectAllCheckbox.checked = (checkedCenters === totalCenters);
+                selectAllCheckbox.indeterminate = (checkedCenters > 0 && checkedCenters < totalCenters);
+    
                 updateInputValue();
-                updateSelectAllCheckbox();
+            });
+    
+            checkbox.parentElement.addEventListener('click', function (event) {
+                event.stopPropagation();
             });
         });
-
+    
+        // ✅ Update selected value in input
+        function updateInputValue() {
+            const selectedCenters = [];
+            let ids = [];
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    selectedCenters.push(checkbox.getAttribute('data-name'));
+                    ids.push(checkbox.value);
+                }
+            });
+            dropdownToggle.value = selectedCenters.join(', ');
+            hiddenInput.value = ids.join(',');
+        }
+    
+        // Prevent dropdown close when clicking "Select All" label
+        document.querySelector('.select_all_container').addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+    });
     </script>
+    
     <script>
+
+        document.addEventListener('change', function (event) {
+            // Any checkbox reference
+            const anyCheckboxCourse = document.querySelector('.course__checkbox[data-name="Any"]');
+            const allCourses = document.querySelectorAll('.course__checkbox:not([data-name="Any"])');
+            const selectAll = document.getElementById('select__all__courses');
+
+            // ✅ If "Any" clicked
+            if (event.target === anyCheckboxCourse && anyCheckboxCourse.checked) {
+                // Uncheck all courses & Select All
+                allCourses.forEach(cb => cb.checked = false);
+                selectAll.checked = false;
+            }
+
+            // ✅ If "Select All" clicked
+            if (event.target === selectAll && selectAll.checked) {
+                // Uncheck "Any"
+                anyCheckboxCourse.checked = false;
+                // Check all courses
+                allCourses.forEach(cb => cb.checked = true);
+            }
+
+            // ✅ If individual course clicked (excluding "Any")
+            if (event.target.classList.contains('course__checkbox') && event.target !== anyCheckboxCourse && event.target !== selectAll) {
+                if (event.target.checked) {
+                    anyCheckboxCourse.checked = false;
+                }
+            }
+
+            // ✅ Auto manage Select All state based on individual courses
+            const checkedCourses = document.querySelectorAll('.course__checkbox:not([data-name="Any"]):checked').length;
+            if (checkedCourses === allCourses.length) {
+                selectAll.checked = true;
+            } else {
+                selectAll.checked = false;
+            }
+        });
+
+
         document.addEventListener('DOMContentLoaded', function () {
             const courseDropdownToggle = document.querySelector('.dropdown__toggle');
             const courseDropdownMenu = document.querySelector('.dropdown__menu');
-            const courseCheckboxes = document.querySelectorAll('.course__checkbox');
-            const courseSelectAllCheckbox = document.querySelector('.select__all__checkbox');
+            let courseCheckboxes = document.querySelectorAll('.course__checkbox');
+            const courseSelectAllCheckbox = document.getElementById('select__all__courses');
             const coursehiddenInput = document.getElementById('selectedCoursesIds');
             const anyCheckboxCourse = document.querySelector('.course__checkbox[data-name="Any"]');
 
-            // Make dropdown clickable
-
+            // ✅ Make dropdown clickable
             courseDropdownToggle.addEventListener('click', function (event) {
                 event.stopPropagation();
                 courseDropdownMenu.classList.toggle('open');
             });
 
-            // Close dropdown when clicking outside
+            // ✅ Close dropdown when clicking outside
             document.addEventListener('click', function (event) {
                 if (!event.target.closest('.custom__dropdown')) {
                     courseDropdownMenu.classList.remove('open');
                 }
             });
 
-            // Select All functionality for courses
+            // ✅ **Select All functionality for courses**
             courseSelectAllCheckbox.addEventListener('change', function (event) {
                 event.stopPropagation();
                 const isChecked = this.checked;
 
+                // ✅ **अब सभी courses checkbox को update कर रहे हैं**
                 courseCheckboxes.forEach(function (checkbox) {
                     checkbox.checked = isChecked;
                 });
@@ -581,28 +661,15 @@
                 updateCourseInputValue();
             });
 
-            // Update input value when checkboxes are clicked
-            courseCheckboxes.forEach(function (checkbox) {
-
-                checkbox.addEventListener('change', function (event) {
-                    event.stopPropagation();
+            // ✅ **Handle individual course selection**
+            document.addEventListener('change', function (event) {
+                if (event.target.classList.contains('course__checkbox')) {
                     updateCourseInputValue();
                     updateCourseSelectAllCheckbox();
-                });
-
-                checkbox.parentElement.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                });
+                }
             });
 
-            // Function to update the "Select All" checkbox
-            function updateCourseSelectAllCheckbox() {
-                const checkedCount = document.querySelectorAll('.course__checkbox:checked').length;
-                courseSelectAllCheckbox.checked = checkedCount === courseCheckboxes.length;
-                courseSelectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < courseCheckboxes.length;
-            }
-
-            // Handle Any checkbox logic
+            // ✅ **Handle "Any" checkbox logic**
             anyCheckboxCourse.addEventListener('change', function (event) {
                 event.stopPropagation();
                 if (this.checked) {
@@ -616,9 +683,17 @@
                 updateCourseSelectAllCheckbox();
             });
 
+            // ✅ **Function to update "Select All" checkbox**
+            function updateCourseSelectAllCheckbox() {
+                courseCheckboxes = document.querySelectorAll('.course__checkbox'); // 🔄 Refresh checkboxes
+                const checkedCount = document.querySelectorAll('.course__checkbox:checked').length;
+                courseSelectAllCheckbox.checked = checkedCount === courseCheckboxes.length;
+                courseSelectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < courseCheckboxes.length;
+            }
 
-            // Function to update course input value
+            // ✅ **Function to update input value**
             function updateCourseInputValue() {
+                courseCheckboxes = document.querySelectorAll('.course__checkbox'); // 🔄 Refresh checkboxes
                 const selectedCourses = [];
                 let ids = [];
                 courseCheckboxes.forEach(function (checkbox) {
@@ -632,9 +707,11 @@
                 coursehiddenInput.value = ids.join(',');
             }
 
-            // Prevent closing when clicking on Select All
+            // ✅ **Prevent dropdown from closing when clicking inside**
             document.querySelector('.select__all__container').addEventListener('click', function (event) {
                 event.stopPropagation();
             });
         });
+
+
     </script>

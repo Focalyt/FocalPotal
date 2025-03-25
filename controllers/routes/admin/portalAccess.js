@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const { auth1 } = require("../../../helpers");
+const mongoose = require('mongoose');
 const { Courses, CourseSectors, Candidate, AppliedCourses, Center, User } = require("../../models");
 
 
@@ -53,11 +54,9 @@ router.route('/addaccess')
 
             if (email) {
                 let duplicateEmail = await User.findOne({ email: email })
-                if (duplicateEmail) {
-                    
+                if (duplicateEmail) {                    
                     req.flash('error', 'Email already Exists')
-                    console.log('Email already Exists')
-                    
+                    console.log('Email already Exists')                   
 
                 }
             };
@@ -93,5 +92,47 @@ router.get("/viewaccess", auth1, async (req, res) => {
         return res.redirect("back");
     }
 });
+
+
+
+router.post('/getCoursesByCenter', async (req, res) => {
+    try {
+        const { centerIds } = req.body;
+        console.log("centerIds",centerIds)
+        let courses = null;
+
+        if(centerIds=='any'){
+            courses = await Courses.find({
+                status: true
+            })
+        } else{
+        // IDs को normalize कर लो (Array या Single दोनों चलेगा)
+        const idsArray = Array.isArray(centerIds) ? centerIds : [centerIds];
+
+        // Valid ObjectId check & conversion
+        const validCenterIds = idsArray
+            .filter(id => mongoose.Types.ObjectId.isValid(id))
+            .map(id => new mongoose.Types.ObjectId(id));
+
+        if (validCenterIds.length === 0) {
+            return res.status(400).json({ success: false, message: 'Invalid Center ID(s)' });
+        }
+
+        // Courses जिनके center array में centerId मौजूद हो
+        courses = await Courses.find({
+            center: { $in: validCenterIds },
+            status:true
+        });}
+
+        return res.status(200).json({ success: true, courses });
+
+    } catch (error) {
+        console.error("Error fetching courses:", error);
+        return res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
+
+
 
 module.exports = router;
