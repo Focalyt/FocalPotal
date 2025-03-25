@@ -30,7 +30,7 @@
                                 <div class="card-body">
 
                                     <div class="row">
-                                        <div class="col-xl-4 mb-1">
+                                        <div class="col-xl-6 mb-1">
                                             <label>Role Type</label>
                                             <select class="form-control" name="role" id="roleName">
                                                 <option value="">Select Option</option>
@@ -41,12 +41,12 @@
                                                 <option value="Center Manager">Center Manager</option>
                                             </select>
                                         </div>
-                                        <div class="col-xl-4 mb-1">
+                                        <div class="col-xl-6 mb-1">
                                             <label>Name</label>
                                             <input type="text" class="form-control" id="name" name="name"
                                                 placeholder="Name" />
                                         </div>
-                                        <div class="col-xl-4 mb-1">
+                                        <div class="col-xl-6 mb-1">
                                             <label>Email Id</label>
                                             <input type="email" class="form-control" id="email" name="email"
                                                 placeholder="Email" />
@@ -59,7 +59,12 @@
 													placeholder="center" 
 													/>
 											</div> -->
-                                        <div class="col-xl-4 mb-1 dropdown_container">
+                                            <div class="col-xl-6 mb-1">
+                                                <label>Password</label>
+                                                <input type="password" id="password" class="form-control" name="password"
+                                                    placeholder="Password" />
+                                            </div>
+                                        <div class="col-xl-6 mb-1 dropdown_container">
                                             <label>Center</label>
                                             <div class="custom_dropdown">
                                                 <input type="text" class="form-control dropdown_toggle" value=""
@@ -107,7 +112,7 @@
                                                 <input type="text" class="form-control" value="" name="course"
                                                     placeholder="Course" />
                                             </div> -->
-                                        <div class="col-xl-4 mb-1 dropdown__container">
+                                        <div class="col-xl-6 mb-1 dropdown__container">
                                             <label>Course</label>
                                             <div class="custom__dropdown">
                                                 <input type="text" class="form-control dropdown__toggle" value=""
@@ -153,11 +158,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-4 mb-1">
-                                            <label>Password</label>
-                                            <input type="password" id="password" class="form-control" name="password"
-                                                placeholder="Password" />
-                                        </div>
+                                       
                                         <div class="col-xl-12 mb-1 text-right">
                                             <br />
 
@@ -293,11 +294,14 @@
             z-index: 1000;
             padding: 8px;
             margin-top: 2px;
+            overflow-y: auto;
+            height: 109px;
         }
 
         .checkbox_item {
             padding: 6px;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .checkbox_item:hover {
@@ -305,7 +309,7 @@
         }
 
         .checkbox_item input {
-            margin-right: 8px;
+            /* margin-right: 8px; */
             cursor: pointer;
         }
 
@@ -320,7 +324,6 @@
 
         .dropdown__menu {
             display: block;
-            /* Changed from none */
             position: absolute;
             top: 100%;
             left: 0;
@@ -332,7 +335,7 @@
             z-index: 1000;
             padding: 8px;
             margin-top: 2px;
-            max-height: 200px;
+            max-height: 100px;
             overflow-y: auto;
             /* Add transition properties */
             opacity: 0;

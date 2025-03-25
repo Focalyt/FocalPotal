@@ -46,6 +46,7 @@
                                             <th class="three column wide" width="18%" style="cursor: pointer;" onclick="sorting('createdAt')">DATE <i  class="fa-solid fa-arrow-down success cursors pointer" value="1"></i></th>
                                             <th class="three column wide candidate-wrap" width="19%" onclick="sorting('name')">CANDIDATE NAME</th>
                                             <th class="one column wide" width="15%">MOBILE NO.</th>
+                                            <th class="one column wide" width="15%">Document Status</th>
                                             <th class="one column wide" width="15%">Lead Status</th>
                                             <th class="one column wide" width="15%">Demo Status</th>
                                             <th class="one column wide" width="15%">Center Status</th>
@@ -72,9 +73,40 @@
                                             <td class="text-capitalize">
                                                 <%= l.mobile ? l.mobile : "N/A" %>
                                             </td>
-                                            <td class="text-capitalize"></td>
-                                            <td class="text-capitalize"></td>
-                                            <td class="text-capitalize"></td>
+                                            <td class="text-capitalize">
+                                                <div class="circular-progress-container" data-percent=20>
+                                                    <svg width="40" height="40">
+                                                      <circle class="circle-bg" cx="20" cy="20" r="16"></circle>
+                                                      <circle class="circle-progress"  cx="20" cy="20" r="16"></circle>
+                                                    </svg>
+                                                    <div class="progress-text">20%</div>
+                                                  </div>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <select class="form-control leadsSelect">
+                                                    <option value="">Select</option>
+                                                    <option value="Hot">Hot</option>
+                                                    <option value="Warm">Warm</option>
+                                                    <option value="Cold">Cold</option>
+                                                  </select>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <select class="form-control leadsSelect">
+                                                    <option value="">Select</option>
+                                                    <option value="Hot">Demo Scheduled</option>
+                                                    <option value="Warm">Demo Pending</option>
+                                                    <option value="Cold">Demo Done</option>
+                                                  </select>
+                                                  
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <select class="form-control leadsSelect">
+                                                    <option value="">Select</option>
+                                                    <option value="Hot">Add Center</option>
+                                                    <option value="Warm">Rejected</option>
+                                                    <option value="Cold">Drop Out</option>
+                                                  </select>
+                                            </td>
                                             <td class="text-capitalize">
                                                 <%= l.courseName ? l.courseName : "N/A" %>
                                             </td>
@@ -216,7 +248,60 @@
     #tblexportData td{
         white-space: nowrap;
     }
+    .circular-progress-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.circular-progress-container svg {
+  transform: rotate(-90deg);
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #e6e6e6;
+  stroke-width: 4;
+}
+
+.circle-progress {
+  fill: none;
+  stroke: #FC2B5A;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.circular-progress-container .progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  color: #333;
+}
+.leadsSelect{
+    width: 75px;
+}
 </style>
+<script>
+    document.querySelectorAll('.circular-progress-container').forEach(container => {
+      const percent = container.getAttribute('data-percent');
+      console.log(percent,"percent")
+      const circle = container.querySelector('circle.circle-progress');
+      console.log(circle,"circle")
+      const radius = 16;
+      const circumference = 2 * Math.PI * radius;
+      const offset = circumference - (percent / 100) * circumference;
+      
+      circle.style.strokeDasharray = circumference;
+      circle.style.strokeDashoffset = offset;
+      
+      // Set text also if needed
+      container.querySelector('.progress-text').innerText = percent + '%';
+    });
+  </script>
+  
 <script>
     function handleActionClick(id, remarks, assignDate, url) {
 		const formattedDate = new Date(assignDate).toLocaleDateString('en-GB', {
