@@ -55,7 +55,8 @@ const upload = multer({ storage }).single('file');
 router.route("/").get(async (req, res) => {
 	try {
 		let view = false
-		if (req.session.user.role === 10) {
+		const user = req.session.user
+		if (user.role === 10) {
 			view = true
 		}
 		const data = req.query;
@@ -85,7 +86,34 @@ router.route("/").get(async (req, res) => {
 			var isChecked = "true";
 		}
 		fields["status"] = status;
-		let courses = await Courses.find(fields).populate("sectors")
+		let courses;
+    // ✅ Role 11 specific filtering
+    if (user.role === 11) {
+        let courseFilter = [];
+
+        // Check if courseAccess has data
+        if (user.access?.courseAccess?.length) {
+            courseFilter = user.access.courseAccess;
+            fields['_id'] = { $in: courseFilter };
+        }
+        // Else filter by centerAccess
+        else if (user.access?.centerAccess?.length) {
+            courses = await Courses.find({
+                ...fields,
+                centers: { $in: user.access.centerAccess }
+            }).populate("sectors");
+        } else {
+            courses = []; // No access, empty result
+        }
+
+        // If courseFilter is filled, fetch based on that
+        if (courseFilter.length) {
+            courses = await Courses.find(fields).populate("sectors");
+        }
+    } else {
+        // For Admin/other roles
+        courses = await Courses.find(fields).populate("sectors");
+    }
 		// console.log(courses, "this is courses")
 		return res.render(`${req.vPath}/admin/course`, {
 			menu: 'course',

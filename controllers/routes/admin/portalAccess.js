@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const { auth1 } = require("../../../helpers");
-const { Courses, CourseSectors, Candidate, AppliedCourses, Center,User } = require("../../models");
+const { Courses, CourseSectors, Candidate, AppliedCourses, Center, User } = require("../../models");
 
 
 
@@ -12,10 +12,27 @@ router.route('/addaccess')
         try {
             const centers = await Center.find({ status: true });
             const courses = await Courses.find({ status: true })
+            const users = await User.find({ role: 11 }).lean();  // lean() important hai yahan
+
+            const updatedUsers = await Promise.all(users.map(async (user) => {
+                const courseData = await Courses.find({ _id: { $in: user.access.courseAccess } }).lean();
+                const centerData = await Center.find({ _id: { $in: user.access.centerAccess } }).lean();
+
+                return {
+                    ...user,
+                    courseData,
+                    centerData
+                };
+            }));
+
+            console.log(updatedUsers);
+
+
             return res.render(`admin/portalAccess/add`, {
                 menu: 'accesstype',
                 centers,
-                courses
+                courses,
+                users
             });
             // return res.render(`${req.vPath}/portalAccess/add`, { menu: 'accesstype' });
 
@@ -32,20 +49,21 @@ router.route('/addaccess')
 
             let body = req.body;
             let email = body.email;
-            
+
 
             if (email) {
                 let duplicateEmail = await User.findOne({ email: email })
                 if (duplicateEmail) {
-                    console.log('Email already Exists')
+                    
                     req.flash('error', 'Email already Exists')
-                    return res.redirect('/admin/roles')
+                    console.log('Email already Exists')
+                    
 
                 }
             };
-           
 
-            console.log("Body",body);            
+
+            console.log("Body", body);
 
             let user = await User.create(body)
             if (!user) {

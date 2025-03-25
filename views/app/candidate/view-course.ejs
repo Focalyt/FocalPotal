@@ -890,13 +890,17 @@
 
       // Get stored entry URL from localStorage
   const entryUrlData = localStorage.getItem('entryUrl');
-  
-
-  // Prepare data to send
+  const centerId = document.getElementById('centerSelect')?.value
   const data = {
   entryUrl: entryUrlData ? entryUrlData : null,
-  selectedCenter: document.getElementById('centerSelect')?.value || ''
-};
+  
+} 
+
+  // Prepare data to send
+  if (!centerId){
+    data.selectedCenter = centerId
+
+  } 
   console.log(data);
 
 

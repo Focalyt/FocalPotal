@@ -1,27 +1,21 @@
-<% if(error && error.length> 0) { %>
+<% if(error && error.length > 0) { %>
 	<div class="alertAdmin alert-danger alert-dismissible error_login" role="alert">
-		<!-- <button type="button" class="close" data-dismiss="alertAdmin" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button> -->
-		<strong>Error!</strong>
-		<%- error %>
+	  <strong>Error!</strong>
+	  <%= error.join('<br>') %>
 	</div>
-	<% } %>
-		<% if(success && success.length> 0) { %>
-			<div class="alertAdminSuccess alert-success alert-dismissible error_login" role="alert">
-				<!-- <button type="button" class="close" data-dismiss="alertAdmin" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button> -->
-				<strong>Success!</strong>
-				<%- success %>
-			</div>
-			<% } %>
-				<% if(info && info.length> 0) { %>
-					<div class="alertAdmin  alert-info alert-dismissible error_login" role="alert">
-						<!-- <button type="button" class="close" data-dismiss="alertAdmin" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button> -->
-						<strong>Info!</strong>
-						<%- info %>
-					</div>
-					<% } %>
+  <% } %>
+  
+  <% if(success && success.length > 0) { %>
+	<div class="alertAdminSuccess alert-success alert-dismissible error_login" role="alert">
+	  <strong>Success!</strong>
+	  <%= success.join('<br>') %>
+	</div>
+  <% } %>
+  
+  <% if(info && info.length > 0) { %>
+	<div class="alertAdmin alert-info alert-dismissible error_login" role="alert">
+	  <strong>Info!</strong>
+	  <%= info.join('<br>') %>
+	</div>
+  <% } %>
+  
