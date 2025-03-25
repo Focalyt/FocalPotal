@@ -764,6 +764,16 @@ router.route('/:courseId/candidate/upload-docs')
         }
     });
 
+	router.route('/crm')
+    .get(async ( req, res) => {
+		
+        try {
+			res.render(`admin/course/crm`, { menu: 'course' });
+        } catch (err) {
+            console.log("Error rendering addleads page:", err);
+            res.redirect('back');
+        }
+    });
 
 
 
