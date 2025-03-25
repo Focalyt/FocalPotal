@@ -1371,6 +1371,18 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
     const candidate = await Candidate.findOne({ mobile: userMobile }).lean();
     const centers = await Center.find();
 
+    let docsRequired = false;
+
+    const requiredDocs = course.docsRequired ? course.docsRequired.length : 0;
+
+    if(requiredDocs>0){
+      docsRequired = true
+    };
+
+    console.log("requiredDocs",requiredDocs)
+    console.log("docsRequired",docsRequired)
+
+
     let canApply = false;
     if (candidate.name && candidate.mobile && candidate.email && candidate.sex && candidate.whatsapp && candidate.city && candidate.state && candidate.highestQualification) {
       if (candidate.isExperienced == false || candidate.isExperienced == true) {
@@ -1405,11 +1417,12 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
       }
     }
     let mobileNumber = course.phoneNumberof ? course.phoneNumberof : contact[0]?.mobile
-    console.log('course: ', course);
+
 
 
     return res.render(`${req.vPath}/app/candidate/view-course`, {
       course,
+      docsRequired,
       menu: 'Cources',
       isApplied,
       mobileNumber,
