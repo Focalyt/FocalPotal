@@ -91,25 +91,9 @@ router.route("/").get(async (req, res) => {
     if (user.role === 11) {
         let courseFilter = [];
 
-        // Check if courseAccess has data
-        if (user.access?.courseAccess?.length) {
-            courseFilter = user.access.courseAccess;
-            fields['_id'] = { $in: courseFilter };
-        }
-        // Else filter by centerAccess
-        else if (user.access?.centerAccess?.length) {
-            courses = await Courses.find({
-                ...fields,
-                centers: { $in: user.access.centerAccess }
-            }).populate("sectors");
-        } else {
-            courses = []; // No access, empty result
-        }
-
-        // If courseFilter is filled, fetch based on that
-        if (courseFilter.length) {
-            courses = await Courses.find(fields).populate("sectors");
-        }
+        const userDetails = req.session.user;
+		console.log(userDetails)
+		courses = await Courses.find(fields).populate("sectors");
     } else {
         // For Admin/other roles
         courses = await Courses.find(fields).populate("sectors");
