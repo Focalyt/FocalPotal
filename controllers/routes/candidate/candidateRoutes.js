@@ -993,7 +993,7 @@ router.get("/job/:jobId", [isCandidate], async (req, res) => {
 
   const candidate = await Candidate.findOne({ mobile: userMobile });
   let canApply = false;
-  if (candidate.name && candidate.mobile && candidate.sex && candidate.whatsapp && candidate.city && candidate.state && candidate.highestQualification) {
+  if (candidate.name && candidate.mobile && candidate.email && candidate.sex && candidate.whatsapp && candidate.city && candidate.state && candidate.highestQualification) {
     if (candidate.isExperienced == false || candidate.isExperienced == true) {
       canApply = true;
     }
@@ -1372,7 +1372,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
     const centers = await Center.find();
 
     let canApply = false;
-    if (candidate.name && candidate.mobile && candidate.sex && candidate.whatsapp && candidate.city && candidate.state && candidate.highestQualification) {
+    if (candidate.name && candidate.mobile && candidate.email && candidate.sex && candidate.whatsapp && candidate.city && candidate.state && candidate.highestQualification) {
       if (candidate.isExperienced == false || candidate.isExperienced == true) {
         canApply = true;
       }

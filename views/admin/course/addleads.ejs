@@ -390,7 +390,11 @@
                         '<% if (course.docsRequired && course.docsRequired.length> 0) { %>'
 
                         $('#add-docs').removeClass('d-none');
-                        '<% } %>'
+                        '<% } else { %> window.location.href = "/admin/courses/<%=courseId%>/candidate/addleads" <% }%>'
+                        
+                        
+
+
 
                     }).catch((error) => {
                         console.error("Error sending OTP:", error);
@@ -488,7 +492,8 @@
             '<% if (course.docsRequired && course.docsRequired.length> 0) { %>'
 
                         $('#add-docs').removeClass('d-none');
-                        '<% } %>'
+                        '<% } else { %> window.location.href = "/admin/courses/<%=courseId%>/candidate/addleads" <% }%>'
+                        
                     }).catch((error) => {
 
                         alert(error.response?.data?.msg || "Something went wrong");
