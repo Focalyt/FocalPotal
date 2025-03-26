@@ -63,3 +63,4 @@ views/app/candidate/requiredDocuments copy.ejs
 views/app/candidate/view-course copy 2.ejs
 views/admin/course/crm.ejs
 controllers/routes/admin/courses.js
+views/admin/qualificationSetting/index copy.ejs

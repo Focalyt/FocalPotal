@@ -34,7 +34,7 @@
                                 oninvalid="this.setCustomValidity('Enter Company Name Here')"
                                 oninput="this.setCustomValidity('')" required />
                             </div>
-                            <div   class="col-xl-3 mb-1" id="jd-title">
+                            <div class="col-xl-3 mb-1" id="jd-title">
                               <label>Title</label><span class="mandatory"> *</span></label>
                               <input class="form-control" id="jobTitle" type="text" name="title"
                                 value="<%= jd?.title %>" required="required"
@@ -137,25 +137,24 @@
                               </select>
                             </div>
 
-                            <d  iv class="col-xl-2 mb-1">
+                            <d iv class="col-xl-2 mb-1">
                               <label>Cut Price</label>
                               <input class="form-control" id="cutprice" type="number" value="<%=jd.cutprice%>">
-                              
-                            </div>    
 
-                            <div class="col-xl-3 mb-1" id="sub-qua-field">
-                              <label>Stream</label><span class="mandatory"> *</span></label>
-                              <input type="text" class="form-control" placeholder="Enter your subQualification"
-                                name="_subQualification" value="" disabled>
-                            </div>
-                            <input type="hidden" value="<%= jd?.isEdit %>" name="isEdit" id="isedited">
-                            <div class="col-xl-3 mb-1" id="jd-validity-field">
-                              <label>Active Till
-                                <span class="asterisk">*</span></label>
-                              <input type="date" class="form-control" required name="validity" id="endDate"
-                                min="<%= jd?.validity ? moment(jd?.validity).utcOffset('+05:30').format('YYYY-MM-DD') : moment().utcOffset('+05:30').format('YYYY-MM-DD') %>"
-                                value="<%= jd?.validity ? moment(jd?.validity).utcOffset('+05:30').format('YYYY-MM-DD') : '' %>" />
-                            </div>
+                          </div>
+
+                          <div class="col-xl-3 mb-1" id="sub-qua-field">
+                            <label>Stream</label><span class="mandatory"> *</span></label>
+                            <input type="text" class="form-control" placeholder="Enter your subQualification"
+                              name="_subQualification" value="" disabled>
+                          </div>
+                          <input type="hidden" value="<%= jd?.isEdit %>" name="isEdit" id="isedited">
+                          <div class="col-xl-3 mb-1" id="jd-validity-field">
+                            <label>Active Till
+                              <span class="asterisk">*</span></label>
+                            <input type="date" class="form-control" required name="validity" id="endDate"
+                              min="<%= jd?.validity ? moment(jd?.validity).utcOffset('+05:30').format('YYYY-MM-DD') : moment().utcOffset('+05:30').format('YYYY-MM-DD') %>"
+                              value="<%= jd?.validity ? moment(jd?.validity).utcOffset('+05:30').format('YYYY-MM-DD') : '' %>" />
                           </div>
                         </div>
                       </div>
@@ -163,6 +162,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="row" id="jd-loc">
                 <div class="col-xl-12 col-lg-12 px-3">
                   <div class="card mt-1">
@@ -223,10 +223,9 @@
                             </div>
                             <div class="col-xl-4 mb-1">
                               <label for="noOfVacancies">Number of Vacancies</label>
-                              <input id="noOfVacancies" class="form-control" type="number" name="noOfPosition" 
-                                     onkeypress="if(this.value.length==4) return false" 
-                                     value="<%= jd?.noOfPosition %>" 
-                                     maxlength="3" />
+                              <input id="noOfVacancies" class="form-control" type="number" name="noOfPosition"
+                                onkeypress="if(this.value.length==4) return false" value="<%= jd?.noOfPosition %>"
+                                maxlength="3" />
                             </div>
                           </div>
                         </div>
@@ -403,9 +402,8 @@
                             </div>
                             <div class="col-xl-2 mb-1">
                               <label for="timings">Shift Timings</label>
-                              <input id="timings" class="form-control" type="text" name="shifttimings"                                      
-                                     value="<%= jd?.shifttimings %>" 
-                                     maxlength="3" />
+                              <input id="timings" class="form-control" type="text" name="shifttimings"
+                                value="<%= jd?.shifttimings %>" maxlength="3" />
                             </div>
                             <div class="col-xl-3 mb-1" id="jd-work-field">
                               <div class="demo-inline-spacing">
@@ -418,8 +416,7 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                   <input class="form-check-input" type="radio" name="work" id="wfh"
-                                    value="Work from home" <% if(jd?.work==='Work from home' ) {%> checked <%
-                                    } %>/>
+                                    value="Work from home" <% if(jd?.work==='Work from home' ) {%> checked <% } %>/>
                                     <label class="form-check-label" for="wfh">Work from home</label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -461,9 +458,10 @@
 
                             <div class="col-xl-3">
                               <label for="remarks">Remarks</label>
-                              <textarea id="remarks" name="remarks" class="form-control" cols="3" rows="3" maxlength="150"><%= jd?.remarks %></textarea>
+                              <textarea id="remarks" name="remarks" class="form-control" cols="3" rows="3"
+                                maxlength="150"><%= jd?.remarks %></textarea>
                             </div>
-                            
+
                           </div>
                         </div>
                       </div>
@@ -483,57 +481,66 @@
                               <select id="payOut" class="form-control" name="payOut">
                                 <option value="">Select option</option>
                                 <option value="Daily" <% if(jd?.payOut==='Daily' ) {%> selected <% } %>>Daily</option>
-                                <option value="Weekly" <% if(jd?.payOut==='Weekly' ) {%> selected <% } %>>Weekly</option>
-                                <option value="Monthly" <% if(jd?.payOut==='Monthly' ) {%> selected <% } %>>Monthly</option>
+                                <option value="Weekly" <% if(jd?.payOut==='Weekly' ) {%> selected <% } %>>Weekly
+                                </option>
+                                <option value="Monthly" <% if(jd?.payOut==='Monthly' ) {%> selected <% } %>>Monthly
+                                </option>
                                 <option value="NA" <% if(jd?.payOut==='NA' ) {%> selected <% } %>>NA</option>
                               </select>
                             </div>
-                            
+
                             <div class="col-xl-3 mb-1">
                               <label for="techSkills">Tech Skills Required</label>
-                              <select id="techSkills" class="form-control chosen" multiple name="_techSkills" data-placeholder="Select Technical Skills">
-                                <% techskills.forEach((item) => { %>
+                              <select id="techSkills" class="form-control chosen" multiple name="_techSkills"
+                                data-placeholder="Select Technical Skills">
+                                <% techskills.forEach((item)=> { %>
                                   <% if(jd?._techSkills.includes(item._id)) { %>
                                     <option value="<%= item._id %>" class="text-capitalize" selected>
                                       <%= item.name %>
                                     </option>
-                                  <% } else { %>
-                                    <option value="<%= item._id %>" class="text-capitalize">
-                                      <%= item.name %>
-                                    </option>
-                                  <% } %>
-                                <% }); %>
+                                    <% } else { %>
+                                      <option value="<%= item._id %>" class="text-capitalize">
+                                        <%= item.name %>
+                                      </option>
+                                      <% } %>
+                                        <% }); %>
                               </select>
                             </div>
-                            
+
                             <div class="col-xl-3 mb-1">
                               <label for="nonTechSkills">Non Tech Skills Required</label>
-                              <select id="nonTechSkills" class="form-control chosen" multiple name="_nonTechSkills" data-placeholder="Select Non-Technical Skills">
-                                <% nontechskills.forEach((item) => { %>
+                              <select id="nonTechSkills" class="form-control chosen" multiple name="_nonTechSkills"
+                                data-placeholder="Select Non-Technical Skills">
+                                <% nontechskills.forEach((item)=> { %>
                                   <% if(jd?._nonTechSkills.includes(item._id)) { %>
                                     <option value="<%= item._id %>" class="text-capitalize" selected>
                                       <%= item.name %>
                                     </option>
-                                  <% } else { %>
-                                    <option value="<%= item._id %>" class="text-capitalize">
-                                      <%= item.name %>
-                                    </option>
-                                  <% } %>
-                                <% }); %>
+                                    <% } else { %>
+                                      <option value="<%= item._id %>" class="text-capitalize">
+                                        <%= item.name %>
+                                      </option>
+                                      <% } %>
+                                        <% }); %>
                               </select>
                             </div>
-                            
+
                             <div class="col-xl-3 mb-1">
                               <label for="requirement">Requirement (If any)</label>
                               <select id="requirement-feild" class="form-control" name="requirement">
                                 <option value="">Select option</option>
-                                <option value="Two Wheeler" <% if(jd?.requirement==='Two Wheeler' ) {%> selected <% } %>>Two Wheeler</option>
-                                <option value="Four Wheeler" <% if(jd?.requirement==='Four Wheeler' ) {%> selected <% } %>>Four Wheeler</option>
-                                <option value="Driving License" <% if(jd?.requirement==='Driving License' ) {%> selected <% } %>>Driving License</option>
-                                <option value="Passport" <% if(jd?.payOut==='Passport' ) {%> selected <% } %>>Passport</option>
+                                <option value="Two Wheeler" <% if(jd?.requirement==='Two Wheeler' ) {%> selected <% } %>
+                                    >Two Wheeler</option>
+                                <option value="Four Wheeler" <% if(jd?.requirement==='Four Wheeler' ) {%> selected <% }
+                                    %>>Four Wheeler</option>
+                                <option value="Driving License" <% if(jd?.requirement==='Driving License' ) {%> selected
+                                  <% } %>>Driving License
+                                </option>
+                                <option value="Passport" <% if(jd?.payOut==='Passport' ) {%> selected <% } %>>Passport
+                                </option>
                               </select>
                             </div>
-                            
+
                             <div class="col-xl-3 mb-1 fixed" id="salaryRange-field" name="salaryRange">
                               <label>Salary Range (Monthly in Rs.)</label><span class="mandatory"> *</span></label>
                               <br />
@@ -573,10 +580,6 @@
                   </div>
                 </div>
               </div>
-
-
-
-
 
               <div class="row">
                 <div class="col-xl-12 col-lg-12 px-3">
@@ -662,33 +665,33 @@
                         <div class="card-body" id="questionanswerlist">
                           <%if(jd?.questionsAnswers?.length>0){%>
                             <%jd?.questionsAnswers.forEach((item)=>{%>
-                          <div class="row questionanswerrow">
-                            <div class="col-xl-6 mb-1">
-                              <label>Question</label>
-                              <textarea name="question" class="form-control" col="50"
-                                rows="1"><%=item.Question%></textarea>
-                            </div>
-                            <div class="col-xl-6 mb-1">
-                              <label>Answer</label>
-                              <textarea name="answer" class="form-control" col="50"
-                                rows="1"><%=item.Answer%></textarea>
-                            </div>
-                           </div>
-                           <%})%>
-                           <%}else {%>
-                            <div class="row questionanswerrow">
-                              <div class="col-xl-6 mb-1">
-                                <label>Question</label>
-                                <textarea name="question" class="form-control" col="50"
-                                  rows="1">Do you offer safe working environment ?</textarea>
+                              <div class="row questionanswerrow">
+                                <div class="col-xl-6 mb-1">
+                                  <label>Question</label>
+                                  <textarea name="question" class="form-control" col="50"
+                                    rows="1"><%=item.Question%></textarea>
+                                </div>
+                                <div class="col-xl-6 mb-1">
+                                  <label>Answer</label>
+                                  <textarea name="answer" class="form-control" col="50"
+                                    rows="1"><%=item.Answer%></textarea>
+                                </div>
                               </div>
-                              <div class="col-xl-6 mb-1">
-                                <label>Answer</label>
-                                <textarea name="answer" class="form-control" col="50"
-                                  rows="1">Yes we do offer as we are ISO certified</textarea>
-                              </div>
-                             </div>
-                            <%}%>
+                              <%})%>
+                                <%}else {%>
+                                  <div class="row questionanswerrow">
+                                    <div class="col-xl-6 mb-1">
+                                      <label>Question</label>
+                                      <textarea name="question" class="form-control" col="50"
+                                        rows="1">Do you offer safe working environment ?</textarea>
+                                    </div>
+                                    <div class="col-xl-6 mb-1">
+                                      <label>Answer</label>
+                                      <textarea name="answer" class="form-control" col="50"
+                                        rows="1">Yes we do offer as we are ISO certified</textarea>
+                                    </div>
+                                  </div>
+                                  <%}%>
 
                         </div>
                         <div class="col-xl-12 mb-1 text-right">
@@ -714,18 +717,18 @@
                             </div>
                             <div class="col-xl-5">
                               <label for="duties">Job Duties</label>
-                              <textarea id="duties" name="duties" class="form-control" cols="3" rows="3" maxlength="150"><%= jd?.duties %></textarea>
-                          </div>
+                              <textarea id="duties" name="duties" class="form-control" cols="3"
+                                rows="3"><%= jd?.duties %></textarea>
+                            </div>
                             <div class="col-xl-3 mb-1" id="video">
                               <label>Add Video JD</label>
-                              <input class="form-control" type="text" name="jobVideo"
-                                      placeholder="Add Youtube url" id="jobvideo" value="<%= jd?.jobVideo %>">
-                              </div>
+                              <input class="form-control" type="text" name="jobVideo" placeholder="Add Youtube url"
+                                id="jobvideo" value="<%= jd?.jobVideo %>">
                             </div>
-                            <div class="col-xl-12 mb-1 text-right">
-                              <button id="sub-btn"
-                                class="btn btn-success waves-effect waves-light text-white">SUBMIT</button>
-                            </div>
+                          </div>
+                          <div class="col-xl-12 mb-1 text-right">
+                            <button id="sub-btn"
+                              class="btn btn-success waves-effect waves-light text-white">SUBMIT</button>
                           </div>
                         </div>
                       </div>
@@ -733,6 +736,7 @@
                   </div>
                 </div>
               </div>
+
             </section>
           </form>
         </div>
@@ -1030,7 +1034,7 @@
           src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.AUTH_KEY_GOGGLE%>&callback=initMap&libraries=places&v=weekly"
           defer></script>
         <script>
-          let lessCoins=false
+          let lessCoins = false
           function initMap() {
 
             const options = {
@@ -1133,7 +1137,7 @@
               return false;
             }
             event.preventDefault();
-           
+
             const creditsLeft = +("<%=company.creditLeft%>")
             const coinsRequired = +("<%=coinsRequired?.contactcoins %>")
             let isContactvalue = "<%= jd?.isContact %>";
@@ -1143,70 +1147,70 @@
               document.getElementById("sub-btn").setAttribute("data-toggle", "modal");
               document.getElementById("sub-btn").setAttribute("data-target", "#addCoins");
               document.getElementById("sub-btn").setAttribute("data-dismiss", "modal");
-              lessCoins=true;
+              lessCoins = true;
             }
             else {
               document.getElementById("sub-btn").removeAttribute("data-toggle");
-              lessCoins=false;
+              lessCoins = false;
               document.getElementById("sub-btn").removeAttribute("data-target");
               document.getElementById("sub-btn").removeAttribute("data-dismiss");
             }
-  debugger
+            debugger
             let body = {
-              displayCompanyName: $('#organizationName').val(),   
-                _techSkills: $('#techSkills').val(),
-                requirement: $('#requirement-feild').val(),
-                _nonTechSkills: $('#nonTechSkills').val(),             
-                noOfPosition: $('#noOfVacancies').val(),
-                shifttimings:$('#shifttimings').val(),
-                remarks: $('#remarks').val(),
-                title: $('#jobTitle').val(),
-                _industry: $('#jd-industry').val(),
-                experience: $('#jd-exp').val(),
-                _qualification: $('#jd-qua').val(),
-                _subQualification: $('#jd-subqua').val(),
-                isedited: $('#availService').val(),
-                validity: $('#endDate').val(),
-                state: $('#state-field').val(),
-                city: $('#city').val(),
-                place: $('#place').val(),
-                latitude: $('#latitude').val(),
-                longitude: $('#longitude').val(), 
-                payOut: $('#payOut').val(),
-                genderPreference:  $('[name=genderPreference]:checked').val(),
-                jobType: $('#inlineRadio1').val() || $('#inlineRadio2').val(),
-                compensation: $('#inlineRadio3').val()||$('#inlineRadio4').val()|| $('#inlineRadio5').val(),
-                pay: $('[name=pay]:checked').val(),
-                jobDescription: $('#jobDescription').val(),
-                duties:$('#duties').val(),
-                ageMin: $('#min-age').val(),
-                ageMax: $('#max-age').val(),
-                nameof: $('#name').val(),
-                shift: $('[name=shift]:checked').val(),
-                salaryRange: $('#salaryRange-feild').val(),
-                jobVideo: $('#jobvideo').val(),
-                work: $('[name=work]:checked').val(),
-                benifits: $('#additional-benifits').val(),
-                isFixed: document.getElementById('fixedCheck').checked ? true : false ,
-                isContact: document.getElementById('contact-directly-yes').checked  ? true : false,
-                phoneNumberof: $('#phoneNumber').val(),
-                whatsappNumberof: $('#whatsappNumber').val(),
-                emailof: $('#email').val(),
-                nameof:$('#name').val(),
-                cutprice:$('#cutprice').val(),
-                questionsAnswers: getQuestionAnswers()
-              };
-              if(body['isFixed']==true){
-                body['amount']=$('#fixed-range-input').val();
-              }else {
-                body['min']= $('#min-input').val();
-                body['max']= $('#max-input').val();
-              }
-            if(!lessCoins){
+              displayCompanyName: $('#organizationName').val(),
+              _techSkills: $('#techSkills').val(),
+              requirement: $('#requirement-feild').val(),
+              _nonTechSkills: $('#nonTechSkills').val(),
+              noOfPosition: $('#noOfVacancies').val(),
+              shifttimings: $('#shifttimings').val(),
+              remarks: $('#remarks').val(),
+              title: $('#jobTitle').val(),
+              _industry: $('#jd-industry').val(),
+              experience: $('#jd-exp').val(),
+              _qualification: $('#jd-qua').val(),
+              _subQualification: $('#jd-subqua').val(),
+              isedited: $('#availService').val(),
+              validity: $('#endDate').val(),
+              state: $('#state-field').val(),
+              city: $('#city').val(),
+              place: $('#place').val(),
+              latitude: $('#latitude').val(),
+              longitude: $('#longitude').val(),
+              payOut: $('#payOut').val(),
+              genderPreference: $('[name=genderPreference]:checked').val(),
+              jobType: $('#inlineRadio1').val() || $('#inlineRadio2').val(),
+              compensation: $('#inlineRadio3').val() || $('#inlineRadio4').val() || $('#inlineRadio5').val(),
+              pay: $('[name=pay]:checked').val(),
+              jobDescription: $('#jobDescription').val(),
+              duties: $('#duties').val(),
+              ageMin: $('#min-age').val(),
+              ageMax: $('#max-age').val(),
+              nameof: $('#name').val(),
+              shift: $('[name=shift]:checked').val(),
+              salaryRange: $('#salaryRange-feild').val(),
+              jobVideo: $('#jobvideo').val(),
+              work: $('[name=work]:checked').val(),
+              benifits: $('#additional-benifits').val(),
+              isFixed: document.getElementById('fixedCheck').checked ? true : false,
+              isContact: document.getElementById('contact-directly-yes').checked ? true : false,
+              phoneNumberof: $('#phoneNumber').val(),
+              whatsappNumberof: $('#whatsappNumber').val(),
+              emailof: $('#email').val(),
+              nameof: $('#name').val(),
+              cutprice: $('#cutprice').val(),
+              questionsAnswers: getQuestionAnswers()
+            };
+            if (body['isFixed'] == true) {
+              body['amount'] = $('#fixed-range-input').val();
+            } else {
+              body['min'] = $('#min-input').val();
+              body['max'] = $('#max-input').val();
+            }
+            if (!lessCoins) {
               axios.post("/company/editJobs/<%= jd?._id%>", body).then((res) => {
-                 if(res.status&&res){
-                  window.location.href="/company/list/jobs"
-                 }
+                if (res.status && res) {
+                  window.location.href = "/company/list/jobs"
+                }
               })
             }
           })
@@ -1231,7 +1235,7 @@
             Array.from(elements).forEach((item) => {
               let queAnsObj = {}
               let formControls = item.querySelectorAll('.form-control');
-              if(formControls[0].value.trim()!==""&&formControls[1].value.trim()!==""){
+              if (formControls[0].value.trim() !== "" && formControls[1].value.trim() !== "") {
                 queAnsObj['Question'] = formControls[0].value;
                 queAnsObj['Answer'] = formControls[1].value;
                 questionsAnswersArray.push(queAnsObj);
