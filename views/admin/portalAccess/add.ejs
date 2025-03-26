@@ -529,7 +529,7 @@
                 }
             });
 
-            // ✅ Select All Centers
+            
             selectAllCheckbox.addEventListener('change', function () {
                 const isChecked = this.checked;
                 checkboxes.forEach(cb => cb.checked = isChecked);
@@ -537,7 +537,7 @@
                 updateInputValue();
             });
 
-            // ✅ Individual Center Checkbox Logic
+           
             checkboxes.forEach(function (checkbox) {
                 checkbox.addEventListener('change', function () {
                     if (checkbox === anyCheckbox && anyCheckbox.checked) {
@@ -557,7 +557,7 @@
                 });
             });
 
-            // ✅ Update Selected Centers Value
+            
             function updateInputValue() {
                 const selectedCenters = [];
                 let ids = [];
