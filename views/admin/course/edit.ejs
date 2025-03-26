@@ -1,76 +1,76 @@
 <% include ../partials/header %>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
-<style>
-    .choices__list--multiple .choices__item {
-        position: relative !important;
-        margin: 3px 5px 3px 0 !important;
-        padding: 3px 20px 3px 5px !important;
-        border: 1px solid #aaa !important;
-        max-width: 100% !important;
-        border-radius: 3px !important;
-        background-color: #eee !important;
-        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), to(#eee)) !important;
-        background-image: linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%) !important;
-        background-size: 100% 19px !important;
-        background-repeat: repeat-x !important;
-        background-clip: padding-box !important;
-        -webkit-box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, .05) !important;
-        box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, .05) !important;
-        color: #333 !important;
-        line-height: 13px !important;
-        cursor: default !important;
-    }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <style>
+        .choices__list--multiple .choices__item {
+            position: relative !important;
+            margin: 3px 5px 3px 0 !important;
+            padding: 3px 20px 3px 5px !important;
+            border: 1px solid #aaa !important;
+            max-width: 100% !important;
+            border-radius: 3px !important;
+            background-color: #eee !important;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), to(#eee)) !important;
+            background-image: linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%) !important;
+            background-size: 100% 19px !important;
+            background-repeat: repeat-x !important;
+            background-clip: padding-box !important;
+            -webkit-box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, .05) !important;
+            box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, .05) !important;
+            color: #333 !important;
+            line-height: 13px !important;
+            cursor: default !important;
+        }
 
-    .chosen-container {
-        position: relative;
-        display: inline-block;
-        vertical-align: middle;
-        font-size: 13px;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
+        .chosen-container {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 13px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-    .choices__inner {
-        background-color: #fff;
-    }
+        .choices__inner {
+            background-color: #fff;
+        }
 
-    .chosen-choices {
-        position: relative;
-        overflow: hidden;
-        margin: 0;
-        padding: 0 5px;
-        width: 100%;
-        height: auto;
-        border: 1px solid #aaa;
-        background-color: #fff;
-        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #eee), color-stop(15%, #fff));
-        background-image: linear-gradient(#eee 1%, #fff 15%);
-        cursor: text;
-    }
+        .chosen-choices {
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+            padding: 0 5px;
+            width: 100%;
+            height: auto;
+            border: 1px solid #aaa;
+            background-color: #fff;
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #eee), color-stop(15%, #fff));
+            background-image: linear-gradient(#eee 1%, #fff 15%);
+            cursor: text;
+        }
 
-    .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
-        position: absolute;
-        top: 4px;
-        right: 3px;
-        display: block;
-        width: 12px;
-        height: 12px;
-        background: url(chosen-sprite.png) -42px 1px no-repeat;
-        font-size: 1px;
-    }
+        .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+            position: absolute;
+            top: 4px;
+            right: 3px;
+            display: block;
+            width: 12px;
+            height: 12px;
+            background: url(chosen-sprite.png) -42px 1px no-repeat;
+            font-size: 1px;
+        }
 
-    .choices__inner {
-        cursor: pointer;
-    }
+        .choices__inner {
+            cursor: pointer;
+        }
 
-    .choices[data-type*=select-multiple] .choices__button,
-    .choices[data-type*=text] .choices__button {
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMSAyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0yLjU5Mi4wNDRsMTguMzY0IDE4LjM2NC0yLjU0OCAyLjU0OEwuMDQ0IDIuNTkyeiIvPjxwYXRoIGQ9Ik0wIDE4LjM2NEwxOC4zNjQgMGwyLjU0OCAyLjU0OEwyLjU0OCAyMC45MTJ6Ii8+PC9nPjwvc3ZnPg==) !important;
-    }
-</style>
+        .choices[data-type*=select-multiple] .choices__button,
+        .choices[data-type*=text] .choices__button {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAyMSAyMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSIjMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0yLjU5Mi4wNDRsMTguMzY0IDE4LjM2NC0yLjU0OCAyLjU0OEwuMDQ0IDIuNTkyeiIvPjxwYXRoIGQ9Ik0wIDE4LjM2NEwxOC4zNjQgMGwyLjU0OCAyLjU0OEwyLjU0OCAyMC45MTJ6Ii8+PC9nPjwvc3ZnPg==) !important;
+        }
+    </style>
     <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
         <div class="content-header-left col-md-9 col-12 mb-2">
             <div class="row breadcrumbs-top">
@@ -141,9 +141,11 @@
                                                 onchange="toggleCourseFeeType()">
                                                 <option value="">Select Course Fee Type</option>
                                                 <option value="Paid" <% if(course.courseFeeType==="Paid" ) {%> selected
-                                                    <% } %>>Paid</option>
+                                                    <% } %>>Paid
+                                                </option>
                                                 <option value="Free" <% if(course.courseFeeType==="Free" ) {%> selected
-                                                    <% } %>>Free</option>
+                                                    <% } %>>Free
+                                                </option>
 
                                             </select>
                                         </div>
@@ -159,11 +161,15 @@
                                             <select class="form-control" name="typeOfProject" id="typeOfProject">
                                                 <option value="">Select Type of Project</option>
                                                 <option value="T&P" <% if(course.typeOfProject==="T&P" ) {%> selected
-                                                    <% } %>>T&P</option>
+                                                    <% } %>>T&P
+                                                </option>
                                                 <option value="P&T" <% if(course.typeOfProject==="P&T" ) {%> selected
-                                                    <% } %>>P&T</option>
-                                                    <option value="General" <% if(course.typeOfProject==="General" ) {%> selected
-                                                        <% } %>>General</option>
+                                                    <% } %>>P&T
+                                                </option>
+                                                <option value="General" <% if(course.typeOfProject==="General" ) {%>
+                                                    selected
+                                                    <% } %>>General
+                                                </option>
 
                                             </select>
                                         </div>
@@ -196,7 +202,8 @@
                                             <select class="form-control" name="courseType" id="courseType">
                                                 <option value="">Select Type</option>
                                                 <option value="course" <% if(course.courseType==="course" ) {%> selected
-                                                    <% } %>>Course Only</option>
+                                                    <% } %>>Course Only
+                                                </option>
                                                 <option value="coursejob" <% if(course.courseType==="coursejob" ) {%>
                                                     selected <% } %>>Course and Job</option>
                                             </select>
@@ -277,61 +284,66 @@
                                             <input class="form-control" type="text"
                                                 value="<%=course.offlineTrainingTiming%>" id="offlineTrainingTiming">
                                         </div>
-                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1" id="trainingCenterblock" style="display: none;" multiple >
+                                        <div class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1"
+                                            id="trainingCenterblock" style="display: none;" multiple>
                                             <label>Training Center</label>
-                                            <% 
-  let selectedCenterIds = [];
-  if (course.center && course.center.length > 0) {
-    selectedCenterIds = course.center.map(c => c._id.toString());
-  }
-%>
+                                            <% let selectedCenterIds=[]; if (course.center && course.center.length> 0) {
+                                                selectedCenterIds = course.center.map(c => c._id.toString());
+                                                }
+                                                %>
 
-<select class="form-control" name="trainingCenter" id="trainingCenter" multiple>
-  <!-- Already Selected Centers -->
-  <% course.center.forEach(c => { %>
-      <option value="<%= c._id %>" selected><%= c.name %></option>
-  <% }) %>
+                                                <select class="form-control" name="trainingCenter" id="trainingCenter"
+                                                    multiple>
+                                                    <!-- Already Selected Centers -->
+                                                    <% course.center.forEach(c=> { %>
+                                                        <option value="<%= c._id %>" selected>
+                                                            <%= c.name %>
+                                                        </option>
+                                                        <% }) %>
 
-  <!-- Remaining Centers (Remove duplicates) -->
-  <% center.forEach(c => { %>
-      <% if (!selectedCenterIds.includes(c._id.toString())) { %>
-          <option value="<%= c._id %>"><%= c.name %></option>
-      <% } %>
-  <% }) %>
-</select>
+                                                            <!-- Remaining Centers (Remove duplicates) -->
+                                                            <% center.forEach(c=> { %>
+                                                                <% if (!selectedCenterIds.includes(c._id.toString())) {
+                                                                    %>
+                                                                    <option value="<%= c._id %>">
+                                                                        <%= c.name %>
+                                                                    </option>
+                                                                    <% } %>
+                                                                        <% }) %>
+                                                </select>
 
                                         </div>
-                                        
+
                                         <script
-                                                src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+                                            src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
-                                          
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function () {
-                                                    const trainingCenterSelect = new Choices('#trainingCenter', {
-                                                        removeItemButton: true,
-                                                        searchEnabled: true,
-                                                        itemSelectText: '',
-                                                        placeholder: false,
-                                                        allowHTML: false,
-                                                        maxItemCount: -1,  // Set to -1 for unlimited selections
-                                                        duplicateItemsAllowed: false,
-                                                        delimiter: ',',
-                                                        paste: true,
-                                                        maxItems: null,
-                                                        silent: false
-                                                    });
-                                                    const emptyOption = document.querySelector('#trainingCenter option[value=""]');
-                                                    if (emptyOption) {
-                                                        emptyOption.remove();
-                                                    }
 
-                                                    
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                const trainingCenterSelect = new Choices('#trainingCenter', {
+                                                    removeItemButton: true,
+                                                    searchEnabled: true,
+                                                    itemSelectText: '',
+                                                    placeholder: false,
+                                                    allowHTML: false,
+                                                    maxItemCount: -1,  // Set to -1 for unlimited selections
+                                                    duplicateItemsAllowed: false,
+                                                    delimiter: ',',
+                                                    paste: true,
+                                                    maxItems: null,
+                                                    silent: false
                                                 });
+                                                const emptyOption = document.querySelector('#trainingCenter option[value=""]');
+                                                if (emptyOption) {
+                                                    emptyOption.remove();
+                                                }
 
-                                            </script>
-                                        
-                                        
+
+                                            });
+
+                                        </script>
+
+
 
                                         <script>
                                             function toggleTrainingBlocks() {
@@ -504,6 +516,71 @@
                             </div>
                         </div>
                     </div>
+            </section>
+            <section id="docsRequired">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-header border border-top-0 border-left-0 border-right-0">
+                                <h4 class="card-title pb-1">Documents Required</h4>
+                            </div>
+                            <div class="col-12">
+                                <div id="documentContainer">
+                                    <% if (course.docsRequired && course.docsRequired.length> 0) { %>
+                                        <% course.docsRequired.forEach((docs, i)=> { %>
+                                            <div class="row requiredDocsRow">
+                                                <div
+                                                    class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1 doc-item">
+                                                    <label>Document Name</label>
+                                                    <div class="input-group">
+                                                        <input value="<%= docs.Name %>" rows="1" name="name" type="text"
+                                                            class="form-control docsName">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-danger remove-doc" onclick="disableDocument( '<%= docs._id %>')"
+                                                                type="button">X</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <div class="row requiredDocsRow">
+                                                        <div
+                                                            class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1 doc-item">
+                                                            <label>Document Name</label>
+                                                            <div class="input-group">
+                                                                <input rows="1" name="name" type="text"
+                                                                    class="form-control docsName">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-danger remove-doc"
+                                                                        type="button">X</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            class="col-xl-3 col-xl-lg-3 col-md-2 col-sm-12 col-12 mb-1 doc-add">
+                                                            <label></label>
+
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-danger add-docs"
+                                                                    onclick="addDocumentToCourse(this)"
+                                                                    type="button">Add</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+
+                                </div>
+                            </div>
+
+                            <div class="col-xl-12 mb-1 px-0 text-right">
+                                <a class="btn btn-success text-white add-another-button">+ Add
+                                    Another</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
             <section id="personal-info">
                 <div class="row">
@@ -892,6 +969,69 @@
             </section>
             </form>
     </div>
+    <script>
+        document.querySelector('.add-another-button').addEventListener('click', function () {
+            let container = document.querySelector("#documentContainer");
+
+            let newRow = document.createElement("div");
+            newRow.classList.add("row", "requiredDocsRow");
+
+            let newInputDiv = document.createElement("div");
+            newInputDiv.classList.add("col-xl-3", "mb-1", "doc-item");
+            let newInputDiv2 = document.createElement("div");
+            newInputDiv.classList.add("col-xl-3", "mb-1", "doc-add");
+
+            let newLabel = document.createElement("label");
+            newLabel.textContent = "Document Name";
+            let newLabel2 = document.createElement("label");
+            newLabel.textContent = "";
+
+            let inputGroup = document.createElement("div");
+            inputGroup.classList.add("input-group");
+
+            let newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.classList.add("form-control", "docsName");
+
+            let inputGroupAppend = document.createElement("div");
+            inputGroupAppend.classList.add("input-group-append");
+            let inputGroupAppend2 = document.createElement("div");
+            inputGroupAppend.classList.add("input-group-append");
+
+            let removeBtn = document.createElement("button");
+            removeBtn.classList.add("btn", "btn-danger", "remove-doc");
+            removeBtn.type = "button";
+            removeBtn.textContent = "X";
+            let addBtn = document.createElement("button");
+            addBtn.classList.add("btn", "btn-danger", "remove-doc");
+            addBtn.type = "button";
+            addBtn.textContent = "Add";
+
+
+
+            inputGroupAppend.appendChild(removeBtn);
+            inputGroupAppend2.appendChild(addBtn);
+            inputGroup.appendChild(newInput);
+            inputGroup.appendChild(inputGroupAppend);
+
+            newInputDiv.appendChild(newLabel);
+            newInputDiv.appendChild(inputGroup);
+            newInputDiv2.appendChild(newLabel2);
+            newInputDiv2.appendChild(inputGroupAppend2);
+            newRow.appendChild(newInputDiv);
+            newRow.appendChild(newInputDiv2);
+
+            container.appendChild(newRow);
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('remove-doc')) {
+                e.target.closest('.requiredDocsRow').remove();
+            }
+        });
+
+
+    </script>
     <script src="https://cdn.ckeditor.com/ckeditor5/37.0.0/classic/ckeditor.js"></script>
     <script>
 
@@ -911,7 +1051,41 @@
             }
         });
 
+        function addDocumentToCourse(btn) {
+            // Input value nikal lo - same row ka input pakadna hai
+            const docName = btn.closest('.requiredDocsRow').querySelector('.docsName').value.trim();
+            const courseId = '<%=id%>';
 
+            if (!docName) {
+                alert("Please enter Document Name");
+                return;
+            }
+
+            axios.patch(`/admin/courses/edit/${courseId}/add-doc`, { Name: docName })
+                .then(res => {
+                    alert("Document Added Successfully");
+                    location.reload();  // Optional: ya UI update karo
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Failed to add document");
+                });
+        };
+
+        function disableDocument( docId) {
+            if (confirm("Are you sure you want to remove this document?")) {
+                const courseId = '<%=id%>';
+                axios.patch(`/admin/courses/${courseId}/disable-doc/${docId}`)
+                    .then(res => {
+                        alert(res.data.message);
+                        location.reload(); // Optional: ya UI se remove kar do
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert("Failed to disable document");
+                    });
+            }
+        }
 
 
 
@@ -1410,7 +1584,9 @@
             const selectedSectors = Array.from(document.getElementById("sector").selectedOptions).map(option => option.value);
             const selectedCenters = Array.from(document.getElementById("trainingCenter").selectedOptions).map(option => option.value);
             const certifyingAgencyWebsiteValue = document.getElementById("certifyingAgencyWebsite").value;
-            console.log("selectedCenters",selectedCenters)
+            console.log("selectedCenters", selectedCenters);
+
+
 
             let body = {
                 sectors: selectedSectors,
@@ -1470,17 +1646,24 @@
                 // })
                 questionAnswers: questionAnswers
             };
+            const docsArray = [];
+            document.querySelectorAll('.docsName').forEach(input => {
+                if (input.value.trim() !== '') {
+                    docsArray.push({ Name: input.value.trim() });
+                }
+            });
+            body.docsRequired = docsArray;
             console.log(JSON.stringify(body), "body");
             // Send updated data to the server
-            axios.post(`/admin/courses/edit/<%=course._id %>`, body)
-                .then((res) => {
-                    if (res && res.status) {
-                        window.location.href = "/admin/courses";
-                    }
-                })
-                .catch(error => {
-                    console.error('Error updating course:', error);
-                });
+            // axios.post(`/admin/courses/edit/<%=course._id %>`, body)
+            //     .then((res) => {
+            //         if (res && res.status) {
+            //             window.location.href = "/admin/courses";
+            //         }
+            //     })
+            //     .catch(error => {
+            //         console.error('Error updating course:', error);
+            //     });
         });
 
         function validations() {
