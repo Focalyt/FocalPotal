@@ -13,7 +13,7 @@
           <div class="header-navbar-shadow"></div>
           <div class="content-wrapper"></div>
           <form>
-            <section id="Concerned-Person ">
+            <section id="Concerned-Person">
               <div class="row">
                 <div class="col-xl-12 px-3 text-right">
                   <a href="/company/list/jobs" class="btn btn-outline-primary">All Job Details</a>
@@ -731,7 +731,7 @@
                                 <div class="video-preview-container position-relative">
                                   <video style="
                             max-height: 150px;
-                            width: 300px;
+                            width: 250px;
                         " controls>
                                     <source src="<%= jd.jobVideo %>" type="video/mp4">
                                     Your browser does not support the video tag.
@@ -911,7 +911,7 @@
             offer.value = offerId;
             voucherAmount.value = amount
             offerAmount.value = amount
-            document.getElementById('apply').innerHTML = Pay ₹ ${amount}
+            document.getElementById('apply').innerHTML = `Pay ₹ ${amount}`
           }
           function convert(event) {
             const val = event.target.value;
@@ -1003,13 +1003,13 @@
                     $('#error-message').text('')
                     $('#success-message').text(res.data.message);
                     document.getElementById('amount').value = res.data.amount;
-                    document.getElementById('apply').innerHTML = Pay / भुगतान करें ₹ ${res.data.amount}
+                    document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
                     makePayment(e);
                   } else if (res.data.status && res.data.amount == 0) {
                     $('#error-message').text('')
                     $('#success-message').text(res.data.message);
                     document.getElementById('amount').value = res.data.amount;
-                    document.getElementById('apply').innerHTML = Pay / भुगतान करें ₹ ${res.data.amount}
+                    document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
                     window.location.reload();
                   } else {
                     document.getElementById('voucher').value = ''
@@ -1018,7 +1018,7 @@
                     $('#error-message').text(res.data.message)
                     $('#success-message').text('');
                     let offerAmount = document.getElementById('offerAmount').value
-                    document.getElementById('apply').innerHTML = Pay ₹ ${offerAmount}
+                    document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
                   }
                 })
             }
@@ -1045,12 +1045,12 @@
                   $('#error-message').text('')
                   $('#success-message').text(res.data.message);
                   document.getElementById('amount').value = res.data.amount;
-                  document.getElementById('apply').innerHTML = Pay / भुगतान करें ₹ ${res.data.amount}
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
                 } else if (res.data.status && res.data.amount == 0) {
                   $('#error-message').text('')
                   $('#success-message').text(res.data.message);
                   document.getElementById('amount').value = res.data.amount;
-                  document.getElementById('apply').innerHTML = Pay / भुगतान करें ₹ ${res.data.amount}
+                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
                   window.location.reload();
                 } else {
                   document.getElementById('voucher').value = ''
@@ -1059,18 +1059,18 @@
                   document.getElementById('amount').value = document.getElementById('offerAmount').value;
                   $('#success-message').text('');
                   let offerAmount = document.getElementById('offerAmount').value
-                  document.getElementById('apply').innerHTML = Pay ₹ ${offerAmount}
+                  document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
                 }
               })
           }
 
           function getOffers() {
-            axios({ method: 'get', url: /company/getCoinOffers, headers: { 'x-auth': localStorage.getItem('token') } })
+            axios({ method: 'get', url: `/company/getCoinOffers`, headers: { 'x-auth': localStorage.getItem('token') } })
               .then(res => {
                 let offers = document.getElementById('offers');
                 let html = ''
                 for (let i of res.data) {
-                  html += <div class="row inner-border my-2 text-white popup-bg py-1" ><div class="col-9 pr-0">${i.displayOffer}</div><div class="col-3 text-left"><span>  <input type="radio" id="${i._id}" name="offerName" value="${i.payAmount.$numberDecimal}" class="radio-size"> </span></div></div>
+                  html += `<div class="row inner-border my-2 text-white popup-bg py-1" ><div class="col-9 pr-0">${i.displayOffer}</div><div class="col-3 text-left"><span>  <input type="radio" id="${i._id}" name="offerName" value="${i.payAmount.$numberDecimal}" class="radio-size"> </span></div></div>`
                 }
                 offers.innerHTML = html
                 $('.radio-size').first().prop("checked", true)
@@ -1109,14 +1109,14 @@
             let body = { stateId: stateId };
             const selectCase = document.getElementById(cityId);
             $.get('/company/getcitiesbyId', body).done((res) => {
-              $(select#${cityId} option.companycitylist).remove();
+              $(`select#${cityId} option.companycitylist`).remove();
               let options;
               for (let i = 0; i < res.cityValues.length; i++) {
                 options =
                   options +
-                  <option value="${res.cityValues[i]._id}" class="text-capitalize companycitylist">${res.cityValues[i].name}</option>;
+                  `<option value="${res.cityValues[i]._id}" class="text-capitalize companycitylist">${res.cityValues[i].name}</option>`;
               }
-              $(select#${cityId}).append(options);
+              $(`select#${cityId}`).append(options);
             });
           };
           function salaryCheck() {
@@ -1163,7 +1163,7 @@
               file: file,
               path: 'JD'
             }
-            let inputField = document.getElementById(file-input);
+            let inputField = document.getElementById(`file-input`);
             let type = file.name;
             header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
             if (checkJDVideoValidation(type) === false) {
@@ -1313,7 +1313,7 @@
             })
           })
           const displayVal = (event, selector) => {
-            document.getElementById(${selector}).textContent = event.target.value
+            document.getElementById(`${selector}`).textContent = event.target.value
           }
 
 
