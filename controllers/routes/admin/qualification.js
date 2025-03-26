@@ -1,5 +1,5 @@
 const express = require("express");
-const { Qualification } = require("../../models");
+const { Qualification,QualificationCourse } = require("../../models");
 const { isAdmin } = require("../../../helpers");
 const router = express.Router();
 router.use(isAdmin);
@@ -9,9 +9,9 @@ router
 	.get(async (req, res) => {
 		try {
 			let view = false
-		if(req.session.user.role === 10){
-			view = true
-		}
+			if (req.session.user.role === 10) {
+				view = true
+			}
 			const perPage = 5;
 			const p = parseInt(req.query.page, 10);
 			const page = p || 1;
@@ -23,7 +23,7 @@ router
 				.skip(perPage * page - perPage)
 				.limit(perPage);
 
-				const qual = await Qualification.find({})
+			const qual = await Qualification.find({})
 				.select("name status basic")
 				.sort({ createdAt: -1 })
 				.skip(perPage * page - perPage)
@@ -37,7 +37,7 @@ router
 				perPage,
 				totalPages,
 				page,
-				menu:'qualification',
+				menu: 'qualification',
 				view
 			});
 		} catch (err) {
@@ -47,21 +47,21 @@ router
 	})
 	.post(async (req, res) => {
 		try {
-			if(req.body.id){
-				const 	qual = await Qualification.findOne({ _id:req.body.id, status:true});
-			if (qual) throw req.ykError("Course already exist!");
-
-			await Qualification.findOneAndUpdate({_id:req.body.id}, { 
-				status:true 
-			});
-
-			req.flash("success", "Course added successfully!");
-			return res.redirect("/admin/qualification");
-			}else{
-				const 	qual = await Qualification.findOne({name:req.body.name});
+			if (req.body.id) {
+				const qual = await Qualification.findOne({ _id: req.body.id, status: true });
 				if (qual) throw req.ykError("Course already exist!");
-				const qualification = await Qualification.create({ name:req.body.name ,status:true})
-				if (!qualification){
+
+				await Qualification.findOneAndUpdate({ _id: req.body.id }, {
+					status: true
+				});
+
+				req.flash("success", "Course added successfully!");
+				return res.redirect("/admin/qualification");
+			} else {
+				const qual = await Qualification.findOne({ name: req.body.name });
+				if (qual) throw req.ykError("Course already exist!");
+				const qualification = await Qualification.create({ name: req.body.name, status: true })
+				if (!qualification) {
 					throw req.ykError("qualification not created!");
 				}
 				req.flash("success", "Course added successfully!");
@@ -79,13 +79,13 @@ router
 	.get(async (req, res) => {
 		try {
 			let view = false
-		if(req.session.user.role === 10){
-			view = true
-		}
+			if (req.session.user.role === 10) {
+				view = true
+			}
 			const perPage = 5;
 			const p = parseInt(req.query.page, 10);
 			const page = p || 1;
-			const qualifications = await Qualification.find({status:true});
+			const qualifications = await Qualification.find({ status: true });
 			const qualData = await Qualification.findById(req.params.id).select(
 				"name"
 			);
@@ -133,5 +133,59 @@ router
 			return res.redirect("back");
 		}
 	});
+router
+	.route("/addEducation")
+	.get(async (req, res) => {
+		try {
+			
+			const qualifications = await Qualification.find({
+				status: true,
+			}).select("name");
+			const educationData = await QualificationCourse.find()
+			
+			.populate("_qualification")  
+			.sort({ createdAt: -1 });
+			
+			
+			return res.render(`${req.vPath}/admin/qualificationSetting/Education`, {
+				menu: 'addedu',
+				qualifications,
+				educationData
+			});
 
+		} catch (err) {
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+
+	})
+	.post(async (req, res) => {
+		try {
+			const { _qualification, name } = req.body;
+			const body = {
+				_qualification, name
+			}
+			console.log("body",body)
+			  // Check if the name already exists
+			  const existing = await QualificationCourse.findOne({ name: name.trim() });
+			  if (existing) {
+				req.flash('error', 'This Course already exists.');
+				return res.redirect('back');
+			  }
+
+			const addRecord = await QualificationCourse.create(body);
+
+			
+			// res.json({ status: true, message: "Record added!" });
+			req.flash('success','Record added!' );
+			return res.redirect("back");
+			
+		} catch (err) {
+			console.log(err)
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+
+		}
+
+	})
 module.exports = router;

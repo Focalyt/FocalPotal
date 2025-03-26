@@ -64,4 +64,5 @@ module.exports.CourseSectors=require('./courseSectors');
 module.exports.AppliedCourses = require("./appliedCourses");
 module.exports.FAQ = require("./chatfaqs");
 module.exports.Center = require("./center");
+module.exports.QualificationCourse = require("./qualificationCourse");
 // module.exports.Manager = required("");
