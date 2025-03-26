@@ -29,7 +29,7 @@ router.route('/addaccess')
             console.log(updatedUsers);
 
 
-            return res.render(`admin/portalAccess/add`, {
+            return res.render(`admin/portalAccess/Access`, {
                 menu: 'accesstype',
                 centers,
                 courses,
@@ -82,7 +82,7 @@ router.route('/addaccess')
 
 router.get("/viewaccess", auth1, async (req, res) => {
     try {
-        return res.render(`admin/portalAccess/view`, { menu: 'viewaccess' });
+        return res.render(`admin/portalAccess/AccessType`, { menu: 'viewaccess' });
         // return res.render(`${req.vPath}/portalAccess/add`, { menu: 'accesstype' });
 
 
