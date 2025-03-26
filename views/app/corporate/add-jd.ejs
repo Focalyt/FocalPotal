@@ -735,7 +735,7 @@
 
                               <div class="col-xl-3 mb-1">
                                 <label>Add Video JD</label>
-                                <input class="form-control" type="file" name="jobVideo" id="jobvideo">
+                                <input onchange="validateVideoFile(this)" class="form-control" type="file" name="jobVideo" id="jobvideo">
                               </div>
 
                               <div class="col-xl-12 mb-1 text-right">
@@ -1122,6 +1122,17 @@
                 return true;
               }
             }
+
+            function validateVideoFile(input) {
+              let file = input.files[0];
+              if (file) {
+                if (!checkJDVideoValidation(file.name)) {
+                  alert("Please upload video in mp4, mov, or avi format only!");
+                  input.value = ""; // Reset the file input
+                }
+              }
+            }
+
 
             function getQuestionAnswers() {
               let questionsAnswersArray = [];
@@ -1510,6 +1521,8 @@
                 $('#jd-subqua-field').show();
               }
             })
+
+
 
           </script>
           <% include ./partials/footer %>

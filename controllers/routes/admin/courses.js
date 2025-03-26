@@ -16,18 +16,19 @@ router.use(isAdmin);
 const AWS = require("aws-sdk");
 const multer = require('multer');
 const {
-  accessKeyId,
-  secretAccessKey,
-  bucketName,
-  region,
-  authKey,
-  msg91WelcomeTemplate,
+	accessKeyId,
+	secretAccessKey,
+	bucketName,
+	region,
+	authKey,
+	msg91WelcomeTemplate,
 } = require("../../../config");
+const courses = require("../../models/courses");
 
 AWS.config.update({
-  accessKeyId,
-  secretAccessKey,
-  region,
+	accessKeyId,
+	secretAccessKey,
+	region,
 });
 const s3 = new AWS.S3({ region, signatureVersion: 'v4' });
 const allowedVideoExtensions = ['mp4', 'mkv', 'mov', 'avi', 'wmv'];
@@ -40,12 +41,12 @@ const destination = path.resolve(__dirname, '..', '..', '..', 'public', 'temp');
 if (!fs.existsSync(destination)) fs.mkdirSync(destination);
 
 const storage = multer.diskStorage({
-  destination,
-  filename: (req, file, cb) => {
-	const ext = path.extname(file.originalname);
-	const basename = path.basename(file.originalname, ext);
-	cb(null, `${basename}-${Date.now()}${ext}`);
-  },
+	destination,
+	filename: (req, file, cb) => {
+		const ext = path.extname(file.originalname);
+		const basename = path.basename(file.originalname, ext);
+		cb(null, `${basename}-${Date.now()}${ext}`);
+	},
 });
 
 const upload = multer({ storage }).single('file');
@@ -55,9 +56,17 @@ const upload = multer({ storage }).single('file');
 router.route("/").get(async (req, res) => {
 	try {
 		let view = false
+		let canEdit = false
 		const user = req.session.user
+		console.log("user",user)
+		if (user.role === 0) {
+			
+			canEdit = true
+		}
+
 		if (user.role === 10) {
-			view = true
+			view = true;
+			
 		}
 		const data = req.query;
 		const fields = {
@@ -87,24 +96,69 @@ router.route("/").get(async (req, res) => {
 		}
 		fields["status"] = status;
 		let courses;
-    // ✅ Role 11 specific filtering
-    if (user.role === 11) {
-        let courseFilter = [];
+		// ✅ Role 11 specific filtering
+		if (user.role === 11) {
 
-        const userDetails = req.session.user;
-		console.log(userDetails)
-		courses = await Courses.find(fields).populate("sectors");
-    } else {
-        // For Admin/other roles
-        courses = await Courses.find(fields).populate("sectors");
-    }
+
+			const userDetails = req.session.user;
+			let courseIsds = userDetails.access.courseAccess;
+			let centerIds = userDetails.access.centerAccess;
+			if (courseIsds) {
+				const idsArray = Array.isArray(courseIsds) ? courseIsds : [courseIsds];
+
+				// Valid ObjectId check & conversion
+				const validCoursesIds = idsArray
+					.filter(id => mongoose.Types.ObjectId.isValid(id))
+					.map(id => new mongoose.Types.ObjectId(id));
+
+				if (validCoursesIds.length === 0) {
+					return res.status(400).json({ success: false, message: 'Invalid Courses ID(s)' });
+				}
+
+				// Courses जिनके center array में centerId मौजूद हो
+				courses = await Courses.find({
+					_id: { $in: validCoursesIds },
+					status: true
+				}).populate("sectors");
+			} else if (centerIds) {
+				const idsArray = Array.isArray(centerIds) ? centerIds : [centerIds];
+
+				// Valid ObjectId check & conversion
+				const validCenterIds = idsArray
+					.filter(id => mongoose.Types.ObjectId.isValid(id))
+					.map(id => new mongoose.Types.ObjectId(id));
+
+				if (validCenterIds.length === 0) {
+					return res.status(400).json({ success: false, message: 'Invalid Center ID(s)' });
+				}
+
+				// Courses जिनके center array में centerId मौजूद हो
+				courses = await Courses.find({
+					center: { $in: validCenterIds },
+					status: true
+				})
+
+
+			} else {
+
+				courses = await Courses.find(fields).populate("sectors");
+
+			}
+
+
+		} else {
+			// For Admin/other roles
+			courses = await Courses.find(fields).populate("sectors");
+		}
+		console.log("canEdit",canEdit)
 		// console.log(courses, "this is courses")
 		return res.render(`${req.vPath}/admin/course`, {
 			menu: 'course',
 			view,
 			courses,
 			isChecked,
-			data
+			data,
+			canEdit
 		});
 
 	} catch (err) {
@@ -118,7 +172,7 @@ router
 		try {
 			const sectors = await CourseSectors.find({ status: true })
 			const center = await Center.find({ status: true })
-			
+
 			return res.render(`${req.vPath}/admin/course/add`, {
 				menu: 'addCourse',
 				sectors,
@@ -192,7 +246,8 @@ router
 				}
 			})
 			course = await Courses.findById(id).populate('sectors').populate('center');
-			
+			course.docsRequired = course.docsRequired.filter(doc => doc.status === true);;
+
 			return res.render(`${req.vPath}/admin/course/edit`, {
 				course,
 				sectors,
@@ -232,6 +287,56 @@ router
 			return res.redirect("back");
 		}
 	});
+
+
+router
+	.route("/edit/:id/add-doc")
+	.patch(async (req, res) => {
+		try {
+			const { id } = req.params;
+			const { Name } = req.body; // Example body: { "Name": "PAN Card" }
+
+			if (!Name) return res.status(400).json({ message: 'Document Name is required' });
+
+			const update = await Courses.findByIdAndUpdate(
+				id,
+				{ $push: { docsRequired: { Name } } }, // Push new doc object
+				{ new: true }  // Return updated document
+			);
+
+			if (!update) return res.status(404).json({ message: 'Course not found' });
+
+			res.status(200).json({ message: 'Document added successfully', data: update.docsRequired });
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({ message: 'Internal Server Error' });
+		}
+
+	});
+	router.patch('/:courseId/disable-doc/:docId', async (req, res) => {
+		const { courseId, docId } = req.params;
+	  
+		try {
+		  const course = await Courses.findOneAndUpdate(
+			{ _id: courseId, 'docsRequired._id': docId },
+			{ $set: { 'docsRequired.$.status': false } },
+			{ new: true }
+		  );
+	  
+		  if (!course) {
+			return res.status(404).json({ status: false, message: "Document or Course not found" });
+		  }
+	  
+		  res.status(200).json({ status: true, message: "Document disabled successfully", data: course });
+		} catch (error) {
+		  console.error(error);
+		  res.status(500).json({ status: false, message: "Server Error" });
+		}
+	  });
+	  
+
+
+
 router.route("/getCourseViaSector").get(async (req, res) => {
 	try {
 		const { sectorId } = req.query;
@@ -265,40 +370,104 @@ router.route("/getCourseDetailById").get(async (req, res) => {
 router.route("/registrations")
 	.get(auth1, async (req, res) => {
 		try {
-			const data = req.query
-			const perPage = 20;
-			const p = parseInt(req.query.page, 10);
-			const page = p || 1;
-			let view = false
-			if (req.session.user.role === 10) {
-				view = true
-			}
-			const filter = {};
-			let numberCheck = isNaN(data?.name);
-			if (data['name'] != '' && data.hasOwnProperty('name')) {
-				const regex = new RegExp(data['name'], 'i');
-				filter["name"] = regex;
-			}
-			if (data['name'] && !numberCheck) {
-				filter["$or"] = [
-					{ "name": { "$regex": data['name'], "$options": "i" } },
-					{ "mobile": Number(data['mobile']) },
-					{ "whatsapp": Number(data['whatsapp']) }
-				];
-			}
-
-			const count = await AppliedCourses.countDocuments(filter)
+			const user = req.session.user
+			let candidates;
+			let count;
+			let view = false;
+			let data
+			let perPage
+			let p
+			let totalPages
+			let page
 			let { value, order } = req.query
-			let sorting = {}
-			if (value && order) {
-				sorting[value] = Number(order)
-			} else {
-				sorting = { createdAt: -1 }
+			let sorting = {};
+			let numberCheck;
+			let filter = {};
+			console.log("order", order, "value", value)
+			if (user.role === 0 || user.role === 10) {
+				page = p || 1;
+
+				data = req.query
+				perPage = 20;
+				p = parseInt(req.query.page, 10);
+				page = p || 1;
+
+				if (req.session.user.role === 10) {
+					view = true
+				}
+
+				numberCheck = isNaN(data?.name);
+				if (data['name'] != '' && data.hasOwnProperty('name')) {
+					const regex = new RegExp(data['name'], 'i');
+					filter["name"] = regex;
+				}
+				if (data['name'] && !numberCheck) {
+					filter["$or"] = [
+						{ "name": { "$regex": data['name'], "$options": "i" } },
+						{ "mobile": Number(data['mobile']) },
+						{ "whatsapp": Number(data['whatsapp']) }
+					];
+				}
+
+				count = await AppliedCourses.countDocuments(filter)
+
+				if (value && order) {
+					sorting[value] = Number(order)
+				} else {
+					sorting = { createdAt: -1 }
+				}
+				let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter)
+				candidates = await AppliedCourses.aggregate(agg);
+				totalPages = Math.ceil(count / perPage);
+
 			}
-			let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter)
-			let candidates = await AppliedCourses.aggregate(agg);
-			const totalPages = Math.ceil(count / perPage);
-			console.log(candidates)
+			else if (user.role === 11) {
+
+				let courseIsds = user.access.courseAccess;
+				let centerIds = user.access.centerAccess;
+				if (courseIsds) {
+					const idsArray = Array.isArray(courseIsds) ? courseIsds : [courseIsds];
+
+					// Valid ObjectId check & conversion
+					const validCoursesIds = idsArray
+						.filter(id => mongoose.Types.ObjectId.isValid(id))
+						.map(id => new mongoose.Types.ObjectId(id));
+
+					if (validCoursesIds.length === 0) {
+						return res.status(400).json({ success: false, message: 'Invalid Courses ID(s)' });
+					}
+
+					// Courses जिनके center array में centerId मौजूद हो
+					candidates = await AppliedCourses.find({
+						_course: { $in: validCoursesIds }
+					}).populate("_candidate").populate("_course").populate("_center");
+
+				} else if (centerIds) {
+					const idsArray = Array.isArray(centerIds) ? centerIds : [centerIds];
+
+					// Valid ObjectId check & conversion
+					const validCenterIds = idsArray
+						.filter(id => mongoose.Types.ObjectId.isValid(id))
+						.map(id => new mongoose.Types.ObjectId(id));
+
+					if (validCenterIds.length === 0) {
+						return res.status(400).json({ success: false, message: 'Invalid Center ID(s)' });
+					}
+
+					// Courses जिनके center array में centerId मौजूद हो
+					candidates = await AppliedCourses.find({
+						center: { $in: validCenterIds }
+					}).populate("_candidate").populate("_course").populate("_center")
+
+
+				} else {
+
+					candidates = await AppliedCourses.find().populate("_candidate").populate("_course").populate("_center");
+
+				}
+
+
+			}
 
 			return res.render(`${req.vPath}/admin/course/registration`, {
 				candidates,
@@ -588,176 +757,176 @@ router.post("/removephoto", isAdmin, async (req, res) => {
 
 // add leads 
 router.route('/:courseId/candidate/addleads')
-    .get(async ( req, res) => {
-		
-        try {
-			let {courseId} = req.params
+	.get(async (req, res) => {
+
+		try {
+			let { courseId } = req.params
 			const country = await Country.find({});
-			const highestQualification = await Qualification.find({status:true})
-			
+			const highestQualification = await Qualification.find({ status: true })
+
 			if (typeof courseId === 'string' && mongoose.Types.ObjectId.isValid(courseId)) {
 				courseId = new mongoose.Types.ObjectId(courseId);
-			} 
-	        let course = await Courses.findById(courseId).populate('center');
-			
-			
-            res.render('admin/course/addleads', { menu: 'course', courseId, course, country, highestQualification });
-        } catch (err) {
-            console.log("Error rendering addleads page:", err);
-            res.redirect('back');
-        }
-    });
+			}
+			let course = await Courses.findById(courseId).populate('center');
+
+
+			res.render('admin/course/addleads', { menu: 'course', courseId, course, country, highestQualification });
+		} catch (err) {
+			console.log("Error rendering addleads page:", err);
+			res.redirect('back');
+		}
+	});
 
 router.route('/:courseId/candidate/upload-docs')
-    .post(async ( req, res) => {
-		
-        try {
-			 const { docsName, courseId, docsId } = req.body;
-					console.log("docsId:", docsId, "Type:", typeof docsId, "Valid:", mongoose.Types.ObjectId.isValid(docsId));
-			
-					if (!mongoose.Types.ObjectId.isValid(docsId)) {
-						return res.status(400).json({ error: "Invalid document ID format." });
-					}
-			
-					
-					const candidateMobile = req.body.mobile;
+	.post(async (req, res) => {
 
-					if(!candidateMobile){
+		try {
+			const { docsName, courseId, docsId } = req.body;
+			console.log("docsId:", docsId, "Type:", typeof docsId, "Valid:", mongoose.Types.ObjectId.isValid(docsId));
 
-						return res.status(400).json({ error: "mobile number required." });				
+			if (!mongoose.Types.ObjectId.isValid(docsId)) {
+				return res.status(400).json({ error: "Invalid document ID format." });
+			}
 
-					}
-			
-					const candidate = await Candidate.findOne({
-						mobile: candidateMobile,
-						appliedCourses: courseId
-					});
-			
-					if (!candidate) {
-						return res.status(400).json({ error: "You have not applied for this course." });
-					}
-			
-					let files = req.files?.file;
-					if (!files) {
-						return res.status(400).send({ status: false, message: "No files uploaded" });
-					}
-			
-					console.log("Files", files)
-			
-					const filesArray = Array.isArray(files) ? files : [files];
-					const uploadedFiles = [];
-					const uploadPromises = [];
-					const candidateId = candidate._id;
-			
-					filesArray.forEach((item) => {
-						const { name, mimetype } = item;
-						const ext = name?.split('.').pop().toLowerCase();
-			
-						console.log(`Processing File: ${name}, Extension: ${ext}`);
-			
-						if (!allowedExtensions.includes(ext)) { // ✅ Now includes PDFs
-							console.log("File type not supported")
-							throw new Error(`File type not supported: ${ext}`);
-						}
-			
-						let fileType = "document"; // ✅ Default to "document"
-						if (allowedImageExtensions.includes(ext)) {
-							fileType = "image";
-						} else if (allowedVideoExtensions.includes(ext)) {
-							fileType = "video";
-						}
-			
-						const key = `Documents for course/${courseId}/${candidateId}/${docsId}/${uuid()}.${ext}`;
-						const params = {
-							Bucket: bucketName,
-							Key: key,
-							Body: item.data,
-							ContentType: mimetype,
-						};
-			
-						uploadPromises.push(
-							s3.upload(params).promise().then((uploadResult) => {
-								uploadedFiles.push({
-									fileURL: uploadResult.Location,
-									fileType,
-								});
-							})
-						);
-					});
-			
-					await Promise.all(uploadPromises);
-					console.log(uploadedFiles)
-			
-					const fileUrl = uploadedFiles[0].fileURL;
-			
-					const existingCourseDoc = await Candidate.findOne({
-						mobile: candidateMobile,
-						"docsForCourses.courseId": courseId
-					});
-			
-					if (existingCourseDoc) {
-						const updatedCandidate = await Candidate.findOneAndUpdate(
-							{ mobile: candidateMobile, "docsForCourses.courseId": courseId },
-							{
-								$push: {
-									"docsForCourses.$.uploadedDocs": {
-										docsId: new mongoose.Types.ObjectId(docsId),
-										fileUrl: fileUrl,
-										status: "Pending",
-										uploadedAt: new Date()
-									}
-								}
-							},
-							{ new: true }
-						);
-			
-						return res.status(200).json({
-							status: true,
-							message: "Document uploaded successfully",
-							data: updatedCandidate
+
+			const candidateMobile = req.body.mobile;
+
+			if (!candidateMobile) {
+
+				return res.status(400).json({ error: "mobile number required." });
+
+			}
+
+			const candidate = await Candidate.findOne({
+				mobile: candidateMobile,
+				appliedCourses: courseId
+			});
+
+			if (!candidate) {
+				return res.status(400).json({ error: "You have not applied for this course." });
+			}
+
+			let files = req.files?.file;
+			if (!files) {
+				return res.status(400).send({ status: false, message: "No files uploaded" });
+			}
+
+			console.log("Files", files)
+
+			const filesArray = Array.isArray(files) ? files : [files];
+			const uploadedFiles = [];
+			const uploadPromises = [];
+			const candidateId = candidate._id;
+
+			filesArray.forEach((item) => {
+				const { name, mimetype } = item;
+				const ext = name?.split('.').pop().toLowerCase();
+
+				console.log(`Processing File: ${name}, Extension: ${ext}`);
+
+				if (!allowedExtensions.includes(ext)) { // ✅ Now includes PDFs
+					console.log("File type not supported")
+					throw new Error(`File type not supported: ${ext}`);
+				}
+
+				let fileType = "document"; // ✅ Default to "document"
+				if (allowedImageExtensions.includes(ext)) {
+					fileType = "image";
+				} else if (allowedVideoExtensions.includes(ext)) {
+					fileType = "video";
+				}
+
+				const key = `Documents for course/${courseId}/${candidateId}/${docsId}/${uuid()}.${ext}`;
+				const params = {
+					Bucket: bucketName,
+					Key: key,
+					Body: item.data,
+					ContentType: mimetype,
+				};
+
+				uploadPromises.push(
+					s3.upload(params).promise().then((uploadResult) => {
+						uploadedFiles.push({
+							fileURL: uploadResult.Location,
+							fileType,
 						});
-					} else {
-						const updatedCandidate = await Candidate.findOneAndUpdate(
-							{ mobile: candidateMobile },
-							{
-								$push: {
-									"docsForCourses": {
-										courseId: new mongoose.Types.ObjectId(courseId),
-										uploadedDocs: [{
-											docsId: new mongoose.Types.ObjectId(docsId),
-											fileUrl: fileUrl,
-											status: "Pending",
-											uploadedAt: new Date()
-										}]
-									}
-								}
-							},
-							{ new: true }
-						);
-			
-						return res.status(200).json({
-							status: true,
-							message: "Document uploaded successfully",
-							data: updatedCandidate
-						});
-					}
-			
-        } catch (err) {
-            console.log("Error rendering addleads page:", err);
-            res.redirect('back');
-        }
-    });
+					})
+				);
+			});
 
-	router.route('/crm')
-    .get(async ( req, res) => {
-		
-        try {
+			await Promise.all(uploadPromises);
+			console.log(uploadedFiles)
+
+			const fileUrl = uploadedFiles[0].fileURL;
+
+			const existingCourseDoc = await Candidate.findOne({
+				mobile: candidateMobile,
+				"docsForCourses.courseId": courseId
+			});
+
+			if (existingCourseDoc) {
+				const updatedCandidate = await Candidate.findOneAndUpdate(
+					{ mobile: candidateMobile, "docsForCourses.courseId": courseId },
+					{
+						$push: {
+							"docsForCourses.$.uploadedDocs": {
+								docsId: new mongoose.Types.ObjectId(docsId),
+								fileUrl: fileUrl,
+								status: "Pending",
+								uploadedAt: new Date()
+							}
+						}
+					},
+					{ new: true }
+				);
+
+				return res.status(200).json({
+					status: true,
+					message: "Document uploaded successfully",
+					data: updatedCandidate
+				});
+			} else {
+				const updatedCandidate = await Candidate.findOneAndUpdate(
+					{ mobile: candidateMobile },
+					{
+						$push: {
+							"docsForCourses": {
+								courseId: new mongoose.Types.ObjectId(courseId),
+								uploadedDocs: [{
+									docsId: new mongoose.Types.ObjectId(docsId),
+									fileUrl: fileUrl,
+									status: "Pending",
+									uploadedAt: new Date()
+								}]
+							}
+						}
+					},
+					{ new: true }
+				);
+
+				return res.status(200).json({
+					status: true,
+					message: "Document uploaded successfully",
+					data: updatedCandidate
+				});
+			}
+
+		} catch (err) {
+			console.log("Error rendering addleads page:", err);
+			res.redirect('back');
+		}
+	});
+
+router.route('/crm')
+	.get(async (req, res) => {
+
+		try {
 			res.render(`admin/course/crm`, { menu: 'course' });
-        } catch (err) {
-            console.log("Error rendering addleads page:", err);
-            res.redirect('back');
-        }
-    });
+		} catch (err) {
+			console.log("Error rendering addleads page:", err);
+			res.redirect('back');
+		}
+	});
 
 
 

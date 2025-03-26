@@ -140,20 +140,7 @@
                                                         <input type="text" class="form-control" maxlength="100"
                                                             name="address" value="" />
                                                     </div>
-                                                    <div class="col-xl-3 mb-1">
-                                                        <label>Country
-                                                            <span class="mandatory">*</span></label>
-                                                        <select style="cursor: pointer;" class="form-control"
-                                                            name="countryId" id="country" required>
-                                                            <option value="">Select Option</option>
-                                                            <% country.forEach((i)=> { %>
-                                                                <option value="<%= i.countryId %>" class="text-capitalize">
-                                                                    <%= i.name %>
-                                                                </option>
-                                                                <% }); %>
-    
-                                                        </select>
-                                                    </div>
+                                                   
                                                     <div class="col-xl-3 mb-1">
                                                         <label>State <span class="mandatory">*</span></label>
                                                         <select style="cursor: pointer;" class="form-control" name="state"
@@ -410,27 +397,27 @@
 
 
 
-                $("#country").change(() => {
-                    $("#state")
-                        .find("option")
-                        .remove()
-                        .end()
-                        .append(
-                            '<option disabled selected value="">Select Option</option>'
-                        );
-                    axios
-                        .post("/admin/helper/getstate", {
-                            countryId: $("#country").val(),
-                        })
-                        .then(({ data }) => {
-                            data.forEach((d) => {
-                                $("#state").append(
-                                    `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
-                                );
-                            });
-                        })
-                        .catch((e) => console.log(e));
-                });
+                $(document).ready(() => {
+    $("#state")
+        .find("option")
+        .remove()
+        .end()
+        .append('<option disabled selected value="">Select Option</option>');
+
+    axios
+        .post("/admin/helper/getstate", {
+            countryId: 101, // Fix countryId 101
+        })
+        .then(({ data }) => {
+            data.forEach((d) => {
+                $("#state").append(
+                    `<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+                );
+            });
+        })
+        .catch((e) => console.log(e));
+});
+
 
                 $("#state").change(() => {
                     $('#city')

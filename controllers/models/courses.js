@@ -1,4 +1,5 @@
 const { kStringMaxLength } = require('buffer');
+const { boolean } = require('joi');
 const { Schema, model } = require('mongoose');
 
 const { ObjectId } = Schema.Types;
@@ -53,7 +54,13 @@ const courseSchema = new Schema({
     stipendDuringTraining: String,
     lastDateForApply: String,
     requiredDocuments: String,
-    docsRequired:[{ Name: String }],
+    docsRequired: [
+        { 
+          Name: { type: String },
+          status: { type: Boolean, default: true } 
+        }
+      ],
+      
     testimonialvideos: [{
         type: String
     }],
