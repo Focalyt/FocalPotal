@@ -1006,6 +1006,8 @@
             addBtn.classList.add("btn", "btn-danger", "remove-doc");
             addBtn.type = "button";
             addBtn.textContent = "Add";
+            
+            addBtn.setAttribute("onclick", "addDocumentToCourse(this)"); // ✅ Click function bind
 
 
 
