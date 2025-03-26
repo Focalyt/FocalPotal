@@ -1168,7 +1168,62 @@ router.post('/editJobs/:jobId', isCompany, async (req, res) => {
         { new: true, upsert: true }
       );
 
+
+      
     }
+    const companyId = company._id;
+    const jobTitle = req.body.title
+
+    let files = req.files?.jobVideo; // Ensure correct key from FormData
+      const filesArray = Array.isArray(files) ? files : [files]; // Convert to array if single file
+
+
+
+      if (files) {
+
+        // ✅ Upload Files to S3
+        const uploadedFiles = [];
+        const uploadPromises = [];
+
+        filesArray.forEach((item) => {
+          const { name, mimetype } = item;
+          const ext = name?.split('.').pop().toLowerCase();
+
+          console.log(`Processing File: ${name}, Extension: ${ext}`);
+
+          if (!allowedImageExtensions.includes(ext) && !allowedVideoExtensions.includes(ext)) {
+            throw new Error(`File type not supported: ${ext}`);
+          }
+
+          // Determine fileType
+          const fileType = allowedImageExtensions.includes(ext) ? "image" : "video";
+
+          // Generate unique S3 key
+          const key = `Jobs/${companyId}/${jobTitle}/${fileType}s/${uuid()}.${ext}`;
+          const params = {
+            Bucket: bucketName,
+            Key: key,
+            Body: item.data,
+            ContentType: mimetype,
+          };
+
+          // Upload to S3
+          uploadPromises.push(
+            s3.upload(params).promise().then((uploadResult) => {
+              uploadedFiles.push({
+                fileURL: uploadResult.Location,
+                fileType,
+              });
+            })
+          );
+        });
+
+        // ✅ Wait for all uploads to complete
+        await Promise.all(uploadPromises);
+        console.log("Upload Files", uploadedFiles[0].fileURL)
+        updatedJob['jobVideo'] = uploadedFiles[0].fileURL;
+      }
+
 
     const jd = await Vacancy.findOneAndUpdate({ _id: req.params.jobId }, updatedJob);
     if (!jd) {
