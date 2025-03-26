@@ -56,9 +56,17 @@ const upload = multer({ storage }).single('file');
 router.route("/").get(async (req, res) => {
 	try {
 		let view = false
+		let canEdit = false
 		const user = req.session.user
+		console.log("user",user)
+		if (user.role === 0) {
+			
+			canEdit = true
+		}
+
 		if (user.role === 10) {
-			view = true
+			view = true;
+			
 		}
 		const data = req.query;
 		const fields = {
@@ -142,13 +150,15 @@ router.route("/").get(async (req, res) => {
 			// For Admin/other roles
 			courses = await Courses.find(fields).populate("sectors");
 		}
+		console.log("canEdit",canEdit)
 		// console.log(courses, "this is courses")
 		return res.render(`${req.vPath}/admin/course`, {
 			menu: 'course',
 			view,
 			courses,
 			isChecked,
-			data
+			data,
+			canEdit
 		});
 
 	} catch (err) {
