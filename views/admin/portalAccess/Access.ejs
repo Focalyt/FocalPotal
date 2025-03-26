@@ -112,7 +112,7 @@
                                                 <input type="text" class="form-control" value="" name="course"
                                                     placeholder="Course" />
                                             </div> -->
-                                        <div class="col-xl-6 mb-1 dropdown__container">
+                                        <div class="col-xl-6 mb-1 dropdown__container course-section">
                                             <label>Course</label>
                                             <div class="custom__dropdown">
                                                 <input type="text" class="form-control dropdown__toggle" value=""
@@ -242,6 +242,10 @@
 
     </div>
     <style>
+        .course-section {
+    position: relative;
+    transition: padding-bottom 0.3s ease-in-out;
+}
         .select_all_container {
             border-bottom: 1px solid #eee;
             font-weight: bold;
@@ -317,7 +321,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
+            /* z-index: 1000; */
             padding: 8px;
             margin-top: 2px;
             max-height: 100px;
@@ -327,11 +331,9 @@
             visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.3s ease-in-out;
-            /* Smooth transition for all properties */
         }
 
         .dropdown__menu.open {
-            /* New class for open state */
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
@@ -501,10 +503,175 @@
             });
         }
     </script>
- <script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownToggle = document.querySelector('.dropdown_toggle');
+            const dropdownMenu = document.querySelector('.dropdown_menu');
+            const courseDropdownMenu = document.querySelector('.dropdown__menu'); 
+
+            const checkboxes = document.querySelectorAll('.center_checkbox');
+            const selectAllCheckbox = document.querySelector('.select_all_checkbox');
+            const hiddenInput = document.getElementById('selectedCenterIds');
+            const anyCheckbox = document.querySelector('.center_checkbox[data-name="Any"]');
+
+            // ✅ Center Dropdown Toggle
+            dropdownToggle.addEventListener('click', function (event) {
+                event.stopPropagation();
+                courseDropdownMenu.classList.remove('open'); 
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // ✅ Close Dropdown Outside Click
+            document.addEventListener('click', function (event) {
+                if (!event.target.closest('.custom_dropdown')) {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+
+            
+            selectAllCheckbox.addEventListener('change', function () {
+                const isChecked = this.checked;
+                checkboxes.forEach(cb => cb.checked = isChecked);
+                anyCheckbox.checked = false;
+                updateInputValue();
+            });
+
+           
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    if (checkbox === anyCheckbox && anyCheckbox.checked) {
+                        checkboxes.forEach(cb => { if (cb !== anyCheckbox) cb.checked = false; });
+                        selectAllCheckbox.checked = false;
+                    }
+                    if (checkbox !== anyCheckbox && checkbox.checked) {
+                        anyCheckbox.checked = false;
+                    }
+
+                    const checkedCenters = document.querySelectorAll('.center_checkbox:not([data-name="Any"]):checked').length;
+                    const totalCenters = document.querySelectorAll('.center_checkbox:not([data-name="Any"])').length;
+                    selectAllCheckbox.checked = checkedCenters === totalCenters;
+                    selectAllCheckbox.indeterminate = (checkedCenters > 0 && checkedCenters < totalCenters);
+
+                    updateInputValue();
+                });
+            });
+
+            
+            function updateInputValue() {
+                const selectedCenters = [];
+                let ids = [];
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        selectedCenters.push(cb.getAttribute('data-name'));
+                        ids.push(cb.value);
+                    }
+                });
+                dropdownToggle.value = selectedCenters.join(', ');
+                hiddenInput.value = ids.join(',');
+            }
+
+            // Prevent dropdown close on select all click
+            document.querySelector('.select_all_container').addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const courseSection = document.querySelector('.course-section');
+            const courseDropdownToggle = document.querySelector('.dropdown__toggle');
+            const courseDropdownMenu = document.querySelector('.dropdown__menu');
+            const dropdownMenu = document.querySelector('.dropdown_menu');
+
+            let courseCheckboxes = document.querySelectorAll('.course__checkbox');
+            const courseSelectAllCheckbox = document.getElementById('select__all__courses');
+            const coursehiddenInput = document.getElementById('selectedCoursesIds');
+            const anyCheckboxCourse = document.querySelector('.course__checkbox[data-name="Any"]');
+
+            // ✅ Course Dropdown Toggle
+            courseDropdownToggle.addEventListener('click', function (event) {
+                event.stopPropagation();
+                dropdownMenu.style.display = 'none';
+                courseDropdownMenu.classList.toggle('open');
+                if (courseDropdownMenu.classList.contains('open')) {
+                    courseSection.style.paddingBottom = '90px';
+                } else {
+                    courseSection.style.paddingBottom = '0';
+                }
+            });
+            document.addEventListener('click', function (event) {
+                if (!event.target.closest('.custom__dropdown')) {
+                    courseDropdownMenu.classList.remove('open');
+                    courseSection.style.paddingBottom = '0';
+                }
+            });
+            // ✅ Close Course Dropdown Outside Click
+            document.addEventListener('click', function (event) {
+                if (!event.target.closest('.custom__dropdown')) {
+                    courseDropdownMenu.classList.remove('open');
+                }
+            });
+
+            // ✅ Select All Courses
+            courseSelectAllCheckbox.addEventListener('change', function () {
+                const isChecked = this.checked;
+                courseCheckboxes.forEach(cb => cb.checked = isChecked);
+                anyCheckboxCourse.checked = false;
+                updateCourseInputValue();
+            });
+
+            // ✅ Individual Course Checkbox Logic
+            document.addEventListener('change', function (event) {
+                if (event.target.classList.contains('course__checkbox')) {
+                    if (event.target === anyCheckboxCourse && anyCheckboxCourse.checked) {
+                        courseCheckboxes.forEach(cb => { if (cb !== anyCheckboxCourse) cb.checked = false; });
+                        courseSelectAllCheckbox.checked = false;
+                    }
+
+                    if (event.target !== anyCheckboxCourse && event.target.checked) {
+                        anyCheckboxCourse.checked = false;
+                    }
+
+                    const checkedCourses = document.querySelectorAll('.course__checkbox:not([data-name="Any"]):checked').length;
+                    const totalCourses = document.querySelectorAll('.course__checkbox:not([data-name="Any"])').length;
+                    courseSelectAllCheckbox.checked = checkedCourses === totalCourses;
+                    courseSelectAllCheckbox.indeterminate = (checkedCourses > 0 && checkedCourses < totalCourses);
+
+                    updateCourseInputValue();
+                }
+            });
+
+            // ✅ Update Selected Courses Value
+            function updateCourseInputValue() {
+                courseCheckboxes = document.querySelectorAll('.course__checkbox'); // Refresh checkboxes
+                const selectedCourses = [];
+                let ids = [];
+                courseCheckboxes.forEach(cb => {
+                    if (cb.checked) {
+                        selectedCourses.push(cb.getAttribute('data-name'));
+                        ids.push(cb.value);
+                    }
+                });
+                courseDropdownToggle.value = selectedCourses.join(', ');
+                coursehiddenInput.value = ids.join(',');
+            }
+
+            // Prevent dropdown close on select all click
+            document.querySelector('.select__all__container').addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+    </script>
+
+    <!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
         const dropdownToggle = document.querySelector('.dropdown_toggle');
         const dropdownMenu = document.querySelector('.dropdown_menu');
+
+      
+
         const checkboxes = document.querySelectorAll('.center_checkbox');
         const selectAllCheckbox = document.querySelector('.select_all_checkbox');
         const hiddenInput = document.getElementById('selectedCenterIds');
@@ -585,8 +752,8 @@
             event.stopPropagation();
         });
     });
-    </script>
-    
+    </script> -->
+
     <script>
 
         document.addEventListener('change', function (event) {
@@ -627,91 +794,91 @@
         });
 
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const courseDropdownToggle = document.querySelector('.dropdown__toggle');
-            const courseDropdownMenu = document.querySelector('.dropdown__menu');
-            let courseCheckboxes = document.querySelectorAll('.course__checkbox');
-            const courseSelectAllCheckbox = document.getElementById('select__all__courses');
-            const coursehiddenInput = document.getElementById('selectedCoursesIds');
-            const anyCheckboxCourse = document.querySelector('.course__checkbox[data-name="Any"]');
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const courseDropdownToggle = document.querySelector('.dropdown__toggle');
+        //     const courseDropdownMenu = document.querySelector('.dropdown__menu');
+        //     let courseCheckboxes = document.querySelectorAll('.course__checkbox');
+        //     const courseSelectAllCheckbox = document.getElementById('select__all__courses');
+        //     const coursehiddenInput = document.getElementById('selectedCoursesIds');
+        //     const anyCheckboxCourse = document.querySelector('.course__checkbox[data-name="Any"]');
 
-            // ✅ Make dropdown clickable
-            courseDropdownToggle.addEventListener('click', function (event) {
-                event.stopPropagation();
-                courseDropdownMenu.classList.toggle('open');
-            });
+        //     // ✅ Make dropdown clickable
+        //     courseDropdownToggle.addEventListener('click', function (event) {
+        //         event.stopPropagation();
+        //         courseDropdownMenu.classList.toggle('open');
+        //     });
 
-            // ✅ Close dropdown when clicking outside
-            document.addEventListener('click', function (event) {
-                if (!event.target.closest('.custom__dropdown')) {
-                    courseDropdownMenu.classList.remove('open');
-                }
-            });
+        //     // ✅ Close dropdown when clicking outside
+        //     document.addEventListener('click', function (event) {
+        //         if (!event.target.closest('.custom__dropdown')) {
+        //             courseDropdownMenu.classList.remove('open');
+        //         }
+        //     });
 
-            // ✅ **Select All functionality for courses**
-            courseSelectAllCheckbox.addEventListener('change', function (event) {
-                event.stopPropagation();
-                const isChecked = this.checked;
+        //     // ✅ **Select All functionality for courses**
+        //     courseSelectAllCheckbox.addEventListener('change', function (event) {
+        //         event.stopPropagation();
+        //         const isChecked = this.checked;
 
-                // ✅ **अब सभी courses checkbox को update कर रहे हैं**
-                courseCheckboxes.forEach(function (checkbox) {
-                    checkbox.checked = isChecked;
-                });
+        //         // ✅ **अब सभी courses checkbox को update कर रहे हैं**
+        //         courseCheckboxes.forEach(function (checkbox) {
+        //             checkbox.checked = isChecked;
+        //         });
 
-                updateCourseInputValue();
-            });
+        //         updateCourseInputValue();
+        //     });
 
-            // ✅ **Handle individual course selection**
-            document.addEventListener('change', function (event) {
-                if (event.target.classList.contains('course__checkbox')) {
-                    updateCourseInputValue();
-                    updateCourseSelectAllCheckbox();
-                }
-            });
+        //     // ✅ **Handle individual course selection**
+        //     document.addEventListener('change', function (event) {
+        //         if (event.target.classList.contains('course__checkbox')) {
+        //             updateCourseInputValue();
+        //             updateCourseSelectAllCheckbox();
+        //         }
+        //     });
 
-            // ✅ **Handle "Any" checkbox logic**
-            anyCheckboxCourse.addEventListener('change', function (event) {
-                event.stopPropagation();
-                if (this.checked) {
-                    courseCheckboxes.forEach(function (checkbox) {
-                        if (checkbox !== anyCheckboxCourse) {
-                            checkbox.checked = false;
-                        }
-                    });
-                }
-                updateCourseInputValue();
-                updateCourseSelectAllCheckbox();
-            });
+        //     // ✅ **Handle "Any" checkbox logic**
+        //     anyCheckboxCourse.addEventListener('change', function (event) {
+        //         event.stopPropagation();
+        //         if (this.checked) {
+        //             courseCheckboxes.forEach(function (checkbox) {
+        //                 if (checkbox !== anyCheckboxCourse) {
+        //                     checkbox.checked = false;
+        //                 }
+        //             });
+        //         }
+        //         updateCourseInputValue();
+        //         updateCourseSelectAllCheckbox();
+        //     });
 
-            // ✅ **Function to update "Select All" checkbox**
-            function updateCourseSelectAllCheckbox() {
-                courseCheckboxes = document.querySelectorAll('.course__checkbox'); // 🔄 Refresh checkboxes
-                const checkedCount = document.querySelectorAll('.course__checkbox:checked').length;
-                courseSelectAllCheckbox.checked = checkedCount === courseCheckboxes.length;
-                courseSelectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < courseCheckboxes.length;
-            }
+        //     // ✅ **Function to update "Select All" checkbox**
+        //     function updateCourseSelectAllCheckbox() {
+        //         courseCheckboxes = document.querySelectorAll('.course__checkbox'); // 🔄 Refresh checkboxes
+        //         const checkedCount = document.querySelectorAll('.course__checkbox:checked').length;
+        //         courseSelectAllCheckbox.checked = checkedCount === courseCheckboxes.length;
+        //         courseSelectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < courseCheckboxes.length;
+        //     }
 
-            // ✅ **Function to update input value**
-            function updateCourseInputValue() {
-                courseCheckboxes = document.querySelectorAll('.course__checkbox'); // 🔄 Refresh checkboxes
-                const selectedCourses = [];
-                let ids = [];
-                courseCheckboxes.forEach(function (checkbox) {
-                    if (checkbox.checked) {
-                        selectedCourses.push(checkbox.getAttribute('data-name'));
-                        ids.push(checkbox.value);
-                    }
-                });
+        //     // ✅ **Function to update input value**
+        //     function updateCourseInputValue() {
+        //         courseCheckboxes = document.querySelectorAll('.course__checkbox'); // 🔄 Refresh checkboxes
+        //         const selectedCourses = [];
+        //         let ids = [];
+        //         courseCheckboxes.forEach(function (checkbox) {
+        //             if (checkbox.checked) {
+        //                 selectedCourses.push(checkbox.getAttribute('data-name'));
+        //                 ids.push(checkbox.value);
+        //             }
+        //         });
 
-                courseDropdownToggle.value = selectedCourses.join(', ');
-                coursehiddenInput.value = ids.join(',');
-            }
+        //         courseDropdownToggle.value = selectedCourses.join(', ');
+        //         coursehiddenInput.value = ids.join(',');
+        //     }
 
-            // ✅ **Prevent dropdown from closing when clicking inside**
-            document.querySelector('.select__all__container').addEventListener('click', function (event) {
-                event.stopPropagation();
-            });
-        });
+        //     // ✅ **Prevent dropdown from closing when clicking inside**
+        //     document.querySelector('.select__all__container').addEventListener('click', function (event) {
+        //         event.stopPropagation();
+        //     });
+        // });
 
 
     </script>
