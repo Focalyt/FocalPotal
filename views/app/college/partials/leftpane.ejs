@@ -33,6 +33,22 @@
                   <li class="nav-item <% if(menu==='Jobs') {%>active<%}%>"><a href="/college/availablejobs"><i class="fa-solid fa-briefcase"></i><span class="menu-title" data-i18n="Todo">Available
                                     Jobs</span></a>
                   </li>
+                  <li class="nav-item"><a href="/college"><i class="fa-solid fa-user"></i>
+                        <span class="menu-title" data-i18n="Todo">Events</span></a>
+                  <ul class="menu-content">
+                        <li class="nav-item <% if(menu==='addEvents') {%>active<%}%>"><a
+                                    href="/college/addEvent"><i class="fa-regular fa-user"></i><span
+                                          class="menu-title" data-i18n="Todo">Add Events
+                                          </span></a>
+                        </li>
+                        <li class="nav-item <% if(menu==='viewEvents') {%>active<%}%> "><a
+                                    href="/college/viewEvent"><i class="fa-regular fa-file"></i><span
+                                          class="menu-title" data-i18n="Todo">
+                                          View Events</span></a>
+                        </li>
+
+                  </ul>
+            </li>
 
       </div>
 </div>

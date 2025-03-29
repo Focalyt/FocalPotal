@@ -112,6 +112,23 @@
                         </ul>
                   </li>
 
+                  <li class="nav-item"><a href="/candidate"><i class="fa-solid fa-user"></i>
+                        <span class="menu-title" data-i18n="Todo">Events</span></a>
+                  <ul class="menu-content">
+                        <li class="nav-item <% if(menu==='addEvent') {%>active<%}%>"><a
+                                    href="/candidate/addCandidateEvent"><i class="fa-regular fa-user"></i><span
+                                          class="menu-title" data-i18n="Todo">Add Events
+                                          </span></a>
+                        </li>
+                        <li class="nav-item <% if(menu==='viewEvent') {%>active<%}%> "><a
+                                    href="/candidate/viewCandidateEvent"><i class="fa-regular fa-file"></i><span
+                                          class="menu-title" data-i18n="Todo">
+                                          View Events</span></a>
+                        </li>
+
+                  </ul>
+            </li>
+
 
                   <li class="nav-item 
                   <% if(menu==='requestLoan') {%>active<%}%>"><a href="/candidate/requestLoan"><i
