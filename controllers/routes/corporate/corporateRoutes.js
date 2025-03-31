@@ -1284,10 +1284,6 @@ router
   })
   .post("/addjd", async (req, res) => {
     try {
-
-
-
-
       const coinsRequired = await CoinsAlgo.findOne().select("contactcoins")
       const jobDetails = {};
       const company = await Company.findOne({
@@ -1319,9 +1315,7 @@ router
       const filesArray = Array.isArray(files) ? files : [files]; // Convert to array if single file
 
 
-
-      if (files) {
-
+     if (files) {
         // ✅ Upload Files to S3
         const uploadedFiles = [];
         const uploadPromises = [];
@@ -1363,7 +1357,56 @@ router
         await Promise.all(uploadPromises);
         console.log("Upload Files", uploadedFiles[0].fileURL)
         jobDetails['jobVideo'] = uploadedFiles[0].fileURL;
-      }
+      };
+
+      let thumbnailfiles = req.files?.jobVideoThumbnail; // Ensure correct key from FormData
+      const thumbnailfilesArray = Array.isArray(thumbnailfiles) ? thumbnailfiles : [thumbnailfiles]; // Convert to array if single file
+      console.log("thumbnailfiles",thumbnailfiles)
+
+
+     if (thumbnailfiles) {
+        // ✅ Upload Files to S3
+        const uploadedThumbnailFiles = [];
+        const uploadThumbnailPromises = [];
+
+        thumbnailfilesArray.forEach((item) => {
+          const { name, mimetype } = item;
+          const ext = name?.split('.').pop().toLowerCase();
+
+          console.log(`Processing File: ${name}, Extension: ${ext}`);
+
+          if (!allowedImageExtensions.includes(ext) && !allowedVideoExtensions.includes(ext)) {
+            throw new Error(`File type not supported: ${ext}`);
+          }
+
+          // Determine fileType
+          const fileType = allowedImageExtensions.includes(ext) ? "image" : "video";
+
+          // Generate unique S3 key
+          const key = `Jobs/${companyId}/${jobTitle}/${fileType}s/${uuid()}.${ext}`;
+          const params = {
+            Bucket: bucketName,
+            Key: key,
+            Body: item.data,
+            ContentType: mimetype,
+          };
+
+          // Upload to S3
+          uploadThumbnailPromises.push(
+            s3.upload(params).promise().then((uploadResult) => {
+              uploadedThumbnailFiles.push({
+                fileURL: uploadResult.Location,
+                fileType,
+              });
+            })
+          );
+        });
+
+        // ✅ Wait for all uploads to complete
+        await Promise.all(uploadThumbnailPromises);
+        console.log("Upload Files", uploadedThumbnailFiles[0].fileURL)
+        jobDetails['jobVideoThumbnail'] = uploadedThumbnailFiles[0].fileURL;
+      };
 
 
       jobDetails._company = companyId;
@@ -1383,6 +1426,8 @@ router
         jobDetails['emailof'] = "";
       }
       const jd = await Vacancy.create(jobDetails);
+
+      console.log("jd", jd)
 
       const coins = +(coinsRequired.contactcoins)
       if (jobDetails.isContact === true || jobDetails.isContact === "true") {

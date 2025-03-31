@@ -729,28 +729,12 @@
                               </div>
                               <div class="col-xl-5">
                                 <label for="duties">Job Duties</label>
-                                <textarea id="duties" name="duties" class="form-control" cols="3"
-                                  rows="3"><%= vacancy?.duties %></textarea>
+                                <textarea id="duties" name="duties" class="form-control" cols="3" rows="3"
+                                  maxlength="150"><%= vacancy?.duties %></textarea>
                               </div>
 
-                              <!-- <div class="col-xl-3 mb-1">
-                                <label>Add Video JD</label>
-                                <input onchange="validateVideoFile(this)" class="form-control" type="file"
-                                  name="jobVideo" id="jobvideo">
-                              </div>
-                              <div class="col-xl-4 col-xl-lg-4 col-md-4 col-sm-12 col-12 mb-1" id="thumbnails">
-                                <label for="thumbnail">
-
-                                  Add Thumbnail
-                                </label>
-                                <input id="thumbnail" type="file" name="thumbnail" />
-                              </div> -->
-
-                              <div class="col-xl-12 mb-1 text-right">
-                                <button id="sub-btn" class="btn btn-success waves-effect waves-light text-white">
-                                  SUBMIT
-                                </button>
-                              </div>
+                              
+                              
                             </div>
                           </div>
                         </div>
@@ -758,25 +742,21 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="row">
                   <div class="col-xl-12 col-lg-12 px-3">
                     <div class="card mt-1">
                       <div class="card-content">
                         <div class="card-content">
                           <div class="card-body">
-                            <div class="row">
-                              
+                           <div class="row">
                               <div class="col-xl-3 mb-1">
                                 <label>Add Video JD</label>
-                                <input onchange="validateVideoFile(this)" class="form-control" type="file"
-                                  name="jobVideo" id="jobvideo">
+                                <input accept="video/*" onchange="validateVideoFile(this)" class="form-control" type="file" name="jobVideo" id="jobvideo">
                               </div>
-                              <div class="col-xl-3 mb-1" id="thumbnails">
-                                <label for="thumbnail">
-
-                                  Add Thumbnail
-                                </label>
-                                <input id="thumbnail" type="file" name="thumbnail" class="form-control" />
+                              <div class="col-xl-3 mb-1">
+                                <label>Add Thumbnail JD</label>
+                                <input accept="image/*" onchange="validateImageFile(this)" class="form-control" type="file" name="jobVideoThumbnail" id="jobVideoThumbnail">
                               </div>
 
                               <div class="col-xl-12 mb-1 text-right">
@@ -1174,6 +1154,24 @@
               }
             }
 
+            const checkJDThumbnailValidation = (image) => {
+              let regex = /(\.jpg|\.jpeg|\.png)$/i;
+              if (!regex.exec(image)) {
+                return false;
+              } else {
+                return true;
+              }
+            }
+            function validateImageFile(input) {
+              let file = input.files[0];
+              if (file) {
+                if (!checkJDThumbnailValidation(file.name)) {
+                  alert("Please upload image in png, jpg, or jpeg format only!");
+                  input.value = ""; // Reset the file input
+                }
+              }
+            }
+
 
             function getQuestionAnswers() {
               let questionsAnswersArray = [];
@@ -1263,6 +1261,26 @@
                 }
               });
 
+              document.getElementById('jobVideoThumbnail').addEventListener('change', function () {
+                let file = this.files[0]; // Get selected file
+                if (file) {
+                  let fileType = file.name.split('.').pop().toLowerCase();
+                  let allowedTypes = ['jpg', 'jpeg', 'png'];
+                  let maxSize = 10 * 1024 * 1024; // 10MB limit
+
+                  if (!allowedTypes.includes(fileType)) {
+                    alert("❌ Invalid file format! Only PNG, JPG, and JPEG files are allowed.");
+                    this.value = ''; // Reset input field
+                    return;
+                  }
+
+                  if (file.size > maxSize) {
+                    alert("❌ File size too large! Maximum allowed size is 10MB.");
+                    this.value = ''; // Reset input field
+                  }
+                }
+              });
+
               let formData = new FormData(document.querySelector("form")); // FormData Object बनाएं
 
               // ✅ Form Fields Append करें
@@ -1304,6 +1322,11 @@
               let fileInput = document.getElementById('jobvideo');
               if (fileInput.files.length > 0) {
                 formData.append("jobVideo", fileInput.files[0]); // Only the first selected file
+              }
+
+              let fileThumbnailInput = document.getElementById('jobVideoThumbnail');
+              if (fileThumbnailInput.files.length > 0) {
+                formData.append("jobVideoThumbnail", fileThumbnailInput.files[0]); // Only the first selected file
               }
 
               console.log(formData, 'body>>>>>>>>>>>>>')
