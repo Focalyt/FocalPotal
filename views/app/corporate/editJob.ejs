@@ -536,7 +536,8 @@
                                     %>
                                     >Four Wheeler</option>
                                 <option value="Driving License" <% if(jd?.requirement==='Driving License' ) {%> selected
-                                  <% } %>>Driving License</option>
+                                  <% } %>>Driving License
+                                </option>
                                 <option value="Passport" <% if(jd?.payOut==='Passport' ) {%> selected <% } %>>Passport
                                 </option>
                               </select>
@@ -729,18 +730,16 @@
                               <label>Add Video JD</label>
                               <% if(jd?.jobVideo) { %>
                                 <div class="video-preview-container position-relative">
-                                  <video style="
-                            max-height: 150px;
-                            width: 250px;
-                        " controls>
+                                  <video style="max-height: 150px;width: 250px;" controls>
                                     <source src="<%= jd.jobVideo %>" type="video/mp4">
                                     Your browser does not support the video tag.
                                   </video>
                                   <button type="button" class="btn btn-danger btn-sm remove-video-btn"
-                                    onclick="removeVideo()">
+                                    onclick="removeVideo('<%= jd.jobVideo %>')">
                                     &#10006;
                                   </button>
                                 </div>
+
 
                                 <style>
                                   .video-preview-container {
@@ -768,6 +767,54 @@
                                   <input class="form-control  <% if(jd?.jobVideo) { %> d-none <% }%>" type="file"
                                     name="jobVideo" onchange="validateVideoFile(this)" placeholder="Add Video Jd "
                                     accept="video/mp4, video/mov, video/avi" id="jobvideo">
+
+
+
+                            </div>
+                            <div class="col-xl-3 mb-1" id="video">
+                              <label>Add Thumbnail JD</label>
+
+                              <% if(jd?.jobVideoThumbnail) { %>
+                                <div class="thumbnail-preview-container position-relative">
+
+                                  <img src="<%= jd.jobVideoThumbnail %>" alt="">
+                                  <button type="button" class="btn btn-danger btn-sm remove-video-btn"
+                                    onclick="removethumbnail('<%= jd.jobVideoThumbnail %>')">
+                                    &#10006;
+                                  </button>
+                                </div>
+
+
+                                <style>
+                                  .thumbnail-preview-container {
+                                    display: inline-block;
+                                    position: relative;
+                                  }
+
+                                  .thumbnail-preview-container img {
+                                    max-width: 150px;
+                                  }
+
+                                  .remove-video-btn {
+                                    position: absolute;
+                                    top: 5px;
+                                    right: 5px;
+                                    padding: 2px 8px;
+                                    border-radius: 50%;
+                                    background-color: #dc3545;
+                                    color: #fff;
+                                    border: none;
+                                    cursor: pointer;
+                                  }
+
+                                  .remove-video-btn:hover {
+                                    background-color: #c82333;
+                                  }
+                                </style>
+                                <% }%>
+                                  <input accept="image/*" onchange="validateImageFile(this)"
+                                    class="form-control <% if(jd?.jobVideoThumbnail) { %> d-none <% }%>" type="file"
+                                    name="jobVideoThumbnail" id="jobVideoThumbnail">
 
 
 
@@ -894,6 +941,26 @@
 
         <!-- End Coin modal offer -->
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+        <script>
+          const checkJDThumbnailValidation = (image) => {
+            let regex = /(\.jpg|\.jpeg|\.png)$/i;
+            if (!regex.exec(image)) {
+              return false;
+            } else {
+              return true;
+            }
+          }
+          function validateImageFile(input) {
+            let file = input.files[0];
+            if (file) {
+              if (!checkJDThumbnailValidation(file.name)) {
+                alert("Please upload image in png, jpg, or jpeg format only!");
+                input.value = ""; // Reset the file input
+              }
+            }
+          }
+        </script>
         <script>
           $('.chosen').chosen();
           document.getElementById('sub-qua-field').style.display = "none"
@@ -1212,7 +1279,7 @@
               document.getElementById("sub-btn").removeAttribute("data-target");
               document.getElementById("sub-btn").removeAttribute("data-dismiss");
             }
-            
+
 
 
             document.getElementById('jobvideo').addEventListener('change', function () {
@@ -1234,6 +1301,28 @@
                 }
               }
             });
+
+            document.getElementById('jobVideoThumbnail').addEventListener('change', function () {
+              let file = this.files[0]; // Get selected file
+              if (file) {
+                let fileType = file.name.split('.').pop().toLowerCase();
+                let allowedTypes = ['jpg', 'jpeg', 'png'];
+                let maxSize = 10 * 1024 * 1024; // 10MB limit
+
+                if (!allowedTypes.includes(fileType)) {
+                  alert("❌ Invalid file format! Only PNG, JPG, and JPEG files are allowed.");
+                  this.value = ''; // Reset input field
+                  return;
+                }
+
+                if (file.size > maxSize) {
+                  alert("❌ File size too large! Maximum allowed size is 10MB.");
+                  this.value = ''; // Reset input field
+                }
+              }
+            });
+
+
 
             let formData = new FormData(document.querySelector("form")); // FormData Object बनाएं
 
@@ -1291,6 +1380,11 @@
             let fileInput = document.getElementById('jobvideo');
             if (fileInput.files.length > 0) {
               formData.append("jobVideo", fileInput.files[0]); // Only the first selected file
+            };
+
+            let fileThumbnailInput = document.getElementById('jobVideoThumbnail');
+            if (fileThumbnailInput.files.length > 0) {
+              formData.append("jobVideoThumbnail", fileThumbnailInput.files[0]); // Only the first selected file
             }
 
 
@@ -1471,14 +1565,47 @@
               firstError.focus();
             }
             return flag
+          };
+
+          function getKeyFromS3Url(url) {
+            const s3BaseUrl = "https://mipie-bucket.s3.ap-south-1.amazonaws.com/";
+            return url.replace(s3BaseUrl, "");
           }
 
 
-          function removeVideo() {
-            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+
+          function removethumbnail(url) {
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } };
+            const location = url // yeh full URL hai
+            const key = getKeyFromS3Url(location);
+
             let data = {
-              key: $('#jobvideo').val(),
-            }
+              key: key
+            };
+
+
+            axios.post('/api/deleteSingleFile', data, header)
+              .then(res => {
+                axios.post("/company/removeVideoThuumbnailJd/<%= jd?._id%>")
+                  .then(() => {
+                    $('.thumbnail-preview-container').hide();
+                    $('#jobVideoThumbnail').removeClass('d-none');
+
+                  })
+                  .catch(err => console.log(err.message))
+              }).catch(err => console.log(err.message))
+          }
+
+
+          function removeVideo(url) {
+            header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
+            const location = url; // yeh full URL hai
+            const key = getKeyFromS3Url(location);
+
+            let data = {
+              key: key
+            };
+
             axios.post('/api/deleteSingleFile', data, header)
               .then(res => {
                 axios.post("/company/removeVideoJd/<%= jd?._id%>")
