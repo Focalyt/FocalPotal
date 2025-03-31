@@ -612,10 +612,11 @@ router.get("/jobdetailsmore/:jobId", async(req, res) => {
 				}]).sort({ createdAt: -1 }).limit(5)
 
 		const courses = await Courses.find({ status: true}).sort({ createdAt: -1 }).limit(10)
-	
-
+		const bucketUrl = process.env.MIPIE_BUCKET_URL;
+		
 		rePath = res.render(`${req.vPath}/front/jobdetailmore`, {
-			job, recentJobs, state, city, courses
+			job, recentJobs, state, city, courses, bucketUrl
+			
 		});
 	}catch(err){
 		console.log(err,'err>>>>>>>>>>>>')

@@ -1,176 +1,448 @@
 <% include ../../partials/header %>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="/public_assets/css/icons.css">
-<link rel="stylesheet" href="/public_assets/css/slider-responsive.css">
-<link rel="stylesheet" href="/public_assets/css/animate.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/public_assets/css/icons.css">
+  <link rel="stylesheet" href="/public_assets/css/slider-responsive.css">
+  <link rel="stylesheet" href="/public_assets/css/animate.min.css">
 
-<body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static  pose-lead"
-data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
-<% include ./partials/navbar%>
-  <% include ./partials/leftpane%>
+  <body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static  pose-lead"
+    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+    <% include ./partials/navbar%>
+      <% include ./partials/leftpane%>
 
-    <% include ../../partials/flash %>
+        <% include ../../partials/flash %>
 
-  <div class="app-content content">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
+          <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
 
 
-    <div class="content-wrapper">
-  <div id="add-Events">
-    <div class="content-body">
-        <div class="mb-2">
+            <div class="content-wrapper">
+              <div id="add-Events">
+                <div class="content-body">
+                  <div class="mb-2">
 
-              <div class="event-view-container">
-                
-                <div class="school-header">
-                  <h2 class="school-name">ABC Public School</h2>
-                  <p class="school-description">
-                    ABC Public School organized an exciting Tech Fest showcasing student innovations.
-                  </p>
-                </div>
-              
-                <div class="swiper eventSwiper">
-                  <div class="swiper-wrapper" style="height:300px">
-                  
-                    <div class="swiper-slide">
-                      <img src="/images/referal.png" alt="Event Image" />
+                    <div class="event-view-container">
+
+                      <div class="school-header">
+                        <h2 class="school-name">ABC Public School</h2>
+                        <p class="school-description">
+                          ABC Public School organized an exciting Tech Fest showcasing student innovations.
+                        </p>
+                      </div>
+
+                      <div class="swiper eventSwiper">
+                        <div class="swiper-wrapper" style="height:300px">
+
+                          <div class="swiper-slide">
+                            <img src="/images/referal.png" alt="Event Image" />
+                          </div>
+                          <div class="swiper-slide">
+                            <img src="/images/referal.png" alt="Event Image" />
+                          </div>
+                          <div class="swiper-slide">
+                            <video controls muted>
+                              <source src="/uploads/events/video1.mp4" type="video/mp4" />
+                            </video>
+                          </div>
+                        </div>
+
+
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                      </div>
+
+
+
                     </div>
-                    <div class="swiper-slide">
-                      <img src="/images/referal.png" alt="Event Image" />
-                    </div>
-                    <div class="swiper-slide">
-                      <video controls muted>
-                        <source src="/uploads/events/video1.mp4" type="video/mp4" />
-                      </video>
-                    </div>
+
+                    <section class="searchjobspage">
+                      <div class="forlrgscreen">
+                        <div class="pt-xl-2 pt-lg-0 pt-md-0 pt-sm-5 pt-0">
+                          <div class="course_nw mb-3">
+                            <div class="row justify-content-sm-center justify-content-md-start">
+                              <% if (courses && courses.length> 0) { %>
+                                <% courses.forEach((recentJob)=> { %>
+                                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-10 mx-auto">
+                                    <div class="cr_nw_in">
+                                      <!-- <div id="base">
+                                        <p class="text-center p-0 match_card font-weight-bolder mb-0">Now At</p>
+                                        <p class="text-center p-0 match_del font-weight-bold mb-0"><del class="text"><%=recentJob.courseFee%></del></p>
+                                        <p class="text-center p-0 match_final font-weight-bold mb-0"><%=recentJob.cutPrice%></p>
+                                      </div> -->
+                                      <div class="right_obj shadow">
+                                        <%=recentJob.courseType==='coursejob' ? 'Course + Job' : 'Course' %>
+                                      </div>
+                                      <!-- <a href="/candidate/course/<%= recentJob._id%>" class="video-bttn position-relative d-block">
+                                        <img src="/images/pages/video_thum1.png" class="video_thum img-fluid" alt="">
+                                        </a> -->
+                                      <% if (recentJob.videos !==undefined && recentJob.videos !==null) { %>
+                                        <a href="#" data-target="#videoModal" data-toggle="modal"
+                                          link="<%= process.env.MIPIE_BUCKET_URL +'/' + recentJob.videos[0] %>"
+                                          class="video-bttn position-relative d-block"><img id="videoPlay"
+                                            src="<%= recentJob.thumbnail ? process.env.MIPIE_BUCKET_URL +'/' + recentJob.thumbnail : '/images/pages/video_thum1.png' %>"
+                                            class="video_thum img-fluid" alt="">
+                                          <img src="public_assets/images/newjoblisting/play.svg" alt="" class="group1"></a>
+                                        <%}%>
+                                          <div class="course_inf pt-0">
+                                            <a href="/candidate/course/<%= recentJob._id%>">
+                                              <h5>
+                                                <%=recentJob.name ? recentJob.name : 'N/A' %>
+                                              </h5>
+                                              <span class="job_cate">
+                                                <%= recentJob.sectors?recentJob.sectors[0]?.name : 'N/A' %>
+                                              </span>
+                                              <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-6">
+                                                  <div class="course_spec">
+                                                    <div class="spe_icon">
+                                                      <!-- <i class="la la-money"></i> -->
+                                                      <figure class="text-end">
+                                                        <img src="/public_assets/images/newicons/eligibility.png"
+                                                          class="img-fluid p-0 width" draggable="false">
+                                                      </figure>
+                                                    </div>
+                                                    <div class="spe_detail">
+                                                      <p class="mb-0 text-black">Eligibility</p>
+                                                      <p class="mb-0 text-black"><small class="sub_head">(
+                                                          <%=recentJob.qualification%>)</small></p>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-6">
+                                                  <div class="course_spec">
+                                                    <div class="spe_icon">
+                                                      <!-- <i class="la la-shield"></i> -->
+                                                      <figure class="text-end">
+                                                        <img src="/public_assets/images/newicons/duration.png"
+                                                          class="img-fluid p-0 width" draggable="false">
+                                                      </figure>
+                                                    </div>
+                                                    <div class="spe_detail">
+                                                      <p class="mb-0 text-black">Duration</p>
+                                                      <p class="mb-0 text-black"><small class="sub_head">(
+                                                          <%=recentJob.duration%>)</small></p>
+                                                    </div>
+                                                  </div>
+                                                </div>
+      
+      
+                                                <div class="col-md-6 col-sm-6 col-6">
+                                                  <div class="course_spec">
+                                                    <div class="spe_icon">
+                                                      <figure class="text-end">
+                                                        <img src="/public_assets/images/newicons/location.png"
+                                                          class="img-fluid p-0 width" draggable="false">
+                                                      </figure>
+                                                      <!-- <i class="la la-graduation-cap"></i> -->
+                                                    </div>
+                                                    <div class="spe_detail">
+                                                      <p class="mb-0 text-black">Location</p>
+                                                      <div class="ellipsis-wrapper">
+                                                        <p class="mb-0 text-black para_ellipsis"
+                                                          title="<%= courses.city ? courses.city + ', ' + courses.state : 'NA' %>">
+                                                          <small class="sub_head">
+                                                            <% if (recentJob.city) { %>
+                                                              (<%= recentJob.city + ', ' + recentJob.state %>)
+                                                                <% } else { %>
+                                                                  NA
+                                                                  <% } %>
+                                                          </small>
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+      
+                                                <div class="col-md-6 col-sm-6 col-6">
+                                                  <div class="course_spec">
+                                                    <div class="spe_icon">
+                                                      <!-- <i class="la la-map"></i> -->
+                                                      <figure class="text-end">
+                                                        <img src="/public_assets/images/newicons/job-mode.png"
+                                                          class="img-fluid p-0 width" draggable="false">
+                                                      </figure>
+                                                    </div>
+      
+                                                    <div class="spe_detail">
+                                                      <p class="mb-0 text-black">Mode</p>
+                                                      <p class="mb-0 text-black"><small class="sub_head">(
+                                                          <%=recentJob.trainingMode%>)</small></p>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </a>
+                                            <div class="row mt-1">
+                                              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                <a class="apply-thisjob text-left px-1 apply-padding mb-0 mt-0"
+                                                  href="/candidate/course/<%= recentJob._id%>" title=""><i
+                                                    class="la la-paper-plane  "></i>
+                                                  Apply Now</a>
+                                              </div>
+                                              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                <a class="apply-thisjob text-left px-1 apply-padding mb-0 mt-0"
+                                                  href="https://wa.me/918699017301?text=hi" title=""><i
+                                                    class="la la-mobile-phone  "></i>
+                                                  Chat Now</a>
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                  </div>
+                                  <!-- <hr> -->
+                                  <% }); %>
+                                    <% } else{%>
+                                      <h4 class="text-center"> No Courses found</h4>
+                                      <%} %>
+                            </div>
+                          </div>
+      
+      
+      
+      
+      
+                        </div>
+                      </div>
+                      <div class="forsmallscrn d-none">
+                        <div class="container search-page pt-xl-5 pt-lg-0 pt-md-0 pt-sm-0 pt-0">
+                          <% if (courses && courses.length> 0) { %>
+                            <% courses.forEach((recentJob)=> { %>
+      
+                              <div class="row pointer">
+                                <div class="card-body px-0">
+                                  <div class="col-lg-8 col-md-7 column">
+                                    <div class="job-single-sec">
+                                      <div class="job-single-head border-0 pb-0">
+                                        <div class="job-head-info">
+                                          <h6 class="text-capitalize font-weight-bolder">
+                                            <%=recentJob.name ? recentJob.name : 'NA' %>
+                                          </h6>
+                                          <span class="text-capitalize set-lineh">
+                                            <%= recentJob.sectors?recentJob.sectors[0]?.name : "" %>
+                                          </span>
+                                        </div>
+                                      </div>
+                                      <a href="/candidate/course/<%= recentJob._id%>">
+                                        <div class="job-overview mt-1">
+                                          <ul class="mb-xl-2 mb-lg-2 mb-md-2 mb-sm-0 mb-0 list-unstyled">
+                                            <li><i class="la la-money"></i>
+                                              <h3 class="jobDetails-wrap">
+                                                <%=recentJob.cutPrice ? recentJob.cutPrice.toLowerCase()==='free' ?
+                                                  recentJob.cutPrice : '₹ ' + recentJob.cutPrice : 'N/A' %>
+                                              </h3>
+                                              <span class="text-capitalize jobDetails-wrap">
+                                                Course Fee
+                                              </span>
+                                            </li>
+                                            <li><i class="la la-shield"></i>
+                                              <h3 class="jobDetails-wrap">
+                                                <%=recentJob.courseLevel ? recentJob.courseLevel : 'N/A' %>
+                                                  <span class="jobDetails-wrap">
+                                                    Course Level
+                                                  </span>
+                                            </li>
+                                            <li><i class="la la-graduation-cap"></i>
+                                              <h3 class="jobDetails-wrap">
+                                                <%=recentJob?.certifyingAgency ? recentJob.certifyingAgency : 'N/A' %>
+                                                  <span class="jobDetails-wrap">
+                                                    Course Agency
+                                                  </span>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </a>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4 col-md-5 column mt-xl-4 mt-lg-5 mt-md-5 mt-sm-3 mt-2">
+                                    <a class="apply-thisjob text-left px-0 d-xl-block d-lg-block d-md-block d-sm-none d-none apply-padding text-center"
+                                      href="/candidate/course/<%= recentJob._id%>" title=""><i
+                                        class="la la-paper-plane  "></i>
+                                      Register for this Course</a>
+                                    <!-- Course Overview -->
+                                    <div class="row ">
+                                      <div class="col-6 same-plane mt-2">
+                                        <a class="apply-thisjob text-center py-1 px-0 d-xl-none d-lg-none d-md-none d-sm-block d-block w-100 same-plane"
+                                          href="/candidate/job/<%= recentJob._id%>" title="">
+                                          <i
+                                            class="la la-paper-plane ml-xl-3 mt-lg-3 mt-md-2 mt-sm-0 ml-xl-0 ml-lg-0 ml-md-1 ml-sm-2 ml-0 text-center-sm text-center-md text-center-lg text-center-xl plane-font"></i>Course
+                                          Apply
+                                        </a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+      
+      
+                              <% }); %>
+                                <% } %>
+                        </div>
+                      </div>
+                      <% if (totalPages> 1) { %>
+                        <ul class="pagination justify-content-end ml-2 mb-2 text-right">
+                          <% let first=1 %>
+                            <% let last=totalPages> 4 ? 4 :
+                              totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                                <% first=page - 1 %>
+                                  <% last=page + 1 %>
+                                    <% if (last> totalPages) last = totalPages
+                                      %> <% } %>
+                                        <% if (first> 1) { %>
+                                          <li class="page-item">
+                                            <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                                          </li>
+                                          <% } %>
+                                            <% for (let i=first; i <=last; i +=1) { %>
+                                              <% if (i===page) { %>
+                                                <li class="active page-item">
+                                                  <a href="javascript:void()" class="page-link pagi_custom">
+                                                    <%= i %>
+                                                  </a>
+                                                </li>
+                                                <% } else { %>
+                                                  <li class="page-item">
+                                                    <a class="page-link pageAnchor pagi_customtwo" href="<%= i %>">
+                                                      <%= i %>
+                                                    </a>
+                                                  </li>
+                                                  <% } %>
+                                                    <% } %>
+                                                      <% if (totalPages>
+                                                        last)
+                                                        { %>
+                                                        <li class="page-item">
+                                                          <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                          <a class="pageAnchor page-link" href="<%= totalPages %>">Last</a>
+                                                        </li>
+                                                        <% } %>
+                        </ul>
+                        <% } %>
+                    </section>
+
+
+
                   </div>
-              
-               
-                  <div class="swiper-button-next"></div>
-                  <div class="swiper-button-prev"></div>
                 </div>
-              </div>
-              
-              
-        </div>
-    </div>
-<style>
-  .event-view-container {
-  padding: 20px;
-  max-width: 1000px;
-  margin: auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
+                <style>
+                  .event-view-container {
+                    padding: 20px;
+                    max-width: 1000px;
+                    margin: auto;
+                    background: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                  }
 
-.school-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
+                  .school-header {
+                    text-align: center;
+                    margin-bottom: 30px;
+                  }
 
-.school-name {
-  font-size: 28px;
-  font-weight: bold;
-  color: #3f3f3f;
-}
+                  .school-name {
+                    font-size: 28px;
+                    font-weight: bold;
+                    color: #3f3f3f;
+                  }
 
-.school-description {
-  font-size: 16px;
-  color: #666;
-  margin-top: 10px;
-}
+                  .school-description {
+                    font-size: 16px;
+                    color: #666;
+                    margin-top: 10px;
+                  }
 
-.swiper-slide img,
-.swiper-slide video {
-  width: 100%;
-  height: 300px;
-  object-fit: contain;
-  border-radius: 12px;
-}
-.swiper-button-prev:after, .swiper-rtl .swiper-button-next:after {
-font-size: 14px!important;
-}
-.swiper-button-next:after, .swiper-rtl .swiper-button-prev:after{
-  font-size: 14px!important;
-}
+                  .swiper-slide img,
+                  .swiper-slide video {
+                    width: 100%;
+                    height: 300px;
+                    object-fit: contain;
+                    border-radius: 12px;
+                  }
 
-</style>
-<!-- Swiper JS -->
- <!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+                  .swiper-button-prev:after,
+                  .swiper-rtl .swiper-button-next:after {
+                    font-size: 14px !important;
+                  }
 
-<script>
-  const swiper = new Swiper(".eventSwiper", {
-    slidesPerView: 1,
-    spaceBetween: 20,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    // autoplay: {
-    //   delay: 2000,
-    //   disableOnInteraction: false,
-    // },
-    loop: true, 
-    breakpoints: {
-      768: {
-        slidesPerView: 2,
-      }
-    }
-  });
-</script>
+                  .swiper-button-next:after,
+                  .swiper-rtl .swiper-button-prev:after {
+                    font-size: 14px !important;
+                  }
+                </style>
+                <!-- Swiper JS -->
+                <!-- Swiper CSS -->
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+                <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+                <script>
+                  const swiper = new Swiper(".eventSwiper", {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                    navigation: {
+                      nextEl: ".swiper-button-next",
+                      prevEl: ".swiper-button-prev",
+                    },
+                    // autoplay: {
+                    //   delay: 2000,
+                    //   disableOnInteraction: false,
+                    // },
+                    loop: true,
+                    breakpoints: {
+                      768: {
+                        slidesPerView: 2,
+                      }
+                    }
+                  });
+                </script>
 
 
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        initCarousel(); // Initialize image carousel
-        // initDropdown(); // Dropdown functionality
-        // initToggleMore(); // Read more functionality
-        // initLazyVideo(); // Video autoplay optimization
-        // initShareButton(); // Sharing functionality
-        // initEdit(); // Edit modal functionality
-        // initTagModal(); // Tagging modal
-      });
+                <script>
+                  document.addEventListener("DOMContentLoaded", function () {
+                    initCarousel(); // Initialize image carousel
+                    // initDropdown(); // Dropdown functionality
+                    // initToggleMore(); // Read more functionality
+                    // initLazyVideo(); // Video autoplay optimization
+                    // initShareButton(); // Sharing functionality
+                    // initEdit(); // Edit modal functionality
+                    // initTagModal(); // Tagging modal
+                  });
 
-      // 🔹 1️⃣ Initialize Carousel (Image Slider)
-      function initCarousel() {
-        document.querySelectorAll(".happy_candidate_images").forEach(container => {
-          const slides = [...container.children];
-          if (slides.length <= 1) return;
+                  // 🔹 1️⃣ Initialize Carousel (Image Slider)
+                  function initCarousel() {
+                    document.querySelectorAll(".happy_candidate_images").forEach(container => {
+                      const slides = [...container.children];
+                      if (slides.length <= 1) return;
 
-          container.insertAdjacentHTML("beforebegin", `
+                      container.insertAdjacentHTML("beforebegin", `
       <button class="carousel-btn prev">❮</button>
       <button class="carousel-btn next">❯</button>
     `);
-          let currentSlide = 0;
-          const updateSlides = () => slides.forEach((slide, i) => slide.style.display = i === currentSlide ? "block" : "none");
-          container.parentNode.querySelector(".prev").addEventListener("click", () => { currentSlide = (currentSlide - 1 + slides.length) % slides.length; updateSlides(); });
-          container.parentNode.querySelector(".next").addEventListener("click", () => { currentSlide = (currentSlide + 1) % slides.length; updateSlides(); });
-          updateSlides();
-        });
-      }
-    </script>
+                      let currentSlide = 0;
+                      const updateSlides = () => slides.forEach((slide, i) => slide.style.display = i === currentSlide ? "block" : "none");
+                      container.parentNode.querySelector(".prev").addEventListener("click", () => { currentSlide = (currentSlide - 1 + slides.length) % slides.length; updateSlides(); });
+                      container.parentNode.querySelector(".next").addEventListener("click", () => { currentSlide = (currentSlide + 1) % slides.length; updateSlides(); });
+                      updateSlides();
+                    });
+                  }
+                </script>
 
-    <style>
-      /* .carousel-btn{
+                <style>
+                  /* .carousel-btn{
         border: none;
         background: transparent;
       } */
-
-    </style>
-
+                </style>
 
 
 
-  </div>
-</div>
+
+              </div>
+            </div>
 
 
-</div>
+          </div>
 
-</body>
+  </body>
