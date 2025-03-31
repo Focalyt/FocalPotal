@@ -536,7 +536,8 @@
                                     %>
                                     >Four Wheeler</option>
                                 <option value="Driving License" <% if(jd?.requirement==='Driving License' ) {%> selected
-                                  <% } %>>Driving License</option>
+                                  <% } %>>Driving License
+                                </option>
                                 <option value="Passport" <% if(jd?.payOut==='Passport' ) {%> selected <% } %>>Passport
                                 </option>
                               </select>
@@ -734,7 +735,7 @@
                                     Your browser does not support the video tag.
                                   </video>
                                   <button type="button" class="btn btn-danger btn-sm remove-video-btn"
-                                    onclick="removeVideo('<%= jd.jobVideo %>')">
+                                    onclick="removeVideo()">
                                     &#10006;
                                   </button>
                                 </div>
@@ -940,6 +941,10 @@
 
         <!-- End Coin modal offer -->
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+        <script>
+        
+        </script>
         <script>
           $('.chosen').chosen();
           document.getElementById('sub-qua-field').style.display = "none"
@@ -1546,28 +1551,12 @@
             return flag
           };
 
-          const checkJDThumbnailValidation = (image) => {
-            let regex = /(\.jpg|\.jpeg|\.png)$/i;
-            if (!regex.exec(image)) {
-              return false;
-            } else {
-              return true;
-            }
-          }
-          function validateImageFile(input) {
-            let file = input.files[0];
-            if (file) {
-              if (!checkJDThumbnailValidation(file.name)) {
-                alert("Please upload image in png, jpg, or jpeg format only!");
-                input.value = ""; // Reset the file input
-              }
-            }
-          }
-
           function getKeyFromS3Url(url) {
             const s3BaseUrl = "https://mipie-bucket.s3.ap-south-1.amazonaws.com/";
             return url.replace(s3BaseUrl, "");
           }
+
+
 
           function removethumbnail(url) {
             header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } };
@@ -1589,11 +1578,12 @@
                   })
                   .catch(err => console.log(err.message))
               }).catch(err => console.log(err.message))
-          };
+          }
+
 
           function removeVideo(url) {
             header = { headers: { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" } }
-            const location = url; // yeh full URL hai
+            const location = $('#jobVideoThumbnail').val(); // yeh full URL hai
             const key = getKeyFromS3Url(location);
 
             let data = {
@@ -1612,11 +1602,6 @@
                   .catch(err => console.log(err.message))
               }).catch(err => console.log(err.message))
           }
-          
-
-
-
-
           function showContactInfo() {
             document.getElementById("contact-info").style.display = "block";
             var coinLabel = document.querySelector('label[for="25 coin"]');
