@@ -3981,7 +3981,7 @@ router.route("/viewCandidateEvent").get((req, res) => {
     
     res.render(`${req.vPath}/app/candidate/viewCandidateView`, {
       menu :'viewEvent',
-      courses,
+      
     });
   } catch (err) {
     req.flash("error", err.message || "Something went wrong!");
