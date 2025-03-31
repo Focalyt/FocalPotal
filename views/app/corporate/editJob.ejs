@@ -726,6 +726,27 @@
                               <textarea id="duties" name="duties" class="form-control" cols="3" rows="3"
                                 maxlength="150"><%= jd?.duties %></textarea>
                             </div>
+                            
+                          </div>
+                          <div class="col-xl-12 mb-1 text-right">
+                            <button id="sub-btn"
+                              class="btn btn-success waves-effect waves-light text-white">SUBMIT</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 px-3">
+                  <div class="card mt-1">
+                    <div class="card-content">
+                      <div class="card-content">
+                        <div class="card-body">
+                          <div class="row">
+                           
                             <div class="col-xl-3 mb-1" id="video">
                               <label>Add Video JD</label>
                               <% if(jd?.jobVideo) { %>
@@ -741,28 +762,7 @@
                                 </div>
 
 
-                                <style>
-                                  .video-preview-container {
-                                    display: inline-block;
-                                    position: relative;
-                                  }
-
-                                  .remove-video-btn {
-                                    position: absolute;
-                                    top: 5px;
-                                    right: 5px;
-                                    padding: 2px 8px;
-                                    border-radius: 50%;
-                                    background-color: #dc3545;
-                                    color: #fff;
-                                    border: none;
-                                    cursor: pointer;
-                                  }
-
-                                  .remove-video-btn:hover {
-                                    background-color: #c82333;
-                                  }
-                                </style>
+                               
                                 <% }%>
                                   <input class="form-control  <% if(jd?.jobVideo) { %> d-none <% }%>" type="file"
                                     name="jobVideo" onchange="validateVideoFile(this)" placeholder="Add Video Jd "
@@ -819,6 +819,13 @@
 
 
                             </div>
+                            <div class="col-xl-3 mb-1" id="videothumbnail">
+                              <label for="thumbnail">
+
+                                Add Thumbnail
+                              </label>
+                              <input id="thumbnail" type="file" name="thumbnail" class="form-control" />
+                            </div>
                           </div>
                           <div class="col-xl-12 mb-1 text-right">
                             <button id="sub-btn"
@@ -830,6 +837,7 @@
                   </div>
                 </div>
               </div>
+
         </div>
         </section>
         </form>
