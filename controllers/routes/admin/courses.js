@@ -58,15 +58,15 @@ router.route("/").get(async (req, res) => {
 		let view = false
 		let canEdit = false
 		const user = req.session.user
-		console.log("user",user)
+		console.log("user", user)
 		if (user.role === 0) {
-			
+
 			canEdit = true
 		}
 
 		if (user.role === 10) {
 			view = true;
-			
+
 		}
 		const data = req.query;
 		const fields = {
@@ -150,7 +150,7 @@ router.route("/").get(async (req, res) => {
 			// For Admin/other roles
 			courses = await Courses.find(fields).populate("sectors");
 		}
-		console.log("canEdit",canEdit)
+		console.log("canEdit", canEdit)
 		// console.log(courses, "this is courses")
 		return res.render(`${req.vPath}/admin/course`, {
 			menu: 'course',
@@ -313,27 +313,27 @@ router
 		}
 
 	});
-	router.patch('/:courseId/disable-doc/:docId', async (req, res) => {
-		const { courseId, docId } = req.params;
-	  
-		try {
-		  const course = await Courses.findOneAndUpdate(
+router.patch('/:courseId/disable-doc/:docId', async (req, res) => {
+	const { courseId, docId } = req.params;
+
+	try {
+		const course = await Courses.findOneAndUpdate(
 			{ _id: courseId, 'docsRequired._id': docId },
 			{ $set: { 'docsRequired.$.status': false } },
 			{ new: true }
-		  );
-	  
-		  if (!course) {
+		);
+
+		if (!course) {
 			return res.status(404).json({ status: false, message: "Document or Course not found" });
-		  }
-	  
-		  res.status(200).json({ status: true, message: "Document disabled successfully", data: course });
-		} catch (error) {
-		  console.error(error);
-		  res.status(500).json({ status: false, message: "Server Error" });
 		}
-	  });
-	  
+
+		res.status(200).json({ status: true, message: "Document disabled successfully", data: course });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ status: false, message: "Server Error" });
+	}
+});
+
 
 
 
@@ -371,27 +371,43 @@ router.route("/registrations")
 	.get(auth1, async (req, res) => {
 		try {
 			const user = req.session.user
+
 			let candidates;
 			let count;
 			let view = false;
-			let data
-			let perPage
-			let p
+			let data = req.query
+			let perPage = 20
+			let p = parseInt(req.query.page, 10);
+			let page = p || 1;
 			let totalPages
-			let page
+
 			let { value, order } = req.query
 			let sorting = {};
 			let numberCheck;
 			let filter = {};
-			console.log("order", order, "value", value)
-			if (user.role === 0 || user.role === 10) {
-				page = p || 1;
 
-				data = req.query
-				perPage = 20;
-				p = parseInt(req.query.page, 10);
-				page = p || 1;
+			// Parsing courseIds and centerIds
+			let courseIds = [];
+			let centerIds = [];
 
+			// Convert courseAccess to ObjectIds
+			if (user.access && typeof user.access.courseAccess === 'string') {
+				courseIds = user.access.courseAccess
+					.split(',')
+					.map(id => id.trim())
+					.filter(id => id)
+					.map(id => new ObjectId(id));
+			}
+
+			// Convert centerAccess to ObjectIds
+			if (user.access && typeof user.access.centerAccess === 'string') {
+				centerIds = user.access.centerAccess
+					.split(',')
+					.map(id => id.trim())
+					.filter(id => id)
+					.map(id => new ObjectId(id));
+			}
+		     	if (user.role === 0 || user.role === 10) {
 				if (req.session.user.role === 10) {
 					view = true
 				}
@@ -422,53 +438,109 @@ router.route("/registrations")
 
 			}
 			else if (user.role === 11) {
-
-				let courseIsds = user.access.courseAccess;
-				let centerIds = user.access.centerAccess;
-				if (courseIsds) {
-					const idsArray = Array.isArray(courseIsds) ? courseIsds : [courseIsds];
-
-					// Valid ObjectId check & conversion
-					const validCoursesIds = idsArray
-						.filter(id => mongoose.Types.ObjectId.isValid(id))
-						.map(id => new mongoose.Types.ObjectId(id));
-
-					if (validCoursesIds.length === 0) {
-						return res.status(400).json({ success: false, message: 'Invalid Courses ID(s)' });
-					}
-
-					// Courses जिनके center array में centerId मौजूद हो
-					candidates = await AppliedCourses.find({
-						_course: { $in: validCoursesIds }
-					}).populate("_candidate").populate("_course").populate("_center");
-
-				} else if (centerIds) {
-					const idsArray = Array.isArray(centerIds) ? centerIds : [centerIds];
-
-					// Valid ObjectId check & conversion
-					const validCenterIds = idsArray
-						.filter(id => mongoose.Types.ObjectId.isValid(id))
-						.map(id => new mongoose.Types.ObjectId(id));
-
-					if (validCenterIds.length === 0) {
-						return res.status(400).json({ success: false, message: 'Invalid Center ID(s)' });
-					}
-
-					// Courses जिनके center array में centerId मौजूद हो
-					candidates = await AppliedCourses.find({
-						center: { $in: validCenterIds }
-					}).populate("_candidate").populate("_course").populate("_center")
-
-
-				} else {
-
-					candidates = await AppliedCourses.find().populate("_candidate").populate("_course").populate("_center");
-
+				// Prepare role filter based on courseIds or centerIds
+				let roleFilter = {};
+	
+				// Prioritize courseIds
+				if (courseIds.length > 0) {
+					roleFilter['_course'] = { $in: courseIds };
+				} 
+				// Fallback to centerIds
+				else if (centerIds.length > 0) {
+					roleFilter['_center'] = { $in: centerIds };
+				} 
+				// If no access, return empty result
+				else {
+					return res.render(`${req.vPath}/admin/course/registration`, {
+						candidates: [],
+						perPage,
+						totalPages: 0,
+						page: 1,
+						count: 0,
+						data,
+						menu: 'courseRegistrations',
+						view: true,
+						sortingValue: ['createdAt'],
+						sortingOrder: [-1],
+					});
 				}
-
-
+	
+				// Name/Mobile filtering
+				numberCheck = isNaN(data?.name);
+				if (data['name'] != '' && data.hasOwnProperty('name')) {
+					const regex = new RegExp(data['name'], 'i');
+					
+					if (numberCheck) {
+						// If name is not a number, use regex
+						roleFilter["name"] = regex;
+					} else {
+						// If name can be a number, add more flexible search
+						roleFilter["$or"] = [
+							{ "name": { "$regex": data['name'], "$options": "i" } },
+							{ "mobile": Number(data['name']) },
+							{ "whatsapp": Number(data['name']) }
+						];
+					}
+				}
+	
+				// Sorting
+				if (value && order) {
+					sorting[value] = Number(order)
+				} else {
+					sorting = { createdAt: -1 }
+				}
+	
+				// Aggregation pipeline
+				let agg = [
+					{ $match: roleFilter },
+					{
+						$lookup: {
+							from: 'candidates',
+							localField: '_candidate',
+							foreignField: '_id',
+							as: 'candidateDetails'
+						}
+					},
+					{
+						$lookup: {
+							from: 'courses',
+							localField: '_course',
+							foreignField: '_id',
+							as: 'courseDetails'
+						}
+					},
+					{ $unwind: '$candidateDetails' },
+					{ $unwind: '$courseDetails' },
+					{
+						$project: {
+							_id: 1,
+							courseStatus: 1,
+							registrationFee: 1,
+							url: 1,
+							remarks: 1,
+							createdAt: 1,
+							name: '$candidateDetails.name',
+							candidateId: '$candidateDetails._id',
+							mobile: '$candidateDetails.mobile',
+							courseName: '$courseDetails.name',
+							courseId: '$courseDetails._id',
+							registrationCharges: '$courseDetails.registrationCharges',
+							sector: '$courseDetails.sector'
+						}
+					},
+					{ $sort: sorting },
+					{ $skip: (page - 1) * perPage },
+					{ $limit: perPage }
+				];
+	
+				// Count for pagination
+				count = await AppliedCourses.countDocuments(roleFilter);
+				
+				candidates = await AppliedCourses.aggregate(agg);
+				totalPages = Math.ceil(count / perPage);
 			}
-
+	
+			console.log("candidates", candidates)
 			return res.render(`${req.vPath}/admin/course/registration`, {
 				candidates,
 				perPage,
