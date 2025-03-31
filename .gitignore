@@ -65,3 +65,4 @@ views/admin/course/crm.ejs
 controllers/routes/admin/courses.js
 views/admin/qualificationSetting/index copy.ejs
 views/front/jobdetailmore copy.ejs
+/views/admin/subQualificationSetting/index copy.ejs
