@@ -3975,4 +3975,28 @@ router.route('/reqDocs/:courseId')
     }
 })
 
+router.route("/addCandidateEvent").get((req, res) => {
+  try {
+    res.render(`${req.vPath}/app/candidate/addCandidateEvents`, {
+      menu: 'addEvent'
+    });
+  } catch (err) {
+    req.flash("error", err.message || "Something went wrong!");
+    return res.redirect("back");
+  }
+});
+
+
+router.route("/viewCandidateEvent").get((req, res) => {
+  try {
+    
+    res.render(`${req.vPath}/app/candidate/viewCandidateView`, {
+      menu :'viewEvent'
+    });
+  } catch (err) {
+    req.flash("error", err.message || "Something went wrong!");
+    return res.redirect("back");
+  }
+});
+
 module.exports = router;

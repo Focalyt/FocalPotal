@@ -17,6 +17,7 @@ const todoRoutes = require("./todo");
 const smsRoutes = require("./sms");
 const coverLetterRoutes = require("./coverLetter");
 const mockInterviewRoutes = require("./mockInterview");
+// const addEventsRoutes = require('./addEvents');
 const router = express.Router();
 const moment = require('moment')
 router.use("/todo", isCollege, todoRoutes);
@@ -27,6 +28,7 @@ router.use("/careerObjective", isCollege, careerObjectiveRoutes);
 // router.use(isCollege);
 router.use("/coverLetter", isCollege, coverLetterRoutes);
 router.use("/mockInterview", isCollege, mockInterviewRoutes);
+// router.use("/addEvent", isCollege , addEventsRoutes)
 const readXlsxFile = require("read-excel-file/node");
 
 router.route('/')
@@ -1547,4 +1549,29 @@ router.route("/single").get(auth1, function (req, res) {
 		}
 	});
 });
+
+router.route("/addEvent").get(auth1, async (req, res) => {
+	try {
+		
+		res.render(`${req.vPath}/app/college/addEvent`, {
+			menu :'addEvents'
+		});
+	} catch (err) {
+		req.flash("error", err.message || "Something went wrong!");
+		return res.redirect("back");
+	}
+});
+
+router.route("/viewEvent").get(auth1, async (req, res) => {
+	try {
+		
+		res.render(`${req.vPath}/app/college/viewEvent`, {
+			menu :'viewEvents'
+		});
+	} catch (err) {
+		req.flash("error", err.message || "Something went wrong!");
+		return res.redirect("back");
+	}
+});
+
 module.exports = router;

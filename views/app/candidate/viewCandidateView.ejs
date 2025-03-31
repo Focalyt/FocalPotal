@@ -1,0 +1,176 @@
+<% include ../../partials/header %>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/public_assets/css/icons.css">
+<link rel="stylesheet" href="/public_assets/css/slider-responsive.css">
+<link rel="stylesheet" href="/public_assets/css/animate.min.css">
+
+<body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static  pose-lead"
+data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+<% include ./partials/navbar%>
+  <% include ./partials/leftpane%>
+
+    <% include ../../partials/flash %>
+
+  <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+
+
+    <div class="content-wrapper">
+  <div id="add-Events">
+    <div class="content-body">
+        <div class="mb-2">
+
+              <div class="event-view-container">
+                
+                <div class="school-header">
+                  <h2 class="school-name">ABC Public School</h2>
+                  <p class="school-description">
+                    ABC Public School organized an exciting Tech Fest showcasing student innovations.
+                  </p>
+                </div>
+              
+                <div class="swiper eventSwiper">
+                  <div class="swiper-wrapper" style="height:300px">
+                  
+                    <div class="swiper-slide">
+                      <img src="/images/referal.png" alt="Event Image" />
+                    </div>
+                    <div class="swiper-slide">
+                      <img src="/images/referal.png" alt="Event Image" />
+                    </div>
+                    <div class="swiper-slide">
+                      <video controls muted>
+                        <source src="/uploads/events/video1.mp4" type="video/mp4" />
+                      </video>
+                    </div>
+                  </div>
+              
+               
+                  <div class="swiper-button-next"></div>
+                  <div class="swiper-button-prev"></div>
+                </div>
+              </div>
+              
+              
+        </div>
+    </div>
+<style>
+  .event-view-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.school-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.school-name {
+  font-size: 28px;
+  font-weight: bold;
+  color: #3f3f3f;
+}
+
+.school-description {
+  font-size: 16px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.swiper-slide img,
+.swiper-slide video {
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+.swiper-button-prev:after, .swiper-rtl .swiper-button-next:after {
+font-size: 14px!important;
+}
+.swiper-button-next:after, .swiper-rtl .swiper-button-prev:after{
+  font-size: 14px!important;
+}
+
+</style>
+<!-- Swiper JS -->
+ <!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  const swiper = new Swiper(".eventSwiper", {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    // autoplay: {
+    //   delay: 2000,
+    //   disableOnInteraction: false,
+    // },
+    loop: true, 
+    breakpoints: {
+      768: {
+        slidesPerView: 2,
+      }
+    }
+  });
+</script>
+
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        initCarousel(); // Initialize image carousel
+        // initDropdown(); // Dropdown functionality
+        // initToggleMore(); // Read more functionality
+        // initLazyVideo(); // Video autoplay optimization
+        // initShareButton(); // Sharing functionality
+        // initEdit(); // Edit modal functionality
+        // initTagModal(); // Tagging modal
+      });
+
+      // 🔹 1️⃣ Initialize Carousel (Image Slider)
+      function initCarousel() {
+        document.querySelectorAll(".happy_candidate_images").forEach(container => {
+          const slides = [...container.children];
+          if (slides.length <= 1) return;
+
+          container.insertAdjacentHTML("beforebegin", `
+      <button class="carousel-btn prev">❮</button>
+      <button class="carousel-btn next">❯</button>
+    `);
+          let currentSlide = 0;
+          const updateSlides = () => slides.forEach((slide, i) => slide.style.display = i === currentSlide ? "block" : "none");
+          container.parentNode.querySelector(".prev").addEventListener("click", () => { currentSlide = (currentSlide - 1 + slides.length) % slides.length; updateSlides(); });
+          container.parentNode.querySelector(".next").addEventListener("click", () => { currentSlide = (currentSlide + 1) % slides.length; updateSlides(); });
+          updateSlides();
+        });
+      }
+    </script>
+
+    <style>
+      /* .carousel-btn{
+        border: none;
+        background: transparent;
+      } */
+
+    </style>
+
+
+
+
+  </div>
+</div>
+
+
+</div>
+
+</body>
