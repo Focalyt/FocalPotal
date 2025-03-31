@@ -841,6 +841,7 @@ router.post("/removevideo", isCompany, async (req, res) => {
   res.send({ status: 200, message: "Profile Updated Successfully" });
 });
 
+
 router.post("/removelogo", isCompany, async (req, res) => {
   const company = await Company.findOne({
     _concernPerson: req.session.user._id,
@@ -869,6 +870,30 @@ router.post("/removeVideoJd/:_id", isCompany, async (req, res) => {
   req.flash("success", "Vacancy updated successfully!");
   res.send({ status: 200, message: "Vacancy Updated Successfully" });
 });
+
+router.post("/removeVideoThuumbnailJd/:_id", isCompany, async (req, res) => {
+  try {
+    const vacancy = await Vacancy.findById(req.params._id);
+    if (!vacancy) throw req.ykError("Vacancy doesn't exist!");
+
+    if (!vacancy.jobVideoThumbnail) {
+      return res.status(400).json({ status: false, message: "No thumbnail to delete." });
+    }
+
+    // Optional: Delete file from S3
+    // await deleteSingleFile(vacancy.jobVideoThumbnail);
+
+    vacancy.jobVideoThumbnail = "";
+    await vacancy.save();
+
+    req.flash("success", "Vacancy updated successfully!");
+    return res.status(200).json({ status: true, message: "Vacancy Updated Successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ status: false, message: err.message || "Something went wrong" });
+  }
+});
+
 router.get("/list/jobs", isCompany, async (req, res) => {
   try {
     const menu = "jobList";
@@ -1223,6 +1248,55 @@ router.post('/editJobs/:jobId', isCompany, async (req, res) => {
         console.log("Upload Files", uploadedFiles[0].fileURL)
         updatedJob['jobVideo'] = uploadedFiles[0].fileURL;
       }
+
+      let thumbnailfiles = req.files?.jobVideoThumbnail; // Ensure correct key from FormData
+      const thumbnailfilesArray = Array.isArray(thumbnailfiles) ? thumbnailfiles : [thumbnailfiles]; // Convert to array if single file
+      console.log("thumbnailfiles",thumbnailfiles)
+
+
+     if (thumbnailfiles) {
+        // ✅ Upload Files to S3
+        const uploadedThumbnailFiles = [];
+        const uploadThumbnailPromises = [];
+
+        thumbnailfilesArray.forEach((item) => {
+          const { name, mimetype } = item;
+          const ext = name?.split('.').pop().toLowerCase();
+
+          console.log(`Processing File: ${name}, Extension: ${ext}`);
+
+          if (!allowedImageExtensions.includes(ext) && !allowedVideoExtensions.includes(ext)) {
+            throw new Error(`File type not supported: ${ext}`);
+          }
+
+          // Determine fileType
+          const fileType = allowedImageExtensions.includes(ext) ? "image" : "video";
+
+          // Generate unique S3 key
+          const key = `Jobs/${companyId}/${jobTitle}/${fileType}s/${uuid()}.${ext}`;
+          const params = {
+            Bucket: bucketName,
+            Key: key,
+            Body: item.data,
+            ContentType: mimetype,
+          };
+
+          // Upload to S3
+          uploadThumbnailPromises.push(
+            s3.upload(params).promise().then((uploadResult) => {
+              uploadedThumbnailFiles.push({
+                fileURL: uploadResult.Location,
+                fileType,
+              });
+            })
+          );
+        });
+
+        // ✅ Wait for all uploads to complete
+        await Promise.all(uploadThumbnailPromises);
+        console.log("Upload Files", uploadedThumbnailFiles[0].fileURL)
+        updatedJob['jobVideoThumbnail'] = uploadedThumbnailFiles[0].fileURL;
+      };
 
 
     const jd = await Vacancy.findOneAndUpdate({ _id: req.params.jobId }, updatedJob);
