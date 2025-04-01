@@ -4,7 +4,7 @@ const { auth1 } = require("../../../helpers");
 
 router.get("/add", auth1, async (req, res) => {
     try {
-        return res.render("admin/addEvent/add", { menu: 'event' });
+        return res.render("admin/event/add", { menu: 'event' });
     } catch (err) {
         console.error("Error loading Add Event page:", err);
         req.flash("error", "Something went wrong!");

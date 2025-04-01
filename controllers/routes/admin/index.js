@@ -61,7 +61,7 @@ const contactRoutes=require('./contacts')
 const loanRoutes = require('./loanEnquiry');
 const courseSectorsRoutes = require('./courseSectors');
 const teamRoutes=require('./team')
-const addEventRoutes = require('./addevents');
+const eventRoutes = require('./events');
 const addCenterRoutes = require('./center');
 const addPortalAccessRoutes = require('./portalAccess');
 
@@ -107,7 +107,7 @@ router.use("/contact",contactRoutes)
 router.use("/loanEnquiry",loanRoutes);
 router.use('/courseSectors', courseSectorsRoutes);
 router.use('/team', teamRoutes);
-router.use('/addEvent', addEventRoutes);
+router.use('/event', eventRoutes);
 router.use('/center', addCenterRoutes);
 router.use('/portalaccess', addPortalAccessRoutes);
 
@@ -120,6 +120,10 @@ router.get('/', async (req, res) => {
 
     const userId = req.session?.user?._id;
     let loggedInUser = null;
+
+    if (!userId) {
+      return res.redirect('/admin/login'); // ✅ User not logged in, redirect to login
+    }
 
     if (userId) {
       loggedInUser = await User.findById(userId);
