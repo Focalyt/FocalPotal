@@ -35,7 +35,7 @@
 											<div class="row">
 												<% if (!subQua) { %>
 												<div class="col-xl-4 mb-1">
-													<label>Select Course</label>
+													<label>Select Education</label>
 													<select style="cursor: pointer;" class="form-control"
 														name="_qualification" id="qual" required>
 														<option value="">Select Option</option>
@@ -54,7 +54,7 @@
 													</select>
 												</div>
 												<div class="col-xl-4 mb-1">
-													<label>Select Stream</label>
+													<label>Select course</label>
 													<select style="cursor: pointer;" class="form-control"
 														name="subQuali" id="subQua" required>
 														<option disabled value="-">
@@ -62,9 +62,13 @@
 														</option>	
 													</select>
 												</div>
+												<div class="col-xl-4 mb-1">
+													<label> Select Stream</label>
+													<input type="text" class="form-control" name="subStream">
+												</div>
 												<% }else{ %>
 													<div class="col-xl-4 mb-1">
-														<label>Select Course <span class="asterisk">*</span></label>
+														<label>Select Education <span class="asterisk">*</span></label>
 														<select style="cursor: pointer;" class="form-control"
 															name="_qualification" required>
 															<option value="" disabled>Select Option</option>
@@ -179,6 +183,7 @@
 												<tr>
 													<th>Stream Name</th>
 													<th>Course</th>
+													<th>Select Course</th>
 													<% if (!subName) { %>
 													<th>Status</th>
 													<% } %>
@@ -196,6 +201,9 @@
 															</td>
 															<td class="text-capitalize">
 																<%= l._qualification.name %>
+															</td>
+															<td class="text-capitalize">
+																<%= l.subStream %>
 															</td>
 															<% if (!subName) { %>
 															<% if (view === true) { %>
@@ -395,3 +403,5 @@
 		      		}
 				</script>
 	</div>
+</body>
+</html>

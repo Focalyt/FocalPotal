@@ -3976,6 +3976,30 @@ router.route('/reqDocs/:courseId')
 })
 
 
+router.route("/appliedEvents").get(async (req, res) => {
+  try {
+    const mobile = req.session.user?.mobile;
+    const candidate = await Candidate.findOne({ mobile }).lean();
+
+    let course = [];
+
+    if (candidate && candidate.appliedCourses?.length > 0) {
+      appliedCourses = await Courses.find({
+        _id: { $in: candidate.appliedCourses },
+        status: true
+      }).populate("sectors").lean();
+    }
+
+    res.render(`${req.vPath}/app/candidate/appliedEvents`, {
+      menu: 'viewEvent',
+      course
+    });
+  } catch (err) {
+    req.flash("error", err.message || "Something went wrong!");
+    return res.redirect("back");
+  }
+});
+
 router.route("/viewCandidateEvent").get((req, res) => {
   try {
     

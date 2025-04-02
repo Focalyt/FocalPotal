@@ -1,0 +1,1317 @@
+<% include ../../partials/header %>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/public_assets/css/icons.css">
+	<link rel="stylesheet" href="/public_assets/css/slider-responsive.css">
+	<link rel="stylesheet" href="/public_assets/css/animate.min.css">
+	<link rel="stylesheet" href="/public/css/style.css">
+
+	<body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static  pose-lead"
+		data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+		<% include ./partials/navbar%>
+			<% include ./partials/leftpane%>
+
+				<% include ../../partials/flash %>
+
+					<div class="app-content content">
+						<div class="content-overlay"></div>
+						<div class="header-navbar-shadow"></div>
+
+
+						<div class="content-wrapper">
+
+							<section class="ml-3">
+								<div class="container-fluid px-1">
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+												<div class="col-lg-8 col-md-8 column">
+													<div class="course_dtl mt-2">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="curs_description">
+																	<h3 class="text-capitalize mb-2 font-weight-bold">
+																		<%=course.name%>
+																	</h3>
+																	<h4 class="job_cate">
+																		<%= course?.sectors ? course.sectors[0].name
+																			: "" %>
+																	</h4>
+																	<h6>Event Overview</h6>
+																	<div class="row">
+																		<div class="col-md-4 col-lg-4 col-sm-6 col-6">
+																			<div class="course_spec">
+																				<div class="spe_icon">
+																					<i class="la la-money"></i>
+																				</div>
+																				<div class="spe_detail">
+																					<h3 class="jobDetails-wrap">
+																						<%=course.cutPrice ?
+																							course.cutPrice.toLowerCase()==='free'
+																							? course.cutPrice : '₹ ' +
+																							course.cutPrice : 'N/A' %>
+																					</h3>
+																					<span
+																						class="text-capitalize jobDetails-wrap">Course
+																						Fee</span>
+																				</div>
+																			</div>
+																		</div>
+
+																		<div class="col-md-4 col-lg-4 col-sm-6 col-6">
+																			<div class="course_spec">
+																				<div class="spe_icon">
+																					<i class="la la-money"></i>
+																				</div>
+																				<div class="spe_detail">
+																					<h3 class="jobDetails-wrap">
+																						<%=course.courseLevel ?
+																							course.courseLevel : 'N/A'
+																							%>
+																					</h3>
+																					<span
+																						class="text-capitalize jobDetails-wrap">Course
+																						Level</span>
+																				</div>
+																			</div>
+																		</div>
+
+																		<div class="col-md-4 col-lg-4 col-sm-6 col-6">
+																			<div class="course_spec">
+																				<div class="spe_icon">
+																					<i class="la la-money"></i>
+																				</div>
+																				<div class="spe_detail">
+																					<h3 class="jobDetails-wrap">
+																						<%=course?.certifyingAgency ?
+																							course.certifyingAgency
+																							: 'N/A' %>
+																					</h3>
+																					<span
+																						class="text-capitalize jobDetails-wrap">Course
+																						Agency</span>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+
+																</div>
+															</div>
+														</div>
+														<div class="row py-4">
+															<div
+																class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mb-xl-2 mb-lg-2 mb-md-2 mb-sm-4 mb-4">
+																<div id="carouselExampleIndicators"
+																	class="carousel slide" data-ride="carousel">
+																	<div class="carousel-indicators">
+																		<% if(course.photos?.length>0) { %>
+																			<%course.photos.forEach((photo, i)=>{%>
+																				<button type="button"
+																					data-target="#carouselExampleIndicators"
+																					data-slide-to="<%=i%>"
+																					class="active activeclass"
+																					aria-current="true"
+																					aria-label="Slide 1"></button>
+																				<%})%>
+																					<% } else { %>
+																						<button type="button"
+																							data-target="#carouselExampleIndicators"
+																							data-slide-to="0"
+																							aria-label="Slide 2"
+																							class="activeclass"></button>
+																						<% } %>
+																	</div>
+																	<div class="carousel-inner ">
+																		<% if(course.photos?.length>0) { %>
+																			<%course.photos.forEach((photo, i)=>{%>
+																				<div
+																					class="carousel-item <% if (i==0){%> active <% } %>">
+																					<img class="d-block w-100"
+																						src="<%=photo ? process.env.MIPIE_BUCKET_URL +'/' +photo : '/public_assets/images/newjoblisting/banner1.jpg'%>"
+																						class="d-block w-100 rounded shadow"
+																						alt="...">
+																				</div>
+																				<%})%>
+																					<% } else { %>
+																						<div class="carousel-item">
+																							<img src="/public_assets/images/newjoblistingbanner2.jpg"
+																								class="d-block w-100 rounded shadow"
+																								alt="...">
+																						</div>
+																						<% } %>
+																	</div>
+																	<% if(course.photos?.length>0) { %>
+																		<button class="carousel-control-prev"
+																			type="button"
+																			data-bs-target="#carouselExampleIndicators"
+																			data-bs-slide="prev">
+																			<span
+																				class="carousel-control-prev-icon pree"
+																				aria-hidden="true"></span>
+																			<span
+																				class="visually-hidden">Previous</span>
+																		</button>
+																		<button class="carousel-control-next"
+																			type="button"
+																			data-bs-target="#carouselExampleIndicators"
+																			data-bs-slide="next">
+																			<span
+																				class="carousel-control-next-icon pree"
+																				aria-hidden="true"></span>
+																			<span class="visually-hidden">Next</span>
+																		</button>
+																		<% } %>
+																</div>
+															</div>
+															<div
+																class="col-md-6 d-xl-block d-lg-block d-md-block d-sm-none d-none">
+																<div class="v_pal mt-sm-3 mt-md-0 mt-3">
+																	<% if (course.videos !==undefined && course.videos
+																		!==null) { %>
+																		<a href="#" data-target="#videoModal"
+																			data-toggle="modal"
+																			link="<%= process.env.MIPIE_BUCKET_URL +'/' + course.videos[0] %>"
+																			class="video-bttn position-relative d-block"><img
+																				id="videoPlay"
+																				src="<%= course.thumbnail ? process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail : '/images/pages/video_thum1.png' %>"
+																				class="video_thum img-fluid" alt="">
+																			<img src="public_assets/images/newjoblisting/play.svg"
+																				alt="" class="group1"></a>
+																		<%}%>
+																</div>
+															</div>
+															<div
+																class="col-md-6 d-xl-none d-lg-none d-md-none d-sm-block d-block">
+																<div class="v_pal">
+																	<% if (course.videos !==undefined && course.videos
+																		!==null) { %>
+																		<a href="#" data-target="#videoModal"
+																			data-toggle="modal"
+																			link="<%= process.env.MIPIE_BUCKET_URL +'/' + course.videos[0] %>"
+																			class="video-bttn position-relative d-block"><img
+																				id="videoPlay"
+																				src="<%= course.thumbnail ? process.env.MIPIE_BUCKET_URL +'/' + course.thumbnail : '/images/pages/video_thum1.png' %>"
+																				class="video_thum img-fluid" alt="">
+																			<img src="public_assets/images/newjoblisting/play.svg"
+																				alt="" class="group1"></a>
+																		<%}%>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="job-single-sec">
+														<div class="cr_detail_in cr_vw">
+															<h3
+																class="mt-xl-2 mt-lg-3 mt-md-3 mt-sm-2 mt-2 mb-xl-4 mb-lg-4 mb-sm-2 mb-2">
+																Event Details</h3>
+															<div class="row">
+																<div class="col-md-3 col-sm-6 col-6">
+																	<div class="course_dt mb-4">
+																		<% if (course.age !==undefined && course.age
+																			!==null) { %>
+																			<h6>Age</h6>
+																			<p class="text-capitalize mb-0">
+																				<span>
+																					<%= course.age ? course.age : 'N/A'
+																						%> Years
+																				</span>
+																			</p>
+																			<% } %>
+																	</div>
+																</div>
+
+																<div class="col-md-3 col-sm-6 col-6">
+																	<div class="course_dt mb-4">
+																		<% if (course.qualification !==undefined &&
+																			course.qualification !==null) { %>
+																			<h6>Course Qualification</h6>
+																			<p class="text-capitalize mb-0">
+																				<span>
+																					<%= course.qualification ?
+																						course.qualification : 'N/A' %>
+																				</span>
+																			</p>
+																			<% } %>
+																	</div>
+																</div>
+
+																<div class="col-md-3 col-sm-6 col-6">
+																	<div class="course_dt mb-3">
+																		<% if (course.duration !==undefined &&
+																			course.duration !==null) { %>
+																			<h6>Course Duration</h6>
+																			<p class="text-capitalize mb-0">
+																				<span>
+																					<%= course.duration ?
+																						course.duration : 'N/A' %>
+																				</span>
+																			</p>
+																			<% } %>
+																	</div>
+																</div>
+
+																<div class="col-md-3 col-sm-6 col-6">
+																	<div class="course_dt mb-3">
+																		<% if (course.experience !==undefined &&
+																			course.experience !==null) { %>
+																			<h6> Experience</h6>
+																			<p class="text-capitalize mb-0">
+																				<span>
+																					<%= course.experience ?
+																						course.experience : 'N/A' %>
+																				</span>
+																			</p>
+																			<% } %>
+																	</div>
+																</div>
+																<% if (course.courseFeatures !==undefined &&
+																	course.courseFeatures !==null &&
+																	course.courseFeatures !=='' ) { %>
+																	<div class="col-md-6">
+																		<div class="course_dt mb-4">
+																			<h6>Course feature</h6>
+																			<p class="text-capitalize mb-0">
+																			<ul
+																				class="contact-info text-start text-white pl-4">
+																				<%course.courseFeatures?.split('\n').forEach((feature,
+																					i)=>{%>
+																					<li>
+																						<%= feature%>
+																					</li>
+																					<% })%>
+																			</ul>
+																			</p>
+																		</div>
+																	</div>
+																	<% } %>
+																		<% if (course.importantTerms !==undefined &&
+																			course.importantTerms !==null &&
+																			course.importantTerms !=='' ) { %>
+																			<div class="col-md-6">
+																				<div class="course_dt mb-4">
+																					<h6>Course terms</h6>
+																					<p class="text-capitalize mb-0">
+																					<ul
+																						class="contact-info text-start text-white pl-4">
+																						<%course.importantTerms?.split('\n').forEach((term,
+																							i)=>{%>
+																							<li>
+																								<%= term%>
+																							</li>
+																							<% })%>
+																					</ul>
+																					</p>
+																				</div>
+																			</div>
+																			<% } %>
+																				<% if (course.requiredDocuments
+																					!==undefined &&
+																					course.requiredDocuments !==null &&
+																					course.requiredDocuments !=='' ) {
+																					%>
+																					<div class="col-md-6">
+																						<div class="course_dt mb-4">
+																							<h6>Required Documents</h6>
+																							<p
+																								class="text-capitalize mb-0">
+																							<ul
+																								class="contact-info text-start text-white pl-4">
+																								<%course.requiredDocuments?.split('\n').forEach((term,
+																									i)=>{%>
+																									<li>
+																										<%= term%>
+																									</li>
+																									<% })%>
+																							</ul>
+																							</p>
+																						</div>
+																					</div>
+																					<% } %>
+															</div>
+														</div>
+													</div>
+
+												</div>
+												<!-- <div
+													class="col-lg-4 col-md-4 column mt-xl-2 mt-lg-3 mt-md-3 mt-sm-0 mt-0">
+													<a class="apply-thisjob  apply-div-field text-left px-0 d-xl-block d-lg-block d-md-block d-sm-none d-none py-4 mb-2 decoration-none "
+														href="tel:" title="apply" style="text-decoration: none;"><i
+															class="la la-phone  plane-font ml-2"></i>Call Now</a>
+
+													<a class="apply-thisjob  apply-div-field text-left px-0 d-xl-block d-lg-block d-md-block d-sm-none d-none py-4 mb-2 decoration-none "
+														href="#" title="apply" style="text-decoration: none;"
+														data-toggle="modal" data-target="#apply" data-value="false"
+														data-bs-target="#editUser" data-bs-toggle="modal"
+														id="apply-div-btn"><i class="la la-paper-plane ml-2"></i>Apply
+														Now</a>
+
+
+													<div class="d-xl--none d-lg-none d-md-none d-sm-block d-block"
+														id="floating-apply">
+
+														<a class="apply-thisjob  apply-div-field text-left px-0 py-2 mb-2 decoration-none shadow text-center"
+															href="#" title="apply" style="text-decoration: none;"
+															data-toggle="modal" data-target="#apply" data-value="false"
+															data-bs-target="#editUser" data-bs-toggle="modal"
+															id="apply-div-btn">APPLY NOW</a>
+
+														<a class="apply-thisjob text-center apply-div-field text-left px-0 py-2 mb-2 decoration-none shadow "
+															href="tel:918699011108" id="apply-div-btn">CALL NOW</a>
+													</div>
+
+													<div class="extra-job-info mb-1 mt-3">
+														<span class="text-capitalize px-0 py-1"><i
+																class="la la-male"></i><strong>Training Mode</strong>
+															Blended
+														</span>
+														<span class="text-capitalize px-0 py-1"><i
+																class="la la-briefcase"></i><strong>Registration
+																Charges</strong>
+															N/A <b></b>
+														</span>
+														<span class="text-capitalize px-0 py-1"><i
+																class="la la-money"></i><strong>Experience</strong>
+															Fresher
+														</span><span class="py-2 px-0"><i
+																class="la la-building"></i><strong>Stiepend During
+																Training</strong>
+															N/A
+														</span><span class="py-2 px-0"><i
+																class="la la-credit-card"></i><strong>Duration</strong>
+															4 Months
+														</span>
+														<span class="px-0"><i class="la la-map "></i><strong>Last
+																Date</strong>
+															28 Feb 2025
+														</span>
+														<span class="text-capitalize px-0 py-1"><i
+																class="la la-rupee"></i><strong>EMI Options
+																Available</strong>
+															Yes
+														</span>
+														
+														<span class="text-capitalize px-0 py-1">
+															<i class="la la-map"></i>
+															<strong>Assigned Date</strong>
+															N/A
+														</span>
+														<span class="text-capitalize px-0 py-1">
+															<a href="https://mipie-bucket.s3.ap-south-1.amazonaws.com/"
+																target="_blank">
+																<i class="la la-download"></i>
+																<strong><em>Download Brochure</em></strong>
+															</a>
+														</span>
+														<span class="text-capitalize px-0 py-1"><i
+																class="la la-map-pin"></i><strong>Location</strong>
+															(Chandigarh, )
+														</span>
+													</div>
+
+													<a class="viewjob-apply apply-thisjob apply-div-field  text-left px-0 d-xl-none d-lg-none d-md-none d-sm-block d-block mt-xl-2 mt-lg-2 mt-md-2 mt-sm-1 mt-1 text-center"
+														href="#" title="" data-toggle="modal" data-target="#apply"
+														data-value="false" data-bs-target="#editUser"
+														data-bs-toggle="modal" id="apply-div-btn-mob"><i
+															class="la la-paper-plane ml-3"></i>Register for this
+														Course</a>
+
+
+
+
+												</div> -->
+
+												<div class="col-lg-4 col-md-4 column mt-xl-2 mt-lg-3 mt-md-3 mt-sm-0 mt-0">
+													<a class="apply-thisjob  apply-div-field text-left px-0 d-xl-block d-lg-block d-md-block d-sm-none d-none py-4 mb-2 decoration-none "
+													   href="tel:<%=course.counslerphonenumber%>" title="apply" style="text-decoration: none;"
+													   ><i class="la la-phone  plane-font ml-2"></i>Call Now</a>
+													   	
+															 <div class="d-xl--none d-lg-none d-md-none d-sm-block d-block" id="floating-apply"></div>
+						 
+						 
+						 
+																   <!-- Course Overview -->
+																   <div class="extra-job-info mb-1 mt-3">
+																	 <span class="text-capitalize px-0 py-1"><i
+																		 class="la la-male"></i><strong>Training Mode</strong>
+																	   <%= course.trainingMode ? course.trainingMode
+																		 : 'No Preferances' %>
+																	 </span>
+																	 <span class="text-capitalize px-0 py-1"><i
+																		 class="la la-briefcase"></i><strong>Registration Charges</strong>
+																	   <%=course.registrationCharges?course.registrationCharges :'N/A'%> <b></b>
+																	 </span>
+																	 <span class="text-capitalize px-0 py-1"><i
+																		 class="la la-money"></i><strong>Experience</strong>
+																	   <%=course.experience? course.experience:'N/A'%>
+																	 </span class="text-capitalize px-0 "><span class="py-2 px-0"><i
+																		 class="la la-building"></i><strong>Stiepend During Training</strong>
+																	   <%=course.stipendDuringTraining? course.stipendDuringTraining : 'N/A' %>
+																	 </span class="text-capitalize px-0 py-1"><span class="py-2 px-0"><i
+																		 class="la la-credit-card"></i><strong>Duration</strong>
+																	   <%=course.duration ? course.duration : 'N/A' %>
+																	 </span>
+																	 <span class="px-0"><i class="la la-map "></i><strong>Last Date</strong>
+																	   <%=moment(course.lastDateForApply ||
+																		 course.createdAt).utcOffset('+05:30').format('DD MMM YYYY') %></i>
+																	 </span>
+																	 <span class="text-capitalize px-0 py-1"><i
+																		 class="la la-rupee"></i><strong>EMI Options Available</strong>
+																	   <%=course.emiOptionAvailable? course.emiOptionAvailable : 'N/A' %>
+																	 </span>
+																	 <!-- <span class="text-capitalize px-0 py-1">
+																	   <i class="la la-map"></i>
+																	   <strong>Assigned Date</strong>
+																	   <%= course.assignDate ? moment(course.assignDate).utcOffset('+05:30').format('DD MMM YYYY') : 'N/A' %>
+																   </span> -->
+																   <span class="text-capitalize px-0 py-1">
+																	 <i class="la la-map"></i>
+																	 <strong>Assigned Date</strong>
+																	 <%= course.assignDate ? moment(course.assignDate, 'DD MMM YYYY').format('DD MMM YYYY') : 'N/A' %>
+																   </span>
+																   <span class="text-capitalize px-0 py-1">
+																	 <a href="<%=process.env.MIPIE_BUCKET_URL +'/' + course.brochure%>" target="_blank">
+																	 <i class="la la-download"></i>
+																	 <strong><em>Download Brochure</em></strong>
+																   </a>
+																   </span>
+																   <span class="text-capitalize px-0 py-1"><i
+																	 class="la la-map-pin"></i><strong>Location</strong>
+																	 <% if(course.city) { %>(<%=course.city +', ' + course.state%>)<% } else { %> NA  <% } %>
+																 </span>
+																   </div>
+										
+						 
+											   </div>
+												<div
+													class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-4 mt-4">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="course_dt mb-4" id="admin_col_data">
+																<h6>Event Remarks</h6>
+																<div class="row feature-widget-7-row pt-xl-2 pt-lg-2 pt-md-2 pt-sm-1 pt-1"
+																	id="apply_modal">
+																	<div class="col-xl-12 mb-3 mx-auto">
+																		<div class="course_details_col">
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/jobicons/Eligibility.png"
+																							class="img-fluid"
+																							draggable="false">Eligibility
+																					</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.qualification%>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/jobicons/Age.png"
+																							class="img-fluid"
+																							draggable="false">Age</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.age%> Years
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/jobicons/Experience.png"
+																							class="img-fluid"
+																							draggable="false">Experience
+																					</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.experience%>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/jobicons/Course_mode.png"
+																							class="img-fluid"
+																							draggable="false">Course
+																						Mode</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.trainingMode%>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/jobicons/Course_duration.png"
+																							class="img-fluid"
+																							draggable="false">Course
+																						Duration</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.duration%>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/jobicons/Course_type.png"
+																							class="img-fluid"
+																							draggable="false">Course
+																						Type</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.courseType==='coursejob'
+																							? 'Course + Job' : 'Course'
+																							%>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/jobicons/Timing.png"
+																							class="img-fluid"
+																							draggable="false">Timings
+																					</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.onlineTrainingTiming||course.offlineTrainingTiming%>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto text-end">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/jobicons/Institute_name.png"
+																							class="img-fluid"
+																							draggable="false">Institute
+																						Name</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal text-truncate">
+																						<%=course.certifyingAgency%>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/jobicons/job_training.png"
+																							class="img-fluid"
+																							draggable="false">On Job
+																						Training</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.ojt%>
+																					</p>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="course_dt mb-4">
+																<h6>Event Fee Description</h6>
+																<div class="row feature-widget-7-row pt-xl-2 pt-lg-2 pt-md-2 pt-sm-1 pt-1"
+																	id="apply_modal">
+																	<div class="col-xl-12 mb-3 mx-auto">
+																		<div class="course_details_col">
+																			<div
+																				class="feature-widget-7__icon-wrapper my-auto mx-auto text-center">
+																				<h5 class="fw-normal">Registration Fee
+																					: &#8377;
+																					<%=course.registrationCharges%>
+																				</h5>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/tick_icon.svg"
+																							class="img-fluid"
+																							draggable="false">Course Fee
+																					</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.cutPrice ?
+																							course.cutPrice.toLowerCase()==='free'
+																							? course.cutPrice : '₹ ' +
+																							course.cutPrice : 'N/A' %>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/tick_icon.svg"
+																							class="img-fluid"
+																							draggable="false">Exam Fee
+																					</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						&#8377;<%=course.examFee%>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/tick_icon.svg"
+																							class="img-fluid"
+																							draggable="false">Stipend
+																						During Training</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						&#8377;
+																						<%=course.stipendDuringTraining
+																							|| 'NA' %>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/tick_icon.svg"
+																							class="img-fluid"
+																							draggable="false">Any Other
+																						Charges</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						&#8377;<%=course.otherFee
+																							|| 'NA' %>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/tick_icon.svg"
+																							class="img-fluid"
+																							draggable="false">Installment
+																						Option</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.emiOptionAvailable%>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/tick_icon.svg"
+																							class="img-fluid"
+																							draggable="false">Max. EMI
+																						Tenure</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.maxEMITenure || 'NA'
+																							%>
+																					</p>
+																				</div>
+																			</div>
+																			<div class="feature-widget-7 border-bottom">
+																				<div
+																					class="feature-widget-7__icon-wrapper my-auto">
+																					<h5 class="fw-normal"><img
+																							src="/public_assets/images/tick_icon.svg"
+																							class="img-fluid"
+																							draggable="false">Bank Loan
+																						Option</h5>
+																				</div>
+																				<div class="feature-widget-7__body">
+																					<p
+																						class="feature-widget-7__title mb-0 fw-normal">
+																						<%=course.loan==='Yes'? 'Yes'
+																							:'No'%>
+																					</p>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+											</div>
+											<input type="hidden" id="apply-field" value="true">
+											<input type="hidden" id="has-applied" value="false">
+											<input type="hidden" id="for-mobile" value="false">
+										</div>
+									</div>
+
+
+								</div>
+							</section>
+							<div class="text-right reset">
+
+							</div>
+
+							<script>
+								const imageUploaders = document.querySelectorAll(".my-logo-uploader");
+								const submitBtns = document.querySelectorAll(".btnSubmit");
+								imageUploaders.forEach((x) => {
+									const idText = x.getAttribute("data-id");
+									const id = document.querySelector(`#${idText}`);
+
+									x.addEventListener("change", async (e) => {
+										try {
+											submitBtns.forEach((x) => {
+												x.disabled = true;
+											});
+											const filesData = Array.from(e.target.files);
+											if (!Array.isArray(filesData) || filesData.length <= 0)
+												throw new Error("No image found!");
+
+											const data = await Promise.all(
+												filesData.map(async (file) => {
+													const ext = file.name.split(".").pop();
+													const res = await axios.get("/admin/s3upload", {
+														params: { type: file.type, ext },
+													});
+													if (!res || !res.data || !res.data.data) return null;
+													const { url, key } = res.data.data;
+													if (!url || !key) return null;
+													const upload = await axios.put(url, file, {
+														headers: { "Content-Type": file.type },
+													});
+													if (upload || upload.status === 200) return key;
+													return null;
+												})
+											);
+
+											const files = data.filter((x) => !!x);
+
+											if (files.length <= 0)
+												throw new Error("Unable to upload any image!");
+
+											files.forEach((f) => {
+												const div = document.createElement("div");
+												div.setAttribute(
+													"class",
+													"col-xl-12 col-md-12 col-sm-12 col-12 mt-1"
+												);
+
+												const img = document.createElement("img");
+												img.setAttribute(
+													"src",
+													`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+												);
+												img.setAttribute("alt", "img");
+												img.setAttribute("width", "40");
+												img.setAttribute("height", "40");
+												div.appendChild(img);
+
+												const input = document.createElement("input");
+												input.setAttribute("type", "hidden");
+												input.setAttribute("name", idText);
+												input.setAttribute("value", f);
+												div.appendChild(input);
+
+												const p = document.createElement("p");
+												p.setAttribute("class", "mt-1");
+												const rmBtn = document.createElement("a");
+												rmBtn.setAttribute("class", "text-danger");
+												rmBtn.setAttribute("href", "javascript:void(0)");
+												rmBtn.textContent = "Remove ";
+												rmBtn.addEventListener("click", () => {
+													div.parentNode.removeChild(div);
+													$(".firstImage").removeClass("d-none");
+												});
+												p.appendChild(rmBtn);
+												const viewBtn = document.createElement("a");
+												viewBtn.setAttribute("class", "text-primary mr-2");
+												viewBtn.setAttribute("target", "_blank");
+												viewBtn.setAttribute(
+													"href",
+													`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+												);
+												viewBtn.textContent = "View";
+												p.appendChild(viewBtn);
+												div.appendChild(p);
+												id.append(div);
+												$(".firstImage").addClass("d-none");
+											});
+											submitBtns.forEach((x) => {
+												x.disabled = false;
+											});
+											x.value = "";
+										} catch (err) {
+											console.log(err);
+										}
+									});
+								});
+
+								const imageUpload = document.querySelectorAll(".my-banner-uploader");
+								imageUpload.forEach((x) => {
+									const idText = x.getAttribute("data-id");
+									const id = document.querySelector(`#${idText}`);
+
+									x.addEventListener("change", async (e) => {
+										try {
+											submitBtns.forEach((x) => {
+												x.disabled = true;
+											});
+											const filesData = Array.from(e.target.files);
+											if (!Array.isArray(filesData) || filesData.length <= 0)
+												throw new Error("No image found!");
+
+											const data = await Promise.all(
+												filesData.map(async (file) => {
+													const ext = file.name.split(".").pop();
+													const res = await axios.get("/admin/s3upload", {
+														params: { type: file.type, ext },
+													});
+													if (!res || !res.data || !res.data.data) return null;
+													const { url, key } = res.data.data;
+													if (!url || !key) return null;
+													const upload = await axios.put(url, file, {
+														headers: { "Content-Type": file.type },
+													});
+													if (upload || upload.status === 200) return key;
+													return null;
+												})
+											);
+
+											const files = data.filter((x) => !!x);
+
+											if (files.length <= 0)
+												throw new Error("Unable to upload any image!");
+
+											files.forEach((f) => {
+												const div = document.createElement("div");
+												div.setAttribute(
+													"class",
+													"col-xl-12 col-md-12 col-sm-12 col-12 mt-1"
+												);
+
+												const img = document.createElement("img");
+												img.setAttribute(
+													"src",
+													`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+												);
+												img.setAttribute("alt", "img");
+												img.setAttribute("width", "40");
+												img.setAttribute("height", "40");
+												div.appendChild(img);
+
+												const input = document.createElement("input");
+												input.setAttribute("type", "hidden");
+												input.setAttribute("name", idText);
+												input.setAttribute("value", f);
+												div.appendChild(input);
+
+												const p = document.createElement("p");
+												p.setAttribute("class", "mt-1");
+												const rmBtn = document.createElement("a");
+												rmBtn.setAttribute("class", "text-danger");
+												rmBtn.setAttribute("href", "javascript:void(0)");
+												rmBtn.textContent = "Remove ";
+												rmBtn.addEventListener("click", () => {
+													div.parentNode.removeChild(div);
+													$(".bannerImage").removeClass("d-none");
+												});
+												p.appendChild(rmBtn);
+												const viewBtn = document.createElement("a");
+												viewBtn.setAttribute("class", "text-primary mr-2");
+												viewBtn.setAttribute("target", "_blank");
+												viewBtn.setAttribute(
+													"href",
+													`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+												);
+												viewBtn.textContent = "View";
+												p.appendChild(viewBtn);
+												div.appendChild(p);
+												id.append(div);
+												$(".bannerImage").addClass("d-none");
+											});
+											submitBtns.forEach((x) => {
+												x.disabled = false;
+											});
+											x.value = "";
+										} catch (err) {
+											console.log(err);
+										}
+									});
+								});
+
+								const imageUploader = document.querySelectorAll(".my-gallery-uploader");
+								imageUploader.forEach((x) => {
+									const idText = x.getAttribute("data-id");
+									const id = document.querySelector(`#${idText}`);
+
+									x.addEventListener("change", async (e) => {
+										try {
+											submitBtns.forEach((x) => {
+												x.disabled = true;
+											});
+											const filesData = Array.from(e.target.files);
+											if (!Array.isArray(filesData) || filesData.length <= 0)
+												throw new Error("No image found!");
+
+											const data = await Promise.all(
+												filesData.map(async (file) => {
+													const ext = file.name.split(".").pop();
+													const res = await axios.get("/admin/s3upload", {
+														params: { type: file.type, ext },
+													});
+													if (!res || !res.data || !res.data.data) return null;
+													const { url, key } = res.data.data;
+													if (!url || !key) return null;
+													const upload = await axios.put(url, file, {
+														headers: { "Content-Type": file.type },
+													});
+													if (upload || upload.status === 200) return key;
+													return null;
+												})
+											);
+
+											const files = data.filter((x) => !!x);
+
+											if (files.length <= 0)
+												throw new Error("Unable to upload any image!");
+
+											files.forEach((f) => {
+												const div = document.createElement("div");
+												div.setAttribute(
+													"class",
+													"col-xl-3 col-md-3 col-sm-3 col-12"
+												);
+
+												const img = document.createElement("img");
+												img.setAttribute(
+													"src",
+													`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+												);
+												img.setAttribute("alt", "img");
+												img.setAttribute("width", "40");
+												img.setAttribute("height", "40");
+												div.appendChild(img);
+
+												const input = document.createElement("input");
+												input.setAttribute("type", "hidden");
+												input.setAttribute("name", idText);
+												input.setAttribute("value", f);
+												div.appendChild(input);
+
+												const p = document.createElement("p");
+												p.setAttribute("class", "mt-1");
+												const rmBtn = document.createElement("a");
+												rmBtn.setAttribute("class", "text-danger");
+												rmBtn.setAttribute("href", "javascript:void(0)");
+												rmBtn.textContent = "Remove ";
+												rmBtn.addEventListener("click", () =>
+													div.parentNode.removeChild(div)
+												);
+												p.appendChild(rmBtn);
+												const viewBtn = document.createElement("a");
+												viewBtn.setAttribute("class", "text-primary");
+												viewBtn.setAttribute("target", "_blank");
+												viewBtn.setAttribute(
+													"href",
+													`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+												);
+												viewBtn.textContent = "View";
+												p.appendChild(viewBtn);
+												div.appendChild(p);
+												id.append(div);
+											});
+											submitBtns.forEach((x) => {
+												x.disabled = false;
+											});
+											x.value = "";
+										} catch (err) {
+											console.log(err);
+										}
+									});
+								});
+
+								const diningUploaders = document.querySelectorAll(
+									".my-executive-uploader"
+								);
+								diningUploaders.forEach((x) => {
+									const idText = x.getAttribute("data-id");
+									const id = x.closest(`#${idText}`);
+									x.addEventListener("change", async (e) => {
+										try {
+											submitBtns.forEach((x) => {
+												x.disabled = true;
+											});
+											const filesData = Array.from(e.target.files);
+											if (!Array.isArray(filesData) || filesData.length <= 0)
+												throw new Error("No image found!");
+
+											const data = await Promise.all(
+												filesData.map(async (file) => {
+													const ext = file.name.split(".").pop();
+													const res = await axios.get("/admin/s3upload", {
+														params: { type: file.type, ext },
+													});
+													if (!res || !res.data || !res.data.data) return null;
+													const { url, key } = res.data.data;
+													if (!url || !key) return null;
+													const upload = await axios.put(url, file, {
+														headers: { "Content-Type": file.type },
+													});
+													if (upload || upload.status === 200) return key;
+													return null;
+												})
+											);
+
+											const files = data.filter((x) => !!x);
+
+											if (files.length <= 0)
+												throw new Error("Unable to upload any image!");
+
+											files.forEach((f) => {
+												const div = document.createElement("div");
+												div.setAttribute(
+													"class",
+													"col-xl-12 col-md-12 col-sm-12 col-12"
+												);
+
+												const img = document.createElement("img");
+												img.setAttribute(
+													"src",
+													`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+												);
+												img.setAttribute("alt", "img");
+												img.setAttribute("width", "50");
+												img.setAttribute("height", "50");
+												div.appendChild(img);
+
+												const input = document.createElement("input");
+												input.setAttribute("type", "hidden");
+												input.setAttribute("name", idText);
+												input.setAttribute("value", f);
+												div.appendChild(input);
+
+												const p = document.createElement("p");
+												p.setAttribute("class", "mt-1");
+												const rmBtn = document.createElement("a");
+												rmBtn.setAttribute("class", "text-danger");
+												rmBtn.setAttribute("href", "javascript:void(0)");
+												rmBtn.textContent = "Remove ";
+												rmBtn.addEventListener("click", () => {
+													div.parentNode.removeChild(div);
+												});
+												rmBtn.addEventListener("click", () =>
+													div.parentNode.removeChild(div)
+												);
+												p.appendChild(rmBtn);
+												const viewBtn = document.createElement("a");
+												viewBtn.setAttribute("class", "text-primary mr-2");
+												viewBtn.setAttribute("target", "_blank");
+												viewBtn.setAttribute(
+													"href",
+													`https://mmt-alls-1.s3.ap-south-1.amazonaws.com/${f}`
+												);
+												viewBtn.textContent = "View";
+												p.appendChild(viewBtn);
+												div.appendChild(p);
+												$(`#${idText}`).append(div);
+												$(".diningCleaa").addClass("d-none");
+												$(".diningCleaa").closest(".row").removeAttr("id");
+											});
+											submitBtns.forEach((x) => {
+												x.disabled = false;
+											});
+											x.value = "";
+										} catch (err) {
+											console.log(err);
+										}
+									});
+								});
+
+								$("#country").change(() => {
+									$("#state")
+										.find("option")
+										.remove()
+										.end()
+										.append(
+											'<option disabled selected value="">Select Option</option>'
+										);
+									axios
+										.post("/admin/helper/getstate", {
+											countryId: $("#country").val(),
+										})
+										.then(({ data }) => {
+											data.forEach((d) => {
+												$("#state").append(
+													`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+												);
+											});
+										})
+										.catch((e) => console.log(e));
+								});
+
+								$("#state").change(() => {
+									$("#city")
+										.find("option")
+										.remove()
+										.end()
+										.append(
+											'<option disabled selected value="">Select Option</option>'
+										);
+									axios
+										.post("/admin/helper/getcity", {
+											stateId: $("#state").val(),
+										})
+										.then(({ data }) => {
+											data.forEach((d) => {
+												$("#city").append(
+													`<option class='text-capitalize' value='${d._id}'>${d.name}</option>`
+												);
+											});
+										})
+										.catch((e) => console.log(e));
+								});
+
+								$(".btnSubmit").click(function () {
+									// const password = $("#password").val();
+									// const confirmPassword = $("#confirm_password").val();
+									// if (password != confirmPassword) {
+									//   alert("Passwords do not match.");
+									//   return false;
+									// }
+									return true;
+								});
+
+								$(".appoint").click(() => {
+									$(".diningRows").append(`  <div class="form-group row">
+								<div class="col-xl-2 mb-1">
+										<label>Name</label>
+										<input class="form-control text-capitalize" type="text" name="repName">
+									</div>
+									<div class="col-xl-2 mb-1">
+										<label>Designation</label>
+										<input class="form-control text-capitalize" type="text" name="repDesignation" >
+									</div>
+									<div class="col-xl-2 mb-1">
+										<label>Email</label>
+										<input class="form-control" type="email" name="repEmail" >
+									</div>
+									<div class="col-xl-2 mb-1">
+											<label>Contact Number</label>
+											<input class="form-control" type="text" name="repMobile" minlength="10" maxlength="13">
+										</div>
+									<div class="col-xl-2 mt-2">
+										<button class="btn btn-danger removediv">-</button>
+									</div>
+                        	</div>
+                        
+             
+    </div>`);
+								});
+
+								$(document).on("click", ".removediv", function () {
+									$(this).closest(".row").remove();
+								});
+
+								// $('#password, #confirm_password').on('keyup', function () {
+								//   $('#message').removeClass('d-none');
+								//   if ($('#password').val() == $('#confirm_password').val()) {
+								//     $('#message').html('Matching').css('color', 'green');
+								//     $('#message').addClass('d-none');
+								//   } else
+								//     $('#message').html('Not Matching').css('color', 'red');
+								// });
+
+
+								// dropdown search filter
+								// function filterFunction() {
+								// 	var input, filter, ul, li, a, i;
+								// 	input = document.getElementById("myInput");
+								// 	filter = input.value.toUpperCase();
+								// 	div = document.getElementById("myDropdown");
+								// 	a = div.getElementsByTagName("option");
+								// 	for (i = 0; i < a.length; i++) {
+								// 		txtValue = a[i].textContent || a[i].innerText;
+								// 		if (txtValue.toUpperCase().indexOf(filter) > -1) {
+								// 			a[i].style.display = "";
+								// 		} else {
+								// 			a[i].style.display = "none";
+								// 		}
+								// 	}
+								// }
+
+								function reset() {
+									window.location.href = "/admin/college/add";
+								}
+
+							</script>
+							<!-- for search filter for universities -->
+							<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+							<link rel="stylesheet"
+								href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+							<script
+								src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+							<script
+								src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+							<link rel="stylesheet"
+								href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+							<script type="text/javascript">
+								$(".chosen").chosen();
+							</script>
+						</div>
+
+
+
+
+					</div>
+	</body>
+	</html>
