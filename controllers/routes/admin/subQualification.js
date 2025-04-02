@@ -56,10 +56,10 @@ router
 				req.flash("success", "Stream added successfully!");
 				return res.redirect("/admin/subQualification");
 			}else{
-				const { name, _qualification } = req.body;
+				const { name, _qualification ,subStream } = req.body;
 				const subQ = await SubQualification.findOne({ name:req.body.name});
 				if (subQ) throw req.ykError("Stream already exist!");
-				const sub = await SubQualification.create({ name, _qualification });
+				const sub = await SubQualification.create({ name, _qualification , subStream });
 				if(!sub) {
 					throw req.ykError("SubQualification not created!");
 				}

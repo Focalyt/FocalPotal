@@ -1550,7 +1550,20 @@ router.route("/single").get(auth1, function (req, res) {
 	});
 });
 
+router.route("/appliedEvent").get(async (req, res) => {
+  try {
+	
+ 
 
+	res.render(`${req.vPath}/app/college/appliedEvent`, {
+	  menu: 'viewEvents',
+	  
+	});
+  } catch (err) {
+	req.flash("error", err.message || "Something went wrong!");
+	return res.redirect("back");
+  }
+});
 
 router.route("/viewEvent").get(auth1, async (req, res) => {
 	try {

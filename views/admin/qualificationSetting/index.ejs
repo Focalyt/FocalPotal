@@ -34,27 +34,30 @@
                   <form class="form-horizontal" action="" method="post">
                     <div class="row">
                       <% if (quaName) { %>
-                        <div class="col-xl-4 mb-1">
-                          <label>Select Course
-                            <span class="asterisk">*</span></label>
-                            <select style="cursor: pointer;" class="form-control"
-                            name="id" required>
-                            <option value="">Select Option</option>
-                            <% qualifications.forEach((i)=> { %>
-                              <option value="<%= i._id %>" class="text-capitalize">
-                                <%= i.name %>
-                              </option>
-                              <% }); %>
-                          </select>
+                        
 
-                           </div>
-                        <% } else {%>
-                          <div class="col-xl-4 mb-1">
+                           <div class="col-xl-4 mb-1">
                             <label>Course Name</label>
                             <input type="type" class="form-control" minlength="1" maxlength="50" required
                               value="<%- quaName ? quaName : ''%>" name="name" placeholder="Course name">
                         
                         </div>
+
+                        <% } else {%>
+                          <div class="col-xl-4 mb-1">
+                            <label>Select Course
+                              <span class="asterisk">*</span></label>
+                              <select style="cursor: pointer;" class="form-control"
+                              name="id" required>
+                              <option value="">Select Option</option>
+                              <% qualifications.forEach((i)=> { %>
+                                <option value="<%= i._id %>" class="text-capitalize">
+                                  <%= i.name %>
+                                </option>
+                                <% }); %>
+                            </select>
+  
+                             </div>
                           <% } %>
                         <div class="col-xl-4 mb-1">
                           <br>
@@ -256,3 +259,5 @@
 		      }
 
         </script>
+        </body>
+        </html>
