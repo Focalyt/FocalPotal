@@ -1,4 +1,5 @@
 module.exports.AppBanner = require('./appBanner');
+module.exports.Event = require('./event');
 module.exports.AppUpdate = require('./appUpdate');
 module.exports.User = require('./users');
 module.exports.CareerObjective = require('./careerObjective');
