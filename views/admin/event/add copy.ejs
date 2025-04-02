@@ -16,7 +16,7 @@
 	</div>
 	<div class="content-body">
 		<% include ../partials/flash %>
-			<form class="form-horizontal" enctype="multipart/form-data" method="post" id="formData">
+			<form class="form-horizontal" action="" method="post" id="formData">
 				<section id="personal-info">
 					<div class="row">
 						<div class="col-xl-12 col-lg-12">
@@ -33,10 +33,10 @@
 												<select class="form-control text-capitalize " required name="eventType">
 													<!-- chosen  class removed-->
 													<option value="">Select Option</option>
-													<option value="Contest" class="text-capitalize">
+													<option value="Online" class="text-capitalize">
 														Contest
 													</option>
-													<option value="Webinar" class="text-capitalize">
+													<option value="Offline" class="text-capitalize">
 														Webinar
 													</option>
 
@@ -46,14 +46,12 @@
 												<label>Event Title
 													<span class="asterisk">*</span></label>
 												<input type="text" class="form-control" required name="eventTitle"
-													placeholder="Event Title" />
+													palaceholder="Event Title" />
 											</div>
 											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
 												<label>Event Mode
 													<span class="asterisk">*</span></label>
-												<select class="form-control text-capitalize"
-													onchange="onlineOfflineCheck ()" id="eventMode" required
-													name="mode">
+												<select class="form-control text-capitalize " required name="mode">
 													<!-- chosen  class removed-->
 													<option value="">Select Option</option>
 													<option value="Online" class="text-capitalize">
@@ -65,40 +63,23 @@
 
 												</select>
 											</div>
-											<div id="location"
-												class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-1 d-none">
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
 												<label>Location</label>
-												<input type="text" class="form-control" id="loc" maxlength="50"
+												<input type="text" class="form-control" maxlength="50"
 													name="location" />
-												<input type="hidden" id="latitude" name="latitude" />
-												<input type="hidden" id="longitude" name="longitude" />
-												<input type="hidden" id="state" name="state" />
-												<input type="hidden" id="city" name="city" />
-												<input type="hidden" id="fullAddress" name="fullAddress" />
+												<input type="hidden" id="latitude" name="latitude" value=""
+													class="form-control" />
+												<input type="hidden" id="longitude" name="longitude" value=""
+													class="form-control" />
+												<input type="hidden" id="state" name="State" value=""
+													class="form-control" />
+												<input type="hidden" id="city" name="city" value=""
+													class="form-control" />
+
 											</div>
-
-											<script>
-												function onlineOfflineCheck() {
-													const mode = document.getElementById('eventMode').value
-													console.log("Event Mode", mode);
-													if (mode === "Offline") {
-														document.getElementById('location').classList.remove('d-none');
-														document.getElementById('onlineUrl').classList.add('d-none');
-													}
-													if (mode === "Online") {
-														document.getElementById('location').classList.add('d-none');
-														document.getElementById('onlineUrl').classList.remove('d-none');
-													}
-
-												}
-											</script>
-
-
-											<div id="onlineUrl"
-												class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1 d-none">
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
 												<label>Online URL</label>
-												<input placeholder="Enter URL" type="text" class="form-control"
-													maxlength="50" name="url" />
+												<input type="text" class="form-control" maxlength="50" name="url" />
 											</div>
 											<div class="col-xl-3 mb-1">
 												<label>Event Timing
@@ -108,20 +89,47 @@
 												<div id="eventTiming">
 													<!-- <label>&nbsp;</label> -->
 													<div class="row">
-														<div class="col-6">
-															<input name="timingFrom" type="text" id="timing-from"
-																class="form-control" placeholder="From">
-														</div>
-														<div class="col-6">
-															<input name="timingTo" type="text" id="timing-to" class="form-control"
-																placeholder="To">
-														</div>
+														<div class="col-6"> <input class="form-control"
+																placeholder="From" type="text" name="timing-from"
+																id="timing-from" /></div>
+														<div class="col-6"><input class="form-control" placeholder="To"
+																type="text" name="timing-to" id="timing-to" /></div>
 													</div>
-
 
 
 												</div>
 											</div>
+
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Country <span class="asterisk">*</span></label>
+												<select style="cursor: pointer;" class="form-control" name="countryId"
+													id="country" required>
+													<option value="">Select Option</option>
+
+													<option value="" class="text-capitalize">
+
+													</option>
+
+												</select>
+											</div>
+
+
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>State <span class="asterisk">*</span></label>
+												<select style="cursor: pointer;" class="form-control" name="stateId"
+													id="state" required>
+													<option value="">Select Option</option>
+												</select>
+											</div>
+											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>City <span class="asterisk">*</span></label>
+												<select style="cursor: pointer;" class="form-control" name="cityId"
+													required id="city">
+													<option value="">Select Option</option>
+												</select>
+											</div>
+
+
 											<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
 												<label>Description</label>
 												<textarea class="form-control" maxlength="100" name="description"
@@ -136,142 +144,59 @@
 						</div>
 				</section>
 
-				<style>
-					.flatpickr-calendar {
-						z-index: 99999 !important;
-						/* bring on top of everything */
-						width: 120px !important;
-					}
+				<section id="upload">
+					<div class="row">
+						<div class="col-xl-12 col-lg-12">
+							<div class="card">
+								<div class="card-header border border-top-0 border-left-0 border-right-0">
+									<h4 class="card-title pb-1">Upload Documents</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body diningRows">
+										<div class="row mb-2">
+											<div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Name</label>
+												<input class="form-control text-capitalize" maxlength="50" type="text"
+													name="repName[]" value='' />
+											</div>
+											<div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Designation <span class="asterisk"></span></label>
+												<input class="form-control text-capitalize" maxlength="50" type="text"
+													name="repDesignation[]" value='' />
+											</div>
+											<div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Email <span class="asterisk"></span></label>
+												<input class="form-control" maxlength="50" type="email"
+													name="repEmail[]" value='' />
+											</div>
+											<div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+												<label>Contact Number </label>
+												<input class="form-control" type="text" name="repMobile[]"
+													minlength="10" maxlength="13" value='' />
+											</div>
+											<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 text-right">
+												<a class="appoint btn btn-success text-white mt-2 px-lg-2">+</a>
+											</div>
+											<div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2 text-right">
+												<button onclick="reset()" class="btn btn-danger">Reset</button>
+												<button type="submit" class="btn btn-success btnSubmit px-lg-2 ml-1">
+													Save
+												</button>
 
-					.flatpickr-calendar.open {
-						display: block !important;
-						visibility: visible !important;
-					}
+											</div>
 
-					.flatpickr-input[readonly] {
-						background-color: #fff !important;
-						/* fix greyed out look */
-						cursor: pointer;
-						
-					}
-
-					numInputWrapper .flatpickr-am-pm{
-						width: 40% !important ;
-					}
-				</style>
-
-
-<section id="upload-doc">
-	<div class="row">
-	  <div class="col-xl-12 col-lg-12">
-		<div class="card">
-		  <div class="card-header border border-top-0 border-left-0 border-right-0">
-			<h4 class="card-title pb-1">Add Docs</h4>
-		  </div>
-		  <div class="card-content">
-			<div class="card-body">
-			  <section id="imageGalaryTemplate">
-				<div class="row">
-				  <!-- Video Upload -->
-				  <div class="col-xl-4 col-md-4 col-sm-12 mb-1">
-					<label for="video">Add Video</label>
-					<input type="file" id="video" name="video" />
-				  </div>
-  
-				  <!-- Thumbnail Upload -->
-				  <div class="col-xl-4 col-md-4 col-sm-12 mb-1">
-					<label for="thumbnail">Add Thumbnail</label>
-					<input type="file" id="thumbnail" name="thumbnail" />
-				  </div>
-  
-				  <!-- Guidelines Upload -->
-				  <div class="col-xl-4 col-md-4 col-sm-12 mb-1">
-					<label for="guidelines">Add Guidelines</label>
-					<input type="file" id="guidelines" name="guidelines" />
-				  </div>
-				</div>
-			  </section>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	</div>
-  
-	<!-- Submit Button -->
-	<div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2 text-right">
-	  <button id="sub-btn" type="submit"
-		class="btn btn-success px-lg-2 ml-1 waves-effect waves-light">
-		Save
-	  </button>
-	</div>
-  </section>
-  
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
 			</form>
 			<div class="text-right reset">
 
 			</div>
 			<% include ../partials/footer %>
-
-				<script
-					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7DDN_gUp2zyrlElXtYpjTEQobYiUB9Lg&callback=initMap&libraries=places&v=weekly"
-					defer></script>
-
-				<script>
-					flatpickr("#timing-from", {
-						enableTime: true,
-						noCalendar: true,
-						dateFormat: "h:i K", // Format like 12:30 PM
-						time_24hr: false     // Set to true for 24hr format
-					});
-
-					flatpickr("#timing-to", {
-						enableTime: true,
-						noCalendar: true,
-						dateFormat: "h:i K",
-						time_24hr: false
-					});
-				</script>
-
-				<script>
-					function initMap() {
-						const input = document.getElementById("loc");
-
-						const autocomplete = new google.maps.places.Autocomplete(input, {
-							componentRestrictions: { country: "in" }
-						});
-
-						autocomplete.addListener("place_changed", function () {
-							const place = autocomplete.getPlace();
-							console.log(place);
-
-							document.getElementById("fullAddress").value = place.formatted_address || input.value;
-							document.getElementById("latitude").value = place.geometry?.location?.lat() || '';
-							document.getElementById("longitude").value = place.geometry?.location?.lng() || '';
-
-							let state = '';
-							let city = '';
-							place.address_components.forEach(component => {
-								if (component.types.includes("administrative_area_level_1")) {
-									state = component.long_name;
-								}
-								if (component.types.includes("locality")) {
-									city = component.long_name;
-								}
-							});
-
-							document.getElementById("state").value = state;
-							document.getElementById("city").value = city;
-						});
-					}
-
-					window.initMap = initMap;
-				</script>
-
-
-
-
-
-
 				<script>
 					const imageUploaders = document.querySelectorAll(".my-logo-uploader");
 					const submitBtns = document.querySelectorAll(".btnSubmit");
@@ -776,7 +701,3 @@
 					$(".chosen").chosen();
 				</script>
 	</div>
-
-	</body>
-
-	</html>
