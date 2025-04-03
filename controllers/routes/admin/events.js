@@ -87,6 +87,7 @@ router.post("/add", async (req, res) => {
             description,
             timingFrom,
             timingTo,
+            registrationFrom,registrationTo
         } = req.body;
 
         let videoURL = "";
@@ -137,6 +138,10 @@ router.post("/add", async (req, res) => {
             timing: {
                 from: timingFrom,
                 to: timingTo,
+            },
+            registrationPeriod: {
+                from: registrationFrom,
+                to: registrationTo,
             },
             video: videoURL,
             thumbnail: thumbnailURL,
