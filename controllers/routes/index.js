@@ -8,6 +8,7 @@ const collegeRoutes = require('./college');
 const { sendMail } = require("../../helpers");
 // const companyRoutes = require('./company');
 const candidateRoutes=require('./candidate');
+const androidAppRoutes=require('./androidApp');
 const corporateRoutes=require('./corporate');
 const { baseUrl } = require("../../config");
 const router = express.Router();
@@ -20,6 +21,7 @@ const moment = require("moment");
 
 router.use('/', frontRoutes);
 router.use('/candidate',candidateRoutes);
+router.use('/androidapp',androidAppRoutes);
 router.use('/api', apiRoutes);
 router.use('/candidateForm', viewsRoutes);
 router.use('/admin', adminRoutes);
