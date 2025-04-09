@@ -309,54 +309,8 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
 
     console.log("selectedCenter",selectedCenter)
 
-    // Create URL object to parse parameters
-    const urlObj = new URL(entryUrl);
-    const params = urlObj.searchParams;
+   
 
-    // Get fbclid from URL
-    const fbclid = params.get('fbclid');
-    console.log("fbclid:", fbclid);
-
-
-    // Generate fbc from fbclid
-    let fbc = null;
-    if (fbclid) {
-      // Facebook click ID format: fb.1.{timestamp}.{fbclid}
-      fbc = `fb.1.${Date.now()}.${fbclid}`;
-    }
-
-    console.log("fbc:", fbc);
-
-    // Get or generate fbp
-    let fbp = params.get('fbp');
-
-    if (!fbp) {
-      const timestamp = Date.now();
-      const random = Math.floor(Math.random() * 1000000000);
-      fbp = `fb.1.${timestamp}.${random}`;
-    }
-
-    console.log("fbp:", fbp);
-
-
-
-    const metaParams = {
-      fbc: fbc,
-      fbclid: fbclid || null, // Store original fbclid
-      fbp: fbp,
-      adId: params.get('ad_id') || null,
-      campaignId: params.get('campaign_id') || null,
-      adsetId: params.get('adset_id') || null,
-      utmSource: params.get('utm_source') || null,
-      utmMedium: params.get('utm_medium') || null,
-      utmCampaign: params.get('utm_campaign') || null
-    };
-
-
-    // Get Meta parameters
-    // const metaParams = getMetaParameters(req);
-
-    // Validate courseId and candidate's mobile number
     const { value, error } = await CandidateValidators.userMobile(validation);
     if (error) {
       return res.status(400).json({ status: false, msg: "Invalid mobile number.", error });
@@ -450,38 +404,7 @@ router.post("/course/:courseId/apply", [isCandidate, authenti], async (req, res)
 
 
     console.log(candidateMob);
-
-    // Track conversion event
-    const metaApi = new MetaConversionAPI();
-    await metaApi.trackCourseApplication(
-      {
-        courseName: course.name,
-        courseId: courseId,
-        courseValue: course.registrationCharges,
-        sourceUrl: `${process.env.BASE_URL}/coursedetails/${courseId}`
-      },
-      {
-        email: candidate.email,
-        phone: candidateMob,
-        firstName: candidate.name.split(' ')[0],
-        lastName: candidate.name.split(' ').slice(1).join(' '),
-        gender: candidate?.sex === 'Male' ? 'm' : candidate?.sex === 'Female' ? 'f' : '',
-        dob: candidate?.dob ? moment(candidate.dob).format('YYYYMMDD') : '',
-        city: candidate.city?.name,
-        state: candidate.state?.name,
-        ipAddress: req.ip,
-        userAgent: req.headers['user-agent']
-      },
-      metaParams
-    );
-
-
-
-
-
-
-
-    return res.status(200).json({ status: true, msg: "Course applied successfully." });
+return res.status(200).json({ status: true, msg: "Course applied successfully." });
   } catch (error) {
     console.error("Error applying for course:", error.message);
     return res.status(500).json({ status: false, msg: "Internal server error.", error: error.message });
@@ -1310,52 +1233,8 @@ router.get("/searchcourses", [isCandidate], async (req, res) => {
 router.get("/course/:courseId", [isCandidate], async (req, res) => {
   try {
     const { courseId } = req.params;
-    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-    console.log(fullUrl);
-
-    // Modify script to run after DOM is loaded and escape quotes properly
-    const storageScript = `
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        try {
-        const storedurl = localStorage.getItem('entryUrl');
-        if(!storedurl){
-          // Store current URL immediately
-          const data = {
-            url: '${fullUrl.replace(/'/g, "\\'")}',
-            timestamp: new Date().getTime()
-          };
-          localStorage.setItem('entryUrl', JSON.stringify(data));
-          
-          // Verify it was stored
-          console.log('URL stored:', localStorage.getItem('entryUrl'))};
-          
-          // Function to check and clean expired URL
-          function cleanExpiredUrl() {
-            const stored = localStorage.getItem('entryUrl');
-            if (stored) {
-              const data = JSON.parse(stored);
-              const now = new Date().getTime();
-              const hours24 = 24 * 60 * 60 * 1000;
-              
-              if (now - data.timestamp > hours24) {
-                localStorage.removeItem('entryUrl');
-                console.log('Expired URL removed');
-              }
-            }
-          }
-          
-          // Check for expired URLs
-          cleanExpiredUrl();
-          
-        } catch (error) {
-          console.error('Error storing URL:', error);
-        }
-      });
-    </script>
-  `;
     const contact = await Contact.find({ status: true, isDeleted: false }).sort({ createdAt: 1 })
-    const userMobile = req.session.user.mobile;
+    const userMobile = req.user.mobile;
     let validation = { mobile: userMobile }
     let { value, error } = CandidateValidators.userMobile(validation)
     if (error) {

@@ -107,6 +107,20 @@ const candidateSchema = new Schema(
       lowercase: true,
       trim: true,
     },
+    presentAddress:{
+      city: { type: String, default: "" },
+      state: { type: String, default: "" },
+      latitude: { type: String, default: "" },
+      longitude: { type: String, default: "" },
+      fullAddress: { type: String, default: "" }
+    },
+    parmanentAddress:{
+      city: { type: String, default: "" },
+      state: { type: String, default: "" },
+      latitude: { type: String, default: "" },
+      longitude: { type: String, default: "" },
+      fullAddress: { type: String, default: "" }
+    },
     place: String,
     latitude: String,
     longitude: String,

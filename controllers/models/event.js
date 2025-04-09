@@ -27,12 +27,12 @@ const eventSchema = new mongoose.Schema({
     fullAddress: { type: String, default: "" }
   },
   timing: {
-    from: { type: String, required: true },
-    to: { type: String, required: true }
+    from: { type: Date, required: true },
+    to: { type: Date, required: true }
   },
   registrationPeriod: {
-    from: { type: String, required: true },
-    to: { type: String, required: true }
+    from: { type: Date, required: true },
+    to: { type: Date, required: true }
   },
   description: {
     type: String,

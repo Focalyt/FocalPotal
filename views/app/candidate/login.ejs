@@ -1,94 +1,110 @@
 <% include ./partials/header %>
 
-<!-- Your existing login page HTML -->
-<%- storageScript %>
+    <!-- Your existing login page HTML -->
+    <%- storageScript %>
 
-<!-- Final SLIDER-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css">
-<link rel="stylesheet" type="text/css" href="/public_assets/css/card-slider.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
-<!--- Final SLIDER END-->
-<link rel="stylesheet" type="text/css" href="../css/newpages/custom.css">
-<style>
-    .carousel-gallery .swiper-pagination{
-        margin-top: 0!important;
-    }
-</style>
-<body
-    class="vertical-layout vertical-menu-modern 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page"
-    data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-W39K27R');</script>
-        <!-- End Google Tag Manager -->
-    
-    <!-- BEGIN: Content-->
-    <div class="app-content content  repeat-img">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper mt-xl-4 mt-lg-4 mt-md-4 mt-sm-1 mt-1 mb-md-0 mb-sm-5 mb-5">
-            <div class="content-header row">
-            </div>
-            <div class="content-body card_pos_top" id="login_card">
-                <% include ../../partials/flash %>
-                <section class="row flexbox-container">
-                    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 col-12 d-flex justify-content-center mx-auto pr-0 px-2"
-                        id="candi_login">
-                        <div class="col-xl-12 card rounded mb-0 shadow px-0">
-                            <div class="row m-0">
-                                <div class="col-xl-12 text-center">
-                                    <img src="/images/logo/logo.png" alt="Focalyt logo"
-                                        class="img-fluid brand_logo w-25 py-1">
-                                </div>
-                                <div class="col-xl-12 col-lg-12 col-sm-12 col-12 col-12 p-0">
-                                    <div class="card mb-0">
-                                        <div class="card-title text-center mb-0">
-                                            <h4>#Building Future Ready Minds</h4>
-                                        </div>
+        <!-- Final SLIDER-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css">
+        <link rel="stylesheet" type="text/css" href="/public_assets/css/card-slider.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
+        <!--- Final SLIDER END-->
+        <link rel="stylesheet" type="text/css" href="../css/newpages/custom.css">
+        <style>
+            .carousel-gallery .swiper-pagination {
+                margin-top: 0 !important;
+            }
+        </style>
 
-                                          <!--Carousel Gallery-->
-                                          <div class="carousel-gallery px-xl-2 px-lg-2 px-md-2 px-sm-1 px-1 mb-0">
-                                              <div class="swiper-container">
-                                                  <div class="swiper-wrapper text-center">
-                                                      <div class="swiper-slide text-center" >
-                                                          <img src="/images/logo/cashback-login.png" alt="dd" class="img-fluid login-border">
-                                                      </div>
-                                                      <div class="swiper-slide text-center">
-                                                          <img src="/images/logo/near-login.png" alt="dd" class="img-fluid login-border">
-                                                      </div>
-                                                      <div class="swiper-slide text-center">
-                                                        <img src="/images/logo/verified-login.png" alt="dd" class="img-fluid login-border">
-                                                    </div>
-                                                    <div class="swiper-slide text-center">
-                                                        <img src="/images/logo/cashback-login.png" alt="dd" class="img-fluid login-border">
-                                                    </div>
-                                                    <div class="swiper-slide text-center">
-                                                        <img src="/images/logo/getloan.png" alt="dd" class="img-fluid login-border">
-                                                    </div>
-                                                  </div>
-                                                  <div class="swiper-pagination"></div>
-                                              </div>
-                                          </div>
-                                          <!--#Carousel Gallery-->
+        <body
+            class="vertical-layout vertical-menu-modern 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page"
+            data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+            <!-- Google Tag Manager -->
+            <script>(function (w, d, s, l, i) {
+                    w[l] = w[l] || []; w[l].push({
+                        'gtm.start':
+                            new Date().getTime(), event: 'gtm.js'
+                    }); var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+                })(window, document, 'script', 'dataLayer', 'GTM-W39K27R');</script>
+            <!-- End Google Tag Manager -->
 
-                                        <div class="card-content px-xl-0 px-lg-0 px-md-0 px-sm-0 px-0">
-                                            <div class="card-body px-xl-2 px-lg-2 px-md-2 px-sm-1 px-1 py-0">
-                                                <ul class="nav nav-tabs justify-content-left" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active px-0" id="service-tab-center"
-                                                            data-toggle="tab" href="#" aria-controls="service-center"
-                                                            role="tab" aria-selected="false">
-                                                            <h5 class="color-black font-weight-bold">Candidate Login /
-                                                                Signup</h5>
-                                                            <h5 class="text-primary font-weight-bold mb-0 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-1 mt-1">लॉग इन / साइन
-                                                                अप करें</h5>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                                <!-- <div class="col-xl-12 px-0">
+            <!-- BEGIN: Content-->
+            <div class="app-content content  repeat-img">
+                <div class="content-overlay"></div>
+                <div class="header-navbar-shadow"></div>
+                <div class="content-wrapper mt-xl-4 mt-lg-4 mt-md-4 mt-sm-1 mt-1 mb-md-0 mb-sm-5 mb-5">
+                    <div class="content-header row">
+                    </div>
+                    <div class="content-body card_pos_top" id="login_card">
+                        <% include ../../partials/flash %>
+                            <section class="row flexbox-container">
+                                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 col-12 d-flex justify-content-center mx-auto pr-0 px-2"
+                                    id="candi_login">
+                                    <div class="col-xl-12 card rounded mb-0 shadow px-0">
+                                        <div class="row m-0">
+                                            <div class="col-xl-12 text-center">
+                                                <img src="/images/logo/logo.png" alt="Focalyt logo"
+                                                    class="img-fluid brand_logo w-25 py-1">
+                                            </div>
+                                            <div class="col-xl-12 col-lg-12 col-sm-12 col-12 col-12 p-0">
+                                                <div class="card mb-0">
+                                                    <div class="card-title text-center mb-0">
+                                                        <h4>#Building Future Ready Minds</h4>
+                                                    </div>
+
+                                                    <!--Carousel Gallery-->
+                                                    <div
+                                                        class="carousel-gallery px-xl-2 px-lg-2 px-md-2 px-sm-1 px-1 mb-0">
+                                                        <div class="swiper-container">
+                                                            <div class="swiper-wrapper text-center">
+                                                                <div class="swiper-slide text-center">
+                                                                    <img src="/images/logo/cashback-login.png" alt="dd"
+                                                                        class="img-fluid login-border">
+                                                                </div>
+                                                                <div class="swiper-slide text-center">
+                                                                    <img src="/images/logo/near-login.png" alt="dd"
+                                                                        class="img-fluid login-border">
+                                                                </div>
+                                                                <div class="swiper-slide text-center">
+                                                                    <img src="/images/logo/verified-login.png" alt="dd"
+                                                                        class="img-fluid login-border">
+                                                                </div>
+                                                                <div class="swiper-slide text-center">
+                                                                    <img src="/images/logo/cashback-login.png" alt="dd"
+                                                                        class="img-fluid login-border">
+                                                                </div>
+                                                                <div class="swiper-slide text-center">
+                                                                    <img src="/images/logo/getloan.png" alt="dd"
+                                                                        class="img-fluid login-border">
+                                                                </div>
+                                                            </div>
+                                                            <div class="swiper-pagination"></div>
+                                                        </div>
+                                                    </div>
+                                                    <!--#Carousel Gallery-->
+
+                                                    <div class="card-content px-xl-0 px-lg-0 px-md-0 px-sm-0 px-0">
+                                                        <div
+                                                            class="card-body px-xl-2 px-lg-2 px-md-2 px-sm-1 px-1 py-0">
+                                                            <ul class="nav nav-tabs justify-content-left"
+                                                                role="tablist">
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link active px-0"
+                                                                        id="service-tab-center" data-toggle="tab"
+                                                                        href="#" aria-controls="service-center"
+                                                                        role="tab" aria-selected="false">
+                                                                        <h5 class="color-black font-weight-bold">
+                                                                            Candidate Login /
+                                                                            Signup</h5>
+                                                                        <h5
+                                                                            class="text-primary font-weight-bold mb-0 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-1 mt-1">
+                                                                            लॉग इन / साइन
+                                                                            अप करें</h5>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                            <!-- <div class="col-xl-12 px-0">
                                                     <p class="color-black">Register Quickly</p>
                                                     <p class="text-primary">नौकरियां आपका इंतजार कर रही हैं</p>
                                                 </div>
@@ -100,211 +116,259 @@
                                                     <img src="/images/login-arrow.png" alt="arrow" class="img-fluid"
                                                         draggable="false" id="arrow_login">
                                                 </div> -->
-                                                <div class="tab-content mt-1">
-                                                    <div class="tab-pane active" id="service-center"
-                                                        aria-labelledby="service-tab-center" role="tabpanel">
-                                                        <div class="card rounded-0 mb-0">
-                                                            <div class="card-content">
-                                                                <div class="card-body px-0 pt-xl-1 pt-lg-1 pt-md-1 pt-sm-1 pt-1 pb-1">
-                                                                    <!---------------------->
+                                                            <div class="tab-content mt-1">
+                                                                <div class="tab-pane active" id="service-center"
+                                                                    aria-labelledby="service-tab-center"
+                                                                    role="tabpanel">
+                                                                    <div class="card rounded-0 mb-0">
+                                                                        <div class="card-content">
+                                                                            <div
+                                                                                class="card-body px-0 pt-xl-1 pt-lg-1 pt-md-1 pt-sm-1 pt-1 pb-1">
+                                                                                <!---------------------->
 
-                                                                    <div class="row ">
-                                                                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9"
-                                                                            id="mb_input">
-                                                                            <input type="tel" class="form-control py-2"
-                                                                                maxlength="10"
-                                                                                onKeyPress="if(this.value.length==10) return false;"
-                                                                                id="user-input"
-                                                                                placeholder="Mobile / मोबाइल"
-                                                                                pattern="[0-9]{10}" value=""
-                                                                                aria-label="Mobile Number"
-                                                                                aria-describedby="basic-addon2">
-                                                                        </div>
-                                                                        <div
-                                                                            class="col text-center pl-0">
-                                                                            <button
-                                                                                class="btn btn-primary float-right btn-inline waves-effect waves-light text-white btn-block px-xl-0 px-lg-0 px-md-0 px-sm-0 px-0 py-1"
-                                                                                type="button" id="generate-otp"><img
-                                                                                    src="/images/login_arrow.png"
-                                                                                    alt="Focalyt logo"
-                                                                                    class="candid_arrow">&nbsp;&nbsp;<span>SEND</span></button>
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                    <!---------------------->
-                                                                    <fieldset
-                                                                        class="form-label-group position-relative has-icon-left mt-2"
-                                                                        id="user-otp">
-                                                                        <input type="number" class="form-control"
-                                                                            id="otp-input"
-                                                                            placeholder="Enter OTP / अपना ओटीपी दर्ज करें"
-                                                                            value="">
-                                                                        <div class="form-control-position">
-                                                                            <i class="feather icon-send"></i>
-                                                                        </div>
-                                                                        <label for="Enter OTP">Enter
-                                                                            OTP</label>
-                                                                    </fieldset>
-                                                                    <fieldset id="name"
-                                                                        class="form-label-group form-group position-relative has-icon-left mt-2">
-                                                                        <input type="text" class="form-control"
-                                                                            id="full-name"
-                                                                            onkeypress="if(this.value.length==30) return false"
-                                                                            placeholder="Full Name / पूरा नाम" value="">
-
-
-                                                                        <div class="form-control-position">
-                                                                            <i class="feather icon-user"></i>
-                                                                        </div>
-                                                                        <label for="user-name"></label>
-                                                                    </fieldset>
-
-                                                                    <fieldset id="gender-field"
-                                                                        class="form-label-group form-group position-relative has-icon-left">
-                                                                        <select class="form-control dropdown open"
-                                                                            id="gender" placeholder="select">
-                                                                            <option value="">Select Your Gender
-                                                                            </option>
-                                                                            <option value="Female">Female
-                                                                            </option>
-                                                                            <option value="Male">Male</option>
-                                                                        </select>
-                                                                        <div class="form-control-position">
-                                                                            <i
-                                                                                class="fa-solid fa-person-half-dress"></i>
-                                                                        </div>
-
-                                                                        <label for="user-name"></label>
-                                                                    </fieldset>
-                                                                    <fieldset id="location"
-                                                                        class="form-label-group form-group position-relative">
-                                                                        <div class="input-group mb-0">
-                                                                            <div class="input-group-prepend bg-locat">
-                                                                                <div class="input-group-text bg-intext">
-                                                                                    <img src="/images/isist.png"
-                                                                                        id="siteforcomp">
+                                                                                <div class="row ">
+                                                                                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9"
+                                                                                        id="mb_input">
+                                                                                        <input type="tel"
+                                                                                            class="form-control py-2"
+                                                                                            maxlength="10"
+                                                                                            onKeyPress="if(this.value.length==10) return false;"
+                                                                                            id="user-input"
+                                                                                            placeholder="Mobile / मोबाइल"
+                                                                                            pattern="[0-9]{10}" value=""
+                                                                                            aria-label="Mobile Number"
+                                                                                            aria-describedby="basic-addon2">
+                                                                                    </div>
+                                                                                    <div class="col text-center pl-0">
+                                                                                        <button
+                                                                                            class="btn btn-primary float-right btn-inline waves-effect waves-light text-white btn-block px-xl-0 px-lg-0 px-md-0 px-sm-0 px-0 py-1"
+                                                                                            type="button"
+                                                                                            id="generate-otp"><img
+                                                                                                src="/images/login_arrow.png"
+                                                                                                alt="Focalyt logo"
+                                                                                                class="candid_arrow">&nbsp;&nbsp;<span>SEND</span></button>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <input type="text" class="form-control"
-                                                                                id="loc" value=""
-                                                                                placeholder="City/ शहर">
-                                                                            <input type="hidden" id="place" name="place"
-                                                                                value="" class="form-control" />
-                                                                            <input type="hidden" id="latitude"
-                                                                                name="latitude" value=""
-                                                                                class="form-control" />
-                                                                            <input type="hidden" id="longitude"
-                                                                                name="longitude" value=""
-                                                                                class="form-control" />
-                                                                            <label for="user-name"></label>
-                                                                    </fieldset>
-                                                                    <div class="row ">
-                                                                        <div
-                                                                            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                                            <a class="btn btn-primary float-right btn-inline waves-effect waves-light text-white btn-block"
-                                                                                id="verify-login-btn">
-                                                                                Login / लॉगइन</a>
-                                                                        </div>
-                                                                        <div
-                                                                            class="colx-l-6 col-lg-6 col-md-6 col-sm-6 col-6  pl-sm-0 pl-0 ">
-                                                                            <div class="btn btn-primary btn-block waves-effect waves-light text-white btn-block"
-                                                                                id="resend-btn" style="padding: 0.9rem;">
-                                                                                OTP on call</div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div
-                                                                        class="form-group d-flex justify-content-between align-items-center">
-                                                                    </div>
-                                                                    <div id="error"
-                                                                        style="color:red; font-weight: bold;display:none;">
-                                                                    </div>
-                                                                    <div id="success"
-                                                                        style="color:green;font-weight: bold; display:none;">
-                                                                    </div>
-                                                                    <div id="verified" class="pb-1 d-none"
-                                                                        style="color:green;font-weight: bold;">
-                                                                        <div id="msg1">
-                                                                            <i class="fa-solid fa-circle-check"></i>
-                                                                            OTP Sent Successfully
-                                                                        </div>
-                                                                        <div id="msg2"> </div>
-                                                                    </div>
-                                                                    <h3 id="login-partner" class="mt-2">Our Partners </h3>
-                                                                    <div class="slider py-0">
-                                                                        <div class="slide-track-1">
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/amber.png"
-                                                                                    alt="Focalyt partner" draggable="false">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/arms.png" alt="Focalyt partner" draggable="false">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/utl_solar.png"
-                                                                                    alt="Focalyt partner" draggable="false">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/dixon.png"
-                                                                                    alt="Focalyt partner" draggable="false">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/quess.png"
-                                                                                    alt="Focalyt partner" draggable="false">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/mankind.jpg"
-                                                                                    alt="Focalyt partner" draggable="false" class="px-0">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/methodex.jpg"
-                                                                                    alt="Focalyt partner" draggable="false" class="px-0">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/bodycare.jpg" alt="Focalyt partner" draggable="false">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/htw.jpg"
-                                                                                    alt="Focalyt partner" draggable="false" class="px-0">  
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/maple.jpg"
-                                                                                    alt="Focalyt partner" draggable="false" class="px-0">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/satya.jpg"
-                                                                                    alt="Focalyt partner" draggable="false" class="px-0">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/arms.png" alt="Focalyt partner" draggable="false">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/dixon.png"
-                                                                                    alt="Focalyt partner" draggable="false">
-                                                                            </div>
-                                                                            <div class="slide">
-                                                                                <img src="/images/logo/quess.png"
-                                                                                    alt="Focalyt partner" draggable="false">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
 
-                                                                    <p class=" mt-1 mb-0 pt-0 px-0">I agree to <a
-                                                                            href="/employersTermsofService"
-                                                                            target="_blank">Employer's terms</a>
-                                                                        & <a href="/userAgreement"
-                                                                            target="_blank">User Policy</a>.
-                                                                    </p>
 
+                                                                                <!---------------------->
+                                                                                <fieldset
+                                                                                    class="form-label-group position-relative has-icon-left mt-2"
+                                                                                    id="user-otp">
+                                                                                    <input type="number"
+                                                                                        class="form-control"
+                                                                                        id="otp-input"
+                                                                                        placeholder="Enter OTP / अपना ओटीपी दर्ज करें"
+                                                                                        value="">
+                                                                                    <div class="form-control-position">
+                                                                                        <i
+                                                                                            class="feather icon-send"></i>
+                                                                                    </div>
+                                                                                    <label for="Enter OTP">Enter
+                                                                                        OTP</label>
+                                                                                </fieldset>
+                                                                                <fieldset id="name"
+                                                                                    class="form-label-group form-group position-relative has-icon-left mt-2">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="full-name"
+                                                                                        onkeypress="if(this.value.length==30) return false"
+                                                                                        placeholder="Full Name / पूरा नाम"
+                                                                                        value="">
+
+
+                                                                                    <div class="form-control-position">
+                                                                                        <i
+                                                                                            class="feather icon-user"></i>
+                                                                                    </div>
+                                                                                    <label for="user-name"></label>
+                                                                                </fieldset>
+
+                                                                                <fieldset id="gender-field"
+                                                                                    class="form-label-group form-group position-relative has-icon-left">
+                                                                                    <select
+                                                                                        class="form-control dropdown open"
+                                                                                        id="gender"
+                                                                                        placeholder="select">
+                                                                                        <option value="">Select Your
+                                                                                            Gender
+                                                                                        </option>
+                                                                                        <option value="Female">Female
+                                                                                        </option>
+                                                                                        <option value="Male">Male
+                                                                                        </option>
+                                                                                    </select>
+                                                                                    <div class="form-control-position">
+                                                                                        <i
+                                                                                            class="fa-solid fa-person-half-dress"></i>
+                                                                                    </div>
+
+                                                                                    <label for="user-name"></label>
+                                                                                </fieldset>
+                                                                                <fieldset id="location"
+                                                                                    class="form-label-group form-group position-relative">
+                                                                                    <div class="input-group mb-0">
+                                                                                        <div
+                                                                                            class="input-group-prepend bg-locat">
+                                                                                            <div
+                                                                                                class="input-group-text bg-intext">
+                                                                                                <img src="/images/isist.png"
+                                                                                                    id="siteforcomp">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            id="loc" value=""
+                                                                                            placeholder="City/ शहर">
+                                                                                        <input type="hidden" id="place"
+                                                                                            name="place" value=""
+                                                                                            class="form-control" />
+                                                                                        <input type="hidden"
+                                                                                            id="latitude"
+                                                                                            name="latitude" value=""
+                                                                                            class="form-control" />
+                                                                                        <input type="hidden"
+                                                                                            id="longitude"
+                                                                                            name="longitude" value=""
+                                                                                            class="form-control" />
+                                                                                        <label for="user-name"></label>
+                                                                                </fieldset>
+                                                                                <div class="row ">
+                                                                                    <div
+                                                                                        class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                                                        <a class="btn btn-primary float-right btn-inline waves-effect waves-light text-white btn-block"
+                                                                                            id="verify-login-btn">
+                                                                                            Login / लॉगइन</a>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="colx-l-6 col-lg-6 col-md-6 col-sm-6 col-6  pl-sm-0 pl-0 ">
+                                                                                        <div class="btn btn-primary btn-block waves-effect waves-light text-white btn-block"
+                                                                                            id="resend-btn"
+                                                                                            style="padding: 0.9rem;">
+                                                                                            OTP on call</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="form-group d-flex justify-content-between align-items-center">
+                                                                                </div>
+                                                                                <div id="error"
+                                                                                    style="color:red; font-weight: bold;display:none;">
+                                                                                </div>
+                                                                                <div id="success"
+                                                                                    style="color:green;font-weight: bold; display:none;">
+                                                                                </div>
+                                                                                <div id="verified" class="pb-1 d-none"
+                                                                                    style="color:green;font-weight: bold;">
+                                                                                    <div id="msg1">
+                                                                                        <i
+                                                                                            class="fa-solid fa-circle-check"></i>
+                                                                                        OTP Sent Successfully
+                                                                                    </div>
+                                                                                    <div id="msg2"> </div>
+                                                                                </div>
+                                                                                <h3 id="login-partner" class="mt-2">Our
+                                                                                    Partners </h3>
+                                                                                <div class="slider py-0">
+                                                                                    <div class="slide-track-1">
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/amber.png"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/arms.png"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/utl_solar.png"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/dixon.png"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/quess.png"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/mankind.jpg"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false"
+                                                                                                class="px-0">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/methodex.jpg"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false"
+                                                                                                class="px-0">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/bodycare.jpg"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/htw.jpg"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false"
+                                                                                                class="px-0">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/maple.jpg"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false"
+                                                                                                class="px-0">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/satya.jpg"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false"
+                                                                                                class="px-0">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/arms.png"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/dixon.png"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false">
+                                                                                        </div>
+                                                                                        <div class="slide">
+                                                                                            <img src="/images/logo/quess.png"
+                                                                                                alt="Focalyt partner"
+                                                                                                draggable="false">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <p class=" mt-1 mb-0 pt-0 px-0">I agree
+                                                                                    to <a
+                                                                                        href="/employersTermsofService"
+                                                                                        target="_blank">Employer's
+                                                                                        terms</a>
+                                                                                    & <a href="/userAgreement"
+                                                                                        target="_blank">User Policy</a>.
+                                                                                </p>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane " id="home-center"
-                                                        aria-labelledby="home-tab-center" role="tabpanel">
-                                                        <div class="card rounded-0 mb-0">
-                                                            <div class="card-content">
-                                                                <div class="card-body p-0">
+                                                                <div class="tab-pane " id="home-center"
+                                                                    aria-labelledby="home-tab-center" role="tabpanel">
+                                                                    <div class="card rounded-0 mb-0">
+                                                                        <div class="card-content">
+                                                                            <div class="card-body p-0">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -313,504 +377,510 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                </section>
+                            </section>
 
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <!-- mobile footer -->
+            <!-- mobile footer -->
 
-    <div id="mobile-footer-nav"
-    class="d-xxl-none d-xl-none d-lg-none d-md-none d-sm-block d-block mt-xxl-0 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-4">
-    <div class="container">
-      <div class="footer-nav position-relative">
-        <ul class="h-100 d-flex align-items-center justify-content-between mb-0">
-          <!---->
-          <li>
-            <a href="/">
-              <figure>
-                <img src="/public_assets/images/icons/home.png" draggable="false"
-                  class="img-fluid footer-skill-course m-0">
-              </figure>
-              <span class="text-white pt-1">Home</span>
-            </a>
-          </li>
-          <!---->
-          <!---->
-          <li>
-            <a href="/courses">
-              <figure>
-                <img src="/public_assets/images/icons/learn.png" draggable="false"
-                  class="footer-skill-course img-fluid m-0">
-              </figure>
-              <span class="text-white pt-1">Courses</span>
-            </a>
-          </li>
-          <!---->
-          <li class="login_col">
-            <a href="/candidate/login">
-              <span class="text-white login_ty bg-transparent" style="background-color: transparent;">Login</span>
-            </a>
-          </li>
-          <li>
-            <a href="/joblisting">
-              <figure>
-                <img src="/public_assets/images/icons/jobs.png" draggable="false"
-                  class="footer-skill-course img-fluid m-0"></figure>
-              <span class="text-white pt-1">Jobs</span>
-            </a>
-          </li>
-          <li>
-            <a href="https://api.whatsapp.com/send?text=Check%20out%20Focalyt's%20courses%20and%20job%20opportunities%20at%20https://focalyt.com.%20Enhance%20your%20skills%20and%20secure%20a%20great%20job%20now">
-              <figure>
-                <img src="/public_assets/images/icons/share.png" draggable="false"
-                  class="footer-skill-course img-fluid m-0"></figure>
-              <span class="text-white pt-1">Share</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-<style>
-    li{
-        list-style: none;
-    }
-    @media (max-width:768px) {
-        .content-wrapper{
-            margin-bottom: 75px!important;
-        }
-    }
-</style>
-    <!-- END: Content-->
-    <!-- BEGIN: Vendor JS-->
-    <script src="/js/vendors/js/vendors.min.js"></script>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7DDN_gUp2zyrlElXtYpjTEQobYiUB9Lg&callback=initMap&libraries=places&v=weekly"
-        defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
-        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        function initMap() {
-            const options = {
-                componentRestrictions: {
-                    country: "in"
-                },
-                types: ['(cities)']
-            };
-            setTimeout(() => {
-                const location = document.getElementById("loc");
-                const autocomplete = new google.maps.places.Autocomplete(location, options);
-                google.maps.event.addListener(autocomplete, 'place_changed', function () {
-                    let place = autocomplete.getPlace();
-                    document.getElementById('place').value = location.value;
-                    document.getElementById('latitude').value = place.geometry.location.lat();
-                    document.getElementById('longitude').value = place.geometry.location.lng();
-                });
-            }, 500)
-
-        }
-        window.initMap = initMap;
-    </script>
-    <script type="text/javascript">
-        const userInput = document.getElementById("user-input");
-        const generateOTP = document.getElementById('generate-otp');
-        const otpButton = document.getElementById('mb_input');
-        const otpField = document.getElementById("user-otp");
-        const resendBtn = document.getElementById("resend-btn");
-        const loginBtn = document.getElementById('verify-login-btn')
-        const otp = document.getElementById('otp-input')
-        const fullName = document.getElementById('full-name');
-        const gender = document.getElementById('gender');
-        let loc = document.getElementById('loc')
-        let newUser = false
-        $('#name').hide()
-        $('#gender-field').hide()
-        $('#location').hide()
-        userInput.addEventListener("keypress", (e) => {
-            let k = e.which;
-            if (k > 58 || k < 48)
-                e.preventDefault();
-        })
-        $(loginBtn).hide();
-        $(resendBtn).hide();
-        resendBtn.addEventListener('click', (event) => {
-            if ($(resendBtn).hasClass('disabled')) {
-                return false
-            }
-            event.preventDefault();
-            const params = {
-                mobile: userInput.value
-            }
-            axios({method : 'get', url:'/api/resendOTP' , params }).then((res) => {
-                if (res.data.status === true) {
-                    $('#error').text(' ')
-                    $('#error').hide()
-                    $('#success').show();
-                    $('#success').text("OTP resend");
-                    $('#resend-btn').addClass('disabled');
-                    let time = 20000;
-                    let interval = setInterval(function () {
-                        time = time - 1000; //reduce each second
-                        let timeleft = (time / 1000) % 60
-                        $('#resend-btn').text(`Resend in ${timeleft} secs`)
-                        if (time <= 0) {
-                            $('#resend-btn').text('OTP on call');
-                            clearInterval(interval)
-                            $('#resend-btn').removeClass('disabled')
-                        }
-                    }, 1000);
-                } else {
-                    $('#error').text(res.data.message);
-                    $('#error').show()
-                    $('#success').text(' ');
-                    $('#success').hide();
+            <div id="mobile-footer-nav"
+                class="d-xxl-none d-xl-none d-lg-none d-md-none d-sm-block d-block mt-xxl-0 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-4">
+                <div class="container">
+                    <div class="footer-nav position-relative">
+                        <ul class="h-100 d-flex align-items-center justify-content-between mb-0">
+                            <!---->
+                            <li>
+                                <a href="/">
+                                    <figure>
+                                        <img src="/public_assets/images/icons/home.png" draggable="false"
+                                            class="img-fluid footer-skill-course m-0">
+                                    </figure>
+                                    <span class="text-white pt-1">Home</span>
+                                </a>
+                            </li>
+                            <!---->
+                            <!---->
+                            <li>
+                                <a href="/courses">
+                                    <figure>
+                                        <img src="/public_assets/images/icons/learn.png" draggable="false"
+                                            class="footer-skill-course img-fluid m-0">
+                                    </figure>
+                                    <span class="text-white pt-1">Courses</span>
+                                </a>
+                            </li>
+                            <!---->
+                            <li class="login_col">
+                                <a href="/candidate/login">
+                                    <span class="text-white login_ty bg-transparent"
+                                        style="background-color: transparent;">Login</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/joblisting">
+                                    <figure>
+                                        <img src="/public_assets/images/icons/jobs.png" draggable="false"
+                                            class="footer-skill-course img-fluid m-0">
+                                    </figure>
+                                    <span class="text-white pt-1">Jobs</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://api.whatsapp.com/send?text=Check%20out%20Focalyt's%20courses%20and%20job%20opportunities%20at%20https://focalyt.com.%20Enhance%20your%20skills%20and%20secure%20a%20great%20job%20now">
+                                    <figure>
+                                        <img src="/public_assets/images/icons/share.png" draggable="false"
+                                            class="footer-skill-course img-fluid m-0">
+                                    </figure>
+                                    <span class="text-white pt-1">Share</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <style>
+                li {
+                    list-style: none;
                 }
-            })
-        })
-        $(loginBtn).hide();
-        $(otpField).hide()
-        generateOTP.addEventListener('click', (event) => {
-                if (userInput.value.length !== 10 || !checkMobile(userInput.value)) {
-                    $('#success').text(" ");
-                    $('#success').hide();
-                    $('#error').show();
-                    $('#error').text("Please enter the correct mobile number");
-                } else {
+
+                @media (max-width:768px) {
+                    .content-wrapper {
+                        margin-bottom: 75px !important;
+                    }
+                }
+            </style>
+            <!-- END: Content-->
+            <!-- BEGIN: Vendor JS-->
+            <script src="/js/vendors/js/vendors.min.js"></script>
+            <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7DDN_gUp2zyrlElXtYpjTEQobYiUB9Lg&callback=initMap&libraries=places&v=weekly"
+                defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+                integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script>
+                function initMap() {
+                    const options = {
+                        componentRestrictions: {
+                            country: "in"
+                        },
+                        types: ['(cities)']
+                    };
+                    setTimeout(() => {
+                        const location = document.getElementById("loc");
+                        const autocomplete = new google.maps.places.Autocomplete(location, options);
+                        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                            let place = autocomplete.getPlace();
+                            document.getElementById('place').value = location.value;
+                            document.getElementById('latitude').value = place.geometry.location.lat();
+                            document.getElementById('longitude').value = place.geometry.location.lng();
+                        });
+                    }, 500)
+
+                }
+                window.initMap = initMap;
+            </script>
+            <script type="text/javascript">
+                const userInput = document.getElementById("user-input");
+                const generateOTP = document.getElementById('generate-otp');
+                const otpButton = document.getElementById('mb_input');
+                const otpField = document.getElementById("user-otp");
+                const resendBtn = document.getElementById("resend-btn");
+                const loginBtn = document.getElementById('verify-login-btn')
+                const otp = document.getElementById('otp-input')
+                const fullName = document.getElementById('full-name');
+                const gender = document.getElementById('gender');
+                let loc = document.getElementById('loc')
+                let newUser = false
+                $('#name').hide()
+                $('#gender-field').hide()
+                $('#location').hide()
+                userInput.addEventListener("keypress", (e) => {
+                    let k = e.which;
+                    if (k > 58 || k < 48)
+                        e.preventDefault();
+                })
+                $(loginBtn).hide();
+                $(resendBtn).hide();
+                resendBtn.addEventListener('click', (event) => {
+                    if ($(resendBtn).hasClass('disabled')) {
+                        return false
+                    }
                     event.preventDefault();
-                    userInput.disabled = true;
-                    const body = {
+                    const params = {
                         mobile: userInput.value
                     }
-                    axios.post("/api/sendCandidateOtp", body).then((res) => {
-                        $('#mb_input').removeClass('col-xl-8 col-lg-9 col-md-8 col-sm-8 col-8')
-                        $('#mb_input').addClass('col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12')
-                        $(otpField).show();
-                        $(resendBtn).show();
-                        $('#success').show();
-                        if (res.data.newUser == true) {
-                            $('#name').show()
-                            $('#gender-field').show()
-                            $('#location').show();
-                            $('#user-otp').hide();
-                            $('#msg1').hide();
-                            newUser = true
-                            $(resendBtn).hide();
-                            $(loginBtn).closest('div').removeClass('col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6')
-                            $(loginBtn).closest('div').addClass('col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 loginButton')
-                            $(loginBtn).removeClass('btn-block')
+                    axios({ method: 'get', url: '/api/resendOTP', params }).then((res) => {
+                        if (res.data.status === true) {
+                            $('#error').text(' ')
+                            $('#error').hide()
+                            $('#success').show();
+                            $('#success').text("OTP resend");
+                            $('#resend-btn').addClass('disabled');
+                            let time = 20000;
+                            let interval = setInterval(function () {
+                                time = time - 1000; //reduce each second
+                                let timeleft = (time / 1000) % 60
+                                $('#resend-btn').text(`Resend in ${timeleft} secs`)
+                                if (time <= 0) {
+                                    $('#resend-btn').text('OTP on call');
+                                    clearInterval(interval)
+                                    $('#resend-btn').removeClass('disabled')
+                                }
+                            }, 1000);
+                        } else {
+                            $('#error').text(res.data.message);
+                            $('#error').show()
+                            $('#success').text(' ');
+                            $('#success').hide();
                         }
-                        $('#error').text(" ");
-                        $('#error').hide()
-                        $('#verified').removeClass('d-none')
-                        $(generateOTP).parent().hide();
-                        $(otpButton).addClass('removeOtpBtn')
-                        $(loginBtn).show();
-                        $('#resend-btn').addClass('disabled')
-                        let time = 20000;
-                        let interval = setInterval(function () {
-                            time = time - 1000; //reduce each second
-                            let timeleft = (time / 1000) % 60
-                            $('#resend-btn').text(`Resend in ${timeleft} secs`)
-                            if (time <= 0) {
-                                $('#resend-btn').text('OTP on call');
-                                clearInterval(interval)
-                                $('#resend-btn').removeClass('disabled')
-                            }
-                        }, 1000);
                     })
-                }
-            })
-            loginBtn.addEventListener('click', () => {
-                $('#verified').addClass('d-none')
-                if (newUser && !fullName.value) {
-                    $('#success').hide();
-                    $('#error').text("Please Enter Your Name");
-                    $('#error').show();
-                } else if (newUser && !gender.value) {
-                    $('#success').hide();
-                    $('#error').text("Please Select Your Gender");
-                    $('#error').show();
-                } else if (newUser && !loc.value) {
-                    $('#success').hide();
-                    $('#error').text("Please Select Your Location");
-                    $('#error').show();
-                } else if (otp.value == '' && !newUser) {
-                    $('#success').hide();
-                    $('#error').text("Please Enter OTP");
-                    $('#error').show();
-                } else if (newUser) {
-                    let queryString = location.search
-                    let obj
-                    if (queryString !== '') {
-                        let query = queryString.split('?')
-                        let search = query[1]
-                        obj = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,
-                            '":"') + '"}', function (key, value) {
-                                return key === "" ? value : decodeURIComponent(value)
-                            })
+                })
+                $(loginBtn).hide();
+                $(otpField).hide()
+                generateOTP.addEventListener('click', (event) => {
+                    if (userInput.value.length !== 10 || !checkMobile(userInput.value)) {
+                        $('#success').text(" ");
+                        $('#success').hide();
+                        $('#error').show();
+                        $('#error').text("Please enter the correct mobile number");
+                    } else {
+                        event.preventDefault();
+                        userInput.disabled = true;
+                        const body = {
+                            mobile: userInput.value
+                        }
+                        axios.post("/api/sendCandidateOtp", body).then((res) => {
+                            $('#mb_input').removeClass('col-xl-8 col-lg-9 col-md-8 col-sm-8 col-8');
+                            $('#mb_input').addClass('col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12');
+                            $(otpField).show();
+                            $(resendBtn).show();
+                            $('#success').show();
+                            if (res.data.newUser == true) {
+                                $('#name').show();
+                                $('#gender-field').show();
+                                $('#location').show();
+                                $('#user-otp').hide();
+                                $('#msg1').hide();
+                                newUser = true;
+                                $(resendBtn).hide();
+                                $(loginBtn).closest('div').removeClass('col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6');
+                                $(loginBtn).closest('div').addClass('col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 loginButton');
+                                $(loginBtn).removeClass('btn-block');
+                            }
+                            $('#error').text(" ");
+                            $('#error').hide();
+                            $('#verified').removeClass('d-none');
+                            $(generateOTP).parent().hide();
+                            $(otpButton).addClass('removeOtpBtn');
+                            $(loginBtn).show();
+                            $('#resend-btn').addClass('disabled');
+                            let time = 20000;
+                            let interval = setInterval(function () {
+                                time = time - 1000; //reduce each second
+                                let timeleft = (time / 1000) % 60;
+                                $('#resend-btn').text(`Resend in ${timeleft} secs`);
+                                if (time <= 0) {
+                                    $('#resend-btn').text('OTP on call');
+                                    clearInterval(interval);
+                                    $('#resend-btn').removeClass('disabled');
+                                }
+                            }, 1000);
+                        })
                     }
-                    const place = document.getElementById('place').value;
-                    const latitude = document.getElementById('latitude').value;
-                    const longitude = document.getElementById('longitude').value
-                    body = {
-                        name: fullName.value,
-                        mobile: userInput.value,
-                        sex: gender.value,
-                        latitude,
-                        longitude,
-                        place
-                    };
-                    if (obj) {
-                        body['refCode'] = obj.refCode
-                    }
-                    if (!latitude || !longitude || !place) {
+                })
+                loginBtn.addEventListener('click', () => {
+                    $('#verified').addClass('d-none')
+                    if (newUser && !fullName.value) {
+                        $('#success').hide();
+                        $('#error').text("Please Enter Your Name");
+                        $('#error').show();
+                    } else if (newUser && !gender.value) {
+                        $('#success').hide();
+                        $('#error').text("Please Select Your Gender");
+                        $('#error').show();
+                    } else if (newUser && !loc.value) {
                         $('#success').hide();
                         $('#error').text("Please Select Your Location");
                         $('#error').show();
+                    } else if (otp.value == '' && !newUser) {
+                        $('#success').hide();
+                        $('#error').text("Please Enter OTP");
+                        $('#error').show();
+                    } else if (newUser) {
+                        let queryString = location.search
+                        let obj
+                        if (queryString !== '') {
+                            let query = queryString.split('?')
+                            let search = query[1]
+                            obj = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,
+                                '":"') + '"}', function (key, value) {
+                                    return key === "" ? value : decodeURIComponent(value)
+                                })
+                        }
+                        const place = document.getElementById('place').value;
+                        const latitude = document.getElementById('latitude').value;
+                        const longitude = document.getElementById('longitude').value
+                        body = {
+                            name: fullName.value,
+                            mobile: userInput.value,
+                            sex: gender.value,
+                            latitude,
+                            longitude,
+                            place
+                        };
+                        if (obj) {
+                            body['refCode'] = obj.refCode
+                        }
+                        if (!latitude || !longitude || !place) {
+                            $('#success').hide();
+                            $('#error').text("Please Select Your Location");
+                            $('#error').show();
+                            return false
+                        }
+                        axios.post("/candidate/register", body).then((res) => {
+                            if (res.data.status) {
+                                body = {
+                                    mobile: userInput.value
+                                }
+                                axios.post("/api/otpCandidateLogin", body).then((
+                                    res) => {
+                                    if (res.data.status === true) {
+                                        localStorage.setItem("candidate", res
+                                            .data.name);
+                                        localStorage.setItem("token", res.data
+                                            .token);
+                                        let returnUrl = getReturnUrl()
+                                        if (returnUrl) {
+                                            window.location.href = returnUrl
+                                        } else {
+                                            window.location.href =
+                                                "/candidate/searchcourses";
+                                        }
+                                    } else {
+                                        $('#success').text(" ");
+                                        $('#success').hide();
+                                        $('#error').show();
+                                        $('#error').text("Login failed !!!");
+                                        window.location.href =
+                                            "/candidate/login"
+                                    }
+                                })
+                            } else {
+                                $('#success').text(" ");
+                                $('#success').hide();
+                                $('#error').show();
+                                $('#error').text(res.data.error);
+                            }
+                        })
+                    }
+
+                    else {
+                        if (otp.value.length === 4) {
+                            $(loginBtn).show();
+                            let body;
+                            body = {
+                                mobile: userInput.value,
+                                otp: otp.value
+                            }
+                            axios.post('/api/verifyOtp', body)
+                                .then((res) => {
+                                    if (res.data.status === true) {
+                                        $('#error').text(" ");
+                                        $('#error').hide()
+                                        $('#verified').removeClass()
+                                        $('#msg1').html(
+                                            '<i class="fa-solid fa-circle-check"></i> Mobile Number Verified')
+                                        $('#msg2').html('<i class="fa-solid fa-circle-check"></i> OTP Verified')
+                                        axios.post("/api/otpCandidateLogin", body).then((res) => {
+                                            if (res.data.status === true) {
+                                                localStorage.setItem("candidate", res.data.name);
+                                                localStorage.setItem("token", res.data.token);
+                                                let returnUrl = getReturnUrl()
+
+                                                const body = { mobile: userInput.value, verified: true }
+                                                let header = { headers: { 'x-auth': localStorage.getItem('token') } }
+                                                axios.post('/candidate/verification', body, header).then((res) => {
+                                                    if (res.data.status == true)
+                                                        if (returnUrl) {
+                                                            window.location.href = returnUrl
+                                                        } else {
+                                                            window.location.href = "/candidate/searchcourses";
+                                                        }
+                                                }).catch((err) => {
+                                                    console.log("Err response in verification ====>", err)
+                                                    return res.status(500).send({
+                                                        status: false,
+                                                        message: err
+                                                    })
+                                                })
+
+
+                                            } else {
+                                                $('#success').text(" ");
+                                                $('#success').hide();
+                                                $('#error').show();
+                                                $('#error').text("Login failed !!!");
+                                            }
+                                        })
+                                    } else {
+                                        $('#success').text(" ");
+                                        $('#success').hide();
+                                        $('#error').show();
+                                        $('#error').text("Incorrect OTP");
+                                    }
+                                }).catch((err) => {
+                                    console.log("Err response in login====>", err)
+                                    return res.status(500).send({
+                                        status: false,
+                                        message: err
+                                    })
+                                })
+                        } else {
+                            $('#success').hide();
+                            $('#error').text("Incorrect OTP");
+                            $('#error').show();
+                        }
+                    }
+                })
+                let input = document.getElementById("otp-input");
+                input.addEventListener("keypress", function (event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        document.getElementById("verify-login-btn").click();
+                    }
+                });
+                userInput.addEventListener("keypress", (e) => {
+                    if (e.key === "Enter" && e.target.value.length === 10) {
+                        e.preventDefault();
+                        generateOTP.click();
+                        setTimeout(() => {
+                            input.focus();
+                        }, 600)
+                    }
+                })
+
+                function getReturnUrl() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    let returnUrl = urlParams.get('returnUrl')
+                    if (returnUrl) {
+                        return decodeURIComponent(urlParams.get('returnUrl'));
+                    } else {
                         return false
                     }
-                    axios.post("/candidate/register", body).then((res) => {
-                        if (res.data.status) {
-                            body = {
-                                mobile: userInput.value
-                            }
-                            axios.post("/api/otpCandidateLogin", body).then((
-                                res) => {
-                                if (res.data.status === true) {
-                                    localStorage.setItem("candidate", res
-                                        .data.name);
-                                    localStorage.setItem("token", res.data
-                                        .token);
-                                    let returnUrl = getReturnUrl()
-                                    if (returnUrl) {
-                                        window.location.href = returnUrl
-                                    } else {
-                                        window.location.href =
-                                            "/candidate/searchcourses";
-                                    }
-                                } else {
-                                    $('#success').text(" ");
-                                    $('#success').hide();
-                                    $('#error').show();
-                                    $('#error').text("Login failed !!!");
-                                    window.location.href =
-                                        "/candidate/login"
-                                }
-                            })
-                        } else {
-                            $('#success').text(" ");
-                            $('#success').hide();
-                            $('#error').show();
-                            $('#error').text(res.data.error);
-                        }
-                    })
                 }
-
-                else {
-                    if (otp.value.length === 4) {
-                        $(loginBtn).show();
-                        let body;
-                        body = {
-                            mobile: userInput.value,
-                            otp: otp.value
-                        }
-                        axios.post('/api/verifyOtp', body)
-                            .then((res) => {
-                                if (res.data.status === true) {
-                                    $('#error').text(" ");
-                                    $('#error').hide()
-                                    $('#verified').removeClass()
-                                    $('#msg1').html(
-                                        '<i class="fa-solid fa-circle-check"></i> Mobile Number Verified')
-                                    $('#msg2').html('<i class="fa-solid fa-circle-check"></i> OTP Verified')
-                                    axios.post("/api/otpCandidateLogin", body).then((res) => {
-                                        if (res.data.status === true) {
-                                            localStorage.setItem("candidate", res.data.name);
-                                            localStorage.setItem("token", res.data.token);
-                                            let returnUrl = getReturnUrl()
-                                            if (returnUrl) {
-                                                window.location.href = returnUrl
-                                            } else {
-                                                const body = { mobile: userInput.value , verified: true }
-                                                let header = { headers: { 'x-auth': localStorage.getItem('token') } }
-                                                axios.post('/candidate/verification',body,header).then((res)=>{
-                                                if(res.data.status == true)
-                                                window.location.href = "/candidate/searchcourses";
-                                             }).catch((err) => {
-                                                console.log("Err response in verification ====>", err)
-                                                return res.status(500).send({
-                                                status: false,
-                                                message: err
-                                               })
-                                             })  
-                                            }
-
-                                        } else {
-                                            $('#success').text(" ");
-                                            $('#success').hide();
-                                            $('#error').show();
-                                            $('#error').text("Login failed !!!");
-                                        }
-                                    })
-                                } else {
-                                    $('#success').text(" ");
-                                    $('#success').hide();
-                                    $('#error').show();
-                                    $('#error').text("Incorrect OTP");
-                                }
-                            }).catch((err) => {
-                                console.log("Err response in login====>", err)
-                                return res.status(500).send({
-                                    status: false,
-                                    message: err
-                                })
-                            })
-                    } else {
-                        $('#success').hide();
-                        $('#error').text("Incorrect OTP");
-                        $('#error').show();
+                function checkMobile(phone) {
+                    if (!(/^(\+91[\-\s]?)?[0]?(91)?[6789]\d{9}$/.test(phone))) {
+                        return false
                     }
+                    return true
                 }
-            })
-        let input = document.getElementById("otp-input");
-        input.addEventListener("keypress", function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                document.getElementById("verify-login-btn").click();
-            }
-        });
-        userInput.addEventListener("keypress", (e) => {
-            if (e.key === "Enter" && e.target.value.length === 10) {
-                e.preventDefault();
-                generateOTP.click();
-                setTimeout(() => {
-                    input.focus();
-                }, 600)
-            }
-        })
+            </script>
+            <!-- BEGIN Vendor JS-->
 
-        function getReturnUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            let returnUrl = urlParams.get('returnUrl')
-            if (returnUrl) {
-                return decodeURIComponent(urlParams.get('returnUrl'));
-            } else {
-                return false
-            }
-        }
-        function checkMobile(phone) {
-                if (!(/^(\+91[\-\s]?)?[0]?(91)?[6789]\d{9}$/.test(phone))) {
-                    return false
-                }
-                return true
-            }
-    </script>
-    <!-- BEGIN Vendor JS-->
+            <!-- BEGIN: Page Vendor JS-->
+            <!-- END: Page Vendor JS-->
 
-    <!-- BEGIN: Page Vendor JS-->
-    <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Theme JS-->
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-        var Tawk_API = Tawk_API || {},
-            Tawk_LoadStart = new Date();
-        (function () {
-            var s1 = document.createElement("script"),
-                s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/63d8f891c2f1ac1e20308e37/1go3olure';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
-        })();
-    </script>
-    <!--End of Tawk.to Script-->
+            <!-- BEGIN: Theme JS-->
+            <!--Start of Tawk.to Script-->
+            <script type="text/javascript">
+                var Tawk_API = Tawk_API || {},
+                    Tawk_LoadStart = new Date();
+                (function () {
+                    var s1 = document.createElement("script"),
+                        s0 = document.getElementsByTagName("script")[0];
+                    s1.async = true;
+                    s1.src = 'https://embed.tawk.to/63d8f891c2f1ac1e20308e37/1go3olure';
+                    s1.charset = 'UTF-8';
+                    s1.setAttribute('crossorigin', '*');
+                    s0.parentNode.insertBefore(s1, s0);
+                })();
+            </script>
+            <!--End of Tawk.to Script-->
 
 
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function () {
-                navigator.serviceWorker.register('../../service-worker.js')
-                    .then(function (registration) {
-                        console.log('ServiceWorker registration successful with scope:', registration
-                        .scope);
-                    })
-                    .catch(function (error) {
-                        console.log('ServiceWorker registration failed:', error);
+            <script>
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', function () {
+                        navigator.serviceWorker.register('../../service-worker.js')
+                            .then(function (registration) {
+                                console.log('ServiceWorker registration successful with scope:', registration
+                                    .scope);
+                            })
+                            .catch(function (error) {
+                                console.log('ServiceWorker registration failed:', error);
+                            });
                     });
-            });
-        }
-    </script>
+                }
+            </script>
 
 
 
-<!-- Final SLIDER-->
- <!-- slider gallery -->
- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
- integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
- integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-</script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
-<!--  slider gallery end -->
-<script>
- $(function () {
-   var swiper = new Swiper('.carousel-gallery .swiper-container', {
-     effect: 'slide',
-     speed: 900,
-     slidesPerView: 2.5,
-     spaceBetween: 10,
-     simulateTouch: true,
-     autoplay: {
-       delay: 5000,
-       stopOnLastSlide: false,
-       disableOnInteraction: false
-     },
-     pagination: {
-       el: '.carousel-gallery .swiper-pagination',
-       clickable: true
-     },
-     breakpoints: {
-       // when window width is <= 320px
-       320: {
-         slidesPerView: 1.5,
-         spaceBetween: 10
-       },
-       // when window width is <= 480px
-       425: {
-         slidesPerView: 1.5,
-         spaceBetween: 10
-       },
-       // when window width is <= 640px
-       768: {
-         slidesPerView: 2,
-         spaceBetween: 10
-       },
-       1200: {
-         slidesPerView: 2,
-         spaceBetween: 10
-       },
-       1366: {
-         slidesPerView: 2,
-         spaceBetween: 10
-       }
-     }
-   });
- });
-</script>
- <!-- slider end-->
-<!--- Final SLIDER END-->
-</body>
+            <!-- Final SLIDER-->
+            <!-- slider gallery -->
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous">
+                </script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous">
+                </script>
+            <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+            <!--  slider gallery end -->
+            <script>
+                $(function () {
+                    var swiper = new Swiper('.carousel-gallery .swiper-container', {
+                        effect: 'slide',
+                        speed: 900,
+                        slidesPerView: 2.5,
+                        spaceBetween: 10,
+                        simulateTouch: true,
+                        autoplay: {
+                            delay: 5000,
+                            stopOnLastSlide: false,
+                            disableOnInteraction: false
+                        },
+                        pagination: {
+                            el: '.carousel-gallery .swiper-pagination',
+                            clickable: true
+                        },
+                        breakpoints: {
+                            // when window width is <= 320px
+                            320: {
+                                slidesPerView: 1.5,
+                                spaceBetween: 10
+                            },
+                            // when window width is <= 480px
+                            425: {
+                                slidesPerView: 1.5,
+                                spaceBetween: 10
+                            },
+                            // when window width is <= 640px
+                            768: {
+                                slidesPerView: 2,
+                                spaceBetween: 10
+                            },
+                            1200: {
+                                slidesPerView: 2,
+                                spaceBetween: 10
+                            },
+                            1366: {
+                                slidesPerView: 2,
+                                spaceBetween: 10
+                            }
+                        }
+                    });
+                });
+            </script>
+            <!-- slider end-->
+            <!--- Final SLIDER END-->
+        </body>
 
-</html>
+        </html>
