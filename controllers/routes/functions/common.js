@@ -429,7 +429,7 @@ module.exports.otpCandidateLogin = async (req, res) => {
     } else {
       throw req.ykError('Invalid User!');
     }
-    res.status(200).send({ status: true, name: user.name, email: user.email, token })
+    res.status(200).send({ status: true, name: user.name, email: user.email, token,user })
   } catch (err) {
     console.log(err)
     return req.errFunc(err);

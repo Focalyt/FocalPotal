@@ -127,7 +127,28 @@ module.exports.isCompany = async (req, res, next) => {
 module.exports.isCandidate = async (req, res, next) => {
   try {
     const error = req.ykError("You are not authorized");
-    const { user } = req.session;
+    let user = null;
+
+    // ✅ First check if user exists in session (for EJS SSR project)
+    if (req.session && req.session.user) {
+      user = req.session.user;
+      req.user = user;
+    } else {
+      // ✅ Else check for token in headers (for React SPA project)
+      const token = req.header('x-auth');
+      if (!token) throw error;
+
+      const decoded = jwt.verify(token, process.env.MIPIE_JWT_SECRET);
+      user = await User.findById(decoded.id);
+      
+
+
+      // if (!user || user.role !== 3) throw error;
+
+      // ⚠️ Optional: attach user to req for further use
+      req.user = user;
+    }
+
     if (!user || user.role !== 3) throw error;
     return next();
   } catch (err) {

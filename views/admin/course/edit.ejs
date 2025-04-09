@@ -1657,15 +1657,15 @@
             body.docsRequired = docsArray;
             console.log(JSON.stringify(body), "body");
             // Send updated data to the server
-            // axios.post(`/admin/courses/edit/<%=course._id %>`, body)
-            //     .then((res) => {
-            //         if (res && res.status) {
-            //             window.location.href = "/admin/courses";
-            //         }
-            //     })
-            //     .catch(error => {
-            //         console.error('Error updating course:', error);
-            //     });
+            axios.post(`/admin/courses/edit/<%=course._id %>`, body)
+                .then((res) => {
+                    if (res && res.status) {
+                        window.location.href = "/admin/courses";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating course:', error);
+                });
         });
 
         function validations() {

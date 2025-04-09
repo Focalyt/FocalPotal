@@ -445,6 +445,9 @@ module.exports = {
           registrationCharges: { $ifNull: ["$_course.registrationCharges", 0] },
           registrationFee: { $ifNull: ["$registrationFee", "Unpaid"] },
           sector: { $ifNull: ["$_course.sectors.name", ""] },
+          docsRequired: { $ifNull: ["$_course.docsRequired", []] },
+          docsForCourses: { $ifNull: ["$_candidate.docsForCourses", []] }
+
         },
       },
       {
@@ -463,6 +466,8 @@ module.exports = {
           remarks: 1,
           assignDate: 1,
           url: 1,
+          docsRequired: 1,
+    docsForCourses: 1
         },
       },
     ];

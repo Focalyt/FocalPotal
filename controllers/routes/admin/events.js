@@ -84,11 +84,14 @@ router.post("/add", async (req, res) => {
             state,
             city,
             fullAddress,
-            description,
-            timingFrom,
-            timingTo,
-            registrationFrom,registrationTo
+            description
         } = req.body;
+
+        const timingFrom = new Date(req.body.timingFrom);  // Auto parses "2025-04-01T14:30"
+        const timingTo = new Date(req.body.timingTo);
+        const registrationFrom = new Date(req.body.registrationFrom);  // Auto parses "2025-04-01T14:30"
+        const registrationTo = new Date(req.body.registrationTo);
+
 
         let videoURL = "";
         let thumbnailURL = "";
@@ -98,14 +101,14 @@ router.post("/add", async (req, res) => {
             const ext = file.name.split(".").pop().toLowerCase();
             const key = `Events/${eventTitle}/${uuid()}.${ext}`;
             const params = {
-              Bucket: bucketName,
-              Key: key,
-              Body: file.data,
-              ContentType: file.mimetype,
+                Bucket: bucketName,
+                Key: key,
+                Body: file.data,
+                ContentType: file.mimetype,
             };
             const data = await s3.upload(params).promise();
             return data.Location;
-          };
+        };
 
 
         if (req.files?.video) {
