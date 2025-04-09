@@ -2,6 +2,515 @@
 
   <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
   <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
+  
+   <style>
+  .cv-container {
+            
+    margin: 30px auto;
+    background-color: #fff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.top-bar {
+    height: 10px;
+    background: linear-gradient(90deg, #2e5cb8 0%, #4776e6 100%);
+}
+
+.cv-header {
+    display: flex;
+    padding: 40px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: #e9ecef;
+    position: relative;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.upload-icon:hover {
+    background: #fff;
+    transform: scale(1.1);
+}
+
+.personal-info {
+    margin-left: 40px;
+    flex: 1;
+}
+
+.name {
+    font-size: 36px;
+    font-weight: 700;
+    color: #2e5cb8;
+    margin-bottom: 5px;
+}
+
+.position {
+    font-size: 20px;
+    color: #6c757d;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.profile-summary {
+    margin-bottom: 20px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #495057;
+}
+
+.contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-right: 20px;
+    color: #495057;
+}
+
+.contact-icon {
+    margin-right: 8px;
+    color: #4776e6;
+    font-size: 16px;
+}
+
+.main-content {
+    display: flex;
+    padding: 30px;
+}
+
+.left-column {
+    flex: 1;
+    padding-right: 30px;
+}
+
+.right-column {
+    flex: 1;
+    padding-left: 30px;
+    border-left: 1px solid #eaeaea;
+}
+
+.section {
+    margin-bottom: 35px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-icon {
+    width: 35px;
+    height: 35px;
+    background-color: #4776e6;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2e5cb8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.experience-item, .education-item {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -39px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #4776e6;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 1px #4776e6;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 19px;
+    left: -33px;
+    width: 2px;
+    height: calc(100% + 10px);
+    background-color: #e9ecef;
+}
+
+.job-title, .degree {
+    font-size: 18px;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 5px;
+}
+
+.company, .school {
+    font-size: 16px;
+    color: #6c757d;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.date {
+    font-size: 14px;
+    color: #868e96;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.date-icon {
+    margin-right: 5px;
+}
+
+.job-description, .education-description {
+    font-size: 15px;
+    color: #495057;
+    line-height: 1.7;
+}
+
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.skill-item {
+    margin-bottom: 15px;
+}
+
+.skill-name {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.skill-bar {
+    height: 8px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #2e5cb8 0%, #4776e6 100%);
+    border-radius: 4px;
+}
+
+.languages-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.language-item {
+    margin-bottom: 15px;
+}
+
+.language-name {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+.language-level {
+    display: flex;
+}
+
+.level-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background-color: #e9ecef;
+}
+
+.filled {
+    background: linear-gradient(90deg, #2e5cb8 0%, #4776e6 100%);
+}
+
+.certificates-list {
+    list-style: none;
+}
+
+.certificate-item {
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.certificate-item:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    background-color: #4776e6;
+    border-radius: 50%;
+}
+
+.certificate-title {
+    font-weight: 500;
+    color: #343a40;
+    font-size: 16px;
+    margin-bottom: 3px;
+}
+
+.certificate-details {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.interests-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.interest-tag {
+    background-color: #e9ecef;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #495057;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.interest-tag:hover {
+    background-color: #4776e6;
+    color: #fff;
+}
+
+.strength-meter {
+    padding: 25px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 40px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.strength-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.strength-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.strength-score {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2e5cb8;
+}
+
+.strength-category {
+    margin-bottom: 15px;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2e5cb8 0%, #4776e6 100%);
+    border-radius: 4px;
+}
+
+.references-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+}
+
+.reference-item {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.reference-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 5px;
+}
+
+.reference-position {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.reference-contact {
+    font-size: 14px;
+    color: #495057;
+}
+
+.projects-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+}
+
+.project-item {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.project-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 5px;
+}
+
+.project-date {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.project-description {
+    font-size: 14px;
+    color: #495057;
+}
+
+[contenteditable="true"]:focus {
+    outline: 2px solid #4776e6;
+    border-radius: 3px;
+}
+
+[contenteditable="true"]:empty:before {
+    content: attr(data-placeholder);
+    color: #adb5bd;
+    cursor: text;
+}
+
+.add-UserBtn {
+  background-color: #2e5cb8;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+.add-UserBtn:hover {
+  background-color: #1c469a;
+}
+
+@media (max-width: 768px) {
+    .cv-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .personal-info {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+    
+    .contact-info {
+        justify-content: center;
+    }
+    
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .left-column, .right-column {
+        padding: 0;
+    }
+    
+    .right-column {
+        border-left: none;
+        border-top: 1px solid #eaeaea;
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+    
+    .skills-container, .languages-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+</style>
+
+
 
   <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
     data-menu="vertical-menu-modern" data-col="2-columns">
@@ -624,116 +1133,7 @@
                       </div>
                     </div>
                 </section>
-                <!-- <section id="skills-and-profile">
-                  <div class="row">
-                    <div class="col-xl-6 col-lg-6">
-                      <div class="card">
-                        <div class="card-header border border-top-0 border-left-0 border-right-0">
-                          <h4 class="card-title pb-1">Technical Skills / तकनीकी कौशल</h4>
-                        </div>
-                        <div class="card-content">
-                          <div class="card-body" id="Technical-skills-section">
-                            <div class="col-xl-12 px-0">
-                              <% for(let i=0; i < 4; i++) { %>
-                                <div class="row mb-1 skillrow">
-                                  <div class="col-xl-6 ">
-                                    <label>Select Skills / कौशल का चयन करें</label>
-                                    <select class="form-control text-capitalize chosen" name="techskill">
-                                      <option value="">Select skill</option>
-                                      <% techinalSkill.forEach((j)=> { %>
-                                        <% if(candidate.techSkills[i]?.id?.toString()==j._id.toString()) { %>
-                                          <option value="<%= candidate.techSkills[i].id %>" class="text-capitalize"
-                                            selected>
-                                            <%= j.name %>
-                                          </option>
-                                          <% } else {%>
-                                            <option value="<%= j._id %>" class="text-capitalize">
-                                              <%= j.name %>
-                                            </option>
-                                            <% } }); %>
-                                    </select>
-                                  </div>
-                                  <div class="col-xl-6">
-                                    <% if(candidate.techSkills[i]?.URL) {%>
-                                      <br>
-                                      <a id="uploadedvideo" target="_blank"
-                                        href="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.techSkills[i].URL %>"
-                                        class="pointer img-fluid">
-                                        Uploaded Video
-                                      </a>
-                                      <input type="hidden" class="techskill" name="upload_url"
-                                        value="<%=candidate.techSkills[i].URL %>" />
-                                      <i class="feather icon-x remove_uploaded_pic" style="color:red;"
-                                        onclick="removevideo(event)"></i>
-                                      <% } else { %>
-                                        <label>Upload video / विडियो को अपलोड करें</label>
-                                        <input type="file" id="techSkill<%= i %>" class="form-control" value=""
-                                          onchange="uploadFile(event, 'techSkill', '<%= i %>')">
-                                        <% } %>
-                                  </div>
-                                </div>
-                                <% }; %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6">
-                      <div class="card">
-                        <div class="card-header border border-top-0 border-left-0 border-right-0">
-                          <h4 class="card-title pb-1">Non Technical Skills / गैर तकनीकी कौशल</h4>
-                        </div>
-                        <div class="card-content">
-                          <div class="card-body" id="non-technical-skills-section">
-                            <div class="col-xl-12 px-0">
-                              <% for(let i=0; i < 4; i++) { %>
-                                <div class="row mb-1 skillrow">
-                                  <div class="col-xl-6">
-                                    <label>Select Skills / कौशल का चयन करें</label>
-                                    <select class="form-control text-capitalize chosen" name="nontechskill">
-                                      <option value="">Select skill</option>
-                                      <% nonTechnicalSkill.forEach((j)=> { %>
-                                        <% if(candidate.nonTechSkills[i]?.id.toString()==j._id.toString()) { %>
-                                          <option value="<%= candidate.nonTechSkills[i].id %>" class="text-capitalize"
-                                            selected>
-                                            <%= j.name %>
-                                          </option>
-                                          <% } else {%>
-                                            <option value="<%= j._id %>" class="text-capitalize">
-                                              <%= j.name %>
-                                            </option>
-                                            <% } }); %>
-                                    </select>
-                                  </div>
-                                  <div class="col-xl-6">
-
-                                    <% if(candidate.nonTechSkills[i]?.URL) {%>
-                                      <br>
-                                      <a id="uploadedvideo" target="_blank"
-                                        href="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.nonTechSkills[i].URL %>"
-                                        class="pointer img-fluid">
-                                        Uploaded Video
-                                      </a>
-                                      <input type="hidden" class="nontechskill" name="upload_url"
-                                        value="<%=candidate.nonTechSkills[i].URL %>" />
-                                      <i class="feather icon-x remove_uploaded_pic" style="color:red;"
-                                        onclick="removevideo(event)"></i>
-
-                                      <% } else { %>
-                                        <label>Upload video / विडियो को अपलोड करें</label>
-                                        <input type="file" id="nonTechSkill<%= i %>" class="form-control" value=""
-                                          onchange="uploadFile(event, 'nonTechSkill', '<%= i %>')">
-                                        <% } %>
-                                  </div>
-                                </div>
-                                <% }; %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section> -->
+               
                 <section id="Experience-section">
                   <div class="row">
                     <div class="col-xl-12 col-lg-12">
@@ -992,6 +1392,290 @@
                   </div>
                 </section>
               </form>
+              <section id="skill">
+                <div class="cv-container">
+                  <div class="top-bar"></div>
+                  <div class="cv-header">
+                      <div class="profile-image">
+                          <img src="/api/placeholder/150/150" alt="Profile Picture">
+                          <div class="upload-icon">📷</div>
+                      </div>
+                      <div class="personal-info">
+                          <div class="name" contenteditable="true" data-placeholder="Your Name">Your Name</div>
+                          <div class="position" contenteditable="true" data-placeholder="Professional Title">Professional Title</div>
+                          <div class="profile-summary" contenteditable="true" data-placeholder="Write a brief professional summary here...">A results-driven professional with over 8 years of experience in software development and team leadership. Passionate about creating innovative solutions that drive business growth and improve user experience.</div>
+                          <div class="contact-info">
+                              <div class="contact-item">
+                                  <span class="contact-icon">📞</span>
+                                  <span contenteditable="true" data-placeholder="Phone Number">+91 98765 43210</span>
+                              </div>
+                              <div class="contact-item">
+                                  <span class="contact-icon">✉️</span>
+                                  <span contenteditable="true" data-placeholder="Email Address">yourname@example.com</span>
+                              </div>
+                              <div class="contact-item">
+                                  <span class="contact-icon">🌐</span>
+                                  <span contenteditable="true" data-placeholder="LinkedIn/Website">linkedin.com/in/yourprofile</span>
+                              </div>
+                              <div class="contact-item">
+                                  <span class="contact-icon">📍</span>
+                                  <span contenteditable="true" data-placeholder="Location">Mumbai, India</span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+          
+                  <div class="main-content">
+                      <div class="left-column">
+                          <div class="section">
+                              <div class="section-header">
+                                  <div class="section-icon">💼</div>
+                                  <div class="section-title">Work Experience</div>
+                              </div>
+                              <div class="experience-item">
+                                  <div class="timeline-dot"></div>
+                                  <div class="timeline-line"></div>
+                                  <div class="job-title" contenteditable="true" data-placeholder="Job Title">Senior Project Manager</div>
+                                  <div class="company" contenteditable="true" data-placeholder="Company Name">ABC Technologies Pvt. Ltd.</div>
+                                  <div class="date">
+                                      <span class="date-icon">📅</span>
+                                      <span contenteditable="true" data-placeholder="Duration">January 2020 - Present</span>
+                                  </div>
+                                  <div class="job-description" contenteditable="true" data-placeholder="Job Description">
+                                      • Led a team of 15 professionals to deliver enterprise-level software solutions<br>
+                                      • Increased project delivery efficiency by 35% through process optimization<br>
+                                      • Managed client relationships resulting in 95% client retention rate<br>
+                                      • Implemented Agile methodologies that improved team productivity by 40%
+                                  </div>
+                              </div>
+
+                              <button class="add-UserBtn" onclick="addExperience()">➕ Add Experience</button>
+
+                              <!-- <div class="experience-item">
+                                  <div class="timeline-dot"></div>
+                                  <div class="job-title" contenteditable="true" data-placeholder="Job Title">Team Lead</div>
+                                  <div class="company" contenteditable="true" data-placeholder="Company Name">Tech Innovations Ltd.</div>
+                                  <div class="date">
+                                      <span class="date-icon">📅</span>
+                                      <span contenteditable="true" data-placeholder="Duration">July 2015 - May 2017</span>
+                                  </div>
+                                  <div class="job-description" contenteditable="true" data-placeholder="Job Description">
+                                      • Led a team of 5 developers to deliver software solutions for clients<br>
+                                      • Participated in client meetings to understand requirements<br>
+                                      • Mentored junior team members on best practices and coding standards<br>
+                                      • Conducted code reviews to ensure high-quality deliverables
+                                  </div>
+                              </div> -->
+                          </div>
+          
+                          <div class="section">
+                              <div class="section-header">
+                                  <div class="section-icon">🎓</div>
+                                  <div class="section-title">Education</div>
+                              </div>
+                              <div class="education-item">
+                                  <div class="timeline-dot"></div>
+                                  <div class="timeline-line"></div>
+                                  <div class="degree" contenteditable="true" data-placeholder="Degree">Master of Technology in Computer Science</div>
+                                  <div class="school" contenteditable="true" data-placeholder="University">Indian Institute of Technology</div>
+                                  <div class="date">
+                                      <span class="date-icon">📅</span>
+                                      <span contenteditable="true" data-placeholder="Duration">2013 - 2015</span>
+                                  </div>
+                                  <div class="education-description" contenteditable="true" data-placeholder="Additional Information">
+                                      • Graduated with Distinction (8.9 CGPA)<br>
+                                      • Specialized in Artificial Intelligence and Machine Learning<br>
+                                      • Final project: Developed an AI-based recommendation system
+                                  </div>
+                              </div>
+                              <button class="add-UserBtn" onclick="addEducation()">➕ Add Education</button>
+                              <!-- <div class="education-item">
+                                  <div class="timeline-dot"></div>
+                                  <div class="degree" contenteditable="true" data-placeholder="Degree">Bachelor of Engineering in Information Technology</div>
+                                  <div class="school" contenteditable="true" data-placeholder="University">University of Delhi</div>
+                                  <div class="date">
+                                      <span class="date-icon">📅</span>
+                                      <span contenteditable="true" data-placeholder="Duration">2009 - 2013</span>
+                                  </div>
+                                  <div class="education-description" contenteditable="true" data-placeholder="Additional Information">
+                                      • First Class with Distinction (85%)<br>
+                                      • Member of Technical Club and Organized Annual Tech Fest<br>
+                                      • Recipient of Academic Excellence Award
+                                  </div>
+                              </div> -->
+                          </div>
+          
+                          <div class="strength-meter">
+                              <div class="strength-header">
+                                  <div class="strength-title">Profile Strength</div>
+                                  <div class="strength-score">85%</div>
+                              </div>
+                              <div class="strength-category">
+                                  <div class="category-header">
+                                      <div>Professional Experience</div>
+                                      <div>90%</div>
+                                  </div>
+                                  <div class="progress-bar">
+                                      <div class="progress-fill" style="width: 90%"></div>
+                                  </div>
+                              </div>
+                              <button class="add-UserBtn" onclick="addExperience()">➕ Add Experience</button>
+                             
+                              <!-- <div class="strength-category">
+                                  <div class="category-header">
+                                      <div>Education & Certifications</div>
+                                      <div>95%</div>
+                                  </div>
+                                  <div class="progress-bar">
+                                      <div class="progress-fill" style="width: 95%"></div>
+                                  </div>
+                              </div> -->
+                              
+                          </div>
+                      </div>
+          
+                      <div class="right-column">
+                          <div class="section">
+                              <div class="section-header">
+                                  <div class="section-icon">🔧</div>
+                                  <div class="section-title">Skills</div>
+                              </div>
+                              <div class="skills-container">
+                                  
+                                  <div class="skill-item">
+                                      <div class="skill-name">
+                                          <span contenteditable="true" data-placeholder="Skill Name">Client Management</span>
+                                          <span>95%</span>
+                                      </div>
+                                      <div class="skill-bar">
+                                          <div class="skill-progress" style="width: 95%"></div>
+                                      </div>
+                                  </div>
+                                  <button class="add-UserBtn" onclick="addSkill()">➕ Add SKill</button>
+
+                                  <!-- <div class="skill-item">
+                                      <div class="skill-name">
+                                          <span contenteditable="true" data-placeholder="Skill Name">Agile Methodologies</span>
+                                          <span>90%</span>
+                                      </div>
+                                      <div class="skill-bar">
+                                          <div class="skill-progress" style="width: 90%"></div>
+                                      </div>
+                                  </div> -->
+                                  
+                                  
+                              </div>
+                          </div>
+          
+                          <div class="section">
+                              <div class="section-header">
+                                  <div class="section-icon">🏆</div>
+                                  <div class="section-title">Certifications</div>
+                              </div>
+                              <ul class="certificates-list">
+                                  <li class="certificate-item">
+                                      <div class="certificate-title" contenteditable="true" data-placeholder="Certificate Name">Project Management Professional (PMP)</div>
+                                      <div class="certificate-details" contenteditable="true" data-placeholder="Issuing Organization, Year">Project Management Institute, 2019</div>
+                                  </li>
+                                  <button class="add-UserBtn" onclick="addCertificate()">➕ Add Certificate</button>
+
+                              </ul>
+                          </div>
+          
+                          <div class="section">
+                              <div class="section-header">
+                                  <div class="section-icon">🌐</div>
+                                  <div class="section-title">Languages</div>
+                              </div>
+                              <div class="languages-list">
+                                  <div class="language-item">
+                                      <div class="language-name" contenteditable="true" data-placeholder="Language Name">English</div>
+                                      <div class="language-level">
+                                          <div class="level-dot filled"></div>
+                                          <div class="level-dot filled"></div>
+                                          <div class="level-dot filled"></div>
+                                          <div class="level-dot filled"></div>
+                                          <div class="level-dot filled"></div>
+                                      </div>
+                                  </div>
+                                  <button class="add-UserBtn" onclick="addLanguage()">➕ Add Language</button>
+
+                                  
+                                  
+                                  <!-- <div class="language-item">
+                                      <div class="language-name" contenteditable="true" data-placeholder="Language Name">French</div>
+                                      <div class="language-level">
+                                          <div class="level-dot filled"></div>
+                                          <div class="level-dot filled"></div>
+                                          <div class="level-dot"></div>
+                                          <div class="level-dot"></div>
+                                          <div class="level-dot"></div>
+                                      </div>
+                                  </div> -->
+                              </div>
+                          </div>
+          
+                          <div class="section">
+                              <div class="section-header">
+                                  <div class="section-icon">📊</div>
+                                  <div class="section-title">Projects</div>
+                              </div>
+                              <div class="projects-container">
+                                  <div class="project-item">
+                                      <div class="project-title" contenteditable="true" data-placeholder="Project Name">Enterprise Resource Planning System Implementation</div>
+                                      <div class="project-date" contenteditable="true" data-placeholder="Year">2021 - 2022</div>
+                                      <div class="project-description" contenteditable="true" data-placeholder="Project Description">Led the implementation of an enterprise-wide ERP system that streamlined operations across 5 departments. Managed a cross-functional team of 12 members and completed the project 2 weeks ahead of schedule with a 15% cost saving.</div>
+                                  </div>
+                                  <button class="add-UserBtn" onclick="addProject()">➕ Add Project</button>
+
+                                  <!-- <div class="project-item">
+                                      <div class="project-title" contenteditable="true" data-placeholder="Project Name">Mobile Banking Application Development</div>
+                                      <div class="project-date" contenteditable="true" data-placeholder="Year">2019 - 2020</div>
+                                      <div class="project-description" contenteditable="true" data-placeholder="Project Description">Managed the development of a secure mobile banking application with 20+ features that increased customer engagement by 45%. Ensured compliance with financial regulations and implemented robust security protocols.</div>
+                                  </div> -->
+                              </div>
+                          </div>
+          
+                          <div class="section">
+                              <div class="section-header">
+                                  <div class="section-icon">👥</div>
+                                  <div class="section-title">References</div>
+                              </div>
+                              <div class="references-container">
+                                  <div class="reference-item">
+                                      <div class="reference-name" contenteditable="true" data-placeholder="Reference Name">Rajesh Kumar</div>
+                                      <div class="reference-position" contenteditable="true" data-placeholder="Position, Company">Director, ABC Technologies Pvt. Ltd.</div>
+                                      <div class="reference-contact" contenteditable="true" data-placeholder="Contact Information">Email: rajesh.kumar@abctech.com | Phone: +91 98765 12345</div>
+                                  </div>
+                                  <div class="reference-item">
+                                      <div class="reference-name" contenteditable="true" data-placeholder="Reference Name">Priya Sharma</div>
+                                      <div class="reference-position" contenteditable="true" data-placeholder="Position, Company">Senior VP, XYZ Solutions</div>
+                                      <div class="reference-contact" contenteditable="true" data-placeholder="Contact Information">Email: priya.sharma@xyzsolutions.com | Phone: +91 87654 23456</div>
+                                  </div>
+                              </div>
+                          </div>
+          
+                          <div class="section">
+                              <div class="section-header">
+                                  <div class="section-icon">🎯</div>
+                                  <div class="section-title">Interests</div>
+                              </div>
+                              <div class="interests-list">
+                                  <div class="interest-tag" contenteditable="true" data-placeholder="Interest">Technology Trends</div>
+                                  <button class="add-UserBtn" onclick="addInterest()">➕ Add Interest</button>
+
+                                  <!-- <div class="interest-tag" contenteditable="true" data-placeholder="Interest">Digital Transformation</div>
+                                  <div class="interest-tag" contenteditable="true" data-placeholder="Interest">Leadership Development</div>
+                                  <div class="interest-tag" contenteditable="true" data-placeholder="Interest">Photography</div>
+                                  <div class="interest-tag" contenteditable="true" data-placeholder="Interest">Traveling</div>
+                                  <div class="interest-tag" contenteditable="true" data-placeholder="Interest">Reading</div> -->
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          
+              </section>
             </div>
           </div>
           <div class="modal fade show" id="cashbackmodal" tabindex="-1" role="dialog"
@@ -1830,6 +2514,115 @@
 
             $('.chosen').chosen();
           </script>
+          <script>
+            function createEditableElement(html) {
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = html.trim();
+                return wrapper.firstChild;
+            }
+            
+            function addExperience() {
+                const container = document.querySelector('.experience-item').parentElement;
+                const newItem = createEditableElement(`
+                    <div class="experience-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line"></div>
+                        <div class="job-title" contenteditable="true" data-placeholder="Job Title"></div>
+                        <div class="company" contenteditable="true" data-placeholder="Company Name"></div>
+                        <div class="date">
+                            <span class="date-icon">📅</span>
+                            <span contenteditable="true" data-placeholder="Duration"></span>
+                        </div>
+                        <div class="job-description" contenteditable="true" data-placeholder="Job Description"></div>
+                    </div>
+                `);
+                container.insertBefore(newItem, container.querySelector('.add-UserBtn'));
+            }
+            
+            function addEducation() {
+                const container = document.querySelector('.education-item').parentElement;
+                const newItem = createEditableElement(`
+                    <div class="education-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-line"></div>
+                        <div class="degree" contenteditable="true" data-placeholder="Degree"></div>
+                        <div class="school" contenteditable="true" data-placeholder="University"></div>
+                        <div class="date">
+                            <span class="date-icon">📅</span>
+                            <span contenteditable="true" data-placeholder="Duration"></span>
+                        </div>
+                        <div class="education-description" contenteditable="true" data-placeholder="Additional Information"></div>
+                    </div>
+                `);
+                container.insertBefore(newItem, container.querySelector('.add-UserBtn'));
+            }
+            
+            function addSkill() {
+                const container = document.querySelector('.skills-container');
+                const newItem = createEditableElement(`
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span contenteditable="true" data-placeholder="Skill Name"></span>
+                            <span>80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%"></div>
+                        </div>
+                    </div>
+                `);
+                container.insertBefore(newItem, container.querySelector('.add-UserBtn'));
+            }
+            
+            function addCertificate() {
+                const container = document.querySelector('.certificates-list');
+                const newItem = createEditableElement(`
+                    <li class="certificate-item">
+                        <div class="certificate-title" contenteditable="true" data-placeholder="Certificate Name"></div>
+                        <div class="certificate-details" contenteditable="true" data-placeholder="Issuing Organization, Year"></div>
+                    </li>
+                `);
+                container.insertBefore(newItem, container.querySelector('.add-UserBtn'));
+            }
+            
+            function addLanguage() {
+                const container = document.querySelector('.languages-list');
+                const newItem = createEditableElement(`
+                    <div class="language-item">
+                        <div class="language-name" contenteditable="true" data-placeholder="Language Name"></div>
+                        <div class="language-level">
+                            <div class="level-dot filled"></div>
+                            <div class="level-dot filled"></div>
+                            <div class="level-dot filled"></div>
+                            <div class="level-dot"></div>
+                            <div class="level-dot"></div>
+                        </div>
+                    </div>
+                `);
+                container.insertBefore(newItem, container.querySelector('.add-UserBtn'));
+            }
+            
+            function addProject() {
+                const container = document.querySelector('.projects-container');
+                const newItem = createEditableElement(`
+                    <div class="project-item">
+                        <div class="project-title" contenteditable="true" data-placeholder="Project Name"></div>
+                        <div class="project-date" contenteditable="true" data-placeholder="Year"></div>
+                        <div class="project-description" contenteditable="true" data-placeholder="Project Description"></div>
+                    </div>
+                `);
+                container.insertBefore(newItem, container.querySelector('.add-UserBtn'));
+            }
+            
+            function addInterest() {
+                const container = document.querySelector('.interests-list');
+                const newItem = createEditableElement(`
+                    <div class="interest-tag" contenteditable="true" data-placeholder="Interest"></div>
+                `);
+                container.insertBefore(newItem, container.querySelector('.add-UserBtn'));
+            }
+            </script>
+            
+            
           <% include ./partials/footer%>
         </body>
         </html>
