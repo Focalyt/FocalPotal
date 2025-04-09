@@ -1133,50 +1133,7 @@ router.get("/searchcourses", [isCandidate], async (req, res) => {
   try {
     const data = req.query;
 
-    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-    console.log(fullUrl);
-
-    // Modify script to run after DOM is loaded and escape quotes properly
-    const storageScript = `
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        try {
-        const storedurl = localStorage.getItem('entryUrl');
-        if(!storedurl){
-          // Store current URL immediately
-          const data = {
-            url: '${fullUrl.replace(/'/g, "\\'")}',
-            timestamp: new Date().getTime()
-          };
-          localStorage.setItem('entryUrl', JSON.stringify(data));
-          
-          // Verify it was stored
-          console.log('URL stored:', localStorage.getItem('entryUrl'))};
-          
-          // Function to check and clean expired URL
-          function cleanExpiredUrl() {
-            const stored = localStorage.getItem('entryUrl');
-            if (stored) {
-              const data = JSON.parse(stored);
-              const now = new Date().getTime();
-              const hours24 = 24 * 60 * 60 * 1000;
-              
-              if (now - data.timestamp > hours24) {
-                localStorage.removeItem('entryUrl');
-                console.log('Expired URL removed');
-              }
-            }
-          }
-          
-          // Check for expired URLs
-          cleanExpiredUrl();
-          
-        } catch (error) {
-          console.error('Error storing URL:', error);
-        }
-      });
-    </script>
-  `;
+   
     const perPage = 10;
     const p = parseInt(req.query.page);
     const page = p || 1;
@@ -1198,7 +1155,7 @@ router.get("/searchcourses", [isCandidate], async (req, res) => {
         $nin: candidate?.appliedCourses
       }
     }
-    console.log('data: ', data);
+  
     if (data['name'] != '' && data.hasOwnProperty('name')) {
       fields["name"] = { "$regex": data['name'], "$options": "i" }
     }
@@ -1211,7 +1168,6 @@ router.get("/searchcourses", [isCandidate], async (req, res) => {
       }
     }
     let count = 0;
-    console.log('fields: ', JSON.stringify(fields));
     let courses = await Courses.find(fields).populate("sectors");
     count = await Courses.countDocuments(fields);
     const totalPages = Math.ceil(count / perPage);
@@ -1220,8 +1176,7 @@ router.get("/searchcourses", [isCandidate], async (req, res) => {
       courses,
       data,
       totalPages,
-      page,
-      storageScript: storageScript
+      page
     });
 
   } catch (err) {
@@ -1234,7 +1189,13 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
   try {
     const { courseId } = req.params;
     const contact = await Contact.find({ status: true, isDeleted: false }).sort({ createdAt: 1 })
+    console.log('fetching before number course')
+
+
     const userMobile = req.user.mobile;
+    console.log('fetching after number course')
+
+
     let validation = { mobile: userMobile }
     let { value, error } = CandidateValidators.userMobile(validation)
     if (error) {
@@ -1306,8 +1267,7 @@ router.get("/course/:courseId", [isCandidate], async (req, res) => {
       isApplied,
       mobileNumber,
       canApply,
-      centers,
-      storageScript: storageScript
+      centers
     });
   } catch (err) {
     req.flash("error", err.message || "Something went wrong!");

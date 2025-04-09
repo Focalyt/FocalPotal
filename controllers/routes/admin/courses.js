@@ -407,7 +407,7 @@ router.route("/registrations")
 					.filter(id => id)
 					.map(id => new ObjectId(id));
 			}
-		     	if (user.role === 0 || user.role === 10) {
+			if (user.role === 0 || user.role === 10) {
 				if (req.session.user.role === 10) {
 					view = true
 				}
@@ -431,8 +431,9 @@ router.route("/registrations")
 					sorting[value] = Number(order)
 				} else {
 					sorting = { createdAt: -1 }
-				}
-				let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter)
+				};
+
+				let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter);
 				candidates = await AppliedCourses.aggregate(agg);
 				totalPages = Math.ceil(count / perPage);
 
@@ -440,15 +441,15 @@ router.route("/registrations")
 			else if (user.role === 11) {
 				// Prepare role filter based on courseIds or centerIds
 				let roleFilter = {};
-	
+
 				// Prioritize courseIds
 				if (courseIds.length > 0) {
 					roleFilter['_course'] = { $in: courseIds };
-				} 
+				}
 				// Fallback to centerIds
 				else if (centerIds.length > 0) {
 					roleFilter['_center'] = { $in: centerIds };
-				} 
+				}
 				// If no access, return empty result
 				else {
 					return res.render(`${req.vPath}/admin/course/registration`, {
@@ -464,12 +465,12 @@ router.route("/registrations")
 						sortingOrder: [-1],
 					});
 				}
-	
+
 				// Name/Mobile filtering
 				numberCheck = isNaN(data?.name);
 				if (data['name'] != '' && data.hasOwnProperty('name')) {
 					const regex = new RegExp(data['name'], 'i');
-					
+
 					if (numberCheck) {
 						// If name is not a number, use regex
 						roleFilter["name"] = regex;
@@ -482,14 +483,14 @@ router.route("/registrations")
 						];
 					}
 				}
-	
+
 				// Sorting
 				if (value && order) {
 					sorting[value] = Number(order)
 				} else {
 					sorting = { createdAt: -1 }
 				}
-	
+
 				// Aggregation pipeline
 				let agg = [
 					{ $match: roleFilter },
@@ -525,21 +526,73 @@ router.route("/registrations")
 							courseName: '$courseDetails.name',
 							courseId: '$courseDetails._id',
 							registrationCharges: '$courseDetails.registrationCharges',
-							sector: '$courseDetails.sector'
+							sector: '$courseDetails.sector',
+
 						}
 					},
 					{ $sort: sorting },
 					{ $skip: (page - 1) * perPage },
 					{ $limit: perPage }
 				];
-	
+
 				// Count for pagination
 				count = await AppliedCourses.countDocuments(roleFilter);
-				
+
 				candidates = await AppliedCourses.aggregate(agg);
 				totalPages = Math.ceil(count / perPage);
+			};
+			for (let candidate of candidates) {
+				const courseDocsRequired = candidate.docsRequired || [];
+
+				const candidateDocSet = candidate.docsForCourses?.find(
+					(d) => d.courseId.toString() === candidate.courseId.toString()
+				);
+
+				console.log('candidateDocSet',candidate.docsForCourses)
+
+				let totalRequired = courseDocsRequired.length;
+				let verified = 0;
+				let pending = 0;
+				let pendingForUpload = 0;
+
+				if (candidateDocSet && Array.isArray(candidateDocSet.uploadedDocs)) {
+					for (let reqDoc of courseDocsRequired) {
+						const uploadedDoc = candidateDocSet.uploadedDocs.find(
+							(doc) => doc.docsId.toString() === reqDoc._id.toString()
+						);
+
+						if (uploadedDoc) {
+							if (uploadedDoc.status === "Verified") {
+								verified++;
+							} else if (uploadedDoc.status === "Pending") {
+								pending++;
+							}
+						} else {
+							pendingForUpload++;
+						}
+					}
+				} else {
+					// अगर uploadedDocs ही नहीं है तो सब pending माने
+					pendingForUpload = totalRequired;
+				}
+
+				const uploaded = verified + pending;
+				const percent = courseDocsRequired.length > 0
+					? Math.round((uploaded / courseDocsRequired.length) * 100)
+					: 0;
+				// Candidate में result embed करो
+				candidate.docProgress = {
+					totalRequired,
+					verified,
+					pending,
+					percent,
+					pendingForUpload
+				};
 			}
-	
+
+
+
+
 			console.log("candidates", candidates)
 			return res.render(`${req.vPath}/admin/course/registration`, {
 				candidates,

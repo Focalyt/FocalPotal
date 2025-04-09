@@ -74,12 +74,12 @@
                                                 <%= l.mobile ? l.mobile : "N/A" %>
                                             </td>
                                             <td class="text-capitalize">
-                                                <div class="circular-progress-container" data-percent=20>
+                                                <div class="circular-progress-container" data-percent=<%= l.docProgress.percent%>>
                                                     <svg width="40" height="40">
                                                       <circle class="circle-bg" cx="20" cy="20" r="16"></circle>
                                                       <circle class="circle-progress"  cx="20" cy="20" r="16"></circle>
                                                     </svg>
-                                                    <div class="progress-text">20%</div>
+                                                    <div class="progress-text"><%= l.docProgress.percent ? l.docProgress.percent : "N/A" %>%</div>
                                                   </div>
                                             </td>
                                             <td class="text-capitalize">
@@ -287,9 +287,7 @@
 <script>
     document.querySelectorAll('.circular-progress-container').forEach(container => {
       const percent = container.getAttribute('data-percent');
-      console.log(percent,"percent")
       const circle = container.querySelector('circle.circle-progress');
-      console.log(circle,"circle")
       const radius = 16;
       const circumference = 2 * Math.PI * radius;
       const offset = circumference - (percent / 100) * circumference;
