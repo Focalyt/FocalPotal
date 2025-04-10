@@ -238,7 +238,11 @@
 																<%= l._course?.name? l._course?.name: "" %>
 															</td>
 															<td class="text-capitalize">
-																<%= l._qualification.name %>
+																<% if (l._qualification && l._qualification.name) { %>
+																	<%= l._qualification.name %>
+																  <% } else { %>
+																    N/A
+																  <% } %>
 															</td>
 															<% if (!subName) { %>
 																<% if (view===true) { %>
