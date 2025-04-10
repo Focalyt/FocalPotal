@@ -4,6 +4,32 @@
   <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+            <!-- Flatpickr CSS & Script -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<style>
+  .flatpickr-calendar {
+    z-index: 99999 !important;
+    /* bring on top of everything */
+    width: 120px !important;
+  }
+
+  .flatpickr-calendar.open {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  .flatpickr-input[readonly] {
+    background-color: #fff !important;
+    /* fix greyed out look */
+    cursor: pointer;
+    
+  }
+
+  numInputWrapper .flatpickr-am-pm{
+    width: 40% !important ;
+  }
+</style>
   <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
     data-menu="vertical-menu-modern" data-col="2-columns">
     <div id="preloader"></div>
@@ -395,6 +421,26 @@
                                 <input id="timings" class="form-control" type="text" name="shifttimings"
                                   value="<%= vacancy?.shifttimings %>" maxlength="3" />
                               </div>
+                              <div class="col-xl-3 mb-1">
+                                <label>Shift Timing
+                                  <span class="mandatory">*</span>
+                                </label>
+        
+                                <div id="shiftTiming">
+                                  <!-- <label>&nbsp;</label> -->
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <input name="timingFrom" type="text" id="timing-from"
+                                        class="form-control" placeholder="From">
+                                    </div>
+                                    <div class="col-6">
+                                      <input name="timingTo" type="text" id="timing-to" class="form-control"
+                                        placeholder="To">
+                                    </div>
+                                  </div>
+        
+                                </div>
+                              </div>
                               <div class="col-xl-3 mb-1" id="jd-work-field">
                                 <div class="demo-inline-spacing">
                                   <label>Work Type</label><span class="mandatory"> *</span>
@@ -484,7 +530,7 @@
                                   <option value="NA" <% if(vacancy?.payOut==='NA' ) {%> selected <% } %>>NA</option>
                                 </select>
                               </div>
-                              <div class="col-xl-3 mb-1">
+                              <!-- <div class="col-xl-3 mb-1">
                                 <label for="techSkills">Tech Skills Required</label>
                                 <select id="techSkills" class="form-control chosen" multiple name="_techSkills"
                                   data-placeholder="Select Technical Skills">
@@ -500,9 +546,9 @@
                                         <% } %>
                                           <% }); %>
                                 </select>
-                              </div>
+                              </div> -->
 
-                              <div class="col-xl-3 mb-1">
+                              <!-- <div class="col-xl-3 mb-1">
                                 <label for="nonTechSkills">Non Tech Skills Required</label>
                                 <select id="nonTechSkills" class="form-control chosen" multiple name="_nonTechSkills"
                                   data-placeholder="Select Non-Technical Skills">
@@ -518,7 +564,7 @@
                                         <% } %>
                                           <% }); %>
                                 </select>
-                              </div>
+                              </div> -->
 
                               <div class="col-xl-3 mb-1">
                                 <label>Requirement (If any)</label>
@@ -1592,6 +1638,22 @@
 
 
           </script>
+          <script>
+            flatpickr("#timing-from", {
+              enableTime: true,
+              noCalendar: true,               // 👈 Hide the calendar
+              dateFormat: "h:i K",            // 👈 Only time format (e.g., 02:30 PM)
+              time_24hr: false                // 👈 12-hour format with AM/PM
+            });
+          
+            flatpickr("#timing-to", {
+              enableTime: true,
+              noCalendar: true,
+              dateFormat: "h:i K",
+              time_24hr: false
+            });
+          </script>
+          
           <% include ./partials/footer %>
   </body>
   </html>

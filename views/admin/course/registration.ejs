@@ -34,6 +34,42 @@
                                                 <button class="btn btn-success waves-effect waves-light text-white d-inline" id="submit-btn">Go</button>
                                                 <a class="extra-ss btn btn-danger d-inline waves-effect waves-light mb-2 text-white mx-1" href="/admin/courses/registrations">RESET</a>
                                             </div>
+                                            <div class="col-xl-6 text-right mt-3">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="filterToggle">
+                                                    <label class="custom-control-label" for="filterToggle"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-end advanced-filters" style=" transition: 0.3s ease-in-out; overflow: hidden;">
+                                            <div class="col-xl-2 ml-1 mt-1">
+                                                <label>Course Fee Type</label>
+                                        <select class="form-control text-capitalize" name="courseType" id="courseType">
+                                            <option value="">Select</option>
+                                            <option class="text-capitalize" value="Free">Free</option>
+                                            <option class="text-capitalize" value="Paid">Paid</option>
+                                            
+                                        </select>
+                                            </div>
+                                            <div class="col-xl-2 ml-1 mt-1">
+                                                <label>From Date</label>
+                                                <input type="date" class="form-control" id="from-date" name="FromDate"
+                                                    value="<%= data.FromDate %>">
+                                            </div>
+                                            <div class="col-xl-2 ml-1 mt-1">
+                                                <label>To Date</label>
+                                                <input type="date" class="form-control" id="to-date" name="ToDate"
+                                                    value="<%= data.ToDate %>">
+                                            </div>
+                                           
+                                            <input type="hidden" class="form-control" name="status" value="true">
+                                            <div style="margin-top: 2.5rem !important;" class="col-xl-3 text-center mt-3">
+                                                <button
+                                                    class="btn btn-success  waves-effect waves-light  text-white d-inline "
+                                                    id="submit-btn">Go</button>
+                                                <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
+                                                    href="/admin/registrations">RESET</a>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -54,6 +90,9 @@
                                             <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('registrationCharges')">Reg Fee <i  class="" value="1"></i></th>
                                             <th class="one column wide" width="7%"  style="cursor: pointer;" >Reg Status <i  class="" value="1"></i></th>
                                             <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('sector')">Sector <i class="" value="1"></i></th>
+                                            <th class="one column wide" width="10%"  style="cursor: pointer;">Course Fee Type</th>
+                                            <th class="one column wide" width="7%"  style="cursor: pointer;">From</th>
+                                            <th class="one column wide" width="7%"  style="cursor: pointer;">TO</th>
                                             <% if (view === false) { %>
                                             <th class="one column wide" width="10%">Action</th>
                                             <% } %>
@@ -124,6 +163,9 @@
                                             <td class="text-capitalize">
                                                 <%= l.sector ? l.sector : "N/A" %>
                                             </td>
+                                            <td class="text-capitalize">Free/paid</td>
+                                            <td class="text-capitalize"></td>
+                                            <td class="text-capitalize"></td>
                                             <% if (view === false) { %>
                                             <td class="text-capitalize">
                                                 <a class="btn <% if (l.courseStatus == 0) { %>btn-danger<% } else { %>btn-success<% } %> waves-effect waves-light text-white d-inline btn-sm" onclick="handleActionClick('<%= l._id %>', '<%= l.remarks %>', '<%= l.assignDate %>', '<%= l.url %>')">
@@ -527,5 +569,37 @@ function loginAs(mobile){
         return hasError
     }
 </script>
+<!-- filters  -->
+ <script>
+   document.addEventListener('DOMContentLoaded', function(){
+    const filterToggle = document.getElementById('filterToggle');
+    const advancedFilter = document.querySelector('.advanced-filter');
+    filterToggle.addEventListener('change', function(){
+        if (this.checked){
+            advancedFilter.style.display = 'block';
+            setTimeout(()=>{
+                advancedFilter.style.maxheight= '300px';
+                advancedFilter.style.opacity ='1';
+            }, 10) 
+        }
+        else{
+            advancedFilter.style.display= 'none';
+            setTimeout(() =>{
+                advancedFilter.style.maxheight= '0px';
+                advancedFilter.style.opacity ='0';
+            }, 300)
+            
+        }
+    })
+
+   })
+ </script>
+ <style>
+    .advanced-filters {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+ </style>
 </body>
 </html>

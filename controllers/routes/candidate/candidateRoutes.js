@@ -1762,6 +1762,227 @@ router
     const isProfileCompleted = candidateUpdate.isProfileCompleted
     res.send({ status: true, message: "Profile Updated Successfully", isVideoCompleted: isVideoCompleted, isProfileCompleted: isProfileCompleted, totalCashback });
   });
+router
+  .route("/userProfile")
+  .get(isCandidate, async (req, res) => {
+    try {
+      const menu = "myprofile";
+      let validation = { mobile: req.session.user.mobile }
+      let { value, error } = await CandidateValidators.userMobile(validation)
+      if (error) {
+        console.log(error)
+        return res.send({ status: "failure", error: "Something went wrong!", error });
+      }
+      const candidate = await Candidate.findOne({
+        mobile: value.mobile,
+      }).populate([
+        { path: "experiences.Company_State", select: ["name", "stateId"] },
+        {
+          path: "experiences.Company_City",
+          select: ["name", "stateId", "cityId"],
+        },
+        { path: "experiences.Industry_Name", select: ["name"] },
+        { path: "experiences.SubIndustry_Name", select: ["name"] },
+        { path: "state", select: ["name", "stateId"] },
+        { path: "locationPreferences.state", select: ["name", "stateId"] },
+        {
+          path: "locationPreferences.city",
+          select: ["name", "stateId", "cityId"],
+        },
+      ]);
+      const isProfileCompleted = candidate.isProfileCompleted;
+      const isVideoCompleted = candidate.profilevideo
+      const cashback = await CashBackLogic.findOne({})
+      if (!candidate || candidate === null)
+        throw req.ykError("candidate not found");
+      const state = await State.find({
+        countryId: "101",
+        status: { $ne: false },
+      });
+      let totalCashback = await CandidateCashBack.aggregate([
+        { $match: { candidateId: new mongoose.Types.ObjectId(candidate._id) } },
+        { $group: { _id: "", totalAmount: { $sum: "$amount" } } },
+      ]);
+      let city = [];
+      let statefilter = { status: { $ne: false } };
+      if (candidate.state) {
+        statefilter["stateId"] = candidate.state?.stateId;
+        city = await City.find(statefilter);
+      }
+      let stateIds = state.map((s) => s.stateId);
+      const allcities = await City.find({
+        status: { $ne: false },
+        stateId: { $in: stateIds },
+      });
+      const Qualifications = await Qualification.find({ status: true }).sort({
+        basic: -1,
+      });
+      const subQualification = await SubQualification.find({ status: true });
+      const industry = await Industry.find({ status: true });
+      const subIndustry = await SubIndustry.find({ status: true });
+      const Universities = await University.find({ status: true });
+      const techinalSkill = await Skill.find({
+        type: "technical",
+        status: true,
+      });
+      const nonTechnicalSkill = await Skill.find({
+        type: "non technical",
+        status: true,
+      });
+      return res.render(`${req.vPath}/app/candidate/my-Profile`, {
+        menu,
+        candidate,
+        state,
+        city,
+        cashback,
+        Qualifications,
+        subQualification,
+        industry,
+        subIndustry,
+        Universities,
+        techinalSkill,
+        nonTechnicalSkill,
+        allcities,
+        isVideoCompleted: isVideoCompleted,
+        isProfileCompleted: isProfileCompleted,
+        totalCashback
+      });
+    } catch (err) {
+      console.log("Err-============>", err)
+      req.flash("error", err.message || "Something went wrong!");
+      return res.redirect("/candidate/login");
+    }
+  })
+  .post(isCandidate, async (req, res) => {
+    let validation = { mobile: req.session.user.mobile }
+    let { value, error } = await CandidateValidators.userMobile(validation)
+    if (error) {
+      console.log(error)
+      return res.send({ status: "failure", error: "Something went wrong!", error });
+    }
+    const {
+      personalInfo,
+      qualifications,
+      technicalskills,
+      nontechnicalskills,
+      locationPreferences,
+      experiences,
+      totalExperience,
+      isExperienced,
+      highestQualification,
+      yearOfPassing,
+    } = req.body;
+    const updatedFields = { isProfileCompleted: true };
+    const userInfo = {};
+    Object.keys(personalInfo).forEach((key) => {
+      if (personalInfo[key] !== "") {
+        updatedFields[key] = personalInfo[key];
+      }
+    });
+
+    const user = await Candidate.findOne({ mobile: value.mobile });
+    if (qualifications?.length > 0) {
+      qualifications.forEach((i) => {
+        if (i.collegeLatitude && i.collegeLongitude) {
+          i['location'] = {
+            type: 'Point',
+            coordinates: [i.collegeLongitude, i.collegeLatitude]
+          }
+        }
+      })
+
+      updatedFields['qualifications'] = qualifications;
+    }
+    if (experiences?.length > 0) {
+      updatedFields["experiences"] = experiences;
+    }
+    if (locationPreferences?.length > 0) {
+      updatedFields["locationPreferences"] = locationPreferences;
+    }
+    if (technicalskills?.length > 0) {
+      let technicalSkill = await getTechSkills(technicalskills);
+      updatedFields["techSkills"] = technicalSkill;
+    }
+    if (nontechnicalskills?.length > 0) {
+      let nonTechnicalSkill = await getNonTechSkills(nontechnicalskills);
+      updatedFields["nonTechSkills"] = nonTechnicalSkill;
+    }
+
+    updatedFields["totalExperience"] = totalExperience;
+    updatedFields["isExperienced"] = isExperienced;
+    updatedFields["highestQualification"] = highestQualification;
+    if (yearOfPassing) {
+      updatedFields["yearOfPassing"] = yearOfPassing;
+    }
+    if (updatedFields.latitude && updatedFields.longitude) {
+      updatedFields["location"] = { type: 'Point', coordinates: [updatedFields.longitude, updatedFields.latitude] }
+    }
+    if (user?.referredBy && user?.referredBy && user.isProfileCompleted == false) {
+      const cashback = await CashBackLogic.findOne().select("Referral")
+      const referral = await Referral.findOneAndUpdate(
+        { referredBy: user.referredBy, referredTo: user._id },
+        { status: referalStatus.Active, earning: cashback.Referral, new: true })
+
+      await checkCandidateCashBack({ _id: user.referrefBy })
+      await candidateReferalCashBack(referral)
+    }
+    const candidateUpdate = await Candidate.findByIdAndUpdate(
+      user._id,
+      updatedFields
+    );
+    if (personalInfo.name) {
+      userInfo["name"] = personalInfo.name;
+    }
+    if (personalInfo.email) {
+      userInfo["email"] = personalInfo.email;
+    }
+
+    await User.findOneAndUpdate({ mobile: user.mobile, role: 3 }, userInfo);
+
+    if (!candidateUpdate) {
+      req.flash("error", "Candidate update failed!");
+      return res.send({ status: false, message: "Profile Update failed" });
+    }
+    if (user.isProfileCompleted == false && env.toLowerCase() === 'production') {
+      let dataFormat = {
+        Source: "mipie",
+        FirstName: user.name,
+        MobileNumber: user.mobile,
+        LeadSource: "Website",
+        LeadType: "Online",
+        LeadName: "app",
+        Course: "Mipie general",
+        Center: "Padget",
+        Location: "Technician",
+        Country: "India",
+        LeadStatus: "Profile Completed",
+        ReasonCode: "27",
+        AuthToken: extraEdgeAuthToken
+      }
+      let edgeBody = JSON.stringify(dataFormat)
+      let header = { "Content-Type": "multipart/form-data" }
+      let extraEdge = await axios.post(extraEdgeUrl, edgeBody, header).then(res => {
+        console.log(res.data)
+      }).catch(err => {
+        console.log(err)
+        return err
+      })
+    }
+
+    await checkCandidateCashBack(candidateUpdate)
+    await candidateProfileCashBack(candidateUpdate)
+    await candidateVideoCashBack(candidateUpdate)
+    let totalCashback = await CandidateCashBack.aggregate([
+      { $match: { candidateId: new mongoose.Types.ObjectId(user._id) } },
+      { $group: { _id: "", totalAmount: { $sum: "$amount" } } },
+    ]);
+    let isVideoCompleted = ''
+    if (personalInfo.profilevideo !== '') {
+      isVideoCompleted = personalInfo.profilevideo
+    }
+    const isProfileCompleted = candidateUpdate.isProfileCompleted
+    res.send({ status: true, message: "Profile Updated Successfully", isVideoCompleted: isVideoCompleted, isProfileCompleted: isProfileCompleted, totalCashback });
+  });
 
 router.post("/removelogo", isCandidate, async (req, res) => {
   let validation = { mobile: req.session.user.mobile }
