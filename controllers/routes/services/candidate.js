@@ -199,7 +199,7 @@ module.exports = {
                   $expr: {
                     $and: [
                       { $eq: ["$_candidate", "$$id"] },
-                      { $eq: ["$_company",new mongoose.Types.ObjectId(companyId)] },
+                      { $eq: ["$_company", new mongoose.Types.ObjectId(companyId)] },
                     ],
                   },
                 },
@@ -262,7 +262,7 @@ module.exports = {
     return agg;
   },
 
-  
+
   // candidateCourseList: (sort, perPage, page, filter) => {
   //   let sorting = [
   //     { $sort: sort },
@@ -377,7 +377,7 @@ module.exports = {
               },
             },
             {
-              $project: { name: 1, mobile: 1 } // Fetch only necessary fields
+              $project: { name: 1, mobile: 1, docsForCourses: 1 } // Fetch only necessary fields
             }
           ],
           as: "_candidate",
@@ -459,15 +459,15 @@ module.exports = {
           courseName: 1,
           registrationCharges: 1,
           registrationFee: 1,
-          candidateId:1,
+          candidateId: 1,
           sector: 1,
           courseStatus: 1,
-          courseId:1,
+          courseId: 1,
           remarks: 1,
           assignDate: 1,
           url: 1,
           docsRequired: 1,
-    docsForCourses: 1
+          docsForCourses: 1
         },
       },
     ];

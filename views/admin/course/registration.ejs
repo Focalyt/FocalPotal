@@ -113,16 +113,21 @@
                                                 <%= l.mobile ? l.mobile : "N/A" %>
                                             </td>
                                             <td class="text-capitalize">
-                                                <div class="circular-progress-container" data-percent=<%= l.docProgress.percent%>>
-                                                    <svg width="40" height="40">
-                                                      <circle class="circle-bg" cx="20" cy="20" r="16"></circle>
-                                                      <circle class="circle-progress"  cx="20" cy="20" r="16"></circle>
-                                                    </svg>
-                                                    <div class="progress-text"><%= l.docProgress.percent ? l.docProgress.percent : "N/A" %>%</div>
+                                                <div class="circular-progress-container" data-percent="<%= l.docProgress.percent %>">
+                                                    <% if (l.docProgress.totalRequired && l.docProgress.totalRequired > 0) { %>
+                                                      <svg width="40" height="40">
+                                                        <circle class="circle-bg" cx="20" cy="20" r="16"></circle>
+                                                        <circle class="circle-progress" cx="20" cy="20" r="16"></circle>
+                                                      </svg>
+                                                    <% } %>
+                                                    <div class="progress-text">
+                                                      <%= l.docProgress.totalRequired && l.docProgress.totalRequired > 0 ? l.docProgress.percent + '%' : 'NDR' %>
+                                                    </div>
                                                   </div>
+                                                  
                                             </td>
                                             <td class="text-capitalize">
-                                                <select class="form-control leadsSelect">
+                                                <select onchange="statusUpdate ('<%= l._id%>')" class="form-control leadsSelect">
                                                     <option value="">Select</option>
                                                     <option value="Hot">Hot</option>
                                                     <option value="Warm">Warm</option>
@@ -340,6 +345,21 @@
       // Set text also if needed
       container.querySelector('.progress-text').innerText = percent + '%';
     });
+  </script>
+  <script>
+    function statusUpdate (appliedId){
+
+        axios.post(`/admin/courses/leadStatus`,appliedId)
+        .then(response => {
+            console.log("aaaaaa");
+            
+        })
+        .catch(error => {
+            console.error(error);
+            alert('An error occurred while assigning the course.');
+        });
+
+    }
   </script>
   
 <script>

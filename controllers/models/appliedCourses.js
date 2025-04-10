@@ -61,6 +61,15 @@ const appliedCoursesSchema = new Schema(
       ref: "User",
       description: "Reference to the specific course applied for"
     },
+    leadStatus:[
+      {status: {
+        type:String
+      },
+      updateBy:{ type: ObjectId, ref: "User" },
+      UpdatedAt:{ type: Date, default: Date.now }
+    }
+
+    ],
     courseStatus: { 
       type: Number,
       enum: [0, 1], // 0: due, 1: assigned
