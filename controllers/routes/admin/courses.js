@@ -492,49 +492,7 @@ router.route("/registrations")
 				}
 
 				// Aggregation pipeline
-				let agg = [
-					{ $match: roleFilter },
-					{
-						$lookup: {
-							from: 'candidates',
-							localField: '_candidate',
-							foreignField: '_id',
-							as: 'candidateDetails'
-						}
-					},
-					{
-						$lookup: {
-							from: 'courses',
-							localField: '_course',
-							foreignField: '_id',
-							as: 'courseDetails'
-						}
-					},
-					{ $unwind: '$candidateDetails' },
-					{ $unwind: '$courseDetails' },
-					{
-						$project: {
-							_id: 1,
-							courseStatus: 1,
-							registrationFee: 1,
-							url: 1,
-							remarks: 1,
-							createdAt: 1,
-							name: '$candidateDetails.name',
-							candidateId: '$candidateDetails._id',
-							mobile: '$candidateDetails.mobile',
-							courseName: '$courseDetails.name',
-							courseId: '$courseDetails._id',
-							registrationCharges: '$courseDetails.registrationCharges',
-							sector: '$courseDetails.sector',
-
-						}
-					},
-					{ $sort: sorting },
-					{ $skip: (page - 1) * perPage },
-					{ $limit: perPage }
-				];
-
+				let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter);
 				// Count for pagination
 				count = await AppliedCourses.countDocuments(roleFilter);
 
@@ -1052,6 +1010,30 @@ router.route('/crm')
 			res.redirect('back');
 		}
 	});
+
+	router.route('/leadStatus')
+	.post(async (req, res) => {
+
+		try {			
+			const user = req.session.user;
+			const {appliedId} = req.body
+
+
+			console.log('user',user)
+			console.log('appliedId',appliedId);
+			
+			return res.status(200).json({
+				status: true,
+				message: "Status updated successfully"
+				
+			});
+		} catch (err) {
+			console.log("Error rendering addleads page:", err);
+			res.redirect('back');
+		}
+	});
+
+
 
 
 
