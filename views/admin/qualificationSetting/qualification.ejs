@@ -3,12 +3,12 @@
     <div class="content-header-left col-md-9 col-12 mb-2">
       <div class="row breadcrumbs-top">
         <div class="col-12">
-          <h3 class="content-header-title float-left mb-0">Course</h3>
+          <h3 class="content-header-title float-left mb-0">Qualification</h3>
           <div class="breadcrumb-wrapper col-12">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/admin">Home</a>
               </li>
-              <li class="breadcrumb-item active">Course
+              <li class="breadcrumb-item active">Qualification
               </li>
             </ol>
           </div>
@@ -24,9 +24,9 @@
             <div class="card">
               <div class="card-header border border-top-0 border-left-0 border-right-0">
                 <% if (quaName) { %>
-                  <h4 class="card-title pb-1">Update Course</h4>
+                  <h4 class="card-title pb-1">Update Qualification</h4>
                   <% } else { %>
-                    <h4 class="card-title pb-1">Add Course</h4>
+                    <h4 class="card-title pb-1">Add Qualification</h4>
                     <% } %>
               </div>
               <div class="card-content">
@@ -35,29 +35,21 @@
                     <div class="row">
                       <% if (quaName) { %>
                         
-
-                           <div class="col-xl-4 mb-1">
-                            <label>Course Name</label>
-                            <input type="type" class="form-control" minlength="1" maxlength="50" required
-                              value="<%- quaName ? quaName : ''%>" name="name" placeholder="Course name">
-                        
-                        </div>
+                        <div class="col-xl-4 mb-1">
+                          <label>Qualification</label>
+                          <input type="type" class="form-control" minlength="1" maxlength="50" required
+                            value="<%- quaName ? quaName : ''%>" name="name" placeholder="Qualification">
+                      
+                      </div>
 
                         <% } else {%>
-                          <div class="col-xl-4 mb-1">
-                            <label>Select Course
-                              <span class="asterisk">*</span></label>
-                              <select style="cursor: pointer;" class="form-control"
-                              name="id" required>
-                              <option value="">Select Option</option>
-                              <% qualifications.forEach((i)=> { %>
-                                <option value="<%= i._id %>" class="text-capitalize">
-                                  <%= i.name %>
-                                </option>
-                                <% }); %>
-                            </select>
-  
-                             </div>
+                          
+                             <div class="col-xl-4 mb-1">
+                              <label>Qualification</label>
+                              <input type="type" class="form-control" minlength="1" maxlength="50" required
+                               name="name" placeholder="Qualification">
+                          
+                          </div>
                           <% } %>
                         <div class="col-xl-4 mb-1">
                           <br>
@@ -71,18 +63,18 @@
                         </div>
                     </div>
                   </form>
-                  <% if (!quaName) { %>
+                  <!-- <% if (!quaName) { %>
                     <button onclick="showForm()" class="btn btn-success font-small-3 <% if(view==true ) {%> disabled <% } %>"
                       <% if(view==true ) {%> disabled <% } %>>Add Custom Course</button>
-                    <%}%>
+                    <%}%> -->
                 
                   <form id="hideShowCourse" action="" method="post">
                     <div class="row">
                       <% if (!quaName) { %>
                         <div class="col-xl-4 mb-1">
-                          <label>Course Name <span class="mandatory">*</span></label>
+                          <label>Qualification  <span class="mandatory">*</span></label>
                           <input type="type" class="form-control" minlength="1" maxlength="50" required
-                             name="name" placeholder="Course name">
+                             name="name" placeholder="Qualification ">
                         </div>
                         <div class="col-xl-4 mb-1">
                           <br>
@@ -102,7 +94,7 @@
                 <div class="col-xl-6">
                   <div class="row">
                     <div class="card-header">
-                      <h4 class="card-title">All Courses</h4>
+                      <h4 class="card-title">Qualification List</h4>
                     </div>
                   </div>
                 </div>
@@ -121,11 +113,11 @@
                     <table class="table table-hover-animation mb-0 table-hover">
                       <thead>
                         <tr>
-                          <th>Course Name</th>
-                          <% if (!quaName) { %>
+                          <th>Qualification </th>
+                          <% if (view === false) { %>
                           <th>Status</th>
-                          <% } %>
-										      <% if (view === false) { %>
+                          
+										      
 										      <th>Action</th>
 										      <% } %>
                         </tr>
@@ -137,10 +129,11 @@
                               <td>
                                 <%= l.name %>
                               </td>
-                              <% if (!quaName) { %>
+                              
                               <% if (view === true) { %>
                                 <td><%= l.status ? 'True' : 'False' %></td>
-                                <%}else{%>
+                                <%}%>
+                                <% if (view === false) { %>
                                 <td>
                                   <div class="custom-control custom-switch custom-control-inline">
                                     <input type="checkbox"
@@ -150,9 +143,9 @@
                                   </label>
                                 </div>
                                 </td>
-                                <% } %>
-                                <% }%>
-                                <% if (view === false) { %>
+                               
+                               
+                                
                                 <td valign="middle">
                                   <% if (l.basic !== true) { %>
                                   <a href="/admin/qualification/edit/<%= l._id %>">

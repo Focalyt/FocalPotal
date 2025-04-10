@@ -7,6 +7,7 @@ const {
   State,
   SubIndustry,
   SubQualification,
+  QualificationCourse,
   Candidate,
   User,
   College,
@@ -65,6 +66,15 @@ router.route("/getsubInd").post(async (req, res) => {
 router.route("/getsubQual").post(async (req, res) => {
   try {
     const inds = await SubQualification.find(req.body);
+    res.send(inds);
+  } catch (err) {
+    req.flash("error", "Something went wrong!");
+  }
+});
+
+router.route("/qualificationCourses").post(async (req, res) => {
+  try {
+    const inds = await QualificationCourse.find(req.body);
     res.send(inds);
   } catch (err) {
     req.flash("error", "Something went wrong!");

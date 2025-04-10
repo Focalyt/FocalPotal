@@ -14,7 +14,8 @@ const {
   HiringStatus,
   Vacancy,
   AppliedJobs,
-  AppliedCourses
+  AppliedCourses,
+  QualificationCourse
 
 } = require('../../models');
 const moment = require('moment')

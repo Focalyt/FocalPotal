@@ -1,6 +1,7 @@
 const express = require("express");
-const { Qualification,QualificationCourse } = require("../../models");
+const { Qualification, QualificationCourse, SubQualification } = require("../../models");
 const { isAdmin } = require("../../../helpers");
+const qualificationCourse = require("../../models/qualificationCourse");
 const router = express.Router();
 router.use(isAdmin);
 
@@ -30,7 +31,7 @@ router
 				.limit(perPage);
 
 			const totalPages = Math.ceil(count / perPage);
-			return res.render(`${req.vPath}/admin/qualificationSetting`, {
+			return res.render(`${req.vPath}/admin/qualificationSetting/qualification`, {
 				quaName,
 				qualifications,
 				qual,
@@ -97,14 +98,14 @@ router
 				.skip(perPage * page - perPage)
 				.limit(perPage);
 			const totalPages = Math.ceil(count / perPage);
-			return res.render(`${req.vPath}/admin/qualificationSetting`, {
+			return res.render(`${req.vPath}/admin/qualificationSetting/qualification`, {
 				qualifications,
 				quaName,
 				perPage,
 				qual,
 				totalPages,
 				page,
-				menu:'qualification',
+				menu: 'qualification',
 				view
 			});
 		} catch (err) {
@@ -134,23 +135,31 @@ router
 		}
 	});
 router
-	.route("/addEducation")
+	.route("/addCourse")
 	.get(async (req, res) => {
 		try {
-			
+			let view = false
+			if (req.session.user.role === 10) {
+				view = true
+			}
+
 			const qualifications = await Qualification.find({
 				status: true,
 			}).select("name");
-			const educationData = await QualificationCourse.find()
-			
-			.populate("_qualification")  
-			.sort({ createdAt: -1 });
-			
-			
-			return res.render(`${req.vPath}/admin/qualificationSetting/Education`, {
+			const course = await QualificationCourse.find().populate("_qualification")
+				.sort({ createdAt: -1 });
+			const coursedata = ""
+
+
+
+
+			return res.render(`${req.vPath}/admin/qualificationSetting/course`, {
 				menu: 'addedu',
 				qualifications,
-				educationData
+				course,
+				coursedata,
+				view
+				
 			});
 
 		} catch (err) {
@@ -165,21 +174,21 @@ router
 			const body = {
 				_qualification, name
 			}
-			console.log("body",body)
-			  // Check if the name already exists
-			  const existing = await QualificationCourse.findOne({ name: name.trim() });
-			  if (existing) {
+			console.log("body", body)
+			// Check if the name already exists
+			const existing = await QualificationCourse.findOne({ name: name.trim() });
+			if (existing) {
 				req.flash('error', 'This Course already exists.');
 				return res.redirect('back');
-			  }
+			}
 
 			const addRecord = await QualificationCourse.create(body);
 
-			
+
 			// res.json({ status: true, message: "Record added!" });
-			req.flash('success','Record added!' );
+			req.flash('success', 'Record added!');
 			return res.redirect("back");
-			
+
 		} catch (err) {
 			console.log(err)
 			req.flash("error", err.message || "Something went wrong!");
@@ -188,4 +197,217 @@ router
 		}
 
 	})
+
+router
+	.route("/editCourse/:id")
+	.get(async (req, res) => {
+		try {
+			let view = false
+			if (req.session.user.role === 10) {
+				view = true
+			}
+			
+			const qualifications = await Qualification.find({
+				status: true,
+			}).select("name");
+			const populate = [{ path: "_qualification", select: "name" }]
+			const coursedata = await QualificationCourse.findById(req.params.id)
+				.populate(populate)
+			
+
+				const course = await QualificationCourse.find().populate("_qualification")
+				.sort({ createdAt: -1 });
+			
+
+			
+
+			return res.render(`${req.vPath}/admin/qualificationSetting/course`, {
+				menu: 'addedu',
+				qualifications,
+				course,
+				coursedata,
+				view
+			});
+
+		} catch (err) {
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+
+	})
+	.post(async (req,res) =>{
+
+		try{
+			const { name, _qualification } = req.body;
+			if (!name && !_qualification) {
+				throw req.ykError("Filleds are missing!");
+			}
+			const course = await QualificationCourse.findOneAndUpdate({ _id: req.params.id }, {
+				name, _qualification
+
+			});
+
+
+			req.flash("success", "Course updated successfully!");
+			return res.redirect("/admin/qualification/addCourse");
+
+		}
+		catch (err) {
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+	})
+
+router
+	.route("/course/addstream")
+	.get(async (req, res) => {
+		try {
+			let view = false
+			if (req.session.user.role === 10) {
+				view = true
+			}
+			const perPage = 5;
+			const p = parseInt(req.query.page, 10);
+			const page = p || 1;
+			const subName = "";
+			const subQua = "";
+			const qualifications = await Qualification.find({
+				status: true,
+			}).select("name");
+			const populate = [{ path: "_qualification", select: "name" },
+			{ path: "_course", select: "name" }
+			];
+			const count = await SubQualification.countDocuments({ status: true });
+			const subQual = await SubQualification.find()
+				.populate(populate)
+				.select("name status")
+				.sort({ createdAt: -1 })
+				.skip(perPage * page - perPage)
+				.limit(perPage);
+			const qualificationCourses = await QualificationCourse.find({}).populate("_qualification");
+			console.log('qualificationCourses', qualificationCourses)
+
+			const totalPages = Math.ceil(count / perPage);
+			return res.render(`${req.vPath}/admin/qualificationSetting/stream`, {
+				subName,
+				subQua,
+				subQual,
+				perPage,
+				totalPages,
+				page,
+				qualifications,
+				qualificationCourses,
+				menu: 'subQualification',
+				view
+			});
+		} catch (err) {
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+	})
+	.post(async (req, res) => {
+		try {
+			if (req.body.subQuali) {
+				const subQ = await SubQualification.findOne({ _id: req.body.subQuali, status: true });
+				if (subQ) throw req.ykError("Stream already exist!");
+				await SubQualification.findOneAndUpdate({ _id: req.body.subQuali }, {
+					status: true
+				});
+				req.flash("success", "Stream added successfully!");
+				return res.redirect("/admin/qualification/course/addstream");
+			} else {
+				const { name, _qualification, _course } = req.body;
+				const subQ = await SubQualification.findOne({ name: req.body.name });
+				if (subQ) throw req.ykError("Stream already exist!");
+				const sub = await SubQualification.create({ name, _qualification, _course });
+				if (!sub) {
+					throw req.ykError("SubQualification not created!");
+				}
+				req.flash("success", "Stream added successfully!");
+				return res.redirect("/admin/qualification/course/addstream");
+			}
+		} catch (err) {
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+	});
+
+router
+	.route("/course/editstream/:id")
+	.get(async (req, res) => {
+
+		try {
+			console.log('api hitting')
+			let view = false
+			if (req.session.user.role === 10) {
+				view = true
+			}
+			const perPage = 5;
+			const p = parseInt(req.query.page, 10);
+			const page = p || 1;
+			const subName = "";
+
+
+
+			const qualifications = await Qualification.find({
+				status: true,
+			}).select("name");
+			const populate = [{ path: "_qualification", select: "name" },
+			{ path: "_course", select: "name" }
+			];
+			const subQua = await SubQualification.findById(
+				req.params.id
+			)
+				.populate(populate);
+			console.log('subQua', subQua)
+			const count = await SubQualification.countDocuments({ status: true });
+			const subQual = await SubQualification.find({ status: true })
+				.populate(populate)
+				.select("name status")
+				.sort({ createdAt: -1 })
+				.skip(perPage * page - perPage)
+				.limit(perPage);
+
+			const qualificationCourses = await QualificationCourse.find({}).populate("_qualification");
+
+
+			const totalPages = Math.ceil(count / perPage);
+			return res.render(`${req.vPath}/admin/qualificationSetting/stream`, {
+				subName,
+				subQua,
+				subQual,
+				perPage,
+				totalPages,
+				page,
+				qualifications,
+				qualificationCourses,
+				menu: 'subQualification',
+				view
+			});
+		} catch (err) {
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+	})
+	.post(async (req, res) => {
+		try {
+
+			const { name, _qualification, _course } = req.body;
+			if (!name && !_qualification && !_course) {
+				throw req.ykError("Filleds are missing!");
+			}
+			const subQ = await SubQualification.findOneAndUpdate({ _id: req.params.id }, {
+				name, _qualification, _course
+
+			});
+
+
+			req.flash("success", "Stream updated successfully!");
+			return res.redirect("/admin/qualification/course/addstream");
+
+		} catch (err) {
+			req.flash("error", err.message || "Something went wrong!");
+			return res.redirect("back");
+		}
+	});
 module.exports = router;

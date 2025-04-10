@@ -303,15 +303,23 @@
                   <li class="<% if(menu==='subIndustry') {%>active<%}%>"><a href="/admin/subIndustry"><i
                         class="feather icon-list"></i><span class="menu-item" data-i18n="Analytics">Sub
                         Industries</span></a></li>
+                        <li class="nav-item"><a href="#"><i class="fa-solid fa-gear"></i><span class="menu-title"
+                              data-i18n="Todo">Education</span></a>
+                              <ul class="menu-content">
                   <li class="<% if(menu==='qualification') {%>active<%}%>"><a href="/admin/qualification"><i
-                        class="feather icon-award"></i><span class="menu-item" data-i18n="Analytics">Education</span></a>
+                        class="feather icon-award"></i><span class="menu-item" data-i18n="Analytics">Qualification</span></a>
                   </li>
-                  <li class="<% if(menu==='addedu') {%>active<%}%>"><a href="/admin/qualification/addEducation"><i
-                        class="feather icon-award"></i><span class="menu-item" data-i18n="Analytics">Courses</span></a>
+                  <li class="<% if(menu==='addedu') {%>active<%}%>"><a href="/admin/qualification/addCourse"><i
+                        class="feather icon-award"></i><span class="menu-item" data-i18n="Analytics">Course</span></a>
                   </li>
-                  <li class="<% if(menu==='subQualification') {%>active<%}%>"><a href="/admin/subQualification"><i
+                  <li class="<% if(menu==='subQualification') {%>active<%}%>"><a href="/admin/qualification/course/addstream"><i
                         class="feather icon-bookmark"></i><span class="menu-item"
                         data-i18n="Analytics">Stream</span></a></li>
+                  <!-- <li class="<% if(menu==='subQualification') {%>active<%}%>"><a href="/admin/subQualification"><i
+                        class="feather icon-bookmark"></i><span class="menu-item"
+                        data-i18n="Analytics">Stream</span></a></li> -->
+                  </ul>
+                        </li>
                   <li class="<% if(menu==='center') {%>active<%}%>"><a href="/admin/center"><i
                         class="feather icon-bookmark"></i><span class="menu-item"
                         data-i18n="Analytics">Centers</span></a></li>

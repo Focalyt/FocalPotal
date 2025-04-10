@@ -3,13 +3,19 @@
     <div class="content-header-left col-md-9 col-12 mb-2">
       <div class="row breadcrumbs-top">
         <div class="col-12">
-          <h3 class="content-header-title float-left mb-0">Education</h3>
+          <h3 class="content-header-title float-left mb-0">Course</h3>
           <div class="breadcrumb-wrapper col-12">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/admin">Home</a>
               </li>
-              <li class="breadcrumb-item active">Add Education
+              <% if (coursedata) { %>
+              <li class="breadcrumb-item active">Update Course
               </li>
+              <% } else { %>
+                <li class="breadcrumb-item active">Add Course
+                </li>
+
+              <% } %>
             </ol>
           </div>
         </div>
@@ -23,11 +29,11 @@
           <div class="col-6 equal-height-2">
             <div class="card">
               <div class="card-header border border-top-0 border-left-0 border-right-0">
-                
-                  <h4 class="card-title pb-1">Update Education</h4>
-                 
-                    <h4 class="card-title pb-1">Add Education</h4>
-                  
+                <% if (coursedata) { %>
+                  <h4 class="card-title pb-1">Update Course</h4>
+                  <% } else { %>
+                    <h4 class="card-title pb-1">Add Course</h4>
+                    <% } %>
               </div>
               <div class="card-content">
                 <div class="card-body">
@@ -35,6 +41,7 @@
                     <div class="row">
                      
                          <!-- else part  -->
+                         <% if (!course) { %>
                           <div class="col-xl-4 mb-1">
                             <label>Select Education
                               <span class="asterisk">*</span></label>
@@ -57,15 +64,56 @@
 
                             
                         </div>
-                          
+                        <% }else{ %> 
+
+                          <div class="col-xl-4 mb-1">
+                            <label>Select Education
+                              <span class="asterisk">*</span></label>
+                              <select style="cursor: pointer;" class="form-control"
+                              name="_qualification" required>
+                              <option>Select Option</option>
+                              <% qualifications.forEach((s)=> { %> <% if (coursedata &&
+                                coursedata. _qualification._id.toString()===s._id.toString()) { %>
+                                <option value="<%= s._id %>" class="text-capitalize"
+                                  selected disabled>
+                                  <%= s.name %>
+                                </option>
+                                <% } else { %>
+                                  <option value="<%= s._id %>"
+                                    class="text-capitalize">
+                                    <%= s.name %>
+                                  </option>
+                                  <% } %>
+                                    <% }) %>
+
+                              
+                               
+                            </select>
+                        </div>
+                        <div class="col-xl-4 mb-1">
+                          <label> Course</label>
+                          <input value="<%= coursedata.name %>" type="type" class="form-control" minlength="1" maxlength="50" required
+                             name="name" placeholder="Course">
+
+                            
+                        </div>
+                          <%}%>
                         <div class="col-xl-4 mb-1">
                           <br>
+                          <% if (coursedata) { %>
+                            <button type="submit"
+                              class="btn btn-success font-small-3 <% if(view==true ) {%> disabled <% } %>"
+                              <% if(view==true ) {%> disabled <% } %>>
+                                Update
+                            </button>
+                            <% } else { %>
+                              <button type="submit" 
+                                class="btn btn-success font-small-3 <% if(view==true ) {%> disabled <% } %>"
+                                <% if(view==true ) {%> disabled <% } %>>
+                                  Add
+                              </button>
+                              <% } %>
                          
-                            <!-- <button type="submit" class="btn btn-success font-small-3 "
-                              >Update</button> -->
-                           
-                              <button onclick="uodateQualificationCourse()" type="submit" class="btn btn-success font-small-3"
-                                >Add</button>
                              
                         </div>
                     </div>
@@ -111,15 +159,15 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <% if (educationData.length > 0) { %>
-                          <% educationData.forEach((edu, index) => { %>
+                        <% if (course.length > 0) { %>
+                          <% course.forEach((edu, index) => { %>
                             <tr>
                               <td><%= edu._qualification?.name || 'N/A' %></td>
                         <td><%= edu.name %></td>
                               <td>
                                 <div class="custom-control custom-switch custom-control-inline">
                                   <input type="checkbox"
-                                    onclick="myOnOffFunc('<%= edu._id %>', '<%= edu.status %>', 'Education');"
+                                    onclick="myOnOffFunc('<%= edu._id %>', '<%= edu.status %>', 'QualificationCourse');"
                                     class="custom-control-input" 
                                     id="customSwitch<%= index %>" 
                                     <%= edu.status ? 'checked' : '' %>>
@@ -128,7 +176,7 @@
                               </td>
                         
                               <td valign="middle">
-                                <a href="/admin/qualification/edit/<%= edu._id %>">
+                                <a href="/admin/qualification/editCourse/<%= edu._id %>">
                                   <i class="feather icon-edit fa-lg primary"></i>
                                 </a>
                               </td>
@@ -153,9 +201,7 @@
       </section>
       <% include ../partials/footer %>
         <script>
-          function uodateQualificationCourse(){
-
-          };
+         
           function myOnOffFunc(id, status, model) { // eslint-disable-line
             let myStatus = true;
             if (status === true || status === 'true') {

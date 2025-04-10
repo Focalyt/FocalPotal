@@ -1,5 +1,5 @@
 const express = require("express");
-const { Qualification, SubQualification } = require("../../models");
+const { Qualification, SubQualification , QualificationCourse } = require("../../models");
 const { isAdmin } = require("../../../helpers");
 const router = express.Router();
 router.use(isAdmin);
@@ -28,6 +28,9 @@ router
 				.sort({ createdAt: -1 })
 				.skip(perPage * page - perPage)
 				.limit(perPage);
+				const qualificationCourses = await QualificationCourse.find({}).populate("_qualification");
+				  console.log('qualificationCourses', qualificationCourses)
+
 			const totalPages = Math.ceil(count / perPage);
 			return res.render(`${req.vPath}/admin/subQualificationSetting`, {
 				subName,
@@ -37,6 +40,7 @@ router
 				totalPages,
 				page,
 				qualifications,
+				qualificationCourses,
 				menu:'subQualification',
 				view
 			});
@@ -56,10 +60,10 @@ router
 				req.flash("success", "Stream added successfully!");
 				return res.redirect("/admin/subQualification");
 			}else{
-				const { name, _qualification ,subStream } = req.body;
+				const { name, _qualification ,subStream , _course } = req.body;
 				const subQ = await SubQualification.findOne({ name:req.body.name});
 				if (subQ) throw req.ykError("Stream already exist!");
-				const sub = await SubQualification.create({ name, _qualification , subStream });
+				const sub = await SubQualification.create({ name, _qualification , subStream ,course });
 				if(!sub) {
 					throw req.ykError("SubQualification not created!");
 				}

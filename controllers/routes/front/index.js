@@ -2,6 +2,8 @@ const express = require("express");
 const AWS = require("aws-sdk");
 const uuid = require("uuid/v1");
 const moment = require("moment");
+const mongoose = require("mongoose");
+const path = require("path");
 // const pdf = require('pdf-parse');
 // const fs = require('fs');
 // const multer = require('multer');
@@ -21,6 +23,7 @@ const {
 	State,
 	City,
 	Qualification,
+	QualificationCourse,
 	Industry,
 	Courses,
 	CourseSectors,
@@ -63,10 +66,10 @@ router.get("/", async (req, res) => {
 	try {
 		const data = req.query
 		const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  console.log(fullUrl);
-  
-  // Modify script to run after DOM is loaded and escape quotes properly
-  const storageScript = `
+		console.log(fullUrl);
+
+		// Modify script to run after DOM is loaded and escape quotes properly
+		const storageScript = `
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
@@ -127,14 +130,14 @@ router.get("/", async (req, res) => {
 		if (Salary && isNaN(Salary)) {
 			Salary = ''
 		}
-		let filter = { status: true, _company: { $ne: null }, validity: { $gte: moment().utcOffset('+05:30') },verified:true }
+		let filter = { status: true, _company: { $ne: null }, validity: { $gte: moment().utcOffset('+05:30') }, verified: true }
 		if (qualification) {
 			filter._qualification = qualification
 		}
 		if (industry) {
 			filter._industry = industry
 		}
-		if (jobType) {  	
+		if (jobType) {
 			filter.jobType = jobType
 		}
 		if (experience) {
@@ -205,16 +208,16 @@ router.get("/labs", (req, res) => {
 	});
 });
 router.get("/community", async (req, res) => {
-	let filter = { status: true}
-     	// const countPosts = await Post.find(filter).countDocuments()
-		// const perPage = 18;
-		// const p = parseInt(req.query.page);
-		// const page = p || 1;
-		// const totalPages = Math.ceil(countPosts / perPage);
-		let posts = await Post.find(filter).sort({  createdAt: -1 });
-		rePath =res.render(`${req.vPath}/front/blog`, {
+	let filter = { status: true }
+	// const countPosts = await Post.find(filter).countDocuments()
+	// const perPage = 18;
+	// const p = parseInt(req.query.page);
+	// const page = p || 1;
+	// const totalPages = Math.ceil(countPosts / perPage);
+	let posts = await Post.find(filter).sort({ createdAt: -1 });
+	rePath = res.render(`${req.vPath}/front/blog`, {
 		posts
-		
+
 	});
 });
 
@@ -232,77 +235,77 @@ router.get("/userAgreement", (req, res) => {
 	});
 });
 router.get("/joblisting", async (req, res) => {
-	const data = req.query;	
-		let { experience, sector, salary } = req.query	
+	const data = req.query;
+	let { experience, sector, salary } = req.query
 
-		if (experience && isNaN(experience)) {
-			experience = ''
-		}
+	if (experience && isNaN(experience)) {
+		experience = ''
+	}
 
-		if (salary && isNaN(salary)) {
-			salary = ''
-		}
-		if (sector && isNaN(sector)) {
-			sector = ''
-		}
+	if (salary && isNaN(salary)) {
+		salary = ''
+	}
+	if (sector && isNaN(sector)) {
+		sector = ''
+	}
 
-		let filter = { status: true, _company: { $ne: null }, validity: { $gte: moment().utcOffset('+05:30') },verified:true }
-	   
-		if (salary) {
-			filter["$or"] = [{ isFixed: true, amount: { $gte: salary } }, { isFixed: false, max: { $gte: salary } }]
-		}
+	let filter = { status: true, _company: { $ne: null }, validity: { $gte: moment().utcOffset('+05:30') }, verified: true }
 
-		if (experience) {
-			experience == "0"
-				? (filter["$or"] = [
-					{ experience: { $lte: experience } },
-				])
-				: (filter["experience"] = { $lte: experience });
-		}
-		
-		let populate = [
-			{
-				path: '_company',
-				select: "name logo stateId cityId"
-			},
-			{
-				path: "_industry",
-				select: "name",
-			},
-			{
-				path: "_jobCategory",
-				select: "name",
-			},
-			{
-				path:"_courses",
-				select: "name"	
-			},
-			{
-				path: "_qualification",
-				select: ["name"],
-			},
-			{
-				path: "state"
-			},
-			{
-				path: "city",
-				select: "name",
-			}
-		]
-		
-		const countJobs = await Vacancy.find(filter).countDocuments()
-		const perPage = 9;
-		const p = parseInt(req.query.page);
-		const page = p || 1;
-		const totalPages = Math.ceil(countJobs / perPage);
+	if (salary) {
+		filter["$or"] = [{ isFixed: true, amount: { $gte: salary } }, { isFixed: false, max: { $gte: salary } }]
+	}
 
-		const sectors = await CourseSectors.find({})
-				.select("name image status")
-				.sort({ createdAt: -1 })
-				.skip(perPage * page - perPage)
-				.limit(perPage);
-                console.log(sectors, "sectors")
-		let recentJobs = await Vacancy.find(filter).populate(populate).sort({ sequence: 1, createdAt: -1 }).skip(perPage * page - perPage).limit(perPage)
+	if (experience) {
+		experience == "0"
+			? (filter["$or"] = [
+				{ experience: { $lte: experience } },
+			])
+			: (filter["experience"] = { $lte: experience });
+	}
+
+	let populate = [
+		{
+			path: '_company',
+			select: "name logo stateId cityId"
+		},
+		{
+			path: "_industry",
+			select: "name",
+		},
+		{
+			path: "_jobCategory",
+			select: "name",
+		},
+		{
+			path: "_courses",
+			select: "name"
+		},
+		{
+			path: "_qualification",
+			select: ["name"],
+		},
+		{
+			path: "state"
+		},
+		{
+			path: "city",
+			select: "name",
+		}
+	]
+
+	const countJobs = await Vacancy.find(filter).countDocuments()
+	const perPage = 9;
+	const p = parseInt(req.query.page);
+	const page = p || 1;
+	const totalPages = Math.ceil(countJobs / perPage);
+
+	const sectors = await CourseSectors.find({})
+		.select("name image status")
+		.sort({ createdAt: -1 })
+		.skip(perPage * page - perPage)
+		.limit(perPage);
+	console.log(sectors, "sectors")
+	let recentJobs = await Vacancy.find(filter).populate(populate).sort({ sequence: 1, createdAt: -1 }).skip(perPage * page - perPage).limit(perPage)
 	rePath = res.render(`${req.vPath}/front/joblisting`, {
 		recentJobs,
 		totalPages,
@@ -315,10 +318,10 @@ router.get("/joblisting", async (req, res) => {
 router.get("/about_us", async (req, res) => {
 	try {
 		const seniorManagement = await Team.find({ status: true, position: "Senior Management" }).sort({ sequence: 1 });
-    const management = await Team.find({ status: true, position: "Management" }).sort({ sequence: 1 });
-    const staff = await Team.find({ status: true, position: "Staff" }).sort({ sequence: 1 });
+		const management = await Team.find({ status: true, position: "Management" }).sort({ sequence: 1 });
+		const staff = await Team.find({ status: true, position: "Staff" }).sort({ sequence: 1 });
 
-		
+
 
 
 		// **req.vPath undefined है या नहीं इसकी जाँच करें**
@@ -346,29 +349,29 @@ router.get("/about_us", async (req, res) => {
 	}
 });
 router.get("/futureTechnologyLabs", (req, res) => {
-    
+
 	rePath = res.render(`${req.vPath}/front/labs.ejs`, {
 	});
 });
 router.get("/jobsearch", (req, res) => {
-    
+
 	rePath = res.render(`${req.vPath}/front/jobsearch`, {
 	});
 });
 router.post("/jobsearch", (req, res) => {
-    const {body}=req.body;
-	
+	const { body } = req.body;
+
 	rePath = res.render(`${req.vPath}/front/jobsearch`, {
 	});
 });
 router.get("/courses", async (req, res) => {
-	let filter = { status: true}
-	
+	let filter = { status: true }
+
 	const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  
-  
-  // Modify script to run after DOM is loaded and escape quotes properly
-  const storageScript = `
+
+
+	// Modify script to run after DOM is loaded and escape quotes properly
+	const storageScript = `
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
@@ -408,73 +411,73 @@ router.get("/courses", async (req, res) => {
       });
     </script>
   `;
-     	const countJobs = await Courses.find(filter).countDocuments()
-		 const contact = await Contact.find({ status: true, isDeleted: false }).sort({ createdAt: 1 })
-		const perPage = 18;
-		const p = parseInt(req.query.page);
-		const page = p || 1;
-		const totalPages = Math.ceil(countJobs / perPage);
-		let courses = await Courses.aggregate([
-			{ $match: filter },
-			{ $unwind: "$sectors" },
-			{
-			  $lookup: {
+	const countJobs = await Courses.find(filter).countDocuments()
+	const contact = await Contact.find({ status: true, isDeleted: false }).sort({ createdAt: 1 })
+	const perPage = 18;
+	const p = parseInt(req.query.page);
+	const page = p || 1;
+	const totalPages = Math.ceil(countJobs / perPage);
+	let courses = await Courses.aggregate([
+		{ $match: filter },
+		{ $unwind: "$sectors" },
+		{
+			$lookup: {
 				from: "coursesectors",
 				localField: "sectors",
 				foreignField: "_id",
 				as: "sectorDetails"
-			  }
-			},
-			{
-			  $unwind: "$sectorDetails"
-			},
-			{
-			  $group: {
+			}
+		},
+		{
+			$unwind: "$sectorDetails"
+		},
+		{
+			$group: {
 				_id: "$_id",
 				doc: { $first: "$$ROOT" },  // Keep the entire original document
 				sectors: { $push: "$sectors" },
 				sectorNames: { $push: "$sectorDetails.name" }
-			  }
-			},
-			{
-			  $addFields: {
+			}
+		},
+		{
+			$addFields: {
 				"doc.sectors": "$sectors",
 				"doc.sectorNames": "$sectorNames"
-			  }
-			},
-			{
-			  $replaceRoot: { newRoot: "$doc" }
-			},
-			{ $sort: { createdAt: -1 } },
-			{ $skip: perPage * (page - 1) },
-			{ $limit: perPage }
-		  ]);
+			}
+		},
+		{
+			$replaceRoot: { newRoot: "$doc" }
+		},
+		{ $sort: { createdAt: -1 } },
+		{ $skip: perPage * (page - 1) },
+		{ $limit: perPage }
+	]);
 
-    // Extract unique sectors from the courses
-    const uniqueSectors = await Courses.aggregate([
-        { $match: filter },
-        { $unwind: "$sectors" },
-        {
-            $lookup: {
-                from: "coursesectors",
-                localField: "sectors",
-                foreignField: "_id",
-                as: "sectorDetails"
-            }
-        },
-        { $unwind: "$sectorDetails" },
-        {
-            $group: {
-                _id: "$sectorDetails._id",
-                name: { $first: "$sectorDetails.name" }
-            }
-        },
-        { $sort: { name: 1 } }
-    ]);
-		  
-		 
-		
-		rePath = res.render(`${req.vPath}/front/courses`, {
+	// Extract unique sectors from the courses
+	const uniqueSectors = await Courses.aggregate([
+		{ $match: filter },
+		{ $unwind: "$sectors" },
+		{
+			$lookup: {
+				from: "coursesectors",
+				localField: "sectors",
+				foreignField: "_id",
+				as: "sectorDetails"
+			}
+		},
+		{ $unwind: "$sectorDetails" },
+		{
+			$group: {
+				_id: "$sectorDetails._id",
+				name: { $first: "$sectorDetails.name" }
+			}
+		},
+		{ $sort: { name: 1 } }
+	]);
+
+
+
+	rePath = res.render(`${req.vPath}/front/courses`, {
 		courses,
 		storageScript: storageScript,
 		phoneToCall: contact[0]?.mobile,
@@ -483,12 +486,12 @@ router.get("/courses", async (req, res) => {
 		page
 	});
 });
-router.get("/coursedetails/:id", async(req, res) => {
-	const {id}=req.params
-    let course=await Courses.findOne({_id:id})
+router.get("/coursedetails/:id", async (req, res) => {
+	const { id } = req.params
+	let course = await Courses.findOne({ _id: id })
 	const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 	console.log(fullUrl);
-	
+
 	// Modify script to run after DOM is loaded and escape quotes properly
 	const storageScript = `
 	  <script>
@@ -552,74 +555,74 @@ router.get("/coursedetailmore", (req, res) => {
 	rePath = res.render(`${req.vPath}/front/coursedetailmore`, {
 	});
 });
-router.get("/jobdetailsmore/:jobId", async(req, res) => {
-	try{
-		let jobId = req.params.jobId 
-		
-			if (!jobId) {
-				throw req.ykError("Invalid Job Id");
-			}
-			const populate = [
-				{
-					path: '_company',
-					select: "name description logo stateId cityId mediaGallery mediaGalaryVideo "
-				},
-				{
-					path: "_industry",
-					select: "name",
-				},
-				{
-					path: "_jobCategory",
-					select: "name",
-				},
-				{
-					path: "_qualification",
-					select: "name",
-				},
-				{
-					path: "state",
-					select: "name",
-				},
-				{
-					path: "city",
-					select: "name",
-				},
-				{
-					path: "_techSkills",
-					select: "name",
-				},
-				{
-					path: "_nonTechSkills",
-					select: "name",
-				},
-	
-			];
-			const job = await Vacancy.findOne({ _id: jobId }).populate(populate)
-			let state = '';
-			let city = '';
-			if (job._company?.stateId && job._company?.cityId) {
-				state = await State.findOne({ _id: job._company.stateId, status: true })
-				city = await City.findOne({ _id: job._company.cityId, status: true, stateId: job._company.stateId })
-			}
-			const recentJobs = await Vacancy.find({ status: true, _id: { $ne: jobId } }).populate([
-				{
-					path: '_company',
-					select: "name logo"
-				},
-				{
-					path: "city",
-					select: "name",
-				}]).sort({ createdAt: -1 }).limit(5)
+router.get("/jobdetailsmore/:jobId", async (req, res) => {
+	try {
+		let jobId = req.params.jobId
 
-		const courses = await Courses.find({ status: true}).sort({ createdAt: -1 }).limit(10)
+		if (!jobId) {
+			throw req.ykError("Invalid Job Id");
+		}
+		const populate = [
+			{
+				path: '_company',
+				select: "name description logo stateId cityId mediaGallery mediaGalaryVideo "
+			},
+			{
+				path: "_industry",
+				select: "name",
+			},
+			{
+				path: "_jobCategory",
+				select: "name",
+			},
+			{
+				path: "_qualification",
+				select: "name",
+			},
+			{
+				path: "state",
+				select: "name",
+			},
+			{
+				path: "city",
+				select: "name",
+			},
+			{
+				path: "_techSkills",
+				select: "name",
+			},
+			{
+				path: "_nonTechSkills",
+				select: "name",
+			},
+
+		];
+		const job = await Vacancy.findOne({ _id: jobId }).populate(populate)
+		let state = '';
+		let city = '';
+		if (job._company?.stateId && job._company?.cityId) {
+			state = await State.findOne({ _id: job._company.stateId, status: true })
+			city = await City.findOne({ _id: job._company.cityId, status: true, stateId: job._company.stateId })
+		}
+		const recentJobs = await Vacancy.find({ status: true, _id: { $ne: jobId } }).populate([
+			{
+				path: '_company',
+				select: "name logo"
+			},
+			{
+				path: "city",
+				select: "name",
+			}]).sort({ createdAt: -1 }).limit(5)
+
+		const courses = await Courses.find({ status: true }).sort({ createdAt: -1 }).limit(10)
 		const bucketUrl = process.env.MIPIE_BUCKET_URL;
-		
+
 		rePath = res.render(`${req.vPath}/front/jobdetailmore`, {
 			job, recentJobs, state, city, courses, bucketUrl
-			
+
 		});
-	}catch(err){
-		console.log(err,'err>>>>>>>>>>>>')
+	} catch (err) {
+		console.log(err, 'err>>>>>>>>>>>>')
 	}
 });
 router.get("/contact", (req, res) => {
@@ -878,11 +881,11 @@ router
 
 			if (user) {
 				if (user.role === 10 || user.role === 11 || user.role === 0) {
-					let userData = { role: user.role, name: user.name, _id: user._id, email: user.email, access:user.access}
+					let userData = { role: user.role, name: user.name, _id: user._id, email: user.email, access: user.access }
 					req.session.user = userData;
 					return res.redirect("/admin");
 				}
-				
+
 			}
 		} catch (err) {
 			req.flash("error", err.message || "Something went wrong!");
@@ -902,7 +905,9 @@ router.get("/admin/logout", async (req, res) => {
 
 router.post("/admin/changestatus", async (req, res) => {
 	try {
-		const Model = require(`../../models/` + req.body.model); // eslint-disable-line
+		const modelName = req.body.model;
+		const Model = mongoose.models[modelName] || require(`../../models/${modelName}`);
+		// eslint-disable-line
 		const updata = { $set: { status: req.body.status } };
 		const data = await Model.findByIdAndUpdate(req.body.id, updata);
 		if (req.body.model == "company" || req.body.model == "college") {
