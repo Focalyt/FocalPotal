@@ -68,3 +68,4 @@ views/front/jobdetailmore copy.ejs
 /views/admin/subQualificationSetting/index copy.ejs
 /views/admin/subQualificationSetting/index.ejs
 /controllers/routes/admin/subQualification copy.js
+/views/app/corporate/register copy.ejs
