@@ -3885,7 +3885,7 @@ router.route('/reqDocs/:courseId')
       console.log("Course not found or no docs required");
     };
 
-    console.log(mergedDocs)
+    console.log('mergedDocs',mergedDocs)
       
       res.render(`${req.vPath}/app/candidate/requiredDocuments`, {
         menu: 'appliedCourse',

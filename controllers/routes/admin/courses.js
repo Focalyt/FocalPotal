@@ -617,7 +617,7 @@ router.route("/:courseId/:candidateId/docsview")
 
 					return {
 						_id: docObj._id,
-						Name: docObj.docName || 'Document',
+						Name: docObj.Name || 'Document',
 						description: docObj.description || '',
 						uploads: matchingUploads || []
 					};
@@ -654,17 +654,9 @@ router.route("/:courseId/:candidateId/docsview")
 				};
 			};
 
-
-
-
 			// ✅ Fix Applied: Use candidate.docsForCourses
 			const courseWiseDocumentCounts = countDocsByCourseId(candidate.docsForCourses || [], courseId);
-
-
-			console.log(courseWiseDocumentCounts);
-
-
-
+		
 
 			return res.render(`${req.vPath}/admin/course/listview`, {
 				menu: 'listview',

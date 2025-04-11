@@ -62,6 +62,21 @@
                                                             </div>
                                                         
                                                         <% } %> 
+                                                        <%if (a.uploads.length > 0 && a.uploads[a.uploads.length - 1].status === 'Verified') {%>
+                                                            <!-- Optional: show a different message or no button at all when documents exist -->
+                                                            <span class="text-success">Congratulation your <%- a.Name%> is verified successfully, please check the status by click on the check status button</span>
+                                                            <div class="d-flex flex-wrap align-items-center justify-content-end">
+    
+                                                                <!-- <img src="/images/filtern.png"
+                                                                    class="btn btn-link collapsed py-0 mx-0" data-toggle="collapse"
+                                                                    data-target="#collapseOne" aria-expanded="true"
+                                                                    aria-controls="collapseOne" id="filter-docs"> -->
+                                                                <button 
+                                                                    class="btn btn-link collapsed py-0 mx-0 filter-docs"
+                                                                    data-doc-id="<%- a._id%>" alt="Filter">
+                                                                    Check Status</button>
+                                                            </div>
+                                                        <% } %>
                                                     
                                                       <%if (a.uploads.length > 0 && a.uploads[a.uploads.length - 1].status === 'Pending') {%>
                                                         <!-- Optional: show a different message or no button at all when documents exist -->
