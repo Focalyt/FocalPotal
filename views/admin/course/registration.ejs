@@ -91,8 +91,8 @@
                                             <th class="one column wide" width="7%"  style="cursor: pointer;" >Reg Status <i  class="" value="1"></i></th>
                                             <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('sector')">Sector <i class="" value="1"></i></th>
                                             <th class="one column wide" width="10%"  style="cursor: pointer;">Course Fee Type</th>
-                                            <th class="one column wide" width="7%"  style="cursor: pointer;">From</th>
-                                            <th class="one column wide" width="7%"  style="cursor: pointer;">TO</th>
+                                            <th class="one column wide" width="10%"  style="cursor: pointer;">Registered By</th>
+                                            
                                             <% if (view === false) { %>
                                             <th class="one column wide" width="10%">Action</th>
                                             <% } %>
@@ -113,7 +113,7 @@
                                                 <%= l.mobile ? l.mobile : "N/A" %>
                                             </td>
                                             <td class="text-capitalize">
-                                                <div class="circular-progress-container" data-percent="<%= l.docProgress.percent %>">
+                                                <!-- <div class="circular-progress-container" data-percent="<%= l.docProgress.percent %>">
                                                     <% if (l.docProgress.totalRequired && l.docProgress.totalRequired > 0) { %>
                                                       <svg width="40" height="40">
                                                         <circle class="circle-bg" cx="20" cy="20" r="16"></circle>
@@ -123,7 +123,20 @@
                                                     <div class="progress-text">
                                                       <%= l.docProgress.totalRequired && l.docProgress.totalRequired > 0 ? l.docProgress.percent + '%' : 'NDR' %>
                                                     </div>
-                                                  </div>
+                                                  </div> -->
+                                                  <% if (l.docProgress.totalRequired && l.docProgress.totalRequired > 0) { %>
+                                                  <div class="circular-progress-container" data-percent=<%= l.docProgress.percent %>>
+                                                    <svg width="40" height="40">
+                                                        <circle class="circle-bg" cx="20" cy="20" r="16">
+                                                        </circle>
+                                                        <circle class="circle-progress" cx="20" cy="20"
+                                                            r="16"></circle>
+                                                    </svg>
+                                                    <div class="progress-text"></div>
+                                                </div>
+                                      <% } else { %>
+                                        NDR
+                                      <% } %>
                                                   
                                             </td>
                                             <td class="text-capitalize">
@@ -164,8 +177,7 @@
                                                 <%= l.sector ? l.sector : "N/A" %>
                                             </td>
                                             <td class="text-capitalize">Free/paid</td>
-                                            <td class="text-capitalize"></td>
-                                            <td class="text-capitalize"></td>
+                                            <td class="text-capitalize"><%= l.registeredByName ? l.registeredByName : "N/A" %></td>
                                             <% if (view === false) { %>
                                             <td class="text-capitalize">
                                                 <a class="btn <% if (l.courseStatus == 0) { %>btn-danger<% } else { %>btn-success<% } %> waves-effect waves-light text-white d-inline btn-sm" onclick="handleActionClick('<%= l._id %>', '<%= l.remarks %>', '<%= l.assignDate %>', '<%= l.url %>')">
@@ -333,19 +345,21 @@
 </style>
 <script>
     document.querySelectorAll('.circular-progress-container').forEach(container => {
-      const percent = container.getAttribute('data-percent');
-      const circle = container.querySelector('circle.circle-progress');
-      const radius = 16;
-      const circumference = 2 * Math.PI * radius;
-      const offset = circumference - (percent / 100) * circumference;
-      
-      circle.style.strokeDasharray = circumference;
-      circle.style.strokeDashoffset = offset;
-      
-      // Set text also if needed
-      container.querySelector('.progress-text').innerText = percent + '%';
+        const percent = container.getAttribute('data-percent');
+        console.log(percent, "percent")
+        const circle = container.querySelector('circle.circle-progress');
+        console.log(circle, "circle")
+        const radius = 16;
+        const circumference = 2 * Math.PI * radius;
+        const offset = circumference - (percent / 100) * circumference;
+
+        circle.style.strokeDasharray = circumference;
+        circle.style.strokeDashoffset = offset;
+
+        // Set text also if needed
+        container.querySelector('.progress-text').innerText = percent + '%';
     });
-  </script>
+       </script>
   <script>
     function statusUpdate (appliedId){
 
