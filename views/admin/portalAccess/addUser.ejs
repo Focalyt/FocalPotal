@@ -1,0 +1,919 @@
+<% include ../partials/header %>
+
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h3 class="content-header-title float-left mb-0">Access </h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                            <li class="breadcrumb-item active">Access </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ../partials/flash %>
+
+            <section class="list-view">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 equal-height-2">
+                        <div class="card">
+                            <div class="card-header border border-top-0 border-left-0 border-right-0">
+
+                                <h4 class="card-title pb-1">Add Role</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-xl-6 mb-1">
+                                            <label>Role Type</label>
+                                            <select class="form-control" name="role" id="roleName">
+                                                <option value="">Select Option</option>
+                                                <option value="Counsellor" <%=(editUser?.access?.roleName==='Counsellor'
+                                                    ) ? 'selected' : '' %>>Counsellor</option>
+                                                <option value="Placement Executive"
+                                                    <%=(editUser?.access?.roleName==='Placement Executive' )
+                                                    ? 'selected' : '' %>>Placement Executive</option>
+                                                <option value="FSE Sales" <%=(editUser?.access?.roleName==='FSE Sales' )
+                                                    ? 'selected' : '' %>>FSE Sales</option>
+                                                <option value="TL Inside Sales"
+                                                    <%=(editUser?.access?.roleName==='TL Inside Sales' ) ? 'selected'
+                                                    : '' %>>TL Inside Sales</option>
+                                                <option value="Center Manager"
+                                                    <%=(editUser?.access?.roleName==='Center Manager' ) ? 'selected'
+                                                    : '' %>>Center Manager</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-xl-6 mb-1">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                placeholder="Name" value="<%= editUser ? editUser.name : '' %>" />
+                                        </div>
+                                        <div class="col-xl-6 mb-1">
+                                            <label>Email Id</label>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                placeholder="Email" value="<%= editUser ? editUser.email : '' %>" />
+                                        </div>
+
+                                        <div class="col-xl-6 mb-1">
+                                            <label>Password</label>
+                                            <input type="password" id="password" class="form-control" name="password"
+                                                placeholder="Password" />
+                                        </div>
+                                        <div class="col-xl-6 mb-1 dropdown_container">
+                                            <label>Center</label>
+                                            <div class="custom_dropdown">
+                                                <input type="text" class="form-control dropdown_toggle" value=""
+                                                    name="center" placeholder="Select centers" />
+                                                <input type="hidden" name="center" id="selectedCenterIds">
+                                                <div class="dropdown_menu">
+                                                    <div class="checkbox_item select_all_container">
+                                                        <input type="checkbox" id="select_all"
+                                                            class="select_all_checkbox">
+                                                        <label for="select_all">Select All</label>
+                                                    </div>
+                                                    <div class="checkbox_item">
+                                                        <input type="checkbox" id="center" data-name="Any"
+                                                            class="center_checkbox">
+                                                        <label for="center">Any</label>
+                                                    </div>
+
+                                                    <hr style="margin: 5px 0;">
+
+                                                    <% if(centers && centers.length> 0) { %>
+                                                        <% centers.forEach((center, index)=> { %>
+
+                                                            <div class="checkbox_item">
+                                                                <input type="checkbox" id="center<%= index %>"
+                                                                    value="<%= center._id %>"
+                                                                    data-name="<%= center.name %>"
+                                                                    class="center_checkbox" <%=(editUser &&
+                                                                    editUser.access && editUser.access.centerAccess &&
+                                                                    editUser.access.centerAccess.map(id=>
+                                                                id.toString()).includes(center._id.toString())) ?
+                                                                'checked' : '' %>>
+
+                                                                <label for="center<%= index %>">
+                                                                    <%= center.name %>
+                                                                </label>
+                                                            </div>
+                                                            <% }) %>
+                                                                <% } else { %>
+                                                                    <p>No centers available</p>
+                                                                    <% } %>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-6 mb-1 dropdown__container course-section">
+                                            <label>Course</label>
+                                            <div class="custom__dropdown">
+                                                <input type="text" class="form-control dropdown__toggle" value=""
+                                                    name="course" placeholder="Select courses" />
+                                                <input type="hidden" name="course" id="selectedCoursesIds">
+                                                <div class="dropdown__menu">
+                                                    <div class="checkbox__item select__all__container">
+                                                        <input type="checkbox" id="select__all__courses"
+                                                            class="select__all__checkbox">
+                                                        <label for="select__all__courses">Select All</label>
+                                                    </div>
+                                                    <div class="checkbox__item">
+                                                        <input type="checkbox" id="course" data-name="Any"
+                                                            class="course__checkbox">
+                                                        <label for="course">Any</label>
+                                                    </div>
+                                                    <hr style="margin: 5px 0;">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-12 mb-1 text-right">
+                                            <br />
+
+                                            <% if (editUser) { %>
+                                                <button class="btn btn-success font-small-3"
+                                                    onclick="updateUser('<%= editUser._id %>')">
+                                                    Update
+                                                </button>
+                                                <% } else { %>
+                                                    <button class="btn btn-success font-small-3" onclick="addUser()">
+                                                        Add
+                                                    </button>
+                                                    <% } %>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 rounded equal-height-2 coloumn-2">
+                        <div class="card">
+                            <div class="row pb-1">
+                                <div class="col-xl-6">
+                                    <div class="row">
+                                        <div class="card-header">
+                                            <h4 class="card-title">All Roles</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive">
+                                    <table class="table table-hover-animation mb-0 table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Role</th>
+                                                <th>Email Id</th>
+                                                <th>Center</th>
+                                                <th>Course</th>
+                                                <th>Status</th>
+
+                                                <th>Action</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <% if(users && users.length> 0) { %>
+                                                <% users.forEach((user, index)=> { %>
+                                                    <tr>
+                                                        <td class="text-capitalize">
+                                                            <%=user.access.roleName%>
+
+                                                        </td>
+                                                        <td>
+                                                            <%=user.email%>
+                                                        </td>
+                                                        <td>
+                                                            <% if(user.access.centerAccess && user.access.centerAccess.length > 0) { %>
+                                                              <% user.access.centerAccess.forEach((center, index) => { %>
+                                                                <%= center.name %>
+                                                                <%= index < user.access.centerAccess.length - 1 ? ', ' : '' %>
+                                                              <% }) %>
+                                                            <% } %>
+                                                          </td>
+                                                        <td>
+                                                            <% if(user.access.courseAccess && user.access.courseAccess.length > 0) { %>
+                                                                <% user.access.courseAccess.forEach((course, index) => { %>
+                                                                  <%= course.name %>
+                                                                  <%= index < user.access.courseAccess.length - 1 ? ', ' : '' %>
+                                                                <% }) %>
+                                                              <% } %>
+
+                                                        </td>
+
+                                                        <td>
+                                                            <div
+                                                                class="custom-control custom-switch custom-control-inline">
+
+                                                                <input type="checkbox"
+                                                                    onclick="myOnOffFunc('<%= user._id %>', '<%= user.status %>', 'users');"
+                                                                    class="custom-control-input"
+                                                                    id="customSwitch<%= index %>" <% if (user.status) {
+                                                                    %> checked<% } %>/>
+                                                                    <label class="custom-control-label"
+                                                                        for="customSwitch<%= index %>">
+                                                                    </label>
+
+                                                            </div>
+                                                        </td>
+
+                                                        <td valign="middle">
+                                                            <a href="/admin/portalaccess/editaccess/<%= user._id %>">
+
+                                                                <i class="feather icon-edit fa-lg primary"></i>
+                                                            </a>
+                                                        </td>
+
+                                                    </tr>
+                                                    <% }) %>
+                                                        <% } else { %>
+                                                            <tr>
+                                                                <td colspan="6">
+                                                                    <p class="text-center mt-3">No result found</p>
+                                                                </td>
+                                                            </tr>
+                                                            <% } %>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <% include ../partials/footer %>
+
+    </div>
+    <style>
+        .course-section {
+            position: relative;
+            transition: padding-bottom 0.3s ease-in-out;
+        }
+
+        .select_all_container {
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+        }
+
+        .dropdown_menu hr {
+            margin: 5px 0;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+
+        .dropdown_container {
+            position: relative;
+        }
+
+        .custom_dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .dropdown_toggle {
+            cursor: pointer;
+        }
+
+        .dropdown_menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 8px;
+            margin-top: 2px;
+            overflow-y: auto;
+            height: 109px;
+        }
+
+        .checkbox_item {
+            padding: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .checkbox_item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .checkbox_item input {
+            cursor: pointer;
+        }
+
+        .custom__dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .dropdown__toggle {
+            cursor: pointer;
+        }
+
+        .dropdown__menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 8px;
+            margin-top: 2px;
+            max-height: 100px;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dropdown__menu.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .checkbox__item {
+            padding: 2px 6px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .checkbox__item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .checkbox__item input {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox__item label {
+            margin-right: 8px;
+        }
+
+        .select__all__container {
+            font-weight: bold;
+        }
+        .dropdown__menu.open {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+    </style>
+
+
+    <script>
+        const selectedCourseIds = <%- JSON.stringify((editUser?.access?.courseAccess || []).map(id => id.toString())) %>;
+        console.log("Selected course ids from backend:", selectedCourseIds);
+    </script>
+
+    <script>
+
+        // Modify your fetchCourses function to handle the centerIds parameter better
+        // PROBLEM 1: Remove the first fetchCourses function entirely and keep only one definition
+
+// PROBLEM 2: Modify the fetchCourses function to properly show the dropdown
+function fetchCourses(centerIds) {
+    console.log("Fetching courses for centers:", centerIds);
+    const courseDropdownMenu = document.querySelector('.dropdown__menu');
+    courseDropdownMenu.innerHTML = '<p>Loading courses...</p>';
+    
+    // Format centerIds properly for the API request
+    let centerIdsParam;
+    if (Array.isArray(centerIds)) {
+        centerIdsParam = centerIds;
+    } else if (typeof centerIds === 'string' && centerIds.includes(',')) {
+        centerIdsParam = centerIds.split(',');
+    } else {
+        centerIdsParam = centerIds;
+    }
+
+    // Force the dropdown to be visible during loading
+    // courseDropdownMenu.style.display = 'block';
+    // courseDropdownMenu.style.opacity = '1';
+    // courseDropdownMenu.style.visibility = 'visible';
+    // courseDropdownMenu.style.transform = 'translateY(0)';
+    // courseDropdownMenu.classList.add('open');
+    // document.querySelector('.course-section').style.paddingBottom = '90px';
+
+    axios.post('/admin/portalaccess/getCoursesByCenter', { centerIds: centerIdsParam })
+        .then((response) => {
+            const courses = response.data.courses;
+            const selectedCourseIds = <%- JSON.stringify((editUser?.access?.courseAccess || []).map(id => id.toString())) %>;
+
+            console.log('Course IDs from backend:', selectedCourseIds);
+            console.log('Courses received:', courses);
+
+            let html =
+                `<div class="checkbox__item select__all__container">
+                    <input type="checkbox" id="select__all__courses" class="select__all__checkbox">
+                    <label for="select__all__courses">Select All</label>
+                </div>
+                <div class="checkbox__item">
+                    <input type="checkbox" id="course_any" data-name="Any" class="course__checkbox">
+                    <label for="course_any">Any</label>
+                </div>
+                <hr style="margin: 5px 0">`;
+
+            let selectedCourseNames = [];
+
+            if (courses && courses.length > 0) {
+                courses.forEach((course, index) => {
+                    const isChecked = selectedCourseIds.includes(course._id.toString());
+                    if (isChecked) selectedCourseNames.push(course.name);
+
+                    html += `
+                        <div class="checkbox__item">
+                            <input type="checkbox" id="course${index}" value="${course._id}" data-name="${course.name}"
+                                class="course__checkbox" ${isChecked ? 'checked' : ''}>
+                            <label for="course${index}">${course.name}</label>
+                        </div>`;
+                });
+            } else {
+                html += `<p>No courses available</p>`;
+            }
+
+            // Inject HTML
+            courseDropdownMenu.innerHTML = html;
+
+            // Keep the dropdown visible after populating
+            // courseDropdownMenu.style.display = 'block';
+            // courseDropdownMenu.style.opacity = '1';
+            // courseDropdownMenu.style.visibility = 'visible';
+            // courseDropdownMenu.style.transform = 'translateY(0)';
+            // courseDropdownMenu.classList.add('open');
+            document.querySelector('.course-section').style.paddingBottom = '90px';
+
+            // Add event listeners to course checkboxes
+            setupCourseCheckboxListeners();
+
+            // Update display
+            document.querySelector('.dropdown__toggle').value = selectedCourseNames.join(', ');
+            document.getElementById('selectedCoursesIds').value = selectedCourseIds.join(',');
+
+        }).catch((err) => {
+            console.error('Error fetching courses:', err);
+            courseDropdownMenu.innerHTML = '<p>Error fetching courses: ' + err.message + '</p>';
+            
+            // Keep dropdown visible even on error
+            // courseDropdownMenu.style.display = 'block';
+            // courseDropdownMenu.style.opacity = '1';
+            // courseDropdownMenu.style.visibility = 'visible';
+            // courseDropdownMenu.style.transform = 'translateY(0)';
+            // courseDropdownMenu.classList.add('open');
+        });
+}
+
+
+
+     document.addEventListener('DOMContentLoaded', function() {
+    // Check if centers already selected (edit mode)
+    const selected = document.querySelectorAll('.center_checkbox:checked');
+    const selectedCenters = Array.from(selected)
+        .filter(cb => cb.getAttribute('data-name') !== 'Any')
+        .map(cb => cb.value);
+    
+    // Initialize center dropdown values
+    const centerNames = Array.from(selected).map(cb => cb.getAttribute('data-name')).join(', ');
+    const centerIds = selectedCenters.join(',');
+
+    // Set visible input with names
+    document.querySelector('.dropdown_toggle').value = centerNames;
+
+    // Set hidden input with values
+    document.getElementById('selectedCenterIds').value = centerIds;
+
+    // Only one call to fetch courses based on initial selections
+    if (selectedCenters.length > 0) {
+        console.log("Pre-selected centers found, fetching courses:", centerIds);
+        fetchCourses(selectedCenters);
+    } else {
+        const anySelected = document.querySelector('.center_checkbox[data-name="Any"]');
+        if (anySelected && anySelected.checked) {
+            fetchCourses('any');
+        }
+    }
+    
+    // Rest of your initialization code...
+});
+
+
+
+    </script>
+
+    <script>
+        // Define fetchCourses function
+          // Set up event listeners for course checkboxes
+        function setupCourseCheckboxListeners() {
+            const courseCheckboxes = document.querySelectorAll('.course__checkbox:not([data-name="Any"])');
+            const courseSelectAllCheckbox = document.getElementById('select__all__courses');
+            const anyCheckboxCourse = document.querySelector('.course__checkbox[data-name="Any"]');
+
+            if (courseSelectAllCheckbox) {
+                courseSelectAllCheckbox.addEventListener('change', function () {
+                    const isChecked = this.checked;
+                    courseCheckboxes.forEach(cb => cb.checked = isChecked);
+                    if (anyCheckboxCourse) anyCheckboxCourse.checked = false;
+                    updateCourseInputValue();
+                });
+            }
+
+            courseCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    if (this.checked && anyCheckboxCourse) {
+                        anyCheckboxCourse.checked = false;
+                    }
+
+                    const checkedCourses = document.querySelectorAll('.course__checkbox:not([data-name="Any"]):checked').length;
+                    const totalCourses = courseCheckboxes.length;
+
+                    if (courseSelectAllCheckbox) {
+                        courseSelectAllCheckbox.checked = (checkedCourses === totalCourses);
+                        courseSelectAllCheckbox.indeterminate = (checkedCourses > 0 && checkedCourses < totalCourses);
+                    }
+
+                    updateCourseInputValue();
+                });
+            });
+
+            if (anyCheckboxCourse) {
+                anyCheckboxCourse.addEventListener('change', function () {
+                    if (this.checked) {
+                        courseCheckboxes.forEach(cb => cb.checked = false);
+                        if (courseSelectAllCheckbox) courseSelectAllCheckbox.checked = false;
+                    }
+                    updateCourseInputValue();
+                });
+            }
+        }
+
+        // Update course input value
+        function updateCourseInputValue() {
+            const courseCheckboxes = document.querySelectorAll('.course__checkbox');
+            const selectedCourses = [];
+            const ids = [];
+
+            courseCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedCourses.push(cb.getAttribute('data-name'));
+                    if (cb.value) ids.push(cb.value);
+                }
+            });
+
+            document.querySelector('.dropdown__toggle').value = selectedCourses.join(', ');
+            document.getElementById('selectedCoursesIds').value = ids.join(',');
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check if centers already selected (edit mode)
+            const selected = document.querySelectorAll('.center_checkbox:checked');
+            const selectedCenters = Array.from(selected)
+                .filter(cb => cb.getAttribute('data-name') !== 'Any')
+                .map(cb => cb.value);
+
+            if (selectedCenters.length > 0) {
+                fetchCourses(selectedCenters);
+            } else {
+                const anySelected = document.querySelector('.center_checkbox[data-name="Any"]');
+                if (anySelected && anySelected.checked) {
+                    fetchCourses('any');
+                }
+            }
+
+            const centerCheckboxes = document.querySelectorAll('.center_checkbox');
+
+            centerCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    handleCenterChange();
+                });
+            });
+
+            function handleCenterChange() {
+                let selectedCenters = [];
+
+                // Check if 'Any' is selected
+                const anySelected = document.querySelector('.center_checkbox[data-name="Any"]');
+
+                if (anySelected && anySelected.checked) {
+                    // If 'Any' is selected, fetch all courses
+                    fetchCourses('any');
+                } else {
+                    // Get all selected center IDs
+                    document.querySelectorAll('.center_checkbox:checked').forEach((cb) => {
+                        if (cb.getAttribute('data-name') !== 'Any') {
+                            selectedCenters.push(cb.value);
+                        }
+                    });
+
+                    if (selectedCenters.length > 0) {
+                        fetchCourses(selectedCenters);
+                    } else {
+                        const courseDropdownMenu = document.querySelector('.dropdown__menu');
+                        if (courseDropdownMenu) {
+                            courseDropdownMenu.innerHTML = '<p>Please select centers</p>';
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        function addUser() {
+            const coursehiddenInput = document.getElementById('selectedCoursesIds').value;
+            const centerhiddenInput = document.getElementById('selectedCenterIds').value;
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value;
+            const password = document.getElementById('password').value;
+            const roleName = document.getElementById('roleName').value;
+
+            // Form validation
+            if (!email || !name || !password || !roleName) {
+                alert("Please fill all required fields");
+                return;
+            }
+
+            // Convert comma-separated values to array
+            const courseArray = coursehiddenInput ? coursehiddenInput.split(',') : [];
+            const centerArray = centerhiddenInput ? centerhiddenInput.split(',') : [];
+
+            let body = {
+                name,
+                email,
+                password,
+                role: 11,
+                access: {
+                    roleName,
+                    courseAccess: courseArray,
+                    centerAccess: centerArray
+                }
+            };
+
+            console.log("Data", body);
+
+            let header = { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" };
+            axios.post('/admin/portalaccess/addaccess', body, header)
+                .then(res => {
+                    alert("Role Added");
+                    window.location.reload();
+                })
+                .catch(err => {
+                    console.error("Error adding user:", err);
+                    alert("Error adding user: " + (err.response?.data?.message || err.message));
+                });
+        }
+
+        function updateUser(userId) {
+            const coursehiddenInput = document.getElementById('selectedCoursesIds').value;
+            const centerhiddenInput = document.getElementById('selectedCenterIds').value;
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value;
+            const password = document.getElementById('password').value;
+            const roleName = document.getElementById('roleName').value;
+
+            // Form validation
+            if (!email || !name || !roleName) {
+                alert("Please fill all required fields");
+                return;
+            }
+
+            // Convert comma-separated values to array
+            const courseArray = coursehiddenInput ? coursehiddenInput.split(',') : [];
+            const centerArray = centerhiddenInput ? centerhiddenInput.split(',') : [];
+
+            let body = {
+                
+                name,
+                email,
+                password,
+                role: 11,
+                access: {
+                    roleName,
+                    courseAccess: courseArray,
+                    centerAccess: centerArray
+                }
+            };
+
+            console.log("Update Data", body);
+
+            let header = { 'x-auth': localStorage.getItem('token'), "Content-Type": "multipart/form-data" };
+            axios.post(`/admin/portalaccess/editaccess/${userId}`, body, header)
+                .then(res => {
+                    alert("Role Updated");
+                    window.location.href = '/admin/portalaccess/addaccess';
+                })
+                .catch(err => {
+                    console.error("Error updating user:", err);
+                    alert("Error updating user: " + (err.response?.data?.message || err.message));
+                });
+        }
+
+        function myOnOffFunc(id, status, model) {
+            let myStatus = true;
+            if (status === true || status === "true") {
+                myStatus = false;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/admin/changestatus",
+                data: {
+                    id,
+                    status: myStatus,
+                    model,
+                },
+                success: () => location.reload(),
+                error: (err) => {
+                    console.error("Error changing status:", err);
+                    alert("Error changing status");
+                }
+            });
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownToggle = document.querySelector('.dropdown_toggle');
+            const dropdownMenu = document.querySelector('.dropdown_menu');
+            const courseDropdownToggle = document.querySelector('.dropdown__toggle');
+            const courseDropdownMenu = document.querySelector('.dropdown__menu');
+
+            const checkboxes = document.querySelectorAll('.center_checkbox');
+            const selectAllCheckbox = document.querySelector('.select_all_checkbox');
+            const hiddenInput = document.getElementById('selectedCenterIds');
+            const anyCheckbox = document.querySelector('.center_checkbox[data-name="Any"]');
+
+            // Center Dropdown Toggle
+            if (dropdownToggle) {
+                dropdownToggle.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    if (courseDropdownMenu) courseDropdownMenu.classList.remove('open');
+                    if (dropdownMenu) dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+                });
+            }
+
+            // Course Dropdown Toggle
+            // Course Dropdown Toggle
+if (courseDropdownToggle) {
+    courseDropdownToggle.addEventListener('click', function(event) {
+        event.stopPropagation();
+        if (dropdownMenu) dropdownMenu.style.display = 'none';
+        
+        const isOpen = courseDropdownMenu.classList.contains('open');
+        
+        if (courseDropdownMenu) {
+            if (isOpen) {
+                // Close it
+                courseDropdownMenu.classList.remove('open');
+                courseDropdownMenu.style.display = 'none';
+                courseDropdownMenu.style.opacity = '0';
+                courseDropdownMenu.style.visibility = 'hidden';
+                courseDropdownMenu.style.transform = 'translateY(-10px)';
+                document.querySelector('.course-section').style.paddingBottom = '0';
+            } else {
+                // Open it
+                courseDropdownMenu.classList.add('open');
+                courseDropdownMenu.style.display = 'block';
+                courseDropdownMenu.style.opacity = '1';
+                courseDropdownMenu.style.visibility = 'visible';
+                courseDropdownMenu.style.transform = 'translateY(0)';
+                document.querySelector('.course-section').style.paddingBottom = '90px';
+            }
+        }
+    });
+}
+
+            // Close Dropdown Outside Click
+           // Improve the outside click handler
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.custom_dropdown') && dropdownMenu) {
+        dropdownMenu.style.display = 'none';
+    }
+    
+    // Force dropdown to close if click is outside of it
+    if (!event.target.closest('.custom__dropdown')) {
+        if (courseDropdownMenu) {
+            courseDropdownMenu.classList.remove('open');
+            courseDropdownMenu.style.display = 'none';
+            courseDropdownMenu.style.opacity = '0';
+            courseDropdownMenu.style.visibility = 'hidden';
+            courseDropdownMenu.style.transform = 'translateY(-10px)';
+        }
+        
+        const courseSection = document.querySelector('.course-section');
+        if (courseSection) courseSection.style.paddingBottom = '0';
+    }
+});
+
+            // Center Select All Checkbox
+           // In your code where you handle the Select All checkbox for centers
+if (selectAllCheckbox) {
+    selectAllCheckbox.addEventListener('change', function() {
+        const isChecked = this.checked;
+        checkboxes.forEach(cb => {
+            if (cb !== anyCheckbox) cb.checked = isChecked;
+        });
+        if (anyCheckbox) anyCheckbox.checked = false;
+        updateInputValue();
+        
+        // Add this: Fetch courses when Select All is clicked
+        if (isChecked) {
+            // Get all center IDs
+            const allCenterIds = Array.from(document.querySelectorAll('.center_checkbox:not([data-name="Any"])'))
+                .map(cb => cb.value)
+                .filter(id => id); // Filter out any empty values
+                
+            if (allCenterIds.length > 0) {
+                fetchCourses(allCenterIds);
+            }
+        } else {
+            // Clear courses if unselecting all
+            const courseDropdownMenu = document.querySelector('.dropdown__menu');
+            if (courseDropdownMenu) {
+                courseDropdownMenu.innerHTML = '<p>Please select centers</p>';
+            }
+            document.querySelector('.dropdown__toggle').value = '';
+            document.getElementById('selectedCoursesIds').value = '';
+        }
+    });
+}
+
+            // Center Individual Checkboxes
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    if (checkbox === anyCheckbox && anyCheckbox.checked) {
+                        checkboxes.forEach(cb => { if (cb !== anyCheckbox) cb.checked = false; });
+                        if (selectAllCheckbox) selectAllCheckbox.checked = false;
+                    }
+
+                    if (checkbox !== anyCheckbox && checkbox.checked && anyCheckbox) {
+                        anyCheckbox.checked = false;
+                    }
+
+                    const checkedCenters = document.querySelectorAll('.center_checkbox:not([data-name="Any"]):checked').length;
+                    const totalCenters = document.querySelectorAll('.center_checkbox:not([data-name="Any"])').length;
+
+                    if (selectAllCheckbox) {
+                        selectAllCheckbox.checked = checkedCenters === totalCenters;
+                        selectAllCheckbox.indeterminate = (checkedCenters > 0 && checkedCenters < totalCenters);
+                    }
+
+                    updateInputValue();
+                });
+            });
+
+            // Update center input value
+            function updateInputValue() {
+                const selectedCenters = [];
+                const ids = [];
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        selectedCenters.push(cb.getAttribute('data-name'));
+                        if (cb.value) ids.push(cb.value);
+                    }
+                });
+                if (dropdownToggle) dropdownToggle.value = selectedCenters.join(', ');
+                if (hiddenInput) hiddenInput.value = ids.join(',');
+            }
+
+            // Prevent dropdown close on select all container click
+            const selectAllContainer = document.querySelector('.select_all_container');
+            if (selectAllContainer) {
+                selectAllContainer.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            }
+
+            const selectAllCoursesContainer = document.querySelector('.select__all__container');
+            if (selectAllCoursesContainer) {
+                selectAllCoursesContainer.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            }
+        });
+    </script>
