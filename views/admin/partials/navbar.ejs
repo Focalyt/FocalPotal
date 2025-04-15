@@ -34,9 +34,8 @@
           </li>
           <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#"
               data-toggle="dropdown">
-              <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600 text-white mb-0">Super
-                  Admin</span><span class="user-status text-white">
-                  <%= currentUser.name %>
+              <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600 text-white mb-0"><%= currentUser.name %></span><span class="user-status text-white">
+                  <%=  currentUser.access?.roleName?  currentUser.access.roleName: ""%>
                 </span></div><span><img src="/images/portrait/small/loader.png" alt="avatar" height="40" width="40"></span>
               </a>
             <div class="dropdown-menu dropdown-menu-right">
@@ -59,3 +58,6 @@
     </div>
   </div>
 </nav>
+<script>
+
+</script>
