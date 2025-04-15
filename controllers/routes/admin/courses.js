@@ -99,33 +99,42 @@ router.route("/").get(async (req, res) => {
 		// ✅ Role 11 specific filtering
 		if (user.role === 11) {
 			const userDetails = req.session.user;
-			let courseIds = userDetails.access.courseAccess;
-			let centerIds = userDetails.access.centerAccess;
-		  
+			let courseIds = userDetails.access.courseAccess.map(id => id.toString());
+			let centerIds = userDetails.access.centerAccess.map(id => id.toString());
+
 			const allCourses = await Courses.find(fields).populate("sectors");
-		  
-			// Filter by centerIds (only if center is not null)
-			let filteredCourses = allCourses;
-			if (centerIds && centerIds.length > 0) {
-			  filteredCourses = filteredCourses.filter(course =>
-				course.center && centerIds.includes(course.center.toString())
-			  );
-			}
-		  
-			// Filter by courseIds
-			if (courseIds && courseIds.length > 0) {
-			  filteredCourses = filteredCourses.filter(course =>
-				course._id && courseIds.includes(course._id.toString())
-			  );
-			}
-			courses = filteredCourses
-			// Final filtered data is in filteredCourses
-		  }
-		   else {
-			// For Admin/other roles
+
+			console.log("All courses before filter =>");
+			allCourses.forEach(course => {
+				console.log({
+					courseId: course._id.toString(),
+					centerId: course.center?.toString()
+				});
+			});
+
+
+			let filteredCourses = allCourses.filter(course => {
+				const courseId = course._id?.toString();
+				const courseCenterIds = Array.isArray(course.center)
+				  ? course.center.map(c => c.toString())
+				  : [];
+			  
+				const hasMatchingCenter = courseCenterIds.some(cid => centerIds.includes(cid));
+				const hasMatchingCourse = courseIds.includes(courseId);
+			  
+				return hasMatchingCenter && hasMatchingCourse;
+			  });
+			  
+			  
+			  
+
+			courses = filteredCourses;
+			console.log("filteredCourses:", filteredCourses);
+		} else {
 			courses = await Courses.find(fields).populate("sectors");
 		}
-		console.log("canEdit", canEdit);
+
+
 		// console.log(courses, "this is courses")
 		return res.render(`${req.vPath}/admin/course`, {
 			menu: 'course',
@@ -695,7 +704,7 @@ router.route("/registrations")
 				console.log('allCandidates', allCandidates);
 			}
 
-			
+
 			if (Array.isArray(candidates)) {
 
 				for (let candidate of candidates) {
