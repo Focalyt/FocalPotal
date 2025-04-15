@@ -144,6 +144,7 @@ router.route('/editaccess/:id')
             const updatedData = {
                 name,
                 email,
+                password,
                 access: {
                     roleName: access.roleName,
                     centerAccess: access.centerAccess || [],
