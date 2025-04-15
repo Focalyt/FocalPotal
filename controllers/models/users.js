@@ -74,6 +74,27 @@ userSchema.pre("save", function preSave(next) {
 	}
 });
 
+userSchema.pre('findOneAndUpdate', async function (next) {
+    const update = this.getUpdate();
+
+    // Check if password is being updated
+    if (update.password) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(update.password, salt);
+        update.password = hashedPassword;
+    }
+
+    // If nested inside $set
+    if (update.$set && update.$set.password) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(update.$set.password, salt);
+        update.$set.password = hashedPassword;
+    }
+
+    next();
+});
+
+
 userSchema.methods = {
 	validPassword: function validPassword(password) {
 		return bcrypt.compareSync(password, this.password);
