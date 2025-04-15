@@ -361,10 +361,153 @@ module.exports = {
   // },
 
 
+//   candidateCourseList: (sort, perPage, page, filter) => {
+//     const offset = (page - 1) * perPage;
+
+//     const agg = [
+//       {
+//         $lookup: {
+//           from: "candidates",
+//           let: { id: "$_candidate" },
+//           pipeline: [
+//             {
+//               $match: {
+//                 $expr: { $eq: ["$_id", "$$id"] },
+//                 ...filter // Apply filter directly in the lookup
+//               },
+//             },
+//             {
+//               $project: { name: 1, mobile: 1, docsForCourses: 1 } // Fetch only necessary fields
+//             }
+//           ],
+//           as: "_candidate",
+//         },
+//       },
+//       {
+//         $unwind: {
+//           path: "$_candidate",
+//           preserveNullAndEmptyArrays: true
+//         }
+//       },
+//       {
+//         $lookup: {
+//           from: "courses",
+//           let: { id: "$_course" },
+//           pipeline: [
+//             {
+//               $match: {
+//                 $expr: { $eq: ["$_id", "$$id"] }
+//               },
+//             },
+//             {
+//               $lookup: {
+//                 from: "coursesectors",
+//                 let: { sectorId: "$sectors" },
+//                 pipeline: [
+//                   {
+//                     $match: {
+//                       $expr: { $in: ["$_id", "$$sectorId"] },
+//                     },
+//                   },
+//                   {
+//                     $project: { name: 1 } // Fetch only sector name
+//                   },
+//                 ],
+//                 as: "sectors",
+//               },
+//             },
+//           ],
+//           as: "_course",
+//         },
+//       },
+//       {
+//         $unwind: {
+//           path: "$_course",
+//           preserveNullAndEmptyArrays: true,
+//         },
+//       },
+//       {
+//         $sort: sort, // Sorting should use indexed fields
+//       },
+//       {
+//         $skip: offset,
+//       },
+//       {
+//         $limit: perPage,
+//       },
+//       {
+//         $addFields: {
+//           name: { $ifNull: ["$_candidate.name", ""] },
+//           candidateId: { $ifNull: ["$_candidate._id", ""] },
+//           mobile: { $ifNull: ["$_candidate.mobile", ""] },
+//           courseName: { $ifNull: ["$_course.name", ""] },
+//           courseId: { $ifNull: ["$_course._id", ""] },
+//           registrationCharges: { $ifNull: ["$_course.registrationCharges", 0] },
+//           registrationFee: { $ifNull: ["$registrationFee", "Unpaid"] },
+//           sector: { $ifNull: ["$_course.sectors.name", ""] },
+//           docsRequired: { $ifNull: ["$_course.docsRequired", []] },
+//           docsForCourses: { $ifNull: ["$_candidate.docsForCourses", []] }
+
+
+//         },
+//       },
+//       {
+//         $project: {
+//           createdAt: 1,
+//           _id: 1,
+//           name: 1,
+//           mobile: 1,
+//           courseName: 1,
+//           registrationCharges: 1,
+//           registrationFee: 1,
+//           candidateId: 1,
+//           sector: 1,
+//           courseStatus: 1,
+//           courseId: 1,
+//           remarks: 1,
+//           assignDate: 1,
+//           url: 1,
+//           docsRequired: 1,
+//           docsForCourses: 1,
+//           registeredBy: 1
+
+//         },
+//       },
+//     ];
+
+//     return agg;
+  // },
+
   candidateCourseList: (sort, perPage, page, filter) => {
     const offset = (page - 1) * perPage;
-
+  
     const agg = [
+      // Join with Center
+      {
+        $lookup: {
+          from: "centers", // ✅ Use plural if your collection is named "centers"
+          let: { id: "$_center" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$_id", "$$id"] }
+              },
+            },
+            {
+              $project: { name: 1, }
+            }
+          ],
+          as: "_center",
+        }
+      },
+      {
+        $unwind: {
+          path: "$_center",
+          preserveNullAndEmptyArrays: true
+        }
+      }
+      ,
+      // Join with Candidate
       {
         $lookup: {
           from: "candidates",
@@ -373,11 +516,11 @@ module.exports = {
             {
               $match: {
                 $expr: { $eq: ["$_id", "$$id"] },
-                ...filter // Apply filter directly in the lookup
+                ...filter
               },
             },
             {
-              $project: { name: 1, mobile: 1, docsForCourses: 1 } // Fetch only necessary fields
+              $project: { name: 1, mobile: 1, docsForCourses: 1 }
             }
           ],
           as: "_candidate",
@@ -389,6 +532,8 @@ module.exports = {
           preserveNullAndEmptyArrays: true
         }
       },
+  
+      // Join with Course
       {
         $lookup: {
           from: "courses",
@@ -410,7 +555,7 @@ module.exports = {
                     },
                   },
                   {
-                    $project: { name: 1 } // Fetch only sector name
+                    $project: { name: 1 }
                   },
                 ],
                 as: "sectors",
@@ -426,35 +571,55 @@ module.exports = {
           preserveNullAndEmptyArrays: true,
         },
       },
+  
+      // Optional: Join with User for registeredBy name
       {
-        $sort: sort, // Sorting should use indexed fields
+        $lookup: {
+          from: "users",
+          localField: "registeredBy",
+          foreignField: "_id",
+          as: "registeredByDetails"
+        }
       },
       {
-        $skip: offset,
+        $unwind: {
+          path: "$registeredByDetails",
+          preserveNullAndEmptyArrays: true
+        }
       },
-      {
-        $limit: perPage,
-      },
+  
+      { $sort: sort },
+      { $skip: offset },
+      { $limit: perPage },
+  
+      // Add fields for front-end rendering
       {
         $addFields: {
           name: { $ifNull: ["$_candidate.name", ""] },
+          centerName: { $ifNull: ["$_center.name", ""] },
+          centerId: { $ifNull: ["$_center._id", ""] },
           candidateId: { $ifNull: ["$_candidate._id", ""] },
           mobile: { $ifNull: ["$_candidate.mobile", ""] },
           courseName: { $ifNull: ["$_course.name", ""] },
           courseId: { $ifNull: ["$_course._id", ""] },
           registrationCharges: { $ifNull: ["$_course.registrationCharges", 0] },
           registrationFee: { $ifNull: ["$registrationFee", "Unpaid"] },
-          sector: { $ifNull: ["$_course.sectors.name", ""] },
+          sector: { $ifNull: ["$_course.sectors.name", []] },
           docsRequired: { $ifNull: ["$_course.docsRequired", []] },
-          docsForCourses: { $ifNull: ["$_candidate.docsForCourses", []] }
-
+          docsForCourses: { $ifNull: ["$_candidate.docsForCourses", []] },
+          registeredBy: { $ifNull: ["$registeredBy", null] },
+          registeredByName: { $ifNull: ["$registeredByDetails.name", ""] }
         },
       },
+  
+      // Final projection
       {
         $project: {
           createdAt: 1,
           _id: 1,
           name: 1,
+          centerName:1,
+          centerId:1,
           mobile: 1,
           courseName: 1,
           registrationCharges: 1,
@@ -467,11 +632,14 @@ module.exports = {
           assignDate: 1,
           url: 1,
           docsRequired: 1,
-          docsForCourses: 1
+          docsForCourses: 1,
+          registeredBy: 1,
+          registeredByName: 1
         },
       },
     ];
-
+  
     return agg;
-  },
+  }
+  
 };

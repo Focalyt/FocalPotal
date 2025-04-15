@@ -15,7 +15,7 @@ const userSchema = new Schema(
 			trim: true,
 		},
 		mobile: {
-			type: Number,
+			type: Number,	
 			trim: true,
 			// unique: "Mobile number already exists!",
 		},
@@ -42,7 +42,7 @@ const userSchema = new Schema(
 		role: { type: Number, trim: true }, // 0-admin, 1-company, 2-college, 3-student, 10-admin view
 		access:{
 			roleName:{type:String},
-			courseAccess:[{type:ObjectId, ref:"course"}],
+			courseAccess:[{type:ObjectId, ref:"courses"}],
 			centerAccess:[{type:ObjectId, ref:"Center"}],
 		} , 
 		status: {

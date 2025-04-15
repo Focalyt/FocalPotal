@@ -98,59 +98,34 @@ router.route("/").get(async (req, res) => {
 		let courses;
 		// ✅ Role 11 specific filtering
 		if (user.role === 11) {
-
-
 			const userDetails = req.session.user;
-			let courseIsds = userDetails.access.courseAccess;
+			let courseIds = userDetails.access.courseAccess;
 			let centerIds = userDetails.access.centerAccess;
-			if (courseIsds) {
-				const idsArray = Array.isArray(courseIsds) ? courseIsds : [courseIsds];
-
-				// Valid ObjectId check & conversion
-				const validCoursesIds = idsArray
-					.filter(id => mongoose.Types.ObjectId.isValid(id))
-					.map(id => new mongoose.Types.ObjectId(id));
-
-				if (validCoursesIds.length === 0) {
-					return res.status(400).json({ success: false, message: 'Invalid Courses ID(s)' });
-				}
-
-				// Courses जिनके center array में centerId मौजूद हो
-				courses = await Courses.find({
-					_id: { $in: validCoursesIds },
-					status: true
-				}).populate("sectors");
-			} else if (centerIds) {
-				const idsArray = Array.isArray(centerIds) ? centerIds : [centerIds];
-
-				// Valid ObjectId check & conversion
-				const validCenterIds = idsArray
-					.filter(id => mongoose.Types.ObjectId.isValid(id))
-					.map(id => new mongoose.Types.ObjectId(id));
-
-				if (validCenterIds.length === 0) {
-					return res.status(400).json({ success: false, message: 'Invalid Center ID(s)' });
-				}
-
-				// Courses जिनके center array में centerId मौजूद हो
-				courses = await Courses.find({
-					center: { $in: validCenterIds },
-					status: true
-				})
-
-
-			} else {
-
-				courses = await Courses.find(fields).populate("sectors");
-
+		  
+			const allCourses = await Courses.find(fields).populate("sectors");
+		  
+			// Filter by centerIds (only if center is not null)
+			let filteredCourses = allCourses;
+			if (centerIds && centerIds.length > 0) {
+			  filteredCourses = filteredCourses.filter(course =>
+				course.center && centerIds.includes(course.center.toString())
+			  );
 			}
-
-
-		} else {
+		  
+			// Filter by courseIds
+			if (courseIds && courseIds.length > 0) {
+			  filteredCourses = filteredCourses.filter(course =>
+				course._id && courseIds.includes(course._id.toString())
+			  );
+			}
+			courses = filteredCourses
+			// Final filtered data is in filteredCourses
+		  }
+		   else {
 			// For Admin/other roles
 			courses = await Courses.find(fields).populate("sectors");
 		}
-		console.log("canEdit", canEdit)
+		console.log("canEdit", canEdit);
 		// console.log(courses, "this is courses")
 		return res.render(`${req.vPath}/admin/course`, {
 			menu: 'course',
@@ -368,6 +343,209 @@ router.route("/getCourseDetailById").get(async (req, res) => {
 	}
 });
 router.route("/registrations")
+	// .get(auth1, async (req, res) => {
+	// 	try {
+	// 		const user = req.session.user
+
+	// 		let candidates;
+	// 		let count;
+	// 		let view = false;
+	// 		let data = req.query
+	// 		let perPage = 20
+	// 		let p = parseInt(req.query.page, 10);
+	// 		let page = p || 1;
+	// 		let totalPages
+
+	// 		let { value, order } = req.query
+	// 		let sorting = {};
+	// 		let numberCheck;
+	// 		let filter = {};
+
+	// 		// Parsing courseIds and centerIds
+	// 		let courseIds = [];
+	// 		let centerIds = [];
+
+	// 		// Convert courseAccess to ObjectIds
+	// 		if (user.access && typeof user.access.courseAccess === 'string') {
+	// 			courseIds = user.access.courseAccess
+	// 				.split(',')
+	// 				.map(id => id.trim())
+	// 				.filter(id => id)
+	// 				.map(id => new ObjectId(id));
+	// 		}
+
+	// 		// Convert centerAccess to ObjectIds
+	// 		if (user.access && typeof user.access.centerAccess === 'string') {
+	// 			centerIds = user.access.centerAccess
+	// 				.split(',')
+	// 				.map(id => id.trim())
+	// 				.filter(id => id)
+	// 				.map(id => new ObjectId(id));
+	// 		}
+	// 		if (user.role === 0 || user.role === 10) {
+	// 			if (req.session.user.role === 10) {
+	// 				view = true
+	// 			}
+
+	// 			numberCheck = isNaN(data?.name);
+	// 			if (data['name'] != '' && data.hasOwnProperty('name')) {
+	// 				const regex = new RegExp(data['name'], 'i');
+	// 				filter["name"] = regex;
+	// 			}
+	// 			if (data['name'] && !numberCheck) {
+	// 				filter["$or"] = [
+	// 					{ "name": { "$regex": data['name'], "$options": "i" } },
+	// 					{ "mobile": Number(data['mobile']) },
+	// 					{ "whatsapp": Number(data['whatsapp']) }
+	// 				];
+	// 			}
+
+	// 			count = await AppliedCourses.countDocuments(filter)
+
+	// 			if (value && order) {
+	// 				sorting[value] = Number(order)
+	// 			} else {
+	// 				sorting = { createdAt: -1 }
+	// 			};
+
+	// 			let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter);
+	// 			candidates = await AppliedCourses.aggregate(agg);
+	// 			totalPages = Math.ceil(count / perPage);
+
+	// 		}
+	// 		else if (user.role === 11) {
+	// 			// Prepare role filter based on courseIds or centerIds
+	// 			let roleFilter = {};
+
+	// 			// Prioritize courseIds
+	// 			if (courseIds.length > 0) {
+	// 				roleFilter['_course'] = { $in: courseIds };
+	// 			}
+	// 			// Fallback to centerIds
+	// 			else if (centerIds.length > 0) {
+	// 				roleFilter['_center'] = { $in: centerIds };
+	// 			}
+	// 			// If no access, return empty result
+	// 			else {
+	// 				return res.render(`${req.vPath}/admin/course/registration`, {
+	// 					candidates: [],
+	// 					perPage,
+	// 					totalPages: 0,
+	// 					page: 1,
+	// 					count: 0,
+	// 					data,
+	// 					menu: 'courseRegistrations',
+	// 					view: true,
+	// 					sortingValue: ['createdAt'],
+	// 					sortingOrder: [-1],
+	// 				});
+	// 			}
+
+	// 			// Name/Mobile filtering
+	// 			numberCheck = isNaN(data?.name);
+	// 			if (data['name'] != '' && data.hasOwnProperty('name')) {
+	// 				const regex = new RegExp(data['name'], 'i');
+
+	// 				if (numberCheck) {
+	// 					// If name is not a number, use regex
+	// 					roleFilter["name"] = regex;
+	// 				} else {
+	// 					// If name can be a number, add more flexible search
+	// 					roleFilter["$or"] = [
+	// 						{ "name": { "$regex": data['name'], "$options": "i" } },
+	// 						{ "mobile": Number(data['name']) },
+	// 						{ "whatsapp": Number(data['name']) }
+	// 					];
+	// 				}
+	// 			}
+
+	// 			// Sorting
+	// 			if (value && order) {
+	// 				sorting[value] = Number(order)
+	// 			} else {
+	// 				sorting = { createdAt: -1 }
+	// 			}
+
+	// 			// Aggregation pipeline
+	// 			let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter);
+	// 			// Count for pagination
+	// 			count = await AppliedCourses.countDocuments(roleFilter);
+
+	// 			candidates = await AppliedCourses.aggregate(agg);
+	// 			totalPages = Math.ceil(count / perPage);
+	// 		};
+	// 		for (let candidate of candidates) {
+	// 			const courseDocsRequired = candidate.docsRequired || [];
+
+	// 			const candidateDocSet = candidate.docsForCourses?.find(
+	// 				(d) => d.courseId.toString() === candidate.courseId.toString()
+	// 			);
+
+	// 			console.log('candidateDocSet',candidate.docsForCourses)
+
+	// 			let totalRequired = courseDocsRequired.length;
+	// 			let verified = 0;
+	// 			let pending = 0;
+	// 			let pendingForUpload = 0;
+
+	// 			if (candidateDocSet && Array.isArray(candidateDocSet.uploadedDocs)) {
+	// 				for (let reqDoc of courseDocsRequired) {
+	// 					const uploadedDoc = candidateDocSet.uploadedDocs.find(
+	// 						(doc) => doc.docsId.toString() === reqDoc._id.toString()
+	// 					);
+
+	// 					if (uploadedDoc) {
+	// 						if (uploadedDoc.status === "Verified") {
+	// 							verified++;
+	// 						} else if (uploadedDoc.status === "Pending") {
+	// 							pending++;
+	// 						}
+	// 					} else {
+	// 						pendingForUpload++;
+	// 					}
+	// 				}
+	// 			} else {
+	// 				// अगर uploadedDocs ही नहीं है तो सब pending माने
+	// 				pendingForUpload = totalRequired;
+	// 			}
+
+	// 			const uploaded = verified + pending;
+	// 			const percent = courseDocsRequired.length > 0
+	// 				? Math.round((uploaded / courseDocsRequired.length) * 100)
+	// 				: 0;
+	// 			// Candidate में result embed करो
+	// 			candidate.docProgress = {
+	// 				totalRequired,
+	// 				verified,
+	// 				pending,
+	// 				percent,
+	// 				pendingForUpload
+	// 			};
+	// 		}
+
+
+
+
+	// 		console.log("candidates", candidates)
+	// 		return res.render(`${req.vPath}/admin/course/registration`, {
+	// 			candidates,
+	// 			perPage,
+	// 			totalPages,
+	// 			page,
+	// 			count,
+	// 			data,
+	// 			menu: 'courseRegistrations',
+	// 			view,
+	// 			sortingValue: Object.keys(sorting),
+	// 			sortingOrder: Object.values(sorting),
+	// 		});
+	// 	} catch (err) {
+	// 		console.log(err)
+	// 		req.flash("error", err.message || "Something went wrong!");
+	// 		return res.redirect("back");
+	// 	}
+	// });
+
 	.get(auth1, async (req, res) => {
 		try {
 			const user = req.session.user
@@ -438,114 +616,139 @@ router.route("/registrations")
 				totalPages = Math.ceil(count / perPage);
 
 			}
-			else if (user.role === 11) {
-				// Prepare role filter based on courseIds or centerIds
-				let roleFilter = {};
+			else if (user.role === 11 && user.access.roleName === "FSE Sales") {
+				console.log(user)
 
-				// Prioritize courseIds
-				if (courseIds.length > 0) {
-					roleFilter['_course'] = { $in: courseIds };
-				}
-				// Fallback to centerIds
-				else if (centerIds.length > 0) {
-					roleFilter['_center'] = { $in: centerIds };
-				}
-				// If no access, return empty result
-				else {
-					return res.render(`${req.vPath}/admin/course/registration`, {
-						candidates: [],
-						perPage,
-						totalPages: 0,
-						page: 1,
-						count: 0,
-						data,
-						menu: 'courseRegistrations',
-						view: true,
-						sortingValue: ['createdAt'],
-						sortingOrder: [-1],
-					});
-				}
-
-				// Name/Mobile filtering
 				numberCheck = isNaN(data?.name);
 				if (data['name'] != '' && data.hasOwnProperty('name')) {
 					const regex = new RegExp(data['name'], 'i');
-
-					if (numberCheck) {
-						// If name is not a number, use regex
-						roleFilter["name"] = regex;
-					} else {
-						// If name can be a number, add more flexible search
-						roleFilter["$or"] = [
-							{ "name": { "$regex": data['name'], "$options": "i" } },
-							{ "mobile": Number(data['name']) },
-							{ "whatsapp": Number(data['name']) }
-						];
-					}
+					filter["name"] = regex;
+				}
+				if (data['name'] && !numberCheck) {
+					filter["$or"] = [
+						{ "name": { "$regex": data['name'], "$options": "i" } },
+						{ "mobile": Number(data['mobile']) },
+						{ "whatsapp": Number(data['whatsapp']) }
+					];
 				}
 
-				// Sorting
+				count = await AppliedCourses.countDocuments(filter)
+
 				if (value && order) {
 					sorting[value] = Number(order)
 				} else {
 					sorting = { createdAt: -1 }
-				}
-
-				// Aggregation pipeline
-				let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter);
-				// Count for pagination
-				count = await AppliedCourses.countDocuments(roleFilter);
-
-				candidates = await AppliedCourses.aggregate(agg);
-				totalPages = Math.ceil(count / perPage);
-			};
-			for (let candidate of candidates) {
-				const courseDocsRequired = candidate.docsRequired || [];
-
-				const candidateDocSet = candidate.docsForCourses?.find(
-					(d) => d.courseId.toString() === candidate.courseId.toString()
-				);
-
-				console.log('candidateDocSet',candidate.docsForCourses)
-
-				let totalRequired = courseDocsRequired.length;
-				let verified = 0;
-				let pending = 0;
-				let pendingForUpload = 0;
-
-				if (candidateDocSet && Array.isArray(candidateDocSet.uploadedDocs)) {
-					for (let reqDoc of courseDocsRequired) {
-						const uploadedDoc = candidateDocSet.uploadedDocs.find(
-							(doc) => doc.docsId.toString() === reqDoc._id.toString()
-						);
-
-						if (uploadedDoc) {
-							if (uploadedDoc.status === "Verified") {
-								verified++;
-							} else if (uploadedDoc.status === "Pending") {
-								pending++;
-							}
-						} else {
-							pendingForUpload++;
-						}
-					}
-				} else {
-					// अगर uploadedDocs ही नहीं है तो सब pending माने
-					pendingForUpload = totalRequired;
-				}
-
-				const uploaded = verified + pending;
-				const percent = courseDocsRequired.length > 0
-					? Math.round((uploaded / courseDocsRequired.length) * 100)
-					: 0;
-				// Candidate में result embed करो
-				candidate.docProgress = {
-					totalRequired,
-					verified,
-					pending,
-					percent,
-					pendingForUpload
 				};
+				let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter);
+				let allCandidates = await AppliedCourses.aggregate(agg);
+
+				// ✅ Filter only those registered by current user
+				candidates = allCandidates.filter(c =>
+					c.registeredBy?.toString() === user._id.toString()
+				);
+				totalPages = Math.ceil(count / perPage);
+			}
+			else if (user.role === 11) {
+				console.log(user)
+
+				numberCheck = isNaN(data?.name);
+				if (data['name'] != '' && data.hasOwnProperty('name')) {
+					const regex = new RegExp(data['name'], 'i');
+					filter["name"] = regex;
+				}
+				if (data['name'] && !numberCheck) {
+					filter["$or"] = [
+						{ "name": { "$regex": data['name'], "$options": "i" } },
+						{ "mobile": Number(data['mobile']) },
+						{ "whatsapp": Number(data['whatsapp']) }
+					];
+				}
+
+				count = await AppliedCourses.countDocuments(filter)
+
+				if (value && order) {
+					sorting[value] = Number(order)
+				} else {
+					sorting = { createdAt: -1 }
+				};
+				let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter);
+				let allCandidates = await AppliedCourses.aggregate(agg);
+				let centerIds = user.access?.centerAccess?.map(id => id.toString()) || [];
+				let courseIds = user.access?.courseAccess?.map(id => id.toString()) || [];
+
+				let filtered = allCandidates;
+
+				if (centerIds.length > 0) {
+					filtered = filtered.filter(c => c.centerId && centerIds.includes(c.centerId.toString()));
+				}
+
+				if (courseIds.length > 0) {
+					filtered = filtered.filter(c => c.courseId && courseIds.includes(c.courseId.toString()));
+				}
+
+				candidates = filtered
+
+
+				// ✅ Log to confirm filtering
+				console.log("filtered candidates:", candidates);
+				console.log('centerIds', centerIds);
+				console.log('allCandidates', allCandidates);
+			}
+
+			
+			if (Array.isArray(candidates)) {
+
+				for (let candidate of candidates) {
+					const courseDocsRequired = candidate.docsRequired || [];
+
+					const candidateDocSet = candidate.docsForCourses?.find(
+						(d) => d.courseId.toString() === candidate.courseId.toString()
+					);
+
+					console.log('candidateDocSet', candidate.docsForCourses)
+
+					let totalRequired = courseDocsRequired.length;
+					let verified = 0;
+					let pending = 0;
+					let pendingForUpload = 0;
+
+					if (candidateDocSet && Array.isArray(candidateDocSet.uploadedDocs)) {
+						for (let reqDoc of courseDocsRequired) {
+							const uploadedDoc = candidateDocSet.uploadedDocs.find(
+								(doc) => doc.docsId.toString() === reqDoc._id.toString()
+							);
+
+							if (uploadedDoc) {
+								if (uploadedDoc.status === "Verified") {
+									verified++;
+								} else if (uploadedDoc.status === "Pending") {
+									pending++;
+								}
+							} else {
+								pendingForUpload++;
+							}
+						}
+					} else {
+						// अगर uploadedDocs ही नहीं है तो सब pending माने
+						pendingForUpload = totalRequired;
+					}
+
+					const uploaded = verified + pending;
+					const percent = courseDocsRequired.length > 0
+						? Math.round((uploaded / courseDocsRequired.length) * 100)
+						: 0;
+					// Candidate में result embed करो
+					candidate.docProgress = {
+						totalRequired,
+						verified,
+						pending,
+						percent,
+						pendingForUpload
+					};
+				}
+
+			} else {
+				console.error("❌ candidates is not an array:", candidates);
 			}
 
 
@@ -570,7 +773,6 @@ router.route("/registrations")
 			return res.redirect("back");
 		}
 	});
-
 router.route("/:courseId/:candidateId/docsview")
 	.get(auth1, async (req, res) => {
 		try {
@@ -656,7 +858,7 @@ router.route("/:courseId/:candidateId/docsview")
 
 			// ✅ Fix Applied: Use candidate.docsForCourses
 			const courseWiseDocumentCounts = countDocsByCourseId(candidate.docsForCourses || [], courseId);
-		
+
 
 			return res.render(`${req.vPath}/admin/course/listview`, {
 				menu: 'listview',
@@ -1003,21 +1205,21 @@ router.route('/crm')
 		}
 	});
 
-	router.route('/leadStatus')
+router.route('/leadStatus')
 	.post(async (req, res) => {
 
-		try {			
+		try {
 			const user = req.session.user;
-			const {appliedId} = req.body
+			const { appliedId } = req.body
 
 
-			console.log('user',user)
-			console.log('appliedId',appliedId);
-			
+			console.log('user', user)
+			console.log('appliedId', appliedId);
+
 			return res.status(200).json({
 				status: true,
 				message: "Status updated successfully"
-				
+
 			});
 		} catch (err) {
 			console.log("Error rendering addleads page:", err);
