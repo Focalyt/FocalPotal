@@ -144,6 +144,7 @@ router.route('/editaccess/:id')
             const updatedData = {
                 name,
                 email,
+                password,
                 access: {
                     roleName: access.roleName,
                     centerAccess: access.centerAccess || [],
@@ -154,7 +155,8 @@ router.route('/editaccess/:id')
             // अगर password दिया है तो encrypt करके store करें
 
 
-            await User.updateOne({ _id: userId }, { $set: updatedData });
+            await User.findOneAndUpdate({ _id: userId }, updatedData);
+
 
             return res.status(200).json({
                 message: 'Access updated successfully',
