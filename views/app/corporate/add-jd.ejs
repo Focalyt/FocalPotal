@@ -4,32 +4,33 @@
   <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
-            <!-- Flatpickr CSS & Script -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<style>
-  .flatpickr-calendar {
-    z-index: 99999 !important;
-    /* bring on top of everything */
-    width: 120px !important;
-  }
+  <!-- Flatpickr CSS & Script -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <style>
+    .flatpickr-calendar {
+      z-index: 99999 !important;
+      /* bring on top of everything */
+      width: 120px !important;
+    }
 
-  .flatpickr-calendar.open {
-    display: block !important;
-    visibility: visible !important;
-  }
+    .flatpickr-calendar.open {
+      display: block !important;
+      visibility: visible !important;
+    }
 
-  .flatpickr-input[readonly] {
-    background-color: #fff !important;
-    /* fix greyed out look */
-    cursor: pointer;
-    
-  }
+    .flatpickr-input[readonly] {
+      background-color: #fff !important;
+      /* fix greyed out look */
+      cursor: pointer;
 
-  numInputWrapper .flatpickr-am-pm{
-    width: 40% !important ;
-  }
-</style>
+    }
+
+    numInputWrapper .flatpickr-am-pm {
+      width: 40% !important;
+    }
+  </style>
+
   <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
     data-menu="vertical-menu-modern" data-col="2-columns">
     <div id="preloader"></div>
@@ -425,20 +426,20 @@
                                 <label>Shift Timing
                                   <span class="mandatory">*</span>
                                 </label>
-        
+
                                 <div id="shiftTiming">
                                   <!-- <label>&nbsp;</label> -->
                                   <div class="row">
                                     <div class="col-6">
-                                      <input name="timingFrom" type="text" id="timing-from"
-                                        class="form-control" placeholder="From">
+                                      <input name="timingFrom" type="text" id="timing-from" class="form-control"
+                                        placeholder="From">
                                     </div>
                                     <div class="col-6">
                                       <input name="timingTo" type="text" id="timing-to" class="form-control"
                                         placeholder="To">
                                     </div>
                                   </div>
-        
+
                                 </div>
                               </div>
                               <div class="col-xl-3 mb-1" id="jd-work-field">
@@ -783,8 +784,8 @@
                                   maxlength="150"><%= vacancy?.duties %></textarea>
                               </div>
 
-                              
-                              
+
+
                             </div>
                           </div>
                         </div>
@@ -799,14 +800,16 @@
                       <div class="card-content">
                         <div class="card-content">
                           <div class="card-body">
-                           <div class="row">
+                            <div class="row">
                               <div class="col-xl-3 mb-1">
                                 <label>Add Video JD</label>
-                                <input accept="video/*" onchange="validateVideoFile(this)" class="form-control" type="file" name="jobVideo" id="jobvideo">
+                                <input accept="video/*" onchange="validateVideoFile(this)" class="form-control"
+                                  type="file" name="jobVideo" id="jobvideo">
                               </div>
                               <div class="col-xl-3 mb-1">
                                 <label>Add Thumbnail JD</label>
-                                <input accept="image/*" onchange="validateImageFile(this)" class="form-control" type="file" name="jobVideoThumbnail" id="jobVideoThumbnail">
+                                <input accept="image/*" onchange="validateImageFile(this)" class="form-control"
+                                  type="file" name="jobVideoThumbnail" id="jobVideoThumbnail">
                               </div>
 
                               <div class="col-xl-12 mb-1 text-right">
@@ -1194,14 +1197,40 @@
               }
             }
 
+            // function validateVideoFile(input) {
+            //   let file = input.files[0];
+            //   if (file) {
+            //     if (!checkJDVideoValidation(file.name)) {
+            //       alert("Please upload video in mp4, mov, or avi format only!");
+            //       input.value = ""; 
+            //     }
+            //   }
+            // }
             function validateVideoFile(input) {
-              let file = input.files[0];
+              const file = input.files[0];
+
               if (file) {
-                if (!checkJDVideoValidation(file.name)) {
-                  alert("Please upload video in mp4, mov, or avi format only!");
-                  input.value = ""; // Reset the file input
+                const fileType = file.name.split('.').pop().toLowerCase();
+                const allowedTypes = ['mp4', 'mov', 'avi'];
+                const maxSize = 9 * 1024 * 1024; // 9MB in bytes
+
+                if (!allowedTypes.includes(fileType)) {
+                  alert("❌ Invalid file format! Only MP4, MOV, and AVI files are allowed.");
+                  input.value = ""; // clear input
+                  return false;
                 }
+
+                if (file.size > maxSize) {
+                  alert("❌ File size too large! Maximum allowed size is 9MB.");
+                  input.value = ""; // clear input
+                  return false;
+                }
+
+                // Optional: show file size in console
+                console.log("✅ Video file accepted, size: " + (file.size / (1024 * 1024)).toFixed(2) + " MB");
               }
+
+              return true;
             }
 
             const checkJDThumbnailValidation = (image) => {
@@ -1296,7 +1325,7 @@
                 if (file) {
                   let fileType = file.name.split('.').pop().toLowerCase();
                   let allowedTypes = ['mp4', 'mov', 'avi'];
-                  let maxSize = 50 * 1024 * 1024; // 50MB limit
+                  let maxSize = 9 * 1024 * 1024; // 9MB limit
 
                   if (!allowedTypes.includes(fileType)) {
                     alert("❌ Invalid file format! Only MP4, MOV, and AVI files are allowed.");
@@ -1305,7 +1334,7 @@
                   }
 
                   if (file.size > maxSize) {
-                    alert("❌ File size too large! Maximum allowed size is 50MB.");
+                    alert("❌ File size too large! Maximum allowed size is 9MB.");
                     this.value = ''; // Reset input field
                   }
                 }
@@ -1646,7 +1675,7 @@
               dateFormat: "h:i K",            // 👈 Only time format (e.g., 02:30 PM)
               time_24hr: false                // 👈 12-hour format with AM/PM
             });
-          
+
             flatpickr("#timing-to", {
               enableTime: true,
               noCalendar: true,
@@ -1654,7 +1683,8 @@
               time_24hr: false
             });
           </script>
-          
+
           <% include ./partials/footer %>
   </body>
+
   </html>
