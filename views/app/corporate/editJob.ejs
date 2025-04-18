@@ -1193,15 +1193,43 @@
               return true;
             }
           }
+          // function validateVideoFile(input) {
+          //   let file = input.files[0];
+          //   if (file) {
+          //     if (!checkJDVideoValidation(file.name)) {
+          //       alert("Please upload video in mp4, mov, or avi format only!");
+          //       input.value = ""; // Reset the file input
+          //     }
+          //   }
+          // }
+
           function validateVideoFile(input) {
-            let file = input.files[0];
-            if (file) {
-              if (!checkJDVideoValidation(file.name)) {
-                alert("Please upload video in mp4, mov, or avi format only!");
-                input.value = ""; // Reset the file input
+              const file = input.files[0];
+
+              if (file) {
+                const fileType = file.name.split('.').pop().toLowerCase();
+                const allowedTypes = ['mp4', 'mov', 'avi'];
+                const maxSize = 9 * 1024 * 1024; // 9MB in bytes
+
+                if (!allowedTypes.includes(fileType)) {
+                  alert("❌ Invalid file format! Only MP4, MOV, and AVI files are allowed.");
+                  input.value = ""; // clear input
+                  return false;
+                }
+
+                if (file.size > maxSize) {
+                  alert("❌ File size too large! Maximum allowed size is 9MB.");
+                  input.value = ""; // clear input
+                  return false;
+                }
+
+                // Optional: show file size in console
+                console.log("✅ Video file accepted, size: " + (file.size / (1024 * 1024)).toFixed(2) + " MB");
               }
+
+              return true;
             }
-          }
+
 
           function uploadJD(event) {
             let file = event.target.files[0];
