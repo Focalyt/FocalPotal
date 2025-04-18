@@ -622,6 +622,7 @@ module.exports = {
           centerName:1,
           centerId:1,
           mobile: 1,
+          email: 1,
           courseName: 1,
           registrationCharges: 1,
           registrationFee: 1,
