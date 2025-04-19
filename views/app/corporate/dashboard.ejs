@@ -240,14 +240,18 @@
                         <% if (appliedCandidates && appliedCandidates.length > 0) { %>
                           <% appliedCandidates.forEach((candidate) => { %>
                           <tr>
-                            <td><%= candidate._candidate.name || 'NA' %></td>
+                            <td><%= candidate._candidate?.name || 'NA' %></td>
                             <td><%= candidate._candidate?.highestQualification?.name || 'NA' %></td>
-                            <td><%= candidate._job.title || 'NA' %></td>
-                            <td><%= candidate._candidate.totalExperience ? candidate._candidate.totalExperience : 'Fresher' %></td>
+                            <td><%= candidate._job?.title || 'NA' %></td>
+                            <td><%= candidate._candidate?.totalExperience ? candidate._candidate.totalExperience : 'Fresher' %></td>
                             <td class="actions">
-                              <a href="/company/candidate/<%= candidate._candidate._id %>">
-                                <i class="fa-regular fa-user"></i>
-                              </a>
+                              <% if (candidate._candidate && candidate._candidate._id) { %>
+                                <a href="/company/candidate/<%= candidate._candidate._id %>">
+                                  <i class="fa-regular fa-user"></i>
+                                </a>
+                              <% } else { %>
+                                NA
+                              <% } %>
                             </td>
                           </tr>
                           <% }) } else {%>

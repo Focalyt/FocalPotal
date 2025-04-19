@@ -42,6 +42,7 @@ const vacancyTypeRoutes = require('./vacancyType');
 const universityRoutes = require('./university');
 const stateRoutes = require('./states');
 const cityRoutes = require('./city');
+const crmStreamRoutes = require('./stream');
 // const { isAdmin } = require('../../../helpers');
 const miPieCoinsRoutes = require('./miPieCoins')
 const paymentRoutes = require('./payments')
@@ -79,6 +80,7 @@ router.use('/coverLetter', coverLetterRoutes);
 router.use('/jobCategory', jobCategoryRoutes);
 router.use('/jobSubCategory', jobSubCategoryRoutes);
 router.use('/qualification', qualificationRoutes);
+router.use('/stream' , crmStreamRoutes);
 router.use('/mockInterview', mockInterviewRoutes);
 router.use('/industry', industryRoutes);
 router.use('/skill', skillRoutes);

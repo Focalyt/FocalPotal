@@ -1197,12 +1197,11 @@
                 counslerphonenumber: $('#counslerphonenumber').val(),
                 counslerwhatsappnumber: $('#counslerwhatsappnumber').val(),
                 counsleremail: $('#counsleremail').val(),
-                docsRequired: Array.from(document.querySelectorAll(".requiredDocsRow")).map(row => {
-                    let name = row.querySelector(".docsName").value;
+                docsRequired: Array.from(document.querySelectorAll(".requiredDocsRow"))
+    .map(row => row.querySelector(".docsName").value.trim())
+    .filter(name => name !== "")
+    .map(name => ({ Name: name })),
 
-                    return { Name: name };
-
-                }),
 
                 questionAnswers: Array.from(document.querySelectorAll(".questionanswerrow")).map(row => {
                     let question = row.querySelector(".question").value;
