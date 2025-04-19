@@ -222,12 +222,17 @@ router.route("/addleaddandcourseapply")
 		try {
 			console.log("body data", req.body)
 
-			let { name, mobile, email, address, state, city, sex, dob, whatsapp, highestQualification, courseId, selectedCenter  } = req.body;
+
+			let { name, mobile, email, address, state, city, sex, dob, whatsapp, highestQualification, courseId, selectedCenter } = req.body;
 			if (mongoose.Types.ObjectId.isValid(highestQualification)) highestQualification = new mongoose.Types.ObjectId(highestQualification);
 			if (mongoose.Types.ObjectId.isValid(state)) state = new mongoose.Types.ObjectId(state);
 			if (mongoose.Types.ObjectId.isValid(city)) city = new mongoose.Types.ObjectId(city);
 			if (mongoose.Types.ObjectId.isValid(courseId)) courseId = new mongoose.Types.ObjectId(courseId);
 			if (mongoose.Types.ObjectId.isValid(selectedCenter)) selectedCenter = new mongoose.Types.ObjectId(selectedCenter);
+
+
+			// // Fetch course and candidate
+			const course = await Courses.findById(courseId);
 
 			if (dob) dob = new Date(dob); // For Date field
 
@@ -248,7 +253,7 @@ router.route("/addleaddandcourseapply")
 				selectedCenter: [
 					{
 						courseId,
-						centerId:selectedCenter
+						centerId: selectedCenter
 
 					}
 				],
@@ -258,20 +263,53 @@ router.route("/addleaddandcourseapply")
 			}
 
 			console.log("Final Body:", body);
-        
-        const candidate =  await Candidate.create(body);
-		const user = req.session.user._id
 
-		 const appliedData = await new AppliedCourses({
-			  _candidate: candidate._id,
-			  _course: courseId,
-			  _center: selectedCenter,
-			  registeredBy: user
+			const candidate = await Candidate.create(body);
+			const user = req.session.user._id
+			const userName = req.session.user.name
+
+			const appliedData = await new AppliedCourses({
+				_candidate: candidate._id,
+				_course: courseId,
+				_center: selectedCenter,
+				registeredBy: user
 			}).save();
 
-			console.log("Candidate added and course applied")
+			console.log("Candidate added and course applied");
 
-        res.send({ status: true, msg: "Candidate added and course applied", data: body });
+			// Capitalize every word's first letter
+			function capitalizeWords(str) {
+				if (!str) return '';
+				return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+			}
+
+			// Update Spreadsheet
+			const sheetData = [
+				moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
+				moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
+				capitalizeWords(course?.name), // Apply the capitalizeWords function
+				candidate?.name,
+				candidate?.mobile,
+				candidate?.email,
+				candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+				candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+				candidate?.state?.name,
+				candidate?.city?.name,
+				'Course',
+				`${process.env.BASE_URL}/coursedetails/${courseId}`,
+				course?.registrationCharges,
+				appliedData?.registrationFee,
+				'Lead From Portal',
+				course?.courseFeeType,
+				course?.typeOfProject,
+				course?.projectName,
+				userName
+
+
+			];
+			await updateSpreadSheetValues(sheetData);
+
+			res.send({ status: true, msg: "Candidate added and course applied", data: body });
 
 
 
@@ -285,143 +323,146 @@ router.route("/addleaddandcourseapply")
 
 router.route("/course/:courseId/apply")
 
-.post(auth1, async (req, res) => {
-  try {
-	let { courseId } = req.params;
-	console.log("courseId",courseId);
+	.post(auth1, async (req, res) => {
+		try {
+			let { courseId } = req.params;
+			console.log("courseId", courseId);
 
-	const user = req.session.user._id;
-	const userName = req.session.user.name;
+			const user = req.session.user._id;
+			const userName = req.session.user.name;
 
 
 
-	let {mobile , selectedCenter} = req.body;
-	if (!mobile) {
-	  console.log("mobile number not found.");
-	  return res.status(404).json({ status: false, msg: "mobile number required." });
-	  
-	}
-	// // Check if courseId is a string
-	if (typeof courseId === "string") {
-	  console.log("courseId is a string:", courseId);
+			let { mobile, selectedCenter } = req.body;
+			if (!mobile) {
+				console.log("mobile number not found.");
+				return res.status(404).json({ status: false, msg: "mobile number required." });
 
-	//   // Validate if it's a valid ObjectId before converting
-	  if (mongoose.Types.ObjectId.isValid(courseId)) {
-		courseId = new mongoose.Types.ObjectId(courseId); // Convert to ObjectId
-	  } else {
-		return res.status(400).json({ error: "Invalid course ID" });
-	  }
-	}
-	
-	
-	console.log("selectedCenter",selectedCenter)
+			}
+			// // Check if courseId is a string
+			if (typeof courseId === "string") {
+				console.log("courseId is a string:", courseId);
 
-	if (typeof selectedCenter === "string") {
-	  console.log("selectedCenter is a string:", selectedCenter);
+				//   // Validate if it's a valid ObjectId before converting
+				if (mongoose.Types.ObjectId.isValid(courseId)) {
+					courseId = new mongoose.Types.ObjectId(courseId); // Convert to ObjectId
+				} else {
+					return res.status(400).json({ error: "Invalid course ID" });
+				}
+			}
 
-	//   // Validate if it's a valid ObjectId before converting
-	  if (mongoose.Types.ObjectId.isValid(selectedCenter)) {
-		selectedCenter = new mongoose.Types.ObjectId(selectedCenter); // Convert to ObjectId
-	  } else {
-		return res.status(400).json({ error: "Invalid selectedCenter ID" });
-	  }
-	}
 
-	// // Fetch course and candidate
-	const course = await Courses.findById(courseId);
-	if (!course) {
-	  return res.status(404).json({ status: false, msg: "Course not found." });
-	}
+			console.log("selectedCenter", selectedCenter)
 
-	const candidate = await Candidate.findOne({ mobile: mobile }).populate([
-	  { path: 'state', select: "name" },
-	  { path: 'city', select: "name" }
-	]).lean();
-	console.log("candidate", candidate)
+			if (typeof selectedCenter === "string") {
+				console.log("selectedCenter is a string:", selectedCenter);
 
-	if (!candidate) {
-	  return res.status(404).json({ status: false, msg: "Candidate not found." });
-	  console.log("Candidate not found.")
-	}
+				//   // Validate if it's a valid ObjectId before converting
+				if (mongoose.Types.ObjectId.isValid(selectedCenter)) {
+					selectedCenter = new mongoose.Types.ObjectId(selectedCenter); // Convert to ObjectId
+				} else {
+					return res.status(400).json({ error: "Invalid selectedCenter ID" });
+				}
+			}
 
-	// // Check if already applied
-	if (candidate.appliedCourses && candidate.appliedCourses.some(appliedId => appliedId.equals(courseId))) {
-	  console.log("Already applied")
-	  return res.status(400).json({ status: false, msg: "Course already applied." });
-	}
-	const apply = await Candidate.findOneAndUpdate(
-	  { mobile: mobile },
-	  { $addToSet: { appliedCourses: courseId,
-		selectedCenter: {
-		  courseId: courseId,
-		  centerId: selectedCenter
+			// // Fetch course and candidate
+			const course = await Courses.findById(courseId);
+			if (!course) {
+				return res.status(404).json({ status: false, msg: "Course not found." });
+			}
+
+			const candidate = await Candidate.findOne({ mobile: mobile }).populate([
+				{ path: 'state', select: "name" },
+				{ path: 'city', select: "name" }
+			]).lean();
+			console.log("candidate", candidate)
+
+			if (!candidate) {
+				return res.status(404).json({ status: false, msg: "Candidate not found." });
+				console.log("Candidate not found.")
+			}
+
+			// // Check if already applied
+			if (candidate.appliedCourses && candidate.appliedCourses.some(appliedId => appliedId.equals(courseId))) {
+				console.log("Already applied")
+				return res.status(400).json({ status: false, msg: "Course already applied." });
+			}
+			const apply = await Candidate.findOneAndUpdate(
+				{ mobile: mobile },
+				{
+					$addToSet: {
+						appliedCourses: courseId,
+						selectedCenter: {
+							courseId: courseId,
+							centerId: selectedCenter
+						}
+					}
+				},
+				{ new: true, upsert: true }
+			);
+
+
+			const appliedData = await new AppliedCourses({
+				_candidate: candidate._id,
+				_course: courseId,
+				_center: selectedCenter,
+				registeredBy: user
+			}).save();
+
+
+			// // Capitalize every word's first letter
+			function capitalizeWords(str) {
+				if (!str) return '';
+				return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+			}
+
+			// // Update Spreadsheet
+			const sheetData = [
+				moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
+				moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
+				capitalizeWords(course?.name), // Apply the capitalizeWords function
+				candidate?.name,
+				candidate?.mobile,
+				candidate?.email,
+				candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+				candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+				candidate?.state?.name,
+				candidate?.city?.name,
+				'Course',
+				`${process.env.BASE_URL}/coursedetails/${courseId}`,
+				course?.registrationCharges,
+				appliedData?.registrationFee,
+				'Lead From Portal',
+				course?.courseFeeType,
+				course?.typeOfProject,
+				course?.projectName,
+				userName
+
+
+
+			];
+			await updateSpreadSheetValues(sheetData);
+
+			let candidateMob = candidate.mobile;
+
+			// Check if the mobile number already has the country code
+			if (typeof candidateMob !== "string") {
+				candidateMob = String(candidateMob); // Convert to string
+			}
+
+			if (!candidateMob.startsWith("91") && candidateMob.length === 10) {
+				candidateMob = "91" + candidateMob; // Add country code if missing and the length is 10
+			}
+
+
+			console.log("Candidate Mobile", candidateMob);
+
+			return res.status(200).json({ status: true, msg: "Course applied successfully." });
+		} catch (error) {
+			console.error("Error applying for course:", error.message);
+			return res.status(500).json({ status: false, msg: "Internal server error.", error: error.message });
 		}
-	  } },
-	  { new: true, upsert: true }
-	);
-	
-
-	const appliedData = await new AppliedCourses({
-	  _candidate: candidate._id,
-	  _course: courseId,
-	  _center: selectedCenter,
-	  registeredBy:user
-	}).save();
-
-
-	// // Capitalize every word's first letter
-	function capitalizeWords(str) {
-	  if (!str) return '';
-	  return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-	}
-
-	// // Update Spreadsheet
-	const sheetData = [
-	  moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
-	  moment(appliedData.createdAt).utcOffset('+05:30').format('hh:mm A'),
-	  capitalizeWords(course?.name), // Apply the capitalizeWords function
-	  candidate?.name,
-	  candidate?.mobile,
-	  candidate?.email,
-	  candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
-	  candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
-	  candidate?.state?.name,
-	  candidate?.city?.name,
-	  'Course',
-	  `${process.env.BASE_URL}/coursedetails/${courseId}`,
-	  course?.registrationCharges,
-	  appliedData?.registrationFee,
-	  'Lead From Portal',
-	  course?.courseFeeType,
-	  course?.typeOfProject,
-	  course?.projectName,
-	  userName
-	
-
-
-	];
-	await updateSpreadSheetValues(sheetData);
-
-	let candidateMob = candidate.mobile;
-
-	// Check if the mobile number already has the country code
-	if (typeof candidateMob !== "string") {
-	  candidateMob = String(candidateMob); // Convert to string
-	}
-
-	if (!candidateMob.startsWith("91") && candidateMob.length === 10) {
-	  candidateMob = "91" + candidateMob; // Add country code if missing and the length is 10
-	}
-
-
-	console.log("Candidate Mobile",candidateMob);
-
-	return res.status(200).json({ status: true, msg: "Course applied successfully." });
-  } catch (error) {
-	console.error("Error applying for course:", error.message);
-	return res.status(500).json({ status: false, msg: "Internal server error.", error: error.message });
-  }
-});
+	});
 router
 	.route("/deleteCSV")
 	.delete(async (req, res) => {

@@ -97,6 +97,22 @@ const appliedCoursesSchema = new Schema(
       type: Date,
       description: "Date when the course was assigned to the candidate",
     },
+    leadOwner: [
+      {
+        ownerId: { type: ObjectId, ref: "User", required: true },
+        assignedAt: { type: Date, default: Date.now },
+        note: { type: String } // optional: why it was assigned or remarks
+      }
+    ],
+    
+    referredBy: [
+      {
+        userId: { type: ObjectId, ref: "User" }, // referring counsellor/user
+        referredAt: { type: Date, default: Date.now },
+        note: { type: String } // optional: why it was assigned or remarks
+      }
+    ]
+    
   },
   {
     timestamps: true, // Automatically adds `createdAt` and `updatedAt` fields

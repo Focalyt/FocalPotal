@@ -520,7 +520,7 @@ module.exports = {
               },
             },
             {
-              $project: { name: 1, mobile: 1, docsForCourses: 1 }
+              $project: { name: 1, mobile: 1, email: 1, docsForCourses: 1 }
             }
           ],
           as: "_candidate",
@@ -600,6 +600,7 @@ module.exports = {
           centerId: { $ifNull: ["$_center._id", ""] },
           candidateId: { $ifNull: ["$_candidate._id", ""] },
           mobile: { $ifNull: ["$_candidate.mobile", ""] },
+          email: { $ifNull: ["$_candidate.email", ""] },
           courseName: { $ifNull: ["$_course.name", ""] },
           courseId: { $ifNull: ["$_course._id", ""] },
           registrationCharges: { $ifNull: ["$_course.registrationCharges", 0] },
@@ -621,6 +622,7 @@ module.exports = {
           centerName:1,
           centerId:1,
           mobile: 1,
+          email: 1,
           courseName: 1,
           registrationCharges: 1,
           registrationFee: 1,
