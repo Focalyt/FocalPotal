@@ -1,0 +1,1372 @@
+<% include ../partials/header %>
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-12 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-9">
+                    <h3 class="content-header-title float-left mb-0">CRM</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                            <li class="breadcrumb-item active">CRM</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-body">
+        <% include ../partials/flash %>
+            <section class="list-view">
+                <div class="row">
+                    <div class="col-12 rounded equal-height-2 coloumn-2">
+                        <div class="card">
+                            <div class="row" id="crm-main-row">
+                                <div class="card-content col-12 transition-col" id="mainContent">
+
+                                    <div class="row mb-2">
+                                        <div class="col-xl-12 col-lg-12 px-3">
+                                            <ul class="crmList">
+                                                <li class="crmSubList">All <span class="totalLeads">(1)</span></li>
+                                                <li class="crmSubList">Untouched Lead <span
+                                                        class="totalLeads">(1)</span>
+                                                </li>
+                                                <li class="crmSubList">Not Connected <span class="totalLeads">(1)</span>
+                                                </li>
+                                                <li class="crmSubList">Junk <span class="totalLeads">(1)</span></li>
+                                                <li class="crmSubList">Not Intrested <span class="totalLeads"></span>
+                                                </li>
+                                                <li class="crmSubList">Warm <span class="totalLeads">(1)</span></li>
+                                                <li class="crmSubList">Hot <span class="totalLeads">(1)</span></li>
+                                                <li class="crmSubList">Job Joined <span class="totalLeads">(1)</span>
+                                                </li>
+                                                <li class="crmSubList">Missed Call <span class="totalLeads">(1)</span>
+                                                </li>
+                                                <li class="crmSubList">Lead For Future <span
+                                                        class="totalLeads">(1)</span>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- filters section  -->
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="contact-row">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-3">
+                                                        <div class="userCheckbox new-checkbox gap">
+                                                            <div class="contact-checkbox me-3">
+                                                                <input type="checkbox" class="form-check-input">
+                                                            </div>
+                                                            <div class="contact-info">
+                                                                <p class="contact-name">Akash Gaurav</p>
+                                                                <p class="contact-number m-0">9027486847</p>
+                                                            </div>
+                                                            <div class="circular-progress-container" data-percent=40>
+                                                                <svg width="40" height="40">
+                                                                    <circle class="circle-bg" cx="20" cy="20" r="16">
+                                                                    </circle>
+                                                                    <circle class="circle-progress" cx="20" cy="20"
+                                                                        r="16"></circle>
+                                                                </svg>
+                                                                <div class="progress-text"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="userSelectBox new-checkbox">
+
+                                                            <div class="status-select d-flex flex-column">
+                                                                <!-- Status Dropdown -->
+
+
+                                                                <input type="text"
+                                                                    class="form-control form-control-sm text-truncate crmCheckList"
+                                                                    value="" readonly style="cursor: pointer;
+                                                                    border: 1px solid #ddd;
+                                                                    border-radius: 0px;
+                                                                    border-top-right-radius: 5px;
+                                                                    border-top-left-radius: 5px;" />
+                                                                <!-- Input Box below with ellipsis effect -->
+                                                                <input type="text"
+                                                                    class="form-control form-control-sm text-truncate"
+                                                                    value="Untouched Lead Long Text Example for Checking..."
+                                                                    readonly />
+                                                            </div>
+                                                            <!-- <button class="btn btn-outline-primary btn-sm ms-3"
+                                                                onclick="openEditPanel()" style="padding: 6px 12px;">
+                                                                <i class="fas fa-pen"></i> Edit Followup
+                                                            </button> -->
+                                                            <!-- <div class="interaction-container">
+                                                                <div class="interaction-item">
+                                                                    <i class="fa-solid fa-phone"></i>
+                                                                    <span class="status-number">9</span>
+                                                                </div>
+                                                                <div class="interaction-item">
+                                                                    <i class="fas fa-comment-alt text-secondary"></i>
+                                                                    <span class="status-number">1</span>
+                                                                </div>
+                                                                <div class="interaction-item">
+                                                                    <i class="fas fa-envelope text-secondary"></i>
+                                                                    <span class="status-number">2</span>
+                                                                </div>
+                                                                <div class="interaction-item">
+                                                                    <i class="fas fa-comments text-secondary"></i>
+                                                                    <span class="status-number">2</span>
+                                                                </div>
+                                                            </div> -->
+                                                            <div class="divider"></div>
+                                                            <div>
+                                                                <a href=""
+                                                                    class="btn btn-danger waves-effect waves-light text-white d-inline btn-sm"
+                                                                    style="padding: 8px;">
+                                                                    View Docs
+                                                                </a>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="action-buttons new-checkbox">
+                                                            <button class="action-btn">
+                                                                <i class="fas fa-phone"></i>
+                                                            </button>
+                                                            <button class="action-btn">
+                                                                <i class="fab fa-whatsapp"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-xl-12">
+                                            <div class="leadsStatus">
+                                                <ul class="leadsDetails">
+                                                    <li class="status active">Lead Details</li>
+                                                    <!-- <li class="status">Placement Interest</li>
+                                                    <li class="status">Placement Status</li>
+                                                    <li class="status">Interview Schedule</li>
+                                                    <li class="status">Future Lead</li>
+                                                    <li class="status">Result</li>
+                                                    <li class="status">Testimonial</li>
+                                                    <li class="status">Payment Details</li> -->
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Optional: Tab Content Areas -->
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="lead-details">
+
+                                            <div class="scrollable-container">
+                                                <div class="scrollable-content">
+                                                    <!-- Each card represents a full set of info that will scroll horizontally -->
+                                                    <div class="info-card">
+                                                        <div class="info-group">
+                                                            <div class="info-label">LEAD AGE</div>
+                                                            <div class="info-value">282 Days</div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">Lead Owner</div>
+                                                            <div class="info-value">Meta Ads Inbound IVR Inbound Call
+                                                            </div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">COURSE / JOB NAME</div>
+                                                            <div class="info-value">Operator</div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">BATCH NAME</div>
+                                                            <div class="info-value"></div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="info-card">
+
+                                                        <div class="info-group">
+                                                            <div class="info-label">TYPE OF PROJECT</div>
+                                                            <div class="info-value">Job</div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">PROJECT</div>
+                                                            <div class="info-value">Job</div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">SECTOR</div>
+                                                            <div class="info-value">Retail</div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">LEAD CREATION DATE</div>
+                                                            <div class="info-value">Jan 15, 2024 9:29 AM</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="info-card">
+
+                                                        <div class="info-group">
+                                                            <div class="info-label">STATE</div>
+                                                            <div class="info-value">Uttar Pradesh</div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">City</div>
+                                                            <div class="info-value">Job</div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">BRANCH NAME</div>
+                                                            <div class="info-value">PSD Chandauli Center</div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">LEAD MODIFICATION DATE</div>
+                                                            <div class="info-value">Mar 21, 2025 3:32 PM</div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">LEAD MODIFICATION By</div>
+                                                            <div class="info-value">Mar 21, 2025 3:32 PM</div>
+                                                        </div>
+                                                        <div class="info-group">
+                                                            <div class="info-label">Counsellor Name</div>
+                                                            <div class="info-value">Name</div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="scroll-arrow scroll-left d-md-none">&lt;</div>
+                                            <div class="scroll-arrow scroll-right  d-md-none">&gt;</div>
+
+                                            <!-- Normal desktop view (hidden on mobile) -->
+                                            <div class="desktop-view">
+                                                <!-- Row 1 -->
+                                                <div class="row">
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">LEAD AGE</div>
+                                                            <div class="info-value">282 Days</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">DATA NAME</div>
+                                                            <div class="info-value">Retail Sales Executive Leads</div>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">STATE</div>
+                                                            <div class="info-value">Uttar Pradesh</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">CITY</div>
+                                                            <div class="info-value"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">TYPE OF PROJECT</div>
+                                                            <div class="info-value">Job</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">PROJECT</div>
+                                                            <div class="info-value">Job</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">Sector</div>
+                                                            <div class="info-value">Retail</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">COURSE / JOB NAME</div>
+                                                            <div class="info-value">Operator</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">BATCH NAME</div>
+                                                            <div class="info-value"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">SECTOR</div>
+                                                            <div class="info-value">Retail</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">BRANCH NAME</div>
+                                                            <div class="info-value">PSD Chandauli Center</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">NEXT ACTION DATE</div>
+                                                            <div class="info-value"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">LEAD CREATION DATE</div>
+                                                            <div class="info-value">Jan 15, 2024 9:29 AM</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">LEAD MODIFICATION DATE</div>
+                                                            <div class="info-value">Mar 21, 2025 3:32 PM</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">LEAD MODIFICATION BY</div>
+                                                            <div class="info-value">Name</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">Counsellor Name</div>
+                                                            <div class="info-value">Name</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3">
+                                                        <div class="info-group">
+                                                            <div class="info-label">LEAD OWNER</div>
+                                                            <div class="info-value">Rahul Sharma</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="tab-pane" id="placement-interest">
+                                            <h5>Placement Interest Content</h5>
+                                            <p>Placement interest information would go here.</p>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="col-4 transition-col" id="editFollowupPanel">
+                                    <div class="card border-0 shadow-sm">
+                                        <div
+                                            class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom">
+                                            <!-- LEFT SIDE: Title and Icon -->
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-2">
+                                                    <i class="fas fa-user-edit text-secondary"></i>
+                                                </div>
+                                                <h6 class="mb-0 followUp fw-medium">Edit Followup for HARSHIT
+                                                    ROHILLA</h6>
+                                            </div>
+
+                                            <!-- RIGHT SIDE: Close Button -->
+                                            <div>
+                                                <button class="btn-close" type="button" onclick="closeEditPanel()">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <form>
+                                                <!-- Lead Category -->
+                                                <div class="mb-1">
+                                                    <label for="leadCategory"
+                                                        class="form-label small fw-medium text-dark">Lead Category<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="d-flex">
+                                                        <div class="form-floating flex-grow-1">
+                                                            <select class="form-select  border-0" id="leadCategory"
+                                                                style="height: 42px; padding-top: 8px; padding-inline : 10px; width: 100% ; background-color: #f1f2f6;">
+                                                                <option value="">Application</option>
+                                                                <option value="lead">Lead</option>
+                                                                <option value="b2b">B2B</option>
+                                                                <option value="rawdata">Raw Data</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- Status -->
+                                                <div class="mb-1">
+                                                    <label for="status"
+                                                        class="form-label small fw-medium text-dark">Status<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="d-flex">
+                                                        <div class="form-floating flex-grow-1">
+                                                            <select class="form-select border-0" id="status"
+                                                                style="height: 42px; padding-top: 8px; padding-inline : 10px; width: 100%; background-color: #f1f2f6">
+                                                                <option value="">Select Status</option>
+                                                                <option value="03">03 - Junk (B2C)</option>
+                                                                <option value="01">01 - Untouched Lead</option>
+                                                                <option value="02">02 - Not Connected</option>
+                                                                <option value="04">04 - Not Interested</option>
+                                                                <option value="05">05 - Warm</option>
+                                                                <option value="06">06 - Hot</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- Sub-Status -->
+                                                <div class="mb-1">
+                                                    <label for="subStatus"
+                                                        class="form-label small fw-medium text-dark">Sub-Status<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="d-flex">
+                                                        <div class="form-floating flex-grow-1">
+                                                            <select class="form-select border-0" id="subStatus"
+                                                                style="height: 42px; padding-top: 8px; background-color: #f1f2f6; padding-inline : 10px; width: 100%;">
+                                                                <option value="">Select Sub-Status</option>
+                                                                <option value="not-relevant">Not Relevant</option>
+                                                                <option value="wrong-number">Wrong Number</option>
+                                                                <option value="duplicate">Duplicate</option>
+                                                                <option value="out-of-service">Out of Service</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-1">
+                                                    <!-- Next Action Date -->
+                                                    <div class="col-6">
+                                                        <label for="nextActionDate"
+                                                            class="form-label small fw-medium text-dark">Next Action
+                                                            Date <span class="text-danger">*</span></label>
+                                                        <div class="input-group">
+                                                            <input type="date" class="form-control border-0"
+                                                                id="nextActionDate" value="2025-01-13"
+                                                                style="background-color: #f1f2f6; height: 42px; padding-inline: 10px;">
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Time -->
+                                                    <div class="col-6">
+                                                        <label for="actionTime"
+                                                            class="form-label small fw-medium text-dark">Time <span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="input-group">
+                                                            <input type="time" class="form-control border-0"
+                                                                id="actionTime" value="12:36"
+                                                                style="background-color: #f1f2f6; height: 42px; padding-inline: 10px;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Comment -->
+                                                <div class="mb-1">
+                                                    <label for="comment"
+                                                        class="form-label small fw-medium text-dark">Comment</label>
+                                                    <textarea class="form-control  border-0" id="comment" rows="4"
+                                                        style="resize: none; background-color: #f1f2f6;">wrong no.</textarea>
+                                                </div>
+
+                                                <!-- Action Buttons -->
+                                                <div class="d-flex justify-content-end gap-2 mt-4">
+                                                    <button type="button" class="btn"
+                                                        style="border: 1px solid #ddd; padding: 8px 24px; font-size: 14px;"
+                                                        onclick="closeEditPanel()">CLOSE</button>
+                                                    <button type="submit" class="btn text-white"
+                                                        style="background-color: #fd7e14; border: none; padding: 8px 24px; font-size: 14px;">UPDATE
+                                                        STATUS</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 transition-col d-none" id="whatsappPanel">
+                                    <div class="card" style="border: 1px solid">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+
+                                            <div class="d-flex align-items-center gap-1">
+                                                <div
+                                                    class="avatar-circle bg-primary text-white d-flex align-items-center justify-content-center me-2">
+                                                    AG
+                                                </div>
+                                                <h5 class="mb-0">Akash Gaurav</h5>
+                                            </div>
+
+
+                                            <div class="d-flex gap-1">
+                                                <button class="btn btn-sm btn-secondary">
+                                                    <i class="fas fa-phone-alt"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-success">
+                                                    <i class="fab fa-whatsapp"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger"
+                                                    onclick="closeWhatsapp()">X</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body">
+
+                                            <p>This is the WhatsApp chat info or interaction area.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <input type="hidden" id="candidate-id" value="">
+            <!--Assign/Due modal start-->
+            <div class="modal fade" id="courseAssignModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Assign Course
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body pt-1">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                                    <label>Date</label>
+                                    <input class="form-control text-capitalize" type="date" value="" id="assignDate">
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                                    <label>Course URL</label>
+                                    <input class="form-control text-capitalize" type="text" value="courseURL"
+                                        id="courseURL">
+                                </div>
+                                <div class="col-xl-12 mb-1 text-left">
+                                    <label>Remarks</label>
+                                    <textarea class="form-control" cols="5" value="courseRemarks" rows="3"
+                                        id="courseRemarks"></textarea>
+                                </div>
+                            </div>
+                            <p class="text-success font-weight-bolder" id="successMsg" style="display: none;"></p>
+                            <p class="text-danger font-weight-bolder" id="errorMsg" style="display: none;"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Assigned</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Assign/Due modal end-->
+    </div>
+    <% include ../partials/footer %>
+        <style>
+            #tblexportData td {
+                white-space: nowrap;
+            }
+
+            .crmList {
+                display: flex;
+                flex-wrap: wrap;
+                list-style: none;
+                padding: 8px 0;
+                margin: 0;
+                white-space: nowrap;
+            }
+
+            .crmSubList {
+                display: inline-block;
+                padding: 8px 15px;
+                margin-right: 6px;
+                margin-bottom: 6px;
+                background-color: #f8f9fa;
+                border-radius: 4px;
+                font-size: 14px;
+                cursor: pointer;
+                white-space: nowrap;
+                border: 1px solid #e0e0e0;
+                transition: all 0.2s ease;
+            }
+
+            .crmSubList.active {
+                background-color: #fc2b5a;
+                color: white;
+                border-color: #fc2b5a;
+            }
+
+            .totalLeads {
+                display: inline-block;
+                margin-left: 3px;
+                color: #666;
+            }
+
+            .crmSubList.active .totalLeads {
+                color: rgba(255, 255, 255, 0.9);
+            }
+
+            .crmList::-webkit-scrollbar {
+                height: 5px;
+            }
+
+            .crmList::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
+
+            .crmList::-webkit-scrollbar-thumb {
+                background: #ddd;
+                border-radius: 10px;
+            }
+
+            .crmList::-webkit-scrollbar-thumb:hover {
+                background: #ccc;
+            }
+
+            .crmList {
+                scrollbar-width: thin;
+                scrollbar-color: #ddd #f1f1f1;
+            }
+
+            .contact-row {
+                border: 1px solid #e0e0e0;
+                border-radius: 2px;
+                padding: 10px 15px;
+                background-color: #fff;
+            }
+
+            .userCheckbox {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .contact-checkbox {
+                display: flex;
+                align-items: center;
+            }
+
+            .contact-name {
+                font-weight: 500;
+                margin-bottom: 0;
+            }
+
+            .contact-number {
+                color: #888;
+                font-size: 0.85rem;
+            }
+
+            .percentage-circle {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                border: 2px solid #ff7a00;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #ff7a00;
+                font-size: 12px;
+                font-weight: 500;
+                margin-right: 10px;
+            }
+
+            .status-select {
+                position: relative;
+                width: 180px;
+            }
+
+            .status-select select {
+                width: 100%;
+                padding: 6px 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 13px;
+                background-color: #333;
+                color: white;
+                appearance: none;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
+                border-bottom: 0px;
+            }
+
+            .status-select input {
+                border-top-right-radius: 0px;
+                border-top-left-radius: 0px;
+                border-top: none;
+            }
+
+            .status-number {
+                display: inline-flex;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                align-items: center;
+                justify-content: center;
+                color: #000;
+                font-size: 11px;
+                margin-left: 5px;
+            }
+
+            .interaction-item {
+                display: flex;
+                align-items: center;
+                margin-right: 12px;
+                font-size: 13px;
+                color: #666;
+            }
+
+            .interaction-item i {
+                font-size: 16px;
+            }
+
+            .new-checkbox {
+                padding: 1rem;
+            }
+
+            .userSelectBox {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+
+            .action-buttons {
+                display: flex;
+                justify-content: flex-end;
+                gap: 8px;
+            }
+
+            .action-btn {
+                width: 32px;
+                height: 32px;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #f8f9fa;
+                border: 1px solid #e0e0e0;
+                color: #555;
+                cursor: pointer;
+            }
+
+            .action-btn:hover {
+                background-color: #f0f0f0;
+            }
+
+            .interaction-container {
+                display: flex;
+                align-items: center;
+                margin-left: 10px;
+            }
+
+            .divider {
+                width: 1px;
+                height: 20px;
+                background-color: #ddd;
+                margin: 0 15px;
+            }
+        </style>
+
+
+        <style>
+            .leadsStatus {
+                width: 100%;
+                border-bottom: 1px solid #e0e0e0;
+                /* margin-bottom: 20px; */
+            }
+
+            .leadsDetails {
+                display: flex;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            /* For mobile scrolling */
+            @media (max-width: 992px) {
+                .leadsDetails {
+                    -webkit-overflow-scrolling: touch;
+                    scrollbar-width: none;
+
+                }
+
+                .leadsDetails::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+
+            .leadsDetails .status {
+                padding: 12px 16px;
+                font-size: 14px;
+                color: #555;
+                cursor: pointer;
+                position: relative;
+                transition: all 0.2s ease;
+            }
+
+            .leadsDetails .status:hover {
+                color: #000;
+            }
+
+            .leadsDetails .status.active {
+                color: #333;
+                font-weight: 500;
+            }
+
+            .leadsDetails .status.active::after {
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background-color: #007bff;
+            }
+
+            .tab-pane {
+                display: none;
+            }
+
+            .tab-pane.active {
+                display: block;
+            }
+
+            .lead-info-container {
+                margin: 15px 0;
+                font-family: 'Segoe UI', Arial, sans-serif;
+            }
+
+            .lead-info-row {
+                display: flex;
+                flex-wrap: wrap;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eaeaea;
+            }
+
+            .lead-info-row:last-child {
+                border-bottom: none;
+            }
+
+            /* Individual item styling */
+            .lead-info-item {
+                flex: 1 0 30%;
+                margin-bottom: 8px;
+                padding-right: 15px;
+            }
+
+            /* Strong tag styling for labels */
+            .lead-info-item strong {
+                display: inline-block;
+                color: #666;
+                margin-right: 5px;
+            }
+        </style>
+        <style>
+            .circular-progress-container {
+                position: relative;
+                width: 40px;
+                height: 40px;
+            }
+
+            .circular-progress-container svg {
+                transform: rotate(-90deg);
+            }
+
+            .circle-bg {
+                fill: none;
+                stroke: #e6e6e6;
+                stroke-width: 4;
+            }
+
+            .circle-progress {
+                fill: none;
+                stroke: #FC2B5A;
+                stroke-width: 4;
+                stroke-linecap: round;
+                transition: stroke-dashoffset 0.5s ease;
+            }
+
+            .circular-progress-container .progress-text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 10px;
+                color: #333;
+            }
+
+            .info-group {
+                border-radius: 8px;
+                padding: 12px 15px;
+                transition: transform 0.3s ease;
+            }
+
+            .info-label {
+                font-size: 12px;
+                text-transform: uppercase;
+                margin-bottom: 5px;
+                font-weight: 500;
+            }
+
+            .info-value {
+                font-size: 15px;
+                color: #333;
+                line-height: 1.4;
+                position: relative;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 150px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                /* white-space: nowrap; */
+            }
+
+            .info-value::before {
+                /* content: '⏳'; */
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 18px;
+            }
+
+            .tab-pane {
+                padding: 15px 0;
+                position: relative;
+            }
+
+            /* Responsive handling */
+            .scrollable-container {
+                display: none;
+            }
+
+            .desktop-view {
+                display: block;
+            }
+
+            /* Scroll arrows */
+            .scroll-arrow {
+                display: none;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 30px;
+                height: 30px;
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 50%;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 10;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                border: 1px solid #eaeaea;
+            }
+
+            .scroll-left {
+                left: 5px;
+            }
+
+            .scroll-right {
+                right: 5px;
+            }
+
+            /* Mobile styles */
+            @media (max-width: 767px) {
+                .scrollable-container {
+                    display: block;
+                    width: 100%;
+                    overflow: hidden;
+                    padding: 10px 0;
+                }
+
+                .desktop-view {
+                    display: none;
+                }
+
+                .scrollable-content {
+                    display: flex;
+                    overflow-x: auto;
+                    scroll-snap-type: x mandatory;
+                    -webkit-overflow-scrolling: touch;
+                    scrollbar-width: thin;
+                    scroll-behavior: smooth;
+                    padding: 10px 0;
+                }
+
+                .info-card {
+
+                    flex: 0 0 auto;
+                    scroll-snap-align: start;
+                    margin-right: 15px;
+                    padding: 15px;
+                    border-radius: 8px;
+                    border: 1px solid #eaeaea;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                    background: #fff;
+                }
+
+                .scroll-arrow {
+                    display: flex;
+                }
+
+                /* Scrollbar styling */
+                .scrollable-content::-webkit-scrollbar {
+                    height: 4px;
+                }
+
+                .scrollable-content::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                }
+
+                .scrollable-content::-webkit-scrollbar-thumb {
+                    background: #888;
+                    border-radius: 10px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .lead-info-item {
+                    flex: 1 0 100%;
+                }
+            }
+
+            /* Tab pane styling */
+            .tab-pane {
+                padding: 20px;
+                background: #fff;
+                border-radius: 0 0 4px 4px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            .tab-pane h5 {
+                margin-top: 0;
+                margin-bottom: 20px;
+                color: #333;
+                font-weight: 600;
+                border-bottom: 2px solid #f0f0f0;
+                padding-bottom: 10px;
+            }
+        </style>
+        <style>
+            .avatar-circle {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+            .gap-1 {
+                gap: 8px;
+            }
+
+            .gap-2 {
+                gap: 12px;
+            }
+
+            .transition-col {
+                transition: all 0.3s ease-in-out;
+            }
+
+            #whatsappPanel {
+                transition: all 0.3s ease-in-out;
+            }
+        </style>
+        <style>
+            #editFollowupPanel .card {
+                border-radius: 6px;
+            }
+
+            #editFollowupPanel .card-header {
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+            }
+
+            #editFollowupPanel .form-select {
+                appearance: none;
+                -webkit-appearance: none;
+                background-image: none;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+            #editFollowupPanel .form-label {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+
+            #editFollowupPanel .form-control {
+                font-size: 14px;
+            }
+
+            #editFollowupPanel textarea.form-control {
+                min-height: 80px;
+            }
+
+            #editFollowupPanel .btn-close {
+                font-size: 10px;
+                background: transparent;
+                border: none;
+            }
+
+            #editFollowupPanel .form-select,
+            #editFollowupPanel .form-control {
+                box-shadow: none;
+            }
+
+            #editFollowupPanel .form-select:focus,
+            #editFollowupPanel .form-control:focus {
+                border-color: #fd7e14;
+                box-shadow: 0 0 0 0.25rem rgba(253, 126, 20, 0.25);
+            }
+
+            .transition-col {
+                transition: all 0.3s ease-in-out;
+            }
+
+            .followUp {
+                font-size: 13px;
+                font-weight: 500;
+                padding-left: 10px;
+            }
+        </style>
+        <script>
+            document.querySelectorAll('.circular-progress-container').forEach(container => {
+                const percent = container.getAttribute('data-percent');
+                console.log(percent, "percent")
+                const circle = container.querySelector('circle.circle-progress');
+                console.log(circle, "circle")
+                const radius = 16;
+                const circumference = 2 * Math.PI * radius;
+                const offset = circumference - (percent / 100) * circumference;
+
+                circle.style.strokeDasharray = circumference;
+                circle.style.strokeDashoffset = offset;
+
+                // Set text also if needed
+                container.querySelector('.progress-text').innerText = percent + '%';
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const tabItems = document.querySelectorAll('.leadsDetails .status');
+                const tabPanes = document.querySelectorAll('.tab-pane');
+
+                tabItems.forEach((tab, index) => {
+                    tab.addEventListener('click', function () {
+                        // Remove active class from all tabs and panes
+                        tabItems.forEach(item => item.classList.remove('active'));
+                        tabPanes.forEach(pane => pane.classList.remove('active'));
+
+                        // Add active class to clicked tab and corresponding pane
+                        this.classList.add('active');
+                        if (tabPanes[index]) {
+                            tabPanes[index].classList.add('active');
+                        }
+                    });
+                });
+            });
+        </script>
+        <script>
+            // JavaScript for the scroll arrows
+            document.addEventListener('DOMContentLoaded', function () {
+                const scrollContainer = document.querySelector('.scrollable-content');
+                const leftArrow = document.querySelector('.scroll-left');
+                const rightArrow = document.querySelector('.scroll-right');
+
+                if (scrollContainer && leftArrow && rightArrow) {
+                    // Set initial arrow visibility
+                    updateArrowVisibility();
+
+                    // Add scroll event listener to update arrow visibility
+                    scrollContainer.addEventListener('scroll', updateArrowVisibility);
+
+                    // Add click handlers for arrows
+                    leftArrow.addEventListener('click', function () {
+                        const cardWidth = document.querySelector('.info-card').offsetWidth;
+                        scrollContainer.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                    });
+
+                    rightArrow.addEventListener('click', function () {
+                        const cardWidth = document.querySelector('.info-card').offsetWidth;
+                        scrollContainer.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                    });
+
+                    function updateArrowVisibility() {
+                        // Show/hide left arrow based on scroll position
+                        leftArrow.style.display = scrollContainer.scrollLeft > 0 ? 'flex' : 'none';
+
+                        // Show/hide right arrow based on if we can scroll more
+                        const canScrollMore = scrollContainer.scrollWidth >
+                            scrollContainer.scrollLeft + scrollContainer.clientWidth + 10;
+                        rightArrow.style.display = canScrollMore ? 'flex' : 'none';
+                    }
+                }
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const crmItems = document.querySelectorAll(".crmSubList");
+
+                crmItems.forEach(item => {
+                    item.addEventListener("click", function () {
+                        // Remove active from all
+                        crmItems.forEach(i => i.classList.remove("active"));
+                        // Add active to current
+                        this.classList.add("active");
+                    });
+                });
+            });
+        </script>
+        <script>
+            const mainContent = document.getElementById("mainContent");
+            const whatsappPanel = document.getElementById("whatsappPanel");
+
+            // When WhatsApp button is clicked
+            document.querySelector(".fa-whatsapp").closest("button").addEventListener("click", () => {
+                mainContent.classList.remove("col-12");
+                mainContent.classList.add("col-8");
+
+                whatsappPanel.classList.remove("d-none");
+            });
+
+            // Function to close WhatsApp panel
+            function closeWhatsapp() {
+                mainContent.classList.remove("col-8");
+                mainContent.classList.add("col-12");
+
+                whatsappPanel.classList.add("d-none");
+            }
+        </script>
+        <script>
+            function closeEditPanel() {
+                const editPanel = document.getElementById('editFollowupPanel');
+                if (editPanel) {
+                    editPanel.classList.add('d-none');
+                    // If you need to restore the main content column width
+                    const mainContent = document.getElementById('mainContent');
+                    if (mainContent) {
+                        mainContent.classList.remove('col-8');
+                        mainContent.classList.add('col-12');
+                    }
+                }
+            }
+
+            function openEditPanel() {
+                const editPanel = document.getElementById('editFollowupPanel');
+                if (editPanel) {
+                    editPanel.classList.remove('d-none');
+                    // If you need to adjust the main content column width
+                    const mainContent = document.getElementById('mainContent');
+                    if (mainContent) {
+                        mainContent.classList.remove('col-12');
+                        mainContent.classList.add('col-8');
+                    }
+                }
+            }
+
+            // Clear dropdown selection
+            document.querySelectorAll('#editFollowupPanel .fa-times').forEach(icon => {
+                icon.closest('button').addEventListener('click', function () {
+                    const select = this.closest('.d-flex').querySelector('select');
+                    if (select) {
+                        select.selectedIndex = 0;
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            function closeEditPanel() {
+                const editPanel = document.getElementById('editFollowupPanel');
+                if (editPanel) {
+                    editPanel.classList.add('d-none');
+                    // If you need to restore the main content column width
+                    const mainContent = document.getElementById('mainContent');
+                    if (mainContent) {
+                        mainContent.classList.remove('col-8');
+                        mainContent.classList.add('col-12');
+                    }
+                }
+            }
+
+            function openEditPanel() {
+                const editPanel = document.getElementById('editFollowupPanel');
+                if (editPanel) {
+                    editPanel.classList.remove('d-none');
+                    // If you need to adjust the main content column width
+                    const mainContent = document.getElementById('mainContent');
+                    if (mainContent) {
+                        mainContent.classList.remove('col-12');
+                        mainContent.classList.add('col-8');
+                    }
+                }
+            }
+
+            // Clear dropdown selection
+            document.querySelectorAll('#editFollowupPanel .fa-times').forEach(icon => {
+                icon.closest('button').addEventListener('click', function () {
+                    const select = this.closest('.d-flex').querySelector('select');
+                    if (select) {
+                        select.selectedIndex = 0;
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const crmItems = document.querySelectorAll('.crmSubList');
+                const inputBox = document.querySelector('.status-select .crmCheckList');
+
+                const defaultItem = document.querySelector('.crmSubList');
+                if (defaultItem && inputBox) {
+                    defaultItem.classList.add('active');
+                    let defaultText = defaultItem.innerText.replace(/\(\d+\)/g, '').trim();
+                    inputBox.value = defaultText;
+                }
+
+                if (inputBox) {
+                    inputBox.addEventListener('click', function () {
+                        openEditPanel(); // ✅ Panel open hoga
+                    });
+                }
+
+                crmItems.forEach(item => {
+                    item.addEventListener('click', function () {
+                        // Remove active from all
+                        crmItems.forEach(i => i.classList.remove('active'));
+
+                        // Add active to clicked item
+                        this.classList.add('active');
+
+                        // Get the text without the (number)
+                        let fullText = this.innerText.trim();
+                        let textWithoutNumber = fullText.replace(/\(\d+\)/g, '').trim();
+
+                        // Set text to input
+                        inputBox.value = textWithoutNumber;
+                    });
+                });
+            });
+
+        </script>
+
+        </body>
+
+        </html>
