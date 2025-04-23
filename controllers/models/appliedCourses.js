@@ -105,7 +105,7 @@ const appliedCoursesSchema = new Schema(
       }
     ],
     
-    referredBy: [
+    referredBy: [ 
       {
         userId: { type: ObjectId, ref: "User" }, // referring counsellor/user
         referredAt: { type: Date, default: Date.now },

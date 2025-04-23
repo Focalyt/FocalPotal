@@ -563,7 +563,7 @@ router.route("/registrations")
 			let count;
 			let view = false;
 			let data = req.query
-			let perPage = 20
+			let perPage = 100
 			let p = parseInt(req.query.page, 10);
 			let page = p || 1;
 			let totalPages
