@@ -323,7 +323,13 @@ router
 				return res.redirect("/admin/qualification/course/addstream");
 			} else {
 				const { name, _qualification, _course } = req.body;
-				
+				const subQ = await SubQualification.findOne({
+					name: req.body.name,
+					_qualification: req.body._qualification,
+					_course: req.body._course,
+				  });
+				  
+				if (subQ) throw req.ykError("Stream already exist!");
 				const sub = await SubQualification.create({ name, _qualification, _course });
 				if (!sub) {
 					throw req.ykError("SubQualification not created!");
