@@ -240,13 +240,27 @@
                               <td><%= (qualifications?.find(q => candidate?._candidate?.highestQualification == q._id ))?.name %></td>
                               <td><%= candidate?._candidate?.qualifications[0]?.Qualification?.name ? candidate?._candidate?.qualifications[0]?.Qualification?.name : "NA" %></td>
                               <td><%= !candidate?._candidate?.isExperienced ? 'Fresher' : candidate?._candidate?.totalExperience ? candidate?._candidate.totalExperience + ' Years' : 'NA' %></td>
-                              <td><%= moment(candidate?._candidate.createdAt).format('MMM DD YYYY')%></td>
+                              <td><%= moment(candidate._candidate?.createdAt).format('MMM DD YYYY')%></td>
                               <td class="actions" id="socail-iconw">
-                                <a href="/company/candidate/<%=candidate?._candidate._id%>"><i
-                                  class="fa-regular fa-user fa-lg"></i></a>
-                                 <a href="https://wa.me/91<%= candidate?._candidate?.whatsapp %>" target="_blank"> <img src="/public_assets/images/whatsappicon.png" width="18%" class="mx-1"></a> 
-                                 <a href="tel:<%= candidate?._candidate?.mobile %>"> <img src="/public_assets/images/telephone.png" width="18.5%"> </a>
+                                <% if (candidate && candidate._candidate) { %>
+                                  <a href="/company/candidate/<%= candidate._candidate._id %>">
+                                    <i class="fa-regular fa-user fa-lg"></i>
+                                  </a>
+                                  <% if (candidate._candidate.whatsapp) { %>
+                                    <a href="https://wa.me/91<%= candidate._candidate.whatsapp %>" target="_blank">
+                                      <img src="/public_assets/images/whatsappicon.png" width="18%" class="mx-1">
+                                    </a>
+                                  <% } %>
+                                  <% if (candidate._candidate.mobile) { %>
+                                    <a href="tel:<%= candidate._candidate.mobile %>">
+                                      <img src="/public_assets/images/telephone.png" width="18.5%">
+                                    </a>
+                                  <% } %>
+                                <% } else { %>
+                                  <span>NA</span>
+                                <% } %>
                               </td>
+                              
                             </tr>
                             <% }) } else {%>
                               <tr><td class="text-center" colspan="6">No Record Found</td></tr>

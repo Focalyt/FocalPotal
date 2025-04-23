@@ -568,8 +568,11 @@ router
         console.log('====== register error ', error, value)
         return res.send({ status: "failure", error: "Something went wrong!" });
       }
-      const { firstName, lastName, email, phoneNumber, companyName } = value;
-
+      const { firstName, lastName, email, phoneNumber, companyName ,  password,
+        confirmPassword} = value;
+        if (!password || !confirmPassword || password !== confirmPassword) {
+          return res.send({ status: "failure", error: "Passwords do not match!" });
+        }
       let checkEmail = await users.findOne({
         email: email,
         isDeleted: false,
@@ -586,7 +589,7 @@ router
           error: "Number and Email already exists!",
         });
       }
-
+      const hashedPassword = await bcrypt.hash(password, 10);
       const name = firstName + " " + lastName;
       if (!checkEmail && !checkNumber) {
         const user = await User.create({
@@ -594,6 +597,7 @@ router
           email,
           mobile: phoneNumber,
           role: 1,
+          password: hashedPassword,
         });
         if (!user) {
           return res.send({
@@ -809,7 +813,87 @@ router.get("/candidate/:candidateId", [isCompany], async (req, res) => {
     coins
   });
 });
+router.get("/newcandidate/:candidateId", [isCompany], async (req, res) => {
+  let menu
+  let { src } = req.query
+  if (src == 'onGoing') { menu = "ongoing-candidates"; }
+  else if (src == 'shortlisted') { menu = "shortlisted-candidates"; }
+  else { menu = "list-candidates"; }
+  const user = req.companyUser;
+  let company = await Company.findOne({ _concernPerson: user }).select('companyExecutives _id unmasked availableCredit creditLeft');
 
+  const populate = [
+    {
+      path: "techSkills.id",
+      select: "name",
+    },
+    {
+      path: "nonTechSkills.id",
+      select: "name",
+    },
+    {
+      path: "experiences.Industry_Name",
+      select: "name",
+    },
+    {
+      path: "experiences.SubIndustry_Name",
+      select: "name",
+    },
+    {
+      path: "qualifications.Qualification",
+      select: "name",
+    },
+    {
+      path: "qualifications.subQualification",
+      select: "name",
+    },
+    {
+      path: "qualifications.University",
+      select: "name",
+    },
+    { path: "locationPreferences.state", select: ["name"] },
+    { path: "locationPreferences.city", select: ["name"] },
+    { path: "state", select: ["name", "stateId"] },
+    { path: "city", select: ["name"] },
+    {
+      path: "appliedJobs",
+      match: { '_company': company._id },
+      select: "_id",
+    }
+  ];
+
+  const candidateId = req.params.candidateId;
+
+  const candidate = await Candidate.findOne({
+    _id: candidateId,
+  }).populate(populate);
+
+
+  let hiringStatus = await HiringStatus.findOne({ candidate: candidateId, company: company._id, isDeleted: false }, 'status createdAt updatedAt comment job eventDate concernedPerson')
+    .populate({ path: 'job', select: 'title' })
+
+  if (!hiringStatus) {
+    candidate.mobile = "0";
+    candidate.email = "XXXXXXXXXX";
+    masked = true;
+  } else {
+    masked = false;
+  }
+
+  const qualification = await Qualification.find({ status: true }).sort({ basic: -1 })
+  const jobs = await Vacancy.find({ _company: company._id, status: true })
+  let coins = await CoinsAlgo.findOne({})
+  res.render(`${req.vPath}/app/corporate/candidateProfile_copy`, {
+    candidate,
+    menu,
+    masked,
+    jobs,
+    hiringStatus,
+    qualification,
+    company,
+    coins
+  });
+});
 router.post("/removeimage", isCompany, async (req, res) => {
   const company = await Company.findOne({
     _concernPerson: req.session.user._id,
