@@ -142,6 +142,9 @@ router
 			if (req.session.user.role === 10) {
 				view = true
 			}
+			const perPage = 5;
+			const p = parseInt(req.query.page, 10);
+			const page = p || 1;
 
 			const qualifications = await Qualification.find({
 				status: true,
@@ -150,15 +153,18 @@ router
 				.sort({ createdAt: -1 });
 			const coursedata = ""
 
-
-
+			const count = await QualificationCourse.countDocuments({ status: true });
+			const totalPages = Math.ceil(count / perPage);
 
 			return res.render(`${req.vPath}/admin/qualificationSetting/course`, {
 				menu: 'addedu',
 				qualifications,
 				course,
 				coursedata,
-				view
+				view,
+				totalPages,
+				perPage,
+				page 
 				
 			});
 
@@ -317,8 +323,7 @@ router
 				return res.redirect("/admin/qualification/course/addstream");
 			} else {
 				const { name, _qualification, _course } = req.body;
-				const subQ = await SubQualification.findOne({ name: req.body.name });
-				if (subQ) throw req.ykError("Stream already exist!");
+				
 				const sub = await SubQualification.create({ name, _qualification, _course });
 				if (!sub) {
 					throw req.ykError("SubQualification not created!");
