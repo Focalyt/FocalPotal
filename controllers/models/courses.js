@@ -12,7 +12,7 @@ const courseSchema = new Schema({
         type: ObjectId, ref: "Center"
     }],
     courseLevel: String,
-    name: { type: String, lowercase: true, trim: true },
+    name: { type: String, trim: true },
     courseFeeType: {
         type: String, // Specifies which type of user created the post
         enum: ['Paid', 'Free'], // Allowed user types
