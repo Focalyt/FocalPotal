@@ -39,8 +39,7 @@
                               <td class="text-capitalize">
                                 <%= hiringStatus.status ? hiringStatus.status : "NA" %>
                               </td>
-                              <td title='<%= moment(hiringStatus.updatedAt).utcOffset("+05:30").format(' DD-MMM-YYYY
-                                hh:mm A') %>'>
+                              <td title="<%= moment(hiringStatus.updatedAt).utcOffset('+05:30').format('DD-MMM-YYYY hh:mm A') %>">
                                 <%= hiringStatus.updatedAt ?
                                   moment(hiringStatus.updatedAt).utcOffset("+05:30").format('DD MMM YYYY hh:mm A')
                                   : "NA" %>
@@ -239,7 +238,7 @@
                                       <div class="mb-4">
                                         <h3 class="border-bottom pb-2 mb-1">Professional Summary</h3>
                                         <p>
-                                          ..... summary
+                                          <%= candidate.professionalSummary ? candidate.professionalSummary : "No summary available." %>
                                         </p>
                                       </div>
 

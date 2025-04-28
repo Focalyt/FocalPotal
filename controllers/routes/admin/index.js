@@ -10,14 +10,15 @@ const {
   City,
   Company,
   PaymentDetails,
-  Candidate,
   HiringStatus,
   Vacancy,
   AppliedJobs,
   AppliedCourses,
-  QualificationCourse
+  QualificationCourse,
+
 
 } = require('../../models');
+const Candidate = require('../../models/candidateProfile')
 const moment = require('moment')
 
 const appBannerRoutes = require('./appBanner');
@@ -130,7 +131,7 @@ router.get('/', async (req, res) => {
 
     if (userId) {
       loggedInUser = await User.findById(userId);
-      console.log("Logged In User Details:", loggedInUser);
+      
     }
 
 
