@@ -13,6 +13,7 @@ const {
   Skill,
   Company,
   Candidate,
+  CandidateProfile,
   Qualification,
   State,
   City,
@@ -823,38 +824,9 @@ router.get("/newcandidate/:candidateId", [isCompany], async (req, res) => {
   let company = await Company.findOne({ _concernPerson: user }).select('companyExecutives _id unmasked availableCredit creditLeft');
 
   const populate = [
-    {
-      path: "techSkills.id",
-      select: "name",
-    },
-    {
-      path: "nonTechSkills.id",
-      select: "name",
-    },
-    {
-      path: "experiences.Industry_Name",
-      select: "name",
-    },
-    {
-      path: "experiences.SubIndustry_Name",
-      select: "name",
-    },
-    {
-      path: "qualifications.Qualification",
-      select: "name",
-    },
-    {
-      path: "qualifications.subQualification",
-      select: "name",
-    },
-    {
-      path: "qualifications.University",
-      select: "name",
-    },
-    { path: "locationPreferences.state", select: ["name"] },
-    { path: "locationPreferences.city", select: ["name"] },
-    { path: "state", select: ["name", "stateId"] },
-    { path: "city", select: ["name"] },
+   
+   
+   
     {
       path: "appliedJobs",
       match: { '_company': company._id },
@@ -864,9 +836,11 @@ router.get("/newcandidate/:candidateId", [isCompany], async (req, res) => {
 
   const candidateId = req.params.candidateId;
 
-  const candidate = await Candidate.findOne({
+  const candidate = await CandidateProfile.findOne({
     _id: candidateId,
   }).populate(populate);
+
+  console.log('candidate',candidate)
 
 
   let hiringStatus = await HiringStatus.findOne({ candidate: candidateId, company: company._id, isDeleted: false }, 'status createdAt updatedAt comment job eventDate concernedPerson')
@@ -2386,14 +2360,6 @@ router.get('/interested-candidates', isCompany, async (req, res) => {
             path: 'highestQualification',
             select: 'name',
             model: 'Qualification'
-          },
-          {
-            path: 'city',
-            select: 'name'
-          },
-          {
-            path: 'state',
-            select: 'name'
           }]
       }
     ];

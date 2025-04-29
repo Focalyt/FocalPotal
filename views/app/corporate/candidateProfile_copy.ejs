@@ -130,23 +130,16 @@
                                   </span>
                                 </li>
                                 <li class="mb-1">
-                                  <span class="font-weight-bold">Residence:</span>
-                                  <% if (candidate.city && candidate.state) { %>
+                                  <span class="font-weight-bold">Current Address:</span>
+                                  <% if (candidate.personalInfo?.currentAddress?.fullAddress) { %>
                                     <span class="text-capitalize">
-                                      <%=candidate.city?.name%> (<%=candidate.state?.name%>)
+                                      <%= candidate.personalInfo.currentAddress.fullAddress %>
                                     </span>
-                                    <% } else if (candidate.state) { %>
-                                      <span class="text-capitalize">
-                                        <%=candidate.state?.name%>
-                                      </span>
-                                      <% } else if (candidate.city) { %>
-                                        <span class="text-capitalize">
-                                          <%=candidate.city?.name%>
-                                        </span>
-                                        <% } else { %>
-                                          <span> NA</span>
-                                          <% } %>
+                                  <% } else { %>
+                                    <span>NA</span>
+                                  <% } %>
                                 </li>
+                                
                               </ul>
                               <div class="d-flex justify-content-center">
                                 <% if (masked===true) { %>
@@ -238,7 +231,7 @@
                                       <div class="mb-4">
                                         <h3 class="border-bottom pb-2 mb-1">Professional Summary</h3>
                                         <p>
-                                          <%= candidate.professionalSummary ? candidate.professionalSummary : "No summary available." %>
+                                          <%= candidate.personalInfo.professionalSummary ? candidate.personalInfo.professionalSummary : "No summary available." %>
                                         </p>
                                       </div>
 
