@@ -43,7 +43,7 @@ const appliedCoursesSchema = new Schema(
   {
     _candidate: {
       type: ObjectId,
-      ref: "Candidate",
+      ref: "CandidateProfile",
       description: "Reference to the Candidate who applied for the course",
     },
     _course: {
@@ -111,7 +111,20 @@ const appliedCoursesSchema = new Schema(
         referredAt: { type: Date, default: Date.now },
         note: { type: String } // optional: why it was assigned or remarks
       }
-    ]
+    ],
+
+    uploadedDocs: [
+          {
+            docsId: { type: ObjectId, ref: "courses.docsRequired" },
+            fileUrl: String,
+            status: { type: String, enum: ["Pending", "Verified", "Rejected"], default: "Pending" }, // Verification Status
+            reason: { type: String }, // Rejection ka reason
+            verifiedBy: { type: ObjectId, ref: "User" },
+            verifiedDate: { type: Date },
+            uploadedAt: { type: Date, default: Date.now } // Upload Timestamp
+          }
+        ]
+     
     
   },
   {
