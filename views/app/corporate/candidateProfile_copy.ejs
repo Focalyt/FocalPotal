@@ -39,7 +39,8 @@
                               <td class="text-capitalize">
                                 <%= hiringStatus.status ? hiringStatus.status : "NA" %>
                               </td>
-                              <td title="<%= moment(hiringStatus.updatedAt).utcOffset('+05:30').format('DD-MMM-YYYY hh:mm A') %>">
+                              <td
+                                title="<%= moment(hiringStatus.updatedAt).utcOffset('+05:30').format('DD-MMM-YYYY hh:mm A') %>">
                                 <%= hiringStatus.updatedAt ?
                                   moment(hiringStatus.updatedAt).utcOffset("+05:30").format('DD MMM YYYY hh:mm A')
                                   : "NA" %>
@@ -135,11 +136,21 @@
                                     <span class="text-capitalize">
                                       <%= candidate.personalInfo.currentAddress.fullAddress %>
                                     </span>
-                                  <% } else { %>
-                                    <span>NA</span>
-                                  <% } %>
+                                    <% } else { %>
+                                      <span>NA</span>
+                                      <% } %>
                                 </li>
-                                
+                                <li class="mb-1">
+                                  <span class="font-weight-bold">Permanent Address :</span>
+                                  <% if (candidate.personalInfo?.permanentAddress?.fullAddress) { %>
+                                    <span class="text-capitalize">
+                                      <%= candidate.personalInfo.permanentAddress?.fullAddress %>
+                                    </span>
+                                    <% } else { %>
+                                      <span>NA</span>
+                                      <% } %>
+                                </li>
+
                               </ul>
                               <div class="d-flex justify-content-center">
                                 <% if (masked===true) { %>
@@ -154,46 +165,70 @@
 
                         <!-- Profile section -->
                         <section id="profile">
-                          <div class="col-xl-12" id="mipie_profile">
-                            <div class="row">
-                              <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-one px-0 text-center">
-                                <img src="/images/icons/profile.png" class="img-fluid pt-1">
-                              </div>
-                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
-                                <h5 class="p-0 m-0">Focalyt Profile</h5>
-                              </div>
-                              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right"
-                                data-bs-target="#editUser" data-bs-toggle="modal" target="_blank" aria-disabled
-                                onclick="addTextContent('<%= candidate._id%>')" id="loader">
-                                <a class="dwnload btn">DOWNLOAD&nbsp;<i
-                                    class="feather icon-arrow-down text-white font-weight-bold"></i></a>
-                              </div>
-                            </div>
-                          </div>
+                          <% if (candidate.personalInfo && candidate.personalInfo.focalytProfile && masked===false) { %>
 
-                          <%if (candidate.resume && masked==false) { %>
-                            <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume">
+                            <div class="col-xl-12" id="mipie_profile">
                               <div class="row">
-                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-two px-0 text-center">
-                                  <img src="/images/icons/resume.png" class="img-fluid pt-1">
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-one px-0 text-center">
+                                  <img src="/images/icons/profile.png" class="img-fluid pt-1">
                                 </div>
                                 <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
-                                  <h5 class="p-0 m-0">Resume</h5>
+                                  <h5 class="p-0 m-0">Focalyt Profile</h5>
                                 </div>
-                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right">
-                                  <a class="dwnload btn" onclick="downloadCandidateResume()" id="resumeButton"
-                                    target="_blank">DOWNLOAD&nbsp;<i
+                                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right"
+                                  data-bs-target="#editUser" data-bs-toggle="modal" target="_blank" aria-disabled
+                                  id="loader">
+                                  <a onclick="downloadFocalytresume()" class="dwnload btn">DOWNLOAD&nbsp;<i
                                       class="feather icon-arrow-down text-white font-weight-bold"></i></a>
                                 </div>
                               </div>
                             </div>
-                            <% } else if(candidate.resume) {%>
+                            <% } else {%>
                               <!-- <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume"> -->
-                              <div class="row pt-1">
-                                <img src="/images/disable_button.jpg" class="img-fluid" />
-                              </div>
+                                <div class="col-xl-12" id="mipie_profile">
+                                  <div class="row">
+                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-one px-0 text-center">
+                                      <img src="/images/icons/profile.png" class="img-fluid pt-1">
+                                    </div>
+                                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
+                                      <h5 class="p-0 m-0">Focalyt Profile</h5>
+                                    </div>
+                                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right"
+                                      data-bs-target="#editUser" data-bs-toggle="modal" target="_blank" aria-disabled
+                                      id="loader">
+                                      <a onclick="downloadFocalytresumenotmasked()" class="dwnload btn">DOWNLOAD&nbsp;<i
+                                          class="feather icon-arrow-down text-white font-weight-bold"></i></a>
+                                    </div>
+                                  </div>
+                                </div>
                               <!-- </div> -->
                               <% }%>
+
+                                <% if (candidate.personalInfo && Array.isArray(candidate.personalInfo.resume) && masked == false)  { %>
+
+                                  <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3"
+                                    id="candidate_resume">
+                                    <div class="row">
+                                      <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-two px-0 text-center">
+                                        <img src="/images/icons/resume.png" class="img-fluid pt-1">
+                                      </div>
+                                      <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
+                                        <h5 class="p-0 m-0">Resume</h5>
+                                      </div>
+                                      <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right">
+                                        <a class="dwnload btn" onclick="downloadCandidateResume()" id="resumeButton"
+                                          target="_blank">DOWNLOAD&nbsp;<i
+                                            class="feather icon-arrow-down text-white font-weight-bold"></i></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <% } else if(candidate.resume) {%>
+                                    <!-- <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume"> -->
+                                    <div class="row pt-1">
+                                      <img src="/images/disable_button.jpg" class="img-fluid" />
+                                    </div>
+                                    <!-- </div> -->
+                                    <% }%>
                         </section>
 
                       </div>
@@ -231,7 +266,7 @@
                                       <div class="mb-4">
                                         <h3 class="border-bottom pb-2 mb-1">Professional Summary</h3>
                                         <p>
-                                          <%= candidate.personalInfo.professionalSummary ? candidate.personalInfo.professionalSummary : "No summary available." %>
+                                          <%= candidate.personalInfo?.professionalSummary || "No summary available." %>
                                         </p>
                                       </div>
 
@@ -242,118 +277,83 @@
                                           <div class="mb-4">
                                             <h3 class="border-bottom pb-2 mb-1">Work Experience</h3>
 
-                                            <div class="mb-3">
-                                              <div class="d-flex justify-content-between">
-                                                <h5 class="font-weight-bold mb-1">Senior Software Developer</h5>
-                                                <span class="text-muted">Jan 2022 - Present</span>
-                                              </div>
-                                              <h6 class="text-primary mb-2">TechCorp Solutions</h6>
-                                              <p>Led a team of 5 developers to create enterprise-level web applications
-                                                using React and Node.js. Implemented CI/CD pipelines that reduced
-                                                deployment time by 40%. Optimized database queries resulting in 30%
-                                                faster load times.</p>
-                                            </div>
+                                            <% if (candidate.experiences && candidate.experiences.length> 0) { %>
+                                              <% candidate.experiences.forEach((exp)=> { %>
+                                                <div class="mb-3">
+                                                  <div class="d-flex justify-content-between">
+                                                    <h5 class="font-weight-bold mb-1">
+                                                      <%= exp.jobTitle %>
+                                                    </h5>
+                                                    <span class="text-muted">
+                                                      <%= exp.FromDate %> - <%= exp.currentlyWorking ? "Present" :
+                                                          exp.ToDate %>
+                                                    </span>
+                                                  </div>
+                                                  <h6 class="text-primary mb-2">
+                                                    <%= exp.companyName %>
+                                                  </h6>
+                                                  <p>
+                                                    <%= exp.jobDescription %>
+                                                  </p>
+                                                </div>
+                                                <% }); %>
+                                                  <% } else { %>
+                                                    <p>No work experience provided.</p>
+                                                    <% } %>
 
-                                            <div class="mb-3">
-                                              <div class="d-flex justify-content-between">
-                                                <h5 class="font-weight-bold mb-1">Software Developer</h5>
-                                                <span class="text-muted">Mar 2019 - Dec 2021</span>
-                                              </div>
-                                              <h6 class="text-primary mb-2">Innovate Systems</h6>
-                                              <p>Developed and maintained multiple web applications using JavaScript
-                                                frameworks. Collaborated with design team to implement responsive UI/UX
-                                                designs. Participated in code reviews and implemented testing
-                                                strategies.</p>
-                                            </div>
 
-                                            <div class="mb-3">
-                                              <div class="d-flex justify-content-between">
-                                                <h5 class="font-weight-bold mb-1">Junior Developer</h5>
-                                                <span class="text-muted">Jul 2017 - Feb 2019</span>
-                                              </div>
-                                              <h6 class="text-primary mb-2">DigiTech Solutions</h6>
-                                              <p>Assisted in developing front-end components using HTML, CSS, and
-                                                JavaScript. Contributed to backend development with Node.js and Express.
-                                                Participated in daily scrum meetings and sprint planning.</p>
-                                            </div>
+
                                           </div>
 
                                           <!-- Education -->
                                           <div class="mb-4">
                                             <h3 class="border-bottom pb-2 mb-1">Education</h3>
 
-                                            <div class="mb-3">
-                                              <div class="d-flex justify-content-between">
-                                                <h5 class="font-weight-bold mb-1">Master of Computer Applications</h5>
-                                                <span class="text-muted">2017</span>
-                                              </div>
-                                              <h6 class="text-primary mb-2">Delhi University</h6>
-                                              <div>
-                                                <span class="mr-3">Medium: English</span>
-                                                <span class="mr-3">Marks: 85%</span>
-                                                <span>Specialization: Software Development</span>
-                                              </div>
-                                              <p class="mt-2">Graduated with distinction. Specialized in advanced
-                                                programming techniques and database management.</p>
-                                            </div>
+                                            <% if (candidate.qualifications?.length) { %>
+                                              <% candidate.qualifications.forEach((edu)=> { %>
+                                                <div class="mb-3">
+                                                  <div class="d-flex justify-content-between">
+                                                    <h5 class="font-weight-bold mb-1">
+                                                      <%= qualification.find(i=> i._id == edu.education)?.name %>
+                                                    </h5>
+                                                    <span class="text-muted">
+                                                      <%= edu.passingYear %>
+                                                    </span>
+                                                  </div>
+                                                  <h6 class="text-primary mb-2">
+                                                    <%= edu.collegeName || edu.schoolName || edu.universityName %>
+                                                  </h6>
+                                                  <div>
+                                                    <span class="mr-3">Marks: <%= edu.marks %></span>
+                                                    <% if (edu.specialization) { %><span>Specialization: <%=
+                                                          edu.specialization %></span>
+                                                      <% } %>
+                                                  </div>
+                                                </div>
+                                                <% }) %>
+                                                  <% } else { %>
+                                                    <p>No education details available.</p>
+                                                    <% } %>
 
-                                            <div class="mb-3">
-                                              <div class="d-flex justify-content-between">
-                                                <h5 class="font-weight-bold mb-1">Bachelor of Computer Science</h5>
-                                                <span class="text-muted">2015</span>
-                                              </div>
-                                              <h6 class="text-primary mb-2">Mumbai University</h6>
-                                              <div>
-                                                <span class="mr-3">Medium: English</span>
-                                                <span class="mr-3">Marks: 78%</span>
-                                                <span>Specialization: Computer Science</span>
-                                              </div>
-                                              <p class="mt-2">Completed major projects in web development and data
-                                                structures. Active member of the programming club.</p>
-                                            </div>
 
-                                            <div class="mb-3">
-                                              <div class="d-flex justify-content-between">
-                                                <h5 class="font-weight-bold mb-1">Higher Secondary Education</h5>
-                                                <span class="text-muted">2012</span>
-                                              </div>
-                                              <h6 class="text-primary mb-2">Delhi Public School</h6>
-                                              <div>
-                                                <span class="mr-3">Medium: English</span>
-                                                <span class="mr-3">Marks: 88%</span>
-                                              </div>
-                                              <p class="mt-2">Science stream with Computer Science as an elective
-                                                subject.</p>
-                                            </div>
+
                                           </div>
                                           <!-- Interests Section -->
                                           <div class="mb-4">
                                             <h3 class="border-bottom pb-2 mb-1">Interests</h3>
-                                            <div class="d-flex flex-wrap">
-                                              <span class="badge badge-light mr-1 mb-1 p-1"
-                                                style="position: relative; background:transparent; color: #000;">Machine
-                                                Learning</span>
-                                              <span class="badge badge-light mr-1 mb-1 p-1"
-                                                style="position: relative; background:transparent; color: #000;">Web3
-                                                Development</span>
-                                              <span class="badge badge-light mr-1 mb-1 p-1"
-                                                style="position: relative; background:transparent; color: #000;">Photography</span>
-                                              <span class="badge badge-light mr-1 mb-1 p-1"
-                                                style="position: relative; background:transparent; color: #000;">Hiking</span>
-                                              <span class="badge badge-light mr-1 mb-1 p-1"
-                                                style="position: relative; background:transparent; color: #000;">Chess</span>
-                                              <span class="badge badge-light mr-1 mb-1 p-1"
-                                                style="position: relative; background:transparent; color: #000;">Open
-                                                Source</span>
-                                              <span class="badge badge-light mr-1 mb-1 p-1"
-                                                style="position: relative; background:transparent; color: #000;">UI/UX
-                                                Design</span>
-                                              <span class="badge badge-light mr-1 mb-1 p-1"
-                                                style="position: relative; background:transparent; color: #000;">Blockchain</span>
-                                              <span class="badge badge-light mr-1 mb-1 p-1"
-                                                style="position: relative; background:transparent; color: #000;">Music
-                                                Production</span>
-                                            </div>
+                                            <% if (candidate.personalInfo.interest?.length) { %>
+                                              <div class="d-flex flex-wrap">
+                                                <% candidate.personalInfo.interest.forEach((item)=> { %>
+                                                  <span class="badge badge-light mr-1 mb-1 p-1"
+                                                    style="position: relative; background:transparent; color: #000;">
+                                                    <%= item %>
+                                                  </span>
+                                                  <% }) %>
+                                              </div>
+                                              <% } else { %>
+                                                <p>No interests added.</p>
+                                                <% } %>
+
                                           </div>
                                         </div>
 
@@ -364,135 +364,68 @@
                                             <h3 class="border-bottom pb-2 mb-1">Skills</h3>
                                             <div class="row">
                                               <div class="col-12 mb-2">
-                                                <div class="d-flex align-items-center">
-                                                  <i class="feather icon-check-circle text-success mr-2"></i>
-                                                  <span>JavaScript (React, Node.js)</span>
-                                                </div>
-                                              </div>
-                                              <div class="col-12 mb-2">
-                                                <div class="d-flex align-items-center">
-                                                  <i class="feather icon-check-circle text-success mr-2"></i>
-                                                  <span>Python (Django, Flask)</span>
-                                                </div>
-                                              </div>
-                                              <div class="col-12 mb-2">
-                                                <div class="d-flex align-items-center">
-                                                  <i class="feather icon-check-circle text-success mr-2"></i>
-                                                  <span>HTML5 &amp; CSS3</span>
-                                                </div>
-                                              </div>
-                                              <div class="col-12 mb-2">
-                                                <div class="d-flex align-items-center">
-                                                  <i class="feather icon-check-circle text-success mr-2"></i>
-                                                  <span>SQL &amp; NoSQL Databases</span>
-                                                </div>
-                                              </div>
-                                              <div class="col-12 mb-2">
-                                                <div class="d-flex align-items-center">
-                                                  <i class="feather icon-check-circle text-success mr-2"></i>
-                                                  <span>RESTful API Design</span>
-                                                </div>
-                                              </div>
-                                              <div class="col-12 mb-2">
-                                                <div class="d-flex align-items-center">
-                                                  <i class="feather icon-check-circle text-success mr-2"></i>
-                                                  <span>Docker &amp; Kubernetes</span>
-                                                </div>
-                                              </div>
-                                              <div class="col-12 mb-2">
-                                                <div class="d-flex align-items-center">
-                                                  <i class="feather icon-check-circle text-success mr-2"></i>
-                                                  <span>CI/CD Pipelines</span>
-                                                </div>
-                                              </div>
-                                              <div class="col-12 mb-2">
-                                                <div class="d-flex align-items-center">
-                                                  <i class="feather icon-check-circle text-success mr-2"></i>
-                                                  <span>AWS Cloud Services</span>
-                                                </div>
+                                                <% if (candidate.personalInfo.skills?.length) { %>
+                                                  <% candidate.personalInfo.skills.forEach((skill)=> { %>
+                                                    <div class="col-12 mb-2">
+                                                      <div class="d-flex align-items-center">
+                                                        <i class="feather icon-check-circle text-success mr-2"></i>
+                                                        <span>
+                                                          <%= skill.skillName %> (<%= skill.skillPercent %>%)
+                                                        </span>
+                                                      </div>
+                                                    </div>
+                                                    <% }) %>
+                                                      <% } else { %>
+                                                        <p>No skills listed.</p>
+                                                        <% } %>
+
                                               </div>
                                             </div>
-                                          </div>
 
-                                          <!-- Languages Section -->
-                                          <div class="mb-4">
-                                            <h3 class="border-bottom pb-2 mb-1">Languages</h3>
-                                            <div>
-                                              <div class="mb-2">
-                                                <div class="d-flex justify-content-between">
-                                                  <span>English</span>
-                                                  <div>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
+                                            <!-- Languages Section -->
+                                            <div class="mb-4">
+                                              <h3 class="border-bottom pb-2 mb-1">Languages</h3>
+                                              <div>
+                                                <% candidate.personalInfo.languages?.forEach(lang=> { %>
+                                                  <div class="mb-2">
+                                                    <div class="d-flex justify-content-between">
+                                                      <span>
+                                                        <%= lang.name %>
+                                                      </span>
+                                                      <div>
+                                                        <% for (let i=1; i <=5; i++) { %>
+                                                          <i class="fa fa-circle <%= i <= lang.level ? 'text-primary' : 'text-muted' %> mr-1"
+                                                            style="font-size: 8px;"></i>
+                                                          <% } %>
+                                                      </div>
+                                                    </div>
                                                   </div>
-                                                </div>
-                                              </div>
-                                              <div class="mb-2">
-                                                <div class="d-flex justify-content-between">
-                                                  <span>Hindi</span>
-                                                  <div>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-muted mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              <div class="mb-2">
-                                                <div class="d-flex justify-content-between">
-                                                  <span>Spanish</span>
-                                                  <div>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-muted mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-muted mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              <div class="mb-2">
-                                                <div class="d-flex justify-content-between">
-                                                  <span>French</span>
-                                                  <div>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-primary mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-muted mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-muted mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                    <i class="fa fa-circle text-muted mr-1" style="font-size: 8px;"
-                                                      aria-hidden="true"></i>
-                                                  </div>
-                                                </div>
+                                                  <% }) %>
+
                                               </div>
                                             </div>
-                                          </div>
 
-                                          <!-- Certifications Section -->
-                                          <div class="mb-4">
-                                            <h3 class="border-bottom pb-2 mb-1">Certifications</h3>
-                                            <ul class="list-unstyled">
+                                            <!-- Certifications Section -->
+                                            <div class="mb-4">
+                                              <h3 class="border-bottom pb-2 mb-1">Certifications</h3>
+                                              <% if (candidate.personalInfo.certifications?.length) { %>
+                                                <ul class="list-unstyled">
+                                                  <% candidate.personalInfo.certifications.forEach(cert=> { %>
+                                                    <li class="mb-2">
+                                                      <i class="feather icon-award text-warning mr-2"></i>
+                                                      <span class="font-weight-bold">
+                                                        <%= cert.certificateName %>
+                                                      </span>
+                                                      - <%= cert.orgName %> (<%= cert.month || '' %>
+                                                          <%= cert.year || '' %>)
+                                                    </li>
+                                                    <% }) %>
+                                                </ul>
+                                                <% } else { %>
+                                                  <p>No certifications found.</p>
+                                                  <% } %>
+
+                                                    <!-- <ul class="list-unstyled">
                                               <li class="mb-2">
                                                 <i class="feather icon-award text-warning mr-2"></i>
                                                 <span class="font-weight-bold">AWS Certified Solutions Architect</span>
@@ -518,60 +451,47 @@
                                                 <span class="font-weight-bold">MongoDB Certified Developer
                                                   Associate</span> - MongoDB University
                                               </li>
-                                            </ul>
+                                            </ul> -->
+                                            </div>
+
+                                            <!-- Projects Section -->
+                                            <div class="mb-4">
+                                              <h3 class="border-bottom pb-2 mb-1">Projects</h3>
+                                              <% if (candidate.personalInfo.projects?.length) { %>
+                                                <% candidate.personalInfo.projects.forEach((proj)=> { %>
+                                                  <div class="mb-3">
+                                                    <h5 class="font-weight-bold mb-1">
+                                                      <%= proj.projectName %> <span class="text-muted">(<%= proj.proyear
+                                                            %>)</span>
+                                                    </h5>
+                                                    <p>
+                                                      <%= proj.proDescription %>
+                                                    </p>
+                                                  </div>
+                                                  <% }); %>
+                                                    <% } else { %>
+                                                      <p>No projects listed.</p>
+                                                      <% } %>
+
+
+                                            </div>
+
+
                                           </div>
-
-                                          <!-- Projects Section -->
-                                          <div class="mb-4">
-                                            <h3 class="border-bottom pb-2 mb-1">Projects</h3>
-                                            <div class="mb-3">
-                                              <h5 class="font-weight-bold mb-1">
-                                                E-Commerce Platform Redesign <span class="text-muted">(2023)</span>
-                                              </h5>
-                                              <p>Led the complete redesign and migration of a legacy e-commerce platform
-                                                to a modern React/Node.js stack. Implemented microservices architecture
-                                                and improved site performance by 60%. Integrated payment gateways and
-                                                inventory management systems.</p>
-                                            </div>
-                                            <div class="mb-3">
-                                              <h5 class="font-weight-bold mb-1">
-                                                Health Monitoring Mobile App <span class="text-muted">(2022)</span>
-                                              </h5>
-                                              <p>Developed a cross-platform mobile application for health monitoring
-                                                using React Native. Implemented real-time data synchronization, push
-                                                notifications, and integration with wearable devices. The app received
-                                                50,000+ downloads in the first month.</p>
-                                            </div>
-                                            <div class="mb-3">
-                                              <h5 class="font-weight-bold mb-1">
-                                                AI-Powered Content Management System <span
-                                                  class="text-muted">(2021)</span>
-                                              </h5>
-                                              <p>Created a content management system with AI-powered content suggestions
-                                                and SEO optimization. Used Python and TensorFlow for the AI components
-                                                and React for the frontend. The system increased content engagement by
-                                                45% for client websites.</p>
-                                            </div>
-                                          </div>
-
-
                                         </div>
-                                      </div>
 
-                                      <!-- Declaration -->
-                                      <div class="mt-4">
-                                        <h3 class="border-bottom pb-2 mb-1">Declaration</h3>
-                                        <p>I hereby declare that all the information provided above is true to the best
-                                          of my knowledge and belief. I understand that any false statement may result
-                                          in the rejection of my application or termination of employment. I authorize
-                                          the prospective employer to verify all the details mentioned in this resume
-                                          and contact my previous employers for reference checks.</p>
+                                        <!-- Declaration -->
+                                        <div class="mt-4">
+                                          <h3 class="border-bottom pb-2 mb-1">Declaration</h3>
+                                          <p>
+                                            <%= candidate.personalInfo?.declaration?.text %>
+                                          </p>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
                           </section>
                         </div>
                         <!-- /Project table -->
@@ -580,6 +500,169 @@
               </div>
             </div>
           </section>
+
+          <!-- HIDDEN RESUME VIEW FOR PDF DOWNLOAD - इसे बेहतर बनाया गया है -->
+          <div id="hidden-resume-pdf">
+            <div style="width: 794px; padding: 30px; color: #000;">
+              <div
+                style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 15px;">
+                <h1 style="margin-bottom: 5px; color: #2c3e50;">
+                  <%= candidate.name || 'NA' %>
+                </h1>
+                <p style="margin: 5px 0;">
+                  <strong>Email:</strong>
+                  <%= candidate.email || 'NA' %> |
+                    <strong>Mobile:</strong>
+                    <%= candidate.mobile || 'NA' %>
+                </p>
+                <p>
+                  <strong>Highest Qualification:</strong>
+                  <%= qualification.find(i=> i._id == candidate.highestQualification)?.name || 'NA' %>
+                </p>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Professional Summary
+                </h3>
+                <p style="text-align: justify;">
+                  <%= candidate.personalInfo?.professionalSummary || 'NA' %>
+                </p>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Experience</h3>
+                <% if (candidate.experiences && candidate.experiences.length> 0) { %>
+                  <% candidate.experiences.forEach(exp=> { %>
+                    <div style="margin-bottom: 10px;">
+                      <p style="margin: 5px 0;">
+                        <strong style="font-size: 16px;">
+                          <%= exp.jobTitle %>
+                        </strong>
+                        at <span style="color: #3498db;">
+                          <%= exp.companyName %>
+                        </span>
+                        (<%= exp.FromDate %> - <%= exp.currentlyWorking ? 'Present' : exp.ToDate %>)
+                      </p>
+                      <p style="margin-left: 10px; text-align: justify;">
+                        <%= exp.jobDescription %>
+                      </p>
+                    </div>
+                    <% }) %>
+                      <% } else { %>
+                        <p>No experience information available.</p>
+                        <% } %>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Education</h3>
+                <% if (candidate.qualifications?.length) { %>
+                  <% candidate.qualifications.forEach((edu)=> { %>
+                    <div style="margin-bottom: 10px;">
+                      <p style="margin: 5px 0;">
+                        <strong style="font-size: 16px;">
+                          <%= qualification.find(i=> i._id == edu.education)?.name %>
+                        </strong>,
+                        <span style="color: #3498db;">
+                          <%= edu.collegeName || edu.schoolName || edu.universityName %>
+                        </span>
+                        — <%= edu.passingYear %> | Marks: <%= edu.marks %>
+                      </p>
+                      <% if (edu.specialization) { %>
+                        <p style="margin-left: 10px;">Specialization: <%= edu.specialization %>
+                        </p>
+                        <% } %>
+                    </div>
+                    <% }) %>
+                      <% } else { %>
+                        <p>No education details available.</p>
+                        <% } %>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <div style="width: 48%; margin-bottom: 20px;">
+                  <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Skills</h3>
+                  <% if (candidate.personalInfo.skills?.length) { %>
+                    <ul style="padding-left: 20px;">
+                      <% candidate.personalInfo.skills.forEach(skill=> { %>
+                        <li>
+                          <%= skill.skillName %> (<%= skill.skillPercent %>%)
+                        </li>
+                        <% }) %>
+                    </ul>
+                    <% } else { %>
+                      <p>No skills listed.</p>
+                      <% } %>
+                </div>
+
+                <div style="width: 48%; margin-bottom: 20px;">
+                  <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Languages</h3>
+                  <% if (candidate.personalInfo.languages?.length) { %>
+                    <ul style="padding-left: 20px;">
+                      <% candidate.personalInfo.languages.forEach(lang=> { %>
+                        <li>
+                          <%= lang.name %> - Proficiency: Level <%= lang.level %>/5
+                        </li>
+                        <% }) %>
+                    </ul>
+                    <% } else { %>
+                      <p>No languages listed.</p>
+                      <% } %>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Certifications</h3>
+                <% if (candidate.personalInfo.certifications?.length) { %>
+                  <ul style="padding-left: 20px;">
+                    <% candidate.personalInfo.certifications.forEach(cert=> { %>
+                      <li>
+                        <strong>
+                          <%= cert.certificateName %>
+                        </strong> -
+                        <%= cert.orgName %> (<%= cert.month %>
+                            <%= cert.year %>)
+                      </li>
+                      <% }) %>
+                  </ul>
+                  <% } else { %>
+                    <p>No certifications listed.</p>
+                    <% } %>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Projects</h3>
+                <% if (candidate.personalInfo.projects?.length) { %>
+                  <% candidate.personalInfo.projects.forEach(proj=> { %>
+                    <div style="margin-bottom: 10px;">
+                      <p style="margin: 5px 0;">
+                        <strong style="font-size: 16px;">
+                          <%= proj.projectName %>
+                        </strong>
+                        <span style="color: #7f8c8d;">(<%= proj.proyear %>)</span>
+                      </p>
+                      <p style="margin-left: 10px; text-align: justify;">
+                        <%= proj.proDescription %>
+                      </p>
+                    </div>
+                    <% }) %>
+                      <% } else { %>
+                        <p>No projects listed.</p>
+                        <% } %>
+              </div>
+
+              <% if (candidate.personalInfo?.declaration?.text) { %>
+                <div style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px;">
+                  <h3 style="color: #2980b9; padding-bottom: 5px;">Declaration</h3>
+                  <p style="font-style: italic;">
+                    <%= candidate.personalInfo.declaration.text %>
+                  </p>
+                </div>
+                <% } %>
+            </div>
+          </div>
+
+
+
         </div>
         <div class="sidenav-overlay"></div>
         <div class="drag-target"></div>
@@ -950,43 +1033,76 @@
           const element = document.getElementById('mipie_profile')
           const preloader = $('#preloader');
           preloader.hide();
+          // function addTextContent(id) {
+          //   preloader.show(); console.log("Attempting to download profile for ID:", id);
+          //   axios.get(`/company/createResume/${id}`, {
+          //     headers: { 'x-auth': localStorage.getItem('token') }
+          //   }).then(res => {
+          //     preloader.hide();
+          //     window.open(res.data.uploadData, '_blank')
+          //     console.log("Received download URL:", res.data.uploadData);
+          //   }).catch((err) => {
+          //     preloader.hide();
+          //     console.log(err.message)
+          //   })
+          // }
+
           function addTextContent(id) {
+            const preloader = $('#preloader');
             preloader.show();
-            axios.get(`/company/createResume/${id}`, {
-              headers: { 'x-auth': localStorage.getItem('token') }
-            }).then(res => {
-              preloader.hide();
-              window.open(res.data.uploadData, '_blank')
-            }).catch((err) => {
-              preloader.hide();
-              console.log(err.message)
-            })
+
+            setTimeout(() => {
+              const element = document.getElementById('hidden-resume-pdf');
+              element.style.display = 'block';
+              const opt = {
+                margin: 0.5,
+                filename: 'Resume.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+              };
+
+              html2pdf().set(opt).from(element).save().then(() => {
+
+                preloader.hide();
+              }).catch(err => {
+                console.error("PDF download error:", err);
+                element.style.display = 'none';
+                preloader.hide();
+              });
+            }, 1000); // Slight delay to ensure rendering
           }
+
+
           function downloadCandidateResume() {
-            const url = "<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.resume %>"
+  const resumeArrayStr = '<%- JSON.stringify(candidate.personalInfo?.resume || []) %>';
+  const resumeArray = JSON.parse(resumeArrayStr); // Now it's a real array
+
+  console.log('Actual resume count:', resumeArray.length);
+
+  if (resumeArray.length === 0) {
+    alert("No resume available.");
+    return;
+  }
+
+  const lastResume = resumeArray[resumeArray.length - 1];
+  const url = lastResume.url;
+  
+  window.open(url, '_blank');
+}
+ function downloadFocalytresumenotmasked(){
+  alert("Please Candidate unmasked first.");
+ }
+
+          function downloadFocalytresume() {
+            const url = "<%= candidate.personalInfo.focalytProfile?candidate.personalInfo.focalytProfile:'' %>"
+            if (!url) {
+    alert("No resume available.");
+    return;
+  }
             window.open(url, '_blank')
           }
 
-          function updateStatus(id) {
-            let status = document.getElementById('hiringStatus').value
-            let job = document.getElementById('hiringJob').value
-            let comment = document.getElementById('hiringComment').value
-            let eventDate = $('#eventDate').val()
-            let concernedPerson = $('#concernedPerson').val()
-            let body = {
-              candidate: id,
-              status: status,
-              job: job,
-              comment: comment,
-              eventDate: eventDate,
-              concernedPerson: concernedPerson
-            }
-
-            axios({ method: 'post', url: `/company/candidate/statusUpdate`, data: body, headers: { 'x-auth': localStorage.getItem('token') } })
-              .then(result => {
-                window.location.reload()
-              })
-          }
 
           function changeButton() {
             let hiringStatus = document.getElementById('hiringStatus').value
@@ -1037,6 +1153,10 @@
 
         </script>
 
+        <!-- HTML2PDF लाइब्रेरी का सही CDN लिंक -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+          integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <% include ./partials/footer%>
   </body>

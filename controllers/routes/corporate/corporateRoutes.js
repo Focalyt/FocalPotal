@@ -1082,14 +1082,27 @@ router.get("/jobs/:id", isCompany, async (req, res) => {
   const populateForCandidate = [
     {
       path: '_candidate',
-      select: 'name highestQualification qualifications sex isExperienced totalExperience _id mobile whatsapp',
-      populate: {
-        path: 'qualifications.0.Qualification', select: 'name'
-      }
+      select: 'name mobile whatsapp sex isExperienced highestQualification creditLeft personalInfo.totalExperience qualifications',
+      populate: [
+        {
+          path: 'highestQualification',
+          select: 'name'
+        },
+        {
+          path: 'qualifications.education',
+          select: 'name'
+        },
+        {
+          path: 'qualifications.course',
+          select: 'name'
+        }
+      ]
     }
-  ]
+  ];
+  
   let appliedCandidates = await AppliedJobs.find({ _job: req.params.id }).populate(populateForCandidate)
   let qualifications = await Qualification.find({ status: true }).select('_id name');
+  console.log('appliedCandidates',appliedCandidates)
   res.render(`${req.vPath}/app/corporate/view-jd`, { menu, jd, appliedCandidates, qualifications });
 });
 async function getUploadedURL() {

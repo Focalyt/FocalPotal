@@ -5,6 +5,8 @@ const { ObjectId } = Schema.Types;
 const { jwtSecret } = require("../../config");
 const { boolean } = require("joi");
 
+
+
 const candidateProfileSchema = new Schema(
   {
     name: { type: String, trim: true },
@@ -27,17 +29,19 @@ const candidateProfileSchema = new Schema(
       totalExperience: Number,
 
       profilevideo: { type: String },
-      resume: [{ name: {type:String},
-        url: {type:String},
+      resume: [{
+        name: { type: String },
+        url: { type: String },
         uploadedAt: { type: Date, default: Date.now }
-        }],
+      }],
+      focalytProfile: { type: String },
       linkedInUrl: { type: String },
       facebookUrl: { type: String },
       twitterUrl: { type: String },
       professionalTitle: { type: String },
       professionalSummary: { type: String },
       currentAddress: {
-       type: {
+        type: {
           type: String,
           enum: ["Point"],
           default: "Point"
@@ -53,22 +57,22 @@ const candidateProfileSchema = new Schema(
         fullAddress: { type: String }
       },
       permanentAddress: {
-        sameCurrentAddress:{type:Boolean,default:false},
+        sameCurrentAddress: { type: Boolean, default: false },
         type: {
-           type: String,
-           enum: ["Point"],
-           default: "Point"
-         },
-         coordinates: {
-           type: [Number],
-           default: [0, 0]
-         },
-         latitude: { type: String },
-         longitude: { type: String },
-         city: { type: String },
-         state: { type: String },
-         fullAddress: { type: String }
-       },
+          type: String,
+          enum: ["Point"],
+          default: "Point"
+        },
+        coordinates: {
+          type: [Number],
+          default: [0, 0]
+        },
+        latitude: { type: String },
+        longitude: { type: String },
+        city: { type: String },
+        state: { type: String },
+        fullAddress: { type: String }
+      },
       image: { type: String },
       jobLocationPreferences: [
         {
@@ -99,7 +103,8 @@ const candidateProfileSchema = new Schema(
           state: String,
           fullAddress: String
         },
-        year: { type: String }
+        year: { type: String },
+        month: { type: String },
       }],
       languages: [{
         name: { type: String },
@@ -143,7 +148,10 @@ const candidateProfileSchema = new Schema(
       },
     ],
     appliedJobs: [{ jobId: { type: ObjectId, ref: "Vacancy" } }],
-    appliedEvents: [{ EventId: { type: ObjectId, ref: "Event" } }],
+    appliedEvents: [{
+      EventId: { type: ObjectId, ref: "Event" },
+      appliedEventId: { type: ObjectId, ref: "AppliedEvent" }
+    }],
     appliedCourses: [
       {
         courseId: { type: ObjectId, ref: "courses" }, // Changed from type to courseId
@@ -210,7 +218,7 @@ const candidateProfileSchema = new Schema(
     experiences: [
       {
         jobTitle: String,
-        jobDescription:String,        
+        jobDescription: String,
         companyName: String,
         location: {
           type: {
@@ -227,13 +235,13 @@ const candidateProfileSchema = new Schema(
           city: { type: String },
           state: { type: String },
           fullAddress: { type: String }
-        },        
-        FromDate: String,
-        ToDate: String,
+        },
+        from: { type: Date },   // <-- Change here ✅
+        to: { type: Date },
         currentlyWorking: { type: Boolean, default: false },
       },
     ],
-    
+
 
     availableCredit: {
       type: Number,

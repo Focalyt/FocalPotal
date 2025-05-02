@@ -202,7 +202,7 @@
 											<div class="col-xl-3 mb-1">
 												<label>Name </label>
 												<input class="form-control text-capitalize" name="name"
-													value="<%- company._concernPerson.name ? company._concernPerson.name : ''; %>"
+													value="<%- company._concernPerson?.name ? company._concernPerson?.name : ''; %>"
 													required type="text" pattern="[a-zA-Z\s]+" maxlength="50"
 													readonly />
 											</div>
@@ -211,21 +211,21 @@
 												<label>Designation
 												</label>
 												<input class="form-control text-capitalize" type="text"
-													value="<%- company._concernPerson.designation? company._concernPerson.designation : ''; %>"
+													value="<%- company._concernPerson?.designation? company._concernPerson?.designation : ''; %>"
 													name="designation" maxlength="50" required readonly />
 											</div>
 
 											<div class="col-xl-3 mb-1">
 												<label>Email </label>
 												<input class="form-control" type="Email"
-													value="<%-  company._concernPerson.email ?  company._concernPerson.email : ''; %>"
+													value="<%-  company._concernPerson?.email ?  company._concernPerson?.email : ''; %>"
 													name="email" maxlength="50" required readonly />
 											</div>
 											<div class="col-xl-3 mb-1">
 												<label>Contact Number
 												</label>
 												<input class="form-control" type="number"
-													value="<%- company._concernPerson.mobile ? company._concernPerson.mobile : ''; %>"
+													value="<%- company._concernPerson?.mobile ? company._concernPerson?.mobile : ''; %>"
 													name="mobile" maxlength="12" required readonly />
 											</div>
 										</div>

@@ -225,10 +225,10 @@
                           <th>Candidates</th>
                           <th>Gender</th>
                           <th>Qualification</th>
-                          <th>Branch</th>
                           <th>Experience</th>
-                          <th>Action</th>
+                          
                           <th>Applied on</th>
+                          <th>Action</th>
                           </tr>
                         </thead>
                         <tbody id="table-body" class="text-capitalize">
@@ -237,13 +237,14 @@
                             <tr>
                               <td><%= candidate?._candidate?.name %></td>
                               <td><%= candidate?._candidate?.sex %></td>
-                              <td><%= (qualifications?.find(q => candidate?._candidate?.highestQualification == q._id ))?.name %></td>
-                              <td><%= candidate?._candidate?.qualifications[0]?.Qualification?.name ? candidate?._candidate?.qualifications[0]?.Qualification?.name : "NA" %></td>
+                              <td><%= candidate?._candidate?.highestQualification?.name || "NA" %></td>
+
+                              <!-- <td><%= (qualifications?.find(q => candidate?._candidate?.highestQualification == q._id ))?.name %></td> -->
                               <td><%= !candidate?._candidate?.isExperienced ? 'Fresher' : candidate?._candidate?.totalExperience ? candidate?._candidate.totalExperience + ' Years' : 'NA' %></td>
                               <td><%= moment(candidate._candidate?.createdAt).format('MMM DD YYYY')%></td>
                               <td class="actions" id="socail-iconw">
                                 <% if (candidate && candidate._candidate) { %>
-                                  <a href="/company/candidate/<%= candidate._candidate._id %>">
+                                  <a href="/company/newcandidate/<%= candidate._candidate._id %>">
                                     <i class="fa-regular fa-user fa-lg"></i>
                                   </a>
                                   <% if (candidate._candidate.whatsapp) { %>
