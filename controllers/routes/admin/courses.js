@@ -921,6 +921,7 @@ router.route("/registrations")
 				};
 				let agg = candidateServices.candidateCourseList(sorting, perPage, page, filter);
 				let allCandidates = await AppliedCourses.aggregate(agg);
+				console.log('')
 				let centerIds = user.access?.centerAccess?.map(id => id.toString()) || [];
 				let courseIds = user.access?.courseAccess?.map(id => id.toString()) || [];
 
@@ -940,7 +941,7 @@ router.route("/registrations")
 				// ✅ Log to confirm filtering
 				console.log("filtered candidates:", candidates);
 				console.log('centerIds', centerIds);
-				console.log('allCandidates', allCandidates);
+
 			}
 
 

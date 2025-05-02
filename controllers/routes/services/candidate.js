@@ -436,6 +436,35 @@ module.exports = {
         $limit: perPage,
       },
       {
+        $lookup: {
+          from: "users", // or the actual collection name where registeredBy is stored
+          localField: "registeredBy",
+          foreignField: "_id",
+          as: "registeredUser"
+        }
+      },
+      {
+        $unwind: {
+          path: "$registeredUser",
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: "centers",
+          localField: "_center",
+          foreignField: "_id",
+          as: "centerInfo"
+        }
+      },
+      {
+        $unwind: {
+          path: "$centerInfo",
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      
+      {
         $addFields: {
           name: { $ifNull: ["$_candidate.name", ""] },
           candidateId: { $ifNull: ["$_candidate._id", ""] },
@@ -446,7 +475,10 @@ module.exports = {
           registrationFee: { $ifNull: ["$registrationFee", "Unpaid"] },
           sector: { $ifNull: ["$_course.sectors.name", []] },
           docsRequired: { $ifNull: ["$_course.docsRequired", []] },
-          uploadedDocs: { $ifNull: ["$uploadedDocs", []] }  // ✅ Ye important
+          uploadedDocs: { $ifNull: ["$uploadedDocs", []] },  // ✅ Ye important
+          registeredByName: { $ifNull: ["$registeredUser.name", ""] }, // 👈 add this line
+          centerId: { $ifNull: ["$centerInfo._id", ""] },
+  centerName: { $ifNull: ["$centerInfo.name", ""] }
         },
       },
       {
@@ -467,7 +499,10 @@ module.exports = {
           url: 1,
           docsRequired: 1,
           uploadedDocs: 1, // ✅
-          registeredBy: 1
+          registeredBy: 1,
+          registeredByName:1,
+          centerId: 1,
+          centerName:1
         },
       },
     ];
