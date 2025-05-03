@@ -59,20 +59,21 @@
                                             <td><%= moment(candidate.createdAt).utcOffset("+05:30").format('MMM DD YYYY')%></td>
                                             <td><%= candidate._job?.displayCompanyName || company.name || 'NA' %></td>
                                             <td><%= candidate._job?.title || 'NA' %></td>
-                                            <td><%= candidate._candidate.name || 'NA' %></td>
+                                            <td><%= candidate._candidate ? candidate._candidate.name : 'NA' %></td>
                                             <td><%= candidate._candidate?.highestQualification?.name || 'NA' %></td>
-                                            <td><%= candidate._candidate.totalExperience ? candidate._candidate.totalExperience : 'Fresher' %></td>
+                                            <td><%= candidate._candidate ? (candidate._candidate.totalExperience || 'Fresher') : 'NA' %></td>
                                             <td><%= candidate._candidate?.city?.name || 'NA' %> , <%= candidate._candidate?.state?.name || 'NA' %></td>
                                             <td>
-                                                <a href="/company/candidate/<%= candidate._candidate._id %>">
-                                                    <i class="feather icon-eye fa-lg primary"></i>
+                                              <% if (candidate._candidate && candidate._candidate._id) { %>
+                                                <a href="/company/newcandidate/<%= candidate._candidate._id %>">
+                                                  <i class="feather icon-eye fa-lg primary"></i>
                                                 </a>
+                                              <% } else { %>
+                                                NA
+                                              <% } %>
+                                              
 
-                                                <!-- <a data-toggle="modal" data-target="#updateStatus" 
-                                                onclick="setValues('<%= candidate._candidate._id %>', '<%= candidate._job?.title  %>','<%= candidate._job?._id  %>')">
-                                                    <i class="feather icon-x fa-lg primary"></i>
-                                                </a> -->
-
+                                            
 
                                             </td>
                                         </tr>
