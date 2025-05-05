@@ -17,7 +17,7 @@ const Candidate = require('../../models/candidateProfile')
 
 const {
 	Import,
-	
+
 	Qualification,
 	AppliedCourses,
 	Courses,
@@ -223,105 +223,105 @@ router.route("/addleaddandcourseapply")
 	.post(auth1, async (req, res) => {
 		try {
 			console.log("Incoming body:", req.body);
-		
+
 			let { name, mobile, email, address, state, city, sex, dob, whatsapp, highestQualification, courseId, selectedCenter, longitude, latitude } = req.body;
-		
+
 			if (mongoose.Types.ObjectId.isValid(highestQualification)) highestQualification = new mongoose.Types.ObjectId(highestQualification);
 			if (mongoose.Types.ObjectId.isValid(courseId)) courseId = new mongoose.Types.ObjectId(courseId);
 			if (mongoose.Types.ObjectId.isValid(selectedCenter)) selectedCenter = new mongoose.Types.ObjectId(selectedCenter);
-		
+
 			if (dob) dob = new Date(dob); // Date field
-		
+
 			// Fetch course
 			const course = await Courses.findById(courseId);
 			if (!course) {
-			  return res.status(400).json({ status: false, msg: "Course not found" });
+				return res.status(400).json({ status: false, msg: "Course not found" });
 			}
-		
+
 			const userId = req.session.user._id;
 			const userName = req.session.user.name;
-		
+
 			// ✅ Build CandidateProfile Data
 			let candidateData = {
-			  name,
-			  mobile,
-			  email,
-			  sex,
-			  dob,
-			  whatsapp,
-			  highestQualification,
-			  personalInfo: {
-				currentAddress: {
-					city: city || "",
-					state: state || "",
-					fullAddress: address || "",
-					latitude: latitude || "",
-					longitude: longitude || "",
-					coordinates: latitude && longitude ? [parseFloat(longitude), parseFloat(latitude)] : [0, 0]
-				  
-				}
-			  },
-			  appliedCourses: [
-				{
-				  courseId: courseId,
-				  centerId: selectedCenter
-				}
-			  ],
-			  verified: true
+				name,
+				mobile,
+				email,
+				sex,
+				dob,
+				whatsapp,
+				highestQualification,
+				personalInfo: {
+					currentAddress: {
+						city: city || "",
+						state: state || "",
+						fullAddress: address || "",
+						latitude: latitude || "",
+						longitude: longitude || "",
+						coordinates: latitude && longitude ? [parseFloat(longitude), parseFloat(latitude)] : [0, 0]
+
+					}
+				},
+				appliedCourses: [
+					{
+						courseId: courseId,
+						centerId: selectedCenter
+					}
+				],
+				verified: true
 			};
-		
+
 			console.log("Final Candidate Data:", candidateData);
-		
+
 			// ✅ Create CandidateProfile
 			const candidate = await Candidate.create(candidateData);
-		
+
 			// ✅ Insert AppliedCourses Record
 			const appliedCourseEntry = await AppliedCourses.create({
-			  _candidate: candidate._id,
-			  _course: courseId,
-			  _center: selectedCenter,
-			  registeredBy: userId
+				_candidate: candidate._id,
+				_course: courseId,
+				_center: selectedCenter,
+				registeredBy: userId
 			});
-		
+
 			console.log("Candidate Profile created and Course Applied.");
-		
+
 			// ✅ Optional: Update your Google Spreadsheet
 			const capitalizeWords = (str) => {
-			  if (!str) return '';
-			  return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+				if (!str) return '';
+				return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
 			};
-		
+
 			const sheetData = [
-			  moment(appliedCourseEntry.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
-			  moment(appliedCourseEntry.createdAt).utcOffset('+05:30').format('hh:mm A'),
-			  capitalizeWords(course?.name),
-			  candidate?.name,
-			  candidate?.mobile,
-			  candidate?.email,
-			  candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
-			  candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
-			  state,
-			  city,
-			  'Course',
-			  `${process.env.BASE_URL}/coursedetails/${courseId}`,
-			  course?.registrationCharges,
-			  appliedCourseEntry?.registrationFee,
-			  'Lead From Portal',
-			  course?.courseFeeType,
-			  course?.typeOfProject,
-			  course?.projectName,
-			  userName
+				moment(appliedCourseEntry.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
+				moment(appliedCourseEntry.createdAt).utcOffset('+05:30').format('hh:mm A'),
+				capitalizeWords(course?.name),
+				candidate?.name,
+				candidate?.mobile,
+				candidate?.email,
+				candidate?.sex === 'Male' ? 'M' : candidate?.sex === 'Female' ? 'F' : '',
+				candidate?.dob ? moment(candidate.dob).format('DD MMM YYYY') : '',
+				state,
+				city,
+				'Course',
+				`${process.env.BASE_URL}/coursedetails/${courseId}`,
+				course?.registrationCharges,
+				appliedCourseEntry?.registrationFee,
+				'Lead From Portal',
+				course?.courseFeeType,
+				course?.typeOfProject,
+				course?.projectName,
+				userName
 			];
-		
+
 			await updateSpreadSheetValues(sheetData);
-		
+
 			res.send({ status: true, msg: "Candidate added and course applied successfully", data: candidate });
-		
-		  } catch (err) {
+
+		} catch (err) {
 			console.error(err);
 			req.flash("error", err.message || "Something went wrong!");
 			return res.redirect("back");
-		  }
+		}
 	});
 
 router.route("/course/:courseId/apply")
@@ -374,10 +374,7 @@ router.route("/course/:courseId/apply")
 				return res.status(404).json({ status: false, msg: "Course not found." });
 			}
 
-			const candidate = await Candidate.findOne({ mobile: mobile }).populate([
-				{ path: 'state', select: "name" },
-				{ path: 'city', select: "name" }
-			]).lean();
+			const candidate = await Candidate.findOne({ mobile: mobile }).lean();
 			console.log("candidate", candidate)
 
 			if (!candidate) {
@@ -386,10 +383,16 @@ router.route("/course/:courseId/apply")
 			}
 
 			// // Check if already applied
-			if (candidate.appliedCourses && candidate.appliedCourses.some(appliedId => appliedId.equals(courseId))) {
-				console.log("Already applied")
+			if (
+				candidate.appliedCourses &&
+				candidate.appliedCourses.some(applied =>
+				  applied.courseId && applied.courseId.toString() === courseId.toString()
+				)
+			  ) {
+				console.log("Already applied");
 				return res.status(400).json({ status: false, msg: "Course already applied." });
-			}
+			  }
+			  
 			const apply = await Candidate.findOneAndUpdate(
 				{ mobile: mobile },
 				{
