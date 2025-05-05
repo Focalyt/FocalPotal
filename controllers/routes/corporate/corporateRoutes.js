@@ -1186,6 +1186,7 @@ router.get('/editJobs/:id', isCompany, async (req, res) => {
     const city = hasState
       ? await City.find({ stateId: st.stateId })
       : [];
+      console.log('jd',jd)
     res.render(`${req.vPath}/app/corporate/editJob`, {
       menu,
       jd,

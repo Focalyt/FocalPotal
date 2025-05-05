@@ -127,7 +127,7 @@
                                       <%= vacancy?.experience %>
                                     </option>
                                     <%}%>
-                                      <option value="0" <% if(vacancy?.experience=='0' ) {%> selected <% } %> >Fresher
+                                      <option value="0" <% if(vacancy?.experience=='0' ) {%> selected <% } %> >0
                                       </option>
                                       <% for (var i=1; i <=25; i++ ) { %>
                                         <option value="<%= i %>">
@@ -147,9 +147,9 @@
                                       <%= vacancy?.experience %>
                                     </option>
                                     <%}%>
-                                      <option value="0" <% if(vacancy?.experience=='0' ) {%> selected <% } %> >Fresher
+                                      <option value="0" <% if(vacancy?.experience=='0' ) {%> selected <% } %> >0
                                       </option>
-                                      <% for (var i=1; i <=25; i++ ) { %>
+                                      <% for (var i=1; i <=12; i++ ) { %>
                                         <option value="<%= i %>">
                                           <%= i %>
                                         </option>
@@ -1460,6 +1460,7 @@
               $('#jd-subqua-field').removeClass('error')
               let industry = $('#jd-industry').val();
               let exp = $('#jd-exp').val();
+              let expMon = $('#jd-exp-mon').val();
               let qua = $('#jd-qua').val();
               let subqua = $('#jd-subqua').val();
               // let jobCategory = $('#jd-category').val();
@@ -1516,8 +1517,9 @@
                 firstError = firstError ? firstError : $('#jd-industry')
                 flag = false
               }
-              if (exp.trim() === '') {
+              if (exp.trim() === '' || expMon.trim()==='') {
                 $('#jd-exp-field').addClass('error')
+                $('#jd-exp-field-month').addClass('error')
                 firstError = firstError ? firstError : $('#jd-exp')
                 flag = false
               }

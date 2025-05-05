@@ -92,8 +92,27 @@
                                     <%= jd?.experience %>
                                   </option>
                                   <%}%>
-                                    <option value="0" <% if(jd?.experience=='0' ) {%> selected <% } %> >Fresher</option>
+                                    <option value="0" <% if(jd?.experience=='0' ) {%> selected <% } %> >0</option>
                                     <% for (var i=1; i <=25; i++ ) { %>
+                                      <option value="<%= i %>">
+                                        <%= i %>
+                                      </option>
+                                      <% } %>
+                              </select>
+                            </div>
+                            <div class="col-xl-3 mb-1" id="jd-exp-field-month">
+                              <label>Experience (In Months)</label><span class="mandatory"> *</span></label>
+                              <select class="form-control" id="jd-exp-mon" name="experienceMonths" value="" required
+                                oninvalid="this.setCustomValidity('Please Select Experience in Months')"
+                                oninput="this.setCustomValidity('')">
+                                <option value="">Select option</option>
+                                <% if(jd?.experienceMonths) { %>
+                                  <option value="<%= jd?.experienceMonths %>" class="text-capitalize" selected>
+                                    <%= jd?.experienceMonths %>
+                                  </option>
+                                  <%}%>
+                                    <option value="0" <% if(jd?.experienceMonths=='0' ) {%> selected <% } %> >0</option>
+                                    <% for (var i=1; i <=12; i++ ) { %>
                                       <option value="<%= i %>">
                                         <%= i %>
                                       </option>
