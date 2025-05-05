@@ -1068,10 +1068,15 @@
             }
 
             const lastResume = resumeArray[resumeArray.length - 1];
-            const url = lastResume.url;
-            console.log('url', url)
+            let finalUrl;
 
-            window.open(url, '_blank');
+            if (lastResume?.url?.startsWith('upload')) {
+  finalUrl = `<%= process.env.MIPIE_BUCKET_URL +'/' %>${lastResume.url}`;
+} else {
+  finalUrl = lastResume?.url;
+}
+
+            window.open(finalUrl, '_blank');
           }
           
 
