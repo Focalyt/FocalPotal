@@ -161,7 +161,139 @@ router.post("/add", async (req, res) => {
     }
 });
 
+router.get("/allevents", auth1, async (req, res) => {
+    try {
+      const events = await Event.find({ isDeleted: false }).sort({ createdAt: -1 });
+      return res.render("admin/event/allEvents", {
+        menu: "event",
+        events,
+        canEdit: true, // optionally make this role-based
+        isChecked: false,
+        data: {}
+      });
+    } catch (err) {
+      console.error("Error loading Events page:", err);
+      req.flash("error", "Something went wrong!");
+      return res.redirect("back");
+    }
+  });
 
+  router.get("/registration", auth1, async (req, res) => {
+    try {
+      const events = await Event.find({ isDeleted: false }).sort({ createdAt: -1 });
+      return res.render("admin/event/registration", {
+        menu: "event",
+        events,
+        canEdit: true, // optionally make this role-based
+        isChecked: false,
+        data: {}
+      });
+    } catch (err) {
+      console.error("Error loading Events page:", err);
+      req.flash("error", "Something went wrong!");
+      return res.redirect("back");
+    }
+  });
+
+// router.route("/allevent").get(async (req, res) => {
+//     try {
+//         let view = false
+//         let canEdit = false
+//         const user = req.session.user
+//         console.log("user", user)
+//         if (user.role === 0) {
+
+//             canEdit = true
+//         }
+
+//         if (user.role === 10) {
+//             view = true;
+
+//         }
+//         const data = req.query;
+//         const fields = {
+//             isDeleted: false
+//         }
+//         if (data['name'] != '' && data.hasOwnProperty('name')) {
+//             fields["name"] = { "$regex": data['name'], "$options": "i" }
+//         }
+//         if (data.FromDate && data.ToDate) {
+//             let fdate = moment(data.FromDate).utcOffset("+05:30").startOf('day').toDate()
+//             let tdate = moment(data.ToDate).utcOffset("+05:30").endOf('day').toDate()
+//             fields["createdAt"] = {
+//                 $gte: fdate,
+//                 $lte: tdate
+//             }
+//         }
+
+//         if (req.query.status == undefined) {
+//             var status = true;
+//             var isChecked = "false";
+//         } else if (req.query.status.toString() == "true") {
+//             var status = true;
+//             var isChecked = "false";
+//         } else if (req.query.status.toString() == "false") {
+//             var status = false;
+//             var isChecked = "true";
+//         }
+//         fields["status"] = status;
+//         let courses;
+//         // ✅ Role 11 specific filtering
+//         if (user.role === 11) {
+//             const userDetails = req.session.user;
+//             let courseIds = userDetails.access.courseAccess.map(id => id.toString());
+//             let centerIds = userDetails.access.centerAccess.map(id => id.toString());
+
+//             const allCourses = await Courses.find(fields).populate("sectors");
+
+//             console.log("All courses before filter =>");
+//             allCourses.forEach(course => {
+//                 console.log({
+//                     courseId: course._id.toString(),
+//                     centerId: course.center?.toString()
+//                 });
+//             });
+
+
+//             let filteredCourses = allCourses.filter(course => {
+//                 const courseId = course._id?.toString();
+//                 const courseCenterIds = Array.isArray(course.center)
+//                   ? course.center.map(c => c.toString())
+//                   : [];
+              
+//                 const hasMatchingCenter = courseCenterIds.some(cid => centerIds.includes(cid));
+//                 const hasMatchingCourse = courseIds.includes(courseId);
+              
+//                 return hasMatchingCenter && hasMatchingCourse;
+//               });
+              
+              
+              
+
+//             courses = filteredCourses;
+//             console.log("filteredCourses:", filteredCourses);
+//         } else {
+//             courses = await Courses.find(fields).populate("sectors");
+//         }
+
+
+//         // console.log(courses, "this is courses")
+//         // ${req.vPath}
+//         return res.render('admin/event/allEvents', {
+//             menu: 'course',
+//             view,
+//             courses,
+//             isChecked,
+//             data,
+//             canEdit
+//           });
+          
+
+//     } catch (err) {
+//         req.flash("error", err.message || "Something went wrong!");
+//         return res.redirect("back");
+//     }
+// });
 
 module.exports = router;
 

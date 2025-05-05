@@ -65,6 +65,14 @@
                             <input class="form-control" value="<%= jd.experience == '0' ? 'Fresher' : jd.experience%>" readonly>
                           </div>
                           <div class="col-xl-2 mb-1">
+                            <label>Experience</label>
+                            <input class="form-control"
+                                   value="<%= jd.experience == '0' ? 'Fresher' : `${jd.experience || 0} Years ${jd.experienceMonths || 0} Months` %>"
+                                   readonly>
+                          </div>
+                          
+                          
+                          <div class="col-xl-2 mb-1">
                             <label>Qualification</label>
                             <input class="form-control text-capitalize" value="<%=jd._qualification?.name%>" readonly>
                           </div>
