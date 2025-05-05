@@ -840,8 +840,6 @@ router.get("/newcandidate/:candidateId", [isCompany], async (req, res) => {
     _id: candidateId,
   }).populate(populate);
 
-  console.log('candidate',candidate)
-
 
   let hiringStatus = await HiringStatus.findOne({ candidate: candidateId, company: company._id, isDeleted: false }, 'status createdAt updatedAt comment job eventDate concernedPerson')
     .populate({ path: 'job', select: 'title' })
@@ -853,6 +851,8 @@ router.get("/newcandidate/:candidateId", [isCompany], async (req, res) => {
   } else {
     masked = false;
   }
+
+  console.log('masked',masked)
 
   const qualification = await Qualification.find({ status: true }).sort({ basic: -1 })
   const jobs = await Vacancy.find({ _company: company._id, status: true })

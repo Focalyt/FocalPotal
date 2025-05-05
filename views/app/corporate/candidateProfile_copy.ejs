@@ -165,7 +165,6 @@
 
                         <!-- Profile section -->
                         <section id="profile">
-                          <% if (candidate.personalInfo && candidate.personalInfo.focalytProfile && masked===false) { %>
 
                             <div class="col-xl-12" id="mipie_profile">
                               <div class="row">
@@ -183,28 +182,11 @@
                                 </div>
                               </div>
                             </div>
-                            <% } else {%>
-                              <!-- <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume"> -->
-                                <div class="col-xl-12" id="mipie_profile">
-                                  <div class="row">
-                                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-one px-0 text-center">
-                                      <img src="/images/icons/profile.png" class="img-fluid pt-1">
-                                    </div>
-                                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
-                                      <h5 class="p-0 m-0">Focalyt Profile</h5>
-                                    </div>
-                                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right"
-                                      data-bs-target="#editUser" data-bs-toggle="modal" target="_blank" aria-disabled
-                                      id="loader">
-                                      <a onclick="downloadFocalytresumenotmasked()" class="dwnload btn">DOWNLOAD&nbsp;<i
-                                          class="feather icon-arrow-down text-white font-weight-bold"></i></a>
-                                    </div>
-                                  </div>
-                                </div>
-                              <!-- </div> -->
-                              <% }%>
+                            
+                             
 
-                                <% if (candidate.personalInfo && Array.isArray(candidate.personalInfo.resume) && masked == false)  { %>
+                                <% if (candidate.personalInfo && Array.isArray(candidate.personalInfo.resume) &&
+                                  masked==false) { %>
 
                                   <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3"
                                     id="candidate_resume">
@@ -1075,32 +1057,36 @@
 
 
           function downloadCandidateResume() {
-  const resumeArrayStr = '<%- JSON.stringify(candidate.personalInfo?.resume || []) %>';
-  const resumeArray = JSON.parse(resumeArrayStr); // Now it's a real array
+            const resumeArrayStr = '<%- JSON.stringify(candidate.personalInfo?.resume || []) %>';
+            const resumeArray = JSON.parse(resumeArrayStr); // Now it's a real array
 
-  console.log('Actual resume count:', resumeArray.length);
+            console.log('Actual resume count:', resumeArray.length);
 
-  if (resumeArray.length === 0) {
-    alert("No resume available.");
-    return;
-  }
+            if (resumeArray.length === 0) {
+              alert("No resume available.");
+              return;
+            }
 
-  const lastResume = resumeArray[resumeArray.length - 1];
-  const url = lastResume.url;
-  console.log('url',url)
-  
-  window.open(url, '_blank');
-}
- function downloadFocalytresumenotmasked(){
-  alert("Please Candidate unmasked first.");
- }
+            const lastResume = resumeArray[resumeArray.length - 1];
+            const url = lastResume.url;
+            console.log('url', url)
+
+            window.open(url, '_blank');
+          }
+          
 
           function downloadFocalytresume() {
+            ismasked = "<%= masked %>"
+            console.log('ismasked',ismasked)
+            if(ismasked ===true || ismasked ==="true"){
+              alert("Please Candidate unmasked first.");
+              return
+            }
             const url = "<%= candidate.personalInfo.focalytProfile?candidate.personalInfo.focalytProfile:'' %>"
             if (!url) {
-    alert("No resume available.");
-    return;
-  }
+              alert("No resume available.");
+              return;
+            }
             window.open(url, '_blank')
           }
 
