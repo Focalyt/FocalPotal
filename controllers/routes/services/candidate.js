@@ -377,7 +377,7 @@ module.exports = {
               },
             },
             {
-              $project: { name: 1, mobile: 1 } // Only necessary fields
+              $project: { name: 1, mobile: 1, email:1 } // Only necessary fields
             }
           ],
           as: "_candidate",
@@ -469,6 +469,7 @@ module.exports = {
           name: { $ifNull: ["$_candidate.name", ""] },
           candidateId: { $ifNull: ["$_candidate._id", ""] },
           mobile: { $ifNull: ["$_candidate.mobile", ""] },
+          email: { $ifNull: ["$_candidate.email", ""] },
           courseName: { $ifNull: ["$_course.name", ""] },
           courseId: { $ifNull: ["$_course._id", ""] },
           registrationCharges: { $ifNull: ["$_course.registrationCharges", 0] },
@@ -487,6 +488,7 @@ module.exports = {
           _id: 1,
           name: 1,
           mobile: 1,
+          email:1,
           courseName: 1,
           registrationCharges: 1,
           registrationFee: 1,
