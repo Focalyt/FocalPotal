@@ -67,6 +67,7 @@ const teamRoutes=require('./team')
 const eventRoutes = require('./events');
 const addCenterRoutes = require('./center');
 const addPortalAccessRoutes = require('./portalAccess');
+const addControlRoutes = require('./autoControl');
 
 const router = express.Router();
 router.use('/appBanner', appBannerRoutes);
@@ -114,6 +115,7 @@ router.use('/team', teamRoutes);
 router.use('/event', eventRoutes);
 router.use('/center', addCenterRoutes);
 router.use('/portalaccess', addPortalAccessRoutes);
+router.use('/autocontrol', addControlRoutes);
 
 // router.use(isAdmin);
 router.post ('/courses',async(req,res)=>{

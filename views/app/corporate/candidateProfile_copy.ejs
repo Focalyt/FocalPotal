@@ -1,170 +1,170 @@
-<% include ./partials/header %>
+  <% include ./partials/header %>
 
-  <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
-    data-menu="vertical-menu-modern" data-col="2-columns" id="inner_job_page">
-    <% include ./partials/navbar%>
-      <% include ./partials/leftpane%>
-        <div id="preloader"></div>
+    <body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static  " data-open="click"
+      data-menu="vertical-menu-modern" data-col="2-columns" id="inner_job_page">
+      <% include ./partials/navbar%>
+        <% include ./partials/leftpane%>
+          <div id="preloader"></div>
 
-        <div class="app-content content">
-          <div class="content-overlay"></div>
-          <div class="header-navbar-shadow"></div>
-          <div class="content-wrapper"></div>
-          <section id="Concerned-Person ">
-            <div class="row">
-              <div class="col-xl-12 col-lg-12 px-3 hiring-head">
-                <%if (hiringStatus) { %>
+          <div class="app-content content">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper"></div>
+            <section id="Concerned-Person ">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 px-3 hiring-head">
+                  <%if (hiringStatus) { %>
 
-                  <div class="card mb-2 ">
-                    <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
-                      <h4 class="card-title"><img src="/images/icons/hiring.png" class="img-fluid pr-1">Hiring Status
-                      </h4>
-                    </div>
-                    <div class="card-content">
-                      <div class="table-responsive">
-                        <table class="table table-hover-animation mb-0 table-hover">
-                          <thead>
-                            <tr>
-                              <th>Current Status</th>
-                              <th>Status Change Date</th>
-                              <th>JD</th>
-                              <th>Event DATE/TIME</th>
-                              <th>COMMENT</th>
-                              <th>Concerned Person</th>
-                              <th>ACTION</th>
-                            </tr>
-                          </thead>
-                          <tbody id="table-body">
-                            <tr>
-                              <td class="text-capitalize">
-                                <%= hiringStatus.status ? hiringStatus.status : "NA" %>
-                              </td>
-                              <td
-                                title="<%= moment(hiringStatus.updatedAt).utcOffset('+05:30').format('DD-MMM-YYYY hh:mm A') %>">
-                                <%= hiringStatus.updatedAt ?
-                                  moment(hiringStatus.updatedAt).utcOffset("+05:30").format('DD MMM YYYY hh:mm A')
-                                  : "NA" %>
-                              </td>
-                              <td class="text-capitalize">
-                                <%= hiringStatus.job ? hiringStatus.job.title : "NA" %>
-                              </td>
-                              <td>
-                                <%= hiringStatus.eventDate ?
-                                  moment(hiringStatus.eventDate).utcOffset("+05:30").format('DD MMM YYYY') : 'NA' %>
-                              </td>
-                              <td title="<%= hiringStatus.comment %>">
-                                <%= hiringStatus.comment ? hiringStatus.comment : "NA" %>
-                              </td>
-                              <td>
-                                <%= hiringStatus.concernedPerson ? (company?.companyExecutives?.filter(executive=>
-                                  hiringStatus.concernedPerson == executive._id ))[0]?.name : 'NA' %>
-                              </td>
-                              <td>
-                                <a href="#" class="btn btn-primary me-3 waves-effect waves-light btn-sm"
-                                  style="font-size: 12px;" data-toggle="modal" data-target="#updateStatus">Click</a>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                    <div class="card mb-2 ">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0 py-1 px-1">
+                        <h4 class="card-title"><img src="/images/icons/hiring.png" class="img-fluid pr-1">Hiring Status
+                        </h4>
+                      </div>
+                      <div class="card-content">
+                        <div class="table-responsive">
+                          <table class="table table-hover-animation mb-0 table-hover">
+                            <thead>
+                              <tr>
+                                <th>Current Status</th>
+                                <th>Status Change Date</th>
+                                <th>JD</th>
+                                <th>Event DATE/TIME</th>
+                                <th>COMMENT</th>
+                                <th>Concerned Person</th>
+                                <th>ACTION</th>
+                              </tr>
+                            </thead>
+                            <tbody id="table-body">
+                              <tr>
+                                <td class="text-capitalize">
+                                  <%= hiringStatus.status ? hiringStatus.status : "NA" %>
+                                </td>
+                                <td
+                                  title="<%= moment(hiringStatus.updatedAt).utcOffset('+05:30').format('DD-MMM-YYYY hh:mm A') %>">
+                                  <%= hiringStatus.updatedAt ?
+                                    moment(hiringStatus.updatedAt).utcOffset("+05:30").format('DD MMM YYYY hh:mm A')
+                                    : "NA" %>
+                                </td>
+                                <td class="text-capitalize">
+                                  <%= hiringStatus.job ? hiringStatus.job.title : "NA" %>
+                                </td>
+                                <td>
+                                  <%= hiringStatus.eventDate ?
+                                    moment(hiringStatus.eventDate).utcOffset("+05:30").format('DD MMM YYYY') : 'NA' %>
+                                </td>
+                                <td title="<%= hiringStatus.comment %>">
+                                  <%= hiringStatus.comment ? hiringStatus.comment : "NA" %>
+                                </td>
+                                <td>
+                                  <%= hiringStatus.concernedPerson ? (company?.companyExecutives?.filter(executive=>
+                                    hiringStatus.concernedPerson == executive._id ))[0]?.name : 'NA' %>
+                                </td>
+                                <td>
+                                  <a href="#" class="btn btn-primary me-3 waves-effect waves-light btn-sm"
+                                    style="font-size: 12px;" data-toggle="modal" data-target="#updateStatus">Click</a>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <% } %>
-                    <div class="row">
-                      <div class="col-xl-4">
-                        <div class="card bg-white shadow">
-                          <div class="card-body">
-                            <div class="user-avatar-section">
-                              <div class="d-flex align-items-center flex-column border-bottom mb-2 pb-2">
-                                <% if (candidate.image) { %>
-                                  <img class="img-fluid rounded mb-2 mt-2" height="60" width="80"
-                                    src="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.image %>" alt="User avatar">
-                                  <% } else { %>
-                                    <img class="img-fluid rounded mb-2 mt-2" src="/images/elements/1.png"
-                                      alt="User avatar">
-                                    <% } %>
-                                      <div class="user-info text-center">
-                                        <h4 class="text-capitalize">
-                                          <%=candidate.name?candidate.name:'NA'%>
-                                        </h4>
-                                        <span class="exp-badge bg-label-secondary">
-                                          <%=candidate.isExperienced? 'Experienced' : 'Fresher' %>
-                                        </span>
-                                      </div>
+                    <% } %>
+                      <div class="row">
+                        <div class="col-xl-4">
+                          <div class="card bg-white shadow">
+                            <div class="card-body">
+                              <div class="user-avatar-section">
+                                <div class="d-flex align-items-center flex-column border-bottom mb-2 pb-2">
+                                  <% if (candidate.image) { %>
+                                    <img class="img-fluid rounded mb-2 mt-2" height="60" width="80"
+                                      src="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.image %>" alt="User avatar">
+                                    <% } else { %>
+                                      <img class="img-fluid rounded mb-2 mt-2" src="/images/elements/1.png"
+                                        alt="User avatar">
+                                      <% } %>
+                                        <div class="user-info text-center">
+                                          <h4 class="text-capitalize">
+                                            <%=candidate.name?candidate.name:'NA'%>
+                                          </h4>
+                                          <span class="exp-badge bg-label-secondary">
+                                            <%=candidate.isExperienced? 'Experienced' : 'Fresher' %>
+                                          </span>
+                                        </div>
+                                </div>
                               </div>
-                            </div>
-                            <div class="info-container">
-                              <ul class="list-unstyled">
-                                <li class="mb-1">
-                                  <span class="font-weight-bold">Gender:</span>
-                                  <span class="text-capitalize">
-                                    <%=candidate.sex?candidate.sex:'NA'%>
-                                  </span>
-                                </li>
-                                <li class="mb-1">
-                                  <span class="font-weight-bold">Mobile No.</span>
-                                  <% if (candidate.mobile==0) { %>
-                                    <span class="mobile">xxxxxxxxxx</span>
-                                    <% } else { %>
-                                      <span class="mobile">
-                                        <%=candidate.mobile%>
+                              <div class="info-container">
+                                <ul class="list-unstyled">
+                                  <li class="mb-1">
+                                    <span class="font-weight-bold">Gender:</span>
+                                    <span class="text-capitalize">
+                                      <%=candidate.sex?candidate.sex:'NA'%>
+                                    </span>
+                                  </li>
+                                  <li class="mb-1">
+                                    <span class="font-weight-bold">Mobile No.</span>
+                                    <% if (candidate.mobile==0) { %>
+                                      <span class="mobile">xxxxxxxxxx</span>
+                                      <% } else { %>
+                                        <span class="mobile">
+                                          <%=candidate.mobile%>
+                                        </span>
+                                        <% } %>
+                                  </li>
+                                  <li class="mb-1">
+                                    <span class="font-weight-bold">Email:</span>
+                                    <span class="email">
+                                      <%=candidate.email%>
+                                    </span>
+                                  </li>
+                                  <li class="mb-1">
+                                    <span class="font-weight-bold">Experience:</span>
+                                    <span class="exp-badge bg-label-success">
+                                      <%=candidate.totalExperience?candidate.totalExperience + ' Years' : 'Fresher' %>
+                                    </span>
+                                  </li>
+                                  <li class="mb-1">
+                                    <span class="font-weight-bold">Highest Qualification:</span>
+                                    <span class="text-capitalize">
+                                      <%= qualification.find(i=>i._id == candidate.highestQualification)?.name %>
+                                    </span>
+                                  </li>
+                                  <li class="mb-1">
+                                    <span class="font-weight-bold">Current Address:</span>
+                                    <% if (candidate.personalInfo?.currentAddress?.fullAddress) { %>
+                                      <span class="text-capitalize">
+                                        <%= candidate.personalInfo.currentAddress.fullAddress %>
                                       </span>
-                                      <% } %>
-                                </li>
-                                <li class="mb-1">
-                                  <span class="font-weight-bold">Email:</span>
-                                  <span class="email">
-                                    <%=candidate.email%>
-                                  </span>
-                                </li>
-                                <li class="mb-1">
-                                  <span class="font-weight-bold">Experience:</span>
-                                  <span class="exp-badge bg-label-success">
-                                    <%=candidate.totalExperience?candidate.totalExperience + ' Years' : 'Fresher' %>
-                                  </span>
-                                </li>
-                                <li class="mb-1">
-                                  <span class="font-weight-bold">Highest Qualification:</span>
-                                  <span class="text-capitalize">
-                                    <%= qualification.find(i=>i._id == candidate.highestQualification)?.name %>
-                                  </span>
-                                </li>
-                                <li class="mb-1">
-                                  <span class="font-weight-bold">Current Address:</span>
-                                  <% if (candidate.personalInfo?.currentAddress?.fullAddress) { %>
-                                    <span class="text-capitalize">
-                                      <%= candidate.personalInfo.currentAddress.fullAddress %>
-                                    </span>
-                                    <% } else { %>
-                                      <span>NA</span>
-                                      <% } %>
-                                </li>
-                                <li class="mb-1">
-                                  <span class="font-weight-bold">Permanent Address :</span>
-                                  <% if (candidate.personalInfo?.permanentAddress?.fullAddress) { %>
-                                    <span class="text-capitalize">
-                                      <%= candidate.personalInfo.permanentAddress?.fullAddress %>
-                                    </span>
-                                    <% } else { %>
-                                      <span>NA</span>
-                                      <% } %>
-                                </li>
+                                      <% } else { %>
+                                        <span>NA</span>
+                                        <% } %>
+                                  </li>
+                                  <li class="mb-1">
+                                    <span class="font-weight-bold">Permanent Address :</span>
+                                    <% if (candidate.personalInfo?.permanentAddress?.fullAddress) { %>
+                                      <span class="text-capitalize">
+                                        <%= candidate.personalInfo.permanentAddress?.fullAddress %>
+                                      </span>
+                                      <% } else { %>
+                                        <span>NA</span>
+                                        <% } %>
+                                  </li>
 
-                              </ul>
-                              <div class="d-flex justify-content-center">
-                                <% if (masked===true) { %>
-                                  <button id="maskunmask" onclick="maskUnmask('<%=candidate._id %>')"
-                                    class="masked btn btn-primary me-3 waves-effect waves-light btn-sm"
-                                    data-bs-target="#editUser" data-bs-toggle="modal">UNMASK</button>
-                                  <% } %>
+                                </ul>
+                                <div class="d-flex justify-content-center">
+                                  <% if (masked===true) { %>
+                                    <button id="maskunmask" onclick="maskUnmask('<%=candidate._id %>')"
+                                      class="masked btn btn-primary me-3 waves-effect waves-light btn-sm"
+                                      data-bs-target="#editUser" data-bs-toggle="modal">UNMASK</button>
+                                    <% } %>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
 
-                        <!-- Profile section -->
-                        <section id="profile">
+                          <!-- Profile section -->
+                          <section id="profile">
 
                             <div class="col-xl-12" id="mipie_profile">
                               <div class="row">
@@ -182,727 +182,768 @@
                                 </div>
                               </div>
                             </div>
-                            
-                             
 
-                                <% if (candidate.personalInfo && Array.isArray(candidate.personalInfo.resume) &&
-                                  masked==false) { %>
 
-                                  <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3"
-                                    id="candidate_resume">
-                                    <div class="row">
-                                      <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-two px-0 text-center">
-                                        <img src="/images/icons/resume.png" class="img-fluid pt-1">
-                                      </div>
-                                      <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
-                                        <h5 class="p-0 m-0">Resume</h5>
-                                      </div>
-                                      <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right">
-                                        <a class="dwnload btn" onclick="downloadCandidateResume()" id="resumeButton"
-                                          target="_blank">DOWNLOAD&nbsp;<i
-                                            class="feather icon-arrow-down text-white font-weight-bold"></i></a>
-                                      </div>
-                                    </div>
+
+                            <% if (candidate.personalInfo && Array.isArray(candidate.personalInfo.resume) &&
+                              masked==false) { %>
+
+                              <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume">
+                                <div class="row">
+                                  <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-two px-0 text-center">
+                                    <img src="/images/icons/resume.png" class="img-fluid pt-1">
                                   </div>
-                                  <% } else if(candidate.resume) {%>
-                                    <!-- <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume"> -->
-                                    <div class="row pt-1">
-                                      <img src="/images/disable_button.jpg" class="img-fluid" />
-                                    </div>
-                                    <!-- </div> -->
-                                    <% }%>
-                        </section>
+                                  <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
+                                    <h5 class="p-0 m-0">Resume</h5>
+                                  </div>
+                                  <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right">
+                                    <a class="dwnload btn" onclick="downloadCandidateResume()" id="resumeButton"
+                                      target="_blank">DOWNLOAD&nbsp;<i
+                                        class="feather icon-arrow-down text-white font-weight-bold"></i></a>
+                                  </div>
+                                </div>
+                              </div>
+                              <% } else if(candidate.resume) {%>
+                                <!-- <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume"> -->
+                                <div class="row pt-1">
+                                  <img src="/images/disable_button.jpg" class="img-fluid" />
+                                </div>
+                                <!-- </div> -->
+                                <% }%>
+                          </section>
 
-                      </div>
-                      <div class="col-xl-8 mobileResponsive">
-                        <!-- User Pills -->
-                        <ul class="nav nav-pills flex-column flex-md-row mb-3 d-none">
-                          <li class="nav-item">
-                            <a class="nav-link active" href="javascript:void(0);">
-                              <i class="ti ti-user-check ti-xs me-1"></i>QUALIFICATION</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0);">
-                              <i class="ti ti-lock ti-xs me-1"></i>SKILLS</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0);l">
-                              <i class="ti ti-currency-dollar ti-xs me-1"></i>EXPERIENCE</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0);"><i class="ti ti-bell ti-xs me-1"></i>LOCATION
-                              PREFERENCES</a>
-                          </li>
-                        </ul>
-                        <!--/ User Pills -->
-                        <!-- Project table -->
-                        <div class="content-body">
-                          <section class="list-view">
-                            <div class="row">
-                              <div class="col-xl-12 col-lg-12 col-md-12">
-                                <!-- Resume Preview Section -->
-                                <div class="card">
-                                  <div class="card-body resume-preview">
-                                    <div id="resume-download" class="resume-document">
-                                      <!-- Professional Summary -->
-                                      <div class="mb-4">
-                                        <h3 class="border-bottom pb-2 mb-1">Professional Summary</h3>
-                                        <p>
-                                          <%= candidate.personalInfo?.professionalSummary || "No summary available." %>
-                                        </p>
-                                      </div>
-
-                                      <div class="row">
-                                        <!-- Left Column -->
-                                        <div class="col-md-7">
-                                          <!-- Work Experience -->
-                                          <div class="mb-4">
-                                            <h3 class="border-bottom pb-2 mb-1">Work Experience</h3>
-
-                                            <% if (candidate.experiences && candidate.experiences.length> 0) { %>
-                                              <% candidate.experiences.forEach((exp)=> { %>
-                                                <div class="mb-3">
-                                                  <div class="d-flex justify-content-between">
-                                                    <h5 class="font-weight-bold mb-1">
-                                                      <%= exp.jobTitle %>
-                                                    </h5>
-                                                    <span class="text-muted">
-                                                      <%= exp.FromDate %> - <%= exp.currentlyWorking ? "Present" :
-                                                          exp.ToDate %>
-                                                    </span>
-                                                  </div>
-                                                  <h6 class="text-primary mb-2">
-                                                    <%= exp.companyName %>
-                                                  </h6>
-                                                  <p>
-                                                    <%= exp.jobDescription %>
-                                                  </p>
-                                                </div>
-                                                <% }); %>
-                                                  <% } else { %>
-                                                    <p>No work experience provided.</p>
-                                                    <% } %>
-
-
-
-                                          </div>
-
-                                          <!-- Education -->
-                                          <div class="mb-4">
-                                            <h3 class="border-bottom pb-2 mb-1">Education</h3>
-
-                                            <% if (candidate.qualifications?.length) { %>
-                                              <% candidate.qualifications.forEach((edu)=> { %>
-                                                <div class="mb-3">
-                                                  <div class="d-flex justify-content-between">
-                                                    <h5 class="font-weight-bold mb-1">
-                                                      <%= qualification.find(i=> i._id == edu.education)?.name %>
-                                                    </h5>
-                                                    <span class="text-muted">
-                                                      <%= edu.passingYear %>
-                                                    </span>
-                                                  </div>
-                                                  <h6 class="text-primary mb-2">
-                                                    <%= edu.collegeName || edu.schoolName || edu.universityName %>
-                                                  </h6>
-                                                  <div>
-                                                    <span class="mr-3">Marks: <%= edu.marks %></span>
-                                                    <% if (edu.specialization) { %><span>Specialization: <%=
-                                                          edu.specialization %></span>
-                                                      <% } %>
-                                                  </div>
-                                                </div>
-                                                <% }) %>
-                                                  <% } else { %>
-                                                    <p>No education details available.</p>
-                                                    <% } %>
-
-
-
-                                          </div>
-                                          <!-- Interests Section -->
-                                          <div class="mb-4">
-                                            <h3 class="border-bottom pb-2 mb-1">Interests</h3>
-                                            <% if (candidate.personalInfo.interest?.length) { %>
-                                              <div class="d-flex flex-wrap">
-                                                <% candidate.personalInfo.interest.forEach((item)=> { %>
-                                                  <span class="badge badge-light mr-1 mb-1 p-1"
-                                                    style="position: relative; background:transparent; color: #000;">
-                                                    <%= item %>
-                                                  </span>
-                                                  <% }) %>
-                                              </div>
-                                              <% } else { %>
-                                                <p>No interests added.</p>
-                                                <% } %>
-
-                                          </div>
+                        </div>
+                        <div class="col-xl-8 mobileResponsive">
+                          <!-- User Pills -->
+                          <ul class="nav nav-pills flex-column flex-md-row mb-3 d-none">
+                            <li class="nav-item">
+                              <a class="nav-link active" href="javascript:void(0);">
+                                <i class="ti ti-user-check ti-xs me-1"></i>QUALIFICATION</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="javascript:void(0);">
+                                <i class="ti ti-lock ti-xs me-1"></i>SKILLS</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="javascript:void(0);l">
+                                <i class="ti ti-currency-dollar ti-xs me-1"></i>EXPERIENCE</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="javascript:void(0);"><i class="ti ti-bell ti-xs me-1"></i>LOCATION
+                                PREFERENCES</a>
+                            </li>
+                          </ul>
+                          <!--/ User Pills -->
+                          <!-- Project table -->
+                          <div class="content-body">
+                            <section class="list-view">
+                              <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                  <!-- Resume Preview Section -->
+                                  <div class="card">
+                                    <div class="card-body resume-preview">
+                                      <div id="resume-download" class="resume-document">
+                                        <!-- Professional Summary -->
+                                        <div class="mb-4">
+                                          <h3 class="border-bottom pb-2 mb-1">Professional Summary</h3>
+                                          <p>
+                                            <%= candidate.personalInfo?.professionalSummary || "No summary available." %>
+                                          </p>
                                         </div>
 
-                                        <!-- Right Column -->
-                                        <div class="col-md-5">
-                                          <!-- Skills Section -->
-                                          <div class="mb-4">
-                                            <h3 class="border-bottom pb-2 mb-1">Skills</h3>
-                                            <div class="row">
-                                              <div class="col-12 mb-2">
-                                                <% if (candidate.personalInfo.skills?.length) { %>
-                                                  <% candidate.personalInfo.skills.forEach((skill)=> { %>
-                                                    <div class="col-12 mb-2">
-                                                      <div class="d-flex align-items-center">
-                                                        <i class="feather icon-check-circle text-success mr-2"></i>
-                                                        <span>
-                                                          <%= skill.skillName %> (<%= skill.skillPercent %>%)
-                                                        </span>
-                                                      </div>
-                                                    </div>
-                                                    <% }) %>
-                                                      <% } else { %>
-                                                        <p>No skills listed.</p>
-                                                        <% } %>
-
-                                              </div>
-                                            </div>
-
-                                            <!-- Languages Section -->
+                                        <div class="row">
+                                          <!-- Left Column -->
+                                          <div class="col-md-7">
+                                            <!-- Work Experience -->
                                             <div class="mb-4">
-                                              <h3 class="border-bottom pb-2 mb-1">Languages</h3>
-                                              <div>
-                                                <% candidate.personalInfo.languages?.forEach(lang=> { %>
-                                                  <div class="mb-2">
-                                                    <div class="d-flex justify-content-between">
-                                                      <span>
-                                                        <%= lang.name %>
-                                                      </span>
-                                                      <div>
-                                                        <% for (let i=1; i <=5; i++) { %>
-                                                          <i class="fa fa-circle <%= i <= lang.level ? 'text-primary' : 'text-muted' %> mr-1"
-                                                            style="font-size: 8px;"></i>
-                                                          <% } %>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                  <% }) %>
+                                              <h3 class="border-bottom pb-2 mb-1">Work Experience</h3>
 
-                                              </div>
-                                            </div>
-
-                                            <!-- Certifications Section -->
-                                            <div class="mb-4">
-                                              <h3 class="border-bottom pb-2 mb-1">Certifications</h3>
-                                              <% if (candidate.personalInfo.certifications?.length) { %>
-                                                <ul class="list-unstyled">
-                                                  <% candidate.personalInfo.certifications.forEach(cert=> { %>
-                                                    <li class="mb-2">
-                                                      <i class="feather icon-award text-warning mr-2"></i>
-                                                      <span class="font-weight-bold">
-                                                        <%= cert.certificateName %>
-                                                      </span>
-                                                      - <%= cert.orgName %> (<%= cert.month || '' %>
-                                                          <%= cert.year || '' %>)
-                                                    </li>
-                                                    <% }) %>
-                                                </ul>
-                                                <% } else { %>
-                                                  <p>No certifications found.</p>
-                                                  <% } %>
-
-                                                    <!-- <ul class="list-unstyled">
-                                              <li class="mb-2">
-                                                <i class="feather icon-award text-warning mr-2"></i>
-                                                <span class="font-weight-bold">AWS Certified Solutions Architect</span>
-                                                - Amazon Web Services
-                                              </li>
-                                              <li class="mb-2">
-                                                <i class="feather icon-award text-warning mr-2"></i>
-                                                <span class="font-weight-bold">Professional Scrum Master I</span> -
-                                                Scrum.org
-                                              </li>
-                                              <li class="mb-2">
-                                                <i class="feather icon-award text-warning mr-2"></i>
-                                                <span class="font-weight-bold">Google Professional Cloud
-                                                  Developer</span> - Google Cloud
-                                              </li>
-                                              <li class="mb-2">
-                                                <i class="feather icon-award text-warning mr-2"></i>
-                                                <span class="font-weight-bold">React Developer Certification</span> -
-                                                Meta
-                                              </li>
-                                              <li class="mb-2">
-                                                <i class="feather icon-award text-warning mr-2"></i>
-                                                <span class="font-weight-bold">MongoDB Certified Developer
-                                                  Associate</span> - MongoDB University
-                                              </li>
-                                            </ul> -->
-                                            </div>
-
-                                            <!-- Projects Section -->
-                                            <div class="mb-4">
-                                              <h3 class="border-bottom pb-2 mb-1">Projects</h3>
-                                              <% if (candidate.personalInfo.projects?.length) { %>
-                                                <% candidate.personalInfo.projects.forEach((proj)=> { %>
+                                              <% if (candidate.experiences && candidate.experiences.length> 0) { %>
+                                                <% candidate.experiences.forEach((exp)=> { %>
                                                   <div class="mb-3">
-                                                    <h5 class="font-weight-bold mb-1">
-                                                      <%= proj.projectName %> <span class="text-muted">(<%= proj.proyear
-                                                            %>)</span>
-                                                    </h5>
+                                                    <div class="d-flex justify-content-between">
+                                                      <h5 class="font-weight-bold mb-1">
+                                                        <%= exp.jobTitle %>
+                                                      </h5>
+                                                      <span class="text-muted">
+                                                        <%= new Date(exp.from).toLocaleDateString('en-IN', {
+                                                          year: 'numeric' , month: 'long' , day: 'numeric' }) %> -
+                                                          <%= exp.currentlyWorking ? "Present" : new
+                                                            Date(exp.to).toLocaleDateString('en-IN', { year: 'numeric' ,
+                                                            month: 'long' , day: 'numeric' }) %>
+                                                      </span>
+                                                    </div>
+                                                    <h6 class="text-primary mb-2">
+                                                      <%= exp.companyName %>
+                                                    </h6>
                                                     <p>
-                                                      <%= proj.proDescription %>
+                                                      <%= exp.jobDescription %>
                                                     </p>
                                                   </div>
                                                   <% }); %>
                                                     <% } else { %>
-                                                      <p>No projects listed.</p>
+                                                      <p>No work experience provided.</p>
                                                       <% } %>
+
 
 
                                             </div>
 
+                                            <!-- Education -->
+                                            <div class="mb-4">
+                                              <h3 class="border-bottom pb-2 mb-1">Education</h3>
 
+                                              <% if (candidate.qualifications?.length) { %>
+                                                <% candidate.qualifications.forEach((edu)=> { %>
+                                                  <div class="mb-3">
+                                                    <div class="d-flex justify-content-between">
+                                                      <h5 class="font-weight-bold mb-1">
+                                                        <%= qualification.find(i=> i._id == edu.education)?.name %>
+                                                      </h5>
+                                                      <span class="text-muted">
+                                                        <%= edu.passingYear %>
+                                                      </span>
+                                                    </div>
+                                                    <h6 class="text-primary mb-2">
+                                                      <%= edu.collegeName || edu.schoolName || edu.universityName %>
+                                                    </h6>
+                                                    <div>
+                                                      <span class="mr-3">Marks: <%= edu.marks %>%</span>
+                                                      <% if (edu.specialization) { %><span>Specialization: <%=
+                                                            edu.specialization %></span>
+                                                        <% } %>
+                                                    </div>
+                                                  </div>
+                                                  <% }) %>
+                                                    <% } else { %>
+                                                      <p>No education details available.</p>
+                                                      <% } %>
+
+
+
+                                            </div>
+                                            <!-- Interests Section -->
+                                            <div class="mb-4">
+                                              <h3 class="border-bottom pb-2 mb-1">Interests</h3>
+                                              <% if (candidate.personalInfo.interest?.length) { %>
+                                                <div class="d-flex flex-wrap">
+                                                  <% candidate.personalInfo.interest.forEach((item)=> { %>
+                                                    <span class="badge badge-light mr-1 mb-1 p-1"
+                                                      style="position: relative; background:transparent; color: #000;">
+                                                      <%= item %>
+                                                    </span>
+                                                    <% }) %>
+                                                </div>
+                                                <% } else { %>
+                                                  <p>No interests added.</p>
+                                                  <% } %>
+
+                                            </div>
                                           </div>
-                                        </div>
 
-                                        <!-- Declaration -->
-                                        <div class="mt-4">
-                                          <h3 class="border-bottom pb-2 mb-1">Declaration</h3>
-                                          <p>
-                                            <%= candidate.personalInfo?.declaration?.text %>
-                                          </p>
+                                          <!-- Right Column -->
+                                          <div class="col-md-5">
+                                            <!-- Skills Section -->
+                                            <div class="mb-4">
+                                              <h3 class="border-bottom pb-2 mb-1">Skills</h3>
+                                              <div class="row">
+                                                <div class="col-12 mb-2">
+                                                  <% if (candidate.personalInfo.skills?.length) { %>
+                                                    <% candidate.personalInfo.skills.forEach((skill)=> { %>
+                                                      <div class="col-12 mb-2">
+                                                        <div class="d-flex align-items-center">
+                                                          <i class="feather icon-check-circle text-success mr-2"></i>
+                                                          <span>
+                                                            <%= skill.skillName %> (<%= skill.skillPercent %>%)
+                                                          </span>
+                                                        </div>
+                                                      </div>
+                                                      <% }) %>
+                                                        <% } else { %>
+                                                          <p>No skills listed.</p>
+                                                          <% } %>
+
+                                                </div>
+                                              </div>
+
+                                              <!-- Languages Section -->
+                                              <div class="mb-4">
+                                                <h3 class="border-bottom pb-2 mb-1">Languages</h3>
+                                                <div>
+                                                  <% candidate.personalInfo.languages?.forEach(lang=> { %>
+                                                    <div class="mb-2">
+                                                      <div class="d-flex justify-content-between">
+                                                        <span>
+                                                          <%= lang.name %>
+                                                        </span>
+                                                        <div>
+                                                          <% for (let i=1; i <=5; i++) { %>
+                                                            <i class="fa fa-circle <%= i <= lang.level ? 'text-primary' : 'text-muted' %> mr-1"
+                                                              style="font-size: 8px;"></i>
+                                                            <% } %>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <% }) %>
+
+                                                </div>
+                                              </div>
+
+                                              <!-- Certifications Section -->
+                                              <div class="mb-4">
+                                                <h3 class="border-bottom pb-2 mb-1">Certifications</h3>
+                                                <% if (candidate.personalInfo.certifications?.length) { %>
+                                                  <ul class="list-unstyled">
+                                                    <% candidate.personalInfo.certifications.forEach(cert=> { %>
+                                                      <li class="mb-2">
+                                                        <i class="feather icon-award text-warning mr-2"></i>
+                                                        <span class="font-weight-bold">
+                                                          <%= cert.certificateName %>
+                                                        </span>
+                                                        - <%= cert.orgName %> (<%= cert.month || '' %>
+                                                            <%= cert.year || '' %>)
+                                                      </li>
+                                                      <% }) %>
+                                                  </ul>
+                                                  <% } else { %>
+                                                    <p>No certifications found.</p>
+                                                    <% } %>
+
+                                                      <!-- <ul class="list-unstyled">
+                                                <li class="mb-2">
+                                                  <i class="feather icon-award text-warning mr-2"></i>
+                                                  <span class="font-weight-bold">AWS Certified Solutions Architect</span>
+                                                  - Amazon Web Services
+                                                </li>
+                                                <li class="mb-2">
+                                                  <i class="feather icon-award text-warning mr-2"></i>
+                                                  <span class="font-weight-bold">Professional Scrum Master I</span> -
+                                                  Scrum.org
+                                                </li>
+                                                <li class="mb-2">
+                                                  <i class="feather icon-award text-warning mr-2"></i>
+                                                  <span class="font-weight-bold">Google Professional Cloud
+                                                    Developer</span> - Google Cloud
+                                                </li>
+                                                <li class="mb-2">
+                                                  <i class="feather icon-award text-warning mr-2"></i>
+                                                  <span class="font-weight-bold">React Developer Certification</span> -
+                                                  Meta
+                                                </li>
+                                                <li class="mb-2">
+                                                  <i class="feather icon-award text-warning mr-2"></i>
+                                                  <span class="font-weight-bold">MongoDB Certified Developer
+                                                    Associate</span> - MongoDB University
+                                                </li>
+                                              </ul> -->
+                                              </div>
+
+                                              <!-- Projects Section -->
+                                              <div class="mb-4">
+                                                <h3 class="border-bottom pb-2 mb-1">Projects</h3>
+                                                <% if (candidate.personalInfo.projects?.length) { %>
+                                                  <% candidate.personalInfo.projects.forEach((proj)=> { %>
+                                                    <div class="mb-3">
+                                                      <h5 class="font-weight-bold mb-1">
+                                                        <%= proj.projectName %> <span class="text-muted">(<%= proj.proyear
+                                                              %>)</span>
+                                                      </h5>
+                                                      <p>
+                                                        <%= proj.proDescription %>
+                                                      </p>
+                                                    </div>
+                                                    <% }); %>
+                                                      <% } else { %>
+                                                        <p>No projects listed.</p>
+                                                        <% } %>
+
+
+                                              </div>
+
+
+                                            </div>
+                                          </div>
+
+                                          <!-- Declaration -->
+                                          <div class="mt-4">
+                                            <h3 class="border-bottom pb-2 mb-1">Declaration</h3>
+                                            <p>
+                                              <%= candidate.personalInfo?.declaration?.text %>
+                                            </p>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                          </section>
+                            </section>
+                          </div>
+                          <!-- /Project table -->
                         </div>
-                        <!-- /Project table -->
                       </div>
-                    </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- HIDDEN RESUME VIEW FOR PDF DOWNLOAD - इसे बेहतर बनाया गया है -->
-          <div id="hidden-resume-pdf" class="d-none">
-            <div style="width: 794px; padding: 30px; color: #000;">
-              <div
-                style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 15px;">
-                <h1 style="margin-bottom: 5px; color: #2c3e50;">
-                  <%= candidate.name || 'NA' %>
-                </h1>
-                <p style="margin: 5px 0;">
-                  <strong>Email:</strong>
-                  <%= candidate.email || 'NA' %> |
-                    <strong>Mobile:</strong>
-                    <%= candidate.mobile || 'NA' %>
-                </p>
-                <p>
-                  <strong>Highest Qualification:</strong>
-                  <%= qualification.find(i=> i._id == candidate.highestQualification)?.name || 'NA' %>
-                </p>
-              </div>
-
-              <div style="margin-bottom: 20px;">
-                <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Professional Summary
-                </h3>
-                <p style="text-align: justify;">
-                  <%= candidate.personalInfo?.professionalSummary || 'NA' %>
-                </p>
-              </div>
-
-              <div style="margin-bottom: 20px;">
-                <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Experience</h3>
-                <% if (candidate.experiences && candidate.experiences.length> 0) { %>
-                  <% candidate.experiences.forEach(exp=> { %>
-                    <div style="margin-bottom: 10px;">
-                      <p style="margin: 5px 0;">
-                        <strong style="font-size: 16px;">
-                          <%= exp.jobTitle %>
-                        </strong>
-                        at <span style="color: #3498db;">
-                          <%= exp.companyName %>
-                        </span>
-                        (<%= exp.FromDate %> - <%= exp.currentlyWorking ? 'Present' : exp.ToDate %>)
-                      </p>
-                      <p style="margin-left: 10px; text-align: justify;">
-                        <%= exp.jobDescription %>
-                      </p>
-                    </div>
-                    <% }) %>
-                      <% } else { %>
-                        <p>No experience information available.</p>
-                        <% } %>
-              </div>
-
-              <div style="margin-bottom: 20px;">
-                <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Education</h3>
-                <% if (candidate.qualifications?.length) { %>
-                  <% candidate.qualifications.forEach((edu)=> { %>
-                    <div style="margin-bottom: 10px;">
-                      <p style="margin: 5px 0;">
-                        <strong style="font-size: 16px;">
-                          <%= qualification.find(i=> i._id == edu.education)?.name %>
-                        </strong>,
-                        <span style="color: #3498db;">
-                          <%= edu.collegeName || edu.schoolName || edu.universityName %>
-                        </span>
-                        — <%= edu.passingYear %> | Marks: <%= edu.marks %>
-                      </p>
-                      <% if (edu.specialization) { %>
-                        <p style="margin-left: 10px;">Specialization: <%= edu.specialization %>
-                        </p>
-                        <% } %>
-                    </div>
-                    <% }) %>
-                      <% } else { %>
-                        <p>No education details available.</p>
-                        <% } %>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-                <div style="width: 48%; margin-bottom: 20px;">
-                  <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Skills</h3>
-                  <% if (candidate.personalInfo.skills?.length) { %>
-                    <ul style="padding-left: 20px;">
-                      <% candidate.personalInfo.skills.forEach(skill=> { %>
-                        <li>
-                          <%= skill.skillName %> (<%= skill.skillPercent %>%)
-                        </li>
-                        <% }) %>
-                    </ul>
-                    <% } else { %>
-                      <p>No skills listed.</p>
-                      <% } %>
-                </div>
-
-                <div style="width: 48%; margin-bottom: 20px;">
-                  <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Languages</h3>
-                  <% if (candidate.personalInfo.languages?.length) { %>
-                    <ul style="padding-left: 20px;">
-                      <% candidate.personalInfo.languages.forEach(lang=> { %>
-                        <li>
-                          <%= lang.name %> - Proficiency: Level <%= lang.level %>/5
-                        </li>
-                        <% }) %>
-                    </ul>
-                    <% } else { %>
-                      <p>No languages listed.</p>
-                      <% } %>
                 </div>
               </div>
+            </section>
 
-              <div style="margin-bottom: 20px;">
-                <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Certifications</h3>
-                <% if (candidate.personalInfo.certifications?.length) { %>
-                  <ul style="padding-left: 20px;">
-                    <% candidate.personalInfo.certifications.forEach(cert=> { %>
-                      <li>
-                        <strong>
-                          <%= cert.certificateName %>
-                        </strong> -
-                        <%= cert.orgName %> (<%= cert.month %>
-                            <%= cert.year %>)
-                      </li>
-                      <% }) %>
-                  </ul>
-                  <% } else { %>
-                    <p>No certifications listed.</p>
-                    <% } %>
-              </div>
-
-              <div style="margin-bottom: 20px;">
-                <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Projects</h3>
-                <% if (candidate.personalInfo.projects?.length) { %>
-                  <% candidate.personalInfo.projects.forEach(proj=> { %>
-                    <div style="margin-bottom: 10px;">
-                      <p style="margin: 5px 0;">
-                        <strong style="font-size: 16px;">
-                          <%= proj.projectName %>
-                        </strong>
-                        <span style="color: #7f8c8d;">(<%= proj.proyear %>)</span>
-                      </p>
-                      <p style="margin-left: 10px; text-align: justify;">
-                        <%= proj.proDescription %>
-                      </p>
-                    </div>
-                    <% }) %>
-                      <% } else { %>
-                        <p>No projects listed.</p>
-                        <% } %>
-              </div>
-
-              <% if (candidate.personalInfo?.declaration?.text) { %>
-                <div style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px;">
-                  <h3 style="color: #2980b9; padding-bottom: 5px;">Declaration</h3>
-                  <p style="font-style: italic;">
-                    <%= candidate.personalInfo.declaration.text %>
+            <!-- HIDDEN RESUME VIEW FOR PDF DOWNLOAD - इसे बेहतर बनाया गया है -->
+            <div id="hidden-resume-pdf" class="d-none">
+              <div style="width: 794px; padding: 30px; color: #000;">
+                <div
+                  style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 15px;">
+                  <h1 style="margin-bottom: 5px; color: #2c3e50;">
+                    <%= candidate.name || 'NA' %>
+                  </h1>
+                  <p style="margin: 5px 0;">
+                    <strong>Email:</strong>
+                    <%= candidate.email || 'NA' %> |
+                      <strong>Mobile:</strong>
+                      <%= candidate.mobile || 'NA' %>
+                  </p>
+                  <p>
+                    <strong>Highest Qualification:</strong>
+                    <%= qualification.find(i=> i._id == candidate.highestQualification)?.name || 'NA' %>
                   </p>
                 </div>
-                <% } %>
-            </div>
-          </div>
 
+                <div style="margin-bottom: 20px;">
+                  <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Professional Summary
+                  </h3>
+                  <p style="text-align: justify;">
+                    <%= candidate.personalInfo?.professionalSummary || 'NA' %>
+                  </p>
+                </div>
 
+                <div style="margin-bottom: 20px;">
+                  <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Experience</h3>
+                  <% if (candidate.experiences && candidate.experiences.length> 0) { %>
+                    <% candidate.experiences.forEach(exp=> { %>
+                      <div style="margin-bottom: 10px;">
+                        <p style="margin: 5px 0;">
+                          <strong style="font-size: 16px;">
+                            <%= exp.jobTitle %>
+                          </strong>
+                          at <span style="color: #3498db;">
+                            <%= exp.companyName %>
+                          </span>
+                          (<%= exp.FromDate %> - <%= exp.currentlyWorking ? 'Present' : exp.ToDate %>)
+                        </p>
+                        <p style="margin-left: 10px; text-align: justify;">
+                          <%= exp.jobDescription %>
+                        </p>
+                      </div>
+                      <% }) %>
+                        <% } else { %>
+                          <p>No experience information available.</p>
+                          <% } %>
+                </div>
 
-        </div>
-        <div class="sidenav-overlay"></div>
-        <div class="drag-target"></div>
-        <div class="modal fade" id="updateStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Update Status</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body pt-1" id="popup-body">
-                <div class="row">
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
-                    <label>Status<span class="required text-danger"> *</span></label>
-                    <select class="form-control text-capitalize" id="hiringStatus" value="" onchange="changeButton()">
-                      <option value="">Select Option</option>
-                      <option value="shortlisted" <% if (hiringStatus?.status=='shortlisted' ) { %> selected <% }%>
-                          >Shortlisted
-                      </option>
-                      <option value="interview due" <% if (hiringStatus?.status=='interview due' ) { %> selected <% }%>
-                          >Interview Due</option>
-                      <option value="interviewed" <% if (hiringStatus?.status=='interviewed' ) { %> selected <% }%>
-                          >Interviewed
-                      </option>
-                      <option value="on hold" <% if (hiringStatus?.status=='on hold' ) { %> selected <% }%>>On Hold
-                      </option>
-                      <option value="offer letter rollout" <% if (hiringStatus?.status=='offer letter rollout' ) { %>
-                        selected <% }%>>Offer Letter Rollout</option>
-                      <option value="hiring on hold" <% if (hiringStatus?.status=='hiring on hold' ) { %> selected <%
-                          }%> >Hiring on Hold</option>
-                      <option value="hired" <% if (hiringStatus?.status=='hired' ) { %> selected <% }%> >Hired</option>
-                      <option value="rejected" <% if (hiringStatus?.status=='rejected' ) { %> selected <% }%> >Rejected
-                      </option>
-                    </select>
+                <div style="margin-bottom: 20px;">
+                  <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Education</h3>
+                  <% if (candidate.qualifications?.length) { %>
+                    <% candidate.qualifications.forEach((edu)=> { %>
+                      <div style="margin-bottom: 10px;">
+                        <p style="margin: 5px 0;">
+                          <strong style="font-size: 16px;">
+                            <%= qualification.find(i=> i._id == edu.education)?.name %>
+                          </strong>,
+                          <span style="color: #3498db;">
+                            <%= edu.collegeName || edu.schoolName || edu.universityName %>
+                          </span>
+                          — <%= edu.passingYear %> | Marks: <%= edu.marks %>
+                        </p>
+                        <% if (edu.specialization) { %>
+                          <p style="margin-left: 10px;">Specialization: <%= edu.specialization %>
+                          </p>
+                          <% } %>
+                      </div>
+                      <% }) %>
+                        <% } else { %>
+                          <p>No education details available.</p>
+                          <% } %>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                  <div style="width: 48%; margin-bottom: 20px;">
+                    <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Skills</h3>
+                    <% if (candidate.personalInfo.skills?.length) { %>
+                      <ul style="padding-left: 20px;">
+                        <% candidate.personalInfo.skills.forEach(skill=> { %>
+                          <li>
+                            <%= skill.skillName %> (<%= skill.skillPercent %>%)
+                          </li>
+                          <% }) %>
+                      </ul>
+                      <% } else { %>
+                        <p>No skills listed.</p>
+                        <% } %>
                   </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
-                    <label>Select JD</label>
-                    <select class="form-control text-capitalize" id="hiringJob" value="">
-                      <option value="">Select Option</option>
-                      <% jobs.forEach((job)=> { %>
-                        <option value="<%= job._id %>" <% if (job?._id.toString()==hiringStatus?.job?._id) { %> selected
-                          <% }%>>
-                            <%= job.title %>
-                        </option>
-                        <% }); %>
-                    </select>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
-                    <label>Event Date/Time</label>
-                    <input type="date" class="form-control" name="eventDate"
-                      value="<%= hiringStatus?.eventDate ? moment(hiringStatus?.eventDate).utcOffset('+05:30').format('YYYY-MM-DD') : '' %>"
-                      id="eventDate">
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
-                    <label>Select Concerned Person</label>
-                    <select class="form-control text-capitalize" value="" id="concernedPerson">
-                      <option value="">Select Option</option>
-                      <% company.companyExecutives?.forEach((executive)=> { %>
-                        <option value="<%= executive._id %>" <% if (hiringStatus?.concernedPerson==executive._id ) { %>
-                          selected <% }%> > <%= executive.name %>
-                        </option>
-                        <% }); %>
-                    </select>
-                  </div>
-                  <div class="col-xl-12 mb-1 text-left">
-                    <label>Comment</label>
-                    <textarea class="form-control" cols="5" id="hiringComment" value=""
-                      rows="3"><%= hiringStatus?.comment %></textarea>
+
+                  <div style="width: 48%; margin-bottom: 20px;">
+                    <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Languages</h3>
+                    <% if (candidate.personalInfo.languages?.length) { %>
+                      <ul style="padding-left: 20px;">
+                        <% candidate.personalInfo.languages.forEach(lang=> { %>
+                          <li>
+                            <%= lang.name %> - Proficiency: Level <%= lang.level %>/5
+                          </li>
+                          <% }) %>
+                      </ul>
+                      <% } else { %>
+                        <p>No languages listed.</p>
+                        <% } %>
                   </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary <%= hiringStatus?.status ? '' : 'disabled' %>"
-                  onclick="updateStatus('<%=candidate._id%>')" <%=hiringStatus?.status ? '' : 'disabled' %>
-                  id="updateBtn">Update</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal"><i
-                    class="feather icon-x d-block d-lg-none"></i>
-                  <span class="d-none d-lg-block">Cancel</span></button>
+
+                <div style="margin-bottom: 20px;">
+                  <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Certifications</h3>
+                  <% if (candidate.personalInfo.certifications?.length) { %>
+                    <ul style="padding-left: 20px;">
+                      <% candidate.personalInfo.certifications.forEach(cert=> { %>
+                        <li>
+                          <strong>
+                            <%= cert.certificateName || 'No certificate name available' %>
+                          </strong> -
+                          <%= cert.orgName || 'No organization name available' %>
+                            (<%= cert.month || 'No month available' %>
+                              <%= cert.year || 'No year available' %>)
+                        </li>
+                        <% }) %>
+                    </ul>
+                    <% } else { %>
+                      <p>No certifications listed.</p>
+                      <% } %>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                  <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Projects</h3>
+                  <% if (candidate.personalInfo.projects?.length) { %>
+                    <% candidate.personalInfo.projects.forEach(proj=> { %>
+                      <div style="margin-bottom: 10px;">
+                        <p style="margin: 5px 0;">
+                          <strong style="font-size: 16px;">
+                            <%= proj.projectName %>
+                          </strong>
+                          <span style="color: #7f8c8d;">(<%= proj.proyear %>)</span>
+                        </p>
+                        <p style="margin-left: 10px; text-align: justify;">
+                          <%= proj.proDescription %>
+                        </p>
+                      </div>
+                      <% }) %>
+                        <% } else { %>
+                          <p>No projects listed.</p>
+                          <% } %>
+                </div>
+
+                <% if (candidate.personalInfo?.declaration?.text) { %>
+                  <div style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px;">
+                    <h3 style="color: #2980b9; padding-bottom: 5px;">Declaration</h3>
+                    <p style="font-style: italic;">
+                      <%= candidate.personalInfo.declaration.text %>
+                    </p>
+                  </div>
+                  <% } %>
+                  <div style="text-align: center; margin-top: 20px;">
+                    <img src="/Assets/images/logo/focalyt_new_logo.png" alt="Focalyt Logo" style="width: 120px; margin-bottom: 10px;">
+                  </div>
               </div>
             </div>
+
+
+
           </div>
-        </div>
-
-        <div class="modal fade" id="addCoins" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Insufficient Coins</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body pt-1" id="popup-body">
-                <h5 class="pb-1 mb-0 mt-1">
-                  You need <%= coins.shortlist %> Coin to Shortlist the Candidate
-                </h5>
-                <ul class="list-unstyled">
-                  <li class="mb-1">
-                    <span class="credit font-weight-bold">
-                      Current Coins Balance: <%= company?.creditLeft %></span>
-                  </li>
-                </ul>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-primary" onclick="getOffers()" data-toggle="modal" data-target="#coin_offer"
-                  data-dismiss="modal">Buy Coins</button>
-                <button type="button" class="btn btn-outline-light" data-dismiss="modal"><i
-                    class="feather icon-x d-block d-lg-none"></i>
-                  <span class="d-none d-lg-block">Cancel</span></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Coin modal offer -->
-        <div class="modal fade show" id="coin_offer" tabindex="-1" role="dialog"
-          aria-labelledby="exampleModalCenterTitle" aria-modal="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">COIN OFFERS
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div class="modal-body pt-1" id="popup-body">
-                <ul class="list-unstyled">
-                  <li>
-                    <div class="col-xl-8 mx-auto" id="offers">
-
+          <div class="sidenav-overlay"></div>
+          <div class="drag-target"></div>
+          <div class="modal fade" id="updateStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Update Status</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pt-1" id="popup-body">
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                      <label>Status<span class="required text-danger"> *</span></label>
+                      <select class="form-control text-capitalize" id="hiringStatus" value="" onchange="changeButton()">
+                        <option value="">Select Option</option>
+                        <option value="shortlisted" <% if (hiringStatus?.status=='shortlisted' ) { %> selected <% }%>
+                            >Shortlisted
+                        </option>
+                        <option value="interview due" <% if (hiringStatus?.status=='interview due' ) { %> selected <% }%>
+                            >Interview Due</option>
+                        <option value="interviewed" <% if (hiringStatus?.status=='interviewed' ) { %> selected <% }%>
+                            >Interviewed
+                        </option>
+                        <option value="on hold" <% if (hiringStatus?.status=='on hold' ) { %> selected <% }%>>On Hold
+                        </option>
+                        <option value="offer letter rollout" <% if (hiringStatus?.status=='offer letter rollout' ) { %>
+                          selected <% }%>>Offer Letter Rollout</option>
+                        <option value="hiring on hold" <% if (hiringStatus?.status=='hiring on hold' ) { %> selected <%
+                            }%> >Hiring on Hold</option>
+                        <option value="hired" <% if (hiringStatus?.status=='hired' ) { %> selected <% }%> >Hired</option>
+                        <option value="rejected" <% if (hiringStatus?.status=='rejected' ) { %> selected <% }%> >Rejected
+                        </option>
+                      </select>
                     </div>
-                  </li>
-                  <li class="mb-1">
-                    <span class="credit font-weight-bold">
-                      Current Coins Balance: <%= company?.creditLeft %></span>
-                  </li>
-                </ul>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary waves-effect waves-light" data-toggle="modal"
-                  data-target="#applyvoucher" id="pay-button">Pay Now</button>
-                <button type="button" class="btn btn-outline-light waves-effect waves-light" data-dismiss="modal"><i
-                    class="feather icon-x d-block d-lg-none"></i>
-                  <span class="d-none d-lg-block">Cancel</span></button>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                      <label>Select JD</label>
+                      <select class="form-control text-capitalize" id="hiringJob" value="">
+                        <option value="">Select Option</option>
+                        <% jobs.forEach((job)=> { %>
+                          <option value="<%= job._id %>" <% if (job?._id.toString()==hiringStatus?.job?._id) { %> selected
+                            <% }%>>
+                              <%= job.title %>
+                          </option>
+                          <% }); %>
+                      </select>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                      <label>Event Date/Time</label>
+                      <input type="date" class="form-control" name="eventDate"
+                        value="<%= hiringStatus?.eventDate ? moment(hiringStatus?.eventDate).utcOffset('+05:30').format('YYYY-MM-DD') : '' %>"
+                        id="eventDate">
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                      <label>Select Concerned Person</label>
+                      <select class="form-control text-capitalize" value="" id="concernedPerson">
+                        <option value="">Select Option</option>
+                        <% company.companyExecutives?.forEach((executive)=> { %>
+                          <option value="<%= executive._id %>" <% if (hiringStatus?.concernedPerson==executive._id ) { %>
+                            selected <% }%> > <%= executive.name %>
+                          </option>
+                          <% }); %>
+                      </select>
+                    </div>
+                    <div class="col-xl-12 mb-1 text-left">
+                      <label>Comment</label>
+                      <textarea class="form-control" cols="5" id="hiringComment" value=""
+                        rows="3"><%= hiringStatus?.comment %></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary <%= hiringStatus?.status ? '' : 'disabled' %>"
+                    onclick="updateStatus('<%=candidate._id%>')" <%=hiringStatus?.status ? '' : 'disabled' %>
+                    id="updateBtn">Update</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                      class="feather icon-x d-block d-lg-none"></i>
+                    <span class="d-none d-lg-block">Cancel</span></button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- End Coin modal offer -->
-        <div class="modal fade show" id="applyvoucher" tabindex="-1" role="dialog"
-          aria-labelledby="exampleModalCenterTitle" aria-modal="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-sm">
-              <div class="modal-header vchr_header">
-                <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Buy Coins</h5>
-                <button type="button" class="close color-purple" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div class="modal-body mode-dice p-0">
-                <form class="my-3">
-                  <h3 class="coupon-text">If you have <strong>Coupon Code </strong>, apply here</h3>
-                  <input type="text" name="voucherField" class="text-white mt-1" placeholder="Enter Code" id="voucher"
-                    oninput="convert(event)" onkeypress="checkVouchers(event)">
-                  <button type="button" class="voucher-btn disabled btn btn-sm ml-1" aria-label="Apply" id="add"
-                    disabled> <span aria-hidden="true" class="yes-cross" id="applyVoucher"
-                      onclick="apply(event)">Apply</span> </button>
 
-                </form>
-                <input type="hidden" class="form-control" id="offerId" value="" />
-                <input type="hidden" class="form-control" id="amount" value="" />
-                <input type="hidden" class="form-control" id="offerAmount" value="" />
-                <input type="hidden" class="form-control" id="codevalue" value="" />
-                <p class="text-success font-weight-bolder font-italic" id="success-message"></p>
-                <p class="text-danger font-weight-bolder font-italic" id="error-message"></p>
-              </div>
-              <div class="modal-footer text-center">
-                <button class="btn button-vchr shadow" role="button" onclick="payment(event)" id="apply">Pay ₹</button>
+          <div class="modal fade" id="addCoins" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Insufficient Coins</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pt-1" id="popup-body">
+                  <h5 class="pb-1 mb-0 mt-1">
+                    You need <%= coins.shortlist %> Coin to Shortlist the Candidate
+                  </h5>
+                  <ul class="list-unstyled">
+                    <li class="mb-1">
+                      <span class="credit font-weight-bold">
+                        Current Coins Balance: <%= company?.creditLeft %></span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" onclick="getOffers()" data-toggle="modal" data-target="#coin_offer"
+                    data-dismiss="modal">Buy Coins</button>
+                  <button type="button" class="btn btn-outline-light" data-dismiss="modal"><i
+                      class="feather icon-x d-block d-lg-none"></i>
+                    <span class="d-none d-lg-block">Cancel</span></button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <style>
-          @media (max-width:768px) {
-            .mobileResponsive {
-              padding: 0;
-              margin-top: 35px;
+
+          <!-- Coin modal offer -->
+          <div class="modal fade show" id="coin_offer" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">COIN OFFERS
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body pt-1" id="popup-body">
+                  <ul class="list-unstyled">
+                    <li>
+                      <div class="col-xl-8 mx-auto" id="offers">
+
+                      </div>
+                    </li>
+                    <li class="mb-1">
+                      <span class="credit font-weight-bold">
+                        Current Coins Balance: <%= company?.creditLeft %></span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary waves-effect waves-light" data-toggle="modal"
+                    data-target="#applyvoucher" id="pay-button">Pay Now</button>
+                  <button type="button" class="btn btn-outline-light waves-effect waves-light" data-dismiss="modal"><i
+                      class="feather icon-x d-block d-lg-none"></i>
+                    <span class="d-none d-lg-block">Cancel</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Coin modal offer -->
+          <div class="modal fade show" id="applyvoucher" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content modal-sm">
+                <div class="modal-header vchr_header">
+                  <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Buy Coins</h5>
+                  <button type="button" class="close color-purple" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body mode-dice p-0">
+                  <form class="my-3">
+                    <h3 class="coupon-text">If you have <strong>Coupon Code </strong>, apply here</h3>
+                    <input type="text" name="voucherField" class="text-white mt-1" placeholder="Enter Code" id="voucher"
+                      oninput="convert(event)" onkeypress="checkVouchers(event)">
+                    <button type="button" class="voucher-btn disabled btn btn-sm ml-1" aria-label="Apply" id="add"
+                      disabled> <span aria-hidden="true" class="yes-cross" id="applyVoucher"
+                        onclick="apply(event)">Apply</span> </button>
+
+                  </form>
+                  <input type="hidden" class="form-control" id="offerId" value="" />
+                  <input type="hidden" class="form-control" id="amount" value="" />
+                  <input type="hidden" class="form-control" id="offerAmount" value="" />
+                  <input type="hidden" class="form-control" id="codevalue" value="" />
+                  <p class="text-success font-weight-bolder font-italic" id="success-message"></p>
+                  <p class="text-danger font-weight-bolder font-italic" id="error-message"></p>
+                </div>
+                <div class="modal-footer text-center">
+                  <button class="btn button-vchr shadow" role="button" onclick="payment(event)" id="apply">Pay ₹</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <style>
+            @media (max-width:768px) {
+              .mobileResponsive {
+                padding: 0;
+                margin-top: 35px;
+              }
             }
-          }
-        </style>
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-        <script>
-          document.getElementById('pay-button').onclick = function (e) {
-            $('#coin_offer').modal('hide');
-            let amount = $('input[name="offerName"]:checked').val()
-            let offerId = $('input[name="offerName"]:checked').attr('id');
-            setValues(offerId, amount)
-          }
-          function makePayment(e) {
-            let voucherCode = document.getElementById('voucher').value
-            const offerId = document.getElementById('offerId').value;
-            const amount = document.getElementById('amount').value
-            let code = document.getElementById('codevalue').value
-            let data = {
-              offerId: offerId,
-              amount: amount
+          </style>
+          <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+          <script>
+            document.getElementById('pay-button').onclick = function (e) {
+              $('#coin_offer').modal('hide');
+              let amount = $('input[name="offerName"]:checked').val()
+              let offerId = $('input[name="offerName"]:checked').attr('id');
+              setValues(offerId, amount)
             }
-            axios({ method: 'post', url: '/company/payment', data, headers: { 'x-auth': localStorage.getItem('token') } }).then((res) => {
-              let options = {
-                "key": '<%= process.env.MIPIE_RAZORPAY_KEY %>',
-                "amount": res.data.order.amount,
-                "currency": res.data.order.currency,
-                "name": "MiPie",
-                "description": "",
-                "image": "/images/logo/logo.png",
-                "order_id": res.data.order.id,
-                "handler": function (response) {
-                  let data = {
-                    paymentId: response.razorpay_payment_id,
-                    orderId: response.razorpay_order_id,
-                    _company: res.data.company._id,
-                    _offer: offerId,
-                    amount: amount,
-                    code: code
+            function makePayment(e) {
+              let voucherCode = document.getElementById('voucher').value
+              const offerId = document.getElementById('offerId').value;
+              const amount = document.getElementById('amount').value
+              let code = document.getElementById('codevalue').value
+              let data = {
+                offerId: offerId,
+                amount: amount
+              }
+              axios({ method: 'post', url: '/company/payment', data, headers: { 'x-auth': localStorage.getItem('token') } }).then((res) => {
+                let options = {
+                  "key": '<%= process.env.MIPIE_RAZORPAY_KEY %>',
+                  "amount": res.data.order.amount,
+                  "currency": res.data.order.currency,
+                  "name": "MiPie",
+                  "description": "",
+                  "image": "/images/logo/logo.png",
+                  "order_id": res.data.order.id,
+                  "handler": function (response) {
+                    let data = {
+                      paymentId: response.razorpay_payment_id,
+                      orderId: response.razorpay_order_id,
+                      _company: res.data.company._id,
+                      _offer: offerId,
+                      amount: amount,
+                      code: code
+                    }
+                    axios({ method: 'post', url: '/company/paymentStatus', data, headers: { 'x-auth': localStorage.getItem('token') } }).then(res => {
+                      window.location.reload()
+                    }).catch(
+                      (error) => {
+                        console.log(error.message)
+                      })
+                  },
+                  "prefill": {
+                    "name": res.data.company.name,
+                    "email": res.data.company.email,
+                    "contact": res.data.company._concernPerson.mobile
+                  },
+                  "theme": {
+                    "color": "#FC2B5A"
                   }
-                  axios({ method: 'post', url: '/company/paymentStatus', data, headers: { 'x-auth': localStorage.getItem('token') } }).then(res => {
-                    window.location.reload()
-                  }).catch(
-                    (error) => {
-                      console.log(error.message)
-                    })
-                },
-                "prefill": {
-                  "name": res.data.company.name,
-                  "email": res.data.company.email,
-                  "contact": res.data.company._concernPerson.mobile
-                },
-                "theme": {
-                  "color": "#FC2B5A"
+                };
+                let rzp1 = new Razorpay(options);
+                rzp1.open();
+                e.preventDefault();
+              }).catch(
+                err => console.log(err.message)
+              )
+            }
+            function payment(e) {
+              let voucherCode = document.getElementById('voucher').value
+              if (voucherCode.trim() == "") {
+                makePayment(e);
+              } else {
+                let code = document.getElementById('voucher').value
+                let amount = document.getElementById('offerAmount').value
+                let offer = document.getElementById('offerId').value
+                let data = {
+                  amount,
+                  code,
+                  offerId: offer
                 }
-              };
-              let rzp1 = new Razorpay(options);
-              rzp1.open();
-              e.preventDefault();
-            }).catch(
-              err => console.log(err.message)
-            )
-          }
-          function payment(e) {
-            let voucherCode = document.getElementById('voucher').value
-            if (voucherCode.trim() == "") {
-              makePayment(e);
-            } else {
+                document.getElementById('codevalue').value = code
+                axios({ method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') } })
+                  .then((res) => {
+                    if (res.data.status && res.data.amount > 0) {
+                      $('#error-message').text('')
+                      $('#success-message').text(res.data.message);
+                      document.getElementById('amount').value = res.data.amount;
+                      document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                      makePayment(e);
+                    } else if (res.data.status && res.data.amount == 0) {
+                      $('#error-message').text('')
+                      $('#success-message').text(res.data.message);
+                      document.getElementById('amount').value = res.data.amount;
+                      document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
+                      window.location.reload();
+                    } else {
+                      document.getElementById('voucher').value = ''
+                      document.getElementById('codevalue').value = ''
+                      $('#error-message').text(res.data.message)
+                      let offerAmount = document.getElementById('offerAmount').value
+                      document.getElementById('amount').value = document.getElementById('offerAmount').value;
+                      $('#success-message').text('');
+                    }
+                  })
+              }
+            }
+            function apply(e) {
               let code = document.getElementById('voucher').value
               let amount = document.getElementById('offerAmount').value
               let offer = document.getElementById('offerId').value
@@ -914,243 +955,208 @@
               document.getElementById('codevalue').value = code
               axios({ method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') } })
                 .then((res) => {
-                  if (res.data.status && res.data.amount > 0) {
+                  if (res.data.status) {
                     $('#error-message').text('')
                     $('#success-message').text(res.data.message);
                     document.getElementById('amount').value = res.data.amount;
                     document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
-                    makePayment(e);
-                  } else if (res.data.status && res.data.amount == 0) {
+                  }
+                  else if (res.data.status && res.data.amount == 0) {
                     $('#error-message').text('')
                     $('#success-message').text(res.data.message);
                     document.getElementById('amount').value = res.data.amount;
                     document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
                     window.location.reload();
-                  } else {
+                  }
+                  else {
                     document.getElementById('voucher').value = ''
                     document.getElementById('codevalue').value = ''
-                    $('#error-message').text(res.data.message)
-                    let offerAmount = document.getElementById('offerAmount').value
+                    $('#error-message').text(res.data.message);
                     document.getElementById('amount').value = document.getElementById('offerAmount').value;
                     $('#success-message').text('');
+                    let offerAmount = document.getElementById('offerAmount').value
+                    document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
                   }
                 })
             }
-          }
-          function apply(e) {
-            let code = document.getElementById('voucher').value
-            let amount = document.getElementById('offerAmount').value
-            let offer = document.getElementById('offerId').value
-            let data = {
-              amount,
-              code,
-              offerId: offer
-            }
-            document.getElementById('codevalue').value = code
-            axios({ method: 'put', url: '/company/checkvoucher', data, headers: { 'x-auth': localStorage.getItem('token') } })
-              .then((res) => {
-                if (res.data.status) {
-                  $('#error-message').text('')
-                  $('#success-message').text(res.data.message);
-                  document.getElementById('amount').value = res.data.amount;
-                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
-                }
-                else if (res.data.status && res.data.amount == 0) {
-                  $('#error-message').text('')
-                  $('#success-message').text(res.data.message);
-                  document.getElementById('amount').value = res.data.amount;
-                  document.getElementById('apply').innerHTML = `Pay / भुगतान करें ₹ ${res.data.amount}`
-                  window.location.reload();
-                }
-                else {
-                  document.getElementById('voucher').value = ''
-                  document.getElementById('codevalue').value = ''
-                  $('#error-message').text(res.data.message);
-                  document.getElementById('amount').value = document.getElementById('offerAmount').value;
-                  $('#success-message').text('');
-                  let offerAmount = document.getElementById('offerAmount').value
-                  document.getElementById('apply').innerHTML = `Pay ₹ ${offerAmount}`
-                }
-              })
-          }
 
-          function checkVouchers(e) {
-            if (e.key === "Enter") {
-              event.preventDefault();
-              payment(e)
+            function checkVouchers(e) {
+              if (e.key === "Enter") {
+                event.preventDefault();
+                payment(e)
+              }
             }
-          }
-          function maskUnmask(id) {
-            const body = { userId: id };
-            if ($('#maskunmask').hasClass('masked')) {
-              axios({ method: 'get', url: "/company/get-candidate-details", params: { userId: id }, headers: { 'x-auth': localStorage.getItem('token') } }).then((res) => {
-                $('.mobile').html(res.data.mobile)
-                $('.email').html(res.data.email)
-                $('#maskunmask').hide()
-                $('#loader').removeClass('disabled')
-                $('#loader').removeAttr('disabled')
-                axios({
-                  method: 'get', url: '/company/getCreditCount', headers: { 'x-auth': localStorage.getItem('token') }
-                }).then((res) => {
-                  let credit = res.data.credit
-                  if (!credit) { credit = 0 }
-                  $('#userCredit').text(credit)
-                  window.location.reload()
-                })
-              }).catch(
-                (error) => {
-                  if (error.response.status == 400) {
-                    $('#addCoins').modal()
-                  }
-                })
+            function maskUnmask(id) {
+              const body = { userId: id };
+              if ($('#maskunmask').hasClass('masked')) {
+                axios({ method: 'get', url: "/company/get-candidate-details", params: { userId: id }, headers: { 'x-auth': localStorage.getItem('token') } }).then((res) => {
+                  $('.mobile').html(res.data.mobile)
+                  $('.email').html(res.data.email)
+                  $('#maskunmask').hide()
+                  $('#loader').removeClass('disabled')
+                  $('#loader').removeAttr('disabled')
+                  axios({
+                    method: 'get', url: '/company/getCreditCount', headers: { 'x-auth': localStorage.getItem('token') }
+                  }).then((res) => {
+                    let credit = res.data.credit
+                    if (!credit) { credit = 0 }
+                    $('#userCredit').text(credit)
+                    window.location.reload()
+                  })
+                }).catch(
+                  (error) => {
+                    if (error.response.status == 400) {
+                      $('#addCoins').modal()
+                    }
+                  })
+              }
+              else {
+                $('.mobile').html('xxxxxxxxxx')
+                $('.email').html('xxxxxxxxxx')
+                $('#maskunmask').addClass('masked')
+                $('#maskunmask').text('UNMASK')
+              }
             }
-            else {
-              $('.mobile').html('xxxxxxxxxx')
-              $('.email').html('xxxxxxxxxx')
-              $('#maskunmask').addClass('masked')
-              $('#maskunmask').text('UNMASK')
-            }
-          }
 
-          const element = document.getElementById('mipie_profile')
-          const preloader = $('#preloader');
-          preloader.hide();
-          // function addTextContent(id) {
-          //   preloader.show(); console.log("Attempting to download profile for ID:", id);
-          //   axios.get(`/company/createResume/${id}`, {
-          //     headers: { 'x-auth': localStorage.getItem('token') }
-          //   }).then(res => {
-          //     preloader.hide();
-          //     window.open(res.data.uploadData, '_blank')
-          //     console.log("Received download URL:", res.data.uploadData);
-          //   }).catch((err) => {
-          //     preloader.hide();
-          //     console.log(err.message)
-          //   })
-          // }
-
-          function addTextContent(id) {
+            const element = document.getElementById('mipie_profile')
             const preloader = $('#preloader');
-            preloader.show();
+            preloader.hide();
+            // function addTextContent(id) {
+            //   preloader.show(); console.log("Attempting to download profile for ID:", id);
+            //   axios.get(`/company/createResume/${id}`, {
+            //     headers: { 'x-auth': localStorage.getItem('token') }
+            //   }).then(res => {
+            //     preloader.hide();
+            //     window.open(res.data.uploadData, '_blank')
+            //     console.log("Received download URL:", res.data.uploadData);
+            //   }).catch((err) => {
+            //     preloader.hide();
+            //     console.log(err.message)
+            //   })
+            // }
 
-            setTimeout(() => {
-              const element = document.getElementById('hidden-resume-pdf');
-              element.style.display = 'block';
-              const opt = {
-                margin: 0.5,
-                filename: 'Resume.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-              };
+            function addTextContent(id) {
+              const preloader = $('#preloader');
+              preloader.show();
 
-              html2pdf().set(opt).from(element).save().then(() => {
+              setTimeout(() => {
+                const element = document.getElementById('hidden-resume-pdf');
+                element.style.display = 'block';
+                const opt = {
+                  margin: 0.5,
+                  filename: 'Resume.pdf',
+                  image: { type: 'jpeg', quality: 0.98 },
+                  html2canvas: { scale: 2 },
+                  jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                };
 
-                preloader.hide();
-              }).catch(err => {
-                console.error("PDF download error:", err);
-                element.style.display = 'none';
-                preloader.hide();
-              });
-            }, 1000); // Slight delay to ensure rendering
-          }
+                html2pdf().set(opt).from(element).save().then(() => {
 
-
-          function downloadCandidateResume() {
-            const resumeArrayStr = '<%- JSON.stringify(candidate.personalInfo?.resume || []) %>';
-            const resumeArray = JSON.parse(resumeArrayStr); // Now it's a real array
-
-            console.log('Actual resume count:', resumeArray.length);
-
-            if (resumeArray.length === 0) {
-              alert("No resume available.");
-              return;
+                  preloader.hide();
+                }).catch(err => {
+                  console.error("PDF download error:", err);
+                  element.style.display = 'none';
+                  preloader.hide();
+                });
+              }, 1000); // Slight delay to ensure rendering
             }
 
-            const lastResume = resumeArray[resumeArray.length - 1];
-            let finalUrl;
 
-            if (lastResume?.url?.startsWith('upload')) {
-  finalUrl = `<%= process.env.MIPIE_BUCKET_URL +'/' %>${lastResume.url}`;
-} else {
-  finalUrl = lastResume?.url;
-}
+            function downloadCandidateResume() {
+              const resumeArrayStr = '<%- JSON.stringify(candidate.personalInfo?.resume || []) %>';
+              const resumeArray = JSON.parse(resumeArrayStr); // Now it's a real array
 
-            window.open(finalUrl, '_blank');
-          }
-          
+              console.log('Actual resume count:', resumeArray.length);
 
-          function downloadFocalytresume() {
-            ismasked = "<%= masked %>"
-            console.log('ismasked',ismasked)
-            if(ismasked ===true || ismasked ==="true"){
-              alert("Please Candidate unmasked first.");
-              return
+              if (resumeArray.length === 0) {
+                alert("No resume available.");
+                return;
+              }
+
+              const lastResume = resumeArray[resumeArray.length - 1];
+              let finalUrl;
+
+              if (lastResume?.url?.startsWith('upload')) {
+                finalUrl = `<%= process.env.MIPIE_BUCKET_URL +'/' %>${lastResume.url}`;
+              } else {
+                finalUrl = lastResume?.url;
+              }
+
+              window.open(finalUrl, '_blank');
             }
-            const url = "<%= candidate.personalInfo.focalytProfile?candidate.personalInfo.focalytProfile:'' %>"
-            if (!url) {
-              alert("No resume available.");
-              return;
+
+
+            function downloadFocalytresume() {
+              ismasked = "<%= masked %>"
+              console.log('ismasked', ismasked)
+              if (ismasked === true || ismasked === "true") {
+                alert("Please Candidate unmasked first.");
+                return
+              }
+              const url = "<%= candidate.personalInfo.focalytProfile?candidate.personalInfo.focalytProfile:'' %>"
+              if (!url) {
+                alert("No resume available.");
+                return;
+              }
+              window.open(url, '_blank')
             }
-            window.open(url, '_blank')
-          }
 
 
-          function changeButton() {
-            let hiringStatus = document.getElementById('hiringStatus').value
-            if (hiringStatus) {
-              $('#updateBtn').removeAttr('disabled')
-              $('#updateBtn').removeClass('disabled')
-            } else {
-              $('#updateBtn').attr('disabled', 'disabled')
-              $('#updateBtn').addClass('disabled')
+            function changeButton() {
+              let hiringStatus = document.getElementById('hiringStatus').value
+              if (hiringStatus) {
+                $('#updateBtn').removeAttr('disabled')
+                $('#updateBtn').removeClass('disabled')
+              } else {
+                $('#updateBtn').attr('disabled', 'disabled')
+                $('#updateBtn').addClass('disabled')
+              }
             }
-          }
-          function convert(event) {
-            const val = event.target.value;
-            event.target.value = val.toUpperCase()
+            function convert(event) {
+              const val = event.target.value;
+              event.target.value = val.toUpperCase()
 
-            let applyButton = document.getElementById('add')
-            if (event.target.value.trim() !== '') {
-              applyButton.disabled = false
-              applyButton.classList.remove('disabled')
+              let applyButton = document.getElementById('add')
+              if (event.target.value.trim() !== '') {
+                applyButton.disabled = false
+                applyButton.classList.remove('disabled')
+              }
+              else {
+                applyButton.disabled = true
+                applyButton.classList.add('disabled')
+              }
             }
-            else {
-              applyButton.disabled = true
-              applyButton.classList.add('disabled')
+
+            function setValues(offerId, amount) {
+              let offer = document.getElementById('offerId')
+              let voucherAmount = document.getElementById('amount')
+              let offerAmount = document.getElementById('offerAmount')
+              offer.value = offerId;
+              voucherAmount.value = amount
+              offerAmount.value = amount
+              document.getElementById('apply').innerHTML = `Pay ₹ ${amount}`
             }
-          }
+            function getOffers() {
+              axios({ method: 'get', url: `/company/getCoinOffers`, headers: { 'x-auth': localStorage.getItem('token') } })
+                .then(res => {
+                  let offers = document.getElementById('offers');
+                  let html = ''
+                  for (let i of res.data) {
+                    html += `<div class="row inner-border my-2 text-white popup-bg py-1" ><div class="col-9 pr-0">${i.displayOffer}</div><div class="col-3 text-left"><span>  <input type="radio" id="${i._id}" name="offerName" value="${i.payAmount.$numberDecimal}" class="radio-size"> </span></div></div>`
+                  }
+                  offers.innerHTML = html
+                  $('.radio-size').first().prop("checked", true)
+                })
+            }
 
-          function setValues(offerId, amount) {
-            let offer = document.getElementById('offerId')
-            let voucherAmount = document.getElementById('amount')
-            let offerAmount = document.getElementById('offerAmount')
-            offer.value = offerId;
-            voucherAmount.value = amount
-            offerAmount.value = amount
-            document.getElementById('apply').innerHTML = `Pay ₹ ${amount}`
-          }
-          function getOffers() {
-            axios({ method: 'get', url: `/company/getCoinOffers`, headers: { 'x-auth': localStorage.getItem('token') } })
-              .then(res => {
-                let offers = document.getElementById('offers');
-                let html = ''
-                for (let i of res.data) {
-                  html += `<div class="row inner-border my-2 text-white popup-bg py-1" ><div class="col-9 pr-0">${i.displayOffer}</div><div class="col-3 text-left"><span>  <input type="radio" id="${i._id}" name="offerName" value="${i.payAmount.$numberDecimal}" class="radio-size"> </span></div></div>`
-                }
-                offers.innerHTML = html
-                $('.radio-size').first().prop("checked", true)
-              })
-          }
+          </script>
 
-        </script>
+          <!-- HTML2PDF लाइब्रेरी का सही CDN लिंक -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+            integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-        <!-- HTML2PDF लाइब्रेरी का सही CDN लिंक -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-          integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+          <% include ./partials/footer%>
+    </body>
 
-        <% include ./partials/footer%>
-  </body>
-
-  </html>
+    </html>

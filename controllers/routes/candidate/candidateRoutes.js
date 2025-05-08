@@ -1512,7 +1512,7 @@ router.get("/dashboard", isCandidate, async (req, res) => {
       qualification: candidate.highestQualification,
       experience: candidate.isExperienced != null,
       skills:
-        candidate.techSkills.length > 0 && candidate.nonTechSkills.length > 0,
+        candidate.techSkills?.length > 0 && candidate.nonTechSkills?.length > 0,
       location:
         candidate.locationPreferences &&
         candidate.locationPreferences.length > 0,

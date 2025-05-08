@@ -841,6 +841,10 @@ router.get("/newcandidate/:candidateId", [isCompany], async (req, res) => {
   }).populate(populate);
 
 
+  // console.log('Candidate Details:', candidate); 
+  // console.log('candidate.personalInfo.certifications', candidate.personalInfo.certifications);
+  // console.log('candidate.personalInfo.languages', candidate.personalInfo.languages);
+
   let hiringStatus = await HiringStatus.findOne({ candidate: candidateId, company: company._id, isDeleted: false }, 'status createdAt updatedAt comment job eventDate concernedPerson')
     .populate({ path: 'job', select: 'title' })
 
