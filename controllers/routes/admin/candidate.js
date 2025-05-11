@@ -127,7 +127,7 @@ router.route("/")
 			}
 			const smsCount = await Candidate.countDocuments(smsFilter);
 			const count = await Candidate.countDocuments(filter)
-			let { value, order } = req.query
+			let { value, order	 } = req.query
 			let sorting = {}
 			if (value && order) {
 				sorting[value] = Number(order)
@@ -1149,7 +1149,7 @@ router
 			const candidate = await Candidate.findOne({
 				_id: req.params.id,
 			})
-				.populate(populate);
+				// .populate(populate);
 
 			if (!candidate) {
 				req.flash("error", "Candidate not found !");

@@ -31,13 +31,14 @@
                       <img class="img-fluid rounded mb-2 mt-2" height="60" width="80"
                         src="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.image %>" alt="User avatar">
                       <% } else { %>
-                        <img class="img-fluid rounded mb-2 mt-2" src="/images/elements/1.png" alt="User avatar">
+                        <img class="img-fluid rounded mb-2 mt-2" src="/images/elements/1.png"
+                          alt="User avatar">
                         <% } %>
                           <div class="user-info text-center">
-                            <h4 class="name">
-                              <%=candidate.name%>
+                            <h4 class="text-capitalize">
+                              <%=candidate.name?candidate.name:'NA'%>
                             </h4>
-                            <span class="exp-badge bg-label-secondary ">
+                            <span class="exp-badge bg-label-secondary">
                               <%=candidate.isExperienced? 'Experienced' : 'Fresher' %>
                             </span>
                           </div>
@@ -47,16 +48,19 @@
                   <ul class="list-unstyled">
                     <li class="mb-1">
                       <span class="font-weight-bold">Gender:</span>
-                      <span class="name">
-                        <%=candidate.sex%>
+                      <span class="text-capitalize">
+                        <%=candidate.sex?candidate.sex:'NA'%>
                       </span>
                     </li>
                     <li class="mb-1">
                       <span class="font-weight-bold">Mobile No.</span>
-
-                      <span class="mobile">
-                        <%=candidate.mobile%>
-                      </span>
+                      <% if (candidate.mobile==0) { %>
+                        <span class="mobile">xxxxxxxxxx</span>
+                        <% } else { %>
+                          <span class="mobile">
+                            <%=candidate.mobile%>
+                          </span>
+                          <% } %>
                     </li>
                     <li class="mb-1">
                       <span class="font-weight-bold">Email:</span>
@@ -71,93 +75,78 @@
                       </span>
                     </li>
                     <li class="mb-1">
-                      <span class="font-weight-bold">Qualification:</span>
-                      <span>
-                        <%=candidate.highestQualification ? qualification.find(i=>i._id ==
-                          candidate.highestQualification)?.name: "NA" %>
+                      <span class="font-weight-bold">Highest Qualification:</span>
+                      <span class="text-capitalize">
+                        <%= qualification.find(i=>i._id == candidate.highestQualification)?.name %>
                       </span>
                     </li>
                     <li class="mb-1">
-                      <span class="font-weight-bold">Residence:</span>
-                      <% if (candidate.city && candidate.state) { %>
-                        <span>
-                          <%=candidate.city?.name%> (<%=candidate.state?.name%>)
+                      <span class="font-weight-bold">Current Address:</span>
+                      <% if (candidate.personalInfo?.currentAddress?.fullAddress) { %>
+                        <span class="text-capitalize">
+                          <%= candidate.personalInfo.currentAddress.fullAddress %>
                         </span>
-                        <% } else if (candidate.state) { %>
-                          <span>
-                            <%=candidate.state?.name%>
-                          </span>
-                          <% } else if (candidate.city) { %>
-                            <span>
-                              <%=candidate.city?.name%>
-                            </span>
-                            <% } else { %>
-                              <span> NA</span>
-                              <% } %>
+                        <% } else { %>
+                          <span>NA</span>
+                          <% } %>
                     </li>
-                  </ul>
-                  <p id="subscription"></p>
+                    <li class="mb-1">
+                      <span class="font-weight-bold">Permanent Address :</span>
+                      <% if (candidate.personalInfo?.permanentAddress?.fullAddress) { %>
+                        <span class="text-capitalize">
+                          <%= candidate.personalInfo.permanentAddress?.fullAddress %>
+                        </span>
+                        <% } else { %>
+                          <span>NA</span>
+                          <% } %>
+                    </li>
 
+                  </ul>
+                 
                 </div>
               </div>
             </div>
 
-
-
+            <!-- Profile section -->
             <section id="profile">
-              <div class="col-xl-12" id="mipie_profile">
-                <div class="row">
-                  <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-one px-0 text-center">
-                    <img src="/images/icons/profile.png" class="img-fluid pt-1">
-                  </div>
-                  <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
-                    <h5 class="p-0 m-0">Candidate CV</h5>
-                  </div>
-                  <% if (candidate.resume) { %>
-                  <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right" data-bs-target="#editUser"
-                    data-bs-toggle="modal" target="_blank" aria-disabled
-                    onclick="downloadCandidateResume()" id="loader">
-                    <button class="dwnload btn">DOWNLOAD&nbsp;<i
-                        class="feather icon-arrow-down text-white font-weight-bold"></i></button>
-                  </div>
-                  <% } %>
-                </div>
-              </div>
-            </section>
 
-
-
-          
-
-
-            
-
-
-
-
-            <div class="card bg-white shadow d-none">
-              <div class="card-header border border-top-0 border-left-0 border-right-0 py-1">
-                <h4 class="card-title text-primary">Take Action</h4>
-              </div>
-              <div class="card-body">
-                <div class="info-container">
-                  <div class="justify-content-center text-center">
-                    <div class="col-xl-12">
-                      <select class="form-control">
-                        <option>Select option</option>
-                        <option>Pending</option>
-                        <option>Shortlist</option>
-                        <option>Reject</option>
-                        <option>Offer</option>
-                        <option>Hired</option>
-                      </select>
+                <div class="col-xl-12" id="mipie_profile">
+                  <div class="row">
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-one px-0 text-center">
+                      <img src="/images/icons/profile.png" class="img-fluid pt-1">
+                    </div>
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
+                      <h5 class="p-0 m-0">Focalyt Profile</h5>
+                    </div>
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right"
+                      data-bs-target="#editUser" data-bs-toggle="modal" target="_blank" aria-disabled
+                      id="loader">
+                      <a onclick="downloadFocalytresume()" class="dwnload btn">DOWNLOAD&nbsp;<i
+                          class="feather icon-arrow-down text-white font-weight-bold"></i></a>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                </div>  
+                <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3"
+                        id="candidate_resume">
+                        <div class="row">
+                          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-two px-0 text-center">
+                            <img src="/images/icons/resume.png" class="img-fluid pt-1">
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
+                            <h5 class="p-0 m-0">Resume</h5>
+                          </div>
+                          <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right">
+                            <a class="dwnload btn" onclick="downloadCandidateResume()" id="resumeButton"
+                              target="_blank">DOWNLOAD&nbsp;<i
+                                class="feather icon-arrow-down text-white font-weight-bold"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                      
+            </section>
+
           </div>
-          <div class="col-xl-8">
+          <div class="col-xl-8 mobileResponsive">
             <!-- User Pills -->
             <ul class="nav nav-pills flex-column flex-md-row mb-3 d-none">
               <li class="nav-item">
@@ -182,203 +171,241 @@
             <div class="content-body">
               <section class="list-view">
                 <div class="row">
-                  <div class="col-12">
-                    <div class="card" style="background-color:#fffcec;padding: bottom 12px;">
-                      <div class="card-header border border-top-0 border-left-0 border-right-0" id="box23" style="padding-top: 12px; padding-bottom: 12‒; padding-bottom: 8px;">
-                        <img src="/images/icons/qualification.png" class="img-fluid pr-1">
-                        <p class="text-flex text-black" style="padding-top: 8px; text-align: left;">Qualification</p>
-                      </div>
-                      
-                      <div class="card-content">
-                        <div class="table-responsive">
-                          <table class="table table-hover-animation mb-0 table-hover">
-                            <thead>
-                              <tr>
-                                <th>Qualification</th>
-                                <th>College</th>
-                                <th>University</th>
-                                <th>Grade/CGPA</th>
-                                <th>Year of Passing</th>
-                              </tr>
-                            </thead>
-                          
+                  <div class="col-xl-12 col-lg-12 col-md-12">
+                    <!-- Resume Preview Section -->
+                    <div class="card">
+                      <div class="card-body resume-preview">
+                        <div id="resume-download" class="resume-document">
+                          <!-- Professional Summary -->
+                          <div class="mb-4">
+                            <h3 class="border-bottom pb-2 mb-1">Professional Summary</h3>
+                            <p>
+                              <%= candidate.personalInfo?.professionalSummary || "No summary available." %>
+                            </p>
+                          </div>
 
-                            <tbody id="table-body">
-                              <% candidate.qualifications.forEach((i)=> { %>
-                                <tr>
-                                  <td>
-                                    <%=i.Qualification?.name ? i.Qualification?.name : 'NA' %>
-                                  </td>
-                                  <td>
-                                    <%=i.College?i.College:'NA' %>
-                                  </td>
-                                  <td>
-                                    <%=i.University ? i.University.name : 'NA' %>
-                                  </td>
-                                  <td>
-                                    <%=i.Result?i.Result:'NA' %>
-                                  </td>
-                                  <td>
-                                    <%=i.PassingYear ? i.PassingYear:'NA' %>
-                                  </td>
-                                </tr>
-                                <% }); %>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="card mt-1 mb-2">
-                      <div class="card-header border border-top-0 border-left-0 border-right-0"
-                        style="background-color:#fffcec;padding-top: 12px;">
+                          <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-7">
+                              <!-- Work Experience -->
+                              <div class="mb-4">
+                                <h3 class="border-bottom pb-2 mb-1">Work Experience</h3>
+
+                                <% if (candidate.experiences && candidate.experiences.length> 0) { %>
+                                  <% candidate.experiences.forEach((exp)=> { %>
+                                    <div class="mb-3">
+                                      <div class="d-flex justify-content-between">
+                                        <h5 class="font-weight-bold mb-1">
+                                          <%= exp.jobTitle %>
+                                        </h5>
+                                        <span class="text-muted">
+                                          <%= exp.FromDate %> - <%= exp.currentlyWorking ? "Present" :
+                                              exp.ToDate %>
+                                        </span>
+                                      </div>
+                                      <h6 class="text-primary mb-2">
+                                        <%= exp.companyName %>
+                                      </h6>
+                                      <p>
+                                        <%= exp.jobDescription %>
+                                      </p>
+                                    </div>
+                                    <% }); %>
+                                      <% } else { %>
+                                        <p>No work experience provided.</p>
+                                        <% } %>
 
 
-                        <h4 class="card-title pb-1">
-                          <img src="/images/icons/technicalskill.png" class="img-fluid pr-1">Technical Skills Details
-                        </h4>
-                      </div>
-                      <div class="card-content">
-                        <div class="table-responsive">
-                          <table class="table table-hover-animation mb-0 table-hover">
-                            <thead>
-                              <tr>
-                                <th>Technical</th>
-                                <th>Media</th>
-                              </tr>
-                            </thead>
-                            
-                            <tbody id="table-body">
-                              <% candidate.techSkills.forEach((i)=> { %>
-                                <tr>
-                                  <td>
-                                    <%=i.id.name%>
-                                  </td>
-                                  <td><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + i.URL %>"
-                                      target="_blank">View</a></td>
-                                </tr>
-                                <% }); %>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="card mt-1 mb-2">
-                      <div class="card-header border border-top-0 border-left-0 border-right-0"
-                        style="padding-top: 12px;background-color: #fffcec;">
-                        <h4 class="card-title pb-1">
-                          <img src="/images/icons/technicalskill.png" class="img-fluid pr-1">
-                          Non Technical Skills Details
-                        </h4>
-                      </div>
-                      <div class="card-content">
-                        <div class="table-responsive">
-                          <table class="table table-hover-animation mb-0 table-hover">
-                            <thead>
-                              <tr>
-                                <th>Non Technical</th>
-                                <th>Media</th>
-                              </tr>
-                            </thead>
-                            <tbody id="table-body">
-                              <% candidate.nonTechSkills.forEach((i)=> { %>
-                                <tr>
-                                  <td>
-                                    <%=i.id.name %>
-                                  </td>
-                                  <td><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + i.URL %>"
-                                      target="_blank">View</a></td>
-                                </tr>
-                                <% }); %>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="card mt-1 mb-2">
-                      <div class="card-header border border-top-0 border-left-0 border-right-0"
-                        style="padding-top: 12px;padding-bottom: 4px;background-color: #fffcec;">
 
-                        <h4 class="card-title pb-1">
-                          <img src="/images/icons/experince.png" class="img-fluid pr-1">Experience Details
-                        </h4>
-                      </div>
-                      <div class="card-content">
-                        <div class="table-responsive">
-                          <table class="table table-hover-animation mb-0 table-hover">
-                            <thead>
-                              <tr>
-                                <th>Duration</th>
-                                <th>Company Name</th>
-                                <th>Industry</th>
-                              </tr>
-                            </thead>
-                            <tbody id="table-body">
-                              <% candidate.experiences.forEach((i)=> { %>
-                                <tr>
-                                  <td>
-                                    <%=i.FromDate? moment(i.FromDate).format('MMM-YYYY') : ' NA ' %> To
-                                      <%=i.ToDate? moment(i.ToDate).format('MMM-YYYY') : ' NA ' %>
-                                  </td>
-                                  <td>
-                                    <%=i.Company_Name? i.Company_Name : 'NA' %>
-                                  </td>
-                                  <td>
-                                    <%=i.Industry_Name?.name ? i.Industry_Name?.name : 'NA' %>
-                                  </td>
-                                </tr>
-                                <% }); %>
-                            </tbody>
-                          </table>
+                              </div>
+
+                              <!-- Education -->
+                              <div class="mb-4">
+                                <h3 class="border-bottom pb-2 mb-1">Education</h3>
+
+                                <% if (candidate.qualifications?.length) { %>
+                                  <% candidate.qualifications.forEach((edu)=> { %>
+                                    <div class="mb-3">
+                                      <div class="d-flex justify-content-between">
+                                        <h5 class="font-weight-bold mb-1">
+                                          <%= qualification.find(i=> i._id == edu.education)?.name %>
+                                        </h5>
+                                        <span class="text-muted">
+                                          <%= edu.passingYear %>
+                                        </span>
+                                      </div>
+                                      <h6 class="text-primary mb-2">
+                                        <%= edu.collegeName || edu.schoolName || edu.universityName %>
+                                      </h6>
+                                      <div>
+                                        <span class="mr-3">Marks: <%= edu.marks %></span>
+                                        <% if (edu.specialization) { %><span>Specialization: <%=
+                                              edu.specialization %></span>
+                                          <% } %>
+                                      </div>
+                                    </div>
+                                    <% }) %>
+                                      <% } else { %>
+                                        <p>No education details available.</p>
+                                        <% } %>
+
+
+
+                              </div>
+                              <!-- Interests Section -->
+                              <div class="mb-4">
+                                <h3 class="border-bottom pb-2 mb-1">Interests</h3>
+                                <% if (candidate.personalInfo.interest?.length) { %>
+                                  <div class="d-flex flex-wrap">
+                                    <% candidate.personalInfo.interest.forEach((item)=> { %>
+                                      <span class="badge badge-light mr-1 mb-1 p-1"
+                                        style="position: relative; background:transparent; color: #000;">
+                                        <%= item %>
+                                      </span>
+                                      <% }) %>
+                                  </div>
+                                  <% } else { %>
+                                    <p>No interests added.</p>
+                                    <% } %>
+
+                              </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="col-md-5">
+                              <!-- Skills Section -->
+                              <div class="mb-4">
+                                <h3 class="border-bottom pb-2 mb-1">Skills</h3>
+                                <div class="row">
+                                  <div class="col-12 mb-2">
+                                    <% if (candidate.personalInfo.skills?.length) { %>
+                                      <% candidate.personalInfo.skills.forEach((skill)=> { %>
+                                        <div class="col-12 mb-2">
+                                          <div class="d-flex align-items-center">
+                                            <i class="feather icon-check-circle text-success mr-2"></i>
+                                            <span>
+                                              <%= skill.skillName %> (<%= skill.skillPercent %>%)
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <% }) %>
+                                          <% } else { %>
+                                            <p>No skills listed.</p>
+                                            <% } %>
+
+                                  </div>
+                                </div>
+
+                                <!-- Languages Section -->
+                                <div class="mb-4">
+                                  <h3 class="border-bottom pb-2 mb-1">Languages</h3>
+                                  <div>
+                                    <% candidate.personalInfo.languages?.forEach(lang=> { %>
+                                      <div class="mb-2">
+                                        <div class="d-flex justify-content-between">
+                                          <span>
+                                            <%= lang.name %>
+                                          </span>
+                                          <div>
+                                            <% for (let i=1; i <=5; i++) { %>
+                                              <i class="fa fa-circle <%= i <= lang.level ? 'text-primary' : 'text-muted' %> mr-1"
+                                                style="font-size: 8px;"></i>
+                                              <% } %>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <% }) %>
+
+                                  </div>
+                                </div>
+
+                                <!-- Certifications Section -->
+                                <div class="mb-4">
+                                  <h3 class="border-bottom pb-2 mb-1">Certifications</h3>
+                                  <% if (candidate.personalInfo.certifications?.length) { %>
+                                    <ul class="list-unstyled">
+                                      <% candidate.personalInfo.certifications.forEach(cert=> { %>
+                                        <li class="mb-2">
+                                          <i class="feather icon-award text-warning mr-2"></i>
+                                          <span class="font-weight-bold">
+                                            <%= cert.certificateName %>
+                                          </span>
+                                          - <%= cert.orgName %> (<%= cert.month || '' %>
+                                              <%= cert.year || '' %>)
+                                        </li>
+                                        <% }) %>
+                                    </ul>
+                                    <% } else { %>
+                                      <p>No certifications found.</p>
+                                      <% } %>
+
+                                        <!-- <ul class="list-unstyled">
+                                  <li class="mb-2">
+                                    <i class="feather icon-award text-warning mr-2"></i>
+                                    <span class="font-weight-bold">AWS Certified Solutions Architect</span>
+                                    - Amazon Web Services
+                                  </li>
+                                  <li class="mb-2">
+                                    <i class="feather icon-award text-warning mr-2"></i>
+                                    <span class="font-weight-bold">Professional Scrum Master I</span> -
+                                    Scrum.org
+                                  </li>
+                                  <li class="mb-2">
+                                    <i class="feather icon-award text-warning mr-2"></i>
+                                    <span class="font-weight-bold">Google Professional Cloud
+                                      Developer</span> - Google Cloud
+                                  </li>
+                                  <li class="mb-2">
+                                    <i class="feather icon-award text-warning mr-2"></i>
+                                    <span class="font-weight-bold">React Developer Certification</span> -
+                                    Meta
+                                  </li>
+                                  <li class="mb-2">
+                                    <i class="feather icon-award text-warning mr-2"></i>
+                                    <span class="font-weight-bold">MongoDB Certified Developer
+                                      Associate</span> - MongoDB University
+                                  </li>
+                                </ul> -->
+                                </div>
+
+                                <!-- Projects Section -->
+                                <div class="mb-4">
+                                  <h3 class="border-bottom pb-2 mb-1">Projects</h3>
+                                  <% if (candidate.personalInfo.projects?.length) { %>
+                                    <% candidate.personalInfo.projects.forEach((proj)=> { %>
+                                      <div class="mb-3">
+                                        <h5 class="font-weight-bold mb-1">
+                                          <%= proj.projectName %> <span class="text-muted">(<%= proj.proyear
+                                                %>)</span>
+                                        </h5>
+                                        <p>
+                                          <%= proj.proDescription %>
+                                        </p>
+                                      </div>
+                                      <% }); %>
+                                        <% } else { %>
+                                          <p>No projects listed.</p>
+                                          <% } %>
+
+
+                                </div>
+
+
+                              </div>
+                            </div>
+
+                            <!-- Declaration -->
+                            <div class="mt-4">
+                              <h3 class="border-bottom pb-2 mb-1">Declaration</h3>
+                              <p>
+                                <%= candidate.personalInfo?.declaration?.text %>
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="card mt-1 mb-5">
-                      <div class="card-header border border-top-0 border-left-0 border-right-0"
-                        style="padding-top: 12px;padding-bottom: 4px;background-color: #fffcec;">
-                        <h4 class="card-title pb-1"><img src="/images/icons/location.png"
-                            class="img-fluid pr-1">Location Preferences</h4>
-                      </div>
-                      <div class="card-content">
-                        <div class="table-responsive">
-                          <table class="table table-hover-animation mb-0 table-hover">
-                            <thead>
-                              <tr>
-                                <th>Location 1</th>
-                                <th>Location 2</th>
-                                <th>Location 3</th>
-                              </tr>
-                            </thead>
-                            <tbody id="table-body">
-                              <tr>
-                                <!-- <%candidate.locationPreferences.forEach((location)=>{%>
-                                                  <td><%=location.city %></td>
-                                                  
-                                                  <%})%> -->
-                                <td>
-                                  <%=candidate.locationPreferences[0]?.city?.name %>
-                                </td>
-                                <td>
-                                  <%=candidate.locationPreferences[1]?.city?.name %>
-                                </td>
-                                <td>
-                                  <%=candidate.locationPreferences[2]?.city?.name %>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </section>
             </div>
             <!-- /Project table -->
@@ -511,6 +538,45 @@
   <div class="drag-target"></div>
   </div>
   <script>
+    
+    function downloadCandidateResume() {
+      console.log("Candidate resume downloading")
+            const resumeArrayStr = '<%- JSON.stringify(candidate.personalInfo?.resume || []) %>';
+            const resumeArray = JSON.parse(resumeArrayStr); // Now it's a real array
+
+            console.log('Actual resume count:', resumeArray.length);
+
+            if (resumeArray.length === 0) {
+              alert("No resume available.");
+              return;
+            }
+
+            const lastResume = resumeArray[resumeArray.length - 1];
+            let finalUrl;
+
+            if (lastResume?.url?.startsWith('upload')) {
+              finalUrl = `<%= process.env.MIPIE_BUCKET_URL +'/' %>${lastResume.url}`;
+            } else {
+              finalUrl = lastResume?.url;
+            }
+
+            window.open(finalUrl, '_blank');
+          }
+
+
+          function downloadFocalytresume() {
+            
+            const url = "<%= candidate.personalInfo.focalytProfile?candidate.personalInfo.focalytProfile:'' %>"
+            if (!url) {
+              alert("No resume available.");
+              return;
+            }
+            window.open(url, '_blank')
+          }
+
+
+  </script>
+  <script>
 
 document.addEventListener("DOMContentLoaded", () => {
 const pageAnchors = document.querySelectorAll("a.pageAnchor");
@@ -552,10 +618,7 @@ pageAnchors.forEach((el) => {
         console.log(err.message)
       })
     }
-    function downloadCandidateResume() {
-      const url = "<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.resume %>"
-      window.open(url, '_blank')
-    }
+    
 
   </script>
 

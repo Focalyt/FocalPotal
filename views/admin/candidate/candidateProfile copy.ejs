@@ -1,0 +1,565 @@
+<% include ../partials/header %>
+  <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+    <div class="content-header-left col-md-9 col-12 mb-2">
+      <div class="row breadcrumbs-top">
+        <div class="col-12">
+          <h3 class="content-header-title float-left mb-0">Candidate Profile</h3>
+          <div class="breadcrumb-wrapper col-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+              <li class="breadcrumb-item"><a href="/admin/candidate">Candidates</a></li>
+              <li class="breadcrumb-item active">Candidate Profile</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="preloader"></div>
+
+  <section id="Concerned-Person ">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 px-3">
+        <div class="row">
+          <div class="col-xl-4">
+            <div class="card bg-white shadow">
+              <div class="card-body">
+                <div class="user-avatar-section">
+                  <div class="d-flex align-items-center flex-column border-bottom mb-2 pb-2">
+                    <% if (candidate.image) { %>
+                      <img class="img-fluid rounded mb-2 mt-2" height="60" width="80"
+                        src="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.image %>" alt="User avatar">
+                      <% } else { %>
+                        <img class="img-fluid rounded mb-2 mt-2" src="/images/elements/1.png" alt="User avatar">
+                        <% } %>
+                          <div class="user-info text-center">
+                            <h4 class="name">
+                              <%=candidate.name%>
+                            </h4>
+                            <span class="exp-badge bg-label-secondary ">
+                              <%=candidate.isExperienced? 'Experienced' : 'Fresher' %>
+                            </span>
+                          </div>
+                  </div>
+                </div>
+                <div class="info-container">
+                  <ul class="list-unstyled">
+                    <li class="mb-1">
+                      <span class="font-weight-bold">Gender:</span>
+                      <span class="name">
+                        <%=candidate.sex%>
+                      </span>
+                    </li>
+                    <li class="mb-1">
+                      <span class="font-weight-bold">Mobile No.</span>
+
+                      <span class="mobile">
+                        <%=candidate.mobile%>
+                      </span>
+                    </li>
+                    <li class="mb-1">
+                      <span class="font-weight-bold">Email:</span>
+                      <span class="email">
+                        <%=candidate.email%>
+                      </span>
+                    </li>
+                    <li class="mb-1">
+                      <span class="font-weight-bold">Experience:</span>
+                      <span class="exp-badge bg-label-success">
+                        <%=candidate.totalExperience?candidate.totalExperience + ' Years' : 'Fresher' %>
+                      </span>
+                    </li>
+                    <li class="mb-1">
+                      <span class="font-weight-bold">Qualification:</span>
+                      <span>
+                        <%=candidate.highestQualification ? qualification.find(i=>i._id ==
+                          candidate.highestQualification)?.name: "NA" %>
+                      </span>
+                    </li>
+                    <li class="mb-1">
+                      <span class="font-weight-bold">Residence:</span>
+                      <% if (candidate.city && candidate.state) { %>
+                        <span>
+                          <%=candidate.city?.name%> (<%=candidate.state?.name%>)
+                        </span>
+                        <% } else if (candidate.state) { %>
+                          <span>
+                            <%=candidate.state?.name%>
+                          </span>
+                          <% } else if (candidate.city) { %>
+                            <span>
+                              <%=candidate.city?.name%>
+                            </span>
+                            <% } else { %>
+                              <span> NA</span>
+                              <% } %>
+                    </li>
+                  </ul>
+                  <p id="subscription"></p>
+
+                </div>
+              </div>
+            </div>
+
+
+
+            <section id="profile">
+              <div class="col-xl-12" id="mipie_profile">
+                <div class="row">
+                  <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 bg-cs-one px-0 text-center">
+                    <img src="/images/icons/profile.png" class="img-fluid pt-1">
+                  </div>
+                  <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 my-auto">
+                    <h5 class="p-0 m-0">Candidate CV</h5>
+                  </div>
+                  <% if (candidate.resume) { %>
+                  <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 py-1 text-right" data-bs-target="#editUser"
+                    data-bs-toggle="modal" target="_blank" aria-disabled
+                    onclick="downloadCandidateResume()" id="loader">
+                    <button class="dwnload btn">DOWNLOAD&nbsp;<i
+                        class="feather icon-arrow-down text-white font-weight-bold"></i></button>
+                  </div>
+                  <% } %>
+                </div>
+              </div>
+            </section>
+
+
+
+          
+
+
+            
+
+
+
+
+            <div class="card bg-white shadow d-none">
+              <div class="card-header border border-top-0 border-left-0 border-right-0 py-1">
+                <h4 class="card-title text-primary">Take Action</h4>
+              </div>
+              <div class="card-body">
+                <div class="info-container">
+                  <div class="justify-content-center text-center">
+                    <div class="col-xl-12">
+                      <select class="form-control">
+                        <option>Select option</option>
+                        <option>Pending</option>
+                        <option>Shortlist</option>
+                        <option>Reject</option>
+                        <option>Offer</option>
+                        <option>Hired</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <!-- User Pills -->
+            <ul class="nav nav-pills flex-column flex-md-row mb-3 d-none">
+              <li class="nav-item">
+                <a class="nav-link active" href="javascript:void(0);">
+                  <i class="ti ti-user-check ti-xs me-1"></i>QUALIFICATION</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0);">
+                  <i class="ti ti-lock ti-xs me-1"></i>SKILLS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0);l">
+                  <i class="ti ti-currency-dollar ti-xs me-1"></i>EXPERIENCE</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0);"><i class="ti ti-bell ti-xs me-1"></i>LOCATION
+                  PREFERENCES</a>
+              </li>
+            </ul>
+            <!--/ User Pills -->
+            <!-- Project table -->
+            <div class="content-body">
+              <section class="list-view">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card" style="background-color:#fffcec;padding: bottom 12px;">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0" id="box23" style="padding-top: 12px; padding-bottom: 12‒; padding-bottom: 8px;">
+                        <img src="/images/icons/qualification.png" class="img-fluid pr-1">
+                        <p class="text-flex text-black" style="padding-top: 8px; text-align: left;">Qualification</p>
+                      </div>
+                      
+                      <div class="card-content">
+                        <div class="table-responsive">
+                          <table class="table table-hover-animation mb-0 table-hover">
+                            <thead>
+                              <tr>
+                                <th>Qualification</th>
+                                <th>College</th>
+                                <th>University</th>
+                                <th>Grade/CGPA</th>
+                                <th>Year of Passing</th>
+                              </tr>
+                            </thead>
+                          
+
+                            <tbody id="table-body">
+                              <% candidate.qualifications.forEach((i)=> { %>
+                                <tr>
+                                  <td>
+                                    <%=i.Qualification?.name ? i.Qualification?.name : 'NA' %>
+                                  </td>
+                                  <td>
+                                    <%=i.College?i.College:'NA' %>
+                                  </td>
+                                  <td>
+                                    <%=i.University ? i.University.name : 'NA' %>
+                                  </td>
+                                  <td>
+                                    <%=i.Result?i.Result:'NA' %>
+                                  </td>
+                                  <td>
+                                    <%=i.PassingYear ? i.PassingYear:'NA' %>
+                                  </td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card mt-1 mb-2">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0"
+                        style="background-color:#fffcec;padding-top: 12px;">
+
+
+                        <h4 class="card-title pb-1">
+                          <img src="/images/icons/technicalskill.png" class="img-fluid pr-1">Technical Skills Details
+                        </h4>
+                      </div>
+                      <div class="card-content">
+                        <div class="table-responsive">
+                          <table class="table table-hover-animation mb-0 table-hover">
+                            <thead>
+                              <tr>
+                                <th>Technical</th>
+                                <th>Media</th>
+                              </tr>
+                            </thead>
+                            
+                            <tbody id="table-body">
+                              <% candidate.techSkills.forEach((i)=> { %>
+                                <tr>
+                                  <td>
+                                    <%=i.id.name%>
+                                  </td>
+                                  <td><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + i.URL %>"
+                                      target="_blank">View</a></td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card mt-1 mb-2">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0"
+                        style="padding-top: 12px;background-color: #fffcec;">
+                        <h4 class="card-title pb-1">
+                          <img src="/images/icons/technicalskill.png" class="img-fluid pr-1">
+                          Non Technical Skills Details
+                        </h4>
+                      </div>
+                      <div class="card-content">
+                        <div class="table-responsive">
+                          <table class="table table-hover-animation mb-0 table-hover">
+                            <thead>
+                              <tr>
+                                <th>Non Technical</th>
+                                <th>Media</th>
+                              </tr>
+                            </thead>
+                            <tbody id="table-body">
+                              <% candidate.nonTechSkills.forEach((i)=> { %>
+                                <tr>
+                                  <td>
+                                    <%=i.id.name %>
+                                  </td>
+                                  <td><a href="<%= process.env.MIPIE_BUCKET_URL +'/' + i.URL %>"
+                                      target="_blank">View</a></td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="card mt-1 mb-2">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0"
+                        style="padding-top: 12px;padding-bottom: 4px;background-color: #fffcec;">
+
+                        <h4 class="card-title pb-1">
+                          <img src="/images/icons/experince.png" class="img-fluid pr-1">Experience Details
+                        </h4>
+                      </div>
+                      <div class="card-content">
+                        <div class="table-responsive">
+                          <table class="table table-hover-animation mb-0 table-hover">
+                            <thead>
+                              <tr>
+                                <th>Duration</th>
+                                <th>Company Name</th>
+                                <th>Industry</th>
+                              </tr>
+                            </thead>
+                            <tbody id="table-body">
+                              <% candidate.experiences.forEach((i)=> { %>
+                                <tr>
+                                  <td>
+                                    <%=i.FromDate? moment(i.FromDate).format('MMM-YYYY') : ' NA ' %> To
+                                      <%=i.ToDate? moment(i.ToDate).format('MMM-YYYY') : ' NA ' %>
+                                  </td>
+                                  <td>
+                                    <%=i.Company_Name? i.Company_Name : 'NA' %>
+                                  </td>
+                                  <td>
+                                    <%=i.Industry_Name?.name ? i.Industry_Name?.name : 'NA' %>
+                                  </td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="card mt-1 mb-5">
+                      <div class="card-header border border-top-0 border-left-0 border-right-0"
+                        style="padding-top: 12px;padding-bottom: 4px;background-color: #fffcec;">
+                        <h4 class="card-title pb-1"><img src="/images/icons/location.png"
+                            class="img-fluid pr-1">Location Preferences</h4>
+                      </div>
+                      <div class="card-content">
+                        <div class="table-responsive">
+                          <table class="table table-hover-animation mb-0 table-hover">
+                            <thead>
+                              <tr>
+                                <th>Location 1</th>
+                                <th>Location 2</th>
+                                <th>Location 3</th>
+                              </tr>
+                            </thead>
+                            <tbody id="table-body">
+                              <tr>
+                                <!-- <%candidate.locationPreferences.forEach((location)=>{%>
+                                                  <td><%=location.city %></td>
+                                                  
+                                                  <%})%> -->
+                                <td>
+                                  <%=candidate.locationPreferences[0]?.city?.name %>
+                                </td>
+                                <td>
+                                  <%=candidate.locationPreferences[1]?.city?.name %>
+                                </td>
+                                <td>
+                                  <%=candidate.locationPreferences[2]?.city?.name %>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <!-- /Project table -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-12 col-lg-12">
+      <form method="GET">
+      <div class="row ">
+        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-12 mt-1">
+          <label>From Date</label>
+          <input type="date" class="form-control" name="fromDate" value="<%= data.fromDate %>">
+        </div>
+        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-12 mt-1">
+          <label>To Date</label>
+          <input type="date" class="form-control" name="toDate" value="<%= data.toDate %>">
+        </div>
+        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-12 mt-1">
+          <label>Status</label>
+          <select class="form-control text-capitalize" name="status">
+            <option value="">Select</option>
+            <option value="Active" <% if(data.status=='Active' ) { %> selected <%}%> > Active</option>
+            <option value="Inactive" <% if(data.status=='Inactive' ) { %> selected <%}%> > Inactive</option>
+          </select>
+        </div>
+        <div  class="col-xl-4 col-lg-12 col-md-12 col-sm-6 col-12 mt-1" style="margin-top: 2.5rem !important;">
+          <button class="btn btn-success  waves-effect waves-light  text-white d-inline px-xl-2 px-lg-2 px-md-2 px-sm-2 px-1 py-1 mx-2"
+            id="search-button" type="submit">
+            Go
+          </button>
+          <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-md-0 mx-0 px-xl-2 px-lg-2 px-md-2 px-sm-2 px-1"
+            href="/admin/candidate/details/<%= candidate._id %>">RESET</a>                 
+        </div>
+        <div class="totalCount col-xl-2 col-lg-4 col-md-4 col-sm-6 col-12">
+          <span>Total Candidates: <%= count %></span>
+        </div>
+      </div>
+      </form>
+    </div>
+    <div class="row mt-3">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 px-0 pb-1">
+        <div class="table-content shadow-cashback shadow-cashback">
+          <div class="tab_head font-weight-bolder py-1 px-1"> My Referrals</div>
+           <div style="overflow-x:auto;">
+          <table class="table">
+            <thead>
+              <tr class="tab_row">
+                <th scope="col">Date/Time</th>
+                <th scope="col">Candidate Name</th>
+                <th scope="col">Number</th>
+                <th scope="col">Status</th>
+                <th scope="col">Earning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if(referral?.length > 0) {%>
+                <% referral.forEach((refer)=> { %>
+                  <tr>
+                <td>
+                  <%= moment(refer.createdAt).utcOffset('+05:30').format('DD MMM YYYY, hh:mm A')  %>
+                </td>
+                <td>
+                  <%= refer?.referredTo?.name ? refer.referredTo.name : 'NA' %>
+                </td>
+                <td>
+                  <%= refer?.referredTo?.mobile ? refer.referredTo.mobile : 'NA' %>
+                </td>
+                <td>
+                  <%= refer?.status ? refer.status : 'NA' %>
+                </td>
+                <td>
+                  <%= refer?.earning ? refer.earning : 'NA' %>
+                </td>
+              </tr>
+                <%}) %> <%} else {%>
+                  <tr><td colspan="5" class="text-center">No Result Found</td></tr>
+              <%}%>
+            </tbody>
+          </table>
+          </div>
+          <% if (totalPages> 1) { %>
+            <ul class="pagination justify-content-end ml-2 mb-2 text-right">
+              <% let first=1 %>
+                <% let last=totalPages> 4 ? 4 :
+                  totalPages %> <% if (totalPages> 4 && page >= 2) { %>
+                    <% first=page - 1 %>
+                      <% last=page + 1 %>
+                        <% if (last> totalPages) last = totalPages
+                          %> <% } %>
+                            <% if (first> 1) { %>
+                              <li class="page-item">
+                                <a class="pageAnchor page-link" href="<%= 1 %>">First</a>
+                              </li>
+                              <% } %>
+                                <% for (let i=first; i <=last; i +=1) { %>
+                                  <% if (i===page) { %>
+                                    <li class="active page-item">
+                                      <a href="javascript:void()" class="page-link pagi_custom">
+                                        <%= i %>
+                                      </a>
+                                    </li>
+                                    <% } else { %>
+                                      <li class="page-item">
+                                        <a class="page-link pageAnchor pagi_customtwo" href="<%= i %>">
+                                          <%= i %>
+                                        </a>
+                                      </li>
+                                      <% } %>
+                                        <% } %>
+                                          <% if (totalPages>
+                                            last)
+                                            { %>
+                                            <li class="page-item">
+                                              <a class="pageAnchor page-link" href="<%= last + 1 %>">...</a>
+                                            </li>
+                                            <li class="page-item">
+                                              <a class="pageAnchor page-link" href="<%= totalPages %>">Last</a>
+                                            </li>
+                                            <% } %>
+            </ul>
+            <% } %>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+  </div>
+  <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+const pageAnchors = document.querySelectorAll("a.pageAnchor");
+const { origin, pathname, search } = window.location;
+let searchParams = search.split("?")[1];
+let obj;
+let url = `${origin}${pathname}?`;
+if (searchParams) {
+  obj = JSON.parse(
+    '{"' + searchParams.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+    function (key, value) {
+      return key === "" ? value : decodeURIComponent(value);
+    }
+  );
+  const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
+  keyArr.forEach((x) => {
+    if (x !== "page") {
+      url += `${x}=${obj[x]}&`;
+    }
+  });
+}
+pageAnchors.forEach((el) => {
+  const n = el.getAttribute("href");
+  el.setAttribute("href", `${url}page=${n}`);
+});
+});
+    const element = document.getElementById('loader')
+    const preloader = $('#preloader');
+    preloader.hide();
+    function addTextContent(id) {
+      preloader.show();
+      axios.get(`/company/createResume/${id}`, {
+        headers: { 'x-auth': localStorage.getItem('token') }
+      }).then(res => {
+        preloader.hide();
+        window.open(res.data.uploadData, '_blank')
+      }).catch((err) => {
+        preloader.hide();
+        console.log(err.message)
+      })
+    }
+    function downloadCandidateResume() {
+      const url = "<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.resume %>"
+      window.open(url, '_blank')
+    }
+
+  </script>
+
+  <% include ../partials/footer %>
+    </div>
+  </body>
+  </html>
