@@ -266,8 +266,13 @@
                                                       <%= exp.jobTitle %>
                                                     </h5>
                                                     <span class="text-muted">
-                                                      <%= exp.FromDate %> - <%= exp.currentlyWorking ? "Present" :
-                                                          exp.ToDate %>
+                                                                              
+                                                      (
+                                                        <%= exp.from ? moment.utc(exp.from).local().format('MMM YYYY') : 'NA' %>
+                                                        -
+                                                        <%= exp.currentlyWorking ? 'Present' : (exp.to ? moment.utc(exp.to).local().format('MMM YYYY') : 'NA') %>
+                                                      )
+                                                      
                                                     </span>
                                                   </div>
                                                   <h6 class="text-primary mb-2">
@@ -367,21 +372,21 @@
                                             <div class="mb-4">
                                               <h3 class="border-bottom pb-2 mb-1">Languages</h3>
                                               <div>
-                                                <% candidate.personalInfo.languages?.forEach(lang=> { %>
-                                                  <div class="mb-2">
-                                                    <div class="d-flex justify-content-between">
-                                                      <span>
-                                                        <%= lang.name %>
-                                                      </span>
-                                                      <div>
-                                                        <% for (let i=1; i <=5; i++) { %>
-                                                          <i class="fa fa-circle <%= i <= lang.level ? 'text-primary' : 'text-muted' %> mr-1"
-                                                            style="font-size: 8px;"></i>
-                                                          <% } %>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                  <% }) %>
+                                                <% candidate.personalInfo.languages.forEach(lang => { 
+                                                  const level = lang.level > 0 ? lang.level : 1; %>
+                                               <div class="mb-2">
+                                                 <div class="d-flex justify-content-between">
+                                                   <span><%= lang.name.trim() %></span>
+                                                   <div>
+                                                     <% for (let i = 1; i <= 5; i++) { %>
+                                                       <i class="fa fa-circle <%= i <= level ? 'text-primary' : 'text-muted' %> mr-1"
+                                                          style="font-size: 8px;"></i>
+                                                     <% } %>
+                                                   </div>
+                                                 </div>
+                                               </div>
+                                             <% }) %>
+                                             
 
                                               </div>
                                             </div>
@@ -522,7 +527,10 @@
                         at <span style="color: #3498db;">
                           <%= exp.companyName %>
                         </span>
-                        (<%= exp.FromDate %> - <%= exp.currentlyWorking ? 'Present' : exp.ToDate %>)
+                        ( <%= exp.from ? moment(exp.from).utcOffset('+05:30').format('MMM YYYY') : 'NA' %>
+                        -
+                        <%= exp.currentlyWorking ? 'Present' : (exp.to ? moment(exp.to).utcOffset('+05:30').format('MMM YYYY') : 'NA') %>
+                        )
                       </p>
                       <p style="margin-left: 10px; text-align: justify;">
                         <%= exp.jobDescription %>
@@ -546,7 +554,7 @@
                         <span style="color: #3498db;">
                           <%= edu.collegeName || edu.schoolName || edu.universityName %>
                         </span>
-                        — <%= edu.passingYear %> | Marks: <%= edu.marks %>
+                        — <%= edu.passingYear %> | Marks: <%= edu.marks %>%
                       </p>
                       <% if (edu.specialization) { %>
                         <p style="margin-left: 10px;">Specialization: <%= edu.specialization %>
@@ -595,17 +603,16 @@
                 <h3 style="color: #2980b9; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Certifications</h3>
                 <% if (candidate.personalInfo.certifications?.length) { %>
                   <ul style="padding-left: 20px;">
-                    <% candidate.personalInfo.certifications.forEach(cert=> { %>
-                      <li>
-                        <strong>
-                          <%= cert.certificateName %>
-                        </strong> -
-                        <%= cert.orgName %> (<%= cert.month %>
-                            <%= cert.year %>)
-                      </li>
-                      <% }) %>
-                  </ul>
-                  <% } else { %>
+                    <% candidate.personalInfo.certifications.forEach(cert => { 
+                      if(cert.certificateName && cert.orgName) { %>
+                   <li class="mb-2">
+                     <i class="feather icon-award text-warning mr-2"></i>
+                     <span class="font-weight-bold">
+                       <%= cert.certificateName %>
+                     </span> - <%= cert.orgName %> (<%= cert.month || '' %> <%= cert.year || '' %>)
+                   </li>
+                 <% } }) %>
+                  else { %>
                     <p>No certifications listed.</p>
                     <% } %>
               </div>
