@@ -214,14 +214,14 @@ commonRoutes.post("/applyjob/:id", async (req, res) => {
 			let apply = await Candidate.findOneAndUpdate(
 				{ mobile: candidateMobile },
 				{
-				  $addToSet: {
-					appliedJobs: { jobId }
-		  
-				  },
-				  // $inc: { creditLeft: -coinsDeducted },
+					$addToSet: {
+						appliedJobs: { jobId }
+
+					},
+					// $inc: { creditLeft: -coinsDeducted },
 				},
 				{ new: true, upsert: true }
-			  );
+			);
 
 			let data = {};
 			data["_job"] = jobId;
@@ -267,21 +267,13 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 		let { id } = req.params;
 		let courseId = id;
 
-		let validation = { mobile: req.body.mobile };
+		let validation = { mobile: req.body.mobile }
 		let selectedCenter = req.body.selectedCenter;
-    console.log('selectedCenter', selectedCenter)
-    if (!selectedCenter) {
-      selectedCenter = ""
+		console.log('selectedCenter', selectedCenter)
+		if (!selectedCenter) {
+			selectedCenter = ""
 
-    }
-
-    else if (typeof selectedCenter === 'string') {
-      try {
-        selectedCenter = new mongoose.Types.ObjectId(selectedCenter);
-      } catch (error) {
-        return res.status(400).send({ status: false, msg: 'Invalid Center ID format' });
-      }
-    }
+		}
 
 		let { value, error } = await CandidateValidators.userMobile(validation)
 		if (error) {
@@ -303,39 +295,40 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 
 		if (candidate.appliedCourses && candidate.appliedCourses.includes(courseId)) {
 			return res.status(400).json({ status: false, msg: "Already applied." });
-		  };
-	  
-		  const updateData = {
-			$addToSet: {
-			  appliedCourses: { courseId }
-			}
-		  };
-	  
-		  if (selectedCenter) {
-			updateData.$addToSet.selectedCenter = {
-			  courseId: courseId,
-			  centerId: selectedCenter
+		}
+		else {
+			const updateData = {
+				$addToSet: {
+					appliedCourses: { courseId }
+				}
 			};
-		  }
-	  
-		  const apply = await Candidate.findOneAndUpdate(
-			{ mobile: candidateMobile },
-			updateData,
-			{ new: true, upsert: true }
-		  );
-	  
-		  let data = {
-			_candidate: candidate._id,
-			_course: courseId,
-		  };
-	  
-		  if (selectedCenter) {
-			data._center = selectedCenter
-		  }
-	  
-	  
-	  
-		  const appliedData = await new AppliedCourses(data).save();
+
+			if (selectedCenter) {
+				updateData.$addToSet.selectedCenter = {
+					courseId: courseId,
+					centerId: selectedCenter
+				};
+			}
+
+			const apply = await Candidate.findOneAndUpdate(
+				{ mobile: candidateMobile },
+				updateData,
+				{ new: true, upsert: true }
+			);
+
+			let data = {
+				_candidate: candidate._id,
+				_course: courseId,
+			};
+
+			if (selectedCenter) {
+				data._center = selectedCenter
+			}
+
+
+
+			const appliedData = await new AppliedCourses(data).save();
+
 			// Update Spreadsheet
 			const sheetData = [
 				moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
@@ -359,7 +352,7 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 			];
 			await updateSpreadSheetValues(sheetData);
 
-			
+
 
 			// Capitalize every word's first letter
 			function capitalizeWords(str) {
