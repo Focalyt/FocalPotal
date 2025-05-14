@@ -362,7 +362,7 @@
 
                                 </div>
 
-                                <div class="col-4 transition-col" id="editFollowupPanel">
+                                <div class="col-4 transition-col d-none" id="editFollowupPanel">
                                     <div class="card border-0 shadow-sm">
                                         <div
                                             class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom">
@@ -1646,7 +1646,7 @@
                 });
             });
         </script>
-        <script>
+        <!-- <script>
             const mainContent = document.getElementById("mainContent");
             const whatsappPanel = document.getElementById("whatsappPanel");
 
@@ -1667,7 +1667,7 @@
             }
         </script>
 
-        <script>
+         <script>
             function closeEditPanel() {
                 const editPanel = document.getElementById('editFollowupPanel');
                 if (editPanel) {
@@ -1703,36 +1703,53 @@
                     }
                 });
             });
-        </script>
-
+        </script> -->
         <script>
-            function closeEditPanel() {
-                const editPanel = document.getElementById('editFollowupPanel');
-                if (editPanel) {
-                    editPanel.classList.add('d-none');
-                    // If you need to restore the main content column width
-                    const mainContent = document.getElementById('mainContent');
-                    if (mainContent) {
-                        mainContent.classList.remove('col-8');
-                        mainContent.classList.add('col-12');
-                    }
-                }
+            const mainContent = document.getElementById("mainContent");
+            const whatsappPanel = document.getElementById("whatsappPanel");
+            const editPanel = document.getElementById("editFollowupPanel");
+        
+            // Open WhatsApp Panel
+            document.querySelector(".fa-whatsapp").closest("button").addEventListener("click", () => {
+                // Close Edit Panel if open
+                editPanel.classList.add("d-none");
+        
+                // Open WhatsApp Panel
+                whatsappPanel.classList.remove("d-none");
+        
+                // Adjust layout
+                mainContent.classList.remove("col-12");
+                mainContent.classList.add("col-8");
+            });
+        
+            // Close WhatsApp Panel
+            function closeWhatsapp() {
+                whatsappPanel.classList.add("d-none");
+                mainContent.classList.remove("col-8");
+                mainContent.classList.add("col-12");
             }
-
+        
+            // Open Edit Panel
             function openEditPanel() {
-                const editPanel = document.getElementById('editFollowupPanel');
-                if (editPanel) {
-                    editPanel.classList.remove('d-none');
-                    // If you need to adjust the main content column width
-                    const mainContent = document.getElementById('mainContent');
-                    if (mainContent) {
-                        mainContent.classList.remove('col-12');
-                        mainContent.classList.add('col-8');
-                    }
-                }
+                // Close WhatsApp Panel if open
+                whatsappPanel.classList.add("d-none");
+        
+                // Open Edit Panel
+                editPanel.classList.remove("d-none");
+        
+                // Adjust layout
+                mainContent.classList.remove("col-12");
+                mainContent.classList.add("col-8");
             }
-
-            // Clear dropdown selection
+        
+            // Close Edit Panel
+            function closeEditPanel() {
+                editPanel.classList.add("d-none");
+                mainContent.classList.remove("col-8");
+                mainContent.classList.add("col-12");
+            }
+        
+            // Optional: Clear dropdown logic
             document.querySelectorAll('#editFollowupPanel .fa-times').forEach(icon => {
                 icon.closest('button').addEventListener('click', function () {
                     const select = this.closest('.d-flex').querySelector('select');
@@ -1742,6 +1759,9 @@
                 });
             });
         </script>
+        
+       
+        
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {

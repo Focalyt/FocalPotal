@@ -841,6 +841,10 @@ router.get("/newcandidate/:candidateId", [isCompany], async (req, res) => {
   }).populate(populate);
 
 
+  console.log('Candidate Details:', candidate); 
+  // console.log('candidate.personalInfo.certifications', candidate.personalInfo.certifications);
+  // console.log('candidate.personalInfo.languages', candidate.personalInfo.languages);
+
   let hiringStatus = await HiringStatus.findOne({ candidate: candidateId, company: company._id, isDeleted: false }, 'status createdAt updatedAt comment job eventDate concernedPerson')
     .populate({ path: 'job', select: 'title' })
 
@@ -853,7 +857,7 @@ router.get("/newcandidate/:candidateId", [isCompany], async (req, res) => {
   }
 
   console.log('masked',masked)
-
+ 
   const qualification = await Qualification.find({ status: true }).sort({ basic: -1 })
   const jobs = await Vacancy.find({ _company: company._id, status: true })
   let coins = await CoinsAlgo.findOne({})
@@ -865,7 +869,8 @@ router.get("/newcandidate/:candidateId", [isCompany], async (req, res) => {
     hiringStatus,
     qualification,
     company,
-    coins
+    coins,
+    moment
   });
 });
 router.post("/removeimage", isCompany, async (req, res) => {

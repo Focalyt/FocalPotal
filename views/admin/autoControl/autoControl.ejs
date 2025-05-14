@@ -1,0 +1,70 @@
+<% include ../partials/header %>
+	<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+		<div class="content-header-left col-md-9 col-12 mb-2">
+			<div class="row breadcrumbs-top">
+				<div class="col-12">
+					<h3 class="content-header-title float-left mb-0">Add Candidate</h3>
+					<div class="breadcrumb-wrapper col-12">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/admin">Home</a></li>
+							<li class="breadcrumb-item">
+								<a href="/admin/candidate">Candidates</a>
+							</li>
+							<li class="breadcrumb-item active">Add Candidates</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-body">
+		<% include ../partials/flash %>
+        <section class="list-view">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Job Verification Control</h5>
+                            
+                        </div>
+                        <div class="card-content">
+                            <div class="table-responsive">
+                                <table id="tblexportData" class="table table-hover-animation mb-0 table-hover" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%">S.No</th>
+                                            <th width="20%">Function Name</th>
+                                            <th width="15%">Auto Verify</th>
+                                            <th width="15%">Manual Verify</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td class="text-capitalize">Job Posting</td>
+                                            <td>
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input" id="auto1" checked>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="custom-checkbox">
+                                                    <input type="checkbox" class="form-check-input" id="manual1">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Repetir para las demás filas -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+			<% include ../partials/footer %>
+				
+	</div>
+</body>
+</html>
