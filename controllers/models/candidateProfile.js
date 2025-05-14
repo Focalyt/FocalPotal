@@ -308,4 +308,3 @@ candidateProfileSchema.methods = {
 };
 
 module.exports = model("CandidateProfile", candidateProfileSchema);
-
