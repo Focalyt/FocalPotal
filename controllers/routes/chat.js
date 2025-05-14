@@ -267,7 +267,21 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 		let { id } = req.params;
 		let courseId = id;
 
-		let validation = { mobile: req.body.mobile }
+		let validation = { mobile: req.body.mobile };
+		let selectedCenter = req.body.selectedCenter;
+    console.log('selectedCenter', selectedCenter)
+    if (!selectedCenter) {
+      selectedCenter = ""
+
+    }
+
+    else if (typeof selectedCenter === 'string') {
+      try {
+        selectedCenter = new mongoose.Types.ObjectId(selectedCenter);
+      } catch (error) {
+        return res.status(400).send({ status: false, msg: 'Invalid Center ID format' });
+      }
+    }
 
 		let { value, error } = await CandidateValidators.userMobile(validation)
 		if (error) {
@@ -288,17 +302,40 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 		}
 
 		if (candidate.appliedCourses && candidate.appliedCourses.includes(courseId)) {
-			req.flash("error", "Already Applied");
-			return res.send({ status: false, msg: "Already Applied" });
-		} else {
-			let apply = await Candidate.findOneAndUpdate({ mobile: candidateMobile },
-				{ $addToSet: { appliedCourses: courseId } },
-				{ new: true, upsert: true });
-			const appliedData = await AppliedCourses({
-				_candidate: candidate._id,
-				_course: courseId
-			}).save();
-
+			return res.status(400).json({ status: false, msg: "Already applied." });
+		  };
+	  
+		  const updateData = {
+			$addToSet: {
+			  appliedCourses: { courseId }
+			}
+		  };
+	  
+		  if (selectedCenter) {
+			updateData.$addToSet.selectedCenter = {
+			  courseId: courseId,
+			  centerId: selectedCenter
+			};
+		  }
+	  
+		  const apply = await Candidate.findOneAndUpdate(
+			{ mobile: candidateMobile },
+			updateData,
+			{ new: true, upsert: true }
+		  );
+	  
+		  let data = {
+			_candidate: candidate._id,
+			_course: courseId,
+		  };
+	  
+		  if (selectedCenter) {
+			data._center = selectedCenter
+		  }
+	  
+	  
+	  
+		  const appliedData = await new AppliedCourses(data).save();
 			// Update Spreadsheet
 			const sheetData = [
 				moment(appliedData.createdAt).utcOffset('+05:30').format('DD MMM YYYY'),
