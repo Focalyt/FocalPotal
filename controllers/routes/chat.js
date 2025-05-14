@@ -281,13 +281,7 @@ commonRoutes.post("/applycourse/:id", async (req, res) => {
 			return res.send({ status: false, msg: "Course not Found!" });
 		}
 
-		let candidate = await Candidate.findOne({ mobile: candidateMobile }).populate([{
-			path: 'state',
-			select: "name"
-		}, {
-			path: 'city',
-			select: "name"
-		}]).lean();
+		let candidate = await Candidate.findOne({ mobile: candidateMobile })
 
 		if (!candidate) {
 			return res.send({ status: false, msg: "Candidate not found!" });
