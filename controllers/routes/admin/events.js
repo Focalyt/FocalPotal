@@ -175,6 +175,7 @@ router.get("/allevents", auth1, async (req, res) => {
         return res.render("admin/event/allEvents", {
             menu: "allevent",
             events,
+            moment,
             canEdit: true, // optionally make this role-based
             isChecked: false,
             data: {}

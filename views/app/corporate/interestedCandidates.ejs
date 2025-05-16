@@ -115,17 +115,22 @@
                                             <button id="maskunmask"
                                               onclick="maskUnmask('<%= candidate._candidate ?._id %>')"
                                               class="masked btn btn-primary me-3 waves-effect waves-light btn-sm"
-                                              data-bs-target="#editUser" data-bs-toggle="modal">UNMASK</button>
+                                              data-bs-target="#editUser" data-bs-toggle="modal">
+                                              UNMASK
+                                            </button>
                                             <% } else { %>
-                                              <a href=""
-                                                data-resume-url="<%= (candidate.personalInfo && candidate.personalInfo.focalytProfile) ? candidate.personalInfo.focalytProfile : '' %>"
-                                                download onclick="downloadCandidateResume()" class="download-resume">
-                                                <i class="fa fa-download"></i>
-                                              </a>
-
-                                              <% } %>
-
+                                              <% if (candidate.personalInfo && candidate.personalInfo.focalytProfile) {
+                                                %>
+                                                <a href="<%= candidate.personalInfo.focalytProfile %>" download
+                                                  class="download-resume">
+                                                  <i class="fa fa-download"></i>
+                                                </a>
+                                                <% } else { %>
+                                                  <span>NA</span>
+                                                  <% } %>
+                                                    <% } %>
                                         </td>
+
 
                                         <td>
                                           <% if (candidate._candidate && candidate._candidate._id) { %>
@@ -133,7 +138,7 @@
                                               <i class="feather icon-eye fa-lg primary"></i>
                                             </a>
                                             <% } else { %>
-                                              NA
+                                              Not Uploaded
                                               <% } %>
 
 
@@ -291,22 +296,22 @@
           }
 
           document.querySelectorAll('.download-resume').forEach(el => {
-  el.addEventListener('click', function(e) {
-    e.preventDefault();
-    const url = this.getAttribute('data-resume-url');
-    if(url) {
-      // Direct download ke liye:
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = ''; // Optional: filename yahan specify kar sakte hain
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } else {
-      alert('No resume available.');
-    }
-  });
-});
+            el.addEventListener('click', function (e) {
+              e.preventDefault();
+              const url = this.getAttribute('data-resume-url');
+              if (url) {
+                // Direct download ke liye:
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = ''; // Optional: filename yahan specify kar sakte hain
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+              } else {
+                alert('No resume available.');
+              }
+            });
+          });
 
           // download
 
