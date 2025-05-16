@@ -61,15 +61,6 @@ const appliedCoursesSchema = new Schema(
       ref: "User",
       description: "Reference to the specific course applied for"
     },
-    leadStatus:[
-      {status: {
-        type:String
-      },
-      updateBy:{ type: ObjectId, ref: "User" },
-      UpdatedAt:{ type: Date, default: Date.now }
-    }
-
-    ],
     courseStatus: { 
       type: Number,
       enum: [0, 1], // 0: due, 1: assigned
@@ -96,23 +87,12 @@ const appliedCoursesSchema = new Schema(
     assignDate: {
       type: Date,
       description: "Date when the course was assigned to the candidate",
-    },
-    leadOwner: [
-      {
-        ownerId: { type: ObjectId, ref: "User", required: true },
-        assignedAt: { type: Date, default: Date.now },
-        note: { type: String } // optional: why it was assigned or remarks
-      }
-    ],
-    
-    referredBy: [ 
-      {
-        userId: { type: ObjectId, ref: "User" }, // referring counsellor/user
-        referredAt: { type: Date, default: Date.now },
-        note: { type: String } // optional: why it was assigned or remarks
-      }
-    ],
-
+    }, 
+    selectedCenter: 
+      {       
+        centerId: { type: ObjectId, ref: "Center" }, // Changed from type to courseId        
+      },
+             
     uploadedDocs: [
           {
             docsId: { type: ObjectId, ref: "courses.docsRequired" },
@@ -124,8 +104,7 @@ const appliedCoursesSchema = new Schema(
             uploadedAt: { type: Date, default: Date.now } // Upload Timestamp
           }
         ]
-     
-    
+      
   },
   {
     timestamps: true, // Automatically adds `createdAt` and `updatedAt` fields

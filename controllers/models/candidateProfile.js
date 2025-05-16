@@ -25,9 +25,9 @@ const candidateProfileSchema = new Schema(
     sex: { type: String },
     dob: { type: Date },
     whatsapp: { type: Number },
+    showProfileForm:{type:Boolean, default: false},
     personalInfo: {
       totalExperience: Number,
-
       profilevideo: { type: String },
       resume: [{
         name: { type: String },
@@ -105,6 +105,7 @@ const candidateProfileSchema = new Schema(
         },
         year: { type: String },
         month: { type: String },
+        currentlypursuing: { type: Boolean, default: false },
       }],
       languages: [{
         name: { type: String },
@@ -170,6 +171,7 @@ const candidateProfileSchema = new Schema(
         specialization: { type: String },
         passingYear: { type: String },
         marks: { type: String },
+        currentlypursuing: { type: Boolean, default: false },
         universityLocation: {
           type: {
             type: String,

@@ -31,7 +31,7 @@ const appliedJobsSchema = new Schema(
   {
     _candidate: {
       type: ObjectId,
-      ref: "CandidateProfile",
+      ref: "Candidate",
       description: "Reference to the Candidate who applied for the job",
     },
     _company: {

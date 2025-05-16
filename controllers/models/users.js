@@ -15,7 +15,7 @@ const userSchema = new Schema(
 			trim: true,
 		},
 		mobile: {
-			type: Number,	
+			type: Number,
 			trim: true,
 			// unique: "Mobile number already exists!",
 		},
@@ -40,11 +40,19 @@ const userSchema = new Schema(
 			default: false,
 		},
 		role: { type: Number, trim: true }, // 0-admin, 1-company, 2-college, 3-student, 10-admin view
-		access:{
-			roleName:{type:String},
-			courseAccess:[{type:ObjectId, ref:"courses"}],
-			centerAccess:[{type:ObjectId, ref:"Center"}],
-		} , 
+		access: {
+			roleName: { type: String },
+			courseAccess: [{ type: ObjectId, ref: "course" }],
+			centerAccess: [{ type: ObjectId, ref: "Center" }],
+			rolePermissions: [{ type: String }], // Standard permissions from the role
+			contextPermissions: [
+				{
+					permKey: { type: String }, // e.g. "MANAGE_COURSE_CONTENT"
+					contextType: { type: String, enum: ["center", "course"] },
+					contextId: { type: ObjectId },
+				},
+			],
+		},
 		status: {
 			type: Boolean,
 			default: true,
@@ -73,27 +81,6 @@ userSchema.pre("save", function preSave(next) {
 		next();
 	}
 });
-
-userSchema.pre('findOneAndUpdate', async function (next) {
-    const update = this.getUpdate();
-
-    // Check if password is being updated
-    if (update.password) {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(update.password, salt);
-        update.password = hashedPassword;
-    }
-
-    // If nested inside $set
-    if (update.$set && update.$set.password) {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(update.$set.password, salt);
-        update.$set.password = hashedPassword;
-    }
-
-    next();
-});
-
 
 userSchema.methods = {
 	validPassword: function validPassword(password) {

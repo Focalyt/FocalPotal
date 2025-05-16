@@ -1,623 +1,473 @@
 <% include ../partials/header %>
-<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
-    <div class="content-header-left col-md-12 col-12 mb-2">
-        <div class="row breadcrumbs-top">
-            <div class="col-9">
-                <h3 class="content-header-title float-left mb-0">Registrations</h3>
-                <div class="breadcrumb-wrapper col-12">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-                        <li class="breadcrumb-item active">Registrations</li>
-                    </ol>
+    <div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+        <div class="content-header-left col-md-12 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-9">
+                    <h3 class="content-header-title float-left mb-0">Registrations</h3>
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                            <li class="breadcrumb-item active">Registrations</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="content-body">
-    <% include ../partials/flash %>
-    <section class="list-view">
-        <div class="row">
-            <div class="col-12 rounded equal-height-2 coloumn-2">
-                <div class="card">
-                    <div class="row">
-                        <div class="card-content col-12">
-                            <div class="row mb-2">
-                                <div class="col-xl-12 col-lg-12 px-3">
-                                    <form method="GET" id="filterForm">
-                                        <div class="row">
-                                            <div class="col-xl-3 mt-1">
-                                                <label>Name/ Mobile/ Whatsapp</label>
-                                                <input type="text" name="name" class="form-control" id="username" value="<%= data?.name %>" maxlength="25">
-                                            </div>
-                                            <div style="margin-top: 2.5rem !important;" class="col-xl-3 text-center mt-3">
-                                                <button class="btn btn-success waves-effect waves-light text-white d-inline" id="submit-btn">Go</button>
-                                                <a class="extra-ss btn btn-danger d-inline waves-effect waves-light mb-2 text-white mx-1" href="/admin/courses/registrations">RESET</a>
-                                            </div>
-                                            <div class="col-xl-6 text-right mt-3">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="filterToggle">
-                                                    <label class="custom-control-label" for="filterToggle"></label>
+    <div class="content-body">
+        <% include ../partials/flash %>
+            <section class="list-view">
+                <div class="row">
+                    <div class="col-12 rounded equal-height-2 coloumn-2">
+                        <div class="card">
+                            <div class="row">
+                                <div class="card-content col-12">
+                                    <div class="row mb-2">
+                                        <div class="col-xl-12 col-lg-12 px-3">
+                                            <form method="GET" id="filterForm">
+                                                <div class="row">
+                                                    <div class="col-xl-3 mt-1">
+                                                        <label>Name/ Mobile/ Whatsapp</label>
+                                                        <input type="text" name="name" class="form-control"
+                                                            id="username" value="<%= data?.name %>" maxlength="25">
+                                                    </div>
+                                                    <div style="margin-top: 2.5rem !important;"
+                                                        class="col-xl-3 text-center mt-3">
+                                                        <button
+                                                            class="btn btn-success waves-effect waves-light text-white d-inline"
+                                                            id="submit-btn">Go</button>
+                                                        <a class="extra-ss btn btn-danger d-inline waves-effect waves-light mb-2 text-white mx-1"
+                                                            href="/admin/courses/registrations">RESET</a>
+                                                    </div>
+                                                    <div class="col-xl-6 text-right mt-3">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="filterToggle">
+                                                            <label class="custom-control-label"
+                                                                for="filterToggle"></label>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="row justify-content-end advanced-filters"
+                                                    style=" transition: 0.3s ease-in-out; overflow: hidden;">
+                                                    <div class="col-xl-2 ml-1 mt-1">
+                                                        <label>Course Fee Type</label>
+                                                        <select class="form-control text-capitalize" name="courseType"
+                                                            id="courseType">
+                                                            <option value="">Select</option>
+                                                            <option class="text-capitalize" value="Free">Free</option>
+                                                            <option class="text-capitalize" value="Paid">Paid</option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xl-2 ml-1 mt-1">
+                                                        <label>From Date</label>
+                                                        <input type="date" class="form-control" id="from-date"
+                                                            name="FromDate" value="<%= data.FromDate %>">
+                                                    </div>
+                                                    <div class="col-xl-2 ml-1 mt-1">
+                                                        <label>To Date</label>
+                                                        <input type="date" class="form-control" id="to-date"
+                                                            name="ToDate" value="<%= data.ToDate %>">
+                                                    </div>
+
+                                                    <input type="hidden" class="form-control" name="status"
+                                                        value="true">
+                                                    <div style="margin-top: 2.5rem !important;"
+                                                        class="col-xl-3 text-center mt-3">
+                                                        <button
+                                                            class="btn btn-success  waves-effect waves-light  text-white d-inline "
+                                                            id="submit-btn">Go</button>
+                                                        <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
+                                                            href="/admin/registrations">RESET</a>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <div class="row justify-content-end advanced-filters" style=" transition: 0.3s ease-in-out; overflow: hidden;">
-                                            <div class="col-xl-2 ml-1 mt-1">
-                                                <label>Course Fee Type</label>
-                                        <select class="form-control text-capitalize" name="courseType" id="courseType">
-                                            <option value="">Select</option>
-                                            <option class="text-capitalize" value="Free">Free</option>
-                                            <option class="text-capitalize" value="Paid">Paid</option>
-                                            
-                                        </select>
-                                            </div>
-                                            <div class="col-xl-2 ml-1 mt-1">
-                                                <label>From Date</label>
-                                                <input type="date" class="form-control" id="from-date" name="FromDate"
-                                                    value="<%= data.FromDate %>">
-                                            </div>
-                                            <div class="col-xl-2 ml-1 mt-1">
-                                                <label>To Date</label>
-                                                <input type="date" class="form-control" id="to-date" name="ToDate"
-                                                    value="<%= data.ToDate %>">
-                                            </div>
-                                           
-                                            <input type="hidden" class="form-control" name="status" value="true">
-                                            <div style="margin-top: 2.5rem !important;" class="col-xl-3 text-center mt-3">
-                                                <button
-                                                    class="btn btn-success  waves-effect waves-light  text-white d-inline "
-                                                    id="submit-btn">Go</button>
-                                                <a class="extra-ss btn btn-danger d-inline  waves-effect waves-light mb-2 text-white mx-1"
-                                                    href="/admin/registrations">RESET</a>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <% if (candidates && candidates.length> 0) { %>
+                                            <table id="tblexportData"
+                                                class="table table-hover-animation mb-0 table-hover" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="three column wide" width="18%"
+                                                            style="cursor: pointer;" onclick="sorting('createdAt')">DATE
+                                                            <i class="fa-solid fa-arrow-down success cursors pointer"
+                                                                value="1"></i></th>
+                                                        <th class="one column wide" width="10%">Event Name</th>
+                                                        <th class="three column wide candidate-wrap" width="19%"
+                                                            onclick="sorting('name')">CANDIDATE NAME</th>
+                                                        <th class="one column wide" width="15%">MOBILE NO.</th>
+                                                        <th class="one column wide" width="15%">Email</th>
+                                                        
+
+
+                                                        <th class="one column wide" width="10%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% candidates.forEach((l, i)=> { %>
+                                                        <tr>
+                                                            <td class="text-capitalize">
+                                                               <%= l.createdAt ? moment(l.createdAt).utcOffset("+05:30").format('MMM DD YYYY hh:mm A') : "N/A" %>
+
+                                                            </td>
+                                                                
+                                                            <td>
+                                                                <%= l._event?.eventTitle ? l._event?.eventTitle  : "N/A" %>
+                                                            </td>
+                                                            <td class="text-capitalize candid-wrap">
+                                                                <%= l._candidate?.name ? l._candidate?.name : "N/A" %>
+                                                            </td>
+                                                            <td class="text-capitalize">
+                                                                <%= l._candidate?.mobile ? l._candidate?.mobile : "N/A" %>
+                                                            </td>
+                                                            <td class="text-capitalize">
+                                                                <%= l._candidate?.email ? l._candidate?.email : "N/A" %>
+                                                            </td>
+                                                            <td class="text-capitalize">
+                                                                <a href="/admin/candidate/details/<%= l._candidate?._id ? l._candidate?._id : '/' %>">
+                                                                    <i class="fas fa-eye"></i>
+
+                                                                </a>
+                                                               
+                                                               
+                                                            </td>
+
+                                                            
+                                                           
+
+                                                        </tr>
+                                                        <% }) %>
+                                                </tbody>
+                                            </table>
+                                            <% } else { %>
+                                                <p class="text-center mt-3">No result found</p>
+                                                <% } %>
+
+                                    </div>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <% if (candidates && candidates.length> 0) { %>
-                                <table id="tblexportData" class="table table-hover-animation mb-0 table-hover" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th class="three column wide" width="18%" style="cursor: pointer;" onclick="sorting('createdAt')">DATE <i  class="fa-solid fa-arrow-down success cursors pointer" value="1"></i></th>
-                                            <th class="three column wide candidate-wrap" width="19%" onclick="sorting('name')">CANDIDATE NAME</th>
-                                            <th class="one column wide" width="15%">MOBILE NO.</th>
-                                            <th class="one column wide" width="15%">Email</th>
-                                            <th class="one column wide" width="15%">Document Status</th>
-                                            <th class="one column wide" width="15%">Lead Status</th>
-                                            <th class="one column wide" width="15%">Demo Status</th>
-                                            <th class="one column wide" width="15%">Center Status</th>
-                                            <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('courseName')">Course <i class="" value="1"></i></th>
-                                            <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('registrationCharges')">Reg Fee <i  class="" value="1"></i></th>
-                                            <th class="one column wide" width="7%"  style="cursor: pointer;" >Reg Status <i  class="" value="1"></i></th>
-                                            <th class="one column wide" width="7%"  style="cursor: pointer;" onclick="sorting('sector')">Sector <i class="" value="1"></i></th>
-                                            <th class="one column wide" width="10%"  style="cursor: pointer;">Course Fee Type</th>
-                                            <th class="one column wide" width="10%"  style="cursor: pointer;">Registered By</th>
-                                            
-                                            <% if (view === false) { %>
-                                            <th class="one column wide" width="10%">Action</th>
-                                            <% } %>
-                                            <th class="one column wide" width="10%">View Docs</th>
-                                            <th class="one column wide" width="10%">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% candidates.forEach((l, i)=> { %>
-                                        <tr>
-                                            <td class="text-capitalize">
-                                                <%= l.createdAt ? moment(l.createdAt).utcOffset("+05:30").format('MMM DD YYYY  hh:mm A') : "N/A" %>
-                                            </td>
-                                            <td class="text-capitalize candid-wrap">
-                                                <%= l.name ? l.name : "N/A" %>
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <%= l.mobile ? l.mobile : "N/A" %>
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <%= l.email ? l.email : "N/A" %>
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <!-- <div class="circular-progress-container" data-percent="<%= l.docProgress.percent %>">
-                                                    <% if (l.docProgress.totalRequired && l.docProgress.totalRequired > 0) { %>
-                                                      <svg width="40" height="40">
-                                                        <circle class="circle-bg" cx="20" cy="20" r="16"></circle>
-                                                        <circle class="circle-progress" cx="20" cy="20" r="16"></circle>
-                                                      </svg>
-                                                    <% } %>
-                                                    <div class="progress-text">
-                                                      <%= l.docProgress.totalRequired && l.docProgress.totalRequired > 0 ? l.docProgress.percent + '%' : 'NDR' %>
-                                                    </div>
-                                                  </div> -->
-                                                  <% if (l.docProgress.totalRequired && l.docProgress.totalRequired > 0) { %>
-                                                  <div class="circular-progress-container" data-percent=<%= l.docProgress.percent %>>
-                                                    <svg width="40" height="40">
-                                                        <circle class="circle-bg" cx="20" cy="20" r="16">
-                                                        </circle>
-                                                        <circle class="circle-progress" cx="20" cy="20"
-                                                            r="16"></circle>
-                                                    </svg>
-                                                    <div class="progress-text"></div>
-                                                </div>
-                                      <% } else { %>
-                                        NDR
-                                      <% } %>
-                                                  
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <select onchange="statusUpdate ('<%= l._id%>')" class="form-control leadsSelect">
-                                                    <option value="">Select</option>
-                                                    <option value="Hot">Hot</option>
-                                                    <option value="Warm">Warm</option>
-                                                    <option value="Cold">Cold</option>
-                                                  </select>
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <select class="form-control leadsSelect">
-                                                    <option value="">Select</option>
-                                                    <option value="Hot">Demo Scheduled</option>
-                                                    <option value="Warm">Demo Pending</option>
-                                                    <option value="Cold">Demo Done</option>
-                                                  </select>
-                                                  
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <select class="form-control leadsSelect">
-                                                    <option value="">Select</option>
-                                                    <option value="Hot">Add Center</option>
-                                                    <option value="Warm">Rejected</option>
-                                                    <option value="Cold">Drop Out</option>
-                                                  </select>
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <%= l.courseName ? l.courseName : "N/A" %>
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <%= l.registrationCharges ? l.registrationCharges : "N/A" %>
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <%= l.registrationFee ? l.registrationFee : "Unpaid" %>
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <%= l.sector ? l.sector : "N/A" %>
-                                            </td>
-                                            <td class="text-capitalize">Free/paid</td>
-                                            <td class="text-capitalize"><%= l.registeredByName ? l.registeredByName : "N/A" %></td>
-                                            <% if (view === false) { %>
-                                            <td class="text-capitalize">
-                                                <a class="btn <% if (l.courseStatus == 0) { %>btn-danger<% } else { %>btn-success<% } %> waves-effect waves-light text-white d-inline btn-sm" onclick="handleActionClick('<%= l._id %>', '<%= l.remarks %>', '<%= l.assignDate %>', '<%= l.url %>')">
-                                                    <% if (l.courseStatus == 0) { %>
-                                                    DUE
-                                                    <% } else { %>
-                                                    Assigned
-                                                    <% } %>
-                                                </a>
-                                            </td>
-                                            <% } %>
-                                            <td class="text-capitalize">
-                                                <a href="/admin/courses/<%= l.courseId %>/<%= l.candidateId %>/docsview" class="btn btn-danger waves-effect waves-light text-white d-inline btn-sm" style="padding: 8px;">
-                                                   View Docs
-                                                </a>
-                                            </td>
-                                            <td class="text-capitalize">
-                                                <i class="feather icon-log-in fa-lg  primary cursor-pointer loginIcon" title="" onclick="loginAs('<%=l.mobile %>')"></i>
-                                            </td>
-                                        </tr>
-                                        <% }) %>
-                                    </tbody>
-                                </table>
-                                <% } else { %>
-                                <p class="text-center mt-3">No result found</p>
-                                <% } %>
-								<% if (totalPages && totalPages> 1) { %>
-									<ul class="pagination justify-content-end ml-2 mb-2">
-										<% let first=1 %>
-											<% let last=totalPages> 4 ? 4 :
-												totalPages %> <% if (totalPages> 4 && page >= 2) { %> <%
-														first=page - 1 %>
-														<% last=page + 1 %>
-															<% if (last>
-																totalPages) last = totalPages %> <% } %>
-																	<% if (first>
-																		1) { %>
-																		<li class="page-item">
-																			<a class="pageAnchor page-link"
-																				href="<%= 1 %>">First</a>
-																		</li>
-																		<% } %>
-																			<% for (let i=first; i
-																				<=last; i +=1) { %>
-																				<% if (i===page) { %>
-																					<li
-																						class="active page-item">
-																						<a href="javascript:void()"
-																							class="page-link">
-																							<%= i %>
-																						</a>
-																					</li>
-																					<% } else { %>
-																						<li
-																							class="page-item">
-																							<a class="page-link pageAnchor"
-																								href="<%= i %>">
-																								<%= i %>
-																							</a>
-																						</li>
-																						<% } %>
-																							<% } %>
-																								<% if
-																									(totalPages>
-																									last)
-																									{ %>
-																									<li
-																										class="page-item">
-																										<a class="pageAnchor page-link"
-																											href="<%= last + 1 %>">...</a>
-																									</li>
-																									<li
-																										class="page-item">
-																										<a class="pageAnchor page-link"
-																											href="<%= totalPages %>">Last</a>
-																									</li>
-																									<% }
-																										%>
-									</ul>
-									<% } %>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <input type="hidden" id="candidate-id" value="">
+            <!--Assign/Due modal start-->
+            <div class="modal fade" id="courseAssignModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Assign Course
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body pt-1">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                                    <label>Date</label>
+                                    <input class="form-control text-capitalize" type="date" value="" id="assignDate">
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
+                                    <label>Course URL</label>
+                                    <input class="form-control text-capitalize" type="text" value="courseURL"
+                                        id="courseURL">
+                                </div>
+                                <div class="col-xl-12 mb-1 text-left">
+                                    <label>Remarks</label>
+                                    <textarea class="form-control" cols="5" value="courseRemarks" rows="3"
+                                        id="courseRemarks"></textarea>
+                                </div>
                             </div>
+                            <p class="text-success font-weight-bolder" id="successMsg" style="display: none;"></p>
+                            <p class="text-danger font-weight-bolder" id="errorMsg" style="display: none;"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" onClick="assignCourse()">Assigned</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <input type="hidden" id="candidate-id" value="">
-    <!--Assign/Due modal start-->
-    <div class="modal fade" id="courseAssignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-white text-uppercase" id="exampleModalLongTitle">Assign Course</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body pt-1">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
-                            <label>Date</label>
-                            <input class="form-control text-capitalize" type="date" value="" id="assignDate">
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-1 text-left">
-                            <label>Course URL</label>
-                            <input class="form-control text-capitalize" type="text" value="courseURL" id="courseURL">
-                        </div>
-                        <div class="col-xl-12 mb-1 text-left">
-                            <label>Remarks</label>
-                            <textarea class="form-control" cols="5" value="courseRemarks" rows="3" id="courseRemarks"></textarea>
-                        </div>
-                    </div>
-                    <p class="text-success font-weight-bolder" id="successMsg" style="display: none;"></p>
-                    <p class="text-danger font-weight-bolder" id="errorMsg" style="display: none;"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onClick="assignCourse()">Assigned</button>
-                </div>
-            </div>
-        </div>
+            <!--Assign/Due modal end-->
     </div>
-    <!--Assign/Due modal end-->
-</div>
-<% include ../partials/footer %>
-<style>
-    #tblexportData td{
-        white-space: nowrap;
-    }
-    .circular-progress-container {
-  position: relative;
-  width: 40px;
-  height: 40px;
-}
-
-.circular-progress-container svg {
-  transform: rotate(-90deg);
-}
-
-.circle-bg {
-  fill: none;
-  stroke: #e6e6e6;
-  stroke-width: 4;
-}
-
-.circle-progress {
-  fill: none;
-  stroke: #FC2B5A;
-  stroke-width: 4;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 0.5s ease;
-}
-
-.circular-progress-container .progress-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 10px;
-  color: #333;
-}
-.leadsSelect{
-    width: 75px;
-}
-</style>
-<script>
-    document.querySelectorAll('.circular-progress-container').forEach(container => {
-        const percent = container.getAttribute('data-percent');
-        console.log(percent, "percent")
-        const circle = container.querySelector('circle.circle-progress');
-        console.log(circle, "circle")
-        const radius = 16;
-        const circumference = 2 * Math.PI * radius;
-        const offset = circumference - (percent / 100) * circumference;
-
-        circle.style.strokeDasharray = circumference;
-        circle.style.strokeDashoffset = offset;
-
-        // Set text also if needed
-        container.querySelector('.progress-text').innerText = percent + '%';
-    });
-       </script>
-  <script>
-    function statusUpdate (appliedId){
-
-        axios.post(`/admin/courses/leadStatus`,appliedId)
-        .then(response => {
-            console.log("aaaaaa");
-            
-        })
-        .catch(error => {
-            console.error(error);
-            alert('An error occurred while assigning the course.');
-        });
-
-    }
-  </script>
-  
-<script>
-    function handleActionClick(id, remarks, assignDate, url) {
-		const formattedDate = new Date(assignDate).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-}).split('/').reverse().join('-');
-		console.log('assignDate: ', assignDate);
-	$('#courseAssignModal').modal('show');
-    $('#courseAssignModal').data('id', id);
-    $('#courseAssignModal #courseRemarks').text(remarks); 
-    $('#courseAssignModal').data('remarks', remarks); 
-    $('#courseAssignModal #courseURL').val(url); 
-    $('#courseAssignModal').data('url', url); 
-    $('#courseAssignModal').data('assignDate', assignDate);
-    $('#courseAssignModal #assignDate').val(formattedDate); 
-    }
-
-    function assignCourse() {
-		event.preventDefault();
-        const id = $('#courseAssignModal').data('id');
-        const remarks = $('#courseAssignModal').data('remarks');
-        // const assignDate = $('#courseAssignModal').data('assignDate');
-    
-        const courseURL = $('#courseURL').val();
-        const courseRemarks = $('#courseRemarks').val();
-		const isoAssignDate = new Date($('#assignDate').val()).toISOString();
-
-
-        const updateCourse = {
-            url: courseURL,
-            remarks: courseRemarks,
-            courseStatus: 0, 
-            assignDate: isoAssignDate
-
-        };
-        axios.put(`/admin/courses/assignCourses/${id}`, updateCourse)
-        .then(response => {
-            console.log("aaaaaa");
-            window.location.href = "/admin/courses/registrations"
-        })
-        .catch(error => {
-            console.error(error);
-            alert('An error occurred while assigning the course.');
-        });
-    }
-
-// function formatDate(date) {
-//     const year = date.getFullYear();
-//     const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero if needed
-//     const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if needed
-//     return `${year}-${month}-${day}`;
-// }
-function loginAs(mobile){
-						$.ajax({
-								type: "POST",
-								data: {mobile, module: 'candidate'},
-								url: "/api/loginAsCandidate",
-								success: (data) => {
-									if(data.role===3) {
-										localStorage.setItem("candidate", data.name);
-                                        localStorage.setItem("token", data.token);
-                                        window.location.href = "/candidate/dashboard";
-									}									
-								}
-							});
-					}
-
-    function updateProfileVisible(mobile,visibility){
-        let field;
-        if(visibility=='true'){
-            field=false
-        }else{
-            field=true
-        }
-        $.ajax({
-            type: "POST",
-            url: "/admin/candidate/changeprofilestatus",
-            data: {
-                mobile,
-                status: field,
-            },
-            success: () => location.reload(),
-        });
-    }
-    function myOnOffFunc(id, status, model) {
-        // eslint-disable-line
-        let myStatus = true;
-        if (status === true || status === "true") {
-            myStatus = false;
-        }
-        $.ajax({
-            type: "POST",
-            url: "/admin/changestatus",
-            data: {
-                id,
-                status: myStatus,
-                model,
-            },
-            success: () => location.reload(),
-        });
-    }
-</script>
-<script>
-    !(function () {
-        "use strict";
-        Array.isArray ||
-            (Array.isArray = function (r) {
-                return "[object Array]" === Object.prototype.toString.call(r);
-            });
-        var r = {
-            get: function () {
-                var r = window.location.search,
-                    t = {};
-                return "" === r
-                    ? t
-                    : ((r = r.slice(1)),
-                    (r = r.split("&")),
-                    r.map(function (r) {
-                        var i, o;
-                        (r = r.split("=")),
-                            (i = r[0]),
-                            (o = r[1]),
-                            t[i]
-                                ? (Array.isArray(t[i]) || (t[i] = [t[i]]), t[i].push(o))
-                                : (t[i] = o);
-                    }),
-                    t);
-            },
-        };
-        if (window) {
-            if (window.qs)
-                throw new Error(
-                    "Error bootstrapping qs: window.qs already set."
-                );
-            window.qs = r;
-        }
-    })();
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        let order = '<%= sortingOrder%>'
-        let value = '<%= sortingValue%>'
-        let iconClass
-        if(order == -1){
-            iconClass = "fa-solid fa-arrow-down success"
-        }else{
-            iconClass = "fa-solid fa-arrow-up success"
-        }
-        $(`#${value}`).removeAttr('class')
-        $(`#${value}`).attr('class', iconClass)
-        $(`#${value}`).attr('value', `${order*-1}`)
-        const pageAnchors = document.querySelectorAll("a.pageAnchor");
-        const { origin, pathname, search } = window.location;
-        const obj = window.qs.get(search);
-        const keyArr = Object.keys(obj).filter((x) => !!obj[x]);
-        let url = `${origin}${pathname}?`;
-        keyArr.forEach((x) => {
-            if (x !== "page") {
-                url += `${x}=${obj[x]}&`;
+    <% include ../partials/footer %>
+        <style>
+            #tblexportData td {
+                white-space: nowrap;
             }
-        });
-        pageAnchors.forEach((el) => {
-            const pageNumber = el.getAttribute("href");
-            el.setAttribute("href", `${url}page=${pageNumber}`);
-        });
-    });
 
-    function sorting(value){
-        let order = $(`#${value}`).attr('value')
-        let str = `?`
-        let form = document.getElementById('filterForm');
-        let data = new FormData(form);
-        let obj = {}
-        for (let [key, value] of data) {
-            obj[key] = value
-            str += `${key}=${value}&`
-        }
-        window.location.href = `/admin/courses/registrations${str}value=${value}&order=${order}`
-    }
-</script>
-<script type="text/javascript">
-    $('#submit-btn').click(()=>{
-        if(validate()){
-            return false
-        }
-    })
-    function validate(){
-        $('.error').removeClass('error')
-        let fromDate = $('#from-date').val();
-        let toDate = $('#to-date').val()
-        let hasError = false
-        let firstError
-        if(fromDate && !toDate){
-            $('#to-date').parent().addClass('error')
-            firstError = firstError ? firstError :$('#to-date')
-            hasError = true
-        }
-        if(!fromDate && toDate){
-            $('#from-date').parent().addClass('error')
-            firstError = firstError ? firstError :$('#from-date')
-            hasError = true
-        }
-        $(firstError).focus()
-        return hasError
-    }
-</script>
-<!-- filters  -->
- <script>
-   document.addEventListener('DOMContentLoaded', function(){
-    const filterToggle = document.getElementById('filterToggle');
-    const advancedFilter = document.querySelector('.advanced-filter');
-    filterToggle.addEventListener('change', function(){
-        if (this.checked){
-            advancedFilter.style.display = 'block';
-            setTimeout(()=>{
-                advancedFilter.style.maxheight= '300px';
-                advancedFilter.style.opacity ='1';
-            }, 10) 
-        }
-        else{
-            advancedFilter.style.display= 'none';
-            setTimeout(() =>{
-                advancedFilter.style.maxheight= '0px';
-                advancedFilter.style.opacity ='0';
-            }, 300)
-            
-        }
-    })
+            .circular-progress-container {
+                position: relative;
+                width: 40px;
+                height: 40px;
+            }
 
-   })
- </script>
- <style>
-    .advanced-filters {
-    max-height: 0;
-    opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
-}
- </style>
-</body>
-</html>
+            .circular-progress-container svg {
+                transform: rotate(-90deg);
+            }
+
+            .circle-bg {
+                fill: none;
+                stroke: #e6e6e6;
+                stroke-width: 4;
+            }
+
+            .circle-progress {
+                fill: none;
+                stroke: #FC2B5A;
+                stroke-width: 4;
+                stroke-linecap: round;
+                transition: stroke-dashoffset 0.5s ease;
+            }
+
+            .circular-progress-container .progress-text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 10px;
+                color: #333;
+            }
+
+            .leadsSelect {
+                width: 75px;
+            }
+        </style>
+        <script>
+            document.querySelectorAll('.circular-progress-container').forEach(container => {
+                const percent = container.getAttribute('data-percent');
+                console.log(percent, "percent")
+                const circle = container.querySelector('circle.circle-progress');
+                console.log(circle, "circle")
+                const radius = 16;
+                const circumference = 2 * Math.PI * radius;
+                const offset = circumference - (percent / 100) * circumference;
+
+                circle.style.strokeDasharray = circumference;
+                circle.style.strokeDashoffset = offset;
+
+                // Set text also if needed
+                container.querySelector('.progress-text').innerText = percent + '%';
+            });
+        </script>
+        <script>
+            function statusUpdate(appliedId) {
+
+                axios.post(`/admin/courses/leadStatus`, appliedId)
+                    .then(response => {
+                        console.log("aaaaaa");
+
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('An error occurred while assigning the course.');
+                    });
+
+            }
+        </script>
+
+        <script>
+            function handleActionClick(id, remarks, assignDate, url) {
+                const formattedDate = new Date(assignDate).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                }).split('/').reverse().join('-');
+                console.log('assignDate: ', assignDate);
+                $('#courseAssignModal').modal('show');
+                $('#courseAssignModal').data('id', id);
+                $('#courseAssignModal #courseRemarks').text(remarks);
+                $('#courseAssignModal').data('remarks', remarks);
+                $('#courseAssignModal #courseURL').val(url);
+                $('#courseAssignModal').data('url', url);
+                $('#courseAssignModal').data('assignDate', assignDate);
+                $('#courseAssignModal #assignDate').val(formattedDate);
+            }
+
+            function assignCourse() {
+                event.preventDefault();
+                const id = $('#courseAssignModal').data('id');
+                const remarks = $('#courseAssignModal').data('remarks');
+                // const assignDate = $('#courseAssignModal').data('assignDate');
+
+                const courseURL = $('#courseURL').val();
+                const courseRemarks = $('#courseRemarks').val();
+                const isoAssignDate = new Date($('#assignDate').val()).toISOString();
+
+
+                const updateCourse = {
+                    url: courseURL,
+                    remarks: courseRemarks,
+                    courseStatus: 0,
+                    assignDate: isoAssignDate
+
+                };
+                axios.put(`/admin/courses/assignCourses/${id}`, updateCourse)
+                    .then(response => {
+                        console.log("aaaaaa");
+                        window.location.href = "/admin/courses/registrations"
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('An error occurred while assigning the course.');
+                    });
+            }
+
+            // function formatDate(date) {
+            //     const year = date.getFullYear();
+            //     const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero if needed
+            //     const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if needed
+            //     return `${year}-${month}-${day}`;
+            // }
+            function loginAs(mobile) {
+                $.ajax({
+                    type: "POST",
+                    data: { mobile, module: 'candidate' },
+                    url: "/api/loginAsCandidate",
+                    success: (data) => {
+                        if (data.role === 3) {
+                            localStorage.setItem("candidate", data.name);
+                            localStorage.setItem("token", data.token);
+                            window.location.href = "/candidate/dashboard";
+                        }
+                    }
+                });
+            }
+
+            function updateProfileVisible(mobile, visibility) {
+                let field;
+                if (visibility == 'true') {
+                    field = false
+                } else {
+                    field = true
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/candidate/changeprofilestatus",
+                    data: {
+                        mobile,
+                        status: field,
+                    },
+                    success: () => location.reload(),
+                });
+            }
+            function myOnOffFunc(id, status, model) {
+                // eslint-disable-line
+                let myStatus = true;
+                if (status === true || status === "true") {
+                    myStatus = false;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/changestatus",
+                    data: {
+                        id,
+                        status: myStatus,
+                        model,
+                    },
+                    success: () => location.reload(),
+                });
+            }
+        </script>
+        <script>
+            !(function () {
+                "use strict";
+                Array.isArray ||
+                    (Array.isArray = function (r) {
+                        return "[object Array]" === Object.prototype.toString.call(r);
+                    });
+                var r = {
+                    get: function () {
+                        var r = window.location.search,
+                            t = {};
+                        return "" === r
+                            ? t
+                            : ((r = r.slice(1)),
+                                (r = r.split("&")),
+                                r.map(function (r) {
+                                    var i, o;
+                                    (r = r.split("=")),
+                                        (i = r[0]),
+                                        (o = r[1]),
+                                        t[i]
+                                            ? (Array.isArray(t[i]) || (t[i] = [t[i]]), t[i].push(o))
+                                            : (t[i] = o);
+                                }),
+                                t);
+                    },
+                };
+                if (window) {
+                    if (window.qs)
+                        throw new Error(
+                            "Error bootstrapping qs: window.qs already set."
+                        );
+                    window.qs = r;
+                }
+            })();
+        </script>
+
+        <script type="text/javascript">
+            $('#submit-btn').click(() => {
+                if (validate()) {
+                    return false
+                }
+            })
+            function validate() {
+                $('.error').removeClass('error')
+                let fromDate = $('#from-date').val();
+                let toDate = $('#to-date').val()
+                let hasError = false
+                let firstError
+                if (fromDate && !toDate) {
+                    $('#to-date').parent().addClass('error')
+                    firstError = firstError ? firstError : $('#to-date')
+                    hasError = true
+                }
+                if (!fromDate && toDate) {
+                    $('#from-date').parent().addClass('error')
+                    firstError = firstError ? firstError : $('#from-date')
+                    hasError = true
+                }
+                $(firstError).focus()
+                return hasError
+            }
+        </script>
+        <!-- filters  -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const filterToggle = document.getElementById('filterToggle');
+                const advancedFilter = document.querySelector('.advanced-filter');
+                filterToggle.addEventListener('change', function () {
+                    if (this.checked) {
+                        advancedFilter.style.display = 'block';
+                        setTimeout(() => {
+                            advancedFilter.style.maxheight = '300px';
+                            advancedFilter.style.opacity = '1';
+                        }, 10)
+                    }
+                    else {
+                        advancedFilter.style.display = 'none';
+                        setTimeout(() => {
+                            advancedFilter.style.maxheight = '0px';
+                            advancedFilter.style.opacity = '0';
+                        }, 300)
+
+                    }
+                })
+
+            })
+        </script>
+        <style>
+            .advanced-filters {
+                max-height: 0;
+                opacity: 0;
+                transition: max-height 0.3s ease, opacity 0.3s ease;
+            }
+        </style>
+        </body>
+
+        </html>

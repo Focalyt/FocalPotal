@@ -1,5 +1,6 @@
 module.exports.AppBanner = require('./appBanner');
 module.exports.Event = require('./event');
+module.exports.AppliedEvent = require('./appliedEvent');
 module.exports.AppUpdate = require('./appUpdate');
 module.exports.User = require('./users');
 module.exports.CareerObjective = require('./careerObjective');
@@ -69,5 +70,6 @@ module.exports.Center = require("./center");
 module.exports.QualificationCourse = require("./qualificationCourse");
 module.exports.EducationBoard = require("./educationBoard");
 module.exports.Universities = require("./universities");
-module.exports.StudentRegistration = require("./studentRegistration")
+module.exports.StudentRegistration = require("./studentRegistration");
+module.exports.AccessUser = require("./AccessUserSchema");
 // module.exports.Manager = required("");
