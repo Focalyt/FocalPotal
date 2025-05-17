@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const eventSchema = new mongoose.Schema({
   eventType: {
     type: String,
-    enum: ["Webinar", "Contest"],
+    
     required: true
   },
   eventTitle: {
