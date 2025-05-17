@@ -1,0 +1,121 @@
+<% include ../partials/header %>
+
+<div class="content-header row d-xl-block d-lg-block d-md-none d-sm-none d-none">
+  <div class="content-header-left col-md-9 col-12 mb-2">
+    <div class="row breadcrumbs-top">
+      <div class="col-12">
+        <h3 class="content-header-title float-left mb-0">View Event</h3>
+        <div class="breadcrumb-wrapper col-12">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+            <li class="breadcrumb-item active">View Event</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-body">
+  <% include ../partials/flash %>
+
+  <section id="personal-info">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12">
+        <div class="card">
+          <div class="card-header border border-top-0 border-left-0 border-right-0">
+            <h4 class="card-title pb-1">Event Information</h4>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row">
+
+                <!-- Event Type -->
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+                  <label>Event Type</label>
+                  <input type="text" class="form-control text-capitalize" value="<%= event.eventType || '-' %>" disabled />
+                </div>
+
+                <!-- Event Title -->
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+                  <label>Event Title</label>
+                  <input type="text" class="form-control" value="<%= event.eventTitle || '-' %>" disabled />
+                </div>
+
+                <!-- Event Mode -->
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-1">
+                  <label>Event Mode</label>
+                  <input type="text" class="form-control text-capitalize" value="<%= event.eventMode || '-' %>" disabled />
+                </div>
+
+                <!-- Location (only visible if Offline) -->
+                <% if(event.eventMode === 'Offline') { %>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-1">
+                  <label>Location</label>
+                  <textarea class="form-control" rows="2" disabled><%= event.location?.fullAddress || '-' %></textarea>
+                </div>
+                <% } %>
+
+                <!-- Online URL (only visible if Online) -->
+                <% if(event.eventMode === 'Online') { %>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-1">
+                  <label>Online URL</label>
+                  <a href="<%= event.url %>" target="_blank" rel="noopener noreferrer"><%= event.url || '-' %></a>
+                </div>
+                <% } %>
+
+                <!-- Event Timing -->
+                <div class="col-xl-6 mb-1">
+                  <label>Event Timing</label>
+                  <input type="text" class="form-control" value="<%= event.timing?.from ? new Date(event.timing.from).toLocaleString() : '-' %> to <%= event.timing?.to ? new Date(event.timing.to).toLocaleString() : '-' %>" disabled />
+                </div>
+
+                <!-- Registration Period -->
+                <div class="col-xl-6 mb-1">
+                  <label>Registration Period</label>
+                  <input type="text" class="form-control" value="<%= event.registrationPeriod?.from ? new Date(event.registrationPeriod.from).toLocaleString() : '-' %> to <%= event.registrationPeriod?.to ? new Date(event.registrationPeriod.to).toLocaleString() : '-' %>" disabled />
+                </div>
+
+                <!-- Description -->
+                <div class="col-xl-12 mb-1">
+                  <label>Description</label>
+                  <textarea class="form-control" rows="3" disabled><%= event.description || '-' %></textarea>
+                </div>
+
+                <!-- Video -->
+                <% if(event.video) { %>
+                <div class="col-xl-6 col-md-6 col-sm-12 mb-1">
+                  <label>Video</label>
+                  <video width="320" height="180" controls>
+                    <source src="<%= event.video %>" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <% } %>
+
+                <!-- Thumbnail -->
+                <% if(event.thumbnail) { %>
+                <div class="col-xl-6 col-md-6 col-sm-12 mb-1">
+                  <label>Thumbnail</label>
+                  <img src="<%= event.thumbnail %>" alt="Thumbnail" width="200" />
+                </div>
+                <% } %>
+
+                <!-- Guidelines -->
+                <% if(event.guidelines) { %>
+                <div class="col-xl-12 mb-1">
+                  <label>Guidelines Document</label><br />
+                  <a href="<%= event.guidelines %>" target="_blank" rel="noopener noreferrer">View Document</a>
+                </div>
+                <% } %>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<% include ../partials/footer %>

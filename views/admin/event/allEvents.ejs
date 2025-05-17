@@ -106,22 +106,22 @@
 									  </td>
 						  
 									  <td>
-										<%= event.timing?.from ? event.timing.from.toLocaleString() : 'N/A' %>
+										<%= event.timing?.from ? moment(event.timing.from).format('DD MMM YYYY, h:mm A') : 'N/A' %>
 										to
-										<%= event.timing?.to ? event.timing.to.toLocaleString() : 'N/A' %>
+										<%= event.timing?.to ? moment(event.timing.to).format('DD MMM YYYY, h:mm A') : 'N/A' %>
 									  </td>
 						  
 									  <td>
-										<%= event.registrationPeriod?.from ? event.registrationPeriod.from.toLocaleString() : 'N/A' %>
+										<%= event.registrationPeriod?.from ? moment(new Date(event.registrationPeriod.from)).format('DD MMM YYYY, h:mm A') : 'N/A' %>
 										to
-										<%= event.registrationPeriod?.to ? event.registrationPeriod.to.toLocaleString() : 'N/A' %>
+										<%= event.registrationPeriod?.to ? moment(new Date(event.registrationPeriod.to)).format('DD MMM YYYY, h:mm A') : 'N/A' %>
 									  </td>
 						  
 									  <td><%= event.description || '-' %></td>
 						  
 									  <td>
-										<a href="/admin/events/view/<%= event._id %>">
-										  <i class="feather icon-eye text-primary"></i>
+										<a href="/admin/event/edit/<%= event._id %>">
+										  <i class="feather icon-edit text-primary"></i>
 										</a>
 									  </td>
 									</tr>

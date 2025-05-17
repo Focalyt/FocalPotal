@@ -2,7 +2,7 @@ const express = require("express");
 const moment = require("moment");
 const router = express.Router();
 const { auth1 } = require("../../../helpers");
-const Event = require("../../models/event"); // your Event model path
+const { Event, AppliedEvent , Qualification , EventType} = require("../../models"); // your Event model path
 const fs = require('fs');
 const multer = require('multer');
 const templates = require("../../models/templates")
@@ -61,7 +61,8 @@ const upload = multer({ storage }).single('file');
 
 router.get("/add", auth1, async (req, res) => {
     try {
-        return res.render("admin/event/add", { menu: 'event' });
+        const eventType = await EventType.find({status: true});
+        return res.render("admin/event/add", { menu: 'event' ,eventType });
     } catch (err) {
         console.error("Error loading Add Event page:", err);
         req.flash("error", "Something went wrong!");
@@ -163,155 +164,199 @@ router.post("/add", async (req, res) => {
 
 router.get("/allevents", auth1, async (req, res) => {
     try {
-      const events = await Event.find({ isDeleted: false }).sort({ createdAt: -1 });
-      return res.render("admin/event/allEvents", {
-        menu: "event",
-        events,
-        canEdit: true, // optionally make this role-based
-        isChecked: false,
-        data: {}
-      });
+        //   const events = await Event.find({ isDeleted: false }).sort({ createdAt: -1 });
+        const events = await Event.find({
+            $or: [
+                { isDeleted: false },
+                { isDeleted: { $exists: false } }
+            ]
+        }).sort({ createdAt: -1 });
+        // console.log("Events found:", events.length);
+        // console.log("Events found:", events);
+        return res.render("admin/event/allEvents", {
+            menu: "allevent",
+            events,
+            moment,
+            canEdit: true, // optionally make this role-based
+            isChecked: false,
+            data: {}
+        });
     } catch (err) {
-      console.error("Error loading Events page:", err);
-      req.flash("error", "Something went wrong!");
-      return res.redirect("back");
+        console.error("Error loading Events page:", err);
+        req.flash("error", "Something went wrong!");
+        return res.redirect("back");
     }
-  });
+});
 
-  router.get("/registration", auth1, async (req, res) => {
+router.get("/registration", auth1, async (req, res) => {
     try {
-      const events = await Event.find({ isDeleted: false }).sort({ createdAt: -1 });
-      return res.render("admin/event/registration", {
-        menu: "event",
-        events,
-        canEdit: true, // optionally make this role-based
-        isChecked: false,
-        data: {}
-      });
+        const candidates = await AppliedEvent.find().sort({ createdAt: -1 }).populate('_candidate').populate('_event');
+        let view = false
+
+        console.log("candidate", candidates);
+        return res.render("admin/event/registration", {
+            menu: "registration",
+            candidates,
+            view,
+            canEdit: true, // optionally make this role-based
+            isChecked: false,
+            data: {}
+        });
     } catch (err) {
-      console.error("Error loading Events page:", err);
-      req.flash("error", "Something went wrong!");
-      return res.redirect("back");
+        console.error("Error loading Events page:", err);
+        req.flash("error", "Something went wrong!");
+        return res.redirect("back");
     }
-  });
+});
 
-// router.route("/allevent").get(async (req, res) => {
-//     try {
-//         let view = false
-//         let canEdit = false
-//         const user = req.session.user
-//         console.log("user", user)
-//         if (user.role === 0) {
+router
+    .route("/edit/:id")
 
-//             canEdit = true
-//         }
-
-//         if (user.role === 10) {
-//             view = true;
-
-//         }
-//         const data = req.query;
-//         const fields = {
-//             isDeleted: false
-//         }
-//         if (data['name'] != '' && data.hasOwnProperty('name')) {
-//             fields["name"] = { "$regex": data['name'], "$options": "i" }
-//         }
-//         if (data.FromDate && data.ToDate) {
-//             let fdate = moment(data.FromDate).utcOffset("+05:30").startOf('day').toDate()
-//             let tdate = moment(data.ToDate).utcOffset("+05:30").endOf('day').toDate()
-//             fields["createdAt"] = {
-//                 $gte: fdate,
-//                 $lte: tdate
-//             }
-//         }
-
-//         if (req.query.status == undefined) {
-//             var status = true;
-//             var isChecked = "false";
-//         } else if (req.query.status.toString() == "true") {
-//             var status = true;
-//             var isChecked = "false";
-//         } else if (req.query.status.toString() == "false") {
-//             var status = false;
-//             var isChecked = "true";
-//         }
-//         fields["status"] = status;
-//         let courses;
-//         // ✅ Role 11 specific filtering
-//         if (user.role === 11) {
-//             const userDetails = req.session.user;
-//             let courseIds = userDetails.access.courseAccess.map(id => id.toString());
-//             let centerIds = userDetails.access.centerAccess.map(id => id.toString());
-
-//             const allCourses = await Courses.find(fields).populate("sectors");
-
-//             console.log("All courses before filter =>");
-//             allCourses.forEach(course => {
-//                 console.log({
-//                     courseId: course._id.toString(),
-//                     centerId: course.center?.toString()
-//                 });
-//             });
-
-
-//             let filteredCourses = allCourses.filter(course => {
-//                 const courseId = course._id?.toString();
-//                 const courseCenterIds = Array.isArray(course.center)
-//                   ? course.center.map(c => c.toString())
-//                   : [];
-              
-//                 const hasMatchingCenter = courseCenterIds.some(cid => centerIds.includes(cid));
-//                 const hasMatchingCourse = courseIds.includes(courseId);
-              
-//                 return hasMatchingCenter && hasMatchingCourse;
-//               });
-              
-              
-              
-
-//             courses = filteredCourses;
-//             console.log("filteredCourses:", filteredCourses);
-//         } else {
-//             courses = await Courses.find(fields).populate("sectors");
-//         }
-
-
-//         // console.log(courses, "this is courses")
-//         // ${req.vPath}
-//         return res.render('admin/event/allEvents', {
-//             menu: 'course',
-//             view,
-//             courses,
-//             isChecked,
-//             data,
-//             canEdit
-//           });
+    .get(async (req, res) => {
+        console.log("Edit route called with id:", req.params.id);
           
+        try {
+            const { id } = req.params;
+            let event = await Event.findById(id);
+            const eventType = await EventType.find({status: true});
+            if (!event) throw new Error("Event not found!");
+            console.log("Event found:", event);
+            // course = await Event.findById(id).populate('sectors').populate('center');
+            // course.docsRequired = course.docsRequired.filter(doc => doc.status === true);;
 
-//     } catch (err) {
-//         req.flash("error", err.message || "Something went wrong!");
-//         return res.redirect("back");
-//     }
-// });
+            return res.render(`${req.vPath}/admin/event/editEvent`, {
+                event,
+                eventType,
+                menu: 'editevent'
+            });
+
+        } catch (err) {
+            req.flash("error", err.message || "Something went wrong!");
+            return res.redirect("back");
+        }
+    })
+    .post(async (req, res) => {
+
+        try {
+            const { id } = req.params;
+
+            // Extract fields from req.body
+            const {
+                eventType,
+                eventTitle,
+                mode,
+                url,
+                latitude,
+                longitude,
+                state,
+                city,
+                fullAddress,
+                description,
+                timingFrom,
+                timingTo,
+                registrationFrom,
+                registrationTo,
+            } = req.body;
+
+            // Parse date fields
+            const timingFromDate = new Date(timingFrom);
+            const timingToDate = new Date(timingTo);
+            const registrationFromDate = new Date(registrationFrom);
+            const registrationToDate = new Date(registrationTo);
+
+            // Find the event first
+            let event = await Event.findById(id);
+            if (!event) {
+                req.flash("error", "Event not found");
+                return res.redirect("back");
+            }
+
+            // Helper function to upload files to S3 (if new files are sent)
+            const uploadToS3 = async (file) => {
+                const ext = file.name.split(".").pop().toLowerCase();
+                const key = `Events/${eventTitle}/${uuid()}.${ext}`;
+                const params = {
+                    Bucket: bucketName,
+                    Key: key,
+                    Body: file.data,
+                    ContentType: file.mimetype,
+                };
+                const data = await s3.upload(params).promise();
+                return data.Location;
+            };
+
+            // Update media URLs if new files uploaded
+            let videoURL = event.video;
+            let thumbnailURL = event.thumbnail;
+            let guidelinesURL = event.guidelines;
+
+            if (req.files?.video) {
+                videoURL = await uploadToS3(req.files.video);
+            }
+            if (req.files?.thumbnail) {
+                thumbnailURL = await uploadToS3(req.files.thumbnail);
+            }
+            if (req.files?.guidelines) {
+                guidelinesURL = await uploadToS3(req.files.guidelines);
+            }
+
+            // Update event fields
+            event.eventType = eventType;
+            event.eventTitle = eventTitle;
+            event.eventMode = mode;
+            event.url = url;
+            event.location = {
+                latitude,
+                longitude,
+                state,
+                city,
+                fullAddress,
+            };
+            event.description = description;
+            event.timing = {
+                from: timingFromDate,
+                to: timingToDate,
+            };
+            event.registrationPeriod = {
+                from: registrationFromDate,
+                to: registrationToDate,
+            };
+            event.video = videoURL;
+            event.thumbnail = thumbnailURL;
+            event.guidelines = guidelinesURL;
+
+            await event.save();
+
+            req.flash("success", "Event updated successfully!");
+            return res.redirect("/admin/event/allevents");
+        } catch (err) {
+            console.error("Error updating event:", err);
+            req.flash("error", err.message || "Something went wrong!");
+            return res.redirect("back");
+        }
+    });
+
+router.get("/view/:id", auth1, async (req, res) => {
+    try {
+        const eventId = req.params.id;
+
+        const event = await Event.findById(eventId);
+        if (!event) {
+            req.flash("error", "Event not found");
+            return res.redirect("/admin/event/allevents");
+        }
+
+        // Render the view page with event data
+        return res.render("admin/event/viewEvent", {
+            event,
+            menu: "viewevent"
+        });
+    } catch (error) {
+        console.error("Error fetching event:", error);
+        req.flash("error", "Something went wrong while fetching event details");
+        return res.redirect("/admin/event/allevents");
+    }
+});
+
 
 module.exports = router;
-
-
-
-
-// const express = require("express");
-// const router = express.Router();
-// const { auth1 } = require("../../../helpers");
-
-// router.get("/add", auth1, async (req, res) => {
-//     try {
-//         return res.render("admin/addEvent/add", { menu: 'event' });
-//     } catch (err) {
-//         console.error("Error loading Add Event page:", err);
-//         req.flash("error", "Something went wrong!");
-//         return res.redirect("back");
-//     }
-// });
-
-// module.exports = router;

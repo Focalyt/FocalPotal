@@ -77,7 +77,7 @@
                           <div class="card-body">
                             <div class="user-avatar-section">
                               <div class="d-flex align-items-center flex-column border-bottom mb-2 pb-2">
-                                <% if (candidate.image) { %>
+                                <% if (candidate?.image) { %>
                                   <img class="img-fluid rounded mb-2 mt-2" height="60" width="80"
                                     src="<%= process.env.MIPIE_BUCKET_URL +'/' + candidate.image %>" alt="User avatar">
                                   <% } else { %>
@@ -86,10 +86,10 @@
                                     <% } %>
                                       <div class="user-info text-center">
                                         <h4 class="text-capitalize">
-                                          <%=candidate.name?candidate.name:'NA'%>
+                                          <%=candidate?.name?candidate.name:'NA'%>
                                         </h4>
                                         <span class="exp-badge bg-label-secondary">
-                                          <%=candidate.isExperienced? 'Experienced' : 'Fresher' %>
+                                          <%=candidate?.isExperienced? 'Experienced' : 'Fresher' %>
                                         </span>
                                       </div>
                               </div>
@@ -99,42 +99,42 @@
                                 <li class="mb-1">
                                   <span class="font-weight-bold">Gender:</span>
                                   <span class="text-capitalize">
-                                    <%=candidate.sex?candidate.sex:'NA'%>
+                                    <%=candidate?.sex?candidate.sex:'NA'%>
                                   </span>
                                 </li>
                                 <li class="mb-1">
                                   <span class="font-weight-bold">Mobile No.</span>
-                                  <% if (candidate.mobile==0) { %>
+                                  <% if (candidate?.mobile==0) { %>
                                     <span class="mobile">xxxxxxxxxx</span>
                                     <% } else { %>
                                       <span class="mobile">
-                                        <%=candidate.mobile%>
+                                        <%=candidate?.mobile%>
                                       </span>
                                       <% } %>
                                 </li>
                                 <li class="mb-1">
                                   <span class="font-weight-bold">Email:</span>
                                   <span class="email">
-                                    <%=candidate.email%>
+                                    <%=candidate?.email%>
                                   </span>
                                 </li>
                                 <li class="mb-1">
                                   <span class="font-weight-bold">Experience:</span>
                                   <span class="exp-badge bg-label-success">
-                                    <%=candidate.totalExperience?candidate.totalExperience + ' Years' : 'Fresher' %>
+                                    <%=candidate?.totalExperience?candidate.totalExperience + ' Years' : 'Fresher' %>
                                   </span>
                                 </li>
                                 <li class="mb-1">
                                   <span class="font-weight-bold">Highest Qualification:</span>
                                   <span class="text-capitalize">
-                                    <%= qualification.find(i=>i._id == candidate.highestQualification)?.name %>
+                                    <%= qualification.find(i=>i._id == candidate?.highestQualification)?.name %>
                                   </span>
                                 </li>
                                 <li class="mb-1">
                                   <span class="font-weight-bold">Current Address:</span>
-                                  <% if (candidate.personalInfo?.currentAddress?.fullAddress) { %>
+                                  <% if (candidate?.personalInfo?.currentAddress?.fullAddress) { %>
                                     <span class="text-capitalize">
-                                      <%= candidate.personalInfo.currentAddress.fullAddress %>
+                                      <%= candidate?.personalInfo.currentAddress.fullAddress %>
                                     </span>
                                     <% } else { %>
                                       <span>NA</span>
@@ -142,9 +142,9 @@
                                 </li>
                                 <li class="mb-1">
                                   <span class="font-weight-bold">Permanent Address :</span>
-                                  <% if (candidate.personalInfo?.permanentAddress?.fullAddress) { %>
+                                  <% if (candidate?.personalInfo?.permanentAddress?.fullAddress) { %>
                                     <span class="text-capitalize">
-                                      <%= candidate.personalInfo.permanentAddress?.fullAddress %>
+                                      <%= candidate?.personalInfo.permanentAddress?.fullAddress %>
                                     </span>
                                     <% } else { %>
                                       <span>NA</span>
@@ -185,7 +185,7 @@
 
 
 
-                          <% if (candidate.personalInfo && Array.isArray(candidate.personalInfo.resume) &&
+                          <% if (candidate?.personalInfo && Array.isArray(candidate.personalInfo.resume) &&
                             masked==false) { %>
 
                             <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume">
@@ -203,7 +203,7 @@
                                 </div>
                               </div>
                             </div>
-                            <% } else if(candidate.resume) {%>
+                            <% } else if(candidate?.resume) {%>
                               <!-- <div class="col-xl-12 mt-2 mb-xl-0 mb-lg-0 mb-md-3 mb-sm-3 mb-3" id="candidate_resume"> -->
                               <div class="row pt-1">
                                 <img src="/images/disable_button.jpg" class="img-fluid" />
@@ -247,7 +247,7 @@
                                       <div class="mb-4">
                                         <h3 class="border-bottom pb-2 mb-1">Professional Summary</h3>
                                         <p>
-                                          <%= candidate.personalInfo?.professionalSummary || "No summary available." %>
+                                          <%= candidate?.personalInfo?.professionalSummary || "No summary available." %>
                                         </p>
                                       </div>
 
@@ -258,8 +258,8 @@
                                           <div class="mb-4">
                                             <h3 class="border-bottom pb-2 mb-1">Work Experience</h3>
 
-                                            <% if (candidate.experiences && candidate.experiences.length> 0) { %>
-                                              <% candidate.experiences.forEach((exp)=> { %>
+                                            <% if (candidate?.experiences && candidate?.experiences.length> 0) { %>
+                                              <% candidate?.experiences.forEach((exp)=> { %>
                                                 <div class="mb-3">
                                                   <div class="d-flex justify-content-between">
                                                     <h5 class="font-weight-bold mb-1">
@@ -295,8 +295,8 @@
                                           <div class="mb-4">
                                             <h3 class="border-bottom pb-2 mb-1">Education</h3>
 
-                                            <% if (candidate.qualifications?.length) { %>
-                                              <% candidate.qualifications.forEach((edu)=> { %>
+                                            <% if (candidate?.qualifications?.length) { %>
+                                              <% candidate?.qualifications.forEach((edu)=> { %>
                                                 <div class="mb-3">
                                                   <div class="d-flex justify-content-between">
                                                     <h5 class="font-weight-bold mb-1">
@@ -327,7 +327,7 @@
                                           <!-- Interests Section -->
                                           <div class="mb-4">
                                             <h3 class="border-bottom pb-2 mb-1">Interests</h3>
-                                            <% if (candidate.personalInfo.interest?.length) { %>
+                                            <% if (candidate?.personalInfo.interest?.length) { %>
                                               <div class="d-flex flex-wrap">
                                                 <% candidate.personalInfo.interest.forEach((item)=> { %>
                                                   <span class="badge badge-light mr-1 mb-1 p-1"

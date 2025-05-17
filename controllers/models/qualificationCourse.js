@@ -6,7 +6,7 @@ const qualificationCourseSchema = new Schema({
   _qualification: { type: ObjectId, ref:"Qualification" },
   status: {
     type: Boolean,
-    default: true,
+    default: false,
   }
 }, { timestamps: true });
 

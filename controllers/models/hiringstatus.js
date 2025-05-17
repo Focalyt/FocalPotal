@@ -5,7 +5,7 @@ const { ObjectId } = Schema.Types;
 const hiringStatusSchema = new Schema(
 	{
 		company: { type: ObjectId, ref: "Company" },
-		candidate: { type: ObjectId, ref: "Candidate" },
+		candidate: { type: ObjectId, ref: "CandidateProfile" },
 		status: { type: String },
 		comment: { type: String },
 		job: { type: ObjectId, ref: "Vacancy" },
