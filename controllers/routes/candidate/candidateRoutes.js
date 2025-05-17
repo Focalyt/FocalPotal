@@ -356,21 +356,21 @@ router
   })
   .post(async (req, res) => {
     try {
-      let { value, error } = await CandidateValidators.register(req.body)
-      if (error) {
-        console.log('====== register error ', error, value)
-        return res.send({ status: "failure", error: "Something went wrong!" });
-      }
-      let formData = value;
-      const { name, mobile, sex, place, latitude, longitude } = formData;
+      // let { value, error } = await CandidateValidators.register(req.body)
+      // if (error) {
+      //   console.log('====== register error ', error, value)
+      //   return res.send({ status: "failure", error: "Something went wrong!" });
+      // }
+      
+      const { name, mobile, sex, place, latitude, longitude } = req.body;
 
-      if (formData?.refCode && formData?.refCode !== '') {
-        let referredBy = await Candidate.findOne({ _id: formData.refCode, status: true, isDeleted: false })
-        if (!referredBy) {
-          req.flash("error", "Enter a valid referral code.");
-          return res.send({ status: 'failure', error: "Enter a valid referral code." })
-        }
-      }
+      // if (formData?.refCode && formData?.refCode !== '') {
+      //   let referredBy = await Candidate.findOne({ _id: formData.refCode, status: true, isDeleted: false })
+      //   if (!referredBy) {
+      //     req.flash("error", "Enter a valid referral code.");
+      //     return res.send({ status: 'failure', error: "Enter a valid referral code." })
+      //   }
+      // }
       const dataCheck = await Candidate.findOne({ mobile: mobile });
       if (dataCheck) {
         return res.send({
@@ -415,33 +415,26 @@ router
         whatsapp: mobile,
         availableCredit: coins?.candidateCoins,
         creditLeft: coins?.candidateCoins,
-        place,
-        latitude,
-        longitude,
-
-        location: {
-          type: "Point",
-          coordinates: [latitude, longitude]
-        }
+        
       }
       console.log("Candidate Data", candidateBody)
-      if (formData?.refCode && formData?.refCode !== '') {
-        candidateBody["referredBy"] = formData?.refCode
-      }
+      // if (formData?.refCode && formData?.refCode !== '') {
+      //   candidateBody["referredBy"] = formData?.refCode
+      // }
       const candidate = await Candidate.create(candidateBody);
 
       if (!candidate) {
         console.log("candidate not created");
         throw req.ykError("Candidate not create!");
       }
-      if (formData?.refCode && formData?.refCode !== '') {
-        const referral = await Referral.create({
-          referredBy: formData?.refCode,
-          referredTo: candidate._id,
-          status: referalStatus.Inactive
-        })
+      // if (formData?.refCode && formData?.refCode !== '') {
+      //   const referral = await Referral.create({
+      //     referredBy: formData?.refCode,
+      //     referredTo: candidate._id,
+      //     status: referalStatus.Inactive
+      //   })
 
-      }
+      // }
       let candName = candidate.name.split(" ")
       let firstName = candName[0], surName = ''
       if (candName.length >= 2) {
