@@ -15,7 +15,7 @@ const {
   AppliedJobs,
   AppliedCourses,
   QualificationCourse,
-
+EventType
 
 } = require('../../models');
 const Candidate = require('../../models/candidateProfile')
@@ -44,6 +44,7 @@ const universityRoutes = require('./university');
 const stateRoutes = require('./states');
 const cityRoutes = require('./city');
 const crmStreamRoutes = require('./stream');
+const eventTypeRoutes = require('./eventType');
 // const { isAdmin } = require('../../../helpers');
 const miPieCoinsRoutes = require('./miPieCoins')
 const paymentRoutes = require('./payments')
@@ -116,6 +117,7 @@ router.use('/event', eventRoutes);
 router.use('/center', addCenterRoutes);
 router.use('/portalaccess', addPortalAccessRoutes);
 router.use('/autocontrol', addControlRoutes);
+router.use('/eventType', eventTypeRoutes);
 
 // router.use(isAdmin);
 router.post ('/courses',async(req,res)=>{

@@ -2,7 +2,7 @@ const express = require("express");
 const moment = require("moment");
 const router = express.Router();
 const { auth1 } = require("../../../helpers");
-const { Event, AppliedEvent } = require("../../models"); // your Event model path
+const { Event, AppliedEvent , Qualification , EventType} = require("../../models"); // your Event model path
 const fs = require('fs');
 const multer = require('multer');
 const templates = require("../../models/templates")
@@ -61,7 +61,8 @@ const upload = multer({ storage }).single('file');
 
 router.get("/add", auth1, async (req, res) => {
     try {
-        return res.render("admin/event/add", { menu: 'event' });
+        const eventType = await EventType.find({status: true});
+        return res.render("admin/event/add", { menu: 'event' ,eventType });
     } catch (err) {
         console.error("Error loading Add Event page:", err);
         req.flash("error", "Something went wrong!");
@@ -213,9 +214,11 @@ router
 
     .get(async (req, res) => {
         console.log("Edit route called with id:", req.params.id);
+          
         try {
             const { id } = req.params;
             let event = await Event.findById(id);
+            const eventType = await EventType.find({status: true});
             if (!event) throw new Error("Event not found!");
             console.log("Event found:", event);
             // course = await Event.findById(id).populate('sectors').populate('center');
@@ -223,7 +226,7 @@ router
 
             return res.render(`${req.vPath}/admin/event/editEvent`, {
                 event,
-
+                eventType,
                 menu: 'editevent'
             });
 
