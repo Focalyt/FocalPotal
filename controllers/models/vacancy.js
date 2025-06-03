@@ -50,6 +50,7 @@ const vacancySchema = new Schema(
     max: Number,
     noOfPosition: Number,
     experience: { type: Number },
+    experienceMonths: { type: Number },
     shortlisted: Number,
     dateOfPosting: Date,
     jobDescription: String,

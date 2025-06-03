@@ -142,12 +142,12 @@
                                   oninvalid="this.setCustomValidity('Please Select Experience')"
                                   oninput="this.setCustomValidity('')">
                                   <option value="">Select option</option>
-                                  <% if(vacancy?.experience) { %>
-                                    <option value="<%= vacancy?.experience %>" class="text-capitalize" selected>
-                                      <%= vacancy?.experience %>
+                                  <% if(vacancy?.experienceMonths) { %>
+                                    <option value="<%= vacancy?.experienceMonths %>" class="text-capitalize" selected>
+                                      <%= vacancy?.experienceMonths %>
                                     </option>
                                     <%}%>
-                                      <option value="0" <% if(vacancy?.experience=='0' ) {%> selected <% } %> >0
+                                      <option value="0" <% if(vacancy?.experienceMonths=='0' ) {%> selected <% } %> >0
                                       </option>
                                       <% for (var i=1; i <=12; i++ ) { %>
                                         <option value="<%= i %>">
